@@ -1,0 +1,19 @@
+#ifndef SIMVARIABLES_H
+#define SIMVARIABLES_H
+
+#include <SimVariables.cpp>
+#include <map>
+
+class SimVariables
+{
+public:
+    SimVariables();
+    
+private:
+    
+   std::map<DATA_NAMES, int> intSimVariables;
+   std::map<DATA_NAMES, bool> boolSimVariables;
+   std::map<DATA_NAMES, std::string> stringSimVariables;
+};
+
+#endif // SIMVARIABLES_H
