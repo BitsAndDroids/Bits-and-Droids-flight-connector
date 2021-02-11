@@ -1,6 +1,8 @@
 #ifndef INPUTWORKER_H
 #define INPUTWORKER_H
 #include <qmutex.h>
+#include <qsettings.h>
+#include <qstandardpaths.h>
 #include <qthread.h>
 #include <qwaitcondition.h>
 #include <tchar.h>
@@ -26,7 +28,15 @@ class InputWorker : public QThread {
   bool advanced = false;
   bool props = true;
 
+ private slots:
+  void switchHandling(int index);
+
  private:
+  QString path =
+      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QSettings* settings =
+      new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
+
   std::string prefix;
   void inputEvents();
 

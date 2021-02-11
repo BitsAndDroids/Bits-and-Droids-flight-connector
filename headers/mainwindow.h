@@ -3,6 +3,7 @@
 #include <headers/ConnectWorker.h>
 #include <headers/InputWorker.h>
 #include <qpushbutton.h>
+#include <qstandardpaths.h>
 
 #include <QCoreApplication>
 #include <QFile>
@@ -12,7 +13,7 @@
 
 #include "SerialPort.hpp"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.7.0";
+const std::string version = "0.8.0";
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -45,8 +46,39 @@ class MainWindow : public QMainWindow {
   void on_stopInputButton_clicked();
   void on_inputRefreshBtn_clicked();
   void on_pushButton_clicked();
+  void on_inputOptionsBtn_clicked();
+  void on_addComInputBtn_clicked();
+
+  void onClicked();
+
+  void on_setOptionsBtn_clicked();
+
+  void on_saveSetBtn_clicked();
+
+  void addInputComRow(bool notInit, int index);
+
+  std::string convertComPort(QString comText);
 
  private:
+  QString path =
+      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QSettings *settings =
+      new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
+
+  QString prevInputComInt;
+  QList<QString> chopStrInput;
+
+  QString prevRowComInt;
+  QList<QString> chopStrRow;
+  int amntSets = 0;
+  bool loadedSet = false;
+
+  QString prevOutputComInt;
+  QList<QString> chopStrOutput;
+  bool setBlockVisible = true;
+  bool extraInputOptionsVisible = true;
+  int inputComRowCounter = 1;
+  QList<QString> availableComPorts;
   QString m_sSettingsFile;
   std::string url;
   std::string lastValueRec = "";
@@ -59,7 +91,8 @@ class MainWindow : public QMainWindow {
   InputWorker inputThread;
 
   Ui::MainWindow *ui;
-  void settings();
+  void openSettings();
   void untick();
+  void loadComPortData();
 };
 #endif  // MAINWINDOW_H

@@ -29,6 +29,7 @@ SOURCES += \
     sources/ConnectWorker.cpp \
     sources/InputWorker.cpp \
     sources/SerialPort.cpp \
+    sources/Set.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/optionsmenu.cpp
@@ -36,6 +37,7 @@ SOURCES += \
 HEADERS += \
     headers/ConnectWorker.h \
     headers/InputWorker.h \
+    headers/Set.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \

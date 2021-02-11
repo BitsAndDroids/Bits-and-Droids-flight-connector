@@ -77,6 +77,8 @@ enum DATA_NAMES {
   DATA_INDICATED_HEADING,
   DATA_INDICATED_ALTITUDE,
   DATA_SELECTED_QUANTITY_FUEL,
+  // GPS
+  DATA_GPS_COURSE_TO_STEER,
 
   // Coms
   DATA_NAV_ACTIVE_FREQUENCY1,
@@ -326,18 +328,14 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
   settings.beginGroup("Coms");
-  string val = settings.value("comActive1").toString().toStdString();
+  string val = settings.value("outputComActiveBase").toString().toStdString();
   const char *valPort = val.c_str();
   settings.endGroup();
   settings.sync();
 
-  QString pathSettings =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings settingsConfig(path + "/" + "settings.ini", QSettings::IniFormat);
-  settingsConfig.beginGroup("Settings");
-  int updatePerXFrames =
-      settingsConfig.value("updateEveryXFramesLineEdit").toInt();
-  if (settingsConfig.value("updateEveryXFramesLineEdit").isNull()) {
+  settings.beginGroup("Settings");
+  int updatePerXFrames = settings.value("updateEveryXFramesLineEdit").toInt();
+  if (settings.value("updateEveryXFramesLineEdit").isNull()) {
     updatePerXFrames = 15;
   }
   HRESULT hr;
@@ -394,6 +392,13 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
           {
             string valString = std::to_string(pS->datum[count].value);
             switch (pS->datum[count].id) {
+              // GPS
+              case DATA_GPS_COURSE_TO_STEER: {
+                sendToArduino(radianToDegree(pS->datum[count].value), "454",
+                              valPort);
+                break;
+              }
+
                 // Avionics
               case DATA_VERTICAL_SPEED: {
                 sendLengthToArduino(pS->datum[count].value, "590", valPort, 5);
@@ -1417,6 +1422,13 @@ void ConnectWorker::testDataRequest() {
           hSimConnect, DEFINITION_PDR, "AUTOPILOT RPM HOLD", "Bool",
           SIMCONNECT_DATATYPE_INT32, 0, DATA_AUTOPILOT_RPM_HOLD);
     }
+    // GPS
+    if (cbGpsCourseToSteer) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "GPS COURSE TO STEER", "Radians",
+          SIMCONNECT_DATATYPE_FLOAT32, 0.01, DATA_GPS_COURSE_TO_STEER);
+    }
+
     // PLANE DATA
     if (cbPlaneName) {
       hr = SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_STRING,

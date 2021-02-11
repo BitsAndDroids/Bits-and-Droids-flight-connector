@@ -1,6 +1,8 @@
 #ifndef CONNECTWORKER_H
 #define CONNECTWORKER_H
 #include <qmutex.h>
+#include <qsettings.h>
+#include <qstandardpaths.h>
 #include <qwaitcondition.h>
 #include <tchar.h>
 #include <windows.h>
@@ -12,11 +14,7 @@
 
 #include "SimConnect.h"
 #include "stdio.h"
-/*!
-  \class InputWorker
-  \brief test
-  \section1 Whoop
- */
+
 class ConnectWorker : public QThread {
   Q_OBJECT
   void run() override { testDataRequest(); }
@@ -44,6 +42,9 @@ class ConnectWorker : public QThread {
   bool cbKohlman = false;
   bool cbBarometerPressure = false;
   bool cbSelectedQuantityPercent = false;
+
+  // GPS
+  bool cbGpsCourseToSteer = false;
 
   // Coms
   bool cbActiveCom1 = false;
@@ -155,6 +156,10 @@ class ConnectWorker : public QThread {
   bool abort = false;
 
  private:
+  QString path =
+      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QSettings* settings =
+      new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
   int updatePerXFrames = 15;
   std::string lastVal;
   SerialPort* arduino;
