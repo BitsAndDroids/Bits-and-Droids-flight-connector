@@ -20,6 +20,7 @@ class ConnectWorker : public QThread {
   void run() override { testDataRequest(); }
  signals:
   void updateLastValUI(QString lastVal);
+  void updateLastStatusUI(QString lastStatus);
 
  public:
   ConnectWorker();
@@ -28,6 +29,11 @@ class ConnectWorker : public QThread {
   QWaitCondition condition;
 
   std::string getLastVal() { return lastVal; }
+  std::string getLastStatusVal() { return lastStatus; }
+
+  // Data
+  bool cbPlaneAltAboveGround = false;
+  bool cbSimOnGround = false;
 
   // Avionics
   bool cbPlaneName = false;
@@ -162,6 +168,7 @@ class ConnectWorker : public QThread {
       new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
   int updatePerXFrames = 15;
   std::string lastVal;
+  std::string lastStatus;
   SerialPort* arduino;
   static void MyDispatchProcRD(SIMCONNECT_RECV* pData, DWORD cbData,
                                void* pContext);

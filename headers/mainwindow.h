@@ -13,7 +13,7 @@
 
 #include "SerialPort.hpp"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.8.0";
+const std::string version = "0.8.2";
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,9 +29,11 @@ class MainWindow : public QMainWindow {
 
  public slots:
   void onUpdateLastValUI(const QString &lastVal);
+  void onUpdateLastStatusUI(const QString &lastStatus);
 
  signals:
   void updateLastValUI(QString lastVal);
+  void updateLastStatusUI(QString lastVal);
 
  private slots:
 

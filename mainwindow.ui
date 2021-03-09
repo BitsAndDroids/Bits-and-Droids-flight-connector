@@ -86,26 +86,6 @@ QCheckBox{
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="0">
-     <widget class="QPushButton" name="switchButton">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>Switch in-/output</string>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="12" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>Status messages:</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QPushButton" name="updateButton">
       <property name="enabled">
@@ -132,6 +112,44 @@ QCheckBox{
       </property>
      </widget>
     </item>
+    <item row="14" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lastText">
+        <property name="text">
+         <string>Last received:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelLastVal_2">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Status messages:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelLastStatus">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="8" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="enabled">
@@ -147,7 +165,7 @@ QCheckBox{
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Output">
        <widget class="QLabel" name="label_2">
@@ -377,7 +395,7 @@ QCheckBox{
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>8</number>
+               <number>9</number>
               </property>
               <widget class="QWidget" name="lightsTAb">
                <property name="styleSheet">
@@ -1114,13 +1132,6 @@ QCheckBox{
                    </property>
                   </widget>
                  </item>
-                 <item row="8" column="0">
-                  <widget class="QCheckBox" name="cbPlaneName">
-                   <property name="text">
-                    <string>Plane title/name</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </widget>
@@ -1540,6 +1551,47 @@ QCheckBox{
                 </layout>
                </widget>
               </widget>
+              <widget class="QWidget" name="tab_2">
+               <attribute name="title">
+                <string>Data</string>
+               </attribute>
+               <widget class="QWidget" name="formLayoutWidget_5">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>10</y>
+                  <width>481</width>
+                  <height>421</height>
+                 </rect>
+                </property>
+                <layout class="QFormLayout" name="formLayout_9">
+                 <property name="rowWrapPolicy">
+                  <enum>QFormLayout::WrapAllRows</enum>
+                 </property>
+                 <item row="0" column="0">
+                  <widget class="QCheckBox" name="cbPlaneName">
+                   <property name="text">
+                    <string>Plane title/name</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QCheckBox" name="cbPlaneAltAboveGround">
+                   <property name="text">
+                    <string>Altitude above ground (ft)</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <widget class="QCheckBox" name="cbSimOnGround">
+                   <property name="text">
+                    <string>On ground (bool)</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
              </widget>
             </item>
             <item>
@@ -1645,7 +1697,14 @@ QCheckBox{
               <item>
                <widget class="QRadioButton" name="advancedRBtn">
                 <property name="text">
-                 <string>Advanced mode (multiple inputs for seperate engines + mixture)</string>
+                 <string>Advanced mode (multiple inputs for seperate engines)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="cbMixtureInput">
+                <property name="text">
+                 <string>Mixture handles</string>
                 </property>
                </widget>
               </item>
@@ -1842,6 +1901,19 @@ QCheckBox{
         </layout>
        </widget>
       </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="switchButton">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>Switch in-/output</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
    </layout>

@@ -1,6 +1,7 @@
 #include "headers/mainwindow.h"
 
 #include <headers/Set.h>
+#include <headers/inputenum.h>
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
@@ -255,6 +256,18 @@ void MainWindow::loadSettings() {
           settings->value(key).toBool());
     }
   }
+  if (!settings->value("simpleInput").isNull()) {
+    ui->simpleRBtn->setChecked(settings->value("simpleInput").toBool());
+  }
+  if (!settings->value("advancedInput").isNull()) {
+    ui->advancedRBtn->setChecked(settings->value("advancedInput").toBool());
+  }
+  if (!settings->value("propInput").isNull()) {
+    ui->cbProps->setChecked(settings->value("propInput").toBool());
+  }
+  if (!settings->value("mixtureInput").isNull()) {
+    ui->cbMixtureInput->setChecked(settings->value("mixtureInput").toBool());
+  }
 
   settings->endGroup();
 }
@@ -268,7 +281,10 @@ void MainWindow::saveSettings() {
     QString name = allCheckBoxes.at(i)->objectName();
     settings->setValue(name, allCheckBoxes.at(i)->isChecked());
   }
-
+  settings->setValue("simpleInput", ui->simpleRBtn->isChecked());
+  settings->setValue("advancedInput", ui->advancedRBtn->isChecked());
+  settings->setValue("propInput", ui->cbProps->isChecked());
+  settings->setValue("mixtureInput", ui->cbMixtureInput->isChecked());
   settings->endGroup();
   settings->sync();
 }
@@ -311,6 +327,10 @@ void MainWindow::on_startButton_clicked() {
   settings->setValue("outputComActiveBase", comNr.c_str());
   settings->endGroup();
   settings->sync();
+
+  // DATA
+  outputThread.cbPlaneAltAboveGround = ui->cbPlaneAltAboveGround->isChecked();
+  outputThread.cbSimOnGround = ui->cbSimOnGround->isChecked();
 
   // Avionics
   outputThread.cbPlaneName = ui->cbPlaneName->isChecked();
@@ -457,15 +477,18 @@ void MainWindow::on_startButton_clicked() {
   ui->startButton->setText("Running");
 
   outputThread.abort = false;
-  connect(&outputThread, SIGNAL(updateLastValUI(QString)),
-          SLOT(onUpdateLastValUI(QString)));
+  connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
+          SLOT(onUpdateLastStatusUI(QString)));
 
   outputThread.start();
   ui->startButton->setEnabled(false);
 }
 
 void MainWindow::onUpdateLastValUI(const QString &lastVal) {
-  ui->labelLastVal->setText(lastVal);
+  ui->labelLastVal_2->setText(lastVal);
+}
+void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
+  ui->labelLastStatus->setText(lastVal);
 }
 
 void MainWindow::on_stopButton_clicked() {
@@ -530,6 +553,10 @@ void MainWindow::on_startInputButton_clicked() {
   } else {
     inputThread.props = false;
   }
+  connect(&inputThread, SIGNAL(updateLastValUI(QString)),
+          SLOT(onUpdateLastValUI(QString)));
+  connect(&inputThread, SIGNAL(updateLastStatusUI(QString)),
+          SLOT(onUpdateLastStatusUI(QString)));
 
   inputThread.abortInput = false;
   inputThread.start();
@@ -542,7 +569,9 @@ void MainWindow::on_stopInputButton_clicked() {
   ui->startInputButton->setEnabled(true);
   ui->stopInputButton->setVisible(false);
   ui->startInputButton->setText("Start");
+
   inputThread.abortInput = true;
+  inputThread.quit();
 }
 
 void MainWindow::on_pushButton_clicked() {
@@ -556,6 +585,9 @@ void MainWindow::on_pushButton_clicked() {
 void MainWindow::on_inputRefreshBtn_clicked() {
   ui->inputComboBoxBase->clear();
   loadComPortData();
+  foreach (const QString &comName, availableComPorts) {
+    ui->inputComboBoxBase->addItem(comName);
+  }
 }
 
 void MainWindow::on_addComInputBtn_clicked() {

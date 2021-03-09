@@ -3,7 +3,7 @@ QT += serialport
 QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 CONFIG += openssl
 CONFIG += serialport
 LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Debug/debug/SimConnect.dll"
@@ -30,9 +30,12 @@ SOURCES += \
     sources/InputWorker.cpp \
     sources/SerialPort.cpp \
     sources/Set.cpp \
+    sources/inputenum.cpp \
+    sources/inputmapper.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
-    sources/optionsmenu.cpp
+    sources/optionsmenu.cpp \
+    sources/InputSwitchHandler.cpp
 
 HEADERS += \
     headers/ConnectWorker.h \
@@ -41,7 +44,11 @@ HEADERS += \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
-    headers/optionsmenu.h
+    headers/optionsmenu.h \
+    headers/InputSwitchHandler.h \
+    headers/inputenum.h \
+    headers/InputMapper.h \
+
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \

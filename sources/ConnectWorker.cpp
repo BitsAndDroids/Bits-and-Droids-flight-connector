@@ -179,7 +179,10 @@ enum DATA_NAMES {
   DATA_AUTOPILOT_VERTICAL_HOLD,
   DATA_AUTOPILOT_RPM_HOLD,
 
-  DATA_PLANE_NAME
+  // DATA
+  DATA_PLANE_NAME,
+  DATA_PLANE_ALT_ABOVE_GROUND,
+  DATA_SIM_ON_GROUND,
 
 };
 
@@ -396,6 +399,16 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
               case DATA_GPS_COURSE_TO_STEER: {
                 sendToArduino(radianToDegree(pS->datum[count].value), "454",
                               valPort);
+                break;
+              }
+              case DATA_PLANE_ALT_ABOVE_GROUND: {
+                sendToArduino(pS->datum[count].value, "312", valPort);
+                break;
+              }
+
+              // DATA
+              case DATA_SIM_ON_GROUND: {
+                sendBoolToArduino(pS->datum[count].value, "323", valPort);
                 break;
               }
 
@@ -896,6 +909,18 @@ void ConnectWorker::testDataRequest() {
     // Set up the data definition, ensuring that all the elements are in Float32
     // units, to match the StructDatum structure The number of entries in the
     // DEFINITION_PDR definition should be equal to the maxReturnedItems define
+
+    // DATA
+    if (cbPlaneAltAboveGround) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "PLANE ALT ABOVE GROUND", "Feet",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_PLANE_ALT_ABOVE_GROUND);
+    }
+    if (cbSimOnGround) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "SIM ON GROUND", "Bool",
+          SIMCONNECT_DATATYPE_INT32, 0, DATA_SIM_ON_GROUND);
+    }
 
     // Ap
 
@@ -1447,11 +1472,11 @@ void ConnectWorker::testDataRequest() {
     while (abort != true) {
       if (connectionError) {
         if (lastConnectionState != connectionError) {
-          emit updateLastValUI("Error connecting to Arduino");
+          emit updateLastStatusUI("Error connecting to Arduino");
           lastConnectionState = connectionError;
         }
       } else {
-        emit updateLastValUI("Succesfully connected to your Arduino");
+        emit updateLastStatusUI("Succesfully connected to your Arduino");
       }
       SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, nullptr);
       Sleep(1);
