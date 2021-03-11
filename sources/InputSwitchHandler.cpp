@@ -69,6 +69,7 @@ UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
     Result += HornerScheme(Quotient, Divider, Factor) * Factor + Remainder;
   return Result;
 }
+
 void InputSwitchHandler::set_throttle_values(int index) {
   // Throttle control
   try {
@@ -105,6 +106,7 @@ void InputSwitchHandler::set_throttle_values(int index) {
     cout << "error in throttle" << endl;
   }
 }
+
 void InputSwitchHandler::setMixtureValues(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -143,6 +145,7 @@ void InputSwitchHandler::setMixtureValues(int index) {
     cout << "error in throttle" << endl;
   }
 }
+
 void InputSwitchHandler::set_prop_values(int index) {
   // Throttle control
   try {
@@ -182,6 +185,7 @@ void InputSwitchHandler::set_prop_values(int index) {
     cout << "error in throttle" << endl;
   }
 }
+
 void InputSwitchHandler::setElevatorTrim(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -207,6 +211,7 @@ void InputSwitchHandler::setElevatorTrim(int index) {
     cout << "error in trim" << endl;
   }
 }
+
 int InputSwitchHandler::setComs(int index, int comNo) {
   int value =
       stoi(std::string(&receivedString[index][4], &receivedString[index][10]));
@@ -232,6 +237,7 @@ int InputSwitchHandler::setComs(int index, int comNo) {
   }
   return Dec2Bcd(value / 10);
 }
+
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
@@ -239,6 +245,7 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
 };
 
 InputSwitchHandler::InputSwitchHandler() {}
+
 void InputSwitchHandler::switchHandling(int index) {
   Sleep(10);
   //

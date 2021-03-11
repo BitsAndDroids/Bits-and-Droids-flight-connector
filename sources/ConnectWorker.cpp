@@ -184,6 +184,9 @@ enum DATA_NAMES {
   DATA_PLANE_ALT_ABOVE_GROUND,
   DATA_SIM_ON_GROUND,
 
+  DATA_NAV_OBS_INDEX1,
+  DATA_NAV_OBS_INDEX2
+
 };
 
 using namespace std;
@@ -873,6 +876,14 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
               }
 
+              case DATA_NAV_OBS_INDEX1: {
+                sendToArduino(pS->datum[count].value, "606", valPort);
+                break;
+              }
+              case DATA_NAV_OBS_INDEX2: {
+                sendToArduino(pS->datum[count].value, "607", valPort);
+                break;
+              }
               default:
                 printf("\nUnknown datum ID: %i", pS->datum[count].id);
                 break;
@@ -1460,6 +1471,16 @@ void ConnectWorker::testDataRequest() {
                                           "TITLE", NULL,
                                           SIMCONNECT_DATATYPE_STRING256);
       strincProcessing = true;
+    }
+    if (cbNavObs1) {
+      SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_PDR, "NAV OBS:1",
+                                     "Degrees", SIMCONNECT_DATATYPE_INT32, 1,
+                                     DATA_NAV_OBS_INDEX1);
+    }
+    if (cbNavObs2) {
+      SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_PDR, "NAV OBS:2",
+                                     "Degrees", SIMCONNECT_DATATYPE_INT32, 1,
+                                     DATA_NAV_OBS_INDEX2);
     }
 
     // Request an event when the simulation starts

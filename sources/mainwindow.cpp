@@ -363,6 +363,10 @@ void MainWindow::on_startButton_clicked() {
   outputThread.cbNavRadialError1 = ui->cbNavRadialError1->isChecked();
   outputThread.cbNavVorLatlonalt1 = ui->cbNavVorLatlonalt1->isChecked();
 
+  // OBS
+  outputThread.cbNavObs1 = ui->cbNavObs1->isChecked();
+  outputThread.cbNavObs2 = ui->cbNavObs2->isChecked();
+
   // DME
   outputThread.cbNavDme1 = ui->cbNavDme1->isChecked();
   outputThread.cbNavDmespeed1 = ui->cbNavDmespeed1->isChecked();

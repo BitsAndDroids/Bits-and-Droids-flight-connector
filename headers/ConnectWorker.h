@@ -64,6 +64,10 @@ class ConnectWorker : public QThread {
   bool cbNavRadialError1 = false;
   bool cbNavVorLatlonalt1 = false;
 
+  // OBS
+  bool cbNavObs1;
+  bool cbNavObs2;
+
   // DME
   bool cbNavDme1 = false;
   bool cbNavDmespeed1 = false;

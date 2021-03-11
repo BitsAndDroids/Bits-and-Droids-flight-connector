@@ -165,7 +165,7 @@ QCheckBox{
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="Output">
        <widget class="QLabel" name="label_2">
@@ -395,7 +395,7 @@ QCheckBox{
                <string notr="true"/>
               </property>
               <property name="currentIndex">
-               <number>9</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="lightsTAb">
                <property name="styleSheet">
@@ -674,7 +674,7 @@ QCheckBox{
                   <x>160</x>
                   <y>10</y>
                   <width>160</width>
-                  <height>371</height>
+                  <height>402</height>
                  </rect>
                 </property>
                 <layout class="QFormLayout" name="formLayout_11">
@@ -762,6 +762,20 @@ QCheckBox{
                   <widget class="QCheckBox" name="cbNavVorLatlonalt1">
                    <property name="text">
                     <string>Nav Vor lationalt 1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="12" column="0">
+                  <widget class="QCheckBox" name="cbNavObs1">
+                   <property name="text">
+                    <string>Nav OBS 1</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="13" column="0">
+                  <widget class="QCheckBox" name="cbNavObs2">
+                   <property name="text">
+                    <string>Nav OBS 2</string>
                    </property>
                   </widget>
                  </item>
