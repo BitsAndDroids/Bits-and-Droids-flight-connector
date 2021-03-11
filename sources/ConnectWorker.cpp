@@ -206,7 +206,7 @@ void sendToArduino(float received, std::string prefix, const char *portName) {
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, input_string.length() + 1);
   delete[] c_string;
 }
 void sendCharToArduino(const char *received, std::string prefix,
@@ -223,7 +223,7 @@ void sendCharToArduino(const char *received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, input_string.length() + 1);
   delete[] c_string;
 }
 void sendLengthToArduino(float received, std::string prefix,
@@ -266,7 +266,7 @@ void sendLengthToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, input_string.length() + 1);
   delete[] c_string;
 }
 
@@ -283,9 +283,9 @@ void sendFloatToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
   if (received < 0) {
-    arduino.writeSerialPort(c_string, 7);
+    arduino.writeSerialPort(c_string, input_string.size() + 1);
   } else {
-    arduino.writeSerialPort(c_string, 6);
+    arduino.writeSerialPort(c_string, input_string.size() + 1);
   }
 
   delete[] c_string;
@@ -312,7 +312,7 @@ void sendBoolToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, input_string.length() + 1);
   delete[] c_string;
 }
 
