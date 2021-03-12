@@ -13,7 +13,7 @@
 
 #include "SerialPort.hpp"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.8.3";
+const std::string version = "0.8.3.1";
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;

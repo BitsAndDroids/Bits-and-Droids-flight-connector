@@ -11,6 +11,8 @@
 #include <qstandardpaths.h>
 #include <qstring.h>
 
+COMMTIMEOUTS cto;
+
 SerialPort::SerialPort(const char *portName) {
   this->connected = false;
 
@@ -81,7 +83,10 @@ int SerialPort::readSerialPort(const char *buffer, unsigned int buf_size) {
   unsigned int toRead = 0;
 
   ClearCommError(this->handler, &this->errors, &this->status);
-
+  cto.ReadIntervalTimeout = 10;
+  cto.ReadTotalTimeoutConstant = 0;
+  cto.ReadTotalTimeoutMultiplier = 0;
+  SetCommTimeouts(this->handler, &cto);
   if (this->status.cbInQue > 0) {
     if (this->status.cbInQue > buf_size) {
       toRead = buf_size;

@@ -20,7 +20,7 @@
 #define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
 
-#define DATA_LENGTH 255
+#define DATA_LENGTH 500
 
 // Declare a global object
 SerialPort *arduinoInput[10];

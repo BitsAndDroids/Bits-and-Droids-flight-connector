@@ -164,11 +164,13 @@ MainWindow::MainWindow(QWidget *parent)
     prevOutputComInt = settings->value("outputComActiveBase").toString();
     chopStrOutput = prevOutputComInt.split('M');
   }
-
+  settings->endGroup();
+  settings->beginGroup("inputCom");
   if (!settings->value("inputComActiveBase").isNull()) {
     prevInputComInt = settings->value("inputComActiveBase").toString();
     chopStrInput = prevInputComInt.split('M');
   }
+  settings->endGroup();
 
   // This block itterates through the updated com ports list. This is to ensure
   // that the user doesn't have to re-select his previous com port Does this

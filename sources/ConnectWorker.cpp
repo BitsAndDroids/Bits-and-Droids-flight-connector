@@ -11,19 +11,14 @@
 
 #include "stdio.h"
 #include "strsafe.h"
-/*!
-   \class ConnectWorker : public QThread
-   \inmodule Bitsanddroidsgui
-  \brief The ConnectWorker class.
 
- */
 char output[DATA_LENGTH];
 bool strincProcessing = false;
 bool connectionError = false;
-bool lastConnectionState = false;
 float prevSpeed = 0.0f;
 float currentSpeed;
 int eps = 1;
+bool lastConnectionState = false;
 
 SerialPort *arduino;
 
@@ -185,7 +180,9 @@ enum DATA_NAMES {
   DATA_SIM_ON_GROUND,
 
   DATA_NAV_OBS_INDEX1,
-  DATA_NAV_OBS_INDEX2
+  DATA_NAV_OBS_INDEX2,
+
+  DATA_AUTOPILOT
 
 };
 
@@ -206,7 +203,7 @@ void sendToArduino(float received, std::string prefix, const char *portName) {
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 void sendCharToArduino(const char *received, std::string prefix,
@@ -223,7 +220,7 @@ void sendCharToArduino(const char *received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 void sendLengthToArduino(float received, std::string prefix,
@@ -266,7 +263,7 @@ void sendLengthToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 
@@ -281,7 +278,7 @@ void sendFloatToArduino(float received, std::string prefix,
   auto input_string = prefix + std::to_string(received);
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
+  c_string[strlen(c_string)] = '\n';
   if (received < 0) {
     arduino.writeSerialPort(c_string, 7);
   } else {
@@ -312,7 +309,7 @@ void sendBoolToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, input_string.length());
+  arduino.writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 
@@ -422,9 +419,12 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
               }
               case DATA_COM_ALTMTR: {
-                sendLengthToArduino(pS->datum[count].value * 1000, "337",
-                                    valPort, 4);
-                printf("\nKohlman hg = %f", pS->datum[count].value);
+                int inHg = pS->datum[count].value * 1000;
+                if (inHg % (inHg / 10) >= 5) {
+                  inHg += 10;
+                }
+                sendToArduino(inHg / 10, "337", valPort);
+                printf("\nKohlman hg = %i", inHg / 10);
                 break;
               }
               case DATA_HEADING_LOCK: {
