@@ -1340,4 +1340,12 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_ELEVATOR_TRIM_SET,
       "ELEVATOR_TRIM_SET");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_AXIS_RUDDER_SET, "AXIS_RUDDER_SET");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_AXIS_LEFT_BRAKE_SET,
+      "AXIS_LEFT_BRAKE_SET");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_AXIS_RIGHT_BRAKE_SET,
+      "AXIS_RIGHT_BRAKE_SET");
 }

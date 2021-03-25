@@ -81,9 +81,8 @@ SerialPort::~SerialPort() {
 int SerialPort::readSerialPort(const char *buffer, unsigned int buf_size) {
   DWORD bytesRead{};
   unsigned int toRead = 0;
-
   ClearCommError(this->handler, &this->errors, &this->status);
-  cto.ReadIntervalTimeout = 10;
+  cto.ReadIntervalTimeout = 0;
   cto.ReadTotalTimeoutConstant = 0;
   cto.ReadTotalTimeoutMultiplier = 0;
   SetCommTimeouts(this->handler, &cto);

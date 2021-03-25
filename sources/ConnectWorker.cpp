@@ -187,13 +187,13 @@ enum DATA_NAMES {
 };
 
 using namespace std;
-
+SerialPort *arduinoTest;
 ConnectWorker::ConnectWorker() {}
 
-void sendToArduino(float received, std::string prefix, const char *portName) {
+void sendToArduino(float received, std::string prefix) {
   auto intVal = static_cast<int>(received);
-  SerialPort arduino(portName);
-  if (!arduino.isConnected()) {
+
+  if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -203,13 +203,13 @@ void sendToArduino(float received, std::string prefix, const char *portName) {
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-  arduino.writeSerialPort(c_string, strlen(c_string));
+  cout << strlen(c_string) << endl;
+  cout << c_string << endl;
+  arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
-void sendCharToArduino(const char *received, std::string prefix,
-                       const char *portName) {
-  SerialPort arduino(portName);
-  if (!arduino.isConnected()) {
+void sendCharToArduino(const char *received, std::string prefix) {
+  if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -219,15 +219,13 @@ void sendCharToArduino(const char *received, std::string prefix,
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-
-  arduino.writeSerialPort(c_string, strlen(c_string));
+  arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
-void sendLengthToArduino(float received, std::string prefix,
-                         const char *portName, int strLength) {
+void sendLengthToArduino(float received, std::string prefix, int strLength) {
   auto intVal = static_cast<int>(received);
-  SerialPort arduino(portName);
-  if (!arduino.isConnected()) {
+
+  if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -262,15 +260,12 @@ void sendLengthToArduino(float received, std::string prefix,
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-
-  arduino.writeSerialPort(c_string, strlen(c_string));
+  arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 
-void sendFloatToArduino(float received, std::string prefix,
-                        const char *portName) {
-  SerialPort arduino(portName);
-  if (!arduino.isConnected()) {
+void sendFloatToArduino(float received, std::string prefix) {
+  if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -278,18 +273,17 @@ void sendFloatToArduino(float received, std::string prefix,
   auto input_string = prefix + std::to_string(received);
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[strlen(c_string)] = '\n';
+  c_string[input_string.size()] = '\n';
   if (received < 0) {
-    arduino.writeSerialPort(c_string, 7);
+    arduinoTest->writeSerialPort(c_string, 7);
   } else {
-    arduino.writeSerialPort(c_string, 6);
+    arduinoTest->writeSerialPort(c_string, 6);
   }
 
   delete[] c_string;
 }
 
-void sendBoolToArduino(float received, std::string prefix,
-                       const char *portName) {
+void sendBoolToArduino(float received, std::string prefix) {
   int intVal;
   if (received == 0) {
     intVal = 0;
@@ -297,8 +291,7 @@ void sendBoolToArduino(float received, std::string prefix,
     intVal = 1;
   }
 
-  SerialPort arduino(portName);
-  if (!arduino.isConnected()) {
+  if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -309,7 +302,7 @@ void sendBoolToArduino(float received, std::string prefix,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
 
-  arduino.writeSerialPort(c_string, strlen(c_string));
+  arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 
@@ -330,11 +323,6 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
   QString path =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-  settings.beginGroup("Coms");
-  string val = settings.value("outputComActiveBase").toString().toStdString();
-  const char *valPort = val.c_str();
-  settings.endGroup();
-  settings.sync();
 
   settings.beginGroup("Settings");
   int updatePerXFrames = settings.value("updateEveryXFramesLineEdit").toInt();
@@ -380,7 +368,7 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
       switch (pObjData->dwRequestID) {
         case REQUEST_STRING: {
           Struct1 *pS = (Struct1 *)&pObjData->dwData;
-          sendCharToArduino(pS->title, "999", valPort);
+          sendCharToArduino(pS->title, "999");
           cout << "Plane: " << pS->title << endl;
           cout << "hi" << endl;
           break;
@@ -397,24 +385,23 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
             switch (pS->datum[count].id) {
               // GPS
               case DATA_GPS_COURSE_TO_STEER: {
-                sendToArduino(radianToDegree(pS->datum[count].value), "454",
-                              valPort);
+                sendToArduino(radianToDegree(pS->datum[count].value), "454");
                 break;
               }
               case DATA_PLANE_ALT_ABOVE_GROUND: {
-                sendToArduino(pS->datum[count].value, "312", valPort);
+                sendToArduino(pS->datum[count].value, "312");
                 break;
               }
 
               // DATA
               case DATA_SIM_ON_GROUND: {
-                sendBoolToArduino(pS->datum[count].value, "323", valPort);
+                sendBoolToArduino(pS->datum[count].value, "323");
                 break;
               }
 
                 // Avionics
               case DATA_VERTICAL_SPEED: {
-                sendLengthToArduino(pS->datum[count].value, "590", valPort, 5);
+                sendLengthToArduino(pS->datum[count].value, "590", 5);
                 printf("\nAP Vertical speed = %f", pS->datum[count].value);
                 break;
               }
@@ -423,177 +410,173 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 if (inHg % (inHg / 10) >= 5) {
                   inHg += 10;
                 }
-                sendToArduino(inHg / 10, "337", valPort);
+                sendToArduino(inHg / 10, "337");
                 printf("\nKohlman hg = %i", inHg / 10);
                 break;
               }
               case DATA_HEADING_LOCK: {
-                sendLengthToArduino(pS->datum[count].value, "582", valPort, 4);
+                sendLengthToArduino(pS->datum[count].value, "582", 4);
                 printf("\nHeading lock = %f", pS->datum[count].value);
                 break;
               }
               case DATA_ALTITUDE_TARGET: {
-                sendToArduino(pS->datum[count].value, "584", valPort);
+                sendToArduino(pS->datum[count].value, "584");
                 printf("\nAP Altitude target = %f", pS->datum[count].value);
                 cout << "called alt target: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_BAROMETER: {
-                sendLengthToArduino(pS->datum[count].value, "632", valPort, 4);
+                sendLengthToArduino(pS->datum[count].value, "632", 4);
                 printf("\nBarometer = %f", pS->datum[count].value);
                 break;
               }
 
                 // Coms
               case DATA_COM_FREQ1: {
-                sendToArduino(pS->datum[count].value, "900", valPort);
+                sendToArduino(pS->datum[count].value, "900");
                 printf("\nactive freq 1 = %f", pS->datum[count].value);
                 break;
               }
               case DATA_COM_FREQ_STANDBY1: {
-                sendToArduino(pS->datum[count].value, "901", valPort);
+                sendToArduino(pS->datum[count].value, "901");
                 printf("\nstandby freq 1 = %f", pS->datum[count].value);
                 break;
               }
               case DATA_COM_FREQ2: {
-                sendToArduino(pS->datum[count].value, "902", valPort);
+                sendToArduino(pS->datum[count].value, "902");
                 printf("\nactive freq 2 = %f", pS->datum[count].value);
                 break;
               }
               case DATA_COM_FREQ_STANDBY2: {
-                sendToArduino(pS->datum[count].value, "903", valPort);
+                sendToArduino(pS->datum[count].value, "903");
                 printf("\nstandby freq 2 = %f", pS->datum[count].value);
                 break;
               }
               case DATA_NAV_ACTIVE_FREQUENCY1: {
-                sendToArduino(pS->datum[count].value * 100, "910", valPort);
+                sendToArduino(pS->datum[count].value * 100, "910");
                 break;
               }
               case DATA_NAV_STANDBY_FREQUENCY1: {
-                sendToArduino(pS->datum[count].value * 100, "911", valPort);
+                sendToArduino(pS->datum[count].value * 100, "911");
                 break;
               }
               case DATA_NAV_ACTIVE_FREQUENCY2: {
-                sendToArduino(pS->datum[count].value * 100, "912", valPort);
+                sendToArduino(pS->datum[count].value * 100, "912");
                 break;
               }
               case DATA_NAV_STANDBY_FREQUENCY2: {
-                sendToArduino(pS->datum[count].value * 100, "913", valPort);
+                sendToArduino(pS->datum[count].value * 100, "913");
                 break;
               }
               case DATA_NAV_RADIAL_ERROR1: {
-                sendToArduino(pS->datum[count].value, "914", valPort);
+                sendToArduino(pS->datum[count].value, "914");
                 break;
               }
               case DATA_NAV_VOR_LATLONALT1: {
-                sendToArduino(pS->datum[count].value, "915", valPort);
+                sendToArduino(pS->datum[count].value, "915");
                 break;
               }
 
                 // DME
               case DATA_NAV_DME1: {
-                sendToArduino(pS->datum[count].value, "950", valPort);
+                sendToArduino(pS->datum[count].value, "950");
                 break;
               }
               case DATA_NAV_DMESPEED1: {
-                sendToArduino(pS->datum[count].value, "951", valPort);
+                sendToArduino(pS->datum[count].value, "951");
                 break;
               }
               case DATA_NAV_DME2: {
-                sendToArduino(pS->datum[count].value, "952", valPort);
+                sendToArduino(pS->datum[count].value, "952");
                 break;
               }
               case DATA_NAV_DMESPEED2: {
-                sendToArduino(pS->datum[count].value, "953", valPort);
+                sendToArduino(pS->datum[count].value, "953");
                 break;
               }
 
                 // ADF
               case DATA_ADF_ACTIVE_FREQUENCY1: {
-                sendLengthToArduino(pS->datum[count].value / 1000, "954",
-                                    valPort, 4);
+                sendLengthToArduino(pS->datum[count].value / 1000, "954", 4);
                 break;
               }
               case DATA_ADF_STANDBY_FREQUENCY1: {
-                sendLengthToArduino(pS->datum[count].value / 1000, "955",
-                                    valPort, 4);
+                sendLengthToArduino(pS->datum[count].value / 1000, "955", 4);
                 break;
               }
               case DATA_ADF_RADIAL1: {
-                sendToArduino(pS->datum[count].value, "956", valPort);
+                sendToArduino(pS->datum[count].value, "956");
                 break;
               }
               case DATA_ADF_SIGNAL1: {
-                sendToArduino(pS->datum[count].value, "957", valPort);
+                sendToArduino(pS->datum[count].value, "957");
                 break;
               }
 
               case DATA_ADF_ACTIVE_FREQUENCY2: {
-                sendLengthToArduino(pS->datum[count].value / 1000, "958",
-                                    valPort, 4);
+                sendLengthToArduino(pS->datum[count].value / 1000, "958", 4);
                 break;
               }
               case DATA_ADF_STANDBY_FREQUENCY2: {
-                sendLengthToArduino(pS->datum[count].value / 1000, "959",
-                                    valPort, 4);
+                sendLengthToArduino(pS->datum[count].value / 1000, "959", 4);
                 break;
               }
               case DATA_ADF_RADIAL2: {
-                sendToArduino(pS->datum[count].value, "960", valPort);
+                sendToArduino(pS->datum[count].value, "960");
                 break;
               }
               case DATA_ADF_SIGNAL2: {
-                sendToArduino(pS->datum[count].value, "961", valPort);
+                sendToArduino(pS->datum[count].value, "961");
                 break;
               }
 
                 // Transponder
               case DATA_TRANSPONDER_CODE1: {
-                sendToArduino(pS->datum[count].value, "962", valPort);
+                sendToArduino(pS->datum[count].value, "962");
                 break;
               }
               case DATA_TRANSPONDER_CODE2: {
-                sendToArduino(pS->datum[count].value, "963", valPort);
+                sendToArduino(pS->datum[count].value, "963");
                 break;
               }
 
                 // Aircraft data
               case DATA_INDICATED_AIRSPEED: {
-                sendLengthToArduino(pS->datum[count].value, "326", valPort, 3);
+                sendLengthToArduino(pS->datum[count].value, "326", 3);
                 printf("\nIndicated airspeed = %f", pS->datum[count].value);
                 break;
               }
               case DATA_INDICATED_ALTITUDE: {
-                sendLengthToArduino(pS->datum[count].value, "335", valPort, 5);
+                sendLengthToArduino(pS->datum[count].value, "335", 5);
 
                 printf("\nIndicated altitude = %f", pS->datum[count].value);
                 break;
               }
               case DATA_INDICATED_HEADING: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
-                                    "344", valPort, 3);
+                                    "344", 3);
                 printf("\nIndicated heading = %f", pS->datum[count].value);
                 break;
               }
               case DATA_GPS_GROUNDSPEED: {
-                sendToArduino(pS->datum[count].value * 1.94, "430", valPort);
+                sendToArduino(pS->datum[count].value * 1.94, "430");
                 printf("\nGPS groundspeed = %f", pS->datum[count].value);
                 break;
               }
               case DATA_TRUE_VERTICAL_SPEED: {
-                sendToArduino(pS->datum[count].value, "330", valPort);
+                sendToArduino(pS->datum[count].value, "330");
                 printf("\nTrue vertical speed = %f", pS->datum[count].value);
                 break;
               }
               case DATA_SELECTED_QUANTITY_FUEL: {
-                sendToArduino(pS->datum[count].value * 100, "275", valPort);
+                sendToArduino(pS->datum[count].value * 100, "275");
                 printf("\nFuel in = %f", pS->datum[count].value * 100);
                 break;
               }
 
               // lights
               case DATA_LIGHT_TAXI_ON: {
-                sendBoolToArduino(pS->datum[count].value, "033", valPort);
+                sendBoolToArduino(pS->datum[count].value, "033");
                 QString test =
                     QString::fromStdString("Taxi light: " + valString);
 
@@ -601,287 +584,274 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
               }
               case DATA_LIGHT_STROBE_ON: {
-                sendBoolToArduino(pS->datum[count].value, "034", valPort);
+                sendBoolToArduino(pS->datum[count].value, "034");
                 cout << "Strobe: " << pS->datum[count].value << endl;
 
                 break;
               }
               case DATA_LIGHT_PANEL_ON: {
-                sendBoolToArduino(pS->datum[count].value, "035", valPort);
+                sendBoolToArduino(pS->datum[count].value, "035");
                 cout << "Panel: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_RECOGNITION_ON: {
-                sendBoolToArduino(pS->datum[count].value, "036", valPort);
+                sendBoolToArduino(pS->datum[count].value, "036");
                 cout << "Recognition: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_WING_ON: {
-                sendBoolToArduino(pS->datum[count].value, "037", valPort);
+                sendBoolToArduino(pS->datum[count].value, "037");
                 cout << "Wing light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_LOGO_ON: {
-                sendBoolToArduino(pS->datum[count].value, "038", valPort);
+                sendBoolToArduino(pS->datum[count].value, "038");
                 cout << "Logo light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_CABIN_ON: {
-                sendBoolToArduino(pS->datum[count].value, "039", valPort);
+                sendBoolToArduino(pS->datum[count].value, "039");
                 cout << "Cabin light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_HEAD_ON: {
-                sendBoolToArduino(pS->datum[count].value, "040", valPort);
+                sendBoolToArduino(pS->datum[count].value, "040");
                 cout << "Head light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_BRAKE_ON: {
-                sendBoolToArduino(pS->datum[count].value, "041", valPort);
+                sendBoolToArduino(pS->datum[count].value, "041");
                 cout << "Brake light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_NAV_ON: {
-                sendBoolToArduino(pS->datum[count].value, "042", valPort);
+                sendBoolToArduino(pS->datum[count].value, "042");
                 cout << "Nav light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_BEACON_ON: {
-                sendBoolToArduino(pS->datum[count].value, "043", valPort);
+                sendBoolToArduino(pS->datum[count].value, "043");
                 cout << "Beacon light: " << pS->datum[count].value << endl;
                 break;
               }
               case DATA_LIGHT_LANDING_ON: {
-                sendBoolToArduino(pS->datum[count].value, "044", valPort);
+                sendBoolToArduino(pS->datum[count].value, "044");
                 cout << "Landing light: " << pS->datum[count].value << endl;
                 break;
               }
 
               // warnings
               case DATA_STALL_WARNING: {
-                sendBoolToArduino(pS->datum[count].value, "333", valPort);
+                sendBoolToArduino(pS->datum[count].value, "333");
                 break;
               }
               case DATA_OVERSPEED_WARNING: {
-                sendBoolToArduino(pS->datum[count].value, "334", valPort);
+                sendBoolToArduino(pS->datum[count].value, "334");
                 break;
               }
 
               // Gear
               case DATA_GEAR_HANDLE_POSITION: {
-                sendBoolToArduino(pS->datum[count].value, "526", valPort);
+                sendBoolToArduino(pS->datum[count].value, "526");
                 break;
               }
               case DATA_GEAR_HYDRAULIC_PRESSURE: {
-                sendLengthToArduino(pS->datum[count].value, "527", valPort, 6);
+                sendLengthToArduino(pS->datum[count].value, "527", 6);
                 break;
               }
               case DATA_TAILWHEEL_LOCK_ON: {
-                sendBoolToArduino(pS->datum[count].value, "528", valPort);
+                sendBoolToArduino(pS->datum[count].value, "528");
                 break;
               }
               case DATA_GEAR_CENTER_POSITION: {
-                sendLengthToArduino(pS->datum[count].value * 100, "529",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "529", 3);
                 break;
               }
               case DATA_GEAR_LEFT_POSITION: {
-                sendLengthToArduino(pS->datum[count].value * 100, "530",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "530", 3);
                 break;
               }
               case DATA_GEAR_RIGHT_POSITION: {
-                sendLengthToArduino(pS->datum[count].value * 100, "531",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "531", 3);
                 break;
               }
               case DATA_GEAR_TAIL_POSITION: {
-                sendLengthToArduino(pS->datum[count].value * 100, "532",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "532", 3);
                 break;
               }
               case DATA_GEAR_AUX_POSITION: {
-                sendLengthToArduino(pS->datum[count].value * 100, "533",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "533", 3);
                 break;
               }
               case DATA_GEAR_TOTAL_PCT_EXTENDED: {
-                sendLengthToArduino(pS->datum[count].value * 100, "536",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "536", 3);
                 break;
               }
 
               // Flaps
               case DATA_FLAPS_HANDLE_PERCENT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "510",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "510", 3);
                 break;
               }
               case DATA_FLAPS_HANDLE_INDEX: {
-                sendLengthToArduino(pS->datum[count].value, "511", valPort, 3);
+                sendLengthToArduino(pS->datum[count].value, "511", 3);
                 break;
               }
               case DATA_FLAPS_NUM_HANDLE_POSITIONS: {
-                sendLengthToArduino(pS->datum[count].value, "512", valPort, 3);
+                sendLengthToArduino(pS->datum[count].value, "512", 3);
                 break;
               }
               case DATA_TRAILING_EDGE_FLAPS_LEFT_PERCENT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "513",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "513", 3);
                 break;
               }
               case DATA_TRAILING_EDGE_FLAPS_RIGHT_PERCENT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "514",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "514", 3);
                 break;
               }
               case DATA_TRAILING_EDGE_FLAPS_LEFT_ANGLE: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
-                                    "515", valPort, 3);
+                                    "515", 3);
                 break;
               }
               case DATA_TRAILING_EDGE_FLAPS_RIGHT_ANGLE: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
-                                    "516", valPort, 3);
+                                    "516", 3);
                 break;
               }
               case DATA_LEADING_EDGE_FLAPS_LEFT_PERCENT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "517",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "517", 3);
                 break;
               }
               case DATA_LEADING_EDGE_FLAPS_RIGHT_PERCENT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "518",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "518", 3);
                 break;
               }
               case DATA_LEADING_EDGE_FLAPS_LEFT_ANGLE: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
-                                    "519", valPort, 3);
+                                    "519", 3);
                 break;
               }
               case DATA_LEADING_EDGE_FLAPS_RIGHT_ANGLE: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
-                                    "520", valPort, 3);
+                                    "520", 3);
                 break;
               }
 
               // Rudder trim
               case DATA_ELEVATOR_TRIM_POSITION: {
-                sendFloatToArduino(pS->datum[count].value * 100, "498",
-                                   valPort);
+                sendFloatToArduino(pS->datum[count].value * 100, "498");
                 break;
               }
               case DATA_ELEVATOR_TRIM_PCT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "500",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "500", 3);
                 break;
               }
               case DATA_AILERON_TRIM: {
                 sendFloatToArduino(radianToDegreeFloat(pS->datum[count].value),
-                                   "562", valPort);
+                                   "562");
                 break;
               }
               case DATA_AILERON_TRIM_PCT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "563",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "563", 3);
                 break;
               }
               case DATA_RUDDER_TRIM: {
                 sendFloatToArduino(radianToDegreeFloat(pS->datum[count].value),
-                                   "566", valPort);
+                                   "566");
                 break;
               }
               case DATA_RUDDER_TRIM_PCT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "567",
-                                    valPort, 3);
+                sendLengthToArduino(pS->datum[count].value * 100, "567", 3);
                 break;
               }
 
               // AP
               case DATA_AUTOPILOT_AVAILABLE: {
-                sendBoolToArduino(pS->datum[count].value, "576", valPort);
+                sendBoolToArduino(pS->datum[count].value, "576");
                 break;
               }
               case DATA_AUTOPILOT_MASTER: {
-                sendBoolToArduino(pS->datum[count].value, "577", valPort);
+                sendBoolToArduino(pS->datum[count].value, "577");
                 break;
               }
               case DATA_AUTOPILOT_WING_LEVELER: {
-                sendBoolToArduino(pS->datum[count].value, "579", valPort);
+                sendBoolToArduino(pS->datum[count].value, "579");
                 break;
               }
               case DATA_AUTOPILOT_NAV1_LOCK: {
-                sendBoolToArduino(pS->datum[count].value, "580", valPort);
+                sendBoolToArduino(pS->datum[count].value, "580");
                 break;
               }
               case DATA_AUTOPILOT_HEADING_LOCK: {
-                sendBoolToArduino(pS->datum[count].value, "581", valPort);
+                sendBoolToArduino(pS->datum[count].value, "581");
                 break;
               }
               case DATA_AUTOPILOT_ALTITUDE_LOCK: {
-                sendBoolToArduino(pS->datum[count].value, "583", valPort);
+                sendBoolToArduino(pS->datum[count].value, "583");
                 break;
               }
               case DATA_AUTOPILOT_ATTITUDE_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "585", valPort);
+                sendBoolToArduino(pS->datum[count].value, "585");
                 break;
               }
               case DATA_AUTOPILOT_GLIDESLOPE_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "586", valPort);
+                sendBoolToArduino(pS->datum[count].value, "586");
                 break;
               }
               case DATA_AUTOPILOT_APPROACH_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "588", valPort);
+                sendBoolToArduino(pS->datum[count].value, "588");
                 break;
               }
               case DATA_AUTOPILOT_BACKCOURSE_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "589", valPort);
+                sendBoolToArduino(pS->datum[count].value, "589");
                 break;
               }
               case DATA_AUTOPILOT_FLIGHT_DIRECTOR_ACTIVE: {
-                sendBoolToArduino(pS->datum[count].value, "591", valPort);
+                sendBoolToArduino(pS->datum[count].value, "591");
                 break;
               }
               case DATA_AUTOPILOT_AIRSPEED_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "594", valPort);
+                sendBoolToArduino(pS->datum[count].value, "594");
                 break;
               }
               case DATA_AUTOPILOT_MACH_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "596", valPort);
+                sendBoolToArduino(pS->datum[count].value, "596");
                 break;
               }
               case DATA_AUTOPILOT_YAW_DAMPER: {
-                sendBoolToArduino(pS->datum[count].value, "598", valPort);
+                sendBoolToArduino(pS->datum[count].value, "598");
                 break;
               }
               case DATA_AUTOPILOT_THROTTLE_ARM: {
-                sendBoolToArduino(pS->datum[count].value, "600", valPort);
+                sendBoolToArduino(pS->datum[count].value, "600");
                 break;
               }
               case DATA_AUTOPILOT_TAKEOFF_POWER_ACTIVE: {
-                sendBoolToArduino(pS->datum[count].value, "601", valPort);
+                sendBoolToArduino(pS->datum[count].value, "601");
                 break;
               }
               case DATA_AUTOTHROTTLE_ACTIVE: {
-                sendBoolToArduino(pS->datum[count].value, "602", valPort);
+                sendBoolToArduino(pS->datum[count].value, "602");
                 break;
               }
               case DATA_AUTOPILOT_VERTICAL_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "604", valPort);
+                sendBoolToArduino(pS->datum[count].value, "604");
                 break;
               }
               case DATA_AUTOPILOT_RPM_HOLD: {
-                sendBoolToArduino(pS->datum[count].value, "605", valPort);
+                sendBoolToArduino(pS->datum[count].value, "605");
                 break;
               }
 
               case DATA_NAV_OBS_INDEX1: {
-                sendToArduino(pS->datum[count].value, "606", valPort);
+                sendToArduino(pS->datum[count].value, "606");
+                cout << pS->datum[count].value << endl;
                 break;
               }
               case DATA_NAV_OBS_INDEX2: {
-                sendToArduino(pS->datum[count].value, "607", valPort);
+                sendToArduino(pS->datum[count].value, "607");
+                cout << pS->datum[count].value << endl;
                 break;
               }
               default:
@@ -1474,14 +1444,23 @@ void ConnectWorker::testDataRequest() {
     }
     if (cbNavObs1) {
       SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_PDR, "NAV OBS:1",
-                                     "Degrees", SIMCONNECT_DATATYPE_INT32, 1,
-                                     DATA_NAV_OBS_INDEX1);
+                                     "Degrees", SIMCONNECT_DATATYPE_FLOAT32,
+                                     0.1, DATA_NAV_OBS_INDEX1);
     }
     if (cbNavObs2) {
       SimConnect_AddToDataDefinition(hSimConnect, DEFINITION_PDR, "NAV OBS:2",
-                                     "Degrees", SIMCONNECT_DATATYPE_INT32, 1,
-                                     DATA_NAV_OBS_INDEX2);
+                                     "Degrees", SIMCONNECT_DATATYPE_FLOAT32,
+                                     0.1, DATA_NAV_OBS_INDEX2);
     }
+    QString path =
+        QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
+    settings.beginGroup("Coms");
+    string val = settings.value("outputComActiveBase").toString().toStdString();
+    const char *valPort = val.c_str();
+    arduinoTest = new SerialPort(valPort);
+    settings.endGroup();
+    settings.sync();
 
     // Request an event when the simulation starts
 
@@ -1499,16 +1478,19 @@ void ConnectWorker::testDataRequest() {
       } else {
         emit updateLastStatusUI("Succesfully connected to your Arduino");
       }
+
       SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, nullptr);
       Sleep(1);
       quit();
     }
+    arduinoTest->closeSerial();
     hr = SimConnect_Close(hSimConnect);
   }
 }
 ConnectWorker::~ConnectWorker() {
   lastConnectionState = false;
   connectionError = false;
+  // arduinoTest->closeSerial();
   mutex.lock();
   abort = true;
   condition.wakeOne();

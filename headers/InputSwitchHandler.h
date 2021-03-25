@@ -28,10 +28,15 @@ class InputSwitchHandler {
   void set_prop_values(int index);
   int setComs(int index, int comNo);
 
+  void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+  void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+
  private:
   std::string prefix;
   void setElevatorTrim(int index);
   void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID);
+  void setRudder(int index);
+  void setBrakeAxis(int index);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

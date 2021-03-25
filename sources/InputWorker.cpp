@@ -5,6 +5,7 @@
 #include <headers/InputMapper.h>
 #include <headers/InputSwitchHandler.h>
 #include <headers/InputWorker.h>
+#include <headers/SerialReader.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
@@ -20,7 +21,7 @@
 #define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
 
-#define DATA_LENGTH 500
+#define DATA_LENGTH 255
 
 // Declare a global object
 SerialPort *arduinoInput[10];
@@ -71,6 +72,9 @@ void InputWorker::inputEvents() {
   HRESULT hr;
   settings->beginGroup("inputCom");
   int inputs = settings->value("inputCounter").toInt();
+  if (inputs == NULL) {
+    inputs = 1;
+  }
   int extraRows = inputs - 1;
   const char *savedPort;
   arduinoInput[0] = new SerialPort(valPort);
@@ -83,6 +87,7 @@ void InputWorker::inputEvents() {
               << std::endl;
   }
   settings->endGroup();
+
   bool connected = false;
 
   while (abortInput != true) {
@@ -101,17 +106,18 @@ void InputWorker::inputEvents() {
         mapper.mapEvents(hInputSimConnect);
       }
     }
-    if (connected) {
-      emit updateLastStatusUI("Connected to game");
-      Sleep(5);
-      for (int i = 0; i <= extraRows; i++) {
-        const auto hasRead = arduinoInput[i]->readSerialPort(
-            handler.receivedString[i], DATA_LENGTH);
-        if (hasRead) {
+
+    Sleep(5);
+    for (int i = 0; i <= extraRows; i++) {
+      const auto hasRead = arduinoInput[i]->readSerialPort(
+          handler.receivedString[i], DATA_LENGTH);
+      if (hasRead) {
+        if (connected) {
+          emit updateLastStatusUI("Connected to game");
           handler.switchHandling(i);
-          lastVal = handler.receivedString[i];
-          emit updateLastValUI(QString::fromStdString(lastVal));
         }
+        lastVal = handler.receivedString[i];
+        emit updateLastValUI(QString::fromStdString(lastVal));
       }
     }
   }
@@ -119,8 +125,11 @@ void InputWorker::inputEvents() {
   Sleep(1);
   emit updateLastStatusUI("Connection closed");
   if (connected) {
-    for (int i = 0; i <= extraRows; i++) {
-      arduinoInput[i]->closeSerial();
+    arduinoInput[0]->closeSerial();
+    for (int i = 1; i <= extraRows; i++) {
+      if (arduinoInput[i]->isConnected()) {
+        arduinoInput[i]->closeSerial();
+      }
     }
     quit();
     SimConnect_Close(hInputSimConnect);

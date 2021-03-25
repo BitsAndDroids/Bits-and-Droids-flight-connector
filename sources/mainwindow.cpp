@@ -204,8 +204,6 @@ MainWindow::MainWindow(QWidget *parent)
 
   // If these lines aren't here the group stays open which leads to conflict
   // down the line
-  settings->endGroup();
-  settings->sync();
 
   // STYLE AFFECTING SECTION
   //-----------------------
@@ -532,7 +530,8 @@ void MainWindow::on_startInputButton_clicked() {
   settings->beginGroup("inputCom");
   QString comText = ui->inputComboBoxBase->currentText();
   std::cout << comText.toStdString() << std::endl;
-  settings->setValue("inputComActiveBase", convertComPort(comText).c_str());
+  settings->setValue("inputComActiveBase",
+                     QString::fromStdString(convertComPort(comText)));
   QString comboBoxName;
   QString key;
   std::cout << inputComRowCounter << "ROWS ON START" << std::endl;

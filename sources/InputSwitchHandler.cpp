@@ -25,7 +25,6 @@ bool inputs[5];
 
 int counter = 0;
 int engines = 4;
-int trim;
 
 double oldValThrottle[4];
 double oldValMixture[2];
@@ -57,7 +56,17 @@ structPropControl pc;
 structBattery1 bc1;
 structBattery2 bc2;
 
+int trim;
 int oldTrim;
+
+int rudderAxis;
+int oldRudderAxis;
+
+int leftBrake;
+int oldLeftBrake;
+
+int rightBrake;
+int oldRightBrake;
 
 InputEnum inputDefinitions = InputEnum();
 
@@ -74,13 +83,13 @@ void InputSwitchHandler::set_throttle_values(int index) {
   // Throttle control
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
-
+    cout << receivedString[index] << endl;
     counter = 0;
 
     while (token != nullptr && counter < 5) {
       cout << receivedString << ":Received" << endl;
       cout << token << ":Counter" << counter << endl;
-
+      int engineBuffer[4];
       if (token != nullptr) {
         const auto incVal = strtod(token, nullptr);
 
@@ -93,13 +102,18 @@ void InputSwitchHandler::set_throttle_values(int index) {
           } else {
             oldValThrottle[counter - 1] = incVal;
           }
-          tc.throttle_percent[counter - 1] = oldValThrottle[counter - 1];
+          engineBuffer[counter - 1] = oldValThrottle[counter - 1];
           cout << "counter: " << counter << " val: " << incVal << endl;
         }
 
         token = strtok_s(nullptr, " ", &next_token);
 
         counter++;
+      }
+      if (counter == 4) {
+        for (int i = 0; i < 4; i++) {
+          tc.throttle_percent[i] = engineBuffer[i];
+        }
       }
     }
   } catch (const std::exception &e) {
@@ -212,6 +226,69 @@ void InputSwitchHandler::setElevatorTrim(int index) {
   }
 }
 
+void InputSwitchHandler::setRudder(int index) {
+  try {
+    token = strtok_s(receivedString[index], " ", &next_token);
+
+    counter = 0;
+    while (token != nullptr && counter < 2) {
+      if (counter == 1) {
+        rudderAxis = stoi(token);
+      }
+      token = strtok_s(nullptr, " ", &next_token);
+      counter++;
+    }
+    int diff = std::abs(rudderAxis - oldRudderAxis);
+    cout << diff << endl;
+    if (diff < 3000 || oldRudderAxis == NULL) {
+      SimConnect_TransmitClientEvent(
+          connect, 0, inputDefinitions.DEFINITION_AXIS_RUDDER_SET, rudderAxis,
+          SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+          SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+      oldRudderAxis = rudderAxis;
+    }
+  } catch (const std::exception &e) {
+    cout << "error in rudder" << endl;
+  }
+}
+
+void InputSwitchHandler::setBrakeAxis(int index) {
+  try {
+    token = strtok_s(receivedString[index], " ", &next_token);
+
+    counter = 0;
+    while (token != nullptr && counter < 3) {
+      if (counter == 1) {
+        leftBrake = stoi(token);
+      }
+      if (counter == 2) {
+        rightBrake = stoi(token);
+      }
+      token = strtok_s(nullptr, " ", &next_token);
+      counter++;
+    }
+    int diff = std::abs(leftBrake - oldLeftBrake);
+    cout << diff << endl;
+    if (diff < 3000 || oldRightBrake == NULL) {
+      SimConnect_TransmitClientEvent(
+          connect, 0, inputDefinitions.DEFINITION_AXIS_RIGHT_BRAKE_SET,
+          rightBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+          SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+      oldLeftBrake = leftBrake;
+    }
+    diff = std::abs(rightBrake - oldRightBrake);
+    if (diff < 3000 || oldLeftBrake == NULL) {
+      SimConnect_TransmitClientEvent(
+          connect, 0, inputDefinitions.DEFINITION_AXIS_LEFT_BRAKE_SET,
+          leftBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+          SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+      oldRightBrake = rightBrake;
+    }
+  } catch (const std::exception &e) {
+    cout << "error in brakes" << endl;
+  }
+}
+
 int InputSwitchHandler::setComs(int index, int comNo) {
   int value =
       stoi(std::string(&receivedString[index][4], &receivedString[index][10]));
@@ -239,6 +316,19 @@ int InputSwitchHandler::setComs(int index, int comNo) {
 }
 
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
+  SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
+                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+};
+void InputSwitchHandler::sendBasicCommandOn(
+    SIMCONNECT_CLIENT_EVENT_ID eventID) {
+  SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
+                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+};
+
+void InputSwitchHandler::sendBasicCommandOff(
+    SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
@@ -1089,22 +1179,22 @@ void InputSwitchHandler::switchHandling(int index) {
         // Avionics
         case 401: {
           // TO DO CHECK IF WORKS
-          sendBasicCommand(
+          sendBasicCommandOff(
               inputDefinitions.DEFINITION_TOGGLE_AVIONICS1_MASTER_OFF);
           break;
         }
         case 402: {
-          sendBasicCommand(
+          sendBasicCommandOn(
               inputDefinitions.DEFINITION_TOGGLE_AVIONICS1_MASTER_ON);
           break;
         }
         case 403: {
-          sendBasicCommand(
+          sendBasicCommandOff(
               inputDefinitions.DEFINITION_TOGGLE_AVIONICS2_MASTER_OFF);
           break;
         }
         case 404: {
-          sendBasicCommand(
+          sendBasicCommandOn(
               inputDefinitions.DEFINITION_TOGGLE_AVIONICS2_MASTER_ON);
           break;
         }
@@ -2427,6 +2517,14 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         case 900: {
           setElevatorTrim(index);
+          break;
+        }
+        case 901: {
+          setRudder(index);
+          break;
+        }
+        case 902: {
+          setBrakeAxis(index);
           break;
         }
         default: {
