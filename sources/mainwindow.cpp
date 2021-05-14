@@ -25,7 +25,7 @@
 #include "headers/optionsmenu.h"
 #include "stdio.h"
 #include "ui_mainwindow.h"
-
+bool radioOn = false;
 bool matchRow = false;
 int matchRowIndex = 0;
 
@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent)
   // found. These work in cojunction with matchOutput (bool) and
   // matchInput(bool)
   int counter = 0;
-
+  ui->toggleBoxWidget->setVisible(false);
   settings->beginGroup("Coms");
 
   // IMPORTANT leave this check in to assure program doesnt CTD because of
@@ -191,9 +191,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->outputComboBoxBase->addItem(comName);
     ui->inputComboBoxBase->addItem(comName);
-
+    ui->comboBoxRadioComs->addItem(comName);
     counter++;
   }
+  qRegisterMetaType<QList<QString>>("QList<QString>");
+  QObject::connect(&radioThread, SIGNAL(updateActiveCom1(QList<QString>)), this,
+                   SLOT(onUpdateActiveCom1(QList<QString>)));
 
   if (matchOutput) {
     ui->outputComboBoxBase->setCurrentIndex(matchOutputIndex);
@@ -201,9 +204,6 @@ MainWindow::MainWindow(QWidget *parent)
   if (matchInput) {
     ui->inputComboBoxBase->setCurrentIndex(matchInputIndex);
   }
-
-  // If these lines aren't here the group stays open which leads to conflict
-  // down the line
 
   // STYLE AFFECTING SECTION
   //-----------------------
@@ -478,6 +478,76 @@ void MainWindow::on_startButton_clicked() {
       ui->cbAutopilotVerticalHold->isChecked();
   outputThread.cbAutopilotRpmHold = ui->cbAutopilotRpmHold->isChecked();
 
+  outputThread.cbFuelTankCenterLevel = ui->cbFuelTankCenterLevel->isChecked();
+  outputThread.cbFuelTankCenter2Level = ui->cbFuelTankCenter2Level->isChecked();
+  outputThread.cbFuelTankCenter3Level = ui->cbFuelTankCenter3Level->isChecked();
+  outputThread.cbFuelTankLeftMainLevel =
+      ui->cbFuelTankLeftMainLevel->isChecked();
+  outputThread.cbFuelTankLeftAuxLevel = ui->cbFuelTankLeftAuxLevel->isChecked();
+  outputThread.cbFuelTankLeftTipLevel = ui->cbFuelTankLeftTipLevel->isChecked();
+  outputThread.cbFuelTankRightMainLevel =
+      ui->cbFuelTankRightMainLevel->isChecked();
+  outputThread.cbFuelTankRightAuxLevel =
+      ui->cbFuelTankRightAuxLevel->isChecked();
+  outputThread.cbFuelTankRightTipLevel =
+      ui->cbFuelTankRightTipLevel->isChecked();
+  outputThread.cbFuelTankExternal1Level =
+      ui->cbFuelTankExternal1Level->isChecked();
+  outputThread.cbFuelTankExternal2Level =
+      ui->cbFuelTankExternal2Level->isChecked();
+  outputThread.cbFuelTankCenterCapacity =
+      ui->cbFuelTankCenterCapacity->isChecked();
+  outputThread.cbFuelTankCenter2Capacity =
+      ui->cbFuelTankCenter2Capacity->isChecked();
+  outputThread.cbFuelTankCenter3Capacity =
+      ui->cbFuelTankCenter3Capacity->isChecked();
+  outputThread.cbFuelTankLeftMainCapacity =
+      ui->cbFuelTankLeftMainCapacity->isChecked();
+  outputThread.cbFuelTankLeftAuxCapacity =
+      ui->cbFuelTankLeftAuxCapacity->isChecked();
+  outputThread.cbFuelTankLeftTipCapacity =
+      ui->cbFuelTankLeftTipCapacity->isChecked();
+  outputThread.cbFuelTankRightMainCapacity =
+      ui->cbFuelTankRightMainCapacity->isChecked();
+  outputThread.cbFuelTankRightAuxCapacity =
+      ui->cbFuelTankRightAuxCapacity->isChecked();
+  outputThread.cbFuelTankRightTipCapacity =
+      ui->cbFuelTankRightTipCapacity->isChecked();
+  outputThread.cbFuelTankExternal1Capacity =
+      ui->cbFuelTankExternal1Capacity->isChecked();
+  outputThread.cbFuelTankExternal2Capacity =
+      ui->cbFuelTankExternal2Capacity->isChecked();
+  outputThread.cbFuelLeftCapacity = ui->cbFuelLeftCapacity->isChecked();
+  outputThread.cbFuelRightCapacity = ui->cbFuelRightCapacity->isChecked();
+  outputThread.cbFuelTankCenterQuantity =
+      ui->cbFuelTankCenterQuantity->isChecked();
+  outputThread.cbFuelTankCenter2Quantity =
+      ui->cbFuelTankCenter2Quantity->isChecked();
+  outputThread.cbFuelTankCenter3Quantity =
+      ui->cbFuelTankCenter3Quantity->isChecked();
+  outputThread.cbFuelTankLeftMainQuantity =
+      ui->cbFuelTankLeftMainQuantity->isChecked();
+  outputThread.cbFuelTankLeftAuxQuantity =
+      ui->cbFuelTankLeftAuxQuantity->isChecked();
+  outputThread.cbFuelTankLeftTipQuantity =
+      ui->cbFuelTankLeftTipQuantity->isChecked();
+  outputThread.cbFuelTankRightMainQuantity =
+      ui->cbFuelTankRightMainQuantity->isChecked();
+  outputThread.cbFuelTankRightAuxQuantity =
+      ui->cbFuelTankRightAuxQuantity->isChecked();
+  outputThread.cbFuelTankRightTipQuantity =
+      ui->cbFuelTankRightTipQuantity->isChecked();
+  outputThread.cbFuelTankExternal1Quantity =
+      ui->cbFuelTankExternal1Quantity->isChecked();
+  outputThread.cbFuelTankExternal2Quantity =
+      ui->cbFuelTankExternal2Quantity->isChecked();
+  outputThread.cbFuelLeftQuantity = ui->cbFuelLeftQuantity->isChecked();
+  outputThread.cbFuelRightQuantity = ui->cbFuelRightQuantity->isChecked();
+  outputThread.cbFuelTotalQuantity = ui->cbFuelTotalQuantity->isChecked();
+
+  outputThread.cbBrakeParkingIndicator =
+      ui->cbBrakeParkingIndicator->isChecked();
+
   ui->startButton->setText("Running");
 
   outputThread.abort = false;
@@ -493,6 +563,13 @@ void MainWindow::onUpdateLastValUI(const QString &lastVal) {
 }
 void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
   ui->labelLastStatus->setText(lastVal);
+}
+void MainWindow::onUpdateActiveCom1(const QList<QString> &lastVal) {
+  ui->tlStandbyCom1->setText(lastVal[0]);
+  std::cout << lastVal[0].toStdString() << "WUT" << std::endl;
+  ui->tlActiveCom1->setText(lastVal[1]);
+  ui->tlStandbyNav1->setText(lastVal[2]);
+  ui->tlActiveNav1->setText(lastVal[3]);
 }
 
 void MainWindow::on_stopButton_clicked() {
@@ -511,10 +588,10 @@ void MainWindow::on_updateButton_clicked() {
 
 void MainWindow::on_switchButton_clicked() {
   int curIndex = ui->stackedWidget->currentIndex();
-  if (curIndex == 1) {
-    ui->stackedWidget->setCurrentIndex(0);
+  if (curIndex < 2) {
+    ui->stackedWidget->setCurrentIndex(curIndex + 1);
   } else {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
   }
 }
 
@@ -665,5 +742,43 @@ void MainWindow::on_saveSetBtn_clicked() {
     }
     std::cout << "send" << std::endl;
     setEdited.createSet();
+  }
+}
+
+void MainWindow::on_btnRadioStartButton_clicked() {
+  if (radioOn) {
+    radioThread.abortRadio = true;
+
+    ui->btnRadioStartButton->setChecked(false);
+    radioOn = false;
+  } else if (!radioOn) {
+    if (ui->comboBoxRadioComs->currentIndex() == 0) {
+      ui->btnRadioStartButton->setChecked(false);
+    } else {
+      radioThread.start();
+      radioThread.abortRadio = false;
+      std::cout << "clicked" << std::endl;
+      ui->btnRadioStartButton->setChecked(true);
+      radioOn = true;
+      QString comText = ui->comboBoxRadioComs->currentText();
+      std::string comNr =
+          R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+
+      settings->beginGroup("Coms");
+      settings->setValue("radioActiveBase", comNr.c_str());
+      settings->endGroup();
+      settings->sync();
+    }
+  }
+}
+
+void MainWindow::on_btnSwitchComm1_clicked() {
+  if (radioThread.isRunning()) {
+    radioThread.switchCom1();
+  }
+}
+void MainWindow::on_btnSwitchNav1_clicked() {
+  if (radioThread.isRunning()) {
+    radioThread.switchNav1();
   }
 }

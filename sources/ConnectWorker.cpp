@@ -182,7 +182,52 @@ enum DATA_NAMES {
   DATA_NAV_OBS_INDEX1,
   DATA_NAV_OBS_INDEX2,
 
-  DATA_AUTOPILOT
+  DATA_AUTOPILOT,
+
+  DATA_BRAKE_LEFT_POSITION,
+  DATA_BRAKE_RIGHT_POSITION,
+  DATA_BRAKE_INDICATOR,
+  DATA_BRAKE_PARKING_POSITION,
+  DATA_BRAKE_PARKING_INDICATOR,
+  DATA_PITOT_HEAT,
+  DATA_FUEL_TANK_CENTER_LEVEL,
+  DATA_FUEL_TANK_CENTER2_LEVEL,
+  DATA_FUEL_TANK_CENTER3_LEVEL,
+  DATA_FUEL_TANK_LEFT_MAIN_LEVEL,
+  DATA_FUEL_TANK_LEFT_AUX_LEVEL,
+  DATA_FUEL_TANK_LEFT_TIP_LEVEL,
+  DATA_FUEL_TANK_RIGHT_MAIN_LEVEL,
+  DATA_FUEL_TANK_RIGHT_AUX_LEVEL,
+  DATA_FUEL_TANK_RIGHT_TIP_LEVEL,
+  DATA_FUEL_TANK_EXTERNAL1_LEVEL,
+  DATA_FUEL_TANK_EXTERNAL2_LEVEL,
+  DATA_FUEL_TANK_CENTER_CAPACITY,
+  DATA_FUEL_TANK_CENTER2_CAPACITY,
+  DATA_FUEL_TANK_CENTER3_CAPACITY,
+  DATA_FUEL_TANK_LEFT_MAIN_CAPACITY,
+  DATA_FUEL_TANK_LEFT_AUX_CAPACITY,
+  DATA_FUEL_TANK_LEFT_TIP_CAPACITY,
+  DATA_FUEL_TANK_RIGHT_MAIN_CAPACITY,
+  DATA_FUEL_TANK_RIGHT_AUX_CAPACITY,
+  DATA_FUEL_TANK_RIGHT_TIP_CAPACITY,
+  DATA_FUEL_TANK_EXTERNAL1_CAPACITY,
+  DATA_FUEL_TANK_EXTERNAL2_CAPACITY,
+  DATA_FUEL_LEFT_CAPACITY,
+  DATA_FUEL_RIGHT_CAPACITY,
+  DATA_FUEL_TANK_CENTER_QUANTITY,
+  DATA_FUEL_TANK_CENTER2_QUANTITY,
+  DATA_FUEL_TANK_CENTER3_QUANTITY,
+  DATA_FUEL_TANK_LEFT_MAIN_QUANTITY,
+  DATA_FUEL_TANK_LEFT_AUX_QUANTITY,
+  DATA_FUEL_TANK_LEFT_TIP_QUANTITY,
+  DATA_FUEL_TANK_RIGHT_MAIN_QUANTITY,
+  DATA_FUEL_TANK_RIGHT_AUX_QUANTITY,
+  DATA_FUEL_TANK_RIGHT_TIP_QUANTITY,
+  DATA_FUEL_TANK_EXTERNAL1_QUANTITY,
+  DATA_FUEL_TANK_EXTERNAL2_QUANTITY,
+  DATA_FUEL_LEFT_QUANTITY,
+  DATA_FUEL_RIGHT_QUANTITY,
+  DATA_FUEL_TOTAL_QUANTITY,
 
 };
 
@@ -199,7 +244,9 @@ void sendToArduino(float received, std::string prefix) {
     connectionError = false;
   }
   const auto value = intVal;
+
   auto input_string = prefix + std::to_string(value);
+  cout << "size: " << input_string.size() << endl;
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
@@ -735,21 +782,22 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
               case DATA_LEADING_EDGE_FLAPS_RIGHT_ANGLE: {
                 sendLengthToArduino(radianToDegree(pS->datum[count].value),
                                     "520", 3);
+
                 break;
               }
 
               // Rudder trim
               case DATA_ELEVATOR_TRIM_POSITION: {
-                sendFloatToArduino(pS->datum[count].value * 100, "498");
+                sendToArduino(radianToDegree(pS->datum[count].value), "498");
                 break;
               }
               case DATA_ELEVATOR_TRIM_PCT: {
-                sendLengthToArduino(pS->datum[count].value * 100, "500", 3);
+                sendToArduino(pS->datum[count].value * 100, "500");
+                cout << "elev trim pct" << pS->datum[count].value * 100 << endl;
                 break;
               }
               case DATA_AILERON_TRIM: {
-                sendFloatToArduino(radianToDegreeFloat(pS->datum[count].value),
-                                   "562");
+                sendToArduino(radianToDegree(pS->datum[count].value), "562");
                 break;
               }
               case DATA_AILERON_TRIM_PCT: {
@@ -757,7 +805,7 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
               }
               case DATA_RUDDER_TRIM: {
-                sendFloatToArduino(radianToDegreeFloat(pS->datum[count].value),
+                sendFloatToArduino(radianToDegree(pS->datum[count].value),
                                    "566");
                 break;
               }
@@ -854,6 +902,171 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 cout << pS->datum[count].value << endl;
                 break;
               }
+              case DATA_BRAKE_PARKING_INDICATOR: {
+                sendBoolToArduino(pS->datum[count].value, "505");
+                cout << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "234");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER2_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "235");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER3_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "236");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_MAIN_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "237");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_AUX_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "238");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_TIP_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "239");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_MAIN_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "240");
+                cout << "right main lvl: " << pS->datum[count].value << endl;
+
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_AUX_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "241");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_TIP_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "242");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL1_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "243");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL2_LEVEL: {
+                sendToArduino(pS->datum[count].value * 100, "244");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "245");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER2_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "246");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER3_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "247");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_MAIN_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "248");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_AUX_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "249");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_TIP_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "250");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_MAIN_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "251");
+                cout << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_AUX_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "252");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_TIP_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "253");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL1_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "254");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL2_CAPACITY: {
+                sendToArduino(pS->datum[count].value, "255");
+                break;
+              }
+              case DATA_FUEL_LEFT_CAPACITY: {
+                sendFloatToArduino(pS->datum[count].value, "256");
+                cout << "fuelCapL: " << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_RIGHT_CAPACITY: {
+                sendFloatToArduino(pS->datum[count].value, "257");
+                cout << "fuelCapR: " << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "258");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER2_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "259");
+                break;
+              }
+              case DATA_FUEL_TANK_CENTER3_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "260");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_MAIN_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "261");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_AUX_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "262");
+                break;
+              }
+              case DATA_FUEL_TANK_LEFT_TIP_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "263");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_MAIN_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "264");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_AUX_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "265");
+                break;
+              }
+              case DATA_FUEL_TANK_RIGHT_TIP_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "266");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL1_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "267");
+                break;
+              }
+              case DATA_FUEL_TANK_EXTERNAL2_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "268");
+                break;
+              }
+              case DATA_FUEL_LEFT_QUANTITY: {
+                sendFloatToArduino(pS->datum[count].value, "269");
+                cout << "fuelQL: " << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_RIGHT_QUANTITY: {
+                sendFloatToArduino(pS->datum[count].value, "270");
+                cout << "fuelQR: " << pS->datum[count].value << endl;
+                break;
+              }
+              case DATA_FUEL_TOTAL_QUANTITY: {
+                sendToArduino(pS->datum[count].value, "271");
+                break;
+              }
+
               default:
                 printf("\nUnknown datum ID: %i", pS->datum[count].id);
                 break;
@@ -895,7 +1108,7 @@ void ConnectWorker::testDataRequest() {
     if (cbPlaneAltAboveGround) {
       hr = SimConnect_AddToDataDefinition(
           hSimConnect, DEFINITION_PDR, "PLANE ALT ABOVE GROUND", "Feet",
-          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_PLANE_ALT_ABOVE_GROUND);
+          SIMCONNECT_DATATYPE_FLOAT32, 10, DATA_PLANE_ALT_ABOVE_GROUND);
     }
     if (cbSimOnGround) {
       hr = SimConnect_AddToDataDefinition(
@@ -1452,6 +1665,226 @@ void ConnectWorker::testDataRequest() {
                                      "Degrees", SIMCONNECT_DATATYPE_FLOAT32,
                                      0.1, DATA_NAV_OBS_INDEX2);
     }
+    if (cbFuelTankCenterLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_CENTER_LEVEL);
+    }
+    if (cbFuelTankCenter2Level) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER2 LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_CENTER2_LEVEL);
+    }
+    if (cbFuelTankCenter3Level) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER3 LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_CENTER3_LEVEL);
+    }
+    if (cbFuelTankLeftMainLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT MAIN LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_LEFT_MAIN_LEVEL);
+    }
+    if (cbFuelTankLeftAuxLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT AUX LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_LEFT_AUX_LEVEL);
+    }
+    if (cbFuelTankLeftTipLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT TIP LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_LEFT_TIP_LEVEL);
+    }
+    if (cbFuelTankRightMainLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT MAIN LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_RIGHT_MAIN_LEVEL);
+    }
+    if (cbFuelTankRightAuxLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT AUX LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_RIGHT_AUX_LEVEL);
+    }
+    if (cbFuelTankRightTipLevel) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT TIP LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_RIGHT_TIP_LEVEL);
+    }
+    if (cbFuelTankExternal1Level) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL1 LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_EXTERNAL1_LEVEL);
+    }
+    if (cbFuelTankExternal2Level) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL2 LEVEL",
+          "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0.01,
+          DATA_FUEL_TANK_EXTERNAL2_LEVEL);
+    }
+    if (cbFuelTankCenterCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER_CAPACITY);
+    }
+    if (cbFuelTankCenter2Capacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER2 CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER2_CAPACITY);
+    }
+    if (cbFuelTankCenter3Capacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER3 CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER3_CAPACITY);
+    }
+    if (cbFuelTankLeftMainCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT MAIN CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_LEFT_MAIN_CAPACITY);
+    }
+    if (cbFuelTankLeftAuxCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT AUX CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_LEFT_AUX_CAPACITY);
+    }
+    if (cbFuelTankLeftTipCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT TIP CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_LEFT_TIP_CAPACITY);
+    }
+    if (cbFuelTankRightMainCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT MAIN CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_MAIN_CAPACITY);
+    }
+    if (cbFuelTankRightAuxCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT AUX CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_AUX_CAPACITY);
+    }
+    if (cbFuelTankRightTipCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT TIP CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_TIP_CAPACITY);
+    }
+    if (cbFuelTankExternal1Capacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL1 CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_EXTERNAL1_CAPACITY);
+    }
+    if (cbFuelTankExternal2Capacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL2 CAPACITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_EXTERNAL2_CAPACITY);
+    }
+    if (cbFuelLeftCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL LEFT CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_LEFT_CAPACITY);
+    }
+    if (cbFuelRightCapacity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL RIGHT CAPACITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_RIGHT_CAPACITY);
+    }
+    if (cbFuelTankCenterQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER_QUANTITY);
+    }
+    if (cbFuelTankCenter2Quantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER2 QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER2_QUANTITY);
+    }
+    if (cbFuelTankCenter3Quantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK CENTER3 QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_CENTER3_QUANTITY);
+    }
+    if (cbFuelTankLeftMainQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT MAIN QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_LEFT_MAIN_QUANTITY);
+    }
+    if (cbFuelTankLeftAuxQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT AUX QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_LEFT_AUX_QUANTITY);
+    }
+    if (cbFuelTankLeftTipQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK LEFT TIP QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TANK_LEFT_TIP_QUANTITY);
+    }
+    if (cbFuelTankRightMainQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT MAIN QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_MAIN_QUANTITY);
+    }
+    if (cbFuelTankRightAuxQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT AUX QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_AUX_QUANTITY);
+    }
+    if (cbFuelTankRightTipQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK RIGHT TIP QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_RIGHT_TIP_QUANTITY);
+    }
+    if (cbFuelTankExternal1Quantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL1 QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_EXTERNAL1_QUANTITY);
+    }
+    if (cbFuelTankExternal2Quantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TANK EXTERNAL2 QUANTITY",
+          "Gallons", SIMCONNECT_DATATYPE_FLOAT32, 1,
+          DATA_FUEL_TANK_EXTERNAL2_QUANTITY);
+    }
+    if (cbFuelLeftQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL LEFT QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_LEFT_QUANTITY);
+    }
+    if (cbFuelRightQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL RIGHT QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_RIGHT_QUANTITY);
+    }
+    if (cbFuelTotalQuantity) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "FUEL TOTAL QUANTITY", "Gallons",
+          SIMCONNECT_DATATYPE_FLOAT32, 1, DATA_FUEL_TOTAL_QUANTITY);
+    }
+
+    if (cbBrakeParkingIndicator) {
+      hr = SimConnect_AddToDataDefinition(
+          hSimConnect, DEFINITION_PDR, "BRAKE PARKING INDICATOR", "Bool",
+          SIMCONNECT_DATATYPE_INT32, 1, DATA_BRAKE_PARKING_INDICATOR);
+    }
+
     QString path =
         QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);

@@ -1,5 +1,6 @@
 #ifndef CONNECTWORKER_H
 #define CONNECTWORKER_H
+
 #include <qmutex.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -160,6 +161,47 @@ class ConnectWorker : public QThread {
   bool cbAutothrottleActive = false;
   bool cbAutopilotVerticalHold = false;
   bool cbAutopilotRpmHold = false;
+
+  bool cbFuelTankCenterLevel = false;
+  bool cbFuelTankCenter2Level = false;
+  bool cbFuelTankCenter3Level = false;
+  bool cbFuelTankLeftMainLevel = false;
+  bool cbFuelTankLeftAuxLevel = false;
+  bool cbFuelTankLeftTipLevel = false;
+  bool cbFuelTankRightMainLevel = false;
+  bool cbFuelTankRightAuxLevel = false;
+  bool cbFuelTankRightTipLevel = false;
+  bool cbFuelTankExternal1Level = false;
+  bool cbFuelTankExternal2Level = false;
+  bool cbFuelTankCenterCapacity = false;
+  bool cbFuelTankCenter2Capacity = false;
+  bool cbFuelTankCenter3Capacity = false;
+  bool cbFuelTankLeftMainCapacity = false;
+  bool cbFuelTankLeftAuxCapacity = false;
+  bool cbFuelTankLeftTipCapacity = false;
+  bool cbFuelTankRightMainCapacity = false;
+  bool cbFuelTankRightAuxCapacity = false;
+  bool cbFuelTankRightTipCapacity = false;
+  bool cbFuelTankExternal1Capacity = false;
+  bool cbFuelTankExternal2Capacity = false;
+  bool cbFuelLeftCapacity = false;
+  bool cbFuelRightCapacity = false;
+  bool cbFuelTankCenterQuantity = false;
+  bool cbFuelTankCenter2Quantity = false;
+  bool cbFuelTankCenter3Quantity = false;
+  bool cbFuelTankLeftMainQuantity = false;
+  bool cbFuelTankLeftAuxQuantity = false;
+  bool cbFuelTankLeftTipQuantity = false;
+  bool cbFuelTankRightMainQuantity = false;
+  bool cbFuelTankRightAuxQuantity = false;
+  bool cbFuelTankRightTipQuantity = false;
+  bool cbFuelTankExternal1Quantity = false;
+  bool cbFuelTankExternal2Quantity = false;
+  bool cbFuelLeftQuantity = false;
+  bool cbFuelRightQuantity = false;
+  bool cbFuelTotalQuantity = false;
+
+  bool cbBrakeParkingIndicator = false;
 
   const char* portName;
   const char* valPort;

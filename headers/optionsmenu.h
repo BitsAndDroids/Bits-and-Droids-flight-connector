@@ -1,36 +1,39 @@
 #ifndef OPTIONSMENU_H
 #define OPTIONSMENU_H
 
+#include <headers/Engine.h>
+
 #include <QWidget>
 
 namespace Ui {
 class optionsMenu;
 }
 
-class optionsMenu : public QWidget
-{
-    Q_OBJECT
+class optionsMenu : public QWidget {
+  Q_OBJECT
 
-public:
-    explicit optionsMenu(QWidget *parent = nullptr);
-    ~optionsMenu();
+ public:
+  explicit optionsMenu(QWidget *parent = nullptr);
+  ~optionsMenu();
 
-private slots:
+ private slots:
 
+  void on_checkBox_stateChanged(int arg1);
 
-    void on_checkBox_stateChanged(int arg1);
+  void on_saveSettingsBtn_clicked();
 
-    void on_saveSettingsBtn_clicked();
+  void on_baudComboBox_currentTextChanged(const QString &arg1);
 
-    void on_baudComboBox_currentTextChanged(const QString &arg1);
+ private:
+  Ui::optionsMenu *uiOptions;
+  const int defaultArduinoFrameUpdate = 15;
+  const int defaultArduinoWaitMs = 100;
 
-private:
-    Ui::optionsMenu *uiOptions;
-    const int defaultArduinoFrameUpdate = 15;
-    const int defaultArduinoWaitMs = 100;
+  int arduinoFrameUpdate = 15;
+  int arduinoWaitMs = 100;
+  int supportedAmntEngines = 4;
 
-    int arduinoFrameUpdate = 15;
-    int arduinoWaitMs = 100;
+  // Engine engines[4];
 };
 
-#endif // OPTIONSMENU_H
+#endif  // OPTIONSMENU_H

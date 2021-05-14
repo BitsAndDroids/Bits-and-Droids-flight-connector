@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>images/starterImage.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>images/starterImage.png</file>
+        <file>images/starterImageOff.png</file>
+        <file>BitsAndDroidsLogo.ico</file>
+        <file>fonts/DSEG7Classic-Bold.ttf</file>
+        <file>fonts/DSEG7Classic-Regular.ttf</file>
+        <file>images/SwitchArrow.png</file>
+        <file>images/toggleDown.png</file>
+        <file>images/toggleUp.png</file>
+        <file>images/batterySwitch.png</file>
+        <file>images/batterySwitchOff.png</file>
+        <file>images/avionicsSwitchOff.png</file>
+        <file>images/avionicsSwitchOn.png</file>
+    </qresource>
+</RCC>

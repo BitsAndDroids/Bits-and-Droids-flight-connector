@@ -12,8 +12,9 @@
 #include <QSettings>
 
 #include "SerialPort.hpp"
+#include "radioworker.h"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.8.4";
+const std::string version = "0.8.7";
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -30,10 +31,12 @@ class MainWindow : public QMainWindow {
  public slots:
   void onUpdateLastValUI(const QString &lastVal);
   void onUpdateLastStatusUI(const QString &lastStatus);
+  void onUpdateActiveCom1(const QList<QString> &lastVal);
 
  signals:
   void updateLastValUI(QString lastVal);
   void updateLastStatusUI(QString lastVal);
+  void updateActiveCom1(QList<QString> lastVal);
 
  private slots:
 
@@ -60,6 +63,12 @@ class MainWindow : public QMainWindow {
   void addInputComRow(bool notInit, int index);
 
   std::string convertComPort(QString comText);
+
+  void on_btnRadioStartButton_clicked();
+
+  void on_btnSwitchComm1_clicked();
+
+  void on_btnSwitchNav1_clicked();
 
  private:
   QString path =
@@ -89,6 +98,7 @@ class MainWindow : public QMainWindow {
   const char *portNameLocal;
   QPushButton *updateButton;
   QPushButton *switchButton;
+  RadioWorker radioThread;
   ConnectWorker outputThread;
   InputWorker inputThread;
 

@@ -28,6 +28,8 @@ SerialPort *arduinoInput[10];
 
 HANDLE hInputSimConnect = NULL;
 
+// Definition of the client data area format
+double data = 1.;
 using namespace std;
 InputEnum defs = InputEnum();
 InputWorker::InputWorker() {}
@@ -36,13 +38,16 @@ InputSwitchHandler handler = InputSwitchHandler();
 
 enum GROUP_ID {
   GROUP0,
+  GROUP_A = 1,
 };
 
 int x = 0;
 enum DATA_REQUEST_ID {
+
   REQUEST_THROTTLE,
   REQUEST_MIXTURE,
   REQUEST_PROPS,
+  REQUEST_1 = 10,
 };
 
 void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
@@ -50,6 +55,14 @@ void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
   switch (pData->dwID) {
     case SIMCONNECT_RECV_ID_QUIT: {
       // quit = 1;
+      break;
+    }
+    case SIMCONNECT_RECV_ID_CLIENT_DATA: {
+      // Cast incoming data into interpretable format for this event.
+      SIMCONNECT_RECV_CLIENT_DATA *pObjData =
+          (SIMCONNECT_RECV_CLIENT_DATA *)pData;
+
+      printf("Request ID = %d.\n", pObjData->dwRequestID);
       break;
     }
 
@@ -92,18 +105,47 @@ void InputWorker::inputEvents() {
 
   while (abortInput != true) {
     if (!connected) {
-      hr = SimConnect_Open(&hInputSimConnect, "Input Event", NULL, 0, 0, 0);
+      hr = SimConnect_Open(&hInputSimConnect, "Inputs", NULL, 0, 0, 0);
       cout << hr << endl;
       if (hr == S_OK) {
         connected = true;
         handler.connect = hInputSimConnect;
+
         handler.object = SIMCONNECT_OBJECT_ID_USER;
-        SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
-        SimConnect_SetNotificationGroupPriority(
-            hInputSimConnect, GROUP0, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
-        SimConnect_SetInputGroupState(hInputSimConnect, INPUT0,
-                                      SIMCONNECT_STATE_ON);
         mapper.mapEvents(hInputSimConnect);
+
+        settings->beginGroup("Ranges");
+        settings->beginGroup("Engines");
+
+        for (int i = 0; i < 4; i++) {
+          QString minStr = "minEng" + QString::number(i);
+          int minRange = settings->value(minStr).toInt();
+          cout << minRange << endl;
+
+          QString idleStr = "idleEng" + QString::number(i);
+          int idleCutoff = settings->value(idleStr).toInt();
+
+          QString maxStr = "maxEng" + QString::number(i);
+          int maxRange = settings->value(maxStr).toInt();
+
+          handler.enginelist[i] = Engine(minRange, idleCutoff, maxRange, i);
+        }
+        if (!settings->value("maxReverseRange").isNull()) {
+          handler.reverseAxis = settings->value("maxReverseRange").toFloat();
+        }
+
+        settings->endGroup();
+        if (!settings->value("leMinProp").isNull()) {
+          settings->beginGroup("Props");
+          handler.propRange = Range(settings->value("leMinProp").toInt(),
+                                    settings->value("leMaxProp").toInt());
+          settings->endGroup();
+          settings->beginGroup("Mixture");
+          handler.mixtureRange = Range(settings->value("leMinMixture").toInt(),
+                                       settings->value("leMaxMixture").toInt());
+          settings->endGroup();
+        }
+        settings->endGroup();
       }
     }
 
