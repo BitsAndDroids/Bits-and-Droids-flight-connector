@@ -265,7 +265,7 @@ void RadioWorker::RadioEvents() {
             "Khz", SIMCONNECT_DATATYPE_FLOAT32, 0, DATA_COM_FREQ_ACTIVE1);
         cout << "HR added status: " << hr << endl;
         hr = SimConnect_AddToDataDefinition(
-            hRadioSimconnect, DEFINITION_PDR_RADIO, "COM STANDBY FREQUENCY:21",
+            hRadioSimconnect, DEFINITION_PDR_RADIO, "COM STANDBY FREQUENCY:2",
             "Khz", SIMCONNECT_DATATYPE_FLOAT32, 0, DATA_COM_FREQ_STANDBY2);
         cout << "HR added status: " << hr << endl;
         hr = SimConnect_AddToDataDefinition(

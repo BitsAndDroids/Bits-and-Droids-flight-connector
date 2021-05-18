@@ -140,7 +140,7 @@
        <item>
         <layout class="QVBoxLayout" name="vlEngineRange">
          <property name="sizeConstraint">
-          <enum>QLayout::SetMinimumSize</enum>
+          <enum>QLayout::SetDefaultConstraint</enum>
          </property>
         </layout>
        </item>

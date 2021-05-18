@@ -3,16 +3,16 @@
 
 #include <qstring.h>
 
-#include <iterator>
-#include <map>
+#include <QHBoxLayout>
 
 using namespace std;
 
 class FormBuilder {
  public:
   FormBuilder();
-  ~FormBuilder();
-  map<pair<QString, QString>, bool> lights;
+  //~FormBuilder();
+
+  QVBoxLayout* RangeBuilder();
 
  private:
 };

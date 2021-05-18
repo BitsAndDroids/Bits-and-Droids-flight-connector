@@ -39,7 +39,8 @@ SOURCES += \
     sources/optionsmenu.cpp \
     sources/InputSwitchHandler.cpp \
     sources/radioworker.cpp \
-    sources/range.cpp
+    sources/range.cpp \
+    sources/settingsranges.cpp
 
 HEADERS += \
     headers/Engine.h \
@@ -55,7 +56,8 @@ HEADERS += \
     headers/InputMapper.h \
     headers/formbuilder.h \
     headers/radioworker.h \
-    headers/range.h
+    headers/range.h \
+    headers/settingsranges.h
 
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"

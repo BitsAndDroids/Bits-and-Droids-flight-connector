@@ -1,9 +1,9 @@
 #include "headers/optionsmenu.h"
 
+#include <headers/formbuilder.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
-#include <windows.h>
 
 #include <QDebug>
 #include <string>
@@ -11,6 +11,7 @@
 #include "stdio.h"
 #include "ui_optionsmenu.h"
 
+FormBuilder builder = FormBuilder();
 using namespace std;
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
@@ -21,6 +22,7 @@ optionsMenu::optionsMenu(QWidget *parent)
   settings.beginGroup("Settings");
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
+
   QStringList keys = settings.childKeys();
   if (keys.size() > 0) {
     foreach (const QString &key, settings.childKeys()) {
@@ -60,6 +62,7 @@ optionsMenu::optionsMenu(QWidget *parent)
   minMaxLabels->addWidget(minLabel);
   minMaxLabels->addWidget(maxLabel);
 
+  //  uiOptions->vlOptions->addLayout(builder.RangeBuilder(), 1);
   uiOptions->vlEngineRange->addLayout(minMaxLabels);
 
   auto propLineEditRows = new QHBoxLayout();
