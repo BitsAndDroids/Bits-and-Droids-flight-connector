@@ -1,7 +1,7 @@
-#include "Inputs/InputMapper.h"
+#include "headers/InputMapper.h"
 
 #include <headers/SimConnect.h>
-#include <Inputs/inputenum.h>
+#include <headers/inputenum.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>

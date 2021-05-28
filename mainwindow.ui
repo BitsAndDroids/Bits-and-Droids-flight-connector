@@ -18,13 +18,35 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QApp{
-	background-color: rgb(50, 50, 50)
+	background-color: rgb(0, 0, 0);
 }
+#connectionPage{
+background-color: rgb(255, 255, 255);
+}
+QWidget#MainWindow{
+background-color: rgb(0, 0, 0);
+}
+QWidget#centralwidget{
+	background-color: rgb(255, 255, 255);
+}
+QWidget#stackedWidget{
+background-color: rgb(255, 255, 255);
+}
+#page{
+background-color: rgb(255, 255, 255);
+}
+#Input{
+background-color: rgb(255, 255, 255);
+}
+#Output{
+background-color: rgb(255, 255, 255);
+}
+
 QTabWidget::tab-bar {
 
 }
 QFrame{
-   border-color:#000
+   border-color:#000;
 }
 QPushButton{
 	background-color: #0f4c5c;
@@ -181,7 +203,7 @@ QCheckBox{
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page">
        <widget class="QLabel" name="label_9">
@@ -285,7 +307,7 @@ margin-left:0px;</string>
          <rect>
           <x>20</x>
           <y>100</y>
-          <width>808</width>
+          <width>809</width>
           <height>162</height>
          </rect>
         </property>
@@ -2110,6 +2132,17 @@ HEAT</string>
          </item>
         </layout>
        </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>500</y>
+          <width>791</width>
+          <height>80</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_11"/>
+       </widget>
       </widget>
       <widget class="QWidget" name="Output">
        <widget class="QLabel" name="label_2">
@@ -2359,8 +2392,8 @@ HEAT</string>
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>117</width>
-                  <height>368</height>
+                  <width>129</width>
+                  <height>403</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -2502,8 +2535,8 @@ HEAT</string>
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>141</width>
-                  <height>378</height>
+                  <width>144</width>
+                  <height>423</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -2624,7 +2657,7 @@ HEAT</string>
                   <x>160</x>
                   <y>10</y>
                   <width>160</width>
-                  <height>402</height>
+                  <height>471</height>
                  </rect>
                 </property>
                 <layout class="QFormLayout" name="formLayout_11">
@@ -3093,7 +3126,7 @@ HEAT</string>
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>170</width>
+                  <width>196</width>
                   <height>567</height>
                  </rect>
                 </property>
@@ -3211,7 +3244,7 @@ HEAT</string>
                  <rect>
                   <x>180</x>
                   <y>10</y>
-                  <width>176</width>
+                  <width>187</width>
                   <height>401</height>
                  </rect>
                 </property>
@@ -3294,8 +3327,8 @@ HEAT</string>
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>142</width>
-                  <height>257</height>
+                  <width>166</width>
+                  <height>301</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -3464,8 +3497,8 @@ HEAT</string>
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>121</width>
-                  <height>58</height>
+                  <width>140</width>
+                  <height>60</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -3641,7 +3674,7 @@ HEAT</string>
                   <x>10</x>
                   <y>10</y>
                   <width>482</width>
-                  <height>337</height>
+                  <height>369</height>
                  </rect>
                 </property>
                 <property name="styleSheet">
@@ -4238,6 +4271,7 @@ HEAT</string>
         </layout>
        </widget>
       </widget>
+      <widget class="QWidget" name="connectionPage"/>
      </widget>
     </item>
    </layout>
@@ -4248,7 +4282,7 @@ HEAT</string>
      <x>0</x>
      <y>0</y>
      <width>1058</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
