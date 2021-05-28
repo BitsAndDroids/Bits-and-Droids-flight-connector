@@ -155,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent)
   // found. These work in cojunction with matchOutput (bool) and
   // matchInput(bool)
   int counter = 0;
-  ui->toggleBoxWidget->setVisible(false);
+  // ui->toggleBoxWidget->setVisible(false);
   settings->beginGroup("Coms");
 
   // IMPORTANT leave this check in to assure program doesnt CTD because of
