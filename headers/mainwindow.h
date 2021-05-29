@@ -14,7 +14,7 @@
 #include "SerialPort.hpp"
 #include "radioworker.h"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.8.7.1";
+const std::string version = "0.8.7.3";
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;

@@ -11,7 +11,7 @@
 #include <QObject>
 #include <string>
 
-#include "SimConnect.h"
+#include "headers/SimConnect.h"
 #include "stdio.h"
 /*!
   \class InputWorker

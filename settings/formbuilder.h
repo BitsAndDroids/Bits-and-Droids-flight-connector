@@ -12,13 +12,17 @@ class FormBuilder {
   FormBuilder();
   //~FormBuilder();
 
-  QVBoxLayout* RangeBuilder();
+  QVBoxLayout *RangeBuilder();
 
   void loadComPortData();
   QVBoxLayout *generateComColumn(int index);
   QHBoxLayout *generateComBlock();
-private:
-  QStringList comHeaders = {"Inputs","Outputs","Both"};
+  QVBoxLayout *generateRange(QString header);
+
+ private:
+  QStringList rangeHeaders = {"Flaps", "Mixture 1", "Mixture 2", "Propeller 1",
+                              "Proppeller 2"};
+  QStringList comHeaders = {"Inputs", "Outputs", "Both"};
   QList<QString> availableComPorts;
 };
 

@@ -34,6 +34,7 @@ class optionsMenu : public QWidget {
   int supportedAmntEngines = 4;
 
   // Engine engines[4];
+
 };
 
 #endif  // OPTIONSMENU_H

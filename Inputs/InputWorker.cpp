@@ -135,8 +135,8 @@ void InputWorker::inputEvents() {
         }
 
         settings->endGroup();
+        settings->beginGroup("Props");
         if (!settings->value("leMinProp").isNull()) {
-          settings->beginGroup("Props");
           handler.propRange = Range(settings->value("leMinProp").toInt(),
                                     settings->value("leMaxProp").toInt());
           settings->endGroup();

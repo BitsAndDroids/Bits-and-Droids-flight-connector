@@ -1,8 +1,8 @@
 #include "headers/optionsmenu.h"
 
-#include <settings/formbuilder.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
+#include <settings/formbuilder.h>
 #include <tchar.h>
 
 #include <QDebug>
@@ -13,6 +13,7 @@
 
 FormBuilder builder = FormBuilder();
 using namespace std;
+
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
   uiOptions->setupUi(this);
@@ -42,6 +43,9 @@ optionsMenu::optionsMenu(QWidget *parent)
     }
   }
   uiOptions->vlOptions->setAlignment(Qt::AlignTop);
+
+  uiOptions->vlEngineRange->addLayout(builder.RangeBuilder());
+
   auto headerRowProp = new QHBoxLayout();
 
   auto propHeader = new QLabel();

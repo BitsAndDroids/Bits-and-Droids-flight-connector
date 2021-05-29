@@ -11,7 +11,7 @@
 #include <QThread>
 #include <string>
 
-#include "SimConnect.h"
+#include "headers/SimConnect.h"
 #include "inputenum.h"
 #include "stdio.h"
 class InputMapper {

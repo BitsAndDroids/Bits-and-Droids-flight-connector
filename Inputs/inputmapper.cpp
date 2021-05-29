@@ -1,7 +1,7 @@
-#include "headers/InputMapper.h"
+#include "Inputs/InputMapper.h"
 
+#include <Inputs/inputenum.h>
 #include <headers/SimConnect.h>
-#include <headers/inputenum.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
@@ -819,6 +819,8 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
       mapConnect, definitionsMap.DEFINITION_XPNDR_SET, "XPNDR_SET");
 
   // Flaps
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_AXIS_FLAPS_SET, "AXIS_FLAPS_SET");
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_FLAPS_UP, "FLAPS_UP");
   SimConnect_MapClientEventToSimEvent(

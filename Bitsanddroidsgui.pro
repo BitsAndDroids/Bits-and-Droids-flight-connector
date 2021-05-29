@@ -6,18 +6,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 CONFIG += openssl
 CONFIG += serialport
-LIBS += "C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/SimConnect.dll"
+LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Debug/debug/SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
-    INCLUDEPATH += "C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/SimConnect.dll"
+    INCLUDEPATH += "C:/Projects/Build Output/include/"
     LIBS += -L"C:/Program Files/OpenSSL-Win64/lib" -lubsec
     INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
+    INCLUDEPATH += "C:/MSFS SDK/WASM/wasi-sysroot/include"
     INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include"
     CONFIG(debug, debug|release) {
-        LIBS += "C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/SimConnect.dll"
+        LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Debug/debug/SimConnect.dll"
     }
     else {
-         LIBS += "C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/SimConnect.dll"
+         LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Debug/debug/SimConnect.dll"
 
     }
 }
@@ -58,7 +59,6 @@ HEADERS += \
     settings/optionsmenu.h \
     settings/settingsranges.h
 
-
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
     mainwindow.ui \
@@ -83,4 +83,3 @@ DISTFILES += \
 
 RESOURCES += \
     Resources.qrc
-

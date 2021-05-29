@@ -48,6 +48,7 @@ class InputSwitchHandler {
   void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
   int mapThrottleValueToAxis(int value, float reverse, float max,
                              int idleCutoff);
+  void setFlaps(int index);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

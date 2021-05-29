@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 
-#include "headers/inputenum.h"
+#include "Inputs/inputenum.h"
 #include "stdio.h"
 #include "strsafe.h"
 
@@ -38,6 +38,9 @@ double oldValMixture[2];
 int mappedEngines[4];
 int mappedProps[4];
 int mappedMixture[4];
+
+int flaps;
+int spoiler;
 
 double oldValProps[2] = {-10, -10};
 
@@ -165,7 +168,35 @@ void InputSwitchHandler::controlYoke(int index) {
     cout << "error in throttle" << endl;
   }
 }
+void InputSwitchHandler::setFlaps(int index) {
+  try {
+    token = strtok_s(receivedString[index], " ", &next_token);
+    cout << receivedString[index] << endl;
+    counter = 0;
 
+    while (token != nullptr && counter < 2) {
+      cout << token << ":Counter" << counter << endl;
+
+      if (token != nullptr) {
+        const auto incVal = strtod(token, nullptr);
+
+        if (counter != 0) {
+          flaps = incVal;
+          cout << flaps << endl;
+        }
+
+        token = strtok_s(nullptr, " ", &next_token);
+        counter++;
+      }
+      sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_FLAPS_SET,
+                            mapValueToAxis(flaps, 0, 1023));
+    }
+  }
+
+  catch (const std::exception &e) {
+    cout << "error in flaps set" << endl;
+  }
+}
 void InputSwitchHandler::set_throttle_values(int index) {
   // Throttle control
   int engineBuffer[4];
@@ -1400,6 +1431,10 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         case 420: {
           sendBasicCommand(inputDefinitions.DEFINITION_PARKING_BRAKE, index);
+          break;
+        }
+        case 421: {
+          setFlaps(index);
           break;
         }
         case 501: {
