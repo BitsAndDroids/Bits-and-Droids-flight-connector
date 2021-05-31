@@ -26,39 +26,39 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
-    Inputs/InputSwitchHandler.cpp \
-    Inputs/InputWorker.cpp \
-    Inputs/inputenum.cpp \
-    Inputs/inputmapper.cpp \
-    settings/formbuilder.cpp \
-    settings/optionsmenu.cpp \
-    settings/settingsranges.cpp \
     sources/ConnectWorker.cpp \
     sources/Engine.cpp \
+    sources/InputWorker.cpp \
     sources/SerialPort.cpp \
     sources/Set.cpp \
+    sources/formbuilder.cpp \
+    sources/inputenum.cpp \
+    sources/inputmapper.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
+    sources/optionsmenu.cpp \
+    sources/InputSwitchHandler.cpp \
     sources/radioworker.cpp \
-    sources/range.cpp
+    sources/range.cpp \
+    sources/settingsranges.cpp
 
 HEADERS += \
-    Inputs/InputMapper.h \
-    Inputs/InputSwitchHandler.h \
-    Inputs/InputWorker.h \
-    Inputs/inputenum.h \
     headers/Engine.h \
     headers/ConnectWorker.h \
+    headers/InputWorker.h \
     headers/Set.h \
-    headers/constants.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
+    headers/optionsmenu.h \
+    headers/InputSwitchHandler.h \
+    headers/inputenum.h \
+    headers/InputMapper.h \
+    headers/formbuilder.h \
     headers/radioworker.h \
     headers/range.h \
-    settings/formbuilder.h \
-    settings/optionsmenu.h \
-    settings/settingsranges.h
+    headers/settingsranges.h
+
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
@@ -84,3 +84,4 @@ DISTFILES += \
 
 RESOURCES += \
     Resources.qrc
+

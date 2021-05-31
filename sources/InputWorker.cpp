@@ -2,9 +2,9 @@
 // Program execution begins and ends there.
 //
 #include <Windows.h>
-#include <Inputs/InputMapper.h>
-#include <Inputs/InputSwitchHandler.h>
-#include <Inputs/InputWorker.h>
+#include <headers/InputMapper.h>
+#include <headers/InputSwitchHandler.h>
+#include <headers/InputWorker.h>
 #include <headers/SerialReader.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
