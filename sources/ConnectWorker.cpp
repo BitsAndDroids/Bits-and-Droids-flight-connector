@@ -1,7 +1,7 @@
 #define DATA_LENGTH 255
 #define MAX_RETURNED_ITEMS 255
 #include <headers/ConnectWorker.h>
-
+#include <headers/SimConnect.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
@@ -11,7 +11,7 @@
 
 #include "stdio.h"
 #include "strsafe.h"
-#include <headers/SimConnect.h>
+
 char output[DATA_LENGTH];
 bool strincProcessing = false;
 bool connectionError = false;

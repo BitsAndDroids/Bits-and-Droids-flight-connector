@@ -1,5 +1,5 @@
 
-#include <Inputs/InputSwitchHandler.h>
+#include <headers/InputSwitchHandler.h>
 #include <headers/SimConnect.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 
-#include "Inputs/inputenum.h"
+#include "headers/inputenum.h"
 #include "stdio.h"
 #include "strsafe.h"
 
