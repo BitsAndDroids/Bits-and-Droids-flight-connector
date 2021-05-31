@@ -1,3 +1,4 @@
+#include <Inputs/InputSwitchHandler.h>
 #include <headers/InputMapper.h>
 #include <headers/inputenum.h>
 #include <headers/radioworker.h>
@@ -24,6 +25,7 @@ bool received = true;
 int prefixVal;
 InputEnum radioDefs = InputEnum();
 InputMapper radioMap = InputMapper();
+InputSwitchHandler dualHandler = InputSwitchHandler();
 const char *valport = "\\\\.\\COM27";
 struct StructOneDatum {
   int id;
@@ -42,6 +44,7 @@ enum EVENT_ID { EVENT_SIM_START };
 enum DATA_DEFINE_ID {
   DEFINITION_PDR_RADIO,
   DEFINITION_STRING,
+  DEFINITION_ELEVATOR_TRIM_PCT,
 
 };
 enum DATA_NAMES {
@@ -52,7 +55,9 @@ enum DATA_NAMES {
   DATA_NAV_FREQ_STANDBY1,
   DATA_NAV_FREQ_ACTIVE1,
   DATA_NAV_FREQ_STANDBY2,
-  DATA_NAV_FREQ_ACTIVE2
+  DATA_NAV_FREQ_ACTIVE2,
+  DATA_ELEVATOR_TRIM_PCT,
+
 };
 struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
@@ -215,6 +220,11 @@ void RadioWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                 Sleep(20);
                 break;
               }
+              case DATA_ELEVATOR_TRIM_PCT: {
+                printf("\nelevator trim pct = %f", pS->datum[count].value);
+                sendRadioToArduino(pS->datum[count].value * 100, "500");
+                break;
+              }
               default:
                 printf("\nUnknown datum ID: %i", pS->datum[count].id);
                 break;
@@ -255,6 +265,7 @@ void RadioWorker::RadioEvents() {
 
       if (hr == S_OK) {
         connected = true;
+        dualHandler.connect = hRadioSimconnect;
         cout << "Connection made" << endl;
         hr = SimConnect_AddToDataDefinition(
             hRadioSimconnect, DEFINITION_PDR_RADIO, "COM STANDBY FREQUENCY:1",
@@ -289,6 +300,11 @@ void RadioWorker::RadioEvents() {
             hRadioSimconnect, DEFINITION_PDR_RADIO, "NAV ACTIVE FREQUENCY:2",
             "Mhz", SIMCONNECT_DATATYPE_FLOAT32, 0, DATA_NAV_FREQ_ACTIVE2);
         cout << "HR added status: " << hr << endl;
+        hr = SimConnect_AddToDataDefinition(
+            hRadioSimconnect, DEFINITION_PDR_RADIO, "ELEVATOR TRIM PCT",
+            "Percent Over 100", SIMCONNECT_DATATYPE_FLOAT32, 0,
+            DATA_ELEVATOR_TRIM_PCT);
+        cout << "HR added status: " << hr << endl;
         SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
         SimConnect_SubscribeToSystemEvent(hRadioSimconnect, EVENT_SIM_START,
                                           "1sec");
@@ -309,146 +325,37 @@ void RadioWorker::RadioEvents() {
 
     SimConnect_CallDispatch(hRadioSimconnect, MyDispatchProcInput, this);
     timerCheck = QTime::currentTime();
-    if (timerStart.msecsTo(timerCheck) > 200 && received) {
-      sendRadioToArduino(freqStruct.activeCom1, "900");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.standbyCom1, "901");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.activeNav1, "910");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.StandbyNav1, "911");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.activeCom2, "902");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.standbyCom2, "903");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.activeNav2, "913");
-      Sleep(10);
-      sendRadioToArduino(freqStruct.standbyNav2, "912");
-      Sleep(10);
+    //    if (timerStart.msecsTo(timerCheck) > 200 && received) {
+    //      sendRadioToArduino(freqStruct.activeCom1, "900");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.standbyCom1, "901");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.activeNav1, "910");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.StandbyNav1, "911");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.activeCom2, "902");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.standbyCom2, "903");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.activeNav2, "913");
+    //      Sleep(10);
+    //      sendRadioToArduino(freqStruct.standbyNav2, "912");
+    //      Sleep(10);
 
-      cout << "UpdateCheck" << endl;
-      received = false;
-    }
+    //      cout << "UpdateCheck" << endl;
+    //      received = false;
+    //    }
 
-    const auto hasRead =
-        arduinoRadio->readSerialPort(receivedString, DATA_LENGTH);
+    const auto hasRead = arduinoRadio->readSerialPort(
+        dualHandler.receivedString[0], DATA_LENGTH);
 
     if (hasRead) {
       if (connected) {
         try {
           received = true;
-          prefix = std::string(&receivedString[0], &receivedString[3]);
-          prefixVal = stoi(prefix);
           cout << "received: " << prefix << endl;
-          switch (prefixVal) {
-            case 111: {
-              cout << "dec" << endl;
-              sendCommand(radioDefs.DEFINITION_COM1_RADIO_WHOLE_DEC);
-
-              break;
-            }
-            case 112: {
-              sendCommand(radioDefs.DEFINITION_COM1_RADIO_WHOLE_INC);
-              break;
-            }
-            case 113: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_WHOLE_DEC);
-              break;
-            }
-            case 114: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_WHOLE_INC);
-              break;
-            }
-            case 116: {
-              sendCommand(radioDefs.DEFINITION_COM_STANDBY_SWAP);
-              break;
-            }
-              // Swap com2
-            case 117: {
-              sendCommand(radioDefs.DEFINITION_COM_2_STANDBY_SWAP);
-              break;
-            }
-              // Swap nav1
-            case 118: {
-              sendCommand(radioDefs.DEFINITION_NAV_1_STANDBY_SWAP);
-              break;
-            }
-              // Swap nav1
-            case 119: {
-              sendCommand(radioDefs.DEFINITION_NAV_2_STANDBY_SWAP);
-              break;
-            }
-
-            case 120: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_FRACT_DEC);
-              break;
-            }
-            case 121: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_FRACT_INC);
-              break;
-            }
-            case 122: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_FRACT_DEC_CARRY);
-              break;
-            }
-            case 123: {
-              sendCommand(radioDefs.DEFINITION_COM2_RADIO_FRACT_INC_CARRY);
-              break;
-            }
-            case 124: {
-              sendCommand(radioDefs.DEFINITION_COM_RADIO_FRACT_DEC);
-              break;
-            }
-            case 125: {
-              sendCommand(radioDefs.DEFINITION_COM_RADIO_FRACT_INC);
-              break;
-            }
-            case 126: {
-              sendCommand(radioDefs.DEFINITION_COM_RADIO_FRACT_DEC_CARRY);
-              break;
-            }
-            case 127: {
-              sendCommand(radioDefs.DEFINITION_COM_RADIO_FRACT_INC_CARRY);
-              break;
-            }
-
-            // NAV
-            case 128: {
-              sendCommand(radioDefs.DEFINITION_NAV_1_RADIO_FRACT_INC);
-              break;
-            }
-            case 129: {
-              sendCommand(radioDefs.DEFINITION_NAV_1_RADIO_FRACT_DEC);
-              break;
-            }
-            case 130: {
-              sendCommand(radioDefs.DEFINITION_NAV_2_RADIO_FRACT_INC);
-              break;
-            }
-            case 131: {
-              sendCommand(radioDefs.DEFINITION_NAV_2_RADIO_FRACT_DEC);
-              break;
-            }
-            case 132: {
-              sendCommand(radioDefs.DEFINITION_NAV_1_RADIO_WHOLE_INC);
-              break;
-            }
-            case 133: {
-              sendCommand(radioDefs.DEFINITION_NAV_1_RADIO_WHOLE_DEC);
-              break;
-            }
-            case 134: {
-              sendCommand(radioDefs.DEFINITION_NAV_2_RADIO_WHOLE_INC);
-              break;
-            }
-            case 135: {
-              sendCommand(radioDefs.DEFINITION_NAV_2_RADIO_WHOLE_DEC);
-              break;
-            }
-            default:
-              break;
-          }
+          dualHandler.switchHandling(0);
 
           timerStart = QTime::currentTime();
         } catch (const std::exception &e) {
