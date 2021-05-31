@@ -1,5 +1,6 @@
 #include "settings/formbuilder.h"
 
+#include <headers/constants.h>
 #include <qcombobox.h>
 #include <qlabel.h>
 #include <qserialportinfo.h>
@@ -9,7 +10,16 @@
 #include <iostream>
 using namespace std;
 FormBuilder::FormBuilder() {
-  //    lights[make_pair(<QString, QString,bool>(("Test","Test"),true));)
+  for (int i = 0; i < constants::supportedEngines; i++) {
+    engineHeaders.append("Engine " + QString::number(i + 1));
+  }
+  for (int i = 0; i < constants::supportedMixtureLevers; i++) {
+    rangeHeaders.append("Mixture " + QString::number(i + 1));
+  }
+  for (int i = 0; i < constants::supportedPropellerLevers; i++) {
+    rangeHeaders.append("Propeller " + QString::number(i + 1));
+  }
+  rangeHeaders.append("Flaps");
 }
 QVBoxLayout* FormBuilder::generateRange(QString header) {
   auto rangeBlock = new QVBoxLayout();
@@ -31,8 +41,10 @@ QVBoxLayout* FormBuilder::generateRange(QString header) {
   auto editTextRow = new QHBoxLayout();
   auto minLE = new QLineEdit();
   minLE->setObjectName(header + "Min");
+  minLE->setText("0");
   auto maxLE = new QLineEdit();
   maxLE->setObjectName(header + "Max");
+  maxLE->setText("1023");
   editTextRow->addWidget(minLE);
   editTextRow->addWidget(maxLE);
   rangeBlock->addLayout(editTextRow);
@@ -42,24 +54,29 @@ QVBoxLayout* FormBuilder::generateRange(QString header) {
 
 QVBoxLayout* FormBuilder::RangeBuilder() {
   QVBoxLayout* rangeHLayout = new QVBoxLayout();
+  rangeHLayout->setObjectName("rangeLayout");
+
+  QLabel* rangeHeader = new QLabel();
+  rangeHeader->setText("Ranges");
+  rangeHLayout->addWidget(rangeHeader);
 
   QVBoxLayout* engineRanges = new QVBoxLayout();
-  engineRanges->setObjectName("Engine ranges");
-  QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
-  QStringList headers = {"Engine 1", "Engine 2", "Engine 3", "Engine 4"};
-  for (int i = 0; i < headers.size(); i++) {
-    cout << "test " << engineLabels.size() << endl;
+  engineRanges->setObjectName("engineRangesLayout");
+
+  for (int i = 0; i < engineHeaders.size(); i++) {
     SettingsRanges* engineRange =
-        new SettingsRanges(engineLabels.size(), engineLabels, headers[i]);
+        new SettingsRanges(engineLabels.size(), engineLabels, engineHeaders[i]);
     QVBoxLayout* layout = new QVBoxLayout();
     layout = engineRange->CreateRangeRow();
     engineRanges->addLayout(layout);
   }
   rangeHLayout->addLayout(engineRanges);
   rangeHLayout->setContentsMargins(0, 0, 0, 0);
+
   for (int i = 0; i < rangeHeaders.size(); i++) {
     rangeHLayout->addLayout(generateRange(rangeHeaders[i]));
   }
+
   return rangeHLayout;
 }
 

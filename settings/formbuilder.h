@@ -19,10 +19,14 @@ class FormBuilder {
   QHBoxLayout *generateComBlock();
   QVBoxLayout *generateRange(QString header);
 
- private:
-  QStringList rangeHeaders = {"Flaps", "Mixture 1", "Mixture 2", "Propeller 1",
-                              "Proppeller 2"};
   QStringList comHeaders = {"Inputs", "Outputs", "Both"};
+  QStringList rangeHeaders;
+  QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
+  QStringList engineHeaders;
+
+  int getAmountOfEngines() { return engineHeaders.size(); };
+
+ private:
   QList<QString> availableComPorts;
 };
 

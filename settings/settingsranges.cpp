@@ -34,6 +34,18 @@ QVBoxLayout* SettingsRanges::CreateRangeRow() {
   for (int i = 0; i < this->amntOfRanges; i++) {
     QString lineEditName = headerText + labels[i];
     QLineEdit* line = new QLineEdit();
+    switch (i) {
+      case 0:
+        line->setText("0");
+        break;
+      case 1:
+        line->setText("0");
+        break;
+      case 2:
+        line->setText("1023");
+        break;
+    }
+    line->setObjectName(lineEditName);
     lineEditRow->addWidget(line);
   }
 

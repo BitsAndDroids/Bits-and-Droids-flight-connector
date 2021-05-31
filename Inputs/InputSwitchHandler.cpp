@@ -1,5 +1,6 @@
 
-#include <headers/InputSwitchHandler.h>
+#include "InputSwitchHandler.h"
+
 #include <headers/SimConnect.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -11,7 +12,7 @@
 #include <iostream>
 #include <string>
 
-#include "Inputs/inputenum.h"
+#include "inputenum.h"
 #include "stdio.h"
 #include "strsafe.h"
 
@@ -189,7 +190,8 @@ void InputSwitchHandler::setFlaps(int index) {
         counter++;
       }
       sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_FLAPS_SET,
-                            mapValueToAxis(flaps, 0, 1023));
+                            mapValueToAxis(flaps, flapsRange.getMinRange(),
+                                           flapsRange.getMaxRange()));
     }
   }
 
@@ -226,11 +228,13 @@ void InputSwitchHandler::set_throttle_values(int index) {
         counter++;
       }
       if (counter == 5) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < constants::supportedEngines; i++) {
           cout << engineBuffer[i] << endl;
           mappedEngines[i] = mapThrottleValueToAxis(
               engineBuffer[i], enginelist[i].getMinRange(),
               enginelist[i].getMaxRange(), enginelist[i].getIdleIndex());
+          cout << "minrange " << i << ": " << enginelist[i].getMinRange()
+               << endl;
         }
 
         sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
@@ -282,9 +286,10 @@ void InputSwitchHandler::setMixtureValues(int index) {
             oldValMixture[counter - 1] = incVal;
           }
 
-          mappedMixture[counter - 1] = mapValueToAxis(
-              oldValMixture[counter - 1], mixtureRange.getMinRange(),
-              mixtureRange.getMaxRange());
+          mappedMixture[counter - 1] =
+              mapValueToAxis(oldValMixture[counter - 1],
+                             mixtureRanges[counter - 1].getMinRange(),
+                             mixtureRanges[counter - 1].getMaxRange());
           cout << "counter: " << counter << " val: " << incVal << endl;
         }
 
@@ -343,9 +348,9 @@ void InputSwitchHandler::set_prop_values(int index) {
       if (counter == 2) {
         for (int i = 0; i < 2; i++) {
           cout << propAxisBuffer[i] << endl;
-          mappedProps[i] =
-              mapValueToAxis(propAxisBuffer[i], propRange.getMinRange(),
-                             propRange.getMaxRange());
+          mappedProps[i] = mapValueToAxis(propAxisBuffer[i],
+                                          propellerRanges[i].getMinRange(),
+                                          propellerRanges[i].getMaxRange());
         }
 
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
@@ -377,7 +382,7 @@ void InputSwitchHandler::setElevatorTrim(int index) {
     }
     int diff = std::abs(trim - oldTrim);
     cout << diff << endl;
-    if (diff < 3000 || oldTrim == NULL) {
+    if (diff < 5000 || oldTrim == NULL) {
       SimConnect_TransmitClientEvent(
           connect, 0, inputDefinitions.DEFINITION_ELEVATOR_TRIM_SET, trim,
           SIMCONNECT_GROUP_PRIORITY_HIGHEST,

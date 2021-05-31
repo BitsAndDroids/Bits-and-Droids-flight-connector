@@ -50,6 +50,7 @@ HEADERS += \
     headers/Engine.h \
     headers/ConnectWorker.h \
     headers/Set.h \
+    headers/constants.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
