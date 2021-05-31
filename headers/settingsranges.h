@@ -1,4 +1,4 @@
-ifndef SETTINGSRANGES_H
+#ifndef SETTINGSRANGES_H
 #define SETTINGSRANGES_H
 
 #include <qboxlayout.h>
