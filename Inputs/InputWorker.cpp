@@ -1,11 +1,11 @@
 // BitsAndDroidsInputHandler.cpp : This file contains the 'main' function.
 // Program execution begins and ends there.
 //
+#include "InputWorker.h"
+
 #include <Windows.h>
-#include <Inputs/InputMapper.h>
-#include <Inputs/InputSwitchHandler.h>
-#include <Inputs/InputWorker.h>
 #include <headers/SerialReader.h>
+#include <headers/constants.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
@@ -15,6 +15,8 @@
 #include <iostream>
 #include <string>
 
+#include "InputMapper.h"
+#include "InputSwitchHandler.h"
 #include "headers/SerialPort.hpp"
 #include "headers/SimConnect.h"
 
@@ -113,37 +115,61 @@ void InputWorker::inputEvents() {
 
         handler.object = SIMCONNECT_OBJECT_ID_USER;
         mapper.mapEvents(hInputSimConnect);
-
         settings->beginGroup("Ranges");
-        settings->beginGroup("Engines");
+        if (!settings->value("FlapsMin").isNull()) {
+          for (int i = 0; i < constants::supportedEngines; i++) {
+            QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
+            int minRange = settings->value(minStr).toInt();
+            cout << minRange << endl;
 
-        for (int i = 0; i < 4; i++) {
-          QString minStr = "minEng" + QString::number(i);
-          int minRange = settings->value(minStr).toInt();
-          cout << minRange << endl;
+            QString idleStr =
+                "Engine " + QString::number(i + 1) + "Idle cutoff";
+            int idleCutoff = settings->value(idleStr).toInt();
 
-          QString idleStr = "idleEng" + QString::number(i);
-          int idleCutoff = settings->value(idleStr).toInt();
+            QString maxStr = "Engine " + QString::number(i + 1) + "Max";
+            int maxRange = settings->value(maxStr).toInt();
 
-          QString maxStr = "maxEng" + QString::number(i);
-          int maxRange = settings->value(maxStr).toInt();
+            handler.enginelist[i] =
+                Engine(minRange, idleCutoff, maxRange, i + 1);
+          }
 
-          handler.enginelist[i] = Engine(minRange, idleCutoff, maxRange, i);
-        }
-        if (!settings->value("maxReverseRange").isNull()) {
-          handler.reverseAxis = settings->value("maxReverseRange").toFloat();
-        }
+          if (!settings->value("maxReverseRange").isNull()) {
+            handler.reverseAxis = settings->value("maxReverseRange").toFloat();
+          }
 
-        settings->endGroup();
-        if (!settings->value("leMinProp").isNull()) {
-          settings->beginGroup("Props");
-          handler.propRange = Range(settings->value("leMinProp").toInt(),
-                                    settings->value("leMaxProp").toInt());
-          settings->endGroup();
-          settings->beginGroup("Mixture");
-          handler.mixtureRange = Range(settings->value("leMinMixture").toInt(),
-                                       settings->value("leMaxMixture").toInt());
-          settings->endGroup();
+          for (int i = 0; i < constants::supportedMixtureLevers; i++) {
+            QString minStr = "Mixture " + QString::number(i + 1) + "Min";
+            int minRange = settings->value(minStr).toInt();
+            cout << minRange << endl;
+
+            QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
+            int maxRange = settings->value(idleStr).toInt();
+
+            handler.mixtureRanges[i] = Range(minRange, maxRange);
+          }
+          for (int i = 0; i < constants::supportedPropellerLevers; i++) {
+            QString minStr = "Propeller " + QString::number(i + 1) + "Min";
+            int minRange = settings->value(minStr).toInt();
+
+            QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
+            int maxRange = settings->value(idleStr).toInt();
+
+            handler.propellerRanges[i] = Range(minRange, maxRange);
+          }
+          int minFlaps = settings->value("FlapsMin").toInt();
+          int maxFlaps = settings->value("FlapsMax").toInt();
+          handler.flapsRange = Range(minFlaps, maxFlaps);
+        } else if (settings->value("FlapsMin").isNull()) {
+          for (int i = 0; i < constants::supportedEngines; i++) {
+            handler.enginelist[i] = Engine(0, 0, 1023, i);
+          }
+          for (int i = 0; i < constants::supportedMixtureLevers; i++) {
+            handler.mixtureRanges[i] = Range(0, 1023);
+          }
+          for (int i = 0; i < constants::supportedPropellerLevers; i++) {
+            handler.propellerRanges[i] = Range(0, 1023);
+          }
+          handler.flapsRange = Range(0, 1023);
         }
         settings->endGroup();
       }
