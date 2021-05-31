@@ -1,6 +1,7 @@
 #ifndef INPUTSWITCHHANDLER_H
 #define INPUTSWITCHHANDLER_H
 #include <headers/Engine.h>
+#include <headers/constants.h>
 #include <headers/range.h>
 #include <qmutex.h>
 #include <qsettings.h>
@@ -13,7 +14,7 @@
 #include <QThread>
 #include <string>
 
-#include "SimConnect.h"
+#include "headers/SimConnect.h"
 #include "stdio.h"
 using namespace std;
 class InputSwitchHandler {
@@ -23,10 +24,11 @@ class InputSwitchHandler {
   char receivedString[10][255];
   HANDLE connect;
   SIMCONNECT_OBJECT_ID object;
-  std::array<Engine, 4> enginelist;
-  int rangeEngines[4][2];
-  Range mixtureRange;
-  Range propRange;
+  std::array<Engine, constants::supportedEngines> enginelist;
+  Range mixtureRanges[constants::supportedMixtureLevers];
+  Range propellerRanges[constants::supportedPropellerLevers];
+  Range flapsRange;
+
   float reverseAxis = -23000.0;
  private slots:
   void set_throttle_values(int index);
@@ -40,7 +42,7 @@ class InputSwitchHandler {
  private:
   std::string prefix;
   void setElevatorTrim(int index);
-
+  void setFlaps(int index);
   void setRudder(int index);
   void setBrakeAxis(int index);
   void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
@@ -48,7 +50,6 @@ class InputSwitchHandler {
   void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
   int mapThrottleValueToAxis(int value, float reverse, float max,
                              int idleCutoff);
-  void setFlaps(int index);
 };
 
 #endif  // INPUTSWITCHHANDLER_H
