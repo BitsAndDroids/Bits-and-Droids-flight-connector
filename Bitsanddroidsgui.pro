@@ -30,6 +30,13 @@ SOURCES += \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
+    outputs/activeoutputs.cpp \
+    outputs/output.cpp \
+    outputs/outputbundle.cpp \
+    outputs/outputenum.cpp \
+    outputs/outputhandler.cpp \
+    outputs/outputmapper.cpp \
+    outputs/set.cpp \
     settings/formbuilder.cpp \
     settings/optionsmenu.cpp \
     settings/settingsranges.cpp \
@@ -56,6 +63,13 @@ HEADERS += \
     headers/SimConnect.h \
     headers/radioworker.h \
     headers/range.h \
+    outputs/activeoutputs.h \
+    outputs/output.h \
+    outputs/outputbundle.h \
+    outputs/outputenum.h \
+    outputs/outputhandler.h \
+    outputs/outputmapper.h \
+    outputs/set.h \
     settings/formbuilder.h \
     settings/optionsmenu.h \
     settings/settingsranges.h
