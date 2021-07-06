@@ -1,6 +1,16 @@
-#include "activeoutputslist.h"
+#include "outputEnum.h"
+#include "activeoutputs.h"
+#include "iostream"
 
-ActiveOutputsList::ActiveOutputsList()
-{
 
+outputEnum outputEnum;
+using namespace std;
+
+
+
+ActiveOutputs::ActiveOutputs()
+{   
+}
+void ActiveOutputs::changeOutputState(int index){
+    activeOutputsMap.insert(index,!activeOutputsMap.value(index, false));
 }

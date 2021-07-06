@@ -2,5 +2,5 @@
 
 set::set(QString setName)
 {
-    this->setName = setName;
+    //this->setName = setName;
 }

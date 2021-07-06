@@ -2,5 +2,5 @@
 
 outputEnum::outputEnum()
 {
-
+    DATA_OUTPUTS outputDefinitions;
 }

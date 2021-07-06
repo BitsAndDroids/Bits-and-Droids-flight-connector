@@ -8,10 +8,21 @@
 class Output
 {
 public:
-    Output(QString cbName,
+    Output(int id,
+    std::string outputName,
+    std::string metric,
+    float updateEvery,
+    int dataType,
            QString cbText);
+
+    std::string getOutputName(){return outputName;};
+    QString getCbText(){return cbText;};
 private:
-    QString cbName;
+    int id;
+    std::string outputName;
+    std::string metric;
+    float updateEvery;
+    int dataType;
     QString cbText;
 };
 

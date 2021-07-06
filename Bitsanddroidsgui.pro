@@ -6,7 +6,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 CONFIG += openssl
 CONFIG += serialport
-LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+LIBS += "C:\Users\dave-\Documents\GitHub\Bits-and-Droids-flight-connector/SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
     INCLUDEPATH += "C:/Projects/Build Output/include/"
@@ -15,10 +15,10 @@ win64 {
     INCLUDEPATH += "C:/MSFS SDK/WASM/wasi-sysroot/include"
     INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include"
     CONFIG(debug, debug|release) {
-        LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+        LIBS += "C:\Users\dave-\Documents\GitHub\Bits-and-Droids-flight-connector/SimConnect.dll"
     }
     else {
-         LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+         LIBS += "C:\Users\dave-\Documents\GitHub\Bits-and-Droids-flight-connector/SimConnect.dll"
 
     }
 }
@@ -39,11 +39,11 @@ SOURCES += \
     outputs/set.cpp \
     settings/formbuilder.cpp \
     settings/optionsmenu.cpp \
+    settings/outputmenu.cpp \
     settings/settingsranges.cpp \
     sources/ConnectWorker.cpp \
     sources/Engine.cpp \
     sources/SerialPort.cpp \
-    sources/Set.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/radioworker.cpp \
@@ -56,7 +56,6 @@ HEADERS += \
     Inputs/inputenum.h \
     headers/Engine.h \
     headers/ConnectWorker.h \
-    headers/Set.h \
     headers/constants.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
@@ -72,12 +71,14 @@ HEADERS += \
     outputs/set.h \
     settings/formbuilder.h \
     settings/optionsmenu.h \
+    settings/outputmenu.h \
     settings/settingsranges.h
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
     mainwindow.ui \
-    optionsmenu.ui
+    optionsmenu.ui \
+    settings/outputmenu.ui
 
 TRANSLATIONS += \
     Bitsanddroidsgui_en_US.ts

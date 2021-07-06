@@ -104,6 +104,7 @@ class MainWindow : public QMainWindow {
 
   Ui::MainWindow *ui;
   void openSettings();
+  void openOutputMenu();
   void untick();
   void loadComPortData();
 };

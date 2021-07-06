@@ -4,3 +4,6 @@ outputMapper::outputMapper()
 {
 
 }
+void outputMapper::mapOutputs(){
+   }
+

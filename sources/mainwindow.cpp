@@ -1,12 +1,15 @@
 #include "headers/mainwindow.h"
 
-#include <headers/Set.h>
+#include <outputs/outputhandler.h>
+#include <outputs/outputmapper.h>
+#include <outputs/set.h>
 #include <headers/inputenum.h>
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <string.h>
 #include <windows.h>
+#include <settings/outputmenu.h>
 
 #include <QCheckBox>
 #include <QDesktopServices>
@@ -47,6 +50,10 @@ void MainWindow::untick() {
 void MainWindow::openSettings() {
   QWidget *wdg = new optionsMenu;
   wdg->show();
+}
+void MainWindow::openOutputMenu(){
+    QWidget *wdg = new OutputMenu;
+    wdg->show();
 }
 std::string MainWindow::convertComPort(QString comText) {
   std::string val =
@@ -157,7 +164,7 @@ MainWindow::MainWindow(QWidget *parent)
   int counter = 0;
   ui->toggleBoxWidget->setVisible(false);
   settings->beginGroup("Coms");
-
+  outputHandler *testMe = new outputHandler();
   // IMPORTANT leave this check in to assure program doesnt CTD because of
   // search for unexisting variable
   if (!settings->value("outputComActiveBase").isNull()) {
@@ -227,10 +234,14 @@ MainWindow::MainWindow(QWidget *parent)
   // MENU WIP
 
   auto *openSettings = new QAction("&Settings", this);
-
+  auto *openOutputMenu = new QAction("&Outputs", this);
   QMenu *Settings = menuBar()->addMenu("&Settings");
+  QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
+  OutputSettings->addAction(openOutputMenu);
   Settings->addAction(openSettings);
+  connect(openOutputMenu, &QAction::triggered, this, &MainWindow::openOutputMenu);
   connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
+
   auto *untick = new QAction("&Untick all", this);
   Settings->addAction(untick);
   connect(untick, &QAction::triggered, this, &MainWindow::untick);
@@ -730,19 +741,19 @@ void MainWindow::on_saveSetBtn_clicked() {
     amntSets++;
   }
   QString name = ui->setNameTextInput->text();
-  if (name.length() > 0) {
-    Set setEdited = Set(amntSets, !loadedSet, name);
+//  if (name.length() > 0) {
+//    Set setEdited = Set(amntSets, !loadedSet, name);
 
-    QList<QCheckBox *> checkBoxes =
-        ui->cbTabWidget->findChildren<QCheckBox *>();
-    foreach (QCheckBox *cb, checkBoxes) {
-      if (cb->isChecked()) {
-        setEdited.addCheckBox(cb->objectName());
-      }
-    }
-    std::cout << "send" << std::endl;
-    setEdited.createSet();
-  }
+//    QList<QCheckBox *> checkBoxes =
+//        ui->cbTabWidget->findChildren<QCheckBox *>();
+//    foreach (QCheckBox *cb, checkBoxes) {
+//      if (cb->isChecked()) {
+//        setEdited.addCheckBox(cb->objectName());
+//      }
+//    }
+//    std::cout << "send" << std::endl;
+//    setEdited.createSet();
+//  }
 }
 
 void MainWindow::on_btnRadioStartButton_clicked() {

@@ -1,13 +1,18 @@
 #include "settings/formbuilder.h"
 
 #include <headers/constants.h>
+#include <outputs/outputhandler.h>
 #include <qcombobox.h>
 #include <qlabel.h>
 #include <qserialportinfo.h>
 #include <settings/settingsranges.h>
 
+
+#include <QCheckBox>
+#include <QFormLayout>
 #include <QLineEdit>
 #include <iostream>
+#include <outputs/output.h>
 using namespace std;
 FormBuilder::FormBuilder() {
   for (int i = 0; i < constants::supportedEngines; i++) {
@@ -102,7 +107,38 @@ QVBoxLayout* FormBuilder::generateComColumn(int index) {
 
   return comColumn;
 }
+QTabWidget* FormBuilder::generateOutputTabs(){
+    QTabWidget *outputTabs = new QTabWidget();
+    outputHandler outputHandler;
+    auto categorieList = outputHandler.getCategoryStrings();
+    auto categorizedOutputs = outputHandler.getOutputsCategorized();
 
+    for(int i = 0; i < categorieList.size(); i++){
+        QWidget *newTab = new QWidget();
+        QGridLayout *cbGridLayout = new QGridLayout();
+        cbGridLayout->setAlignment(Qt::AlignTop);
+        for(int j = 0; j < categorizedOutputs[i].size(); j++){
+
+            QCheckBox *checkbox = new QCheckBox();
+            QString cbText = categorizedOutputs[i][j].getCbText();
+            checkbox->setText(QString(cbText));
+
+            if(j < 15){
+            cbGridLayout->addWidget(checkbox,j,0);
+            } else if (j < 30) {
+                cbGridLayout->addWidget(checkbox,j-15,1);
+            } else if(j < 45){
+                cbGridLayout->addWidget(checkbox,j-30,2);
+            }
+
+        }
+        newTab->setLayout(cbGridLayout);
+        outputTabs->addTab(newTab,categorieList[i]);
+    }
+    outputTabs->setMinimumWidth(800);
+    outputTabs->adjustSize();
+    return outputTabs;
+}
 void FormBuilder::loadComPortData() {
   availableComPorts.clear();
   availableComPorts.append("");

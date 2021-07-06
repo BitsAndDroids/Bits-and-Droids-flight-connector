@@ -4,6 +4,7 @@
 #include <qstring.h>
 
 #include <QHBoxLayout>
+#include <qtabwidget.h>
 
 using namespace std;
 
@@ -26,7 +27,8 @@ class FormBuilder {
 
   int getAmountOfEngines() { return engineHeaders.size(); };
 
- private:
+  QTabWidget *generateOutputTabs();
+private:
   QList<QString> availableComPorts;
 };
 
