@@ -37,6 +37,7 @@ SOURCES += \
     outputs/outputhandler.cpp \
     outputs/outputmapper.cpp \
     outputs/set.cpp \
+    outputs/sethandler.cpp \
     settings/formbuilder.cpp \
     settings/optionsmenu.cpp \
     settings/outputmenu.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     outputs/outputhandler.h \
     outputs/outputmapper.h \
     outputs/set.h \
+    outputs/sethandler.h \
     settings/formbuilder.h \
     settings/optionsmenu.h \
     settings/outputmenu.h \

@@ -13,8 +13,9 @@
 
 #include "SerialPort.hpp"
 #include "radioworker.h"
+#include "constants.h"
 const char defaultFileName[] = "indexDl.html";
-const std::string version = "0.8.8";
+const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -32,11 +33,20 @@ class MainWindow : public QMainWindow {
   void onUpdateLastValUI(const QString &lastVal);
   void onUpdateLastStatusUI(const QString &lastStatus);
   void onUpdateActiveCom1(const QList<QString> &lastVal);
+  void startMode(int mode);
+  void refreshComs(int mode);
+  void stopMode(int mode);
+  void addCom(int mode);
+
 
  signals:
   void updateLastValUI(QString lastVal);
   void updateLastStatusUI(QString lastVal);
   void updateActiveCom1(QList<QString> lastVal);
+  void startPressed(int mode);
+  void refreshPressed(int mode);
+  void stopPressed(int mode);
+  void addPressed(int mode);
 
  private slots:
 

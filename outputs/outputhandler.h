@@ -4,6 +4,7 @@
 #include "output.h"
 
 #include <QJsonObject>
+#include <QMap>
 
 
 
@@ -13,12 +14,13 @@ public:
     outputHandler();
     QStringList getCategoryStrings(){return categoryStrings;};
     QList<QList<Output>> getOutputsCategorized(){return outputsCategorized;};
-    QList<Output> getAvailableOutputs(){return availableOutputs;};
+    QMap<int,Output*> getAvailableOutputs(){return availableOutputs;};
+    Output* findOutputById(int id);
 private:
     //const QJsonObject &json
     QStringList categoryStrings;
     QList<QList<Output>> outputsCategorized;
-    QList<Output> availableOutputs;
+    QMap<int,Output*> availableOutputs;
     void readOutputs();
 };
 

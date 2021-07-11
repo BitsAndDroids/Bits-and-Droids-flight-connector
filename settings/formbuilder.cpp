@@ -1,5 +1,7 @@
 #include "settings/formbuilder.h"
 
+#include "outputmenu.h"
+
 #include <headers/constants.h>
 #include <outputs/outputhandler.h>
 #include <qcombobox.h>
@@ -7,10 +9,12 @@
 #include <qserialportinfo.h>
 #include <settings/settingsranges.h>
 
-
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QLineEdit>
+#include <QPushButton>
+#include <outputs/set.h>
+#include <QSizePolicy>
 #include <iostream>
 #include <outputs/output.h>
 using namespace std;
@@ -25,7 +29,10 @@ FormBuilder::FormBuilder() {
     rangeHeaders.append("Propeller " + QString::number(i + 1));
   }
   rangeHeaders.append("Flaps");
+
+
 }
+
 QVBoxLayout* FormBuilder::generateRange(QString header) {
   auto rangeBlock = new QVBoxLayout();
   auto headerRow = new QHBoxLayout();
@@ -107,8 +114,104 @@ QVBoxLayout* FormBuilder::generateComColumn(int index) {
 
   return comColumn;
 }
+QGridLayout* FormBuilder::generateOutputControls(){
+    QGridLayout *outputControls = new QGridLayout();
+    outputControls->setAlignment(Qt::AlignLeft);
+    QLineEdit *setName = new QLineEdit();
+    setName->setMaximumWidth(150);
+    setName->setObjectName("leSetName");
+    QLabel *setNameLabel = new QLabel("Set name");
+
+    QPushButton *saveSet = new QPushButton("Save set");
+    connect(saveSet, &QAbstractButton::clicked,this, &FormBuilder::addSet);
+
+    outputControls->addWidget(setNameLabel, 0,0);
+    outputControls->addWidget(setName,0,1,Qt::AlignLeft);
+    outputControls->addWidget(saveSet, 2,0);
+    return outputControls;
+}
+QVBoxLayout* FormBuilder::generateOutputSetList(){
+   QVBoxLayout *outputSetList = new QVBoxLayout();
+   outputSetList->setObjectName("outputSetList");
+   QLabel *listHeader = new QLabel("Saved sets");
+   QFont font = listHeader->font();
+   font.setBold(true);
+   font.setPointSize(24);
+   listHeader->setFont(font);
+
+   outputSetList->addWidget(listHeader);
+
+   return outputSetList;
+}
+QWidget* FormBuilder::generateActiveSet(set *selectedSet){
+
+    QWidget *activeWidget = new QWidget();
+    activeWidget->setObjectName("activeWidget");
+    QVBoxLayout *activeSet = new QVBoxLayout();
+
+    QLabel *setNameHeader = new QLabel(selectedSet->getSetName());
+    setNameHeader->setObjectName("setNameHeader");
+    QFont headerFont = setNameHeader->font();
+    headerFont.setPointSize(18);
+    headerFont.setBold(true);
+    setNameHeader->setFont(headerFont);
+    activeSet->addWidget(setNameHeader);
+
+
+    QGridLayout *outputGrid = new QGridLayout();
+    int columnCounter = 0;
+    int rowCounter = 0;
+    QMap<int,Output*> outputsInSet = selectedSet->getOutputs();
+    QMap<int,Output*>::Iterator i;
+    for(i = outputsInSet.begin(); i != outputsInSet.end(); i++){
+        if(rowCounter % 5 == 0){
+            columnCounter++;
+            rowCounter = 0;
+        }
+        rowCounter++;
+        QLabel *outputName = new QLabel(i.value()->getCbText());
+        outputGrid->addWidget(outputName,rowCounter,columnCounter);
+    }
+     qDebug()<<"we made it";
+    QVBoxLayout* outputList = new QVBoxLayout();
+    outputList->setObjectName("savedOutputs");
+
+    activeSet->addLayout(outputList);
+    activeSet->addLayout(outputGrid);
+    activeWidget->setLayout(activeSet);
+
+    return activeWidget;
+}
+
+QWidget* FormBuilder::generateSetRow(set setForRow){
+    QWidget *setRowContainer = new QWidget();
+    setRowContainer->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    QHBoxLayout* setRow = new QHBoxLayout();
+    QLabel* setRowLabel = new QLabel(setForRow.getSetName());
+
+    QPushButton* editButton = new QPushButton("Edit");
+    connect(editButton, &QAbstractButton::clicked,this, &FormBuilder::localEdit);
+
+    QPushButton* deleteButton = new QPushButton("Delete");
+    connect(deleteButton, SIGNAL(clicked()),SLOT(localRemove()));
+
+    editButton->setMaximumWidth(150);
+    deleteButton->setMaximumWidth(150);
+    setRow->addWidget(setRowLabel);
+    setRow->addWidget(editButton);
+    setRow->addWidget(deleteButton);
+    setRowContainer->setLayout(setRow);
+    setRowContainer->setAutoFillBackground(true);
+    setRowContainer->setPalette(Qt::white);
+    setRowContainer->setObjectName(QString::number(setForRow.getID()));
+    return setRowContainer;
+}
+
+
 QTabWidget* FormBuilder::generateOutputTabs(){
     QTabWidget *outputTabs = new QTabWidget();
+    outputTabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    outputTabs->setObjectName("outputTabWidget");
     outputHandler outputHandler;
     auto categorieList = outputHandler.getCategoryStrings();
     auto categorizedOutputs = outputHandler.getOutputsCategorized();
@@ -120,8 +223,10 @@ QTabWidget* FormBuilder::generateOutputTabs(){
         for(int j = 0; j < categorizedOutputs[i].size(); j++){
 
             QCheckBox *checkbox = new QCheckBox();
+            checkbox->setMinimumHeight(30);
             QString cbText = categorizedOutputs[i][j].getCbText();
             checkbox->setText(QString(cbText));
+            checkbox->setObjectName("cb"+QString::number(categorizedOutputs[i][j].getId()));
 
             if(j < 15){
             cbGridLayout->addWidget(checkbox,j,0);
@@ -147,4 +252,80 @@ void FormBuilder::loadComPortData() {
     availableComPorts.append(serialPortInfo.portName() + " | " +
                              serialPortInfo.description());
   }
+}
+
+QHBoxLayout* FormBuilder::generateOutputRow(Output *output) {
+    QHBoxLayout *row = new QHBoxLayout();
+    QLabel *outputName = new QLabel(output->getCbText());
+    row->addWidget(outputName);
+    return row;
+
+}
+
+
+void FormBuilder::localRemove(){
+qDebug()<<"apple";
+QPushButton* button = qobject_cast<QPushButton*>(sender());
+emit removeSet(button->parentWidget()->objectName());
+}
+
+void FormBuilder::localEdit(){
+    QPushButton* button = qobject_cast<QPushButton*>(sender());
+    emit setEdited(button->parentWidget()->objectName());
+}
+QLabel* FormBuilder::generateHeader(QString text){
+    QLabel* header = new QLabel(text);
+    QFont font = header->font();
+    font.setPointSize(16);
+    header->setFont(font);
+    return header;
+}
+QWidget* FormBuilder::generateComSelector(bool setsNeeded,int mode){
+    QWidget *comSelector = new QWidget();
+    QHBoxLayout* comRow = new QHBoxLayout();
+    comSelector->setLayout(comRow);
+    QComboBox* comPortComboBox = new QComboBox();
+    for (int i = 0; i < availableComPorts.size() ;i++ ) {
+        comPortComboBox->addItem(availableComPorts[i]);
+    }
+    comRow->addWidget(comPortComboBox);
+    return comSelector;
+}
+QWidget* FormBuilder::generateComControls(int mode){
+    QWidget* comControls = new QWidget();
+    QHBoxLayout* comControlRow = new QHBoxLayout();
+    comControls->setLayout(comControlRow);
+
+    //REFRESH BTN
+    QPushButton* refreshButton = new QPushButton("Refresh");
+    connect(refreshButton, &QAbstractButton::clicked, this, &FormBuilder::refreshPressed);
+
+    //START BTN
+    QPushButton* startButton = new QPushButton("Start");
+    connect(startButton, &QAbstractButton::clicked, this, &FormBuilder::startPressed);
+
+    //STOP BTN
+    QPushButton* stopButton = new QPushButton("Stop");
+    connect(stopButton, &QAbstractButton::clicked, this, &FormBuilder::stopPressed);
+
+    //ADD BTN
+    QPushButton* addButton = new QPushButton("+");
+    connect(addButton, &QAbstractButton::clicked, this, &FormBuilder::addPressed);
+
+
+    return comControls;
+}
+
+
+void FormBuilder::localStart(){
+    emit startPressed(1);
+}
+void FormBuilder::localRefreshed(){
+    emit refreshPressed(1);
+}
+void FormBuilder::localStop(){
+    emit stopPressed(1);
+}
+void FormBuilder::localAdd(){
+    emit addPressed(1);
 }

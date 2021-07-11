@@ -3,23 +3,49 @@
 
 #include "output.h"
 
+#include <QList>
+#include <QMap>
+
+#include <qjsonobject.h>
+
 
 
 class set
 {
+
 public:
+    set();
     set(QString setName);
-    const QList<Output> &getOutputs() const;
-    void setOutputs(const QList<Output> &newOutputs);
-    void saveSet();
+
+
+    //void addOutput(Output outputToAdd);
+
+    QMap<int,Output*> getOutputs(){return this->outputs;};
+    int getID() const{return setId;};
+        QString getSetName() {return setName;};
+
+    void setOutputs(QMap<int, Output *> newOutputs);
+    void setSetName(QString name){this->setName = name;};
+    void setSetId(int id){this->setId = id;};
     void deleteSet();
 
+     void saveSet();
 
 
+
+
+     set(QString setName, int id);
+     set fromJson(QJsonDocument *docToConvert);
+
+     set(QString setName, int id, QMap<int, Output*>);
+
+     void addOutput(Output *outputToAdd);
+     void clearOutputs();
 private:
     QString setName;
     int setId;
-    QList<Output>* outputs;
+    QMap<int, Output*> outputs;
 };
+
 
 #endif // SET_H

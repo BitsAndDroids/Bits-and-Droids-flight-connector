@@ -42,7 +42,7 @@ void outputHandler::readOutputs()
 
     QJsonObject outputJSON = json_doc.object();
     categoryStrings = outputJSON.keys();
-    qDebug()<<categoryStrings;
+
     foreach(const QString & v, categoryStrings){
         QList<Output> *outputCategory = new QList<Output>;
         QJsonArray array = outputJSON.value(v).toArray();
@@ -59,13 +59,17 @@ void outputHandler::readOutputs()
 
                 Output *foundOutput = new Output(JSONid, JSONoutputName, JSONmetric, JSONupdateEvery, JSONdataType, JSONcbText);
                 outputCategory->append(*foundOutput);
-                availableOutputs.append(*foundOutput);
-                qDebug() << obj.value("outputName").toString();
+                availableOutputs.insert(foundOutput->getId(),foundOutput);
+
                 QJsonValue score = obj.value("updateEvery");
-                if (!score.isUndefined())
-                    qDebug() << score.toInt();
+\
             }
         outputsCategorized.append(*outputCategory);
    }
     qDebug()<<availableOutputs.size()<<" outputs saved";
+}
+Output* outputHandler::findOutputById(int idToFind){
+    qDebug()<<idToFind;
+    return availableOutputs.value(idToFind);
+
 }

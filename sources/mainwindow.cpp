@@ -9,6 +9,7 @@
 #include <qstandardpaths.h>
 #include <string.h>
 #include <windows.h>
+#include <settings/formbuilder.h>
 #include <settings/outputmenu.h>
 
 #include <QCheckBox>
@@ -28,6 +29,8 @@
 #include "headers/optionsmenu.h"
 #include "stdio.h"
 #include "ui_mainwindow.h"
+
+FormBuilder formbuilder;
 bool radioOn = false;
 bool matchRow = false;
 int matchRowIndex = 0;
@@ -40,12 +43,12 @@ int matchInputIndex = 0;
 
 const char *portNameLocal;
 void MainWindow::untick() {
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
+//  QList<QCheckBox *> allCheckBoxes =
+//      ui->cbTabWidget->findChildren<QCheckBox *>();
 
-  for (int i = 0; i < allCheckBoxes.size(); ++i) {
-    allCheckBoxes.at(i)->setChecked(false);
-  }
+//  for (int i = 0; i < allCheckBoxes.size(); ++i) {
+//    allCheckBoxes.at(i)->setChecked(false);
+//  }
 }
 void MainWindow::openSettings() {
   QWidget *wdg = new optionsMenu;
@@ -227,7 +230,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->setActionsGrid->setAlignment(Qt::AlignTop);
   ui->outputBtnRowHBox->setAlignment(Qt::AlignLeft);
   ui->outputLayoutVBox->setAlignment(Qt::AlignTop);
-  ui->gpsVBox->setAlignment(Qt::AlignTop);
+  //ui->gpsVBox->setAlignment(Qt::AlignTop);
   // Load settings (checkboxes + menus)
   loadSettings();
 
@@ -246,6 +249,33 @@ MainWindow::MainWindow(QWidget *parent)
   Settings->addAction(untick);
   connect(untick, &QAction::triggered, this, &MainWindow::untick);
 
+  //IMPORTANT IMPROV SECTION
+
+  formbuilder.loadComPortData();
+
+  //INPUTS
+  QVBoxLayout* inContainer = ui->inLayoutContainer;
+  inContainer->addWidget(formbuilder.generateHeader("INPUTS"));
+  inContainer->addWidget(formbuilder.generateComControls(1));
+  inContainer->addWidget(formbuilder.generateComSelector(false,1));
+
+
+  //OUTPUTS
+  QVBoxLayout* outContainer = ui->outLayoutContainer;
+  outContainer->addWidget(formbuilder.generateHeader("OUTPUTS"));
+  outContainer->addWidget(formbuilder.generateComControls(2));
+  outContainer->addWidget(formbuilder.generateComSelector(true,2));
+
+
+  //DUAL MODE
+  QVBoxLayout* dualContainer = ui->dualLayoutContainer;
+  dualContainer->addWidget(formbuilder.generateHeader("DUAL"));
+  dualContainer->addWidget(formbuilder.generateComControls(3));
+  dualContainer->addWidget(formbuilder.generateComSelector(true,3));
+
+
+
+
   QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
   connect(mgr, SIGNAL(finished(QNetworkReply *)), this,
           SLOT(onfinish(QNetworkReply *)));
@@ -257,16 +287,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::loadSettings() {
   settings->beginGroup("Checked");
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
-  QStringList keys = settings->childKeys();
+//  QList<QCheckBox *> allCheckBoxes =
+//      ui->cbTabWidget->findChildren<QCheckBox *>();
+//  QStringList keys = settings->childKeys();
 
-  foreach (const QString &key, settings->childKeys()) {
-    if (ui->cbTabWidget->findChild<QCheckBox *>(key)) {
-      ui->cbTabWidget->findChild<QCheckBox *>(key)->setChecked(
-          settings->value(key).toBool());
-    }
-  }
+//  foreach (const QString &key, settings->childKeys()) {
+//    if (ui->cbTabWidget->findChild<QCheckBox *>(key)) {
+//      ui->cbTabWidget->findChild<QCheckBox *>(key)->setChecked(
+//          settings->value(key).toBool());
+//    }
+//  }
   if (!settings->value("simpleInput").isNull()) {
     ui->simpleRBtn->setChecked(settings->value("simpleInput").toBool());
   }
@@ -284,20 +314,20 @@ void MainWindow::loadSettings() {
 }
 
 void MainWindow::saveSettings() {
-  settings->beginGroup("Checked");
+//  settings->beginGroup("Checked");
 
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
-  for (int i = 0; i < allCheckBoxes.size(); i++) {
-    QString name = allCheckBoxes.at(i)->objectName();
-    settings->setValue(name, allCheckBoxes.at(i)->isChecked());
-  }
-  settings->setValue("simpleInput", ui->simpleRBtn->isChecked());
-  settings->setValue("advancedInput", ui->advancedRBtn->isChecked());
-  settings->setValue("propInput", ui->cbProps->isChecked());
-  settings->setValue("mixtureInput", ui->cbMixtureInput->isChecked());
-  settings->endGroup();
-  settings->sync();
+//  QList<QCheckBox *> allCheckBoxes =
+//      ui->cbTabWidget->findChildren<QCheckBox *>();
+//  for (int i = 0; i < allCheckBoxes.size(); i++) {
+//    QString name = allCheckBoxes.at(i)->objectName();
+//    settings->setValue(name, allCheckBoxes.at(i)->isChecked());
+//  }
+//  settings->setValue("simpleInput", ui->simpleRBtn->isChecked());
+//  settings->setValue("advancedInput", ui->advancedRBtn->isChecked());
+//  settings->setValue("propInput", ui->cbProps->isChecked());
+//  settings->setValue("mixtureInput", ui->cbMixtureInput->isChecked());
+//  settings->endGroup();
+//  settings->sync();
 }
 
 void MainWindow::onfinish(QNetworkReply *rep) {
@@ -328,6 +358,7 @@ MainWindow::~MainWindow() {
   delete ui;
 }
 
+//SLOTS
 void MainWindow::on_startButton_clicked() {
   ui->stopButton->setVisible(true);
   QString comText = ui->outputComboBoxBase->currentText();
@@ -339,225 +370,9 @@ void MainWindow::on_startButton_clicked() {
   settings->endGroup();
   settings->sync();
 
-  // DATA
-  outputThread.cbPlaneAltAboveGround = ui->cbPlaneAltAboveGround->isChecked();
-  outputThread.cbSimOnGround = ui->cbSimOnGround->isChecked();
 
-  // Avionics
-  outputThread.cbPlaneName = ui->cbPlaneName->isChecked();
-  outputThread.cbAPAltitudeLock = ui->cbAPAltitudeLock->isChecked();
-  outputThread.cbAPHeadingLock = ui->cbAPHeadingLock->isChecked();
-  outputThread.cbAPVerticalLock = ui->cbAPVerticalLock->isChecked();
-  outputThread.cbActiveCom1 = ui->cbActiveCom1->isChecked();
-  outputThread.cbActiveCom2 = ui->cbActiveCom2->isChecked();
-  outputThread.cbStandbyCom1 = ui->cbStandbyCom1->isChecked();
-  outputThread.cbStandbyCom2 = ui->cbStandbyCom2->isChecked();
-  outputThread.cbIndicatedAirspeed = ui->cbIndicatedAirspeed->isChecked();
-  outputThread.cbIndicatedVerticalSpeed =
-      ui->cbIndicatedVerticalSpeed->isChecked();
-  outputThread.cbIndicatedAltitude = ui->cbIndicatedAltitude->isChecked();
-  outputThread.cbIndicatedHeading = ui->cbIndicatedHeading->isChecked();
-  outputThread.cbGPSGroundspeed = ui->cbGPSGroundspeed->isChecked();
-  outputThread.cbKohlman = ui->cbKohlman->isChecked();
-  outputThread.cbBarometerPressure = ui->cbBarometerPressure->isChecked();
-  outputThread.cbSelectedQuantityPercent =
-      ui->cbSelectedQuantityPercent->isChecked();
-
-  // GPS
-  outputThread.cbGpsCourseToSteer = ui->cbGpsCourseToSteer->isChecked();
-
-  // coms
-  outputThread.cbNavActiveFrequency1 = ui->cbNavActiveFrequency1->isChecked();
-  outputThread.cbNavStandbyFrequency1 = ui->cbNavStandbyFrequency1->isChecked();
-  outputThread.cbNavActiveFrequency2 = ui->cbNavActiveFrequency2->isChecked();
-  outputThread.cbNavStandbyFrequency2 = ui->cbNavStandbyFrequency2->isChecked();
-  outputThread.cbNavRadialError1 = ui->cbNavRadialError1->isChecked();
-  outputThread.cbNavVorLatlonalt1 = ui->cbNavVorLatlonalt1->isChecked();
-
-  // OBS
-  outputThread.cbNavObs1 = ui->cbNavObs1->isChecked();
-  outputThread.cbNavObs2 = ui->cbNavObs2->isChecked();
-
-  // DME
-  outputThread.cbNavDme1 = ui->cbNavDme1->isChecked();
-  outputThread.cbNavDmespeed1 = ui->cbNavDmespeed1->isChecked();
-  outputThread.cbNavDme2 = ui->cbNavDme2->isChecked();
-  outputThread.cbNavDmespeed2 = ui->cbNavDmespeed2->isChecked();
-
-  // ADF
-  outputThread.cbAdfActiveFrequency1 = ui->cbAdfActiveFrequency1->isChecked();
-  outputThread.cbAdfStandbyFrequency1 = ui->cbAdfStandbyFrequency1->isChecked();
-  outputThread.cbAdfRadial1 = ui->cbAdfRadial1->isChecked();
-  outputThread.cbAdfSignal1 = ui->cbAdfSignal1->isChecked();
-
-  outputThread.cbAdfActiveFrequency2 = ui->cbAdfActiveFrequency2->isChecked();
-  outputThread.cbAdfStandbyFrequency2 = ui->cbAdfStandbyFrequency2->isChecked();
-  outputThread.cbAdfRadial2 = ui->cbAdfRadial2->isChecked();
-  outputThread.cbAdfSignal2 = ui->cbAdfSignal2->isChecked();
-
-  // Transponder
-  outputThread.cbTransponderCode1 = ui->cbTransponderCode1->isChecked();
-  outputThread.cbTransponderCode2 = ui->cbTransponderCode2->isChecked();
-
-  // lights
-  outputThread.cbLightTaxiOn = ui->cbLightTaxiOn->isChecked();
-  outputThread.cbLightStrobeOn = ui->cbLightStrobeOn->isChecked();
-  outputThread.cbLightPanelOn = ui->cbLightPanelOn->isChecked();
-  outputThread.cbLightRecognitionOn = ui->cbLightRecognitionOn->isChecked();
-  outputThread.cbLightWingOn = ui->cbLightWingOn->isChecked();
-  outputThread.cbLightLogoOn = ui->cbLightLogoOn->isChecked();
-  outputThread.cbLightCabinOn = ui->cbLightCabinOn->isChecked();
-  outputThread.cbLightHeadOn = ui->cbLightHeadOn->isChecked();
-  outputThread.cbLightBrakeOn = ui->cbLightBrakeOn->isChecked();
-  outputThread.cbLightNavOn = ui->cbLightNavOn->isChecked();
-  outputThread.cbLightBeaconOn = ui->cbLightBeaconOn->isChecked();
-  outputThread.cbLightLandingOn = ui->cbLightLandingOn->isChecked();
-
-  // warnings
-  outputThread.cbStallWarning = ui->cbStallWarning->isChecked();
-  outputThread.cbOverspeedWarning = ui->cbOverspeedWarning->isChecked();
-
-  // trim rudder
-  outputThread.cbElevatorTrimPosition = ui->cbElevatorTrimPosition->isChecked();
-  outputThread.cbElevatorTrimPct = ui->cbElevatorTrimPct->isChecked();
-  outputThread.cbAileronTrim = ui->cbAileronTrim->isChecked();
-  outputThread.cbAileronTrimPct = ui->cbAileronTrimPct->isChecked();
-  outputThread.cbRudderTrim = ui->cbRudderTrim->isChecked();
-  outputThread.cbRudderTrimPct = ui->cbRudderTrimPct->isChecked();
-
-  // flaps
-  outputThread.cbFlapsHandlePercent = ui->cbFlapsHandlePercent->isChecked();
-  outputThread.cbFlapsHandleIndex = ui->cbFlapsHandleIndex->isChecked();
-  outputThread.cbFlapsNumHandlePositions =
-      ui->cbFlapsNumHandlePositions->isChecked();
-  outputThread.cbTrailingEdgeFlapsLeftPercent =
-      ui->cbTrailingEdgeFlapsLeftPercent->isChecked();
-  outputThread.cbTrailingEdgeFlapsRightPercent =
-      ui->cbTrailingEdgeFlapsRightPercent->isChecked();
-  outputThread.cbTrailingEdgeFlapsLeftAngle =
-      ui->cbTrailingEdgeFlapsLeftAngle->isChecked();
-  outputThread.cbTrailingEdgeFlapsRightAngle =
-      ui->cbTrailingEdgeFlapsRightAngle->isChecked();
-  outputThread.cbLeadingEdgeFlapsLeftPercent =
-      ui->cbLeadingEdgeFlapsLeftPercent->isChecked();
-  outputThread.cbLeadingEdgeFlapsRightPercent =
-      ui->cbLeadingEdgeFlapsRightPercent->isChecked();
-  outputThread.cbLeadingEdgeFlapsLeftAngle =
-      ui->cbLeadingEdgeFlapsLeftAngle->isChecked();
-  outputThread.cbLeadingEdgeFlapsRightAngle =
-      ui->cbLeadingEdgeFlapsRightAngle->isChecked();
-
-  // gear
-  outputThread.cbGearHandlePosition = ui->cbGearHandlePosition->isChecked();
-  outputThread.cbGearHydraulicPressure =
-      ui->cbGearHydraulicPressure->isChecked();
-  outputThread.cbGearCenterPosition = ui->cbGearCenterPosition->isChecked();
-  outputThread.cbGearLeftPosition = ui->cbGearLeftPosition->isChecked();
-  outputThread.cbGearRightPosition = ui->cbGearRightPosition->isChecked();
-  outputThread.cbGearTailPosition = ui->cbGearTailPosition->isChecked();
-  outputThread.cbGearAuxPosition = ui->cbGearAuxPosition->isChecked();
-  outputThread.cbGearTotalPctExtended = ui->cbGearTotalPctExtended->isChecked();
-
-  // AP
-  outputThread.cbAutopilotAvailable = ui->cbAutopilotAvailable->isChecked();
-  outputThread.cbAutopilotMaster = ui->cbAutopilotMaster->isChecked();
-  outputThread.cbAutopilotWingLeveler = ui->cbAutopilotWingLeveler->isChecked();
-  outputThread.cbAutopilotNav1Lock = ui->cbAutopilotNav1Lock->isChecked();
-  outputThread.cbAutopilotHeadingLock = ui->cbAutopilotHeadingLock->isChecked();
-  outputThread.cbAutopilotAltitudeLock =
-      ui->cbAutopilotAltitudeLock->isChecked();
-  outputThread.cbAutopilotAttitudeHold =
-      ui->cbAutopilotAttitudeHold->isChecked();
-  outputThread.cbAutopilotGlideslopeHold =
-      ui->cbAutopilotGlideslopeHold->isChecked();
-  outputThread.cbAutopilotApproachHold =
-      ui->cbAutopilotApproachHold->isChecked();
-  outputThread.cbAutopilotBackcourseHold =
-      ui->cbAutopilotBackcourseHold->isChecked();
-  outputThread.cbAutopilotFlightDirectorActive =
-      ui->cbAutopilotFlightDirectorActive->isChecked();
-  outputThread.cbAutopilotAirspeedHold =
-      ui->cbAutopilotAirspeedHold->isChecked();
-  outputThread.cbAutopilotMachHold = ui->cbAutopilotMachHold->isChecked();
-  outputThread.cbAutopilotYawDamper = ui->cbAutopilotYawDamper->isChecked();
-  outputThread.cbAutopilotThrottleArm = ui->cbAutopilotThrottleArm->isChecked();
-  outputThread.cbAutopilotTakeoffPowerActive =
-      ui->cbAutopilotTakeoffPowerActive->isChecked();
-  outputThread.cbAutothrottleActive = ui->cbAutothrottleActive->isChecked();
-  outputThread.cbAutopilotNav1Lock = ui->cbAutopilotNav1Lock->isChecked();
-  outputThread.cbAutopilotVerticalHold =
-      ui->cbAutopilotVerticalHold->isChecked();
-  outputThread.cbAutopilotRpmHold = ui->cbAutopilotRpmHold->isChecked();
-
-  outputThread.cbFuelTankCenterLevel = ui->cbFuelTankCenterLevel->isChecked();
-  outputThread.cbFuelTankCenter2Level = ui->cbFuelTankCenter2Level->isChecked();
-  outputThread.cbFuelTankCenter3Level = ui->cbFuelTankCenter3Level->isChecked();
-  outputThread.cbFuelTankLeftMainLevel =
-      ui->cbFuelTankLeftMainLevel->isChecked();
-  outputThread.cbFuelTankLeftAuxLevel = ui->cbFuelTankLeftAuxLevel->isChecked();
-  outputThread.cbFuelTankLeftTipLevel = ui->cbFuelTankLeftTipLevel->isChecked();
-  outputThread.cbFuelTankRightMainLevel =
-      ui->cbFuelTankRightMainLevel->isChecked();
-  outputThread.cbFuelTankRightAuxLevel =
-      ui->cbFuelTankRightAuxLevel->isChecked();
-  outputThread.cbFuelTankRightTipLevel =
-      ui->cbFuelTankRightTipLevel->isChecked();
-  outputThread.cbFuelTankExternal1Level =
-      ui->cbFuelTankExternal1Level->isChecked();
-  outputThread.cbFuelTankExternal2Level =
-      ui->cbFuelTankExternal2Level->isChecked();
-  outputThread.cbFuelTankCenterCapacity =
-      ui->cbFuelTankCenterCapacity->isChecked();
-  outputThread.cbFuelTankCenter2Capacity =
-      ui->cbFuelTankCenter2Capacity->isChecked();
-  outputThread.cbFuelTankCenter3Capacity =
-      ui->cbFuelTankCenter3Capacity->isChecked();
-  outputThread.cbFuelTankLeftMainCapacity =
-      ui->cbFuelTankLeftMainCapacity->isChecked();
-  outputThread.cbFuelTankLeftAuxCapacity =
-      ui->cbFuelTankLeftAuxCapacity->isChecked();
-  outputThread.cbFuelTankLeftTipCapacity =
-      ui->cbFuelTankLeftTipCapacity->isChecked();
-  outputThread.cbFuelTankRightMainCapacity =
-      ui->cbFuelTankRightMainCapacity->isChecked();
-  outputThread.cbFuelTankRightAuxCapacity =
-      ui->cbFuelTankRightAuxCapacity->isChecked();
-  outputThread.cbFuelTankRightTipCapacity =
-      ui->cbFuelTankRightTipCapacity->isChecked();
-  outputThread.cbFuelTankExternal1Capacity =
-      ui->cbFuelTankExternal1Capacity->isChecked();
-  outputThread.cbFuelTankExternal2Capacity =
-      ui->cbFuelTankExternal2Capacity->isChecked();
-  outputThread.cbFuelLeftCapacity = ui->cbFuelLeftCapacity->isChecked();
-  outputThread.cbFuelRightCapacity = ui->cbFuelRightCapacity->isChecked();
-  outputThread.cbFuelTankCenterQuantity =
-      ui->cbFuelTankCenterQuantity->isChecked();
-  outputThread.cbFuelTankCenter2Quantity =
-      ui->cbFuelTankCenter2Quantity->isChecked();
-  outputThread.cbFuelTankCenter3Quantity =
-      ui->cbFuelTankCenter3Quantity->isChecked();
-  outputThread.cbFuelTankLeftMainQuantity =
-      ui->cbFuelTankLeftMainQuantity->isChecked();
-  outputThread.cbFuelTankLeftAuxQuantity =
-      ui->cbFuelTankLeftAuxQuantity->isChecked();
-  outputThread.cbFuelTankLeftTipQuantity =
-      ui->cbFuelTankLeftTipQuantity->isChecked();
-  outputThread.cbFuelTankRightMainQuantity =
-      ui->cbFuelTankRightMainQuantity->isChecked();
-  outputThread.cbFuelTankRightAuxQuantity =
-      ui->cbFuelTankRightAuxQuantity->isChecked();
-  outputThread.cbFuelTankRightTipQuantity =
-      ui->cbFuelTankRightTipQuantity->isChecked();
-  outputThread.cbFuelTankExternal1Quantity =
-      ui->cbFuelTankExternal1Quantity->isChecked();
-  outputThread.cbFuelTankExternal2Quantity =
-      ui->cbFuelTankExternal2Quantity->isChecked();
-  outputThread.cbFuelLeftQuantity = ui->cbFuelLeftQuantity->isChecked();
-  outputThread.cbFuelRightQuantity = ui->cbFuelRightQuantity->isChecked();
-  outputThread.cbFuelTotalQuantity = ui->cbFuelTotalQuantity->isChecked();
-
-  outputThread.cbBrakeParkingIndicator =
-      ui->cbBrakeParkingIndicator->isChecked();
+//  outputThread.cbBrakeParkingIndicator =
+//      ui->cbBrakeParkingIndicator->isChecked();
 
   ui->startButton->setText("Running");
 
@@ -575,6 +390,10 @@ void MainWindow::onUpdateLastValUI(const QString &lastVal) {
 void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
   ui->labelLastStatus->setText(lastVal);
 }
+void MainWindow::startMode(int mode){}
+void MainWindow::refreshComs(int mode){}
+void MainWindow::stopMode(int mode){}
+void MainWindow::addCom(int mode){}
 void MainWindow::onUpdateActiveCom1(const QList<QString> &lastVal) {
   ui->tlStandbyCom1->setText(lastVal[0]);
   std::cout << lastVal[0].toStdString() << "WUT" << std::endl;
@@ -740,7 +559,7 @@ void MainWindow::on_saveSetBtn_clicked() {
   if (!loadedSet) {
     amntSets++;
   }
-  QString name = ui->setNameTextInput->text();
+  //QString name = ui->setNameTextInput->text();
 //  if (name.length() > 0) {
 //    Set setEdited = Set(amntSets, !loadedSet, name);
 
@@ -792,4 +611,5 @@ void MainWindow::on_btnSwitchNav1_clicked() {
   if (radioThread.isRunning()) {
     radioThread.switchNav1();
   }
+
 }
