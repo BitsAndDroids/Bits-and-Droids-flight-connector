@@ -6,7 +6,7 @@
 #include<iostream>
 SetHandler::SetHandler()
 {
-
+    setList = loadSets();
 }
 
 void SetHandler::saveSet(set setToSave)
@@ -58,12 +58,12 @@ void SetHandler::saveSet(set setToSave)
 
 }
 
-QList<set>* SetHandler::getSets()
+QList<set> SetHandler::loadSets()
 {
  QList<QJsonDocument> documentList;
- QList<set>* setList = new QList<set>();
+ QList<set> *setListFound = new QList<set>();
 
-
+  qDebug()<<path<<" :path";
   settings->beginGroup("sets");
 
   QStringList keys = settings->childKeys();
@@ -73,7 +73,8 @@ QList<set>* SetHandler::getSets()
        QJsonDocument foundDoc = varFound.toJsonDocument();
        QJsonObject foundObj = foundDoc.object();
        set savedSet = fromJson(&foundDoc);
-       setList->append(savedSet);
+       setListFound->append(savedSet);
+
        documentList.append(foundDoc);
        qDebug()<<varFound <<"VARFOUND";
        qDebug()<<foundDoc;
@@ -84,7 +85,7 @@ QList<set>* SetHandler::getSets()
   settings->endGroup();
   settings->sync();
 
-  return setList;
+  return *setListFound;
 }
 set SetHandler::getSetById(QString id){
     set setFound;
@@ -113,7 +114,9 @@ set SetHandler::fromJson(QJsonDocument *docToConvert)
                     tempObj.value("metric").toString().toStdString(),
                     tempObj.value("updateEvery").toDouble(),
                     tempObj.value("dataType").toInt(),
-                    tempObj.value("cbText").toString()
+                    tempObj.value("cbText").toString(),
+                    tempObj.value("prefix").toInt(),
+                    tempObj.value("type").toInt()
                     );
         qDebug()<<"foundOutput"<<foundOutput->getCbText();
         outputsConverted->insert(foundOutput->getId(),foundOutput);

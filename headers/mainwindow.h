@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 #include <headers/ConnectWorker.h>
 #include <headers/InputWorker.h>
+#include <outputs/OutputWorker.h>
+#include <outputs/sethandler.h>
 #include <qpushbutton.h>
 #include <qstandardpaths.h>
 
@@ -29,10 +31,13 @@ class MainWindow : public QMainWindow {
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
- public slots:
+  void startInputs();
+
+  void startOutputs();
+  void on_btnSwitchNav1_clicked();
+public slots:
   void onUpdateLastValUI(const QString &lastVal);
   void onUpdateLastStatusUI(const QString &lastStatus);
-  void onUpdateActiveCom1(const QList<QString> &lastVal);
   void startMode(int mode);
   void refreshComs(int mode);
   void stopMode(int mode);
@@ -50,41 +55,22 @@ class MainWindow : public QMainWindow {
 
  private slots:
 
-  void on_startButton_clicked();
-  void on_stopButton_clicked();
+
   void onfinish(QNetworkReply *rep);
-  void on_updateButton_clicked();
-  void on_switchButton_clicked();
-  void on_simpleRBtn_toggled(bool checked);
-  void on_advancedRBtn_clicked();
-  void on_startInputButton_clicked();
-  void on_stopInputButton_clicked();
-  void on_inputRefreshBtn_clicked();
-  void on_pushButton_clicked();
-  void on_inputOptionsBtn_clicked();
-  void on_addComInputBtn_clicked();
-
-  void onClicked();
-
-  void on_setOptionsBtn_clicked();
-
-  void on_saveSetBtn_clicked();
-
-  void addInputComRow(bool notInit, int index);
 
   std::string convertComPort(QString comText);
 
-  void on_btnRadioStartButton_clicked();
 
-  void on_btnSwitchComm1_clicked();
-
-  void on_btnSwitchNav1_clicked();
 
  private:
+  SetHandler *setHandler = new SetHandler();
+  void stopInput();
+  void stopOutput();
+  void stopDual();
   QString path =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QSettings *settings =
-      new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
+      new QSettings(path +"/"+ "settings.ini", QSettings::IniFormat);
 
   QString prevInputComInt;
   QList<QString> chopStrInput;
@@ -109,13 +95,17 @@ class MainWindow : public QMainWindow {
   QPushButton *updateButton;
   QPushButton *switchButton;
   RadioWorker radioThread;
-  ConnectWorker outputThread;
+  OutputWorker outputThread;
   InputWorker inputThread;
+  QList<set> availableSets;
 
   Ui::MainWindow *ui;
   void openSettings();
   void openOutputMenu();
   void untick();
   void loadComPortData();
+  void on_btnSwitchComm1_clicked();
+  void on_updateButton_clicked();
+  void startDual();
 };
 #endif  // MAINWINDOW_H

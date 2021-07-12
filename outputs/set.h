@@ -5,7 +5,7 @@
 
 #include <QList>
 #include <QMap>
-
+#include <QMap>
 #include <qjsonobject.h>
 
 
@@ -20,9 +20,9 @@ public:
 
     //void addOutput(Output outputToAdd);
 
-    QMap<int,Output*> getOutputs(){return this->outputs;};
+    QMap<int,Output*> getOutputs(){return outputs;};
     int getID() const{return setId;};
-        QString getSetName() {return setName;};
+        QString getSetName() const{return setName;};
 
     void setOutputs(QMap<int, Output *> newOutputs);
     void setSetName(QString name){this->setName = name;};
@@ -37,7 +37,7 @@ public:
      set(QString setName, int id);
      set fromJson(QJsonDocument *docToConvert);
 
-     set(QString setName, int id, QMap<int, Output*>);
+     set(QString setName, int id, QMap<int, Output *>);
 
      void addOutput(Output *outputToAdd);
      void clearOutputs();

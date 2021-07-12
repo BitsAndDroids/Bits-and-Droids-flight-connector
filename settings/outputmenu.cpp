@@ -20,7 +20,7 @@ OutputMenu::OutputMenu(QWidget *parent) :
     ui(new Ui::OutputMenu)
 {
     ui->setupUi(this);
-    QList<set> *foundSets = setHandler.getSets();
+    QList<set> foundSets = setHandler.getSets();
 
     connect(&formBuilder, &FormBuilder::addSet ,this, &OutputMenu::addNewSet);
     connect(&formBuilder, &FormBuilder::setEdited,this,&OutputMenu::editSet);
@@ -37,9 +37,9 @@ OutputMenu::OutputMenu(QWidget *parent) :
     settings->beginGroup("sets");
 
     QStringList keys = settings->childKeys();
-    for(int i = 0; i < foundSets->size(); i++){
+    for(int i = 0; i < foundSets.size(); i++){
         //qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
-        ui->widget->findChild<QVBoxLayout*>("outputSetList")->addWidget(formBuilder.generateSetRow(foundSets->at(i)));
+        ui->widget->findChild<QVBoxLayout*>("outputSetList")->addWidget(formBuilder.generateSetRow(foundSets.at(i)));
     }
     settings->endGroup();
 

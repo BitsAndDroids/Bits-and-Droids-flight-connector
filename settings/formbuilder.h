@@ -8,6 +8,7 @@
 #include <qtabwidget.h>
 
 #include <outputs/set.h>
+#include <outputs/sethandler.h>
 
 using namespace std;
 
@@ -43,6 +44,9 @@ class FormBuilder : public QObject {
   QLabel *generateHeader(QString text);
   QWidget *generateComSelector(bool setsNeeded, int mode);
   QWidget *generateComControls(int mode);
+  QList<set> getAvailableSets() { return availableSets;};
+  QList<QString> getAvailableComPorts(){ return availableComPorts;};
+
 private slots:
   void localRemove();
   void localEdit();
@@ -51,6 +55,7 @@ private slots:
   void localRefreshed();
   void localStop();
   void localAdd();
+  void removeComWidget();
 signals:
   void addSet();
   void setEdited(QString id);
@@ -60,6 +65,8 @@ signals:
   void stopPressed(int mode);
   void addPressed(int mode);
 private:
+  SetHandler setHandler;
+  QList<set> availableSets;
   QList<QString> availableComPorts;
 
 

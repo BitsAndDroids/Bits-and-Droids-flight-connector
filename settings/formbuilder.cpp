@@ -30,6 +30,7 @@ FormBuilder::FormBuilder() {
   }
   rangeHeaders.append("Flaps");
 
+  availableSets = setHandler.getSets();
 
 }
 
@@ -194,9 +195,9 @@ QWidget* FormBuilder::generateSetRow(set setForRow){
 
     QPushButton* deleteButton = new QPushButton("Delete");
     connect(deleteButton, SIGNAL(clicked()),SLOT(localRemove()));
-
     editButton->setMaximumWidth(150);
     deleteButton->setMaximumWidth(150);
+
     setRow->addWidget(setRowLabel);
     setRow->addWidget(editButton);
     setRow->addWidget(deleteButton);
@@ -246,7 +247,6 @@ QTabWidget* FormBuilder::generateOutputTabs(){
 }
 void FormBuilder::loadComPortData() {
   availableComPorts.clear();
-  availableComPorts.append("");
   foreach (const QSerialPortInfo& serialPortInfo,
            QSerialPortInfo::availablePorts()) {
     availableComPorts.append(serialPortInfo.portName() + " | " +
@@ -261,14 +261,11 @@ QHBoxLayout* FormBuilder::generateOutputRow(Output *output) {
     return row;
 
 }
-
-
 void FormBuilder::localRemove(){
 qDebug()<<"apple";
 QPushButton* button = qobject_cast<QPushButton*>(sender());
 emit removeSet(button->parentWidget()->objectName());
 }
-
 void FormBuilder::localEdit(){
     QPushButton* button = qobject_cast<QPushButton*>(sender());
     emit setEdited(button->parentWidget()->objectName());
@@ -285,10 +282,28 @@ QWidget* FormBuilder::generateComSelector(bool setsNeeded,int mode){
     QHBoxLayout* comRow = new QHBoxLayout();
     comSelector->setLayout(comRow);
     QComboBox* comPortComboBox = new QComboBox();
+    comPortComboBox->setObjectName("comBox");
     for (int i = 0; i < availableComPorts.size() ;i++ ) {
         comPortComboBox->addItem(availableComPorts[i]);
     }
     comRow->addWidget(comPortComboBox);
+    comPortComboBox->setMinimumWidth(150);
+    if(setsNeeded){
+        QComboBox *setComboBox = new QComboBox();
+        for(int i = 0; i < availableSets.size(); i ++){
+            setComboBox->addItem(availableSets.at(i).getSetName());
+        }
+        setComboBox->setMinimumWidth(150);
+        setComboBox->setObjectName("setBox");
+        comRow->addWidget(setComboBox);
+    }
+
+    QPushButton* removeButton = new QPushButton("-");
+    removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    removeButton->setMinimumSize(20,20);
+    removeButton->setMaximumSize(20,20);
+    connect(removeButton, &QAbstractButton::clicked, this, &FormBuilder::removeComWidget);
+    comRow->addWidget(removeButton);
     return comSelector;
 }
 QWidget* FormBuilder::generateComControls(int mode){
@@ -298,34 +313,61 @@ QWidget* FormBuilder::generateComControls(int mode){
 
     //REFRESH BTN
     QPushButton* refreshButton = new QPushButton("Refresh");
-    connect(refreshButton, &QAbstractButton::clicked, this, &FormBuilder::refreshPressed);
+    refreshButton->setObjectName(QString::number(mode)+"refreshBtn");
+    refreshButton->setMinimumHeight(20);
+    refreshButton->setMinimumWidth(80);
+    connect(refreshButton, &QAbstractButton::clicked, this, &FormBuilder::localRefreshed);
+    comControlRow->addWidget(refreshButton);
 
     //START BTN
     QPushButton* startButton = new QPushButton("Start");
-    connect(startButton, &QAbstractButton::clicked, this, &FormBuilder::startPressed);
+    startButton->setMinimumHeight(20);
+    startButton->setMinimumWidth(80);
+    startButton->setObjectName(QString::number(mode)+"startButton");
+    connect(startButton, &QAbstractButton::clicked, this, &FormBuilder::localStart);
+    comControlRow->addWidget(startButton);
 
     //STOP BTN
     QPushButton* stopButton = new QPushButton("Stop");
-    connect(stopButton, &QAbstractButton::clicked, this, &FormBuilder::stopPressed);
+    stopButton->setMinimumHeight(20);
+    stopButton->setMinimumWidth(80);
+    stopButton->setObjectName(QString::number(mode)+"stopBtn");
+    connect(stopButton, &QAbstractButton::clicked, this, &FormBuilder::localStop);
+    comControlRow->addWidget(stopButton);
 
     //ADD BTN
     QPushButton* addButton = new QPushButton("+");
-    connect(addButton, &QAbstractButton::clicked, this, &FormBuilder::addPressed);
+    addButton->setMinimumSize(20,20);
+    addButton->setMaximumSize(20,20);
+    addButton->setObjectName(QString::number(mode)+"addBtn");
+    connect(addButton, &QAbstractButton::clicked, this, &FormBuilder::localAdd);
+    comControlRow->addWidget(addButton);
 
 
     return comControls;
 }
 
-
+void FormBuilder::removeComWidget(){
+    QWidget* senderWidget = qobject_cast<QWidget*>(sender()->parent());
+    delete senderWidget;
+}
 void FormBuilder::localStart(){
-    emit startPressed(1);
+    QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+    int mode = pressedBtn->objectName().leftRef(1).toInt();
+    emit startPressed(mode);
 }
 void FormBuilder::localRefreshed(){
-    emit refreshPressed(1);
+    QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+    int mode = pressedBtn->objectName().leftRef(1).toInt();
+    emit refreshPressed(mode);
 }
 void FormBuilder::localStop(){
-    emit stopPressed(1);
+    QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+    int mode = pressedBtn->objectName().leftRef(1).toInt();
+    emit stopPressed(mode);
 }
 void FormBuilder::localAdd(){
-    emit addPressed(1);
+    QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+    int mode = pressedBtn->objectName().leftRef(1).toInt();
+    emit addPressed(mode);
 }

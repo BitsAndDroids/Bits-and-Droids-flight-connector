@@ -12,6 +12,8 @@
 #include "stdio.h"
 #include "strsafe.h"
 #include <headers/SimConnect.h>
+
+#include <outputs/outputmapper.h>
 char output[DATA_LENGTH];
 bool strincProcessing = false;
 bool connectionError = false;
@@ -383,7 +385,8 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
       switch (evt->uEventID) {
         case EVENT_SIM_START:
-
+          outputMapper outputMapper;
+          //outputMapper.mapOutputs(NULL,hSimConnect);
           // Now the sim is running, request information on the user aircraft
           hr = SimConnect_RequestDataOnSimObject(
               hSimConnect, REQUEST_PDR, DEFINITION_PDR,
@@ -402,8 +405,7 @@ void ConnectWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
           break;
 
-        default:
-          break;
+
       }
       break;
     }

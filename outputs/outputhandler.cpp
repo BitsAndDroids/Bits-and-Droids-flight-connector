@@ -56,8 +56,10 @@ void outputHandler::readOutputs()
                 float JSONupdateEvery = obj.value("updateEvery").toDouble();
                 int JSONdataType = obj.value("dataType").toInt();
                 QString JSONcbText = obj.value("cbText").toString();
+                int prefix = obj.value("prefix").toInt();
+                int type = obj.value("type").toInt();
 
-                Output *foundOutput = new Output(JSONid, JSONoutputName, JSONmetric, JSONupdateEvery, JSONdataType, JSONcbText);
+                Output *foundOutput = new Output(JSONid, JSONoutputName, JSONmetric, JSONupdateEvery, JSONdataType, JSONcbText,prefix,type);
                 outputCategory->append(*foundOutput);
                 availableOutputs.insert(foundOutput->getId(),foundOutput);
 
