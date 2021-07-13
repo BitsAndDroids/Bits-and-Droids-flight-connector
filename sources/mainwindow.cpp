@@ -1,14 +1,20 @@
 #include "headers/mainwindow.h"
 
-#include <headers/Set.h>
+#include <outputs/outputhandler.h>
+#include <outputs/outputmapper.h>
+#include <outputs/set.h>
+
 #include <headers/inputenum.h>
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <string.h>
 #include <windows.h>
+#include <settings/formbuilder.h>
+#include <settings/outputmenu.h>
 
 #include <QCheckBox>
+#include <QComboBox>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
@@ -25,6 +31,8 @@
 #include "headers/optionsmenu.h"
 #include "stdio.h"
 #include "ui_mainwindow.h"
+
+FormBuilder formbuilder;
 bool radioOn = false;
 bool matchRow = false;
 int matchRowIndex = 0;
@@ -37,16 +45,20 @@ int matchInputIndex = 0;
 
 const char *portNameLocal;
 void MainWindow::untick() {
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
+//  QList<QCheckBox *> allCheckBoxes =
+//      ui->cbTabWidget->findChildren<QCheckBox *>();
 
-  for (int i = 0; i < allCheckBoxes.size(); ++i) {
-    allCheckBoxes.at(i)->setChecked(false);
-  }
+//  for (int i = 0; i < allCheckBoxes.size(); ++i) {
+//    allCheckBoxes.at(i)->setChecked(false);
+//  }
 }
 void MainWindow::openSettings() {
   QWidget *wdg = new optionsMenu;
   wdg->show();
+}
+void MainWindow::openOutputMenu(){
+    QWidget *wdg = new OutputMenu;
+    wdg->show();
 }
 std::string MainWindow::convertComPort(QString comText) {
   std::string val =
@@ -62,74 +74,7 @@ void MainWindow::loadComPortData() {
                              serialPortInfo.description());
   }
 }
-void MainWindow::addInputComRow(bool notInit, int index) {
-  if (notInit) {
-    inputComRowCounter++;
-    std::cout << "ADDED" << inputComRowCounter << std::endl;
-  }
-  if (inputComRowCounter == 10) {
-    ui->addComInputBtn->setEnabled(false);
-  }
-  // Creates new Row and ensures it has recognizable name
-  auto newRow = new QHBoxLayout();
-  QString rowName = "row" + QString::number(index);
-  newRow->setObjectName(rowName);
-  newRow->setAlignment(Qt::AlignLeft);
 
-  auto newBox = new QComboBox();
-  loadComPortData();
-  foreach (const QString &comName, availableComPorts) {
-    newBox->addItem(comName);
-  }
-  newBox->setMaximumWidth(150);
-  newBox->setObjectName("comboBoxRow" + QString::number(index));
-  auto newDeleteButton = new QPushButton();
-  newDeleteButton->setText("-");
-  newDeleteButton->setMinimumSize(20, 20);
-  newDeleteButton->setMaximumSize(20, 20);
-  // setName to recognize which button is pressed when dynamicly added
-  QString deleteName = "deleteBtn-" + QString::number(index);
-  newDeleteButton->setObjectName(deleteName);
-  connect(newDeleteButton, SIGNAL(clicked()), this, SLOT(onClicked()));
-
-  auto newLabel = new QLabel();
-  newLabel->setText("Select the com port to be used");
-  settings->beginGroup("inputCom");
-  QString comString = "inputCom" + QString::number(index);
-  if (!settings->value(comString).isNull()) {
-    prevRowComInt = settings->value(comString).toString();
-    chopStrRow = prevRowComInt.split('M');
-    std::cout << "found" << std::endl;
-  }
-  int counter = 0;
-  foreach (const QString &comName, availableComPorts) {
-    if (chopStrRow.size() > 0 && comName.contains(chopStrRow.at(1))) {
-      matchRow = true;
-      matchRowIndex = counter;
-      std::cout << "Current match found" << comName.toStdString() << std::endl;
-    }
-    counter++;
-  }
-  if (matchRow) {
-    newBox->setCurrentIndex(matchRowIndex);
-  }
-
-  settings->endGroup();
-
-  newRow->addWidget(newBox);
-  newRow->addWidget(newLabel);
-  newRow->addWidget(newDeleteButton);
-
-  // Pushes horizontal layout in vertical layout which creates a custom grid
-  std::cout << rowName.toStdString() << std::endl;
-  ui->inputComListVBox->addLayout(newRow);
-  //
-  settings->beginGroup("inputCom");
-  settings->setValue("inputCounter", inputComRowCounter);
-  std::cout << inputComRowCounter << "Rows" << std::endl;
-  settings->endGroup();
-  settings->sync();
-}
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   updateButton = ui->updateButton;
@@ -138,155 +83,125 @@ MainWindow::MainWindow(QWidget *parent)
   settings->beginGroup("inputCom");
   inputComRowCounter = settings->value("inputCounter", 1).toInt();
   settings->endGroup();
-  for (int i = 1; i < inputComRowCounter; i++) {
-    addInputComRow(false, i);
-  }
+
   std::cout << inputComRowCounter << "Rows init" << std::endl;
 
-  // Initiate the sets
-  settings->beginGroup("sets");
-  if (settings->value("amntOfSets") != NULL) {
-  }
-  settings->endGroup();
+  availableSets = formbuilder.getAvailableSets();
   // On bootup be assured of the latest available com ports
   loadComPortData();
 
-  // Counter is there to keep track of the index at which a possible match is
-  // found. These work in cojunction with matchOutput (bool) and
-  // matchInput(bool)
-  int counter = 0;
-  ui->toggleBoxWidget->setVisible(false);
-  settings->beginGroup("Coms");
 
-  // IMPORTANT leave this check in to assure program doesnt CTD because of
-  // search for unexisting variable
-  if (!settings->value("outputComActiveBase").isNull()) {
-    prevOutputComInt = settings->value("outputComActiveBase").toString();
-    chopStrOutput = prevOutputComInt.split('M');
-  }
-  settings->endGroup();
-  settings->beginGroup("inputCom");
-  if (!settings->value("inputComActiveBase").isNull()) {
-    prevInputComInt = settings->value("inputComActiveBase").toString();
-    chopStrInput = prevInputComInt.split('M');
-  }
-  settings->endGroup();
+
+
 
   // This block itterates through the updated com ports list. This is to ensure
   // that the user doesn't have to re-select his previous com port Does this
   // only on bootup to avoid conflicts down the road If no com port found
   // defaults to blank to make clear to the user the previous com port is no
   // longer available
-  foreach (const QString &comName, availableComPorts) {
-    if (chopStrOutput.size() > 0 && comName.contains(chopStrOutput.at(1))) {
-      matchOutput = true;
-      matchOutputIndex = counter;
-      std::cout << "Current match found" << comName.toStdString() << std::endl;
-    }
-    if (chopStrInput.size() > 0 && comName.contains(chopStrInput.at(1))) {
-      matchInput = true;
-      matchInputIndex = counter;
-      std::cout << "Current match found" << comName.toStdString() << std::endl;
-    }
 
-    ui->outputComboBoxBase->addItem(comName);
-    ui->inputComboBoxBase->addItem(comName);
-    ui->comboBoxRadioComs->addItem(comName);
-    counter++;
-  }
+//  foreach (const QString &comName, availableComPorts) {
+//    if (chopStrOutput.size() > 0 && comName.contains(chopStrOutput.at(1))) {
+//      matchOutput = true;
+//      matchOutputIndex = counter;
+//      std::cout << "Current match found" << comName.toStdString() << std::endl;
+//    }
+//    if (chopStrInput.size() > 0 && comName.contains(chopStrInput.at(1))) {
+//      matchInput = true;
+//      matchInputIndex = counter;
+//      std::cout << "Current match found" << comName.toStdString() << std::endl;
+//    }
+
+
   qRegisterMetaType<QList<QString>>("QList<QString>");
-  QObject::connect(&radioThread, SIGNAL(updateActiveCom1(QList<QString>)), this,
-                   SLOT(onUpdateActiveCom1(QList<QString>)));
-
-  if (matchOutput) {
-    ui->outputComboBoxBase->setCurrentIndex(matchOutputIndex);
-  }
-  if (matchInput) {
-    ui->inputComboBoxBase->setCurrentIndex(matchInputIndex);
-  }
-
   // STYLE AFFECTING SECTION
   //-----------------------
-
-  // Hide both stopbuttons to minimalize confusion if connector is active or not
-  ui->stopButton->setVisible(false);
-  ui->stopInputButton->setVisible(false);
-
-  // Sets the strecht of the input QVBoxLayout to allow for dynamicly adding of
-  ui->inputLayoutHBox->setAlignment(Qt::AlignTop);
-  ui->btnsHBox->setAlignment(Qt::AlignLeft);
-  ui->inputComListVBox->setAlignment(Qt::AlignTop);
-  ui->comInputVBox->setAlignment(Qt::AlignTop);
-  ui->setActionsGrid->setAlignment(Qt::AlignTop);
-  ui->outputBtnRowHBox->setAlignment(Qt::AlignLeft);
-  ui->outputLayoutVBox->setAlignment(Qt::AlignTop);
-  ui->gpsVBox->setAlignment(Qt::AlignTop);
-  // Load settings (checkboxes + menus)
-  loadSettings();
+  ui->messagesWidgetLayout->setAlignment(Qt::AlignBottom);
 
   // MENU WIP
-
+    qDebug()<<QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   auto *openSettings = new QAction("&Settings", this);
-
+  auto *openOutputMenu = new QAction("&Outputs", this);
   QMenu *Settings = menuBar()->addMenu("&Settings");
+  QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
+  OutputSettings->addAction(openOutputMenu);
   Settings->addAction(openSettings);
-  connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
+
   auto *untick = new QAction("&Untick all", this);
   Settings->addAction(untick);
+
   connect(untick, &QAction::triggered, this, &MainWindow::untick);
+  connect(openOutputMenu, &QAction::triggered, this, &MainWindow::openOutputMenu);
+  connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
+  connect(&formbuilder, &FormBuilder::addPressed, this, &MainWindow::addCom);
+  connect(&formbuilder, &FormBuilder::stopPressed, this, &MainWindow::stopMode);
+  connect(&formbuilder, &FormBuilder::startPressed, this, &MainWindow::startMode);
+  connect(&formbuilder, &FormBuilder::refreshPressed, this, &MainWindow::refreshComs);
+  connect(&inputThread, &InputWorker::updateLastValUI,
+          this, &MainWindow::onUpdateLastValUI);
+  connect(&inputThread, &InputWorker::updateLastStatusUI,
+          this, &MainWindow::onUpdateLastStatusUI);
+  connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
+          SLOT(onUpdateLastStatusUI(QString)));
+
+  //IMPORTANT IMPROV SECTION
+
+  formbuilder.loadComPortData();
+
+  //INPUTS
+  QVBoxLayout* inContainer = ui->inLayoutContainer;
+
+  inContainer->setAlignment(Qt::AlignTop);
+  inContainer->addWidget(formbuilder.generateHeader("INPUTS"));
+  inContainer->addWidget(formbuilder.generateComControls(1));
+  inContainer->addWidget(formbuilder.generateComSelector(false,1));
+  inContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+  //OUTPUTS
+  QVBoxLayout* outContainer = ui->outLayoutContainer;
+
+  outContainer->setAlignment(Qt::AlignTop);
+  outContainer->addWidget(formbuilder.generateHeader("OUTPUTS"));
+  outContainer->addWidget(formbuilder.generateComControls(2));
+  outContainer->addWidget(formbuilder.generateComSelector(true,2));
+    outContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+
+  //DUAL MODE
+  QVBoxLayout* dualContainer = ui->dualLayoutContainer;
+
+  dualContainer->setAlignment(Qt::AlignTop);
+  dualContainer->addWidget(formbuilder.generateHeader("DUAL"));
+  dualContainer->addWidget(formbuilder.generateComControls(3));
+  dualContainer->addWidget(formbuilder.generateComSelector(true,3));
+   dualContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
   QNetworkAccessManager *mgr = new QNetworkAccessManager(this);
-  connect(mgr, SIGNAL(finished(QNetworkReply *)), this,
-          SLOT(onfinish(QNetworkReply *)));
-  connect(mgr, SIGNAL(finished(QNetworkReply *)), mgr, SLOT(deleteLater()));
+  connect(mgr, &QNetworkAccessManager::finished, this,
+          &MainWindow::onfinish);
+  connect(mgr, &QNetworkAccessManager::finished, mgr, &QObject::deleteLater);
   mgr->get(
       QNetworkRequest(QUrl("https://www.bitsanddroids.com/assets/"
                            "downloads/connector/version.html")));
+
+  this->adjustSize();
 }
 
-void MainWindow::loadSettings() {
-  settings->beginGroup("Checked");
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
-  QStringList keys = settings->childKeys();
-
-  foreach (const QString &key, settings->childKeys()) {
-    if (ui->cbTabWidget->findChild<QCheckBox *>(key)) {
-      ui->cbTabWidget->findChild<QCheckBox *>(key)->setChecked(
-          settings->value(key).toBool());
-    }
-  }
-  if (!settings->value("simpleInput").isNull()) {
-    ui->simpleRBtn->setChecked(settings->value("simpleInput").toBool());
-  }
-  if (!settings->value("advancedInput").isNull()) {
-    ui->advancedRBtn->setChecked(settings->value("advancedInput").toBool());
-  }
-  if (!settings->value("propInput").isNull()) {
-    ui->cbProps->setChecked(settings->value("propInput").toBool());
-  }
-  if (!settings->value("mixtureInput").isNull()) {
-    ui->cbMixtureInput->setChecked(settings->value("mixtureInput").toBool());
-  }
-
-  settings->endGroup();
-}
 
 void MainWindow::saveSettings() {
-  settings->beginGroup("Checked");
+//  settings->beginGroup("Checked");
 
-  QList<QCheckBox *> allCheckBoxes =
-      ui->cbTabWidget->findChildren<QCheckBox *>();
-  for (int i = 0; i < allCheckBoxes.size(); i++) {
-    QString name = allCheckBoxes.at(i)->objectName();
-    settings->setValue(name, allCheckBoxes.at(i)->isChecked());
-  }
-  settings->setValue("simpleInput", ui->simpleRBtn->isChecked());
-  settings->setValue("advancedInput", ui->advancedRBtn->isChecked());
-  settings->setValue("propInput", ui->cbProps->isChecked());
-  settings->setValue("mixtureInput", ui->cbMixtureInput->isChecked());
-  settings->endGroup();
-  settings->sync();
+//  QList<QCheckBox *> allCheckBoxes =
+//      ui->cbTabWidget->findChildren<QCheckBox *>();
+//  for (int i = 0; i < allCheckBoxes.size(); i++) {
+//    QString name = allCheckBoxes.at(i)->objectName();
+//    settings->setValue(name, allCheckBoxes.at(i)->isChecked());
+//  }
+//  settings->setValue("simpleInput", ui->simpleRBtn->isChecked());
+//  settings->setValue("advancedInput", ui->advancedRBtn->isChecked());
+//  settings->setValue("propInput", ui->cbProps->isChecked());
+//  settings->setValue("mixtureInput", ui->cbMixtureInput->isChecked());
+//  settings->endGroup();
+//  settings->sync();
 }
 
 void MainWindow::onfinish(QNetworkReply *rep) {
@@ -312,466 +227,193 @@ void MainWindow::onfinish(QNetworkReply *rep) {
   }
 }
 
-MainWindow::~MainWindow() {
-  saveSettings();
-  delete ui;
-}
 
-void MainWindow::on_startButton_clicked() {
-  ui->stopButton->setVisible(true);
-  QString comText = ui->outputComboBoxBase->currentText();
-  std::string comNr =
-      R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
 
-  settings->beginGroup("Coms");
-  settings->setValue("outputComActiveBase", comNr.c_str());
-  settings->endGroup();
-  settings->sync();
-
-  // DATA
-  outputThread.cbPlaneAltAboveGround = ui->cbPlaneAltAboveGround->isChecked();
-  outputThread.cbSimOnGround = ui->cbSimOnGround->isChecked();
-
-  // Avionics
-  outputThread.cbPlaneName = ui->cbPlaneName->isChecked();
-  outputThread.cbAPAltitudeLock = ui->cbAPAltitudeLock->isChecked();
-  outputThread.cbAPHeadingLock = ui->cbAPHeadingLock->isChecked();
-  outputThread.cbAPVerticalLock = ui->cbAPVerticalLock->isChecked();
-  outputThread.cbActiveCom1 = ui->cbActiveCom1->isChecked();
-  outputThread.cbActiveCom2 = ui->cbActiveCom2->isChecked();
-  outputThread.cbStandbyCom1 = ui->cbStandbyCom1->isChecked();
-  outputThread.cbStandbyCom2 = ui->cbStandbyCom2->isChecked();
-  outputThread.cbIndicatedAirspeed = ui->cbIndicatedAirspeed->isChecked();
-  outputThread.cbIndicatedVerticalSpeed =
-      ui->cbIndicatedVerticalSpeed->isChecked();
-  outputThread.cbIndicatedAltitude = ui->cbIndicatedAltitude->isChecked();
-  outputThread.cbIndicatedHeading = ui->cbIndicatedHeading->isChecked();
-  outputThread.cbGPSGroundspeed = ui->cbGPSGroundspeed->isChecked();
-  outputThread.cbKohlman = ui->cbKohlman->isChecked();
-  outputThread.cbBarometerPressure = ui->cbBarometerPressure->isChecked();
-  outputThread.cbSelectedQuantityPercent =
-      ui->cbSelectedQuantityPercent->isChecked();
-
-  // GPS
-  outputThread.cbGpsCourseToSteer = ui->cbGpsCourseToSteer->isChecked();
-
-  // coms
-  outputThread.cbNavActiveFrequency1 = ui->cbNavActiveFrequency1->isChecked();
-  outputThread.cbNavStandbyFrequency1 = ui->cbNavStandbyFrequency1->isChecked();
-  outputThread.cbNavActiveFrequency2 = ui->cbNavActiveFrequency2->isChecked();
-  outputThread.cbNavStandbyFrequency2 = ui->cbNavStandbyFrequency2->isChecked();
-  outputThread.cbNavRadialError1 = ui->cbNavRadialError1->isChecked();
-  outputThread.cbNavVorLatlonalt1 = ui->cbNavVorLatlonalt1->isChecked();
-
-  // OBS
-  outputThread.cbNavObs1 = ui->cbNavObs1->isChecked();
-  outputThread.cbNavObs2 = ui->cbNavObs2->isChecked();
-
-  // DME
-  outputThread.cbNavDme1 = ui->cbNavDme1->isChecked();
-  outputThread.cbNavDmespeed1 = ui->cbNavDmespeed1->isChecked();
-  outputThread.cbNavDme2 = ui->cbNavDme2->isChecked();
-  outputThread.cbNavDmespeed2 = ui->cbNavDmespeed2->isChecked();
-
-  // ADF
-  outputThread.cbAdfActiveFrequency1 = ui->cbAdfActiveFrequency1->isChecked();
-  outputThread.cbAdfStandbyFrequency1 = ui->cbAdfStandbyFrequency1->isChecked();
-  outputThread.cbAdfRadial1 = ui->cbAdfRadial1->isChecked();
-  outputThread.cbAdfSignal1 = ui->cbAdfSignal1->isChecked();
-
-  outputThread.cbAdfActiveFrequency2 = ui->cbAdfActiveFrequency2->isChecked();
-  outputThread.cbAdfStandbyFrequency2 = ui->cbAdfStandbyFrequency2->isChecked();
-  outputThread.cbAdfRadial2 = ui->cbAdfRadial2->isChecked();
-  outputThread.cbAdfSignal2 = ui->cbAdfSignal2->isChecked();
-
-  // Transponder
-  outputThread.cbTransponderCode1 = ui->cbTransponderCode1->isChecked();
-  outputThread.cbTransponderCode2 = ui->cbTransponderCode2->isChecked();
-
-  // lights
-  outputThread.cbLightTaxiOn = ui->cbLightTaxiOn->isChecked();
-  outputThread.cbLightStrobeOn = ui->cbLightStrobeOn->isChecked();
-  outputThread.cbLightPanelOn = ui->cbLightPanelOn->isChecked();
-  outputThread.cbLightRecognitionOn = ui->cbLightRecognitionOn->isChecked();
-  outputThread.cbLightWingOn = ui->cbLightWingOn->isChecked();
-  outputThread.cbLightLogoOn = ui->cbLightLogoOn->isChecked();
-  outputThread.cbLightCabinOn = ui->cbLightCabinOn->isChecked();
-  outputThread.cbLightHeadOn = ui->cbLightHeadOn->isChecked();
-  outputThread.cbLightBrakeOn = ui->cbLightBrakeOn->isChecked();
-  outputThread.cbLightNavOn = ui->cbLightNavOn->isChecked();
-  outputThread.cbLightBeaconOn = ui->cbLightBeaconOn->isChecked();
-  outputThread.cbLightLandingOn = ui->cbLightLandingOn->isChecked();
-
-  // warnings
-  outputThread.cbStallWarning = ui->cbStallWarning->isChecked();
-  outputThread.cbOverspeedWarning = ui->cbOverspeedWarning->isChecked();
-
-  // trim rudder
-  outputThread.cbElevatorTrimPosition = ui->cbElevatorTrimPosition->isChecked();
-  outputThread.cbElevatorTrimPct = ui->cbElevatorTrimPct->isChecked();
-  outputThread.cbAileronTrim = ui->cbAileronTrim->isChecked();
-  outputThread.cbAileronTrimPct = ui->cbAileronTrimPct->isChecked();
-  outputThread.cbRudderTrim = ui->cbRudderTrim->isChecked();
-  outputThread.cbRudderTrimPct = ui->cbRudderTrimPct->isChecked();
-
-  // flaps
-  outputThread.cbFlapsHandlePercent = ui->cbFlapsHandlePercent->isChecked();
-  outputThread.cbFlapsHandleIndex = ui->cbFlapsHandleIndex->isChecked();
-  outputThread.cbFlapsNumHandlePositions =
-      ui->cbFlapsNumHandlePositions->isChecked();
-  outputThread.cbTrailingEdgeFlapsLeftPercent =
-      ui->cbTrailingEdgeFlapsLeftPercent->isChecked();
-  outputThread.cbTrailingEdgeFlapsRightPercent =
-      ui->cbTrailingEdgeFlapsRightPercent->isChecked();
-  outputThread.cbTrailingEdgeFlapsLeftAngle =
-      ui->cbTrailingEdgeFlapsLeftAngle->isChecked();
-  outputThread.cbTrailingEdgeFlapsRightAngle =
-      ui->cbTrailingEdgeFlapsRightAngle->isChecked();
-  outputThread.cbLeadingEdgeFlapsLeftPercent =
-      ui->cbLeadingEdgeFlapsLeftPercent->isChecked();
-  outputThread.cbLeadingEdgeFlapsRightPercent =
-      ui->cbLeadingEdgeFlapsRightPercent->isChecked();
-  outputThread.cbLeadingEdgeFlapsLeftAngle =
-      ui->cbLeadingEdgeFlapsLeftAngle->isChecked();
-  outputThread.cbLeadingEdgeFlapsRightAngle =
-      ui->cbLeadingEdgeFlapsRightAngle->isChecked();
-
-  // gear
-  outputThread.cbGearHandlePosition = ui->cbGearHandlePosition->isChecked();
-  outputThread.cbGearHydraulicPressure =
-      ui->cbGearHydraulicPressure->isChecked();
-  outputThread.cbGearCenterPosition = ui->cbGearCenterPosition->isChecked();
-  outputThread.cbGearLeftPosition = ui->cbGearLeftPosition->isChecked();
-  outputThread.cbGearRightPosition = ui->cbGearRightPosition->isChecked();
-  outputThread.cbGearTailPosition = ui->cbGearTailPosition->isChecked();
-  outputThread.cbGearAuxPosition = ui->cbGearAuxPosition->isChecked();
-  outputThread.cbGearTotalPctExtended = ui->cbGearTotalPctExtended->isChecked();
-
-  // AP
-  outputThread.cbAutopilotAvailable = ui->cbAutopilotAvailable->isChecked();
-  outputThread.cbAutopilotMaster = ui->cbAutopilotMaster->isChecked();
-  outputThread.cbAutopilotWingLeveler = ui->cbAutopilotWingLeveler->isChecked();
-  outputThread.cbAutopilotNav1Lock = ui->cbAutopilotNav1Lock->isChecked();
-  outputThread.cbAutopilotHeadingLock = ui->cbAutopilotHeadingLock->isChecked();
-  outputThread.cbAutopilotAltitudeLock =
-      ui->cbAutopilotAltitudeLock->isChecked();
-  outputThread.cbAutopilotAttitudeHold =
-      ui->cbAutopilotAttitudeHold->isChecked();
-  outputThread.cbAutopilotGlideslopeHold =
-      ui->cbAutopilotGlideslopeHold->isChecked();
-  outputThread.cbAutopilotApproachHold =
-      ui->cbAutopilotApproachHold->isChecked();
-  outputThread.cbAutopilotBackcourseHold =
-      ui->cbAutopilotBackcourseHold->isChecked();
-  outputThread.cbAutopilotFlightDirectorActive =
-      ui->cbAutopilotFlightDirectorActive->isChecked();
-  outputThread.cbAutopilotAirspeedHold =
-      ui->cbAutopilotAirspeedHold->isChecked();
-  outputThread.cbAutopilotMachHold = ui->cbAutopilotMachHold->isChecked();
-  outputThread.cbAutopilotYawDamper = ui->cbAutopilotYawDamper->isChecked();
-  outputThread.cbAutopilotThrottleArm = ui->cbAutopilotThrottleArm->isChecked();
-  outputThread.cbAutopilotTakeoffPowerActive =
-      ui->cbAutopilotTakeoffPowerActive->isChecked();
-  outputThread.cbAutothrottleActive = ui->cbAutothrottleActive->isChecked();
-  outputThread.cbAutopilotNav1Lock = ui->cbAutopilotNav1Lock->isChecked();
-  outputThread.cbAutopilotVerticalHold =
-      ui->cbAutopilotVerticalHold->isChecked();
-  outputThread.cbAutopilotRpmHold = ui->cbAutopilotRpmHold->isChecked();
-
-  outputThread.cbFuelTankCenterLevel = ui->cbFuelTankCenterLevel->isChecked();
-  outputThread.cbFuelTankCenter2Level = ui->cbFuelTankCenter2Level->isChecked();
-  outputThread.cbFuelTankCenter3Level = ui->cbFuelTankCenter3Level->isChecked();
-  outputThread.cbFuelTankLeftMainLevel =
-      ui->cbFuelTankLeftMainLevel->isChecked();
-  outputThread.cbFuelTankLeftAuxLevel = ui->cbFuelTankLeftAuxLevel->isChecked();
-  outputThread.cbFuelTankLeftTipLevel = ui->cbFuelTankLeftTipLevel->isChecked();
-  outputThread.cbFuelTankRightMainLevel =
-      ui->cbFuelTankRightMainLevel->isChecked();
-  outputThread.cbFuelTankRightAuxLevel =
-      ui->cbFuelTankRightAuxLevel->isChecked();
-  outputThread.cbFuelTankRightTipLevel =
-      ui->cbFuelTankRightTipLevel->isChecked();
-  outputThread.cbFuelTankExternal1Level =
-      ui->cbFuelTankExternal1Level->isChecked();
-  outputThread.cbFuelTankExternal2Level =
-      ui->cbFuelTankExternal2Level->isChecked();
-  outputThread.cbFuelTankCenterCapacity =
-      ui->cbFuelTankCenterCapacity->isChecked();
-  outputThread.cbFuelTankCenter2Capacity =
-      ui->cbFuelTankCenter2Capacity->isChecked();
-  outputThread.cbFuelTankCenter3Capacity =
-      ui->cbFuelTankCenter3Capacity->isChecked();
-  outputThread.cbFuelTankLeftMainCapacity =
-      ui->cbFuelTankLeftMainCapacity->isChecked();
-  outputThread.cbFuelTankLeftAuxCapacity =
-      ui->cbFuelTankLeftAuxCapacity->isChecked();
-  outputThread.cbFuelTankLeftTipCapacity =
-      ui->cbFuelTankLeftTipCapacity->isChecked();
-  outputThread.cbFuelTankRightMainCapacity =
-      ui->cbFuelTankRightMainCapacity->isChecked();
-  outputThread.cbFuelTankRightAuxCapacity =
-      ui->cbFuelTankRightAuxCapacity->isChecked();
-  outputThread.cbFuelTankRightTipCapacity =
-      ui->cbFuelTankRightTipCapacity->isChecked();
-  outputThread.cbFuelTankExternal1Capacity =
-      ui->cbFuelTankExternal1Capacity->isChecked();
-  outputThread.cbFuelTankExternal2Capacity =
-      ui->cbFuelTankExternal2Capacity->isChecked();
-  outputThread.cbFuelLeftCapacity = ui->cbFuelLeftCapacity->isChecked();
-  outputThread.cbFuelRightCapacity = ui->cbFuelRightCapacity->isChecked();
-  outputThread.cbFuelTankCenterQuantity =
-      ui->cbFuelTankCenterQuantity->isChecked();
-  outputThread.cbFuelTankCenter2Quantity =
-      ui->cbFuelTankCenter2Quantity->isChecked();
-  outputThread.cbFuelTankCenter3Quantity =
-      ui->cbFuelTankCenter3Quantity->isChecked();
-  outputThread.cbFuelTankLeftMainQuantity =
-      ui->cbFuelTankLeftMainQuantity->isChecked();
-  outputThread.cbFuelTankLeftAuxQuantity =
-      ui->cbFuelTankLeftAuxQuantity->isChecked();
-  outputThread.cbFuelTankLeftTipQuantity =
-      ui->cbFuelTankLeftTipQuantity->isChecked();
-  outputThread.cbFuelTankRightMainQuantity =
-      ui->cbFuelTankRightMainQuantity->isChecked();
-  outputThread.cbFuelTankRightAuxQuantity =
-      ui->cbFuelTankRightAuxQuantity->isChecked();
-  outputThread.cbFuelTankRightTipQuantity =
-      ui->cbFuelTankRightTipQuantity->isChecked();
-  outputThread.cbFuelTankExternal1Quantity =
-      ui->cbFuelTankExternal1Quantity->isChecked();
-  outputThread.cbFuelTankExternal2Quantity =
-      ui->cbFuelTankExternal2Quantity->isChecked();
-  outputThread.cbFuelLeftQuantity = ui->cbFuelLeftQuantity->isChecked();
-  outputThread.cbFuelRightQuantity = ui->cbFuelRightQuantity->isChecked();
-  outputThread.cbFuelTotalQuantity = ui->cbFuelTotalQuantity->isChecked();
-
-  outputThread.cbBrakeParkingIndicator =
-      ui->cbBrakeParkingIndicator->isChecked();
-
-  ui->startButton->setText("Running");
-
-  outputThread.abort = false;
-  connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
-          SLOT(onUpdateLastStatusUI(QString)));
-
-  outputThread.start();
-  ui->startButton->setEnabled(false);
-}
-
+//SLOTS
 void MainWindow::onUpdateLastValUI(const QString &lastVal) {
   ui->labelLastVal_2->setText(lastVal);
 }
 void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
   ui->labelLastStatus->setText(lastVal);
 }
-void MainWindow::onUpdateActiveCom1(const QList<QString> &lastVal) {
-  ui->tlStandbyCom1->setText(lastVal[0]);
-  std::cout << lastVal[0].toStdString() << "WUT" << std::endl;
-  ui->tlActiveCom1->setText(lastVal[1]);
-  ui->tlStandbyNav1->setText(lastVal[2]);
-  ui->tlActiveNav1->setText(lastVal[3]);
-}
+void MainWindow::startMode(int mode){
 
-void MainWindow::on_stopButton_clicked() {
-  ui->startButton->setEnabled(true);
-  ui->stopButton->setVisible(false);
-  ui->startButton->setText("Start");
-  //    connect(&outputThread, SIGNAL(finished()),
-  //             &outputThread, SLOT(deleteLater()));
-  outputThread.abort = true;
-}
+    switch(mode){
+    case 1: startInputs(); break;
+    case 2: startOutputs(); break;
+    case 3: startDual(); break;
+    }
 
+    qDebug()<<"start"<<mode;
+}
+void MainWindow::startInputs(){
+    QWidget* widget = new QWidget();
+
+    widget = ui->inWidgetContainer;
+
+    QRegularExpression search("comBox");
+    QList<QComboBox*> comList = widget->findChildren<QComboBox*>(search);
+
+    settings->beginGroup("inputCom");
+
+    QString comboBoxName;
+    QString key;
+
+    for (int i = 0; i < comList.size(); i++) {
+      key = "inputCom" + QString::number(i);
+      comboBoxName = "comboBoxRow" + QString::number(i);
+
+
+      QString keyValue = comList[i]->currentText();
+      qDebug()<<keyValue;
+      std::cout << keyValue.toStdString() << std::endl;
+      settings->setValue(key, convertComPort(keyValue).c_str());
+    }
+    settings->endGroup();
+    settings->sync();
+
+    inputThread.abortInput = false;
+    inputThread.start();
+}
+void MainWindow::startOutputs(){
+    QWidget* widget = new QWidget();
+
+    widget = ui->outWidgetContainer;
+
+    QRegularExpression search("comBox");
+    QList<QComboBox*> comList = widget->findChildren<QComboBox*>(search);
+
+    QRegularExpression searchSets("setBox");
+    QList<QComboBox*> setList = widget->findChildren<QComboBox*>(searchSets);
+
+    settings->beginGroup("outputCom");
+
+    QString key;
+    QString setKey;
+
+    qDebug()<<"sets available" << availableSets.size();
+    for (int i = 0; i < availableSets.size(); i++) {
+
+      key = "outputCom" + QString::number(i);
+      setKey = "outputSet" + QString::number(i);
+
+      QString keyValue = comList[i]->currentText();
+      QString setKeyValue = setList[i]->currentText();
+      qDebug()<<setKeyValue;
+      std::cout << keyValue.toStdString() << std::endl;
+      settings->setValue(key, convertComPort(keyValue).c_str());
+          qDebug()<<" SET INDEX " << setList.at(i)->currentIndex();
+      int index = setList[i]->currentIndex();
+
+      int id = availableSets.at(index).getID();
+
+
+      settings->setValue(setKey, id);
+    }
+    settings->endGroup();
+    settings->sync();
+//    ui->stopButton->setVisible(true);
+//    QString comText = ui->outputComboBoxBase->currentText();
+    //std::string comNr =
+    //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+
+    //outputThread.abort = false;
+    //outputThread.start();
+}
+void MainWindow::startDual(){
+
+    QWidget* widget = new QWidget();
+
+    widget = ui->dualWidgetContainer;
+
+    QRegularExpression search("comBox");
+    QList<QComboBox*> comList = widget->findChildren<QComboBox*>(search);
+
+    settings->beginGroup("dualCom");
+
+    QString comboBoxName;
+    QString key;
+
+    for (int i = 0; i < comList.size(); i++) {
+      key = "dualCom" + QString::number(i);
+
+      QString keyValue = comList[i]->currentText();
+      qDebug()<<keyValue;
+      std::cout << keyValue.toStdString() << std::endl;
+      settings->setValue(key, convertComPort(keyValue).c_str());
+    }
+        radioThread.start();
+        radioThread.abortRadio = false;
+
+        std::cout << "clicked" << std::endl;
+        radioOn = true;
+        QString comText = comList[0]->currentText();
+        std::string comNr =
+            R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+
+        settings->beginGroup("Coms");
+        settings->setValue("radioActiveBase", comNr.c_str());
+        settings->endGroup();
+        settings->sync();
+}
+void MainWindow::refreshComs(int mode){
+    QWidget* widget;
+
+    switch(mode){
+        case 1: widget = ui->inWidgetContainer; break;
+    case 2: widget = ui->outWidgetContainer;break;
+case 3: widget = ui->dualWidgetContainer; break;
+    }
+    QRegularExpression search("comBox");
+    QList<QComboBox*> comList = widget->findChildren<QComboBox*>(search);
+    formbuilder.loadComPortData();
+    QList<set> sets = formbuilder.getAvailableSets();
+    QList<QString> coms = formbuilder.getAvailableComPorts();
+
+    for(int i = 0; i < comList.size(); i++){
+        qDebug()<<"hit size:"<< comList.size();
+
+        comList[i]->clear();
+        for(int j = 0; j < coms.size(); j++){
+            comList[i]->addItem(coms[j]);
+            qDebug()<<coms[j];
+        }
+    }
+    qDebug()<<"refresh"<<mode;
+}
+void MainWindow::stopMode(int mode){
+    switch(mode){
+    case 1: stopInput();break;
+    case 2: stopOutput();break;
+    case 3: stopDual();break;
+    }
+}
+void MainWindow::addCom(int mode){
+    QVBoxLayout* layout;
+    bool set = false;
+    switch(mode){
+        case 1: layout = ui->inLayoutContainer; break;
+    case 2: layout = ui->outLayoutContainer;set = true;break;
+case 3: layout = ui->dualLayoutContainer; set = true; break;
+    }
+
+    layout->addWidget(formbuilder.generateComSelector(set,mode));
+    qDebug()<<"addCom"<<mode;
+}
+void MainWindow::stopInput(){
+    inputThread.abortInput = true;
+    inputThread.quit();
+}
+void MainWindow::stopOutput(){
+    outputThread.abort = true;
+}
+void MainWindow::stopDual(){
+
+}
 void MainWindow::on_updateButton_clicked() {
   QString qUrl = QString::fromStdString(url);
   QDesktopServices::openUrl(QUrl(qUrl));
 }
-
-void MainWindow::on_switchButton_clicked() {
-  int curIndex = ui->stackedWidget->currentIndex();
-  if (curIndex < 2) {
-    ui->stackedWidget->setCurrentIndex(curIndex + 1);
-  } else {
-    ui->stackedWidget->setCurrentIndex(0);
-  }
-}
-
-void MainWindow::on_simpleRBtn_toggled(bool checked) {
-  ui->advancedRBtn->setChecked(false);
-}
-
-void MainWindow::on_advancedRBtn_clicked() {
-  ui->simpleRBtn->setChecked(false);
-}
-
-void MainWindow::on_startInputButton_clicked() {
-  settings->beginGroup("inputCom");
-  QString comText = ui->inputComboBoxBase->currentText();
-  std::cout << comText.toStdString() << std::endl;
-  settings->setValue("inputComActiveBase",
-                     QString::fromStdString(convertComPort(comText)));
-  QString comboBoxName;
-  QString key;
-  std::cout << inputComRowCounter << "ROWS ON START" << std::endl;
-  for (int i = 1; i < inputComRowCounter; i++) {
-    key = "inputCom" + QString::number(i);
-    comboBoxName = "comboBoxRow" + QString::number(i);
-    std::cout << comboBoxName.toStdString() << std::endl;
-    QComboBox *box =
-        ui->inputComListWidget->findChild<QComboBox *>(comboBoxName);
-    QString keyValue = box->currentText();
-    std::cout << keyValue.toStdString() << std::endl;
-    settings->setValue(key, convertComPort(keyValue).c_str());
-  }
-  std::cout << "why does it do this" << std::endl;
-  settings->endGroup();
-  settings->sync();
-  if (ui->advancedRBtn->isChecked()) {
-    inputThread.advanced = true;
-  } else {
-    inputThread.advanced = false;
-  }
-  if (ui->cbProps->isChecked()) {
-    inputThread.props = true;
-  } else {
-    inputThread.props = false;
-  }
-  connect(&inputThread, SIGNAL(updateLastValUI(QString)),
-          SLOT(onUpdateLastValUI(QString)));
-  connect(&inputThread, SIGNAL(updateLastStatusUI(QString)),
-          SLOT(onUpdateLastStatusUI(QString)));
-
-  inputThread.abortInput = false;
-  inputThread.start();
-  ui->startInputButton->setEnabled(false);
-  ui->stopInputButton->setVisible(true);
-  ui->startInputButton->setText("Running");
-}
-
-void MainWindow::on_stopInputButton_clicked() {
-  ui->startInputButton->setEnabled(true);
-  ui->stopInputButton->setVisible(false);
-  ui->startInputButton->setText("Start");
-
-  inputThread.abortInput = true;
-  inputThread.quit();
-}
-
-void MainWindow::on_pushButton_clicked() {
-  ui->outputComboBoxBase->clear();
-  loadComPortData();
-  foreach (const QString &comName, availableComPorts) {
-    ui->outputComboBoxBase->addItem(comName);
-  }
-}
-
-void MainWindow::on_inputRefreshBtn_clicked() {
-  ui->inputComboBoxBase->clear();
-  loadComPortData();
-  foreach (const QString &comName, availableComPorts) {
-    ui->inputComboBoxBase->addItem(comName);
-  }
-}
-
-void MainWindow::on_addComInputBtn_clicked() {
-  addInputComRow(true, inputComRowCounter);
-  ui->comInputVBox->update();
-}
-
-void MainWindow::onClicked() {
-  std::cout << "clicked" << std::endl;
-  QPushButton *btn = qobject_cast<QPushButton *>(sender());
-  QString btnName = btn->objectName();
-  QStringList splitString = btnName.split('-');
-
-  QString nameOfRow = "row" + splitString[1];
-
-  QHBoxLayout *selectedRow =
-      ui->inputComListVBox->findChild<QHBoxLayout *>(nameOfRow);
-  std::cout << selectedRow->objectName().toStdString() << std::endl;
-  QLayoutItem *child;
-  while ((child = selectedRow->takeAt(0)) != 0) {
-    child->widget()->setParent(NULL);
-    delete child;
-  }
-  delete selectedRow;
-  ui->comInputVBox->update();
-  inputComRowCounter--;
-  settings->beginGroup("inputCom");
-  settings->setValue("inputCounter", inputComRowCounter);
-  settings->endGroup();
-  settings->sync();
-  if (inputComRowCounter < 10) {
-    ui->addComInputBtn->setEnabled(true);
-  }
-}
-
-void MainWindow::on_inputOptionsBtn_clicked() {
-  QWidget *extraOptions = ui->inputExtraOptionsWidget;
-  extraInputOptionsVisible = !extraInputOptionsVisible;
-  if (extraInputOptionsVisible) {
-    extraOptions->show();
-  } else {
-    extraOptions->hide();
-  }
-}
-
-void MainWindow::on_setOptionsBtn_clicked() {
-  QWidget *setBlock = ui->setCreationHBox;
-  setBlockVisible = !setBlockVisible;
-  if (setBlockVisible) {
-    setBlock->show();
-  } else {
-    setBlock->hide();
-  }
-}
-
-void MainWindow::on_saveSetBtn_clicked() {
-  if (!loadedSet) {
-    amntSets++;
-  }
-  QString name = ui->setNameTextInput->text();
-  if (name.length() > 0) {
-    Set setEdited = Set(amntSets, !loadedSet, name);
-
-    QList<QCheckBox *> checkBoxes =
-        ui->cbTabWidget->findChildren<QCheckBox *>();
-    foreach (QCheckBox *cb, checkBoxes) {
-      if (cb->isChecked()) {
-        setEdited.addCheckBox(cb->objectName());
-      }
-    }
-    std::cout << "send" << std::endl;
-    setEdited.createSet();
-  }
-}
-
-void MainWindow::on_btnRadioStartButton_clicked() {
-  if (radioOn) {
-    radioThread.abortRadio = true;
-
-    ui->btnRadioStartButton->setChecked(false);
-    radioOn = false;
-  } else if (!radioOn) {
-    if (ui->comboBoxRadioComs->currentIndex() == 0) {
-      ui->btnRadioStartButton->setChecked(false);
-    } else {
-      radioThread.start();
-      radioThread.abortRadio = false;
-      std::cout << "clicked" << std::endl;
-      ui->btnRadioStartButton->setChecked(true);
-      radioOn = true;
-      QString comText = ui->comboBoxRadioComs->currentText();
-      std::string comNr =
-          R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
-
-      settings->beginGroup("Coms");
-      settings->setValue("radioActiveBase", comNr.c_str());
-      settings->endGroup();
-      settings->sync();
-    }
-  }
-}
-
 void MainWindow::on_btnSwitchComm1_clicked() {
   if (radioThread.isRunning()) {
     radioThread.switchCom1();
@@ -781,4 +423,9 @@ void MainWindow::on_btnSwitchNav1_clicked() {
   if (radioThread.isRunning()) {
     radioThread.switchNav1();
   }
+
+}
+MainWindow::~MainWindow() {
+  saveSettings();
+  delete ui;
 }

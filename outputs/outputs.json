@@ -1,0 +1,996 @@
+[
+  {
+    "id": 1,
+    "outputName": "PLANE ALT ABOVE GROUND",
+    "metric": "Feet",
+    "updateEvery": 10,
+    "dataType": 0
+  },
+  {
+    "id": 2,
+    "outputName": "SIM ON GROUND",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 3,
+    "outputName": "AUTOPILOT HEADING LOCK DIR",
+    "metric": "Degrees",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 4,
+    "outputName": "AUTOPILOT ALTITUDE LOCK VAR",
+    "metric": "Feet",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 5,
+    "outputName": "AUTOPILOT VERTICAL HOLD VAR",
+    "metric": "Feet/minute",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 6,
+    "outputName": "BAROMETER PRESSURE",
+    "metric": "Millibars",
+    "updateEvery": 10,
+    "dataType": 0
+  },
+  {
+    "id": 7,
+    "outputName": "VERTICAL SPEED",
+    "metric": "Feet per second",
+    "updateEvery": 10,
+    "dataType": 0
+  },
+  {
+    "id": 8,
+    "outputName": "AIRSPEED INDICATED",
+    "metric": "Knots",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 9,
+    "outputName": "GPS GROUND SPEED",
+    "metric": "Meters per second",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 10,
+    "outputName": "HEADING INDICATOR",
+    "metric": "Radians",
+    "updateEvery": 0.02,
+    "dataType": 0
+  },
+  {
+    "id": 11,
+    "outputName": "INDICATED ALTITUDE",
+    "metric": "Feet",
+    "updateEvery": 10,
+    "dataType": 0
+  },
+  {
+    "id": 12,
+    "outputName": "FUEL SELECTED QUANTITY PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 13,
+    "outputName": "COM ACTIVE FREQUENCY:1",
+    "metric": "Khz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 14,
+    "outputName": "COM ACTIVE FREQUENCY:2",
+    "metric": "Khz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 15,
+    "outputName": "KOHLSMAN SETTING HG",
+    "metric": "inHg",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 16,
+    "outputName": "COM STANDBY FREQUENCY:1",
+    "metric": "Khz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 17,
+    "outputName": "COM STANDBY FREQUENCY:2",
+    "metric": "Khz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 18,
+    "outputName": "NAV ACTIVE FREQUENCY:1",
+    "metric": "MHz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 19,
+    "outputName": "NAV STANDBY FREQUENCY:1",
+    "metric": "MHz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 20,
+    "outputName": "NAV ACTIVE FREQUENCY:2",
+    "metric": "MHz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 21,
+    "outputName": "NAV STANDBY FREQUENCY:2",
+    "metric": "MHz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 22,
+    "outputName": "NAV RADIAL ERROR:1",
+    "metric": "Degrees",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 23,
+    "outputName": "NAV VOR LATLONALT:1",
+    "metric": "SIMCONNECT_DATA_LATLONALT",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 24,
+    "outputName": "ADF ACTIVE FREQUENCY:1",
+    "metric": "Hz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 25,
+    "outputName": "ADF STANDBY FREQUENCY:1",
+    "metric": "Hz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 26,
+    "outputName": "ADF RADIAL:1",
+    "metric": "Degrees",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 27,
+    "outputName": "ADF SIGNAL:1",
+    "metric": "Number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 28,
+    "outputName": "ADF ACTIVE FREQUENCY:2",
+    "metric": "Hz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 29,
+    "outputName": "ADF STANDBY FREQUENCY:2",
+    "metric": "Hz",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 30,
+    "outputName": "ADF RADIAL:2",
+    "metric": "Degrees",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 31,
+    "outputName": "ADF SIGNAL:2",
+    "metric": "Number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 32,
+    "outputName": "NAV DME:1",
+    "metric": "Nautical miles",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 33,
+    "outputName": "NAV DMESPEED:1",
+    "metric": "Knots",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 34,
+    "outputName": "NAV DME:2",
+    "metric": "Nautical miles",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 35,
+    "outputName": "NAV DMESPEED:2",
+    "metric": "Knots",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 36,
+    "outputName": "TRANSPONDER CODE:1",
+    "metric": "number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 37,
+    "outputName": "TRANSPONDER CODE:2",
+    "metric": "number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 38,
+    "outputName": "LIGHT TAXI ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 39,
+    "outputName": "LIGHT STROBE ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 40,
+    "outputName": "LIGHT PANEL ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 41,
+    "outputName": "LIGHT RECOGNITION ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 42,
+    "outputName": "LIGHT WING ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 43,
+    "outputName": "LIGHT LOGO ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 44,
+    "outputName": "LIGHT CABIN ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 45,
+    "outputName": "LIGHT HEAD ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 46,
+    "outputName": "LIGHT BRAKE ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 47,
+    "outputName": "LIGHT NAV ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 48,
+    "outputName": "LIGHT BEACON ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 49,
+    "outputName": "LIGHT LANDING ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 50,
+    "outputName": "STALL WARNING",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 51,
+    "outputName": "OVERSPEED WARNING",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 52,
+    "outputName": "AILERON TRIM",
+    "metric": "Radians",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 53,
+    "outputName": "AILERON TRIM PCT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 54,
+    "outputName": "RUDDER TRIM",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 55,
+    "outputName": "RUDDER TRIM PCT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 56,
+    "outputName": "AILERON TRIM PCT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 57,
+    "outputName": "RUDDER TRIM PCT",
+    "metric": "Percent over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 58,
+    "outputName": "ELEVATOR TRIM POSITION",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 59,
+    "outputName": "ELEVATOR TRIM PCT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 60,
+    "outputName": "FLAPS HANDLE PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 61,
+    "outputName": "FLAPS HANDLE INDEX",
+    "metric": "Number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 62,
+    "outputName": "FLAPS NUM HANDLE POSITIONS",
+    "metric": "Number",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 63,
+    "outputName": "TRAILING EDGE FLAPS LEFT PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 64,
+    "outputName": "TRAILING EDGE FLAPS RIGHT PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 65,
+    "outputName": "TRAILING EDGE FLAPS LEFT ANGLE",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 66,
+    "outputName": "TRAILING EDGE FLAPS RIGHT ANGLE",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 67,
+    "outputName": "LEADING EDGE FLAPS LEFT PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 68,
+    "outputName": "LEADING EDGE FLAPS RIGHT PERCENT",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 69,
+    "outputName": "LEADING EDGE FLAPS LEFT ANGLE",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 70,
+    "outputName": "LEADING EDGE FLAPS RIGHT ANGLE",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 71,
+    "outputName": "GEAR HANDLE POSITION",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 72,
+    "outputName": "GEAR HYDRAULIC PRESSURE",
+    "metric": "psf",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 73,
+    "outputName": "TAILWHEEL LOCK ON",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 74,
+    "outputName": "GEAR CENTER POSITION",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 75,
+    "outputName": "GEAR LEFT POSITION",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 76,
+    "outputName": "GEAR RIGHT POSITION",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 77,
+    "outputName": "GEAR TAIL POSITION",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 78,
+    "outputName": "GEAR AUX POSITION",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 79,
+    "outputName": "GEAR TOTAL PCT EXTENDED",
+    "metric": "Percentage",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 80,
+    "outputName": "AUTOPILOT AVAILABLE",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 81,
+    "outputName": "AUTOPILOT MASTER",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 82,
+    "outputName": "AUTOPILOT WING LEVELER",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 83,
+    "outputName": "AUTOPILOT NAV1 LOCK",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 84,
+    "outputName": "AUTOPILOT HEADING LOCK",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 85,
+    "outputName": "AUTOPILOT ALTITUDE LOCK",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 86,
+    "outputName": "AUTOPILOT ATTITUDE HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 87,
+    "outputName": "AUTOPILOT GLIDESLOPE HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 88,
+    "outputName": "AUTOPILOT APPROACH HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 89,
+    "outputName": "AUTOPILOT BACKCOURSE HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 90,
+    "outputName": "AUTOPILOT FLIGHT DIRECTOR ACTIVE",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 91,
+    "outputName": "AUTOPILOT AIRSPEED HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 92,
+    "outputName": "AUTOPILOT MACH HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 93,
+    "outputName": "AUTOPILOT YAW DAMPER",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 94,
+    "outputName": "AUTOPILOT THROTTLE ARM",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 95,
+    "outputName": "AUTOPILOT TAKEOFF POWER ACTIVE",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 96,
+    "outputName": "AUTOTHROTTLE ACTIVE",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 97,
+    "outputName": "AUTOPILOT NAV1 LOCK",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 98,
+    "outputName": "AUTOPILOT VERTICAL HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 99,
+    "outputName": "AUTOPILOT RPM HOLD",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 100,
+    "outputName": "GPS COURSE TO STEER",
+    "metric": "Radians",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 101,
+    "outputName": "TITLE",
+    "metric": "NULL",
+    "updateEvery": 0,
+    "dataType": 0
+  },
+  {
+    "id": 102,
+    "outputName": "NAV OBS:1",
+    "metric": "Degrees",
+    "updateEvery": 0.1,
+    "dataType": 0
+  },
+  {
+    "id": 103,
+    "outputName": "NAV OBS:2",
+    "metric": "Degrees",
+    "updateEvery": 0.1,
+    "dataType": 0
+  },
+  {
+    "id": 104,
+    "outputName": "FUEL TANK CENTER LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 105,
+    "outputName": "FUEL TANK CENTER2 LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 106,
+    "outputName": "FUEL TANK CENTER3 LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 107,
+    "outputName": "FUEL TANK LEFT MAIN LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 108,
+    "outputName": "FUEL TANK LEFT AUX LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 109,
+    "outputName": "FUEL TANK LEFT TIP LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 110,
+    "outputName": "FUEL TANK RIGHT MAIN LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 111,
+    "outputName": "FUEL TANK RIGHT AUX LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 112,
+    "outputName": "FUEL TANK RIGHT TIP LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 113,
+    "outputName": "FUEL TANK EXTERNAL1 LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 114,
+    "outputName": "FUEL TANK EXTERNAL2 LEVEL",
+    "metric": "Percent Over 100",
+    "updateEvery": 0.01,
+    "dataType": 0
+  },
+  {
+    "id": 115,
+    "outputName": "FUEL TANK CENTER CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 116,
+    "outputName": "FUEL TANK CENTER2 CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 117,
+    "outputName": "FUEL TANK CENTER3 CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 118,
+    "outputName": "FUEL TANK LEFT MAIN CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 119,
+    "outputName": "FUEL TANK LEFT AUX CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 120,
+    "outputName": "FUEL TANK LEFT TIP CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 121,
+    "outputName": "FUEL TANK RIGHT MAIN CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 122,
+    "outputName": "FUEL TANK RIGHT AUX CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 123,
+    "outputName": "FUEL TANK RIGHT TIP CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 124,
+    "outputName": "FUEL TANK EXTERNAL1 CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 125,
+    "outputName": "FUEL TANK EXTERNAL2 CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 126,
+    "outputName": "FUEL LEFT CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 127,
+    "outputName": "FUEL RIGHT CAPACITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 128,
+    "outputName": "FUEL TANK CENTER QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 129,
+    "outputName": "FUEL TANK CENTER2 QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 130,
+    "outputName": "FUEL TANK CENTER3 QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 131,
+    "outputName": "FUEL TANK LEFT MAIN QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 132,
+    "outputName": "FUEL TANK LEFT AUX QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 133,
+    "outputName": "FUEL TANK LEFT TIP QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 134,
+    "outputName": "FUEL TANK RIGHT MAIN QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 135,
+    "outputName": "FUEL TANK RIGHT AUX QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 136,
+    "outputName": "FUEL TANK RIGHT TIP QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 137,
+    "outputName": "FUEL TANK EXTERNAL1 QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 138,
+    "outputName": "FUEL TANK EXTERNAL2 QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 139,
+    "outputName": "FUEL LEFT QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 140,
+    "outputName": "FUEL RIGHT QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 141,
+    "outputName": "FUEL TOTAL QUANTITY",
+    "metric": "Gallons",
+    "updateEvery": 1,
+    "dataType": 0
+  },
+  {
+    "id": 142,
+    "outputName": "BRAKE PARKING INDICATOR",
+    "metric": "Bool",
+    "updateEvery": 0,
+    "dataType": 0
+  }
+]

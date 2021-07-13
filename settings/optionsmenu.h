@@ -24,6 +24,8 @@ class optionsMenu : public QWidget {
 
   void on_baudComboBox_currentTextChanged(const QString &arg1);
 
+
+
  private:
   Ui::optionsMenu *uiOptions;
   const int defaultArduinoFrameUpdate = 15;
