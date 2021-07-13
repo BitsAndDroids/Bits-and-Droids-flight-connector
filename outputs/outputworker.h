@@ -12,6 +12,8 @@
 #include <headers/SerialPort.hpp>
 #include "headers/SimConnect.h"
 #include "output.h"
+#include "outputbundle.h"
+#include "outputhandler.h"
 
 class OutputWorker: public QThread
 {
@@ -35,6 +37,8 @@ class OutputWorker: public QThread
   bool abort = false;
 
  private:
+  QList<outputBundle*> outputBundles;
+  outputHandler outputHandler;
   QMap<int,Output*> availableSets;
   QString path =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
