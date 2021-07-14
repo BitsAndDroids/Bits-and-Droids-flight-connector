@@ -14,16 +14,16 @@
 #include "outputmapper.h"
 #include "stdio.h"
 #include "strsafe.h"
-char output[DATA_LENGTH];
-bool strincProcessing = false;
+
+
+
 bool connectionError = false;
 float prevSpeed = 0.0f;
 float currentSpeed;
 int eps = 1;
+
 bool lastConnectionState = false;
 SerialPort *ports[10];
-// QList<SerialPort *> ports;
-SerialPort *arduino;
 SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
 int quit = 0;
 HANDLE hSimConnect = NULL;
@@ -61,28 +61,54 @@ enum DATA_REQUEST_ID {
 using namespace std;
 SerialPort *arduinoTest;
 OutputWorker::OutputWorker() {}
+void sendToArduino(float received, std::string prefix, int index,int mode){
 
-void sendToArduino(float received, std::string prefix, int index) {
-  auto intVal = static_cast<int>(received);
+    int intVal;
+    std::string input_string;
 
-  if (!ports[index]->isConnected()) {
-    connectionError = true;
-  } else {
-    connectionError = false;
-  }
-  const auto value = intVal;
+    if(mode == 0 || mode == 3){
+      intVal = static_cast<int>(received);
+    } else if(mode == 4){
+        if (received == 0) {
+          intVal = 0;
+        } else {
+          intVal = 1;
+        }
+    }
 
-  auto input_string = prefix + std::to_string(value);
-  cout << "size: " << input_string.size() << endl;
-  auto *const c_string = new char[input_string.size() + 1];
-  std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
-  cout << strlen(c_string) << endl;
-  cout << c_string << endl;
-  ports[index]->writeSerialPort(c_string, strlen(c_string));
-  qDebug() << ports[index] << "YES";
-  delete[] c_string;
+    if (!ports[index]->isConnected()) {
+      connectionError = true;
+    } else {
+      connectionError = false;
+    }
+
+    if(mode == 3){
+        input_string = prefix + std::to_string(received);
+    } else{
+        input_string = prefix + std::to_string(intVal);
+    }
+
+
+    cout << "size: " << input_string.size() << endl;
+    auto *const c_string = new char[input_string.size() + 1];
+    std::copy(input_string.begin(), input_string.end(), c_string);
+    c_string[input_string.size()] = '\n';
+    cout << strlen(c_string) << endl;
+    cout << c_string << endl;
+
+    if(mode == 1){
+            if (received < 0) {
+              ports[index]->writeSerialPort(c_string, 7);
+            } else {
+              ports[index]->writeSerialPort(c_string, 6);
+            }
+        } else if(mode == 0){
+    ports[index]->writeSerialPort(c_string, strlen(c_string));
+    }
+    qDebug() << ports[index] << "YES";
+    delete[] c_string;
 }
+
 void sendCharToArduino(const char *received, std::string prefix) {
   if (!arduinoTest->isConnected()) {
     connectionError = true;
@@ -94,94 +120,6 @@ void sendCharToArduino(const char *received, std::string prefix) {
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-  arduinoTest->writeSerialPort(c_string, strlen(c_string));
-  delete[] c_string;
-}
-void sendLengthToArduino(float received, std::string prefix, int strLength,
-                         int index) {
-  qDebug() << "MATEY INTVAL = " << received;
-  auto intVal = static_cast<int>(received);
-
-  if (!ports[index]->isConnected()) {
-    connectionError = true;
-    qDebug() << "TRUE";
-  } else {
-    connectionError = false;
-    qDebug() << "FALSE";
-  }
-
-  auto input_string = prefix + std::to_string(intVal);
-
-  switch ((strLength + 3) - input_string.size()) {
-    case 1: {
-      input_string += " ";
-      break;
-    }
-    case 2: {
-      input_string += "  ";
-      break;
-    }
-    case 3: {
-      input_string += "   ";
-      break;
-    }
-    case 4: {
-      input_string += "    ";
-      break;
-    }
-    case 5: {
-      input_string += "     ";
-      break;
-    }
-    default:
-      break;
-  }
-
-  auto *const c_string = new char[input_string.size() + 1];
-  std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
-  ports[index]->writeSerialPort(c_string, strlen(c_string));
-  delete[] c_string;
-}
-
-void sendFloatToArduino(float received, std::string prefix) {
-  if (!arduinoTest->isConnected()) {
-    connectionError = true;
-  } else {
-    connectionError = false;
-  }
-  auto input_string = prefix + std::to_string(received);
-  auto *const c_string = new char[input_string.size() + 1];
-  std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
-  if (received < 0) {
-    arduinoTest->writeSerialPort(c_string, 7);
-  } else {
-    arduinoTest->writeSerialPort(c_string, 6);
-  }
-
-  delete[] c_string;
-}
-
-void sendBoolToArduino(float received, std::string prefix) {
-  int intVal;
-  if (received == 0) {
-    intVal = 0;
-  } else {
-    intVal = 1;
-  }
-
-  if (!arduinoTest->isConnected()) {
-    connectionError = true;
-  } else {
-    connectionError = false;
-  }
-  const auto value = intVal;
-  auto input_string = prefix + std::to_string(value);
-  auto *const c_string = new char[input_string.size() + 1];
-  std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
-
   arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
@@ -270,6 +208,7 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 bundle = i;
               }
             }
+
             //            while (bundle == NULL) {
             //              if
             //              (outputCast->outputBundles->at(counter)->isOutputInBundle(
@@ -288,24 +227,27 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
             switch (mode) {
               case 0: {
                 qDebug() << "YARRR";
-                sendToArduino(pS->datum[count].value, prefix, bundle);
+                sendToArduino(pS->datum[count].value, prefix, bundle,0);
                 break;
               }
               case 1: {
                 qDebug() << "YARRR";
-                sendLengthToArduino(pS->datum[count].value * 100, prefix, 3,
-                                    bundle);
+                sendToArduino(pS->datum[count].value * 100, prefix,
+                                    bundle,0);
                 break;
               }
               case 2: {
                 sendToArduino(radianToDegree(pS->datum[count].value), prefix,
-                              bundle);
+                              bundle,0);
                 break;
               }
-              case 3:;
+            case 3:{
+                sendToArduino(pS->datum[count].value, prefix,bundle,3);
+                break;
+            };
                 break;
               case 4: {
-                sendBoolToArduino(pS->datum[count].value, prefix);
+                sendToArduino(pS->datum[count].value, prefix, bundle,4);
                 break;
               }
               case 5:;
@@ -315,17 +257,17 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 if (inHg % (inHg / 10) >= 5) {
                   inHg += 10;
                 }
-                sendToArduino(inHg / 10, prefix, bundle);
+                sendToArduino(inHg / 10, prefix, bundle,0);
                 break;
               }
               case 7: {
-                sendToArduino(pS->datum[count].value * 1.94, prefix, bundle);
+                sendToArduino(pS->datum[count].value * 1.94, prefix, bundle,0);
                 break;
               }
 
               case 8: {
-                sendLengthToArduino(pS->datum[count].value / 1000, prefix, 4,
-                                    bundle);
+                sendToArduino(pS->datum[count].value / 1000, prefix,
+                                    bundle, 0);
                 break;
               }
 
@@ -356,7 +298,7 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 }
 void OutputWorker::testDataRequest() {
   HRESULT hr;
-  QStringList *keys = settingsHandler.retrieveKeys("outputcoms");
+  *keys = settingsHandler.retrieveKeys("outputcoms");
   for (int i = 0; i < keys->size(); i++) {
     ports[i] = new SerialPort(
         settingsHandler.retrieveSetting("outputcoms", keys->at(i))
@@ -415,8 +357,10 @@ void OutputWorker::testDataRequest() {
 OutputWorker::~OutputWorker() {
   lastConnectionState = false;
   connectionError = false;
-  for (int i = 0; i < outputBundles->size(); i++) {
-    outputBundles->at(i)->getSerialPort()->closeSerial();
+  for (int i = 0; i < keys->size(); i++) {
+      if(ports[i]->isConnected()){
+    ports[i]->closeSerial();
+      }
   }
   // arduinoTest->closeSerial();
   mutex.lock();

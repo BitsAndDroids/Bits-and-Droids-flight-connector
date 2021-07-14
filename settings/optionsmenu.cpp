@@ -1,4 +1,4 @@
-#include "headers/optionsmenu.h"
+#include "optionsmenu.h"
 
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -18,87 +18,75 @@ using namespace std;
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
   uiOptions->setupUi(this);
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-  settings.beginGroup("Settings");
+
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
 
-  QStringList keys = settings.childKeys();
+  QStringList keys = *settingsHandler.retrieveKeys("Settings");
   if (keys.size() > 0) {
-    foreach (const QString &key, settings.childKeys()) {
+    foreach (const QString &key, keys) {
       if (uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)) {
         uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)->setText(
-            settings.value(key).toString());
+           settingsHandler.retrieveSetting("Settings", key)->toString());
       }
     }
-    if (!settings.value("CBR").isNull()) {
-      uiOptions->baudComboBox->setCurrentText(settings.value("CBR").toString());
+    if (!settingsHandler.retrieveSetting("Settings","CBR")->isNull()) {
+      uiOptions->baudComboBox->setCurrentText(settingsHandler.retrieveSetting("Setting","CBR")->toString());
     }
   }
-  settings.endGroup();
-  settings.sync();
+
 
   // Range handling
   uiOptions->vlOptions->setAlignment(Qt::AlignTop);
   uiOptions->vlEngineRange->addLayout(builder.RangeBuilder());
 
-  // Loadin saved data from the Settings.ini file
-  settings.beginGroup("Ranges");
 
   QList<QLineEdit *> allRangeLabels =
       uiOptions->widgetRanges->findChildren<QLineEdit *>();
-  QStringList rangeKeys = settings.childKeys();
+  QStringList rangeKeys = *settingsHandler.retrieveKeys("Ranges");
   if (rangeKeys.size() > 0) {
     foreach (const QString &key, rangeKeys) {
       if (uiOptions->widgetRanges->findChild<QLineEdit *>(key)) {
         uiOptions->widgetRanges->findChild<QLineEdit *>(key)->setText(
-            settings.value(key).toString());
+            settingsHandler.retrieveSetting("Ranges",key)->toString());
       }
     }
   }
-  if (!settings.value("maxReverseId").isNull()) {
-    int value = settings.value("maxReverseId").toInt();
+  if (!settingsHandler.retrieveSetting("Ranges","maxReverseId")->isNull()) {
+    int value = settingsHandler.retrieveSetting("Ranges","maxReverseId")->toInt();
     if (value != -1) {
       uiOptions->buttonGroup->button(value)->click();
     }
   }
-  settings.endGroup();
+
 }
 
 optionsMenu::~optionsMenu() { delete uiOptions; }
 
 void optionsMenu::on_saveSettingsBtn_clicked() {
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-  settings.beginGroup("Settings");
+
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
   qDebug() << "size" << allLabels.size();
   for (int i = 0; i < allLabels.size(); i++) {
     QString name = allLabels.at(i)->objectName();
     qDebug() << "Clicked" << name;
-    settings.setValue(name, allLabels.at(i)->text());
+    settingsHandler.storeValue("Settings",name, allLabels.at(i)->text());
   }
-  settings.setValue("CBR", uiOptions->baudComboBox->currentText());
+  settingsHandler.storeValue("Settings","CBR", uiOptions->baudComboBox->currentText());
 
-  settings.endGroup();
-  settings.sync();
 
-  settings.beginGroup("Ranges");
 
   QList<QLineEdit *> rangeLineEdits =
       uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
   for (int i = 0; i < rangeLineEdits.size(); i++) {
-    settings.setValue(rangeLineEdits[i]->objectName(),
+    settingsHandler.storeValue("Ranges",rangeLineEdits[i]->objectName(),
                       rangeLineEdits[i]->text());
   }
 
   QString idleStr = "Engine " + QString::number(1) + "Min";
-  int idleCutoff = settings.value(idleStr).toInt();
+  int idleCutoff = settingsHandler.retrieveSetting("Ranges",idleStr)->toInt();
   qDebug() << "cut" << idleCutoff;
 
   int value;
@@ -118,11 +106,8 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
       value = -23000;
       break;
   }
-  settings.setValue("maxReverseRange", value);
-  settings.setValue("maxReverseId", id);
-
-  settings.sync();
-  settings.endGroup();
+  settingsHandler.storeValue("Ranges","maxReverseRange", value);
+  settingsHandler.storeValue("Ranges","maxReverseId", id);
 }
 
 void optionsMenu::on_checkBox_stateChanged(int checked) {

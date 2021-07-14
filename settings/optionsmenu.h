@@ -1,6 +1,8 @@
 #ifndef OPTIONSMENU_H
 #define OPTIONSMENU_H
 
+#include "settingshandler.h"
+
 #include <headers/Engine.h>
 
 #include <QWidget>
@@ -27,6 +29,7 @@ class optionsMenu : public QWidget {
 
 
  private:
+  SettingsHandler settingsHandler;
   Ui::optionsMenu *uiOptions;
   const int defaultArduinoFrameUpdate = 15;
   const int defaultArduinoWaitMs = 100;
