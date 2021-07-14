@@ -1,19 +1,20 @@
 #ifndef FORMBUILDER_H
 #define FORMBUILDER_H
 
+#include <outputs/set.h>
+#include <outputs/sethandler.h>
 #include <qstring.h>
+#include <qtabwidget.h>
 
 #include <QHBoxLayout>
 #include <QLabel>
-#include <qtabwidget.h>
 
-#include <outputs/set.h>
-#include <outputs/sethandler.h>
+#include "settingshandler.h"
 
 using namespace std;
 
 class FormBuilder : public QObject {
- Q_OBJECT
+  Q_OBJECT
 
  public:
   FormBuilder();
@@ -36,7 +37,7 @@ class FormBuilder : public QObject {
   QTabWidget *generateOutputTabs();
   QVBoxLayout *generateOutputSetList();
   QGridLayout *generateOutputControls();
-  //QVBoxLayout *generateActiveSet();
+  // QVBoxLayout *generateActiveSet();
 
   QWidget *generateSetRow(set setForRow);
   QHBoxLayout *generateOutputRow(Output *output);
@@ -44,10 +45,10 @@ class FormBuilder : public QObject {
   QLabel *generateHeader(QString text);
   QWidget *generateComSelector(bool setsNeeded, int mode);
   QWidget *generateComControls(int mode);
-  QList<set> getAvailableSets() { return availableSets;};
-  QList<QString> getAvailableComPorts(){ return availableComPorts;};
+  QList<set> *getAvailableSets() { return availableSets; };
+  QList<QString> getAvailableComPorts() { return availableComPorts; };
 
-private slots:
+ private slots:
   void localRemove();
   void localEdit();
 
@@ -56,7 +57,7 @@ private slots:
   void localStop();
   void localAdd();
   void removeComWidget();
-signals:
+ signals:
   void addSet();
   void setEdited(QString id);
   void removeSet(QString id);
@@ -64,12 +65,12 @@ signals:
   void refreshPressed(int mode);
   void stopPressed(int mode);
   void addPressed(int mode);
-private:
+
+ private:
   SetHandler setHandler;
-  QList<set> availableSets;
+  SettingsHandler settingsHandler;
+  QList<set> *availableSets;
   QList<QString> availableComPorts;
-
-
 };
 
 #endif  // FORMBUILDER_H

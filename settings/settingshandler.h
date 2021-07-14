@@ -1,21 +1,27 @@
 #ifndef SETTINGSHANDLER_H
 #define SETTINGSHANDLER_H
 
-#include <QObject>
-#include <QSettings>
 #include <qstandardpaths.h>
 
-class SettingsHandler
-{
+#include <QObject>
+#include <QSettings>
 
-public:
-    SettingsHandler();
-    void storeQStringToGroup(QString group, QString key, QString value);
-private:
-    QString path =
-        QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QSettings *settings =
-        new QSettings(path +"/"+ "settings.ini", QSettings::IniFormat);
+class SettingsHandler {
+ public:
+  SettingsHandler();
+  void storeValue(QString group, QString key, QVariant value);
+  QVariant* retrieveSetting(QString group, QString key);
+  QStringList* retrieveKeys(QString group);
+  void clearKeys(QString group);
+  void removeSetting(QString group, QString key);
+  QString getPath() { return path; };
+
+ private:
+  QString path =
+      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QSettings* settings =
+      new QSettings(QSettings::IniFormat, QSettings::UserScope,
+                    "Bits and Droids", "settings");
 };
 
-#endif // SETTINGSHANDLER_H
+#endif  // SETTINGSHANDLER_H

@@ -14,8 +14,8 @@
 #include <QSettings>
 
 #include "SerialPort.hpp"
-#include "radioworker.h"
 #include "constants.h"
+#include "radioworker.h"
 const char defaultFileName[] = "indexDl.html";
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
@@ -35,14 +35,13 @@ class MainWindow : public QMainWindow {
 
   void startOutputs();
   void on_btnSwitchNav1_clicked();
-public slots:
+ public slots:
   void onUpdateLastValUI(const QString &lastVal);
   void onUpdateLastStatusUI(const QString &lastStatus);
   void startMode(int mode);
   void refreshComs(int mode);
   void stopMode(int mode);
   void addCom(int mode);
-
 
  signals:
   void updateLastValUI(QString lastVal);
@@ -55,22 +54,16 @@ public slots:
 
  private slots:
 
-
   void onfinish(QNetworkReply *rep);
 
   std::string convertComPort(QString comText);
 
-
-
  private:
   SetHandler *setHandler = new SetHandler();
+  SettingsHandler settingsHandler;
   void stopInput();
   void stopOutput();
   void stopDual();
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings *settings =
-      new QSettings(path +"/"+ "settings.ini", QSettings::IniFormat);
 
   QString prevInputComInt;
   QList<QString> chopStrInput;
@@ -97,7 +90,7 @@ public slots:
   RadioWorker radioThread;
   OutputWorker outputThread;
   InputWorker inputThread;
-  QList<set> availableSets;
+  QList<set> *availableSets;
 
   Ui::MainWindow *ui;
   void openSettings();

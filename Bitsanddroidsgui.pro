@@ -26,44 +26,65 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
-    Inputs/InputSwitchHandler.cpp \
+Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
+    outputs/activeoutputs.cpp \
+    outputs/output.cpp \
+    outputs/outputbundle.cpp \
+    outputs/outputenum.cpp \
+    outputs/outputhandler.cpp \
+    outputs/outputmapper.cpp \
+    outputs/outputworker.cpp \
+    outputs/set.cpp \
+    outputs/sethandler.cpp \
     settings/formbuilder.cpp \
     settings/optionsmenu.cpp \
+    settings/outputmenu.cpp \
+    settings/settingshandler.cpp \
     settings/settingsranges.cpp \
-    sources/ConnectWorker.cpp \
     sources/Engine.cpp \
     sources/SerialPort.cpp \
-    sources/Set.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/radioworker.cpp \
     sources/range.cpp
 
+
 HEADERS += \
-    Inputs/InputMapper.h \
+Inputs/InputMapper.h \
     Inputs/InputSwitchHandler.h \
     Inputs/InputWorker.h \
     Inputs/inputenum.h \
     headers/Engine.h \
-    headers/ConnectWorker.h \
-    headers/Set.h \
     headers/constants.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
     headers/radioworker.h \
     headers/range.h \
+    outputs/activeoutputs.h \
+    outputs/output.h \
+    outputs/outputbundle.h \
+    outputs/outputenum.h \
+    outputs/outputhandler.h \
+    outputs/outputmapper.h \
+    outputs/outputworker.h \
+    outputs/set.h \
+    outputs/sethandler.h \
     settings/formbuilder.h \
     settings/optionsmenu.h \
+    settings/outputmenu.h \
+    settings/settingshandler.h \
     settings/settingsranges.h
+
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
     mainwindow.ui \
-    optionsmenu.ui
+    optionsmenu.ui \
+    settings/outputmenu.ui
 
 TRANSLATIONS += \
     Bitsanddroidsgui_en_US.ts
@@ -80,6 +101,7 @@ DISTFILES += \
     fonts/DSEG7Classic-Bold.ttf \
     fonts/DSEG7Classic-Regular.ttf \
     html/bits-and-droids-flight-sim-connector.index \
+    images/refreshicon.png \
     styles.css
 
 RESOURCES += \

@@ -5,6 +5,7 @@
 #include <qstandardpaths.h>
 #include <qthread.h>
 #include <qwaitcondition.h>
+#include <settings/settingshandler.h>
 #include <tchar.h>
 #include <windows.h>
 
@@ -43,13 +44,10 @@ class InputWorker : public QThread {
   // void switchHandling(int index);
 
  private:
+  SettingsHandler settingsHandler;
   std::string lastVal;
   std::string lastStatus;
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings* settings =
-      new QSettings(path + "/" + "settings.ini", QSettings::IniFormat);
-
+  QStringList keys = *settingsHandler.retrieveKeys("inputCom");
   std::string prefix;
   void inputEvents();
 

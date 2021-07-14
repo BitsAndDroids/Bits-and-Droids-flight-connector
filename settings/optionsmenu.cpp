@@ -43,7 +43,7 @@ optionsMenu::optionsMenu(QWidget *parent)
   // Range handling
   uiOptions->vlOptions->setAlignment(Qt::AlignTop);
   uiOptions->vlEngineRange->addLayout(builder.RangeBuilder());
-  uiOptions->vlEngineRange->addWidget(builder.generateOutputTabs());
+
   // Loadin saved data from the Settings.ini file
   settings.beginGroup("Ranges");
 

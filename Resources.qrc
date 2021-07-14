@@ -15,5 +15,6 @@
         <file>images/batterySwitchOff.png</file>
         <file>images/avionicsSwitchOff.png</file>
         <file>images/avionicsSwitchOn.png</file>
+        <file>images/refreshicon.png</file>
     </qresource>
 </RCC>

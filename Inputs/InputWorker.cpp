@@ -78,31 +78,20 @@ enum INPUT_ID {
 };
 
 void InputWorker::inputEvents() {
-  settings->beginGroup("inputCom");
-  string val = settings->value("inputComActiveBase").toString().toStdString();
-  const char *valPort = val.c_str();
-  std::cout << valPort << std::endl;
-  settings->endGroup();
-  settings->sync();
   HRESULT hr;
-  settings->beginGroup("inputCom");
-  int inputs = settings->value("inputCounter").toInt();
-  if (inputs == NULL) {
-    inputs = 1;
-  }
-  int extraRows = inputs - 1;
-  const char *savedPort;
-  arduinoInput[0] = new SerialPort(valPort);
-  for (int i = 1; i < inputs; i++) {
-    QString comName = "inputCom" + QString::number(i);
-    savedPort = settings->value(comName).toString().toStdString().c_str();
+  cout << "why" << endl;
+  for (int i = 0; i < keys.size(); i++) {
+    const char *savedPort;
+    cout << "why" << endl;
+    savedPort = settingsHandler.retrieveSetting("inputCom", keys[i])
+                    ->toString()
+                    .toStdString()
+                    .c_str();
     std::cout << savedPort << std::endl;
     arduinoInput[i] = new SerialPort(savedPort);
     std::cout << i << "Is connected: " << arduinoInput[i]->isConnected()
               << std::endl;
   }
-  settings->endGroup();
-
   bool connected = false;
 
   while (abortInput != true) {
@@ -115,51 +104,66 @@ void InputWorker::inputEvents() {
 
         handler.object = SIMCONNECT_OBJECT_ID_USER;
         mapper.mapEvents(hInputSimConnect);
-        settings->beginGroup("Ranges");
-        if (!settings->value("FlapsMin").isNull()) {
+
+        if (!settingsHandler.retrieveSetting("ranges", "flapsmin")->isNull()) {
           for (int i = 0; i < constants::supportedEngines; i++) {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
-            int minRange = settings->value(minStr).toInt();
+
+            int minRange =
+                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
             cout << minRange << endl;
 
             QString idleStr =
                 "Engine " + QString::number(i + 1) + "Idle cutoff";
-            int idleCutoff = settings->value(idleStr).toInt();
+            int idleCutoff =
+                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
 
             QString maxStr = "Engine " + QString::number(i + 1) + "Max";
-            int maxRange = settings->value(maxStr).toInt();
+            int maxRange =
+                settingsHandler.retrieveSetting("ranges", maxStr)->toInt();
 
             handler.enginelist[i] =
                 Engine(minRange, idleCutoff, maxRange, i + 1);
           }
 
-          if (!settings->value("maxReverseRange").isNull()) {
-            handler.reverseAxis = settings->value("maxReverseRange").toFloat();
+          if (!settingsHandler.retrieveSetting("ranges", "maxReverseRange")
+                   ->isNull()) {
+            handler.reverseAxis =
+                settingsHandler.retrieveSetting("ranges", "maxReverseRange")
+                    ->toFloat();
           }
 
           for (int i = 0; i < constants::supportedMixtureLevers; i++) {
             QString minStr = "Mixture " + QString::number(i + 1) + "Min";
-            int minRange = settings->value(minStr).toInt();
+            int minRange =
+                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
             cout << minRange << endl;
 
             QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
-            int maxRange = settings->value(idleStr).toInt();
+            int maxRange =
+                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
 
             handler.mixtureRanges[i] = Range(minRange, maxRange);
           }
           for (int i = 0; i < constants::supportedPropellerLevers; i++) {
             QString minStr = "Propeller " + QString::number(i + 1) + "Min";
-            int minRange = settings->value(minStr).toInt();
+            int minRange =
+                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
 
             QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
-            int maxRange = settings->value(idleStr).toInt();
+            int maxRange =
+                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
 
             handler.propellerRanges[i] = Range(minRange, maxRange);
           }
-          int minFlaps = settings->value("FlapsMin").toInt();
-          int maxFlaps = settings->value("FlapsMax").toInt();
+          int minFlaps =
+              settingsHandler.retrieveSetting("ranges", "FlapsMin")->toInt();
+          int maxFlaps =
+              settingsHandler.retrieveSetting("ranges", "FlapsMax")->toInt();
           handler.flapsRange = Range(minFlaps, maxFlaps);
-        } else if (settings->value("FlapsMin").isNull()) {
+
+        } else if (settingsHandler.retrieveSetting("ranges", "FlapsMin")
+                       ->isNull()) {
           for (int i = 0; i < constants::supportedEngines; i++) {
             handler.enginelist[i] = Engine(0, 0, 1023, i);
           }
@@ -169,32 +173,34 @@ void InputWorker::inputEvents() {
           for (int i = 0; i < constants::supportedPropellerLevers; i++) {
             handler.propellerRanges[i] = Range(0, 1023);
           }
+
           handler.flapsRange = Range(0, 1023);
         }
-        settings->endGroup();
       }
     }
 
     Sleep(5);
-    for (int i = 0; i <= extraRows; i++) {
+    for (int i = 0; i < keys.size(); i++) {
+      cout << arduinoInput[i]->isConnected() << endl;
       const auto hasRead = arduinoInput[i]->readSerialPort(
           handler.receivedString[i], DATA_LENGTH);
+
       if (hasRead) {
         if (connected) {
           emit updateLastStatusUI("Connected to game");
           handler.switchHandling(i);
         }
         lastVal = handler.receivedString[i];
-        emit updateLastValUI(QString::fromStdString(lastVal));
       }
+
+      emit updateLastValUI(QString::fromStdString(lastVal));
     }
   }
 
   Sleep(1);
-  emit updateLastStatusUI("Connection closed");
+  // emit updateLastStatusUI("Connection closed");
   if (connected) {
-    arduinoInput[0]->closeSerial();
-    for (int i = 1; i <= extraRows; i++) {
+    for (int i = 0; i < keys.size(); i++) {
       if (arduinoInput[i]->isConnected()) {
         arduinoInput[i]->closeSerial();
       }

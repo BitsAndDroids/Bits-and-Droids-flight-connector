@@ -2,20 +2,18 @@
 #define MAX_RETURNED_ITEMS 255
 #include "outputworker.h"
 
+#include <headers/SimConnect.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
 #include <windows.h>
 
+#include <headers/SerialPort.hpp>
 #include <string>
 
+#include "outputmapper.h"
 #include "stdio.h"
 #include "strsafe.h"
-#include <headers/SimConnect.h>
-
-#include "outputmapper.h"
-
-#include <headers/SerialPort.hpp>
 char output[DATA_LENGTH];
 bool strincProcessing = false;
 bool connectionError = false;
@@ -23,9 +21,10 @@ float prevSpeed = 0.0f;
 float currentSpeed;
 int eps = 1;
 bool lastConnectionState = false;
-
+SerialPort *ports[10];
+// QList<SerialPort *> ports;
 SerialPort *arduino;
-
+SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
 int quit = 0;
 HANDLE hSimConnect = NULL;
 
@@ -59,15 +58,14 @@ enum DATA_REQUEST_ID {
   REQUEST_STRING,
 };
 
-
 using namespace std;
 SerialPort *arduinoTest;
 OutputWorker::OutputWorker() {}
 
-void sendToArduino(float received, std::string prefix) {
+void sendToArduino(float received, std::string prefix, int index) {
   auto intVal = static_cast<int>(received);
 
-  if (!arduinoTest->isConnected()) {
+  if (!ports[index]->isConnected()) {
     connectionError = true;
   } else {
     connectionError = false;
@@ -81,7 +79,8 @@ void sendToArduino(float received, std::string prefix) {
   c_string[input_string.size()] = '\n';
   cout << strlen(c_string) << endl;
   cout << c_string << endl;
-  arduinoTest->writeSerialPort(c_string, strlen(c_string));
+  ports[index]->writeSerialPort(c_string, strlen(c_string));
+  qDebug() << ports[index] << "YES";
   delete[] c_string;
 }
 void sendCharToArduino(const char *received, std::string prefix) {
@@ -98,16 +97,21 @@ void sendCharToArduino(const char *received, std::string prefix) {
   arduinoTest->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
-void sendLengthToArduino(float received, std::string prefix, int strLength) {
+void sendLengthToArduino(float received, std::string prefix, int strLength,
+                         int index) {
+  qDebug() << "MATEY INTVAL = " << received;
   auto intVal = static_cast<int>(received);
 
-  if (!arduinoTest->isConnected()) {
+  if (!ports[index]->isConnected()) {
     connectionError = true;
+    qDebug() << "TRUE";
   } else {
     connectionError = false;
+    qDebug() << "FALSE";
   }
-  const auto value = intVal;
-  auto input_string = prefix + std::to_string(value);
+
+  auto input_string = prefix + std::to_string(intVal);
+
   switch ((strLength + 3) - input_string.size()) {
     case 1: {
       input_string += " ";
@@ -136,7 +140,7 @@ void sendLengthToArduino(float received, std::string prefix, int strLength) {
   auto *const c_string = new char[input_string.size() + 1];
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
-  arduinoTest->writeSerialPort(c_string, strlen(c_string));
+  ports[index]->writeSerialPort(c_string, strlen(c_string));
   delete[] c_string;
 }
 
@@ -195,25 +199,20 @@ float radianToDegreeFloat(double rec) {
 }
 
 void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
-                                     void *pContext) {
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-  OutputWorker *outputCast = static_cast<OutputWorker *>(pContext);
-  settings.beginGroup("Settings");
-  int updatePerXFrames = settings.value("updateEveryXFramesLineEdit").toInt();
-  if (settings.value("updateEveryXFramesLineEdit").isNull()) {
-    updatePerXFrames = 15;
-  }
+                                    void *pContext) {
   HRESULT hr;
+  OutputWorker *outputCast = static_cast<OutputWorker *>(pContext);
+
+  int updatePerXFrames = 15;
+
   switch (pData->dwID) {
     case SIMCONNECT_RECV_ID_EVENT: {
       SIMCONNECT_RECV_EVENT *evt = (SIMCONNECT_RECV_EVENT *)pData;
 
       switch (evt->uEventID) {
         case EVENT_SIM_START:
-          outputMapper outputMapper;
-          //outputMapper.mapOutputs(NULL,hSimConnect);
+
+          qDebug() << "SIM STARTED";
           // Now the sim is running, request information on the user aircraft
           hr = SimConnect_RequestDataOnSimObject(
               hSimConnect, REQUEST_PDR, DEFINITION_PDR,
@@ -221,21 +220,25 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
               SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
                   SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
               0, updatePerXFrames);
-          if (strincProcessing) {
-            hr = SimConnect_RequestDataOnSimObject(
-                hSimConnect, REQUEST_STRING, DEFINITION_STRING,
-                SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
-                SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
-                    SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
-                0, 15);
-          }
+          qDebug() << hr;
 
+          hr = SimConnect_RequestDataOnSimObject(
+              hSimConnect, REQUEST_STRING, DEFINITION_STRING,
+              SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
+              SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
+                  SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
+              0, 15);
+
+          break;
+
+        default:
           break;
       }
       break;
     }
 
     case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
+      qDebug() << "si";
       SIMCONNECT_RECV_SIMOBJECT_DATA *pObjData =
           (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
 
@@ -256,47 +259,75 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
           {
             string valString = std::to_string(pS->datum[count].value);
-            Output* output = outputCast->outputHandler.findOutputById(pS->datum->id);
-            switch (pS->datum[count].id) {
+            int id = pS->datum[count].id;
+            Output *output = outputCast->outputHandler.findOutputById(id);
+            int bundle = NULL;
+
+            for (int i = 0; i < outputCast->outputBundles->size(); i++) {
+              if (outputCast->outputBundles->at(i)->isOutputInBundle(
+                      output->getId())) {
+                qDebug() << "FOUND IN SET";
+                bundle = i;
+              }
+            }
+            //            while (bundle == NULL) {
+            //              if
+            //              (outputCast->outputBundles->at(counter)->isOutputInBundle(
+            //                      output->getId())) {
+            //                bundle = counter;
+            //              }
+            //              counter++;
+            //            }
+
+            qDebug() << "id" << id << "BUNDLE ID" << bundle;
             int mode = output->getType();
             string prefix = std::to_string(output->getPrefix());
-            switch (mode){
-                case 0: {
-                sendToArduino(pS->datum[count].value, prefix);
+            qDebug() << "MODE" << mode << "PREFIX"
+                     << QString::fromStdString(prefix)
+                     << pS->datum[count].value;
+            switch (mode) {
+              case 0: {
+                qDebug() << "YARRR";
+                sendToArduino(pS->datum[count].value, prefix, bundle);
                 break;
-            }
-            case 1:{
-                sendLengthToArduino(pS->datum[count].value * 100, prefix, 3);
+              }
+              case 1: {
+                qDebug() << "YARRR";
+                sendLengthToArduino(pS->datum[count].value * 100, prefix, 3,
+                                    bundle);
                 break;
-            }
-            case 2: {
-                sendToArduino(radianToDegree(pS->datum[count].value), prefix);
+              }
+              case 2: {
+                sendToArduino(radianToDegree(pS->datum[count].value), prefix,
+                              bundle);
                 break;
-            }
-                case 3: ;break;
-            case 4:{
+              }
+              case 3:;
+                break;
+              case 4: {
                 sendBoolToArduino(pS->datum[count].value, prefix);
                 break;
-            }
-                case 5: ;break;
-            case 6: {
+              }
+              case 5:;
+                break;
+              case 6: {
                 int inHg = pS->datum[count].value * 1000;
-                                if (inHg % (inHg / 10) >= 5) {
-                                  inHg += 10;
-                                }
-                                sendToArduino(inHg / 10, prefix);
-                                break;
-            }
-            case 7:{
-                sendToArduino(pS->datum[count].value * 1.94, prefix);
+                if (inHg % (inHg / 10) >= 5) {
+                  inHg += 10;
+                }
+                sendToArduino(inHg / 10, prefix, bundle);
                 break;
-            }
-
-            case 8:{
-                sendLengthToArduino(pS->datum[count].value / 1000,prefix,4);
+              }
+              case 7: {
+                sendToArduino(pS->datum[count].value * 1.94, prefix, bundle);
                 break;
-            }
+              }
 
+              case 8: {
+                sendLengthToArduino(pS->datum[count].value / 1000, prefix, 4,
+                                    bundle);
+                break;
+              }
 
               default:
                 printf("\nUnknown datum ID: %i", pS->datum[count].id);
@@ -306,11 +337,11 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
           }
           break;
         }
-
+        default:
+          break;
       }
       break;
     }
-  }
 
     case SIMCONNECT_RECV_ID_QUIT: {
       // quit = 1;
@@ -319,32 +350,40 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
     default:
       printf("\n Unknown dwID: %d", pData->dwID);
-      cout << pData->dwVersion << endl;
+      cout << pData->dwVersion << "id" << pData->dwID << endl;
       break;
   }
 }
 void OutputWorker::testDataRequest() {
   HRESULT hr;
-
-  if (SUCCEEDED(
-          SimConnect_Open(&hSimConnect, "Tagged Data", NULL, 0, nullptr, 0))) {
+  QStringList *keys = settingsHandler.retrieveKeys("outputcoms");
+  for (int i = 0; i < keys->size(); i++) {
+    ports[i] = new SerialPort(
+        settingsHandler.retrieveSetting("outputcoms", keys->at(i))
+            ->toString()
+            .toStdString()
+            .c_str());
+    qDebug() << "hit";
+    if (ports[i]->isConnected()) {
+      cout << "CONNECTED" << endl;
+    } else {
+      cout << "NOT CONNECTED" << endl;
+    }
+  }
+  if (SUCCEEDED(SimConnect_Open(&hSimConnect, "data", NULL, 0, 0, 0))) {
     printf("\nConnected to Flight Simulator!");
 
     emit updateLastValUI("Connected to the game");
-    // Set up the data definition, ensuring that all the elements are in Float32
-    // units, to match the StructDatum structure The number of entries in the
-    // DEFINITION_PDR definition should be equal to the maxReturnedItems define
+    // Set up the data definition, ensuring that all the elements are in
+    // Float32 units, to match the StructDatum structure The number of entries
+    // in the DEFINITION_PDR definition should be equal to the
+    // maxReturnedItems define
 
     // DATA
 
+    outputMapper outputMapper;
 
-
-    settings->beginGroup("Coms");
-    string val = settings->value("outputComActiveBase").toString().toStdString();
-    const char *valPort = val.c_str();
-    arduinoTest = new SerialPort(valPort);
-    settings->endGroup();
-    settings->sync();
+    outputMapper.mapOutputs(outputsToMap, hSimConnect);
 
     // Request an event when the simulation starts
 
@@ -363,20 +402,31 @@ void OutputWorker::testDataRequest() {
         emit updateLastStatusUI("Succesfully connected to your Arduino");
       }
 
-      SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, nullptr);
+      SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, this);
       Sleep(1);
       quit();
     }
-    arduinoTest->closeSerial();
+    for (int i = 0; i < outputBundles->size(); i++) {
+      ports[i]->closeSerial();
+    }
     hr = SimConnect_Close(hSimConnect);
   }
 }
 OutputWorker::~OutputWorker() {
   lastConnectionState = false;
   connectionError = false;
+  for (int i = 0; i < outputBundles->size(); i++) {
+    outputBundles->at(i)->getSerialPort()->closeSerial();
+  }
   // arduinoTest->closeSerial();
   mutex.lock();
   abort = true;
   condition.wakeOne();
   mutex.unlock();
+}
+
+void OutputWorker::clearBundles() { outputBundles->clear(); }
+
+void OutputWorker::addBundle(outputBundle *bundle) {
+  outputBundles->append(bundle);
 }

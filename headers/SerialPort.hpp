@@ -9,6 +9,7 @@
 
 #define MAX_DATA_LENGTH 25
 
+#include <settings/settingshandler.h>
 #include <windows.h>
 
 #include <iostream>
@@ -19,7 +20,8 @@ class SerialPort {
   bool connected;
   COMSTAT status;
   DWORD errors;
-  int arduinoWaitTime = 100;
+  SettingsHandler settingsHandler;
+  int arduinoWaitTime = 15;
 
  public:
   explicit SerialPort(const char *portName);

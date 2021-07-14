@@ -14,19 +14,21 @@
 COMMTIMEOUTS cto;
 
 SerialPort::SerialPort(const char *portName) {
+  std::cout << portName << std::endl;
   this->connected = false;
 
   this->handler =
       CreateFileA(static_cast<LPCSTR>(portName), GENERIC_READ | GENERIC_WRITE,
                   0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-  settings.beginGroup("Settings");
-  arduinoWaitTime = settings.value("waitXMsBeforeSendingLineEdit").toInt();
-  if (settings.value("waitXMsBeforeSendingLineEdit").isNull()) {
-    arduinoWaitTime = 100;
+
+  arduinoWaitTime =
+      settingsHandler.retrieveSetting("com", "waitXMsBeforeSendingLineEdit")
+          ->toInt();
+  if (settingsHandler.retrieveSetting("com", "waitXMsBeforeSendingLineEdit")
+          ->isNull()) {
+    arduinoWaitTime = 15;
   }
+
   if (this->handler == INVALID_HANDLE_VALUE) {
     if (GetLastError() == ERROR_FILE_NOT_FOUND) {
       std::cerr << "ERROR: Handle was not attached.Reason : " << portName
@@ -40,18 +42,13 @@ SerialPort::SerialPort(const char *portName) {
     if (!GetCommState(this->handler, &dcbSerialParameters)) {
       std::cerr << "Failed to get current serial parameters\n";
     } else {
-      QString path =
-          QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-      QSettings settings(path + "/" + "settings.ini", QSettings::IniFormat);
-      settings.beginGroup("Settings");
-      if (settings.value("CBR").isNull()) {
+      if (settingsHandler.retrieveSetting("com", "CBR")->isNull()) {
         dcbSerialParameters.BaudRate = CBR_115200;
       } else {
-        dcbSerialParameters.BaudRate = settings.value("CBR").toInt();
+        dcbSerialParameters.BaudRate =
+            settingsHandler.retrieveSetting("com", "CBR")->toInt();
       }
-      std::cout << dcbSerialParameters.BaudRate << std::endl;
-      settings.endGroup();
-      settings.sync();
+      std::cout << "DCB" << dcbSerialParameters.BaudRate << std::endl;
 
       dcbSerialParameters.ByteSize = 8;
       dcbSerialParameters.StopBits = ONESTOPBIT;
