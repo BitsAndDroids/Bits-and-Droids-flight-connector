@@ -79,144 +79,76 @@ enum INPUT_ID {
 
 void InputWorker::inputEvents() {
   HRESULT hr;
-  cout << "why" << endl;
+  keys = *settingsHandler.retrieveKeys("inputCom");
   for (int i = 0; i < keys.size(); i++) {
     const char *savedPort;
-    cout << "why" << endl;
     savedPort = settingsHandler.retrieveSetting("inputCom", keys[i])
                     ->toString()
                     .toStdString()
                     .c_str();
-    std::cout << savedPort << std::endl;
+
     arduinoInput[i] = new SerialPort(savedPort);
     std::cout << i << "Is connected: " << arduinoInput[i]->isConnected()
               << std::endl;
   }
-  bool connected = false;
 
-  while (abortInput != true) {
-    if (!connected) {
-      hr = SimConnect_Open(&hInputSimConnect, "Inputs", NULL, 0, 0, 0);
-      cout << hr << endl;
-      if (hr == S_OK) {
-        connected = true;
-        handler.connect = hInputSimConnect;
+  while (!connected && !abortInput) {
+    cout << "YUPS" << endl;
+    if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "data", NULL, 0, 0, 0))) {
+      handler.connect = hInputSimConnect;
 
-        handler.object = SIMCONNECT_OBJECT_ID_USER;
-        mapper.mapEvents(hInputSimConnect);
+      handler.object = SIMCONNECT_OBJECT_ID_USER;
+      mapper.mapEvents(hInputSimConnect);
 
-        if (!settingsHandler.retrieveSetting("ranges", "flapsmin")->isNull()) {
-          for (int i = 0; i < constants::supportedEngines; i++) {
-            QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
+      connected = true;
+      Sleep(5);
+      while (!abortInput) {
+        for (int i = 0; i < keys.size(); i++) {
+          cout << arduinoInput[i]->isConnected() << "wh" << endl;
+          const auto hasRead = arduinoInput[i]->readSerialPort(
+              handler.receivedString[i], DATA_LENGTH);
 
-            int minRange =
-                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
-            cout << minRange << endl;
-
-            QString idleStr =
-                "Engine " + QString::number(i + 1) + "Idle cutoff";
-            int idleCutoff =
-                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
-
-            QString maxStr = "Engine " + QString::number(i + 1) + "Max";
-            int maxRange =
-                settingsHandler.retrieveSetting("ranges", maxStr)->toInt();
-
-            handler.enginelist[i] =
-                Engine(minRange, idleCutoff, maxRange, i + 1);
+          if (hasRead) {
+            if (connected) {
+              emit updateLastStatusUI("Connected to game");
+              handler.switchHandling(i);
+            }
+            lastVal = handler.receivedString[i];
           }
 
-          if (!settingsHandler.retrieveSetting("ranges", "maxReverseRange")
-                   ->isNull()) {
-            handler.reverseAxis =
-                settingsHandler.retrieveSetting("ranges", "maxReverseRange")
-                    ->toFloat();
-          }
-
-          for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-            QString minStr = "Mixture " + QString::number(i + 1) + "Min";
-            int minRange =
-                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
-            cout << minRange << endl;
-
-            QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
-            int maxRange =
-                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
-
-            handler.mixtureRanges[i] = Range(minRange, maxRange);
-          }
-          for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-            QString minStr = "Propeller " + QString::number(i + 1) + "Min";
-            int minRange =
-                settingsHandler.retrieveSetting("ranges", minStr)->toInt();
-
-            QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
-            int maxRange =
-                settingsHandler.retrieveSetting("ranges", idleStr)->toInt();
-
-            handler.propellerRanges[i] = Range(minRange, maxRange);
-          }
-          int minFlaps =
-              settingsHandler.retrieveSetting("ranges", "FlapsMin")->toInt();
-          int maxFlaps =
-              settingsHandler.retrieveSetting("ranges", "FlapsMax")->toInt();
-          handler.flapsRange = Range(minFlaps, maxFlaps);
-
-        } else if (settingsHandler.retrieveSetting("ranges", "FlapsMin")
-                       ->isNull()) {
-          for (int i = 0; i < constants::supportedEngines; i++) {
-            handler.enginelist[i] = Engine(0, 0, 1023, i);
-          }
-          for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-            handler.mixtureRanges[i] = Range(0, 1023);
-          }
-          for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-            handler.propellerRanges[i] = Range(0, 1023);
-          }
-
-          handler.flapsRange = Range(0, 1023);
+          emit updateLastValUI(QString::fromStdString(lastVal));
         }
-      }
-    }
-
-    Sleep(5);
-    for (int i = 0; i < keys.size(); i++) {
-      cout << arduinoInput[i]->isConnected() << endl;
-      const auto hasRead = arduinoInput[i]->readSerialPort(
-          handler.receivedString[i], DATA_LENGTH);
-
-      if (hasRead) {
-        if (connected) {
-          emit updateLastStatusUI("Connected to game");
-          handler.switchHandling(i);
-        }
-        lastVal = handler.receivedString[i];
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
 
-      emit updateLastValUI(QString::fromStdString(lastVal));
+      emit updateLastStatusUI("Connection closed");
+      if (connected) {
+        SimConnect_Close(hInputSimConnect);
+      } else {
+        emit updateLastStatusUI("No connection to the game");
+        sleep(100);
+      }
     }
   }
-
+  for (int i = 0; i < keys.size(); i++) {
+    if (arduinoInput[i]->isConnected()) {
+      arduinoInput[i]->closeSerial();
+    }
+  }
+  cout << "we are here" << endl;
   Sleep(1);
-  // emit updateLastStatusUI("Connection closed");
-  if (connected) {
-    for (int i = 0; i < keys.size(); i++) {
-      if (arduinoInput[i]->isConnected()) {
-        arduinoInput[i]->closeSerial();
-      }
-    }
-    quit();
-    SimConnect_Close(hInputSimConnect);
-  } else {
-    emit updateLastStatusUI("No connection to the game");
-    sleep(100);
-  }
+  quit();
 }
 
 InputWorker::~InputWorker() {
-  mutex.lock();
+  for (int i = 0; i < keys.size(); i++) {
+    if (arduinoInput[i]->isConnected()) {
+      arduinoInput[i]->closeSerial();
+    }
+  }
   abortInput = true;
-
+  connected = false;
+  mutex.lock();
   condition.wakeOne();
   mutex.unlock();
 }

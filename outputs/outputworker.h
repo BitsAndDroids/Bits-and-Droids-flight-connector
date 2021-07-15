@@ -17,6 +17,7 @@
 #include "output.h"
 #include "outputbundle.h"
 #include "outputhandler.h"
+#include "outputmapper.h"
 
 class OutputWorker : public QThread {
   Q_OBJECT
@@ -43,11 +44,13 @@ class OutputWorker : public QThread {
   void addBundle(outputBundle* bundle);
 
  private:
+  outputMapper outputMapper;
+  bool connected = false;
   QList<Output*> outputsToMap;
   QList<outputBundle*>* outputBundles = new QList<outputBundle*>();
   SettingsHandler settingsHandler;
   outputHandler outputHandler;
-  QStringList *keys;
+  QStringList* keys;
   QMap<int, Output*> availableSets;
 
   int updatePerXFrames = 15;

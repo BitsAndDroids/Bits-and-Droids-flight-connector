@@ -30,6 +30,7 @@ Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
+    dual/dualworker.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -48,7 +49,6 @@ Inputs/InputSwitchHandler.cpp \
     sources/SerialPort.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
-    sources/radioworker.cpp \
     sources/range.cpp
 
 
@@ -57,12 +57,12 @@ Inputs/InputMapper.h \
     Inputs/InputSwitchHandler.h \
     Inputs/InputWorker.h \
     Inputs/inputenum.h \
+    dual/dualworker.h \
     headers/Engine.h \
     headers/constants.h \
     headers/mainwindow.h \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
-    headers/radioworker.h \
     headers/range.h \
     outputs/activeoutputs.h \
     outputs/output.h \

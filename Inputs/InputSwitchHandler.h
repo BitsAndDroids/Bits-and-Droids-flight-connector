@@ -7,6 +7,7 @@
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <qwaitcondition.h>
+#include <settings/settingshandler.h>
 #include <tchar.h>
 #include <windows.h>
 
@@ -31,6 +32,7 @@ class InputSwitchHandler {
 
   float reverseAxis = -23000.0;
  private slots:
+  SettingsHandler settingsHandler;
   void set_throttle_values(int index);
   void setMixtureValues(int index);
   void set_prop_values(int index);

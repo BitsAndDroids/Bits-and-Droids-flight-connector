@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include <dual/dualworker.h>
 #include <headers/ConnectWorker.h>
 #include <headers/InputWorker.h>
 #include <outputs/OutputWorker.h>
@@ -87,7 +88,7 @@ class MainWindow : public QMainWindow {
   const char *portNameLocal;
   QPushButton *updateButton;
   QPushButton *switchButton;
-  RadioWorker radioThread;
+  DualWorker dualThread;
   OutputWorker outputThread;
   InputWorker inputThread;
   QList<set> *availableSets;

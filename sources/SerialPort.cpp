@@ -11,6 +11,10 @@
 #include <qstandardpaths.h>
 #include <qstring.h>
 
+#include <chrono>
+#include <iostream>
+#include <thread>
+
 COMMTIMEOUTS cto;
 
 SerialPort::SerialPort(const char *portName) {
@@ -60,7 +64,8 @@ SerialPort::SerialPort(const char *portName) {
       } else {
         this->connected = true;
         PurgeComm(this->handler, PURGE_RXCLEAR | PURGE_TXCLEAR);
-        Sleep(arduinoWaitTime);
+        std::this_thread::sleep_for(std::chrono::milliseconds(arduinoWaitTime));
+        // Sleep(arduinoWaitTime);
       }
     }
   }

@@ -247,9 +247,9 @@ void MainWindow::startMode(int mode) {
 }
 void MainWindow::startInputs() {
   QWidget *widget = new QWidget();
-
+  inputThread.abortInput = false;
   widget = ui->inWidgetContainer;
-
+  settingsHandler.clearKeys("inputCom");
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
 
@@ -261,13 +261,10 @@ void MainWindow::startInputs() {
     comboBoxName = "comboBoxRow" + QString::number(i);
 
     QString keyValue = comList[i]->currentText();
-    qDebug() << keyValue;
-    std::cout << keyValue.toStdString() << std::endl;
     settingsHandler.storeValue("inputCom", key,
                                convertComPort(keyValue).c_str());
   }
 
-  inputThread.abortInput = false;
   inputThread.start();
 }
 
@@ -327,36 +324,96 @@ void MainWindow::startOutputs() {
 
   //    ui->stopButton->setVisible(true);
   //    QString comText = ui->outputComboBoxBase->currentText();
-  // std::string comNr =
+  // std::string comNr
   //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
 
   outputThread.abort = false;
   outputThread.start();
 }
 void MainWindow::startDual() {
+  //  QWidget *widget = new QWidget();
+
+  //  widget = ui->dualWidgetContainer;
+
+  //  QRegularExpression search("comBox");
+  //  QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+
+  //  QString comboBoxName;
+  //  QString key;
+
+  //  for (int i = 0; i < comList.size(); i++) {
+  //    key = "dualCom" + QString::number(i);
+
+  //    QString keyValue = comList[i]->currentText();
+  //    qDebug() << keyValue;
+  //    std::cout << keyValue.toStdString() << std::endl;
+  //    settingsHandler.storeValue("dualCom", key,
+  //                               convertComPort(keyValue).c_str());
+  //  }
+  //  radioThread.start();
+  //  radioThread.abortRadio = false;
+
+  //  std::cout << "clicked" << std::endl;
   QWidget *widget = new QWidget();
 
   widget = ui->dualWidgetContainer;
+  settingsHandler.clearKeys("dualComs");
+  settingsHandler.clearKeys("dualComSet");
 
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
 
-  QString comboBoxName;
-  QString key;
+  QRegularExpression searchSets("setBox");
+  QList<QComboBox *> setList = widget->findChildren<QComboBox *>(searchSets);
 
+  QString key;
+  QString setKey;
+  QList<Output *> outputsToMap;
+  qDebug() << "sets available" << comList.size();
   for (int i = 0; i < comList.size(); i++) {
     key = "dualCom" + QString::number(i);
+    setKey = "dualSet" + QString::number(i);
 
     QString keyValue = comList[i]->currentText();
-    qDebug() << keyValue;
+    QString setKeyValue = setList[i]->currentText();
+    qDebug() << setKeyValue;
     std::cout << keyValue.toStdString() << std::endl;
-    settingsHandler.storeValue("dualCom", key,
+    settingsHandler.storeValue("dualComs", key,
                                convertComPort(keyValue).c_str());
-  }
-  radioThread.start();
-  radioThread.abortRadio = false;
 
-  std::cout << "clicked" << std::endl;
+    qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
+    int index = setList[i]->currentIndex();
+
+    int id = availableSets->at(index).getID();
+
+    outputBundle *bundle = new outputBundle();
+
+    set active = setHandler->getSetById(QString::number(id));
+    bundle->setSet(active);
+    //    const char *spString = convertComPort(keyValue).c_str();
+    //    SerialPort *port = new SerialPort(spString);
+    //    bundle->setSerialPortString(&spString);
+    //    bundle->setSerialPort(*port);
+
+    QMap<int, Output *> *outputs = new QMap<int, Output *>();
+    *outputs = active.getOutputs();
+    QMap<int, Output *>::iterator j;
+    for (j = outputs->begin(); j != outputs->end(); j++) {
+      outputsToMap.append(j.value());
+    }
+    dualThread.setOutputsToMap(outputsToMap);
+    bundle->setOutputsInSet(*outputs);
+    dualThread.addBundle(bundle);
+    settingsHandler.storeValue("dualComSet", setKey, id);
+  }
+
+  //    ui->stopButton->setVisible(true);
+  //    QString comText = ui->outputComboBoxBase->currentText();
+  // std::string comNr
+  //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+
+  dualThread.abortDual = false;
+  dualThread.start();
 }
 void MainWindow::refreshComs(int mode) {
   QWidget *widget;
@@ -426,22 +483,19 @@ void MainWindow::stopInput() {
   inputThread.abortInput = true;
   inputThread.quit();
 }
-void MainWindow::stopOutput() { outputThread.abort = true; }
-void MainWindow::stopDual() {}
+void MainWindow::stopOutput() {
+  outputThread.abort = true;
+  outputThread.quit();
+}
+void MainWindow::stopDual() {
+  dualThread.abortDual = true;
+  dualThread.quit();
+}
 void MainWindow::on_updateButton_clicked() {
   QString qUrl = QString::fromStdString(url);
   QDesktopServices::openUrl(QUrl(qUrl));
 }
-void MainWindow::on_btnSwitchComm1_clicked() {
-  if (radioThread.isRunning()) {
-    radioThread.switchCom1();
-  }
-}
-void MainWindow::on_btnSwitchNav1_clicked() {
-  if (radioThread.isRunning()) {
-    radioThread.switchNav1();
-  }
-}
+
 MainWindow::~MainWindow() {
   saveSettings();
   delete ui;

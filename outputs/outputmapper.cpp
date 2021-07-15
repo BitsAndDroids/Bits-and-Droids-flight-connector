@@ -4,6 +4,8 @@
 #include <tchar.h>
 #include <windows.h>
 
+#include <iostream>
+
 #include "output.h"
 
 outputMapper::outputMapper() {}
@@ -15,6 +17,6 @@ void outputMapper::mapOutputs(QList<Output*> outputToMap,
         outputConnect, 0, outputToMap[i]->getOutputName().c_str(),
         outputToMap[i]->getMetric().c_str(), SIMCONNECT_DATATYPE_FLOAT32,
         outputToMap[i]->getUpdateEvery(), outputToMap[i]->getId());
-    qDebug() << hr;
+    std::cout << outputToMap[i]->getId() << std::endl;
   }
 }

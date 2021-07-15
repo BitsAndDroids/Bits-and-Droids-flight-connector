@@ -34,7 +34,7 @@ class InputWorker : public QThread {
 
   std::string getLastVal() { return lastVal; }
   std::string getLastStatus() { return lastStatus; }
-
+  bool connected;
   bool abortInput = false;
   bool advanced = false;
   bool props = true;
