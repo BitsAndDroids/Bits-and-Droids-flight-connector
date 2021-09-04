@@ -5,6 +5,7 @@ class InputEnum {
   InputEnum();
   enum DATA_DEFINE_ID_INPUT {
     // Engine
+    DEFINITION_ENG_AUTO_IGN_1,
     DATA_THROTTLE_1_AXIS,
     DATA_THROTTLE_2_AXIS,
     DATA_THROTTLE_3_AXIS,

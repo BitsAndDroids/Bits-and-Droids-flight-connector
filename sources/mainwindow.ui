@@ -18,16 +18,16 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QApp{
-	background-color: rgb(0, 0, 0);
+	
 }
 #connectionPage{
 background-color: rgb(255, 255, 255);
 }
 QWidget#MainWindow{
-background-color: rgb(0, 0, 0);
+
 }
 QWidget#centralwidget{
-	background-color: rgb(255, 255, 255);
+	background-color: #ebebeb;
 }
 QWidget#stackedWidget{
 background-color: rgb(255, 255, 255);
@@ -145,16 +145,34 @@ QCheckBox{
       <layout class="QHBoxLayout" name="connectionsContainerLayout">
        <item>
         <widget class="QWidget" name="inWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#inWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
          <layout class="QVBoxLayout" name="inLayoutContainer"/>
         </widget>
        </item>
        <item>
         <widget class="QWidget" name="outWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#outWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
          <layout class="QVBoxLayout" name="outLayoutContainer"/>
         </widget>
        </item>
        <item>
         <widget class="QWidget" name="dualWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#dualWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
          <layout class="QVBoxLayout" name="dualLayoutContainer"/>
         </widget>
        </item>
@@ -171,23 +189,9 @@ QCheckBox{
         <number>10</number>
        </property>
        <item>
-        <widget class="QLabel" name="lastText">
-         <property name="text">
-          <string>Last received:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="labelLastVal_2">
          <property name="text">
           <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Status messages:</string>
          </property>
         </widget>
        </item>

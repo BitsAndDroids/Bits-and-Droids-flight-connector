@@ -1,22 +1,17 @@
 
 #include "InputSwitchHandler.h"
 
-#include <headers/SimConnect.h>
 #include <qsettings.h>
-#include <qstandardpaths.h>
 #include <tchar.h>
 #include <windows.h>
 
-#include <cstdio>
 #include <future>
 #include <iostream>
 #include <string>
 
 #include "inputenum.h"
-#include "stdio.h"
-#include "strsafe.h"
 
-#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
+//#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
 
 using namespace std;
@@ -25,9 +20,7 @@ char *token, *next_token;
 bool inputs[5];
 
 int counter = 0;
-int engines = 4;
 
-// elev , ailerons
 int yoke[2] = {0, 0};
 int oldYoke[2] = {0, 0};
 float closedAxis = -16383.0;
@@ -41,39 +34,7 @@ int mappedProps[4];
 int mappedMixture[4];
 
 int flaps;
-int spoiler;
 
-double oldValProps[2] = {-10, -10};
-
-struct structBattery1 {
-  bool battery1On = true;
-};
-struct range {
-  int minRange;
-  int maxRange;
-};
-
-struct structBattery2 {
-  bool battery2On = true;
-};
-
-struct structPropControl {
-  double prop_percent[2] = {0, 0};
-};
-
-struct structThrottleControl {
-  double throttle_percent[4] = {0, 0, 0, 0};
-};
-
-struct structMixtureControl {
-  double mixture_percent[2] = {0, 0};
-};
-
-structMixtureControl mc;
-structThrottleControl tc;
-structPropControl pc;
-structBattery1 bc1;
-structBattery2 bc2;
 
 int trim;
 int oldTrim;
@@ -162,13 +123,14 @@ UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
     Result += HornerScheme(Quotient, Divider, Factor) * Factor + Remainder;
   return Result;
 }
-int mapPercentageToAxis(int value) {
-  return -24000.0 + (16383.0 - -21000.0) * ((value - 0.0) / (100.0 - 0.0));
-}
+// int mapPercentageToAxis(int value) {
+//  return -24000.0 + (16383.0 - -21000.0) * ((value - 0.0) / (100.0 - 0.0));
+//}
 int InputSwitchHandler::mapThrottleValueToAxis(int value, float reverse,
                                                float max, int idleCutoff) {
-  int axis;
+  int valueThrottle;
   bool reversed = max < idleCutoff;
+
   /*First we check the orientation by determing if max < idleCutoff
   If max < idleCutoff. IF max is smaller we know the potentiometer is mounted
   backwards This affects how our logic needs to operate We want to check if the
@@ -176,16 +138,18 @@ int InputSwitchHandler::mapThrottleValueToAxis(int value, float reverse,
   utilize the reverse range or not visa versa for the second check */
   if ((reversed && idleCutoff - reverse < 0 && value >= idleCutoff) ||
       (!reversed && idleCutoff - reverse > 0 && value <= idleCutoff)) {
-    cout << reverseAxis + (closedAxis - reverseAxis) *
-                              ((value - reverse) / (idleCutoff - reverse))
-         << endl;
-    return reverseAxis + (closedAxis - reverseAxis) *
-                             ((value - reverse) / (idleCutoff - reverse));
-
+    valueThrottle =
+        reverseAxis + (closedAxis - reverseAxis) *
+                          ((value - reverse) / (idleCutoff - reverse));
   } else {
-    return closedAxis + (openAxis - closedAxis) *
-                            ((value - idleCutoff) / (max - idleCutoff));
+    valueThrottle =
+        closedAxis +
+        (openAxis - closedAxis) * ((value - idleCutoff) / (max - idleCutoff));
   }
+  if (valueThrottle > 16383) {
+    return 16383;
+  }
+  return valueThrottle;
 }
 
 int mapValueToAxis(int value, float min, float max) {
@@ -301,7 +265,8 @@ void InputSwitchHandler::set_throttle_values(int index) {
           cout << "minrange " << i << ": " << enginelist[i].getMinRange()
                << endl;
         }
-
+        cout << "eng "
+             << ": " << mappedEngines[3] << endl;
         sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
                               mappedEngines[0]);
         sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
@@ -550,36 +515,38 @@ int InputSwitchHandler::setComs(int index, int comNo) {
 
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
                                           int index) {
+  HRESULT hr;
   string sizeTest = receivedString[index];
   cout << "size: " << sizeTest.length() << endl;
-  SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
-                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+  hr = SimConnect_TransmitClientEvent(
+      connect, 0, eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+  cout << hr << endl;
+}
 void InputSwitchHandler::sendBasicCommandOn(
     SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
 
 void InputSwitchHandler::sendBasicCommandOff(
     SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
 void InputSwitchHandler::sendBasicCommandValue(
     SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, value,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
 
 void InputSwitchHandler::switchHandling(int index) {
   Sleep(10);
   //
-  if (sizeof(receivedString) > 2) {
+  if (strlen(receivedString[index]) > 2) {
     prefix = std::string(&receivedString[index][0], &receivedString[index][3]);
     try {
       int prefixVal = stoi(prefix);
@@ -2961,6 +2928,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
       }
+      sendBasicCommand(inputDefinitions.DEFINITION_ENG_AUTO_IGN_1, index);
     } catch (const std::exception &e) {
       cout << "error" << endl;
     }

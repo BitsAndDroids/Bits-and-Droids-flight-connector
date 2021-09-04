@@ -1,10 +1,9 @@
 #include "sethandler.h"
 
-#include <outputs/output.h>
-#include <qfile.h>
+
 
 #include <QJsonDocument>
-#include <QJsonObject>
+
 #include <iostream>
 SetHandler::SetHandler() { setList = loadSets(); }
 
@@ -50,7 +49,7 @@ set *SetHandler::saveSet(set *setToSave) {
 QList<set> *SetHandler::loadSets() {
   QList<QJsonDocument> documentList;
   QList<set> *setListFound = new QList<set>();
-  qDebug() << settingsHandler.getPath() << " :path loadSets";
+
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   qDebug() << keys->size() << "keys";
   for (int i = 0; i < keys->size(); i++) {

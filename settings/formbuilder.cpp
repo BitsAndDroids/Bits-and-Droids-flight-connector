@@ -1,24 +1,15 @@
-#include "settings/formbuilder.h"
+#include "formbuilder.h"
 
 #include <headers/constants.h>
-#include <outputs/output.h>
-#include <outputs/outputhandler.h>
-#include <outputs/set.h>
 #include <qcombobox.h>
-#include <qlabel.h>
-#include <qserialportinfo.h>
 #include <settings/settingsranges.h>
 
-#include <QCheckBox>
-#include <QFormLayout>
-#include <QIcon>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QSizePolicy>
+#include <QtCharts>
+#include <QtSerialPort>
 #include <iostream>
-
-#include "outputmenu.h"
+#include "../qcustomplot.h"
 using namespace std;
+
 FormBuilder::FormBuilder() {
   for (int i = 0; i < constants::supportedEngines; i++) {
     engineHeaders.append("Engine " + QString::number(i + 1));
@@ -34,7 +25,167 @@ FormBuilder::FormBuilder() {
   availableSets = setHandler.getSets();
 }
 
-QVBoxLayout* FormBuilder::generateRange(QString header) {
+QVBoxLayout *FormBuilder::createRudderRow() {
+  auto *layout = new QVBoxLayout();
+  series = new QLineSeries();
+  series->setName("spline");
+  //*series << QPointF(11, 1) << QPointF(13, 3);
+  chart = new QChart();
+  chart->legend()->hide();
+  chart->addSeries(series);
+  chart->setTitle("Rudder curve");
+
+  // chart->createDefaultAxes();
+
+  auto *xAxis = new QValueAxis;
+  xAxis->setRange(0, 1023);
+  xAxis->setLabelFormat("%i");
+
+  auto *yAxis = new QValueAxis;
+  yAxis->setRange(-16383, 16383);
+  yAxis->setLabelFormat("%i");
+
+  chart->addAxis(xAxis, Qt::AlignBottom);
+
+  chart->addAxis(yAxis, Qt::AlignLeft);
+  series->attachAxis(xAxis);
+  series->attachAxis(yAxis);
+
+  chartView = new QChartView(chart);
+  chartView->setMinimumSize(500, 300);
+  chartView->adjustSize();
+
+
+  chartView->setRenderHint(QPainter::Antialiasing);
+  layout->addWidget(chartView);
+  int sliders = 3;
+  for(int i = 0; i < sliders; i++){
+      auto action = QString::number(i);
+      auto slider = new QSlider(Qt::Horizontal);
+      connect(slider, &QAbstractSlider::valueChanged, this,
+              &FormBuilder::changeSlider);
+      slider->setObjectName(action + "Slider");
+      slider->setRange(0, 100);
+      slider->setMinimumSize(400, 15);
+      layout->addWidget(slider);
+  }
+  auto *value = new QLabel("0");
+  value->setObjectName("test");
+  layout->addWidget(value);
+//  cplot = new QCustomPlot();
+//  cplot->replot();
+  int const min = -16383;
+  int const max = 16383;
+  auto *curveControls = new QHBoxLayout();
+  QList<coordinates> coords({{0,min},{250,-10000},{500,0},{500,0},{522,0},{750,10000},{1023,max}});
+//  cplot->yAxis->setRange(-16383,16383);
+//  cplot->addGraph();
+//  QVector<double> x(1023), y0(1023);
+//  for (int i = 0; i < 511; ++i) {
+//      x[i] = i;
+//      y0[i] = -16383.0*qExp(-i/100.0);  // exponentially decaying cosine
+//      cout<<y0[i];// exponential envelope
+//}
+//  for (int i = 511; i < 1023; ++i) {
+//      x[i] = i;
+//      y0[i] = 16383*qExp(i/-100.0);  // exponentially decaying cosine
+//      cout<<y0[i];// exponential envelope
+//  }
+//  y0[0] = -16383;
+//  y0[1022] = 16383;
+//
+//
+//
+//  cplot->graph(0)->addData(x,y0);
+//  cplot->graph(0)->setPen(
+//          QPen(Qt::red));
+//
+//  cplot->xAxis->setRange(0,1023);
+//  cplot->setMinimumSize(500,300);
+//  cplot->replot();
+  layout->addWidget(cplot);
+  for (auto &i : coords) {
+      pointsToPlot.append(i);
+      series->append(i.x, i.y);
+  }
+  //layout->addLayout(curveControls);
+
+  return layout;
+}
+void FormBuilder::updateY() {
+  auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
+  auto index = pressedBtn->objectName().rightRef(1).toInt();
+  pointsToPlot[index].y = pressedBtn->text().toInt();
+  cout << "Y" << index << " val" << pointsToPlot[index].y << endl;
+  updateChart();
+}
+void FormBuilder::updateX() {
+  auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
+  auto index = pressedBtn->objectName().rightRef(1).toInt();
+  pointsToPlot[index].x = pressedBtn->text().toInt();
+  cout << "X" << index << " val" << pointsToPlot[index].x << endl;
+  updateChart();
+}
+void FormBuilder::changeSlider() {
+  auto slider = qobject_cast<QSlider *>(sender());
+  auto label = slider->parent()->findChild<QLabel *>("test");
+  int action = slider->objectName().left(1).toInt();
+  float value;
+  switch(action){
+      case 0:{
+          value = 1023.0 * (slider->value() / 100.0);
+          cout << 511 * value / 2 << endl;
+          pointsToPlot[2] = {511 - (value / 2), 0};
+          pointsToPlot[4] = {511 + (value / 2), 0};
+          label->setText(QString::number(slider->value()));
+          break;
+      }
+      case 1:{
+          value =(slider->value() / 100.0)* 511.0  ;
+          pointsToPlot[1] = {511 - value, -10000};
+          break;
+      }
+      case 2:{
+          value =(slider->value() / 100.0)* 511.0  ;
+          pointsToPlot[5] = {511 + value, 10000};
+          break;
+
+      }
+  }
+
+
+  updateChart();
+
+}
+void FormBuilder::updateChart() {
+  series->clear();
+  for (auto &i : pointsToPlot) {
+    series->append(i.x, i.y);
+  }
+  chartView->update();
+}
+
+QVBoxLayout *FormBuilder::generateCurveCol(int valAxis, int valRange) {
+  auto *colEntries = new QVBoxLayout();
+  auto *inputFieldRange = new QLineEdit();
+  auto *inputFieldAxis = new QLineEdit();
+
+  auto index = QString::number(pointsToPlot.size());
+  inputFieldRange->setObjectName("x" + index);
+  inputFieldAxis->setObjectName("y" + index);
+
+  coordinates coords = {(float)valRange, (float)valAxis};
+  pointsToPlot.append(coords);
+
+  colEntries->addWidget(inputFieldRange);
+  colEntries->addWidget(inputFieldAxis);
+  inputFieldRange->setText(QString::number(valRange));
+  inputFieldAxis->setText(QString::number(valAxis));
+  connect(inputFieldRange, &QLineEdit::textEdited, this, &FormBuilder::updateX);
+  connect(inputFieldAxis, &QLineEdit::textEdited, this, &FormBuilder::updateY);
+  return colEntries;
+}
+QVBoxLayout *FormBuilder::generateRange(QString header) {
   auto rangeBlock = new QVBoxLayout();
   auto headerRow = new QHBoxLayout();
   auto headerLabel = new QLabel();
@@ -61,25 +212,25 @@ QVBoxLayout* FormBuilder::generateRange(QString header) {
   editTextRow->addWidget(minLE);
   editTextRow->addWidget(maxLE);
   rangeBlock->addLayout(editTextRow);
-
+  qDebug() << "Done";
   return rangeBlock;
 }
 
-QVBoxLayout* FormBuilder::RangeBuilder() {
-  QVBoxLayout* rangeHLayout = new QVBoxLayout();
+QVBoxLayout *FormBuilder::RangeBuilder() {
+  auto *rangeHLayout = new QVBoxLayout();
   rangeHLayout->setObjectName("rangeLayout");
-
-  QLabel* rangeHeader = new QLabel();
+  rangeHLayout->addLayout(createRudderRow());
+  auto *rangeHeader = new QLabel();
   rangeHeader->setText("Ranges");
   rangeHLayout->addWidget(rangeHeader);
 
-  QVBoxLayout* engineRanges = new QVBoxLayout();
+  auto *engineRanges = new QVBoxLayout();
   engineRanges->setObjectName("engineRangesLayout");
 
   for (int i = 0; i < engineHeaders.size(); i++) {
-    SettingsRanges* engineRange =
+    auto *engineRange =
         new SettingsRanges(engineLabels.size(), engineLabels, engineHeaders[i]);
-    QVBoxLayout* layout = new QVBoxLayout();
+    auto *layout = new QVBoxLayout();
     layout = engineRange->CreateRangeRow();
     engineRanges->addLayout(layout);
   }
@@ -93,8 +244,8 @@ QVBoxLayout* FormBuilder::RangeBuilder() {
   return rangeHLayout;
 }
 
-QHBoxLayout* FormBuilder::generateComBlock() {
-  QHBoxLayout* comContainer = new QHBoxLayout();
+QHBoxLayout *FormBuilder::generateComBlock() {
+  auto *comContainer = new QHBoxLayout();
 
   for (int i = 0; i < comHeaders.size(); i++) {
     comContainer->addLayout(generateComColumn(i));
@@ -102,28 +253,30 @@ QHBoxLayout* FormBuilder::generateComBlock() {
 
   return comContainer;
 }
-QVBoxLayout* FormBuilder::generateComColumn(int index) {
-  QVBoxLayout* comColumn = new QVBoxLayout();
-  QGridLayout* grid = new QGridLayout();
-  QLabel* columnHeader = new QLabel();
+
+QVBoxLayout *FormBuilder::generateComColumn(int index) {
+  auto *comColumn = new QVBoxLayout();
+  auto *grid = new QGridLayout();
+  auto *columnHeader = new QLabel();
   columnHeader->setText(comHeaders[index]);
-  QLabel* portLabel = new QLabel();
+  auto *portLabel = new QLabel();
   portLabel->setText("Select your comport: ");
   grid->addWidget(portLabel, 1, 0);
-  QComboBox* comBoxes = new QComboBox();
+  auto *comBoxes = new QComboBox();
   grid->addWidget(comBoxes, 1, 1);
 
   return comColumn;
 }
-QGridLayout* FormBuilder::generateOutputControls() {
-  QGridLayout* outputControls = new QGridLayout();
+
+QGridLayout *FormBuilder::generateOutputControls() {
+  auto *outputControls = new QGridLayout();
   outputControls->setAlignment(Qt::AlignLeft);
-  QLineEdit* setName = new QLineEdit();
+  auto *setName = new QLineEdit();
   setName->setMaximumWidth(150);
   setName->setObjectName("leSetName");
-  QLabel* setNameLabel = new QLabel("Set name");
+  auto *setNameLabel = new QLabel("Set name");
 
-  QPushButton* saveSet = new QPushButton("Save set");
+  auto *saveSet = new QPushButton("Save set");
   connect(saveSet, &QAbstractButton::clicked, this, &FormBuilder::addSet);
 
   outputControls->addWidget(setNameLabel, 0, 0);
@@ -131,10 +284,11 @@ QGridLayout* FormBuilder::generateOutputControls() {
   outputControls->addWidget(saveSet, 2, 0);
   return outputControls;
 }
-QVBoxLayout* FormBuilder::generateOutputSetList() {
-  QVBoxLayout* outputSetList = new QVBoxLayout();
+
+QVBoxLayout *FormBuilder::generateOutputSetList() {
+  auto *outputSetList = new QVBoxLayout();
   outputSetList->setObjectName("outputSetList");
-  QLabel* listHeader = new QLabel("Saved sets");
+  auto *listHeader = new QLabel("Saved sets");
   QFont font = listHeader->font();
   font.setBold(true);
   font.setPointSize(24);
@@ -144,12 +298,13 @@ QVBoxLayout* FormBuilder::generateOutputSetList() {
 
   return outputSetList;
 }
-QWidget* FormBuilder::generateActiveSet(set* selectedSet) {
-  QWidget* activeWidget = new QWidget();
-  activeWidget->setObjectName("activeWidget");
-  QVBoxLayout* activeSet = new QVBoxLayout();
 
-  QLabel* setNameHeader = new QLabel(selectedSet->getSetName());
+QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
+  auto *activeWidget = new QWidget();
+  activeWidget->setObjectName("activeWidget");
+  auto *activeSet = new QVBoxLayout();
+
+  auto *setNameHeader = new QLabel(selectedSet->getSetName());
   setNameHeader->setObjectName("setNameHeader");
   QFont headerFont = setNameHeader->font();
   headerFont.setPointSize(18);
@@ -157,22 +312,22 @@ QWidget* FormBuilder::generateActiveSet(set* selectedSet) {
   setNameHeader->setFont(headerFont);
   activeSet->addWidget(setNameHeader);
 
-  QGridLayout* outputGrid = new QGridLayout();
+  auto *outputGrid = new QGridLayout();
   int columnCounter = 0;
   int rowCounter = 0;
-  QMap<int, Output*> outputsInSet = selectedSet->getOutputs();
-  QMap<int, Output*>::Iterator i;
+  QMap<int, Output *> outputsInSet = selectedSet->getOutputs();
+  QMap<int, Output *>::Iterator i;
   for (i = outputsInSet.begin(); i != outputsInSet.end(); i++) {
     if (rowCounter % 5 == 0) {
       columnCounter++;
       rowCounter = 0;
     }
     rowCounter++;
-    QLabel* outputName = new QLabel(i.value()->getCbText());
+    auto *outputName = new QLabel(i.value()->getCbText());
     outputGrid->addWidget(outputName, rowCounter, columnCounter);
   }
 
-  QVBoxLayout* outputList = new QVBoxLayout();
+  auto *outputList = new QVBoxLayout();
   outputList->setObjectName("savedOutputs");
 
   activeSet->addLayout(outputList);
@@ -182,22 +337,24 @@ QWidget* FormBuilder::generateActiveSet(set* selectedSet) {
   return activeWidget;
 }
 
-QWidget* FormBuilder::generateSetRow(set setForRow) {
-  QWidget* setRowContainer = new QWidget();
+QWidget *FormBuilder::generateSetRow(set setForRow) {
+  auto *setRowContainer = new QWidget();
   setRowContainer->setSizePolicy(QSizePolicy::Preferred,
                                  QSizePolicy::Expanding);
-  QHBoxLayout* setRow = new QHBoxLayout();
-  QLabel* setRowLabel = new QLabel(setForRow.getSetName());
+  setRowContainer->setMinimumHeight(20);
+  auto *setRow = new QHBoxLayout();
+  auto *setRowLabel = new QLabel(setForRow.getSetName());
 
-  QPushButton* editButton = new QPushButton("Edit");
+  auto *editButton = new QPushButton("Edit");
   connect(editButton, &QAbstractButton::clicked, this, &FormBuilder::localEdit);
 
-  QPushButton* deleteButton = new QPushButton("Delete");
+  auto *deleteButton = new QPushButton("Delete");
   connect(deleteButton, SIGNAL(clicked()), SLOT(localRemove()));
   editButton->setMaximumWidth(150);
   deleteButton->setMaximumWidth(150);
 
   setRow->addWidget(setRowLabel);
+
   setRow->addWidget(editButton);
   setRow->addWidget(deleteButton);
   setRowContainer->setLayout(setRow);
@@ -209,8 +366,8 @@ QWidget* FormBuilder::generateSetRow(set setForRow) {
   return setRowContainer;
 }
 
-QTabWidget* FormBuilder::generateOutputTabs() {
-  QTabWidget* outputTabs = new QTabWidget();
+QTabWidget *FormBuilder::generateOutputTabs() {
+  auto *outputTabs = new QTabWidget();
   outputTabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   outputTabs->setObjectName("outputTabWidget");
   outputHandler outputHandler;
@@ -218,11 +375,11 @@ QTabWidget* FormBuilder::generateOutputTabs() {
   auto categorizedOutputs = outputHandler.getOutputsCategorized();
 
   for (int i = 0; i < categorieList.size(); i++) {
-    QWidget* newTab = new QWidget();
-    QGridLayout* cbGridLayout = new QGridLayout();
+    auto *newTab = new QWidget();
+    auto *cbGridLayout = new QGridLayout();
     cbGridLayout->setAlignment(Qt::AlignTop);
     for (int j = 0; j < categorizedOutputs[i].size(); j++) {
-      QCheckBox* checkbox = new QCheckBox();
+      auto *checkbox = new QCheckBox();
       checkbox->setMinimumHeight(30);
       QString cbText = categorizedOutputs[i][j].getCbText();
       checkbox->setText(QString(cbText));
@@ -245,59 +402,64 @@ QTabWidget* FormBuilder::generateOutputTabs() {
   outputTabs->adjustSize();
   return outputTabs;
 }
+
 void FormBuilder::loadComPortData() {
   availableComPorts.clear();
-  foreach (const QSerialPortInfo& serialPortInfo,
+  foreach (const QSerialPortInfo &serialPortInfo,
            QSerialPortInfo::availablePorts()) {
     availableComPorts.append(serialPortInfo.portName() + " | " +
                              serialPortInfo.description());
   }
 }
 
-QHBoxLayout* FormBuilder::generateOutputRow(Output* output) {
-  QHBoxLayout* row = new QHBoxLayout();
-  QLabel* outputName = new QLabel(output->getCbText());
+QHBoxLayout *FormBuilder::generateOutputRow(Output *output) {
+  auto *row = new QHBoxLayout();
+  auto *outputName = new QLabel(output->getCbText());
   row->addWidget(outputName);
   return row;
 }
+
 void FormBuilder::localRemove() {
   qDebug() << "apple";
-  QPushButton* button = qobject_cast<QPushButton*>(sender());
+  auto *button = qobject_cast<QPushButton *>(sender());
   emit removeSet(button->parentWidget()->objectName());
 }
+
 void FormBuilder::localEdit() {
-  QPushButton* button = qobject_cast<QPushButton*>(sender());
+  auto *button = qobject_cast<QPushButton *>(sender());
   emit setEdited(button->parentWidget()->objectName());
 }
-QLabel* FormBuilder::generateHeader(QString text) {
-  QLabel* header = new QLabel(text);
+
+QLabel *FormBuilder::generateHeader(QString text) {
+  auto *header = new QLabel(text);
   QFont font = header->font();
   font.setPointSize(16);
   header->setFont(font);
   return header;
 }
-QWidget* FormBuilder::generateComSelector(bool setsNeeded, int mode) {
-  QWidget* comSelector = new QWidget();
-  QHBoxLayout* comRow = new QHBoxLayout();
+
+QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode) {
+  auto *comSelector = new QWidget();
+  auto *comRow = new QHBoxLayout();
   comSelector->setLayout(comRow);
-  QComboBox* comPortComboBox = new QComboBox();
+  auto *comPortComboBox = new QComboBox();
   comPortComboBox->setObjectName("comBox");
-  for (int i = 0; i < availableComPorts.size(); i++) {
-    comPortComboBox->addItem(availableComPorts[i]);
+  for (auto &availableComPort : availableComPorts) {
+    comPortComboBox->addItem(availableComPort);
   }
   comRow->addWidget(comPortComboBox);
   comPortComboBox->setMinimumWidth(150);
   if (setsNeeded) {
-    QComboBox* setComboBox = new QComboBox();
-    for (int i = 0; i < availableSets->size(); i++) {
-      setComboBox->addItem(availableSets->at(i).getSetName());
+    auto *setComboBox = new QComboBox();
+    for (const auto &availableSet : *availableSets) {
+      setComboBox->addItem(availableSet.getSetName());
     }
     setComboBox->setMinimumWidth(150);
     setComboBox->setObjectName("setBox");
     comRow->addWidget(setComboBox);
   }
 
-  QPushButton* removeButton = new QPushButton("-");
+  auto *removeButton = new QPushButton("-");
   removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
   removeButton->setMinimumSize(20, 20);
   removeButton->setMaximumSize(20, 20);
@@ -306,13 +468,15 @@ QWidget* FormBuilder::generateComSelector(bool setsNeeded, int mode) {
   comRow->addWidget(removeButton);
   return comSelector;
 }
-QWidget* FormBuilder::generateComControls(int mode) {
-  QWidget* comControls = new QWidget();
-  QHBoxLayout* comControlRow = new QHBoxLayout();
+
+QWidget *FormBuilder::generateComControls(int mode) {
+  auto *comControls = new QWidget();
+  auto *comControlRow = new QHBoxLayout();
   comControls->setLayout(comControlRow);
-  comControlRow->setAlignment(Qt::AlignRight);
+  comControlRow->addWidget(generateHeader(mainHeaders[mode]));
+  comControlRow->setAlignment(Qt::AlignLeft);
   // REFRESH BTN
-  QPushButton* refreshButton = new QPushButton();
+  auto *refreshButton = new QPushButton();
 
   refreshButton->setIcon(QIcon("images/refreshicon.png"));
   refreshButton->setStyleSheet(
@@ -326,7 +490,7 @@ QWidget* FormBuilder::generateComControls(int mode) {
   comControlRow->addWidget(refreshButton);
 
   // START BTN
-  QPushButton* startButton = new QPushButton("Start");
+  auto *startButton = new QPushButton("Start");
   startButton->setCheckable(true);
   //#2DE3A3
   startButton->setStyleSheet(
@@ -352,7 +516,7 @@ QWidget* FormBuilder::generateComControls(int mode) {
   comControlRow->addWidget(startButton);
 
   // STOP BTN
-  QPushButton* stopButton = new QPushButton("Stop");
+  auto *stopButton = new QPushButton("Stop");
   stopButton->setMinimumSize(50, 25);
   stopButton->setMaximumSize(50, 25);
   stopButton->setObjectName(QString::number(mode) + "stopBtn");
@@ -360,7 +524,7 @@ QWidget* FormBuilder::generateComControls(int mode) {
   comControlRow->addWidget(stopButton);
 
   // ADD BTN
-  QPushButton* addButton = new QPushButton("+");
+  auto *addButton = new QPushButton("+");
   addButton->setMinimumSize(20, 20);
   addButton->setMaximumSize(20, 20);
   addButton->setObjectName(QString::number(mode) + "addBtn");
@@ -371,42 +535,44 @@ QWidget* FormBuilder::generateComControls(int mode) {
 }
 
 void FormBuilder::removeComWidget() {
-  QWidget* senderWidget = qobject_cast<QWidget*>(sender()->parent());
+  QWidget *senderWidget = qobject_cast<QWidget *>(sender()->parent());
   delete senderWidget;
 }
+
 void FormBuilder::localStart() {
-  QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+  auto *pressedBtn = qobject_cast<QPushButton *>(sender());
   pressedBtn->setEnabled(false);
   pressedBtn->setText("Running");
 
   int mode = pressedBtn->objectName().leftRef(1).toInt();
   QString stopText = QString::number(mode) + "stopBtn";
-  QPushButton* stopButton =
-      pressedBtn->parent()->findChild<QPushButton*>(stopText);
+  auto *stopButton = pressedBtn->parent()->findChild<QPushButton *>(stopText);
   stopButton->setStyleSheet("background-color:#E20303");
 
   emit startPressed(mode);
 }
+
 void FormBuilder::localRefreshed() {
-  QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+  auto *pressedBtn = qobject_cast<QPushButton *>(sender());
   int mode = pressedBtn->objectName().leftRef(1).toInt();
   emit refreshPressed(mode);
 }
+
 void FormBuilder::localStop() {
-  QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+  auto *pressedBtn = qobject_cast<QPushButton *>(sender());
   int mode = pressedBtn->objectName().leftRef(1).toInt();
   QString startBtnText = QString::number(mode) + "startButton";
 
-  QPushButton* startBtn =
-      pressedBtn->parent()->findChild<QPushButton*>(startBtnText);
+  auto *startBtn = pressedBtn->parent()->findChild<QPushButton *>(startBtnText);
   startBtn->setEnabled(true);
   startBtn->setChecked(false);
   startBtn->setText("Start");
   pressedBtn->setStyleSheet("background-color:#0F4C5C");
   emit stopPressed(mode);
 }
+
 void FormBuilder::localAdd() {
-  QPushButton* pressedBtn = qobject_cast<QPushButton*>(sender());
+  auto *pressedBtn = qobject_cast<QPushButton *>(sender());
 
   int mode = pressedBtn->objectName().leftRef(1).toInt();
   emit addPressed(mode);

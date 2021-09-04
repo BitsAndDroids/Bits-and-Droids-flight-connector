@@ -1,10 +1,4 @@
 #include "Inputs/InputMapper.h"
-
-#include <Inputs/inputenum.h>
-#include <headers/SimConnect.h>
-#include <qsettings.h>
-#include <qstandardpaths.h>
-#include <tchar.h>
 #include <windows.h>
 
 InputEnum definitionsMap;
@@ -91,7 +85,7 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
       mapConnect, definitionsMap.DEFINITION_TOGGLE_MASTER_ALTERNATOR,
       "TOGGLE_MASTER_ALTERNATOR");
   SimConnect_MapClientEventToSimEvent(
-      mapConnect, definitionsMap.DEFINITION_PARKING_BRAKE, "PARKING BRAKE");
+      mapConnect, definitionsMap.DEFINITION_PARKING_BRAKE, "PARKING_BRAKES");
 
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_PITOT_HEAT_TOGGLE,
@@ -1405,6 +1399,8 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_AXIS_AILERONS_SET,
       "AXIS_AILERONS_SET");
-  SimConnect_MapClientEventToSimEvent(
-      mapConnect, definitionsMap.DEFINITION_CRJ_SMOKE_ON, "LVAR_ACCESS.EFIS");
+
+  SimConnect_MapClientEventToSimEvent(mapConnect,
+                                      definitionsMap.DEFINITION_ENG_AUTO_IGN_1,
+                                      "TOGGLE_MASTER_IGNITION_SWITCH");
 }

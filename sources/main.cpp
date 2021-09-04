@@ -1,6 +1,4 @@
 #include <QApplication>
-#include <QSerialPortInfo>
-
 #include <outputs/set.h>
 
 #include "headers/mainwindow.h"

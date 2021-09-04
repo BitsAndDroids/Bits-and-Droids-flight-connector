@@ -1,45 +1,46 @@
 #include "set.h"
 #include "output.h"
+#include "../../../../../Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/set.h"
+
 
 #include <QJsonArray>
 #include <QJsonDocument>
 
-set::set()
-{
+set::set() {
 
 }
 
-set::set(QString setName)
-{
+set::set(QString setName) {
     this->setName = setName;
 
 }
-set::set(QString setName, int id)
-{
+
+set::set(QString setName, int id) {
     this->setName = setName;
     this->setId = id;
 }
 
-set::set(QString setName, int id, QMap<int, Output*> outputs)
-{
+set::set(QString setName, int id, QMap<int, Output *> outputs) {
     this->setName = setName;
     this->setId = id;
     this->outputs = outputs;
 }
 
 
-void set::addOutput(Output *outputToAdd)
-{
+void set::addOutput(Output *outputToAdd) {
 
-    outputs.insert(outputToAdd->getId(),outputToAdd);
-    qDebug()<<outputs;
+    outputs.insert(outputToAdd->getId(), outputToAdd);
+    qDebug() << outputs;
 }
 
-void set::setOutputs(QMap<int, Output*> newOutputs)
-{
+void set::setOutputs(QMap<int, Output *> newOutputs) {
     this->outputs = newOutputs;
 }
-void set::clearOutputs(){
+
+void set::clearOutputs() {
     this->outputs.clear();
 }
 
+void set::deleteSet() {
+
+}

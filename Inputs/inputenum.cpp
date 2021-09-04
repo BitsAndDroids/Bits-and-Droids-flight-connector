@@ -1,3 +1,3 @@
-#include "Inputs/inputenum.h"
+#include "inputenum.h"
 
 InputEnum::InputEnum() { DATA_DEFINE_ID_INPUT dataDefinitions; }

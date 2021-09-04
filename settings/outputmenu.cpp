@@ -1,18 +1,19 @@
 #include "outputmenu.h"
+#include "formbuilder.h"
+#include "ui_outputmenu.h"
 
 #include <outputs/output.h>
 #include <outputs/outputhandler.h>
 #include <outputs/sethandler.h>
 
+
 #include <QCheckBox>
-#include <QDebug>
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QScrollArea>
 
-#include "formbuilder.h"
-#include "ui_outputmenu.h"
+
 FormBuilder formBuilder;
 outputHandler outputHandler;
 SetHandler setHandler;

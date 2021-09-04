@@ -1,0 +1,1412 @@
+{
+  "Fuel": [{
+      "id": 12,
+      "outputName": "FUEL SELECTED QUANTITY PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel quantity %",
+      "prefix": 275,
+      "type":1
+    },
+    {
+      "id": 104,
+      "outputName": "FUEL TANK CENTER LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank center level",
+      "prefix": 234,
+      "type": 1
+    },
+    {
+      "id": 105,
+      "outputName": "FUEL TANK CENTER2 LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank center 2 level",
+      "prefix": 235,
+      "type": 1
+    },
+    {
+      "id": 106,
+      "outputName": "FUEL TANK CENTER3 LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank center 3 level",
+      "prefix": 236,
+      "type": 1
+    },
+    {
+      "id": 107,
+      "outputName": "FUEL TANK LEFT MAIN LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank left main level",
+      "prefix": 237,
+      "type": 1
+    },
+    {
+      "id": 108,
+      "outputName": "FUEL TANK LEFT AUX LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank left aux level",
+      "prefix": 238,
+      "type": 1
+    },
+    {
+      "id": 109,
+      "outputName": "FUEL TANK LEFT TIP LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank left tip level",
+      "prefix": 239,
+      "type": 1
+    },
+    {
+      "id": 110,
+      "outputName": "FUEL TANK RIGHT MAIN LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank right main level",
+      "prefix": 240,
+      "type": 1
+    },
+    {
+      "id": 111,
+      "outputName": "FUEL TANK RIGHT AUX LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank right aux level",
+      "prefix": 241,
+      "type":1
+    },
+    {
+      "id": 112,
+      "outputName": "FUEL TANK RIGHT TIP LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank right tip level",
+      "prefix": 242,
+      "type": 1
+    },
+    {
+      "id": 113,
+      "outputName": "FUEL TANK EXTERNAL1 LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank external 1 level",
+      "prefix": 243,
+      "type":1
+    },
+    {
+      "id": 114,
+      "outputName": "FUEL TANK EXTERNAL2 LEVEL",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Fuel tank external 2 level",
+      "prefix": 244,
+      "type":1
+    },
+    {
+      "id": 115,
+      "outputName": "FUEL TANK CENTER CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center capacity",
+      "prefix": 245,
+      "type":0
+    },
+    {
+      "id": 116,
+      "outputName": "FUEL TANK CENTER2 CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center 2 capacity",
+      "prefix": 246,
+      "type":0
+    },
+    {
+      "id": 117,
+      "outputName": "FUEL TANK CENTER3 CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center 3 capacity",
+      "prefix": 247,
+      "type":0
+
+    },
+    {
+      "id": 118,
+      "outputName": "FUEL TANK LEFT MAIN CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left main capacity",
+      "prefix": 248,
+      "type":0
+    },
+    {
+      "id": 119,
+      "outputName": "FUEL TANK LEFT AUX CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left aux capacity",
+      "prefix":249,
+      "type":0
+    },
+    {
+      "id": 120,
+      "outputName": "FUEL TANK LEFT TIP CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left tip capacity",
+      "prefix": 250,
+      "type":0
+    },
+    {
+      "id": 121,
+      "outputName": "FUEL TANK RIGHT MAIN CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right main capacity",
+      "prefix":251 ,
+      "type":0
+    },
+    {
+      "id": 122,
+      "outputName": "FUEL TANK RIGHT AUX CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right aux capacity",
+      "prefix": 252,
+      "type":0
+    },
+    {
+      "id": 123,
+      "outputName": "FUEL TANK RIGHT TIP CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right tip capacity",
+      "prefix":253 ,
+      "type":0
+    },
+    {
+      "id": 124,
+      "outputName": "FUEL TANK EXTERNAL1 CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank external 1 capacity",
+      "prefix": 254,
+      "type":0
+    },
+    {
+      "id": 125,
+      "outputName": "FUEL TANK EXTERNAL2 CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank external 2 capacity",
+      "prefix": 255,
+      "type":0
+    },
+    {
+      "id": 126,
+      "outputName": "FUEL LEFT CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel left capacity",
+      "prefix": 256,
+      "type": 0
+    },
+    {
+      "id": 127,
+      "outputName": "FUEL RIGHT CAPACITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel right capacity",
+      "prefix": 257,
+      "type":0
+    },
+    {
+      "id": 128,
+      "outputName": "FUEL TANK CENTER QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center quantity",
+      "prefix": 258,
+      "type":0
+    },
+    {
+      "id": 129,
+      "outputName": "FUEL TANK CENTER2 QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center 2 quantity",
+      "prefix":259 ,
+      "type":0
+    },
+    {
+      "id": 130,
+      "outputName": "FUEL TANK CENTER3 QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank center 3 quantity",
+      "prefix":260 ,
+      "type":0
+    },
+    {
+      "id": 131,
+      "outputName": "FUEL TANK LEFT MAIN QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left main quantity",
+      "prefix": 261,
+      "type":0
+    },
+    {
+      "id": 132,
+      "outputName": "FUEL TANK LEFT AUX QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left aux quantity",
+      "prefix": 262,
+      "type":0
+    },
+    {
+      "id": 133,
+      "outputName": "FUEL TANK LEFT TIP QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank left tip quantity",
+      "prefix":263 ,
+      "type":0
+    },
+    {
+      "id": 134,
+      "outputName": "FUEL TANK RIGHT MAIN QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right main quantity",
+      "prefix": 264,
+      "type":0
+    },
+    {
+      "id": 135,
+      "outputName": "FUEL TANK RIGHT AUX QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right aux quantity",
+      "prefix": 265,
+      "type":0
+    },
+    {
+      "id": 136,
+      "outputName": "FUEL TANK RIGHT TIP QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank right tip quantity",
+      "prefix": 266,
+      "type":0
+    },
+    {
+      "id": 137,
+      "outputName": "FUEL TANK EXTERNAL1 QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank external 1",
+      "prefix": 267,
+      "type":0
+    },
+    {
+      "id": 138,
+      "outputName": "FUEL TANK EXTERNAL2 QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel tank external 2 quantity",
+      "prefix": 268,
+      "type":0
+    },
+    {
+      "id": 139,
+      "outputName": "FUEL LEFT QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel left quantity",
+      "prefix": 269,
+      "type":0
+    },
+    {
+      "id": 140,
+      "outputName": "FUEL RIGHT QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel right quantity",
+      "prefix": 270,
+      "type":0
+    },
+    {
+      "id": 141,
+      "outputName": "FUEL TOTAL QUANTITY",
+      "metric": "Gallons",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Fuel total quantity",
+      "prefix": 271,
+      "type":0
+    }
+  ],
+  "Data": [{
+      "id": 1,
+      "outputName": "PLANE ALT ABOVE GROUND",
+      "metric": "Feet",
+      "updateEvery": 100,
+      "dataType": 0,
+      "cbText":"Feet above ground",
+      "prefix": 312,
+      "type":0
+    },
+    {
+      "id": 2,
+      "outputName": "SIM ON GROUND",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) on the ground",
+      "prefix": 323,
+      "type":4
+    },
+    {
+      "id": 7,
+      "outputName": "VERTICAL SPEED",
+      "metric": "Feet per second",
+      "updateEvery": 10,
+      "dataType": 0,
+      "cbText":"Vertical speed",
+      "prefix":590,
+      "type":0
+    },
+    {
+      "id": 101,
+      "outputName": "TITLE",
+      "metric": "NULL",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Plane name",
+      "prefix":999,
+      "type": 5
+    }
+  ],
+  "Instruments": [{
+      "id": 6,
+      "outputName": "BAROMETER PRESSURE",
+      "metric": "Millibars",
+      "updateEvery": 10,
+      "dataType": 0,
+      "cbText":"Barometer pressure",
+      "prefix": 632,
+      "type": 0
+    },
+    {
+      "id": 8,
+      "outputName": "AIRSPEED INDICATED",
+      "metric": "Knots",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Indicated airspeed",
+      "prefix": 326,
+      "type":0
+    },
+    {
+      "id": 10,
+      "outputName": "HEADING INDICATOR",
+      "metric": "Radians",
+      "updateEvery": 0.02,
+      "dataType": 0,
+      "cbText":"Indicated heading",
+      "prefix": 344,
+      "type":2
+    },
+    {
+      "id": 11,
+      "outputName": "INDICATED ALTITUDE",
+      "metric": "Feet",
+      "updateEvery": 10,
+      "dataType": 0,
+      "cbText":"Indicated altitude",
+      "prefix": 335,
+      "type":0
+    },
+    {
+      "id": 15,
+      "outputName": "KOHLSMAN SETTING HG",
+      "metric": "inHg",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Kohlsman HG",
+      "prefix": 337,
+      "type": 6
+    }
+  ],
+  "GPS": [{
+      "id": 9,
+      "outputName": "GPS GROUND SPEED",
+      "metric": "Meters per second",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"GPS groundspeed",
+      "prefix": 430,
+      "type":7
+    },
+    {
+      "id": 100,
+      "outputName": "GPS COURSE TO STEER",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"GPS course to steer",
+      "prefix":454 ,
+      "type":0
+    }
+  ],
+  "Autopilot": [{
+      "id": 3,
+      "outputName": "AUTOPILOT HEADING LOCK DIR",
+      "metric": "Degrees",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"AP heading lock",
+      "prefix": 582,
+      "type":0
+    },
+    {
+      "id": 4,
+      "outputName": "AUTOPILOT ALTITUDE LOCK VAR",
+      "metric": "Feet",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"AP altitude lock var",
+      "prefix": 584,
+      "type":0
+    },
+    {
+      "id": 5,
+      "outputName": "AUTOPILOT VERTICAL HOLD VAR",
+      "metric": "Feet/minute",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"AP vertical hold var",
+      "prefix": 590,
+      "type":0
+    },
+    {
+      "id": 80,
+      "outputName": "AUTOPILOT AVAILABLE",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP available",
+      "prefix": 576,
+      "type":4
+    },
+    {
+      "id": 81,
+      "outputName": "AUTOPILOT MASTER",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP master",
+      "prefix": 577,
+      "type":4
+    },
+    {
+      "id": 82,
+      "outputName": "AUTOPILOT WING LEVELER",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP wing leveler",
+      "prefix": 579,
+      "type":4
+    },
+    {
+      "id": 83,
+      "outputName": "AUTOPILOT NAV1 LOCK",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP NAV1 lock",
+      "prefix": 580,
+      "type":4
+    },
+    {
+      "id": 84,
+      "outputName": "AUTOPILOT HEADING LOCK",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP heading lock",
+      "prefix":581 ,
+      "type":4
+    },
+    {
+      "id": 85,
+      "outputName": "AUTOPILOT ALTITUDE LOCK",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP altitude lock",
+      "prefix": 583,
+      "type":4
+    },
+    {
+      "id": 86,
+      "outputName": "AUTOPILOT ATTITUDE HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP attitude lock",
+      "prefix": 585,
+      "type":4
+    },
+    {
+      "id": 87,
+      "outputName": "AUTOPILOT GLIDESLOPE HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP glideslope hold",
+      "prefix":586 ,
+      "type":4
+    },
+    {
+      "id": 88,
+      "outputName": "AUTOPILOT APPROACH HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP approach hold",
+      "prefix":588,
+      "type":4
+    },
+    {
+      "id": 89,
+      "outputName": "AUTOPILOT BACKCOURSE HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP backcourse hold",
+      "prefix":589 ,
+      "type":4
+    },
+    {
+      "id": 90,
+      "outputName": "AUTOPILOT FLIGHT DIRECTOR ACTIVE",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP flight director",
+      "prefix":591 ,
+      "type":4
+    },
+    {
+      "id": 91,
+      "outputName": "AUTOPILOT AIRSPEED HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP airspeed hold",
+      "prefix":594 ,
+      "type":4
+    },
+    {
+      "id": 92,
+      "outputName": "AUTOPILOT MACH HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP mach hold",
+      "prefix":596 ,
+      "type":4
+    },
+    {
+      "id": 93,
+      "outputName": "AUTOPILOT YAW DAMPER",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP yaw damper",
+      "prefix":598 ,
+      "type":4
+    },
+    {
+      "id": 94,
+      "outputName": "AUTOPILOT THROTTLE ARM",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP throttle arm",
+      "prefix": 600,
+      "type":4
+    },
+    {
+      "id": 95,
+      "outputName": "AUTOPILOT TAKEOFF POWER ACTIVE",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP takeoff power",
+      "prefix":601 ,
+      "type":4
+    },
+    {
+      "id": 96,
+      "outputName": "AUTOTHROTTLE ACTIVE",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Autothrottle",
+      "prefix":602 ,
+      "type":4
+    },
+    {
+      "id": 97,
+      "outputName": "AUTOPILOT NAV1 LOCK",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP NAV1 lock",
+      "prefix": 580,
+      "type":4
+    },
+    {
+      "id": 98,
+      "outputName": "AUTOPILOT VERTICAL HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP vertical hold",
+      "prefix": 604,
+      "type":4
+    },
+    {
+      "id": 99,
+      "outputName": "AUTOPILOT RPM HOLD",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) AP RPM hold",
+      "prefix":605 ,
+      "type":4
+    }
+  ],
+  "NAV and COMS": [{
+      "id": 13,
+      "outputName": "COM ACTIVE FREQUENCY:1",
+      "metric": "Khz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Com 1 active",
+      "prefix":900 ,
+      "type":0
+    },
+    {
+      "id": 14,
+      "outputName": "COM ACTIVE FREQUENCY:2",
+      "metric": "Khz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Com 2 active",
+      "prefix":902 ,
+      "type":0
+    },
+    {
+      "id": 16,
+      "outputName": "COM STANDBY FREQUENCY:1",
+      "metric": "Khz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Com 1 standby",
+      "prefix":901 ,
+      "type":0
+    },
+    {
+      "id": 17,
+      "outputName": "COM STANDBY FREQUENCY:2",
+      "metric": "Khz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Com 2 standby",
+      "prefix":903 ,
+      "type":0
+    },
+    {
+      "id": 18,
+      "outputName": "NAV ACTIVE FREQUENCY:1",
+      "metric": "MHz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV 1 active",
+      "prefix": 910,
+      "type":0
+    },
+    {
+      "id": 19,
+      "outputName": "NAV STANDBY FREQUENCY:1",
+      "metric": "MHz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV 1 standby",
+      "prefix": 911,
+      "type":0
+    },
+    {
+      "id": 20,
+      "outputName": "NAV ACTIVE FREQUENCY:2",
+      "metric": "MHz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV 2 active",
+      "prefix":912 ,
+      "type":0
+    },
+    {
+      "id": 21,
+      "outputName": "NAV STANDBY FREQUENCY:2",
+      "metric": "MHz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV 2 standby",
+      "prefix":913 ,
+      "type":0
+    },
+    {
+      "id": 22,
+      "outputName": "NAV RADIAL ERROR:1",
+      "metric": "Degrees",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV 1 radial error",
+      "prefix": 914,
+      "type":0
+    },
+    {
+      "id": 23,
+      "outputName": "NAV VOR LATLONALT:1",
+      "metric": "SIMCONNECT_DATA_LATLONALT",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Nav 1 VOR LATLONALT",
+      "prefix":915 ,
+      "type":0
+    },
+    {
+      "id": 24,
+      "outputName": "ADF ACTIVE FREQUENCY:1",
+      "metric": "Hz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 1 active",
+      "prefix": 954,
+      "type":8
+    },
+    {
+      "id": 25,
+      "outputName": "ADF STANDBY FREQUENCY:1",
+      "metric": "Hz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 1 standby",
+      "prefix":955 ,
+      "type":8
+    },
+    {
+      "id": 26,
+      "outputName": "ADF RADIAL:1",
+      "metric": "Degrees",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 1 radial",
+      "prefix":956 ,
+      "type":0
+    },
+    {
+      "id": 27,
+      "outputName": "ADF SIGNAL:1",
+      "metric": "Number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 1 signal",
+      "prefix": 957,
+      "type":0
+    },
+    {
+      "id": 28,
+      "outputName": "ADF ACTIVE FREQUENCY:2",
+      "metric": "Hz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 2 active",
+      "prefix":958 ,
+      "type":8
+    },
+    {
+      "id": 29,
+      "outputName": "ADF STANDBY FREQUENCY:2",
+      "metric": "Hz",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 2 standby",
+      "prefix":959 ,
+      "type":8
+    },
+    {
+      "id": 30,
+      "outputName": "ADF RADIAL:2",
+      "metric": "Degrees",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 2 radial",
+      "prefix":960 ,
+      "type":0
+    },
+    {
+      "id": 31,
+      "outputName": "ADF SIGNAL:2",
+      "metric": "Number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"ADF 2 signal",
+      "prefix":961 ,
+      "type":0
+    },
+    {
+      "id": 32,
+      "outputName": "NAV DME:1",
+      "metric": "Nautical miles",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV DME 1",
+      "prefix": 950,
+      "type":0
+    },
+    {
+      "id": 33,
+      "outputName": "NAV DMESPEED:1",
+      "metric": "Knots",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV DME 1 speed",
+      "prefix":951 ,
+      "type":0
+    },
+    {
+      "id": 34,
+      "outputName": "NAV DME:2",
+      "metric": "Nautical miles",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV DME 2",
+      "prefix": 952,
+      "type":0
+    },
+    {
+      "id": 35,
+      "outputName": "NAV DMESPEED:2",
+      "metric": "Knots",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"NAV DME 2 speed",
+      "prefix": 953,
+      "type":0
+    },
+    {
+      "id": 36,
+      "outputName": "TRANSPONDER CODE:1",
+      "metric": "number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Transponder 1 code",
+      "prefix":962 ,
+      "type":0
+    },
+    {
+      "id": 37,
+      "outputName": "TRANSPONDER CODE:2",
+      "metric": "number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Transponder 2 code",
+      "prefix": 963,
+      "type":0
+    },
+    {
+      "id": 102,
+      "outputName": "NAV OBS:1",
+      "metric": "Degrees",
+      "updateEvery": 0.1,
+      "dataType": 0,
+      "cbText":"NAV OBS 1",
+      "prefix": 606,
+      "type":0
+    },
+    {
+      "id": 103,
+      "outputName": "NAV OBS:2",
+      "metric": "Degrees",
+      "updateEvery": 0.1,
+      "dataType": 0,
+      "cbText":"NAV OBS 2",
+      "prefix": 607,
+      "type":0
+    }
+  ],
+  "Lights": [{
+      "id": 38,
+      "outputName": "LIGHT TAXI ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Taxi lights",
+      "prefix": 33,
+      "type":4
+    },
+    {
+      "id": 39,
+      "outputName": "LIGHT STROBE ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Strobe lights",
+      "prefix":34 ,
+      "type":4
+    },
+    {
+      "id": 40,
+      "outputName": "LIGHT PANEL ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Panel lights",
+      "prefix":35 ,
+      "type":4
+    },
+    {
+      "id": 41,
+      "outputName": "LIGHT RECOGNITION ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Recognition lights",
+      "prefix": 36,
+      "type":4
+    },
+    {
+      "id": 42,
+      "outputName": "LIGHT WING ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Wing lights",
+      "prefix": 37,
+      "type":4
+    },
+    {
+      "id": 43,
+      "outputName": "LIGHT LOGO ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Logo lights",
+      "prefix":38 ,
+      "type":4
+    },
+    {
+      "id": 44,
+      "outputName": "LIGHT CABIN ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Cabin lights",
+      "prefix":39 ,
+      "type":4
+    },
+    {
+      "id": 45,
+      "outputName": "LIGHT HEAD ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Head light",
+      "prefix":40 ,
+      "type":4
+    },
+    {
+      "id": 46,
+      "outputName": "LIGHT BRAKE ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Brake lights (not the brakes!)",
+      "prefix":41 ,
+      "type":4
+    },
+    {
+      "id": 47,
+      "outputName": "LIGHT NAV ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) NAV lights",
+      "prefix":42 ,
+      "type":4
+    },
+    {
+      "id": 48,
+      "outputName": "LIGHT BEACON ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Beacon lights",
+      "prefix": 43,
+      "type":4
+    },
+    {
+      "id": 49,
+      "outputName": "LIGHT LANDING ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Landing lights",
+      "prefix":44 ,
+      "type":4
+    }
+  ],
+  "Warnings": [{
+      "id": 50,
+      "outputName": "STALL WARNING",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Stall warning",
+      "prefix": 333,
+      "type":4
+    },
+    {
+      "id": 51,
+      "outputName": "OVERSPEED WARNING",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Overspeed warning",
+      "prefix": 334,
+      "type":4
+    }
+  ],
+  "Mechanical": [{
+      "id": 142,
+      "outputName": "BRAKE PARKING INDICATOR",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Parking brake indicator",
+      "prefix": 505,
+      "type":4
+    },
+    {
+      "id": 52,
+      "outputName": "AILERON TRIM",
+      "metric": "Radians",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Aileron trim degrees",
+      "prefix": 562,
+      "type":2
+    },
+    {
+      "id": 53,
+      "outputName": "AILERON TRIM PCT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Aileron trim %",
+      "prefix": 563,
+      "type":1
+    },
+    {
+      "id": 54,
+      "outputName": "RUDDER TRIM",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Rudder trim degrees",
+      "prefix": 566,
+      "type":2
+    },
+    {
+      "id": 55,
+      "outputName": "RUDDER TRIM PCT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Rudder trim %",
+      "prefix":567 ,
+      "type":1
+    },
+    {
+      "id": 58,
+      "outputName": "ELEVATOR TRIM POSITION",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Elevator trim position degrees",
+      "prefix":498 ,
+      "type":2
+    },
+    {
+      "id": 59,
+      "outputName": "ELEVATOR TRIM PCT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Elevator trim %",
+      "prefix": 500,
+      "type":1
+    },
+    {
+      "id": 60,
+      "outputName": "FLAPS HANDLE PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Flaps handle %",
+      "prefix":510 ,
+      "type":0
+    },
+    {
+      "id": 61,
+      "outputName": "FLAPS HANDLE INDEX",
+      "metric": "Number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Flaps handle index",
+      "prefix": 511,
+      "type":0
+    },
+    {
+      "id": 62,
+      "outputName": "FLAPS NUM HANDLE POSITIONS",
+      "metric": "Number",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"Flaps number handle positions",
+      "prefix": 512,
+      "type":0
+    },
+    {
+      "id": 63,
+      "outputName": "TRAILING EDGE FLAPS LEFT PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Trailing edge flaps left %",
+      "prefix": 513,
+      "type":1
+    },
+    {
+      "id": 64,
+      "outputName": "TRAILING EDGE FLAPS RIGHT PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Trailing edge flaps right %",
+      "prefix": 514,
+      "type":1
+    },
+    {
+      "id": 65,
+      "outputName": "TRAILING EDGE FLAPS LEFT ANGLE",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Trailing edge flaps left degrees",
+      "prefix": 515,
+      "type":2
+    },
+    {
+      "id": 66,
+      "outputName": "TRAILING EDGE FLAPS RIGHT ANGLE",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Trailing edge flaps right degree",
+      "prefix":516,
+      "type":2
+    },
+    {
+      "id": 67,
+      "outputName": "LEADING EDGE FLAPS LEFT PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Leading edge flaps left %",
+      "prefix": 517,
+      "type":1
+    },
+    {
+      "id": 68,
+      "outputName": "LEADING EDGE FLAPS RIGHT PERCENT",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Leading edge flaps right %",
+      "prefix": 518,
+      "type":1
+    },
+    {
+      "id": 69,
+      "outputName": "LEADING EDGE FLAPS LEFT ANGLE",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Leading edge flaps left degrees",
+      "prefix":519 ,
+      "type":2
+    },
+    {
+      "id": 70,
+      "outputName": "LEADING EDGE FLAPS RIGHT ANGLE",
+      "metric": "Radians",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Leading edge flaps right degrees",
+      "prefix": 520,
+      "type":2
+    },
+    {
+      "id": 71,
+      "outputName": "GEAR HANDLE POSITION",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Gear handle position",
+      "prefix": 526,
+      "type":4
+    },
+    {
+      "id": 72,
+      "outputName": "GEAR HYDRAULIC PRESSURE",
+      "metric": "psf",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText":"Gear hydraulic pressure",
+      "prefix": 527,
+      "type": 0
+    },
+    {
+      "id": 73,
+      "outputName": "TAILWHEEL LOCK ON",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Tailwheel lock",
+      "prefix": 528,
+      "type":4
+    },
+    {
+      "id": 74,
+      "outputName": "GEAR CENTER POSITION",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear center position %",
+      "prefix": 529,
+      "type":1
+    },
+    {
+      "id": 75,
+      "outputName": "GEAR LEFT POSITION",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear left position %",
+      "prefix": 530,
+      "type":1
+    },
+    {
+      "id": 76,
+      "outputName": "GEAR RIGHT POSITION",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear right position %",
+      "prefix": 531,
+      "type":1
+    },
+    {
+      "id": 77,
+      "outputName": "GEAR TAIL POSITION",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear tail position %",
+      "prefix": 532,
+      "type":1
+    },
+    {
+      "id": 78,
+      "outputName": "GEAR AUX POSITION",
+      "metric": "Percent Over 100",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear AUX position %",
+      "prefix":533 ,
+      "type":1
+    },
+    {
+      "id": 79,
+      "outputName": "GEAR TOTAL PCT EXTENDED",
+      "metric": "Percentage",
+      "updateEvery": 0.01,
+      "dataType": 0,
+      "cbText":"Gear total extended %",
+      "prefix": 536,
+      "type":1
+    }
+  ]
+}

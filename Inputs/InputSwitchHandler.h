@@ -16,9 +16,10 @@
 #include <string>
 
 #include "headers/SimConnect.h"
-#include "stdio.h"
+#include <cstdio>
 using namespace std;
 class InputSwitchHandler {
+
  public:
   InputSwitchHandler();
   void switchHandling(int index);
