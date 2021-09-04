@@ -1,0 +1,4 @@
+C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/CMakeFiles/Bitsanddroidsgui.dir
+C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/CMakeFiles/Bitsanddroidsgui_autogen.dir
