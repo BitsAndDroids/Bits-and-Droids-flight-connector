@@ -1,4 +1,5 @@
 #include "settingshandler.h"
+#include "coordinates.h"
 
 SettingsHandler::SettingsHandler() {}
 
@@ -16,6 +17,7 @@ QVariant* SettingsHandler::retrieveSetting(QString group, QString key) {
   settings->endGroup();
   return value;
 }
+
 void SettingsHandler::removeSetting(QString group, QString key) {
   settings->beginGroup(group);
   settings->remove(key);

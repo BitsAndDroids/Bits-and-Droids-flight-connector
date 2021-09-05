@@ -7,11 +7,13 @@ const char* portName;
 #ifndef QT_NO_DATASTREAM
 QDataStream &operator<<(QDataStream &stream, const QList<coordinates>*  &object)
 {
-    return stream<<object;
+    for (coordinates i: *object){
+        stream<<"y"<<i.getY()<<"x"<<i.getX();
+    }
+    return stream;
 }
 QDataStream &operator>>(QDataStream &stream, QList<coordinates>*  &object)
 {
-    stream >> object;
     return stream;
 }
 #endif

@@ -7,7 +7,10 @@
 #include <QtCharts>
 #include <QtSerialPort>
 #include <iostream>
+Q_DECLARE_METATYPE( QList<coordinates>*)
+
 #include "../qcustomplot.h"
+
 using namespace std;
 
 FormBuilder::FormBuilder() {
@@ -22,6 +25,12 @@ FormBuilder::FormBuilder() {
   }
   rangeHeaders.append("Flaps");
 
+  if(!settingsHandler.retrieveSetting("Ranges", "rudderSeries")->isNull()){
+      qDebug()<<"hi";
+      auto* savedCoords = settingsHandler.retrieveSetting("Ranges", "rudderSeries")->value<QList<coordinates>*>();
+    pointsToPlot = *savedCoords;
+    updateChart();
+ }
   availableSets = setHandler.getSets();
 }
 
