@@ -4,6 +4,7 @@
 #include <outputs/outputhandler.h>
 #include <outputs/set.h>
 #include <outputs/sethandler.h>
+#include "coordinates.h"
 #include <qstring.h>
 #include <qtabwidget.h>
 
@@ -62,6 +63,8 @@ public:
 
     QList<QString> getAvailableComPorts() { return availableComPorts; };
 
+    QList<struct coordinates> * getCoordinates();
+
 private slots:
 
     void localRemove();
@@ -80,6 +83,7 @@ private slots:
 
 
     void updateX();
+
 //
     void updateY();
 
@@ -113,16 +117,15 @@ private:
 
     void updateChart();
 
-    struct coordinates {
-        float x;
-        float y;
-    };
+
     QList<coordinates> pointsToPlot;
 
 
     QVBoxLayout *generateCurveCol(int valAxis, int valRange);
 
     void changeSlider();
+
+
 };
 
 #endif  // FORMBUILDER_H

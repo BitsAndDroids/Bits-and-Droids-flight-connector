@@ -3,7 +3,7 @@
 #include <headers/constants.h>
 #include <qcombobox.h>
 #include <settings/settingsranges.h>
-
+#include<settings/coordinates.h>
 #include <QtCharts>
 #include <QtSerialPort>
 #include <iostream>
@@ -80,7 +80,7 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   int const min = -16383;
   int const max = 16383;
   auto *curveControls = new QHBoxLayout();
-  QList<coordinates> coords({{0,min},{250,-10000},{500,0},{500,0},{522,0},{750,10000},{1023,max}});
+  QList<coordinates> coords = {{coordinates(0,min)},{coordinates(250,-10000)},{coordinates(500,0)},{coordinates(500,0)},{coordinates(522,0)},{coordinates(750,10000)},{coordinates(1023,max)}};
 //  cplot->yAxis->setRange(-16383,16383);
 //  cplot->addGraph();
 //  QVector<double> x(1023), y0(1023);
@@ -109,24 +109,27 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   layout->addWidget(cplot);
   for (auto &i : coords) {
       pointsToPlot.append(i);
-      series->append(i.x, i.y);
+      series->append(i.getX(), i.getY());
   }
   //layout->addLayout(curveControls);
 
   return layout;
 }
+QList<coordinates>* FormBuilder::getCoordinates(){
+    return &pointsToPlot;
+}
 void FormBuilder::updateY() {
   auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
   auto index = pressedBtn->objectName().rightRef(1).toInt();
-  pointsToPlot[index].y = pressedBtn->text().toInt();
-  cout << "Y" << index << " val" << pointsToPlot[index].y << endl;
+  pointsToPlot[index].setY(pressedBtn->text().toInt());
+  //cout << "Y" << index << " val" << pointsToPlot[index].y << endl;
   updateChart();
 }
 void FormBuilder::updateX() {
   auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
   auto index = pressedBtn->objectName().rightRef(1).toInt();
-  pointsToPlot[index].x = pressedBtn->text().toInt();
-  cout << "X" << index << " val" << pointsToPlot[index].x << endl;
+  pointsToPlot[index].setX(pressedBtn->text().toInt());
+  //cout << "X" << index << " val" << pointsToPlot[index].x << endl;
   updateChart();
 }
 void FormBuilder::changeSlider() {
@@ -163,7 +166,7 @@ void FormBuilder::changeSlider() {
 void FormBuilder::updateChart() {
   series->clear();
   for (auto &i : pointsToPlot) {
-    series->append(i.x, i.y);
+    series->append(i.getX(), i.getY());
   }
   chartView->update();
 }

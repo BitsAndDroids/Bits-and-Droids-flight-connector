@@ -8,7 +8,7 @@
 #include "formbuilder.h"
 
 #include "ui_optionsmenu.h"
-
+Q_DECLARE_METATYPE( QList<coordinates>*)
 FormBuilder *builder = new FormBuilder();
 
 
@@ -74,16 +74,19 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Settings", "CBR",
                                uiOptions->baudComboBox->currentText());
 
-    auto qChartView = uiOptions->
-            vlEngineRange->
-            findChild<QLayout *>("rudderCalibrateLayout")->
-            findChild<QChartView *>("rudderChartView");
-    qDebug()<<"iop";
-    auto series = qChartView->chart()->series();
+//    auto qChartView = uiOptions->
+//            widgetRanges->
+//            findChild<QChartView *>("rudderChartView");
+//    qDebug()<<"iop"<<qChartView->objectName();
+
+
+//    auto series = qChartView->chart()->series();
+//    qDebug()<<series.size()<<"series";
 
 
 
-    settingsHandler.storeValue("Ranges","rudderSeries", QVariant::fromValue(series));
+QList<coordinates>* coords = builder->getCoordinates();
+settingsHandler.storeValue("Ranges","rudderSeries", QVariant::fromValue(coords));
     QList<QLineEdit *> rangeLineEdits =
             uiOptions->widgetRanges->findChildren<QLineEdit *>();
 

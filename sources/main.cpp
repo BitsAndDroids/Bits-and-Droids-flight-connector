@@ -2,14 +2,14 @@
 #include <outputs/set.h>
 
 #include "headers/mainwindow.h"
-Q_DECLARE_METATYPE( QAbstractSeries *)
+Q_DECLARE_METATYPE( QList<coordinates>*)
 const char* portName;
 #ifndef QT_NO_DATASTREAM
-QDataStream &operator<<(QDataStream &stream, const QAbstractSeries * &object)
+QDataStream &operator<<(QDataStream &stream, const QList<coordinates>*  &object)
 {
     return stream<<object;
 }
-QDataStream &operator>>(QDataStream &stream, QAbstractSeries * &object)
+QDataStream &operator>>(QDataStream &stream, QList<coordinates>*  &object)
 {
     stream >> object;
     return stream;
@@ -23,8 +23,8 @@ int main(int argc, char* argv[])
   a.setOrganizationName("Bits and Droids");
   a.setOrganizationDomain("www.bitsanddroids.com");
   MainWindow w;
-  qRegisterMetaType<QList<QAbstractSeries *>>("QAbstractSeries *");
-  qRegisterMetaTypeStreamOperators<QList<QAbstractSeries *>>("QAbstractSeries *");
+  qRegisterMetaType<QList<coordinates>*>("QList<coordinates>*");
+  qRegisterMetaTypeStreamOperators<QList<coordinates>*>("QList<coordinates>*");
 
 
   w.show();
