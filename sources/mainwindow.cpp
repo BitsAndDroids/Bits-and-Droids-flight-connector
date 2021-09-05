@@ -54,6 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     loadComPortData();
 
+
     // This block itterates through the updated com ports list. This is to ensure
     // that the user doesn't have to re-select his previous com port Does this
     // only on bootup to avoid conflicts down the road If no com port found

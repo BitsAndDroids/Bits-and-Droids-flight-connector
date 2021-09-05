@@ -1,6 +1,5 @@
 #include "set.h"
 #include "output.h"
-#include "../../../../../Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/set.h"
 
 
 #include <QJsonArray>

@@ -27,6 +27,7 @@ FormBuilder::FormBuilder() {
 
 QVBoxLayout *FormBuilder::createRudderRow() {
   auto *layout = new QVBoxLayout();
+  layout->setObjectName("rudderCalibrateLayout");
   series = new QLineSeries();
   series->setName("spline");
   //*series << QPointF(11, 1) << QPointF(13, 3);
@@ -34,6 +35,7 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   chart->legend()->hide();
   chart->addSeries(series);
   chart->setTitle("Rudder curve");
+
 
   // chart->createDefaultAxes();
 
@@ -52,6 +54,7 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   series->attachAxis(yAxis);
 
   chartView = new QChartView(chart);
+  chartView->setObjectName("rudderChartView");
   chartView->setMinimumSize(500, 300);
   chartView->adjustSize();
 

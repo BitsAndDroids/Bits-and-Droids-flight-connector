@@ -6,9 +6,11 @@
 #include <string>
 
 #include "formbuilder.h"
+
 #include "ui_optionsmenu.h"
 
 FormBuilder *builder = new FormBuilder();
+
 
 using namespace std;
 
@@ -72,10 +74,20 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Settings", "CBR",
                                uiOptions->baudComboBox->currentText());
 
+    auto qChartView = uiOptions->
+            vlEngineRange->
+            findChild<QLayout *>("rudderCalibrateLayout")->
+            findChild<QChartView *>("rudderChartView");
+    qDebug()<<"iop";
+    auto series = qChartView->chart()->series();
+
+
+
+    settingsHandler.storeValue("Ranges","rudderSeries", QVariant::fromValue(series));
     QList<QLineEdit *> rangeLineEdits =
             uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
-    for (auto & rangeLineEdit : rangeLineEdits) {
+    for (auto &rangeLineEdit : rangeLineEdits) {
         settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
                                    rangeLineEdit->text());
     }

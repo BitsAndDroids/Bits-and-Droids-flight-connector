@@ -1,0 +1,4 @@
+"C:\Program Files\JetBrains\CLion 2021.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" C:\Users\dave-\Documents\GitHub\Bits-and-Droids-flight-connector
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/cmake-build-release
