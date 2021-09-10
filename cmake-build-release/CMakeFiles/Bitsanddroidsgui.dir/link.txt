@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Bitsanddroidsgui.dir/objects.a
-C:\MINGW64\mingw32\bin\ar.exe cr CMakeFiles\Bitsanddroidsgui.dir/objects.a @CMakeFiles\Bitsanddroidsgui.dir\objects1.rsp
-C:\MINGW64\mingw32\bin\g++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\Bitsanddroidsgui.dir/objects.a -Wl,--no-whole-archive -o Bitsanddroidsgui.exe -Wl,--out-implib,libBitsanddroidsgui.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Bitsanddroidsgui.dir\linklibs.rsp

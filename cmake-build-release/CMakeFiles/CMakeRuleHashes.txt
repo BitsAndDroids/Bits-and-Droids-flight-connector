@@ -1,2 +1,0 @@
-# Hashes of file build rules.
-4e348923befa46ed1c340f87f9c90cc9 CMakeFiles/Bitsanddroidsgui_autogen

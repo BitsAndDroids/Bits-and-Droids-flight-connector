@@ -1,4 +1,0 @@
-C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/cmake-build-release/CMakeFiles/Bitsanddroidsgui.dir
-C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/cmake-build-release/CMakeFiles/edit_cache.dir
-C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/cmake-build-release/CMakeFiles/rebuild_cache.dir
-C:/Users/dave-/Documents/GitHub/Bits-and-Droids-flight-connector/cmake-build-release/CMakeFiles/Bitsanddroidsgui_autogen.dir
