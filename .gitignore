@@ -1,3 +1,4 @@
 
 *.user
 *.pro
+.idea/workspace.xml
