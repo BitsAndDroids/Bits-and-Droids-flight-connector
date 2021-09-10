@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Bitsanddroidsgui"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\QtWindows\;CMake Files\..\..\..\..\QtWindows\5.15.0\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Charts\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Network\;CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5SerialPort\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Bitsanddroidsgui">
+				<Option output="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Bitsanddroidsgui.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add option="-DQT_CHARTS_LIB"/>
+					<Add option="-DQT_NETWORK_LIB"/>
+					<Add option="-DQT_SERIALPORT_LIB"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Bitsanddroidsgui_autogen/include"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/."/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/dual"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtWidgets"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtGui"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtANGLE"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtCore"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/./mkspecs/win32-g++"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtCharts"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtNetwork"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtSerialPort"/>
+					<Add directory="C:/MINGW64/include"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/x86_64-w64-mingw32"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bitsanddroidsgui"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Bitsanddroidsgui/fast">
+				<Option output="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Bitsanddroidsgui.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add option="-DQT_CHARTS_LIB"/>
+					<Add option="-DQT_NETWORK_LIB"/>
+					<Add option="-DQT_SERIALPORT_LIB"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Bitsanddroidsgui_autogen/include"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/."/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/dual"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings"/>
+					<Add directory="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtWidgets"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtGui"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtANGLE"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtCore"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/./mkspecs/win32-g++"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtCharts"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtNetwork"/>
+					<Add directory="C:/QtWindows/5.15.0/mingw81_64/include/QtSerialPort"/>
+					<Add directory="C:/MINGW64/include"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/x86_64-w64-mingw32"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../include/c++/4.8.3/backward"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed"/>
+					<Add directory="c:\mingw64\bin\../lib64/gcc/x86_64-w64-mingw32/4.8.3/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bitsanddroidsgui/fast"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Bitsanddroidsgui_autogen">
+				<Option working_dir="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bitsanddroidsgui_autogen"/>
+					<CompileFile command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW64/bin/mingw32-make.exe -f &quot;C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/InputMapper.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/InputSwitchHandler.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/InputSwitchHandler.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/InputWorker.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/InputWorker.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/inputenum.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/inputenum.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/inputmapper.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/Inputs/inputmapper.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug/Bitsanddroidsgui_autogen/mocs_compilation.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/dual/dualworker.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/dual/dualworker.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/Engine.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/SerialPort.hpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/SerialReader.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/SimConnect.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/constants.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/mainwindow.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/range.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/set.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/headers/settingsranges.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/activeoutputs.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/activeoutputs.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/output.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/output.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputEnum.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputbundle.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputbundle.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputenum.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputenum.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputhandler.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputhandler.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputmapper.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputmapper.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputworker.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/outputworker.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/set.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/set.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/sethandler.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/outputs/sethandler.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/qcustomplot.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/qcustomplot.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/coordinates.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/coordinates.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/formbuilder.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/formbuilder.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/optionsmenu.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/optionsmenu.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/optionsmenu.ui">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/outputmenu.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/outputmenu.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/outputmenu.ui">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/settingshandler.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/settingshandler.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/settingsranges.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/settingsranges.h">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/Engine.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/SerialPort.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/SerialReader.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/main.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/mainwindow.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/mainwindow.ui">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/sources/range.cpp">
+			<Option target="Bitsanddroidsgui"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5/Qt5Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsDirect2DIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Widgets/Qt5Widgets_QWindowsVistaStylePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Charts/Qt5ChartsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Charts\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Charts/Qt5ChartsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Charts\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Network/Qt5NetworkConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Network/Qt5NetworkConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5Network/Qt5Network_QGenericEnginePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5Network\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5SerialPort/Qt5SerialPortConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5SerialPort\"/>
+		</Unit>
+		<Unit filename="C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/../../../../QtWindows/5.15.0/mingw81_64/lib/cmake/Qt5SerialPort/Qt5SerialPortConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\QtWindows\5.15.0\mingw81_64\lib\cmake\Qt5SerialPort\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -7,7 +7,7 @@
 
 #include "headers/SerialPort.hpp"
 
-#include <qsettings.h>
+
 #include <qstandardpaths.h>
 #include <qstring.h>
 

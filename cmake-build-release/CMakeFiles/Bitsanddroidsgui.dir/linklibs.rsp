@@ -1,0 +1,1 @@
+ C:/Qt/5.15.2/mingw81_64/lib/libQt5Charts.a C:/Qt/5.15.2/mingw81_64/lib/libQt5Network.a C:/Qt/5.15.2/mingw81_64/lib/libQt5SerialPort.a C:/Qt/5.15.2/mingw81_64/lib/libQt5Widgets.a C:/Qt/5.15.2/mingw81_64/lib/libQt5Gui.a C:/Qt/5.15.2/mingw81_64/lib/libQt5Core.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

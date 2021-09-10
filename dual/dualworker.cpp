@@ -1,16 +1,10 @@
 #include "dualworker.h"
 
-#include <Inputs/InputSwitchHandler.h>
-#include <headers/InputMapper.h>
-#include <headers/inputenum.h>
-#include <outputs/outputmapper.h>
-#include <stdio.h>
+
 #include <strsafe.h>
 #include <tchar.h>
 #include <windows.h>
 
-#include <QTime>
-#include <headers/SerialPort.hpp>
 #include <string>
 
 #define DATA_LENGTH 255
@@ -18,17 +12,13 @@
 
 using namespace std;
 SerialPort *dualPorts[10];
-QTime timerStart;
-QTime timerCheck;
+
 HANDLE dualSimConnect = NULL;
-SerialPort *arduinoRadio;
-string prefix;
-bool received = true;
-int prefixVal;
+
+
 InputEnum radioDefs = InputEnum();
 InputMapper radioMap = InputMapper();
 
-const char *valport = "\\\\.\\COM27";
 struct StructOneDatum {
   int id;
   float value;
@@ -59,33 +49,10 @@ enum DATA_DEFINE_ID {
   DEFINITION_ELEVATOR_TRIM_PCT,
 
 };
-enum DATA_NAMES {
-  DATA_COM_FREQ_STANDBY1,
-  DATA_COM_FREQ_ACTIVE1,
-  DATA_COM_FREQ_STANDBY2,
-  DATA_COM_FREQ_ACTIVE2,
-  DATA_NAV_FREQ_STANDBY1,
-  DATA_NAV_FREQ_ACTIVE1,
-  DATA_NAV_FREQ_STANDBY2,
-  DATA_NAV_FREQ_ACTIVE2,
-  DATA_ELEVATOR_TRIM_PCT,
 
-};
 struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
 };
-struct frequencies {
-  float activeCom1;
-  float standbyCom1;
-  float activeCom2;
-  float standbyCom2;
-  float activeNav1;
-  float StandbyNav1;
-  float activeNav2;
-  float standbyNav2;
-};
-
-frequencies freqStruct;
 
 enum DATA_REQUEST_ID {
   REQUEST_PDR_RADIO,
@@ -96,26 +63,30 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
                                  eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
-DualWorker::DualWorker() {}
+DualWorker::DualWorker() {
+
+}
 void sendDualToArduino(float received, std::string prefix, int index,
                        int mode) {
   int intVal;
   std::string input_string;
 
-  if (mode == 4) {
+  if (mode != 4) {
+    cout << "0 checked" << endl;
+    intVal = static_cast<int>(received);
+  } else {
     if (received == 0) {
       intVal = 0;
     } else {
       intVal = 1;
     }
-  } else {
-    intVal = static_cast<int>(received);
   }
 
   if (mode == 3) {
     input_string = prefix + std::to_string(received);
   } else {
-    input_string = prefix + std::to_string(intVal);
+    const auto value = intVal;
+    input_string = prefix + std::to_string(value);
   }
 
   cout << "size: " << input_string.size() << endl;
@@ -123,7 +94,7 @@ void sendDualToArduino(float received, std::string prefix, int index,
   std::copy(input_string.begin(), input_string.end(), c_string);
   c_string[input_string.size()] = '\n';
   cout << strlen(c_string) << endl;
-  cout << c_string << endl;
+  cout << input_string << endl;
 
   if (mode == 1) {
     if (received < 0) {
@@ -132,9 +103,9 @@ void sendDualToArduino(float received, std::string prefix, int index,
       dualPorts[index]->writeSerialPort(c_string, 6);
     }
   } else {
-    dualPorts[index]->writeSerialPort(c_string, strlen(c_string));
+    dualPorts[index]->writeSerialPort(c_string, input_string.size() + 1);
   }
-  qDebug() << dualPorts[index] << "YES";
+  input_string.clear();
   delete[] c_string;
 }
 
@@ -187,7 +158,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
             for (int i = 0; i < dualCast->outputBundles->size(); i++) {
               if (dualCast->outputBundles->at(i)->isOutputInBundle(
                       output->getId())) {
-                qDebug() << "FOUND IN SET";
+                  qDebug() << "FOUND IN SET " << i <<" bundles" << dualCast->outputBundles->size();
                 bundle = i;
               }
             }
@@ -275,7 +246,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 }
 
 void DualWorker::addBundle(outputBundle *bundle) {
-  this->outputBundles->append(bundle);
+  outputBundles->append(bundle);
 }
 
 void DualWorker::RadioEvents() {
@@ -299,12 +270,13 @@ void DualWorker::RadioEvents() {
   bool connected = false;
 
   while (!abortDual && !connected) {
-    timerStart = QTime::currentTime();
+    // timerStart = QTime::currentTime();
     if (SUCCEEDED(
             SimConnect_Open(&dualSimConnect, "dual data", NULL, 0, 0, 0))) {
       connected = true;
 
-      dualInputMapper.connect = dualSimConnect;
+      dualInputHandler->connect = dualSimConnect;
+      dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
       dualInputMapper.mapEvents(dualSimConnect);
 
       dualOutputMapper.mapOutputs(outputsToMap, dualSimConnect);
@@ -332,6 +304,7 @@ void DualWorker::RadioEvents() {
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
+      SimConnect_Close(dualSimConnect);
     }
   }
   for (int i = 0; i < keys->size(); i++) {
@@ -339,22 +312,17 @@ void DualWorker::RadioEvents() {
       dualPorts[i]->closeSerial();
     }
   }
-  SimConnect_Close(dualSimConnect);
-  Sleep(1);
   quit();
 }
-
+void DualWorker::clearBundles() { this->outputBundles->clear(); }
 DualWorker::~DualWorker() {
-  abortDual = true;
-
   for (int i = 0; i < keys->size(); i++) {
     if (dualPorts[i]->isConnected()) {
       dualPorts[i]->closeSerial();
     }
   }
-  SimConnect_Close(dualSimConnect);
   mutex.lock();
-
+  abortDual = true;
   condition.wakeOne();
   mutex.unlock();
 }

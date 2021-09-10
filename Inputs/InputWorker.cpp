@@ -1,24 +1,17 @@
-// BitsAndDroidsInputHandler.cpp : This file contains the 'main' function.
-// Program execution begins and ends there.
-//
+
 #include "InputWorker.h"
 
-#include <Windows.h>
-#include <headers/SerialReader.h>
 #include <headers/constants.h>
 #include <qsettings.h>
-#include <qstandardpaths.h>
-#include <tchar.h>
 
 #include <cstdio>
 #include <future>
+#include <headers/SerialPort.hpp>
 #include <iostream>
 #include <string>
 
 #include "InputMapper.h"
 #include "InputSwitchHandler.h"
-#include "headers/SerialPort.hpp"
-#include "headers/SimConnect.h"
 
 #define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
@@ -79,10 +72,11 @@ enum INPUT_ID {
 
 void InputWorker::inputEvents() {
   HRESULT hr;
-  keys = *settingsHandler.retrieveKeys("inputCom");
+  abortInput = false;
+  keys = *settingsHandler.retrieveKeys("inputComs");
   for (int i = 0; i < keys.size(); i++) {
     const char *savedPort;
-    savedPort = settingsHandler.retrieveSetting("inputCom", keys[i])
+    savedPort = settingsHandler.retrieveSetting("inputComs", keys[i])
                     ->toString()
                     .toStdString()
                     .c_str();
@@ -92,8 +86,7 @@ void InputWorker::inputEvents() {
               << std::endl;
   }
 
-  while (!connected && !abortInput) {
-    cout << "YUPS" << endl;
+  while (!abortInput) {
     if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "data", NULL, 0, 0, 0))) {
       handler.connect = hInputSimConnect;
 
@@ -101,10 +94,9 @@ void InputWorker::inputEvents() {
       mapper.mapEvents(hInputSimConnect);
 
       connected = true;
-      Sleep(5);
-      while (!abortInput) {
+
+      while (!abortInput && connected) {
         for (int i = 0; i < keys.size(); i++) {
-          cout << arduinoInput[i]->isConnected() << "wh" << endl;
           const auto hasRead = arduinoInput[i]->readSerialPort(
               handler.receivedString[i], DATA_LENGTH);
 
@@ -123,32 +115,34 @@ void InputWorker::inputEvents() {
 
       emit updateLastStatusUI("Connection closed");
       if (connected) {
-        SimConnect_Close(hInputSimConnect);
+        connected = false;
       } else {
         emit updateLastStatusUI("No connection to the game");
-        sleep(100);
       }
     }
   }
+
+  SimConnect_Close(hInputSimConnect);
   for (int i = 0; i < keys.size(); i++) {
     if (arduinoInput[i]->isConnected()) {
       arduinoInput[i]->closeSerial();
     }
   }
   cout << "we are here" << endl;
-  Sleep(1);
   quit();
 }
 
 InputWorker::~InputWorker() {
-  for (int i = 0; i < keys.size(); i++) {
-    if (arduinoInput[i]->isConnected()) {
-      arduinoInput[i]->closeSerial();
-    }
-  }
   abortInput = true;
   connected = false;
+  //  for (int i = 0; i < keys.size(); i++) {
+  //    if (arduinoInput[i]->isConnected()) {
+  //      arduinoInput[i]->closeSerial();
+  //    }
+  //  }
+
   mutex.lock();
+
   condition.wakeOne();
   mutex.unlock();
 }

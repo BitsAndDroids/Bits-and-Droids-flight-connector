@@ -1,22 +1,19 @@
 
 #include "InputSwitchHandler.h"
 
-#include <headers/SimConnect.h>
 #include <qsettings.h>
-#include <qstandardpaths.h>
+#include <settings/coordinates.h>
 #include <tchar.h>
 #include <windows.h>
 
-#include <cstdio>
 #include <future>
 #include <iostream>
 #include <string>
+#include <utility>
 
 #include "inputenum.h"
-#include "stdio.h"
-#include "strsafe.h"
 
-#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
+//#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
 
 using namespace std;
@@ -25,9 +22,7 @@ char *token, *next_token;
 bool inputs[5];
 
 int counter = 0;
-int engines = 4;
 
-// elev , ailerons
 int yoke[2] = {0, 0};
 int oldYoke[2] = {0, 0};
 float closedAxis = -16383.0;
@@ -41,39 +36,6 @@ int mappedProps[4];
 int mappedMixture[4];
 
 int flaps;
-int spoiler;
-
-double oldValProps[2] = {-10, -10};
-
-struct structBattery1 {
-  bool battery1On = true;
-};
-struct range {
-  int minRange;
-  int maxRange;
-};
-
-struct structBattery2 {
-  bool battery2On = true;
-};
-
-struct structPropControl {
-  double prop_percent[2] = {0, 0};
-};
-
-struct structThrottleControl {
-  double throttle_percent[4] = {0, 0, 0, 0};
-};
-
-struct structMixtureControl {
-  double mixture_percent[2] = {0, 0};
-};
-
-structMixtureControl mc;
-structThrottleControl tc;
-structPropControl pc;
-structBattery1 bc1;
-structBattery2 bc2;
 
 int trim;
 int oldTrim;
@@ -88,6 +50,7 @@ int rightBrake;
 int oldRightBrake;
 
 InputEnum inputDefinitions = InputEnum();
+
 InputSwitchHandler::InputSwitchHandler() {
   if (!settingsHandler.retrieveSetting("Ranges", "flapsmin")->isNull()) {
     for (int i = 0; i < constants::supportedEngines; i++) {
@@ -154,6 +117,7 @@ InputSwitchHandler::InputSwitchHandler() {
     flapsRange = Range(0, 1023);
   }
 }
+
 UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
   UINT32 Remainder = 0, Quotient = 0, Result = 0;
   Remainder = Num % Divider;
@@ -162,13 +126,15 @@ UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
     Result += HornerScheme(Quotient, Divider, Factor) * Factor + Remainder;
   return Result;
 }
-int mapPercentageToAxis(int value) {
-  return -24000.0 + (16383.0 - -21000.0) * ((value - 0.0) / (100.0 - 0.0));
-}
+
+// int mapPercentageToAxis(int value) {
+//  return -24000.0 + (16383.0 - -21000.0) * ((value - 0.0) / (100.0 - 0.0));
+//}
 int InputSwitchHandler::mapThrottleValueToAxis(int value, float reverse,
                                                float max, int idleCutoff) {
-  int axis;
+  int valueThrottle;
   bool reversed = max < idleCutoff;
+
   /*First we check the orientation by determing if max < idleCutoff
   If max < idleCutoff. IF max is smaller we know the potentiometer is mounted
   backwards This affects how our logic needs to operate We want to check if the
@@ -176,21 +142,24 @@ int InputSwitchHandler::mapThrottleValueToAxis(int value, float reverse,
   utilize the reverse range or not visa versa for the second check */
   if ((reversed && idleCutoff - reverse < 0 && value >= idleCutoff) ||
       (!reversed && idleCutoff - reverse > 0 && value <= idleCutoff)) {
-    cout << reverseAxis + (closedAxis - reverseAxis) *
-                              ((value - reverse) / (idleCutoff - reverse))
-         << endl;
-    return reverseAxis + (closedAxis - reverseAxis) *
-                             ((value - reverse) / (idleCutoff - reverse));
-
+    valueThrottle =
+        reverseAxis + (closedAxis - reverseAxis) *
+                          ((value - reverse) / (idleCutoff - reverse));
   } else {
-    return closedAxis + (openAxis - closedAxis) *
-                            ((value - idleCutoff) / (max - idleCutoff));
+    valueThrottle =
+        closedAxis +
+        (openAxis - closedAxis) * ((value - idleCutoff) / (max - idleCutoff));
   }
+  if (valueThrottle > 16383) {
+    return 16383;
+  }
+  return valueThrottle;
 }
 
 int mapValueToAxis(int value, float min, float max) {
   return closedAxis + (openAxis - closedAxis) * ((value - min) / (max - min));
 }
+
 void InputSwitchHandler::controlYoke(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -234,6 +203,7 @@ void InputSwitchHandler::controlYoke(int index) {
     cout << "error in throttle" << endl;
   }
 }
+
 void InputSwitchHandler::setFlaps(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -264,6 +234,7 @@ void InputSwitchHandler::setFlaps(int index) {
     cout << "error in flaps set" << endl;
   }
 }
+
 void InputSwitchHandler::set_throttle_values(int index) {
   // Throttle control
   int engineBuffer[4];
@@ -301,7 +272,8 @@ void InputSwitchHandler::set_throttle_values(int index) {
           cout << "minrange " << i << ": " << enginelist[i].getMinRange()
                << endl;
         }
-
+        cout << "eng "
+             << ": " << mappedEngines[3] << endl;
         sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
                               mappedEngines[0]);
         sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
@@ -464,16 +436,39 @@ void InputSwitchHandler::setRudder(int index) {
     token = strtok_s(receivedString[index], " ", &next_token);
 
     counter = 0;
+
     while (token != nullptr && counter < 2) {
       if (counter == 1) {
-        rudderAxis = stoi(token);
+        int analogValue = stoi(token);
+        // minimum to first point
+        if (static_cast<float>(analogValue) <= rudderCurve[1].getX()) {
+          rudderAxis =
+              mapCoordinates(analogValue, rudderCurve[0], rudderCurve.at(1));
+        }
+        // minCurve
+        else if (static_cast<float>(analogValue) < rudderCurve[2].getX()) {
+          rudderAxis =
+              mapCoordinates(analogValue, rudderCurve[1], rudderCurve[2]);
+        }
+        // deadzone
+        else if (static_cast<float>(analogValue) >= rudderCurve[2].getX() &&
+                 static_cast<float>(analogValue) <= rudderCurve[4].getX()) {
+          rudderAxis = 0;
+        } else if (static_cast<float>(analogValue) <= rudderCurve[5].getX()) {
+          rudderAxis = mapCoordinates(static_cast<float>(analogValue),
+                                      rudderCurve[4], rudderCurve[5]);
+        } else if (static_cast<float>(analogValue) <= rudderCurve[6].getX()) {
+          rudderAxis = mapCoordinates(static_cast<float>(analogValue),
+                                      rudderCurve[5], rudderCurve[6]);
+        }
       }
+      cout << rudderAxis << " AXIS" << endl;
       token = strtok_s(nullptr, " ", &next_token);
       counter++;
     }
     int diff = std::abs(rudderAxis - oldRudderAxis);
     cout << diff << endl;
-    if (diff < 3000 || oldRudderAxis == NULL) {
+    if (diff < 10000 || oldRudderAxis == NULL) {
       SimConnect_TransmitClientEvent(
           connect, 0, inputDefinitions.DEFINITION_AXIS_RUDDER_SET, rudderAxis,
           SIMCONNECT_GROUP_PRIORITY_HIGHEST,
@@ -483,6 +478,13 @@ void InputSwitchHandler::setRudder(int index) {
   } catch (const std::exception &e) {
     cout << "error in rudder" << endl;
   }
+}
+
+int InputSwitchHandler::mapCoordinates(int value, coordinates toMapMin,
+                                       coordinates toMapMax) {
+  return toMapMin.getY() +
+         (toMapMax.getY() - toMapMin.getY()) *
+             ((value - toMapMin.getX()) / (toMapMax.getX() - toMapMin.getX()));
 }
 
 void InputSwitchHandler::setBrakeAxis(int index) {
@@ -550,36 +552,40 @@ int InputSwitchHandler::setComs(int index, int comNo) {
 
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
                                           int index) {
+  HRESULT hr;
   string sizeTest = receivedString[index];
   cout << "size: " << sizeTest.length() << endl;
-  SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
-                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+  hr = SimConnect_TransmitClientEvent(
+      connect, 0, eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+  cout << hr << endl;
+}
+
 void InputSwitchHandler::sendBasicCommandOn(
     SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
 
 void InputSwitchHandler::sendBasicCommandOff(
     SIMCONNECT_CLIENT_EVENT_ID eventID) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
+
 void InputSwitchHandler::sendBasicCommandValue(
     SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
   SimConnect_TransmitClientEvent(connect, 0, eventID, value,
                                  SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-};
+}
 
 void InputSwitchHandler::switchHandling(int index) {
   Sleep(10);
   //
-  if (sizeof(receivedString) > 2) {
+  if (strlen(receivedString[index]) > 2) {
     prefix = std::string(&receivedString[index][0], &receivedString[index][3]);
     try {
       int prefixVal = stoi(prefix);
@@ -724,7 +730,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
 
-        // NAV
+          // NAV
         case 128: {
           sendBasicCommand(inputDefinitions.DEFINITION_NAV_1_RADIO_FRACT_INC,
                            index);
@@ -765,7 +771,7 @@ void InputSwitchHandler::switchHandling(int index) {
                            index);
           break;
         }
-        // DME
+          // DME
         case 136: {
           sendBasicCommand(
               inputDefinitions.DEFINITION_RADIO_SELECTED_DME1_IDENT_ENABLE,
@@ -820,7 +826,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
 
-        // VOR1
+          // VOR1
         case 145: {
           sendBasicCommand(
               inputDefinitions.DEFINITION_RADIO_SELECTED_VOR1_IDENT_ENABLE,
@@ -833,7 +839,7 @@ void InputSwitchHandler::switchHandling(int index) {
               index);
           break;
         }
-        //!
+          //!
         case 147: {
           sendBasicCommand(
               inputDefinitions.DEFINITION_RADIO_SELECTED_VOR1_IDENT_SET, index);
@@ -890,7 +896,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
 
-        // ADF
+          // ADF
         case 158: {
           sendBasicCommand(
               inputDefinitions.DEFINITION_RADIO_SELECTED_ADF_IDENT_ENABLE,
@@ -953,7 +959,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
 
-        // XPNDR
+          // XPNDR
         case 171: {
           sendBasicCommand(inputDefinitions.DEFINITION_XPNDR_1000_INC, index);
           break;
@@ -1100,7 +1106,7 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
 
-        // AP
+          // AP
         case 301: {
           sendBasicCommand(inputDefinitions.DEFINITION_AP_MASTER, index);
           break;
@@ -1452,7 +1458,7 @@ void InputSwitchHandler::switchHandling(int index) {
                            index);
           break;
         }
-        // Avionics
+          // Avionics
         case 401: {
           // TO DO CHECK IF WORKS
           sendBasicCommandOff(
@@ -1474,7 +1480,7 @@ void InputSwitchHandler::switchHandling(int index) {
               inputDefinitions.DEFINITION_TOGGLE_AVIONICS2_MASTER_ON);
           break;
         }
-        // TO DO FUNCTION ON OFF Battery
+          // TO DO FUNCTION ON OFF Battery
         case 405: {
           SimConnect_TransmitClientEvent(
               connect, 0, inputDefinitions.DEFINITION_TOGGLE_MASTER_BATTERY, 1,
@@ -2961,8 +2967,13 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
       }
+      sendBasicCommand(inputDefinitions.DEFINITION_ENG_AUTO_IGN_1, index);
     } catch (const std::exception &e) {
       cout << "error" << endl;
     }
   }
+}
+
+void InputSwitchHandler::setRudderCurve(QList<coordinates> curve) {
+  this->rudderCurve = std::move(curve);
 }

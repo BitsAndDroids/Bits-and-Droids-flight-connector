@@ -10,6 +10,7 @@ class SettingsRanges {
   SettingsRanges();
   SettingsRanges(int amntOfRanges, QStringList labels, QString header);
   QVBoxLayout* CreateRangeRow();
+  QVBoxLayout* createRudderRow();
 
  private:
   QStringList labels;

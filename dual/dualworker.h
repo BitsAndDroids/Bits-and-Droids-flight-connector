@@ -1,8 +1,8 @@
 #ifndef DUALWORKER_H
 #define DUALWORKER_H
 
+#include <Inputs/InputMapper.h>
 #include <Inputs/InputSwitchHandler.h>
-#include <headers/InputMapper.h>
 #include <outputs/outputbundle.h>
 #include <outputs/outputhandler.h>
 #include <outputs/outputmapper.h>
@@ -22,7 +22,7 @@
 #include <string>
 
 #include "headers/SimConnect.h"
-#include "stdio.h"
+
 #include "strsafe.h"
 typedef QList<QString> ComsList;
 class DualWorker : public QThread {
@@ -56,6 +56,7 @@ class DualWorker : public QThread {
   QMutex mutex;
   QWaitCondition condition;
   void RadioEvents();
+  void clearBundles();
  public slots:
 };
 

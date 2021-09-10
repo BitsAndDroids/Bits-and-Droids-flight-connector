@@ -1,5 +1,6 @@
 #ifndef INPUTSWITCHHANDLER_H
 #define INPUTSWITCHHANDLER_H
+
 #include <headers/Engine.h>
 #include <headers/constants.h>
 #include <headers/range.h>
@@ -14,44 +15,78 @@
 #include <QObject>
 #include <QThread>
 #include <string>
-
+#include <settings/coordinates.h>
 #include "headers/SimConnect.h"
-#include "stdio.h"
+#include <cstdio>
+
 using namespace std;
+
 class InputSwitchHandler {
- public:
-  InputSwitchHandler();
-  void switchHandling(int index);
-  char receivedString[10][255];
-  HANDLE connect;
-  SIMCONNECT_OBJECT_ID object;
-  std::array<Engine, constants::supportedEngines> enginelist;
-  Range mixtureRanges[constants::supportedMixtureLevers];
-  Range propellerRanges[constants::supportedPropellerLevers];
-  Range flapsRange;
 
-  float reverseAxis = -23000.0;
- private slots:
-  SettingsHandler settingsHandler;
-  void set_throttle_values(int index);
-  void setMixtureValues(int index);
-  void set_prop_values(int index);
-  int setComs(int index, int comNo);
+public:
+    InputSwitchHandler();
 
-  void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
-  void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    void switchHandling(int index);
 
- private:
-  std::string prefix;
-  void setElevatorTrim(int index);
-  void setFlaps(int index);
-  void setRudder(int index);
-  void setBrakeAxis(int index);
-  void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
-  void controlYoke(int index);
-  void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
-  int mapThrottleValueToAxis(int value, float reverse, float max,
-                             int idleCutoff);
+    char receivedString[10][255];
+    HANDLE connect;
+    SIMCONNECT_OBJECT_ID object;
+    std::array<Engine, constants::supportedEngines> enginelist;
+    Range mixtureRanges[constants::supportedMixtureLevers];
+    Range propellerRanges[constants::supportedPropellerLevers];
+    Range flapsRange;
+
+    float reverseAxis = -23000.0;
+private slots:
+    SettingsHandler settingsHandler;
+
+    void set_throttle_values(int index);
+
+    void setMixtureValues(int index);
+
+    void set_prop_values(int index);
+
+    int setComs(int index, int comNo);
+
+    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+
+    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+
+    void setRudderCurve(QList<coordinates>);
+
+private:
+    std::string prefix;
+    QList<coordinates> rudderCurve = {
+            {coordinates(0, -16383)},
+            {coordinates(250, -10000)},
+            {coordinates(400, 0)},
+            {coordinates(500, 0)},
+            {coordinates(600, 0)},
+            {coordinates(750, 10000)},
+            {coordinates(1023, 16383)}};
+
+    void setElevatorTrim(int index);
+
+    void setFlaps(int index);
+
+    void setRudder(int index);
+
+    void setBrakeAxis(int index);
+
+    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
+
+    void controlYoke(int index);
+
+    void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+
+    int mapThrottleValueToAxis(int value, float reverse, float max,
+                               int idleCutoff);
+
+    int mapCoordinates(coordinates toMap);
+
+    int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
+
+    int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

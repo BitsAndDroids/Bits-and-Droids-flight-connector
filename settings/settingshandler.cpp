@@ -1,5 +1,8 @@
 #include "settingshandler.h"
 
+#include <utility>
+#include "coordinates.h"
+
 SettingsHandler::SettingsHandler() {}
 
 void SettingsHandler::storeValue(QString group, QString key, QVariant value) {
@@ -7,6 +10,17 @@ void SettingsHandler::storeValue(QString group, QString key, QVariant value) {
   settings->setValue(key, value);
   settings->endGroup();
   settings->sync();
+}
+void SettingsHandler::storeSubGroup(QString group,QString subGroup, QString key, QVariant value){
+    settings->beginGroup(group);
+    storeValue(std::move(subGroup),std::move(key),std::move(value));
+    settings->endGroup();
+}
+QStringList* SettingsHandler::retrieveSubKeys(QString group, QString subGroup){
+    settings->beginGroup(group);
+    QStringList* keys = retrieveKeys(subGroup);
+    settings->endGroup();
+    return keys;
 }
 
 QVariant* SettingsHandler::retrieveSetting(QString group, QString key) {
@@ -16,6 +30,13 @@ QVariant* SettingsHandler::retrieveSetting(QString group, QString key) {
   settings->endGroup();
   return value;
 }
+QVariant* SettingsHandler::retrieveSubSetting(QString group, QString subGroup, QString key) {
+    settings->beginGroup(group);
+    QVariant* value = retrieveSetting(std::move(subGroup),std::move(key));
+    settings->endGroup();
+    return value;
+}
+
 void SettingsHandler::removeSetting(QString group, QString key) {
   settings->beginGroup(group);
   settings->remove(key);

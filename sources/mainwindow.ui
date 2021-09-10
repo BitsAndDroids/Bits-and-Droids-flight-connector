@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1058</width>
+    <height>810</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Bits and droids connector</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QApp{
+	
+}
+#connectionPage{
+background-color: rgb(255, 255, 255);
+}
+QWidget#MainWindow{
+
+}
+QWidget#centralwidget{
+	background-color: #ebebeb;
+}
+QWidget#stackedWidget{
+background-color: rgb(255, 255, 255);
+}
+#page{
+background-color: rgb(255, 255, 255);
+}
+#Input{
+background-color: rgb(255, 255, 255);
+}
+#Output{
+background-color: rgb(255, 255, 255);
+}
+
+QTabWidget::tab-bar {
+
+}
+QFrame{
+   border-color:#000;
+}
+QPushButton{
+	background-color: #0f4c5c;
+	color: white;
+	border-radius: 4px;
+  
+}
+QPushButton#updateButton{
+	
+	padding: 4px;
+	
+}
+QPushButton#switchButton{
+
+padding: 8px;
+
+}
+QPushButton#startButton, QPushButton#startInputButton{
+	background-color: rgb(1, 150, 11);
+}
+QPushButton#startButton:disabled, QPushButton#startInputButton:disabled{
+	background-color: rgb(9, 42, 0);
+}
+
+QPushButton#stopButton, QPushButton#stopInputButton{
+	background-color: rgb(167, 13, 13);
+
+}
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+    position: absolute;
+    top: -0.5em;
+}
+/* Style the tab using the tab sub-control. Note that
+    it reads QTabBar _not_ QTabWidget */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 8ex;
+    padding: 2px;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+
+QTabBar::tab:selected {
+    border-color: #9B9B9B;
+    border-bottom-color: #C2C7CB; /* same as pane color */
+}
+QCheckBox{
+	color: #000;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="updateButton">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">:hover{
+	background-color:#0f1d33;
+}</string>
+      </property>
+      <property name="text">
+       <string>There is no update avaialable</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="labelLastVal">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="connectionsVWidget" native="true">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <layout class="QHBoxLayout" name="connectionsContainerLayout">
+       <item>
+        <widget class="QWidget" name="inWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#inWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="inLayoutContainer"/>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="outWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#outWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="outLayoutContainer"/>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="dualWidgetContainer" native="true">
+         <property name="styleSheet">
+          <string notr="true">#dualWidgetContainer{
+background-color:#fff;
+border-radius:4px;
+}</string>
+         </property>
+         <layout class="QVBoxLayout" name="dualLayoutContainer"/>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="19" column="0">
+     <widget class="QWidget" name="messagesWidget" native="true">
+      <layout class="QHBoxLayout" name="messagesWidgetLayout">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="labelLastVal_2">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelLastStatus">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1058</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="menuItemOptions">
+   <property name="text">
+    <string>Options</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,11 +1,12 @@
-#include "settings/settingsranges.h"
+#include "settingsranges.h"
 
 #include <qlabel.h>
 #include <qlineedit.h>
 
 #include <QStringList>
-#include <QVBoxLayout>
+#include <QtCharts>
 #include <iostream>
+
 
 SettingsRanges::SettingsRanges(int amntOfRanges, QStringList labels,
                                QString headerText) {
@@ -15,25 +16,25 @@ SettingsRanges::SettingsRanges(int amntOfRanges, QStringList labels,
 }
 
 QVBoxLayout* SettingsRanges::CreateRangeRow() {
-  QVBoxLayout* rangeRow = new QVBoxLayout();
+  auto* rangeRow = new QVBoxLayout();
 
-  QHBoxLayout* headerRow = new QHBoxLayout();
-  QHBoxLayout* labelRow = new QHBoxLayout();
-  QHBoxLayout* lineEditRow = new QHBoxLayout();
+  auto* headerRow = new QHBoxLayout();
+  auto* labelRow = new QHBoxLayout();
+  auto* lineEditRow = new QHBoxLayout();
 
-  QLabel* header = new QLabel();
+  auto* header = new QLabel();
   header->setText(this->headerText);
   headerRow->addWidget(header);
   std::cout << this->amntOfRanges << std::endl;
   for (int i = 0; i < this->amntOfRanges; i++) {
-    QLabel* label = new QLabel();
+    auto* label = new QLabel();
     label->setText(labels[i]);
     labelRow->addWidget(label);
   }
 
   for (int i = 0; i < this->amntOfRanges; i++) {
     QString lineEditName = headerText + labels[i];
-    QLineEdit* line = new QLineEdit();
+    auto* line = new QLineEdit();
     switch (i) {
       case 0:
         line->setText("0");
@@ -55,3 +56,5 @@ QVBoxLayout* SettingsRanges::CreateRangeRow() {
 
   return rangeRow;
 }
+
+

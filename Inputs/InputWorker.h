@@ -1,5 +1,6 @@
 #ifndef INPUTWORKER_H
 #define INPUTWORKER_H
+#include <headers/SimConnect.h>
 #include <qmutex.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -12,8 +13,7 @@
 #include <QObject>
 #include <string>
 
-#include "headers/SimConnect.h"
-#include "stdio.h"
+#include <cstdio>
 /*!
   \class InputWorker
   \brief The InputWorker class
@@ -28,16 +28,13 @@ class InputWorker : public QThread {
 
  public:
   InputWorker();
-  ~InputWorker();
+  ~InputWorker() override;
   QMutex mutex;
   QWaitCondition condition;
 
-  std::string getLastVal() { return lastVal; }
-  std::string getLastStatus() { return lastStatus; }
   bool connected;
-  bool abortInput = false;
-  bool advanced = false;
-  bool props = true;
+  bool abortInput;
+
 
  private slots:
 

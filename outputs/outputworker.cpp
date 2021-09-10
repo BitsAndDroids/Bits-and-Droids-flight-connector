@@ -2,18 +2,15 @@
 #define MAX_RETURNED_ITEMS 255
 #include "outputworker.h"
 
-#include <headers/SimConnect.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <tchar.h>
 #include <windows.h>
 
-#include <headers/SerialPort.hpp>
 #include <string>
 
-#include "outputmapper.h"
 #include "stdio.h"
-#include "strsafe.h"
+
 
 bool connectionError = false;
 float prevSpeed = 0.0f;
@@ -132,6 +129,7 @@ float radianToDegreeFloat(double rec) {
 void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext) {
   HRESULT hr;
+
   OutputWorker *outputCast = static_cast<OutputWorker *>(pContext);
 
   int updatePerXFrames = 3;
@@ -258,6 +256,12 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 sendToArduino(pS->datum[count].value / 1000, prefix, bundle, 0);
                 break;
               }
+              case 9: {
+                  qDebug()<<"interesting"<<pS->datum[count].value;
+                  sendToArduino(pS->datum[count].value, prefix, bundle, 0);
+
+                  break;
+              }
 
               default:
                 printf("\nUnknown datum ID: %i", pS->datum[count].id);
@@ -286,7 +290,9 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 }
 void OutputWorker::testDataRequest() {
   HRESULT hr;
+  abort = false;
   keys = settingsHandler.retrieveKeys("outputcoms");
+
   for (int i = 0; i < keys->size(); i++) {
     ports[i] = new SerialPort(
         settingsHandler.retrieveSetting("outputcoms", keys->at(i))
@@ -308,10 +314,6 @@ void OutputWorker::testDataRequest() {
       printf("\nConnected to Flight Simulator!");
       connected = true;
       emit updateLastValUI("Connected to the game");
-      // Set up the data definition, ensuring that all the elements are in
-      // Float32 units, to match the StructDatum structure The number of entries
-      // in the DEFINITION_PDR definition should be equal to the
-      // maxReturnedItems define
 
       // DATA
 
@@ -322,35 +324,30 @@ void OutputWorker::testDataRequest() {
       hr = SimConnect_SubscribeToSystemEvent(hSimConnect, EVENT_SIM_START,
                                              "1sec");
 
-      printf("\nLaunch a flight.");
-
-      while (abort != true) {
+      while (!abort) {
         SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, this);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
-      for (int i = 0; i < outputBundles->size(); i++) {
-        ports[i]->closeSerial();
-      }
-
-      hr = SimConnect_Close(hSimConnect);
     }
   }
-  for (int i = 0; i < outputBundles->size(); i++) {
-    ports[i]->closeSerial();
+  SimConnect_Close(hSimConnect);
+  for (int i = 0; i < keys->size(); i++) {
+    if (ports[i]->isConnected()) {
+      cout << keys->size() << " keys and hit" << endl;
+      ports[i]->closeSerial();
+    }
   }
   quit();
 }
 OutputWorker::~OutputWorker() {
-  lastConnectionState = false;
-  connectionError = false;
   for (int i = 0; i < keys->size(); i++) {
     if (ports[i]->isConnected()) {
       ports[i]->closeSerial();
     }
   }
-  // arduinoTest->closeSerial();
-  mutex.lock();
   abort = true;
+  mutex.lock();
+
   condition.wakeOne();
   mutex.unlock();
 }

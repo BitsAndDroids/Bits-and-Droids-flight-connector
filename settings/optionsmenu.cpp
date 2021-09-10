@@ -1,92 +1,146 @@
 #include "optionsmenu.h"
 
-#include <qsettings.h>
 #include <qstandardpaths.h>
-#include <settings/formbuilder.h>
-#include <tchar.h>
 
-#include <QDebug>
+#include <iostream>
 #include <string>
 
-#include "stdio.h"
 #include "ui_optionsmenu.h"
 
-FormBuilder builder = FormBuilder();
-
 using namespace std;
+void optionsMenu::closeEvent(QCloseEvent *event) {
+  qDebug() << 'clEvent';
+  delete this;
+}
 
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
   uiOptions->setupUi(this);
 
-  QList<QLineEdit *> allLabels =
-      uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
-
   QStringList keys = *settingsHandler.retrieveKeys("Settings");
-  if (keys.size() > 0) {
+  if (!keys.empty()) {
     foreach (const QString &key, keys) {
       if (uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)) {
         uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)->setText(
-           settingsHandler.retrieveSetting("Settings", key)->toString());
+            settingsHandler.retrieveSetting("Settings", key)->toString());
       }
     }
-    if (!settingsHandler.retrieveSetting("Settings","CBR")->isNull()) {
-      uiOptions->baudComboBox->setCurrentText(settingsHandler.retrieveSetting("Setting","CBR")->toString());
+    if (!settingsHandler.retrieveSetting("Settings", "CBR")->isNull()) {
+      uiOptions->baudComboBox->setCurrentText(
+          settingsHandler.retrieveSetting("Setting", "CBR")->toString());
     }
   }
 
-
-  // Range handling
   uiOptions->vlOptions->setAlignment(Qt::AlignTop);
-  uiOptions->vlEngineRange->addLayout(builder.RangeBuilder());
+  // uiOptions->vlEngineRange->addLayout(builder->createRudderRow());
+  uiOptions->vlEngineRange->addLayout(builder->RangeBuilder());
+  auto sensLayout = new QVBoxLayout();
+  sensLayout->addLayout(builder->createRudderRow());
+  uiOptions->sensitivityWidget->setLayout(sensLayout);
+  uiOptions->sensitivityWidget->layout()->setAlignment(Qt::AlignTop);
 
+  if (!settingsHandler
+           .retrieveSubSetting("rudderSeries", "sliders", "rudderDeadzone")
+           ->isNull()) {
+    uiOptions->sensitivityWidget->findChild<QSlider *>("rudderDeadzone")
+        ->setValue(
+            settingsHandler
+                .retrieveSubSetting("rudderSeries", "sliders", "rudderDeadzone")
+                ->toInt());
+    uiOptions->sensitivityWidget->findChild<QSlider *>("rudderMinSensitivity")
+        ->setValue(settingsHandler
+                       .retrieveSubSetting("rudderSeries", "sliders",
+                                           "rudderMinSensitivity")
+                       ->toInt());
 
-  QList<QLineEdit *> allRangeLabels =
-      uiOptions->widgetRanges->findChildren<QLineEdit *>();
+    uiOptions->sensitivityWidget->findChild<QSlider *>("rudderPlusSensitivity")
+        ->setValue(settingsHandler
+                       .retrieveSubSetting("rudderSeries", "sliders",
+                                           "rudderPlusSensitivity")
+                       ->toInt());
+    // Range handling
+  }
+  uiOptions->sensitivityWidget->adjustSize();
   QStringList rangeKeys = *settingsHandler.retrieveKeys("Ranges");
-  if (rangeKeys.size() > 0) {
+  if (!rangeKeys.empty()) {
     foreach (const QString &key, rangeKeys) {
       if (uiOptions->widgetRanges->findChild<QLineEdit *>(key)) {
         uiOptions->widgetRanges->findChild<QLineEdit *>(key)->setText(
-            settingsHandler.retrieveSetting("Ranges",key)->toString());
+            settingsHandler.retrieveSetting("Ranges", key)->toString());
       }
     }
   }
-  if (!settingsHandler.retrieveSetting("Ranges","maxReverseId")->isNull()) {
-    int value = settingsHandler.retrieveSetting("Ranges","maxReverseId")->toInt();
+  if (!settingsHandler.retrieveSetting("Ranges", "maxReverseId")->isNull()) {
+    int value =
+        settingsHandler.retrieveSetting("Ranges", "maxReverseId")->toInt();
     if (value != -1) {
       uiOptions->buttonGroup->button(value)->click();
     }
   }
-
 }
 
-optionsMenu::~optionsMenu() { delete uiOptions; }
+optionsMenu::~optionsMenu() {
+  emit closedOptionsMenu();
+  delete uiOptions;
+}
 
 void optionsMenu::on_saveSettingsBtn_clicked() {
-
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
   qDebug() << "size" << allLabels.size();
-  for (int i = 0; i < allLabels.size(); i++) {
-    QString name = allLabels.at(i)->objectName();
+  for (auto allLabel : allLabels) {
+    QString name = allLabel->objectName();
     qDebug() << "Clicked" << name;
-    settingsHandler.storeValue("Settings",name, allLabels.at(i)->text());
+    settingsHandler.storeValue("Settings", name, allLabel->text());
   }
-  settingsHandler.storeValue("Settings","CBR", uiOptions->baudComboBox->currentText());
+  settingsHandler.storeValue("Settings", "CBR",
+                             uiOptions->baudComboBox->currentText());
 
+  //    auto qChartView = uiOptions->
+  //            widgetRanges->
+  //            findChild<QChartView *>("rudderChartView");
+  //    qDebug()<<"iop"<<qChartView->objectName();
 
+  //    auto series = qChartView->chart()->series();
+  //    qDebug()<<series.size()<<"series";
+
+  QList<coordinates> *coords = builder->getCoordinates();
+  QStringList sliderNames = {"rudderDeadzone", "rudderMinSensitivity",
+                             "rudderPlusSensitivity"};
+  for (int i = 0; i < sliderNames.size(); i++) {
+    auto *sliderFound =
+        uiOptions->sensitivityWidget->findChild<QSlider *>(sliderNames.at(i));
+    cout << sliderFound->objectName().toStdString() << endl;
+    settingsHandler.storeSubGroup(
+        "rudderSeries", "sliders", sliderNames.at(i),
+        uiOptions->sensitivityWidget->findChild<QSlider *>(sliderNames.at(i))
+            ->value());
+  }
+
+  for (int i = 0; i < coords->size(); i++) {
+    settingsHandler.storeSubGroup("rudderSeries", "axis", QString::number(i),
+                                  coords->at(i).getX());
+    settingsHandler.storeSubGroup("rudderSeries", "value", QString::number(i),
+                                  coords->at(i).getY());
+  }
 
   QList<QLineEdit *> rangeLineEdits =
       uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
-  for (int i = 0; i < rangeLineEdits.size(); i++) {
-    settingsHandler.storeValue("Ranges",rangeLineEdits[i]->objectName(),
-                      rangeLineEdits[i]->text());
+  for (auto &rangeLineEdit : rangeLineEdits) {
+    settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
+                               rangeLineEdit->text());
+  }
+  QStringList rudderLineEdits = builder->getRudderCalibrateLabels();
+  for (auto &i : rudderLineEdits) {
+    auto rudderValsFound =
+        uiOptions->sensitivityWidget->findChild<QLineEdit *>(i)->text().toInt();
+    settingsHandler.storeSubGroup("rudderSeries", "calibrations", i,
+                                  rudderValsFound);
   }
 
   QString idleStr = "Engine " + QString::number(1) + "Min";
-  int idleCutoff = settingsHandler.retrieveSetting("Ranges",idleStr)->toInt();
+  int idleCutoff = settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
   qDebug() << "cut" << idleCutoff;
 
   int value;
@@ -106,22 +160,22 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
       value = -23000;
       break;
   }
-  settingsHandler.storeValue("Ranges","maxReverseRange", value);
-  settingsHandler.storeValue("Ranges","maxReverseId", id);
+  settingsHandler.storeValue("Ranges", "maxReverseRange", value);
+  settingsHandler.storeValue("Ranges", "maxReverseId", id);
 }
 
 void optionsMenu::on_checkBox_stateChanged(int checked) {
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
   if (uiOptions->checkBox->isChecked()) {
-    for (int i = 0; i < allLabels.size(); i++) {
-      allLabels.at(i)->setEnabled(true);
+    for (auto allLabel : allLabels) {
+      allLabel->setEnabled(true);
     }
     uiOptions->baudComboBox->setEnabled(true);
 
   } else {
-    for (int i = 0; i < allLabels.size(); i++) {
-      allLabels.at(i)->setEnabled(false);
+    for (auto allLabel : allLabels) {
+      allLabel->setEnabled(false);
     }
     uiOptions->baudComboBox->setEnabled(false);
   }
