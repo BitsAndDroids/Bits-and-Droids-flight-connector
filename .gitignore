@@ -4,3 +4,6 @@
 .idea
 cmake-build-debug
 cmake-build-release
+cmake-build-debug/Bitsanddroidsgui_autogen/YPB6MEUM2W/moc_formbuilder.cpp
+cmake-build-debug/CMakeFiles/Bitsanddroidsgui_autogen.dir/ParseCache.txt
+cmake-build-debug/Testing/Temporary/LastTest.log
