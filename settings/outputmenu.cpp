@@ -1,26 +1,19 @@
 #include "outputmenu.h"
 #include "formbuilder.h"
+#include<headers/mainwindow.h>
 #include "ui_outputmenu.h"
 
-#include <outputs/output.h>
-#include <outputs/outputhandler.h>
-#include <outputs/sethandler.h>
-
-
-#include <QCheckBox>
-
 #include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-
 
 FormBuilder formBuilder;
 outputHandler outputHandler;
 SetHandler setHandler;
+
+
 OutputMenu::OutputMenu(QWidget *parent)
     : QWidget(parent), ui(new Ui::OutputMenu) {
   ui->setupUi(this);
-  QList<set> *foundSets = new QList<set>();
+  auto *foundSets = new QList<set>();
   foundSets = setHandler.getSets();
 
   connect(&formBuilder, &FormBuilder::addSet, this, &OutputMenu::addNewSet);
@@ -30,21 +23,21 @@ OutputMenu::OutputMenu(QWidget *parent)
   ui->containerLayout->addLayout(formBuilder.generateOutputSetList());
   ui->containerLayout->addLayout(formBuilder.generateOutputControls());
 
-  QVBoxLayout *activeLayout = new QVBoxLayout();
+  auto *activeLayout = new QVBoxLayout();
   activeLayout->setObjectName("activeContainer");
 
   ui->containerLayout->addLayout(activeLayout);
 
   QStringList *keys = settingsHandler.retrieveKeys("sets");
-  for (int i = 0; i < foundSets->size(); i++) {
+  for (const auto & foundSet : *foundSets) {
     // qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
     ui->widget->findChild<QVBoxLayout *>("outputSetList")
-        ->addWidget(formBuilder.generateSetRow(foundSets->at(i)));
+        ->addWidget(formBuilder.generateSetRow(foundSet));
   }
 
   ui->containerLayout->addWidget(formBuilder.generateOutputTabs());
 
-  QPushButton *saveEdit = new QPushButton("Save edit");
+  auto *saveEdit = new QPushButton("Save edit");
   saveEdit->setObjectName("btnSsaveEdit");
   connect(saveEdit, &QAbstractButton::clicked, this, &OutputMenu::saveEdit);
   ui->containerLayout->addWidget(saveEdit);
@@ -56,10 +49,18 @@ OutputMenu::OutputMenu(QWidget *parent)
           &OutputMenu::removeSetAction);
 }
 
-OutputMenu::~OutputMenu() { delete ui; }
+OutputMenu::~OutputMenu() {
+    emit OutputMenu::closedOutputMenu();
+    qDebug()<<"closed here";
+    delete ui;
+}
+void OutputMenu::closeEvent(QCloseEvent *event) {
+    qDebug()<<'clEvent';
+    delete this;
+}
 
 void OutputMenu::addNewSet() {
-  QLineEdit *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
+  auto *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
   set *newSet = new set(lineEditName->text());
 
   set *setSaved = setHandler.saveSet(newSet);
@@ -81,18 +82,18 @@ void OutputMenu::editSet(QString id) {
 
   qDebug() << "a";
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(true);
-  QWidget *widgetFound = ui->widget->findChild<QWidget *>("activeWidget");
+  auto *widgetFound = ui->widget->findChild<QWidget *>("activeWidget");
   qDebug() << "deleted";
   delete widgetFound;
 
   ui->widget->adjustSize();
 
-  QVBoxLayout *container =
+  auto *container =
       ui->widget->findChild<QVBoxLayout *>("activeContainer");
   QWidget *setActiveWidget = formBuilder.generateActiveSet(&setFound);
   container->addWidget(setActiveWidget);
 
-  QLabel *setHeader = ui->widget->findChild<QLabel *>("setNameHeader");
+  auto *setHeader = ui->widget->findChild<QLabel *>("setNameHeader");
 
   setHeader->setText(setFound.getSetName());
 
@@ -123,12 +124,12 @@ void OutputMenu::saveEdit() {
   QList<QCheckBox *> cbList = ui->widget->findChildren<QCheckBox *>();
   set setToEdit = setHandler.getSetById(QString::number(activeSet));
   setToEdit.clearOutputs();
-  for (int i = 0; i < cbList.size(); i++) {
-    if (cbList[i]->isChecked()) {
-      QString cbName = cbList[i]->objectName();
+  for (auto & i : cbList) {
+    if (i->isChecked()) {
+      QString cbName = i->objectName();
       qDebug() << cbName;
       Output *outputSelected =
-          outputHandler.findOutputById(cbName.mid(2).toInt());
+          outputHandler.findOutputById(cbName.midRef(2).toInt());
       ;
 
       qDebug() << outputSelected->getCbText();

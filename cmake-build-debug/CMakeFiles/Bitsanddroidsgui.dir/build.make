@@ -443,6 +443,20 @@ CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.s"
 	C:\MINGW64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\qcustomplot.cpp" -o CMakeFiles\Bitsanddroidsgui.dir\qcustomplot.cpp.s
 
+CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj: CMakeFiles/Bitsanddroidsgui.dir/flags.make
+CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj: CMakeFiles/Bitsanddroidsgui.dir/includes_CXX.rsp
+CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj: ../settings/coordinates.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj"
+	C:\MINGW64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Bitsanddroidsgui.dir\settings\coordinates.cpp.obj -c "C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\settings\coordinates.cpp"
+
+CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.i"
+	C:\MINGW64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\settings\coordinates.cpp" > CMakeFiles\Bitsanddroidsgui.dir\settings\coordinates.cpp.i
+
+CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.s"
+	C:\MINGW64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\settings\coordinates.cpp" -o CMakeFiles\Bitsanddroidsgui.dir\settings\coordinates.cpp.s
+
 # Object files for target Bitsanddroidsgui
 Bitsanddroidsgui_OBJECTS = \
 "CMakeFiles/Bitsanddroidsgui.dir/Bitsanddroidsgui_autogen/mocs_compilation.cpp.obj" \
@@ -471,7 +485,8 @@ Bitsanddroidsgui_OBJECTS = \
 "CMakeFiles/Bitsanddroidsgui.dir/sources/range.cpp.obj" \
 "CMakeFiles/Bitsanddroidsgui.dir/sources/SerialPort.cpp.obj" \
 "CMakeFiles/Bitsanddroidsgui.dir/sources/SerialReader.cpp.obj" \
-"CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.obj"
+"CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.obj" \
+"CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj"
 
 # External object files for target Bitsanddroidsgui
 Bitsanddroidsgui_EXTERNAL_OBJECTS =
@@ -503,6 +518,7 @@ Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/sources/range.cpp.obj
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/sources/SerialPort.cpp.obj
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/sources/SerialReader.cpp.obj
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.obj
+Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/build.make
 Bitsanddroidsgui.exe: C:/QtWindows/5.15.0/mingw81_64/lib/libQt5Charts.a
 Bitsanddroidsgui.exe: C:/QtWindows/5.15.0/mingw81_64/lib/libQt5Network.a
@@ -513,7 +529,7 @@ Bitsanddroidsgui.exe: C:/QtWindows/5.15.0/mingw81_64/lib/libQt5Core.a
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/linklibs.rsp
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/objects1.rsp
 Bitsanddroidsgui.exe: CMakeFiles/Bitsanddroidsgui.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_28) "Linking CXX executable Bitsanddroidsgui.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Documents and Settings\Dave Riedel\Documents\Bitsanddroidsgui\cmake-build-debug\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable Bitsanddroidsgui.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Bitsanddroidsgui.dir\link.txt --verbose=$(VERBOSE)
 	"C:\Users\Dave Riedel\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.4746.93\bin\cmake\win\bin\cmake.exe" -E copy C:/QtWindows/5.15.0/mingw81_64/lib/cmake/../../bin/Qt5Cored.dll "C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"
 	"C:\Users\Dave Riedel\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\212.4746.93\bin\cmake\win\bin\cmake.exe" -E copy C:/QtWindows/5.15.0/mingw81_64/lib/cmake/../../bin/Qt5Guid.dll "C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/cmake-build-debug"

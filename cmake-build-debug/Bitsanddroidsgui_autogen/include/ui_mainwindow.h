@@ -154,9 +154,11 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         updateButton = new QPushButton(centralwidget);
         updateButton->setObjectName(QString::fromUtf8("updateButton"));
-        updateButton->setEnabled(false);
+        updateButton->setEnabled(true);
         updateButton->setMaximumSize(QSize(250, 16777215));
-        updateButton->setStyleSheet(QString::fromUtf8(""));
+        updateButton->setStyleSheet(QString::fromUtf8(":hover{\n"
+"	background-color:#0f1d33;\n"
+"}"));
 
         gridLayout->addWidget(updateButton, 0, 0, 1, 1);
 

@@ -231,6 +231,12 @@
 			null
 		],
 		[
+			"C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/coordinates.h",
+			"MU",
+			"YPB6MEUM2W/moc_coordinates.cpp",
+			null
+		],
+		[
 			"C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/formbuilder.h",
 			"MU",
 			"YPB6MEUM2W/moc_formbuilder.cpp",
@@ -404,6 +410,11 @@
 		],
 		[
 			"C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/qcustomplot.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Documents and Settings/Dave Riedel/Documents/Bitsanddroidsgui/settings/coordinates.cpp",
 			"MU",
 			null
 		],

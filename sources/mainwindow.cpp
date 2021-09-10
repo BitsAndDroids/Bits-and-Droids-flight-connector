@@ -3,28 +3,43 @@
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
-#include <settings/formbuilder.h>
 #include <settings/optionsmenu.h>
 #include <settings/outputmenu.h>
 
-#include <QGraphicsDropShadowEffect>
 #include <QNetworkAccessManager>
 #include <iostream>
 #include <string>
 
 #include "ui_mainwindow.h"
 
-
 void MainWindow::untick() {}
 
 void MainWindow::openSettings() {
-    QWidget *wdg = new optionsMenu;
-    wdg->show();
+    if(!optionMenuOpen){
+        optionMenuOpen = true;
+        QWidget *wdg = new optionsMenu;
+        connect(wdg, SIGNAL(closedOptionsMenu()), this, SIGNAL(closedOptionsMenu()));
+        wdg->show();
+    }
 }
 
+void MainWindow::outputMenuClosed() {
+    outputMenuOpen = false;
+    qDebug() << "closed";
+}
+void MainWindow::optionMenuClosed() {
+    optionMenuOpen = false;
+    qDebug() << "closed";
+}
+
+
 void MainWindow::openOutputMenu() {
-    QWidget *wdg = new OutputMenu;
-    wdg->show();
+    if (!outputMenuOpen) {
+        outputMenuOpen = true;
+        QWidget *wdg = new OutputMenu;
+        connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
+        wdg->show();
+    }
 }
 
 std::string MainWindow::convertComPort(QString comText) {
@@ -51,9 +66,11 @@ MainWindow::MainWindow(QWidget *parent)
     std::cout << inputComRowCounter << "Rows init" << std::endl;
 
     availableSets = formbuilder.getAvailableSets();
-
+    connect(this, &MainWindow::closedOutputMenu, this,
+            &MainWindow::outputMenuClosed);
+    connect(this, &MainWindow::closedOptionsMenu, this,
+            &MainWindow::optionMenuClosed);
     loadComPortData();
-
 
     // This block itterates through the updated com ports list. This is to ensure
     // that the user doesn't have to re-select his previous com port Does this
@@ -78,6 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
     Settings->addAction("Version " + QString(constants::VERSION));
 
     // SIGNALS + SLOTS
+
     connect(openOutputMenu, &QAction::triggered, this,
             &MainWindow::openOutputMenu);
     connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
@@ -108,11 +126,9 @@ MainWindow::MainWindow(QWidget *parent)
     inWidget->setGraphicsEffect(shadow);
     inContainer->setAlignment(Qt::AlignTop);
 
-
     inContainer->addWidget(formbuilder.generateComControls(1));
     inContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,
                                                QSizePolicy::Expanding);
-
 
     QStringList *inputKeys = settingsHandler.retrieveKeys("inputComs");
     for (int i = 0; i < inputKeys->size(); i++) {
@@ -206,7 +222,7 @@ MainWindow::MainWindow(QWidget *parent)
         comboBox->setCurrentIndex(index);
     }
 
-    if (outputKeys->empty()) {
+    if (dualkKeys->empty()) {
         dualContainer->addWidget(formbuilder.generateComSelector(true, 3));
     }
 
@@ -234,12 +250,13 @@ void MainWindow::onfinish(QNetworkReply *rep) {
             QStringList versionCut = str.split("~");
 
             if (versionCut[1].toStdString() != version) {
-                ui->updateButton->setEnabled(true);
+
                 std::string nr = versionCut[1].toStdString();
                 std::string buttonText = "New update available: " + nr;
                 ui->updateButton->setText(QString::fromStdString(buttonText));
-                url = versionCut[3].toStdString();
+                //url = versionCut[3].toStdString();
             } else {
+                ui->updateButton->setVisible(false);
                 ui->updateButton->setText("Up to date v: " + versionCut[1]);
             }
         }
@@ -280,7 +297,7 @@ void MainWindow::startInputs() {
     QRegularExpression search("comBox");
     QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
     bool emptyInputCom = checkIfComboIsEmpty(comList);
-    if(!emptyInputCom){
+    if (!emptyInputCom) {
         QString comboBoxName;
         QString key;
 
@@ -294,20 +311,23 @@ void MainWindow::startInputs() {
         }
 
         inputThread.start();
-    } else{
-        auto *startButton = ui->inWidgetContainer->findChild<QPushButton *>("2startButton");
+    } else {
+        auto *startButton =
+                ui->inWidgetContainer->findChild<QPushButton *>("2startButton");
         startButton->setChecked(false);
         startButton->setText("Start");
         startButton->setEnabled(true);
 
-        auto *stopButton = ui->inWidgetContainer->findChild<QPushButton *>("2stopBtn");
+        auto *stopButton =
+                ui->inWidgetContainer->findChild<QPushButton *>("2stopBtn");
         stopButton->setChecked(true);
         stopButton->setStyleSheet("background-color:#0F4C5C");
 
-        auto outWarningBox = ui->inWidgetContainer->findChild<QLayout *>("outputWarningBox");
+        auto outWarningBox =
+                ui->inWidgetContainer->findChild<QLayout *>("outputWarningBox");
         clearChildrenFromLayout(outWarningBox);
 
-        //always true, check is in here for if I ever add more error messages
+        // always true, check is in here for if I ever add more error messages
         if (emptyInputCom) {
             outWarningBox->addWidget(returnWarningString(NOCOMPORT));
         }
@@ -333,7 +353,7 @@ void MainWindow::startOutputs() {
         QString key;
         QString setKey;
         QList<Output *> outputsToMap;
-
+        outputThread.clearBundles();
         for (int i = 0; i < comList.size(); i++) {
             key = "outputCom" + QString::number(i);
             setKey = "outputSet" + QString::number(i);
@@ -350,7 +370,7 @@ void MainWindow::startOutputs() {
             int id = availableSets->at(index).getID();
 
             auto *bundle = new outputBundle();
-            outputThread.clearBundles();
+
             set active = setHandler->getSetById(QString::number(id));
             bundle->setSet(active);
 
@@ -369,16 +389,19 @@ void MainWindow::startOutputs() {
         outputThread.abort = false;
         outputThread.start();
     } else {
-        auto *startButton = ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
+        auto *startButton =
+                ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
         startButton->setChecked(false);
         startButton->setText("Start");
         startButton->setEnabled(true);
 
-        auto *stopButton = ui->outWidgetContainer->findChild<QPushButton *>("2stopBtn");
+        auto *stopButton =
+                ui->outWidgetContainer->findChild<QPushButton *>("2stopBtn");
         stopButton->setChecked(true);
         stopButton->setStyleSheet("background-color:#0F4C5C");
 
-        auto outWarningBox = ui->outWidgetContainer->findChild<QLayout *>("outputWarningBox");
+        auto outWarningBox =
+                ui->outWidgetContainer->findChild<QLayout *>("outputWarningBox");
         clearChildrenFromLayout(outWarningBox);
         if (emptyDualCom) {
             outWarningBox->addWidget(returnWarningString(NOCOMPORT));
@@ -391,7 +414,6 @@ void MainWindow::startOutputs() {
 
 void MainWindow::startDual() {
     auto *widget = new QWidget();
-
 
     widget = ui->dualWidgetContainer;
     settingsHandler.clearKeys("dualComs");
@@ -410,6 +432,7 @@ void MainWindow::startDual() {
         QString setKey;
         QList<Output *> outputsToMap;
         qDebug() << "sets available" << comList.size();
+        dualThread.clearBundles();
         for (int i = 0; i < comList.size(); i++) {
             key = "dualCom" + QString::number(i);
             setKey = "dualSet" + QString::number(i);
@@ -425,7 +448,7 @@ void MainWindow::startDual() {
             int index = setList[i]->currentIndex();
 
             int id = availableSets->at(index).getID();
-            dualThread.clearBundles();
+
             auto *bundle = new outputBundle();
 
             set active = setHandler->getSetById(QString::number(id));
@@ -444,6 +467,7 @@ void MainWindow::startDual() {
             dualThread.setOutputsToMap(outputsToMap);
             bundle->setOutputsInSet(*outputs);
             dualThread.addBundle(bundle);
+            cout << "added" << endl;
             settingsHandler.storeValue("dualComSet", setKey, id);
         }
 
@@ -455,16 +479,19 @@ void MainWindow::startDual() {
         dualThread.abortDual = false;
         dualThread.start();
     } else {
-        auto *startButton = ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
+        auto *startButton =
+                ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
         startButton->setChecked(false);
         startButton->setText("Start");
         startButton->setEnabled(true);
 
-        auto *stopButton = ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
+        auto *stopButton =
+                ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
         stopButton->setChecked(true);
         stopButton->setStyleSheet("background-color:#0F4C5C");
 
-        auto dualWarningBox = ui->dualWidgetContainer->findChild<QLayout *>("dualWarningBox");
+        auto dualWarningBox =
+                ui->dualWidgetContainer->findChild<QLayout *>("dualWarningBox");
         clearChildrenFromLayout(dualWarningBox);
         if (emptyDualCom) {
             dualWarningBox->addWidget(returnWarningString(NOCOMPORT));
@@ -472,16 +499,15 @@ void MainWindow::startDual() {
         if (emptyDualSet) {
             dualWarningBox->addWidget(returnWarningString(NOSET));
         }
-
-
     }
 }
 
 bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
-    for (auto &i: toCheck) {
+    for (auto &i : toCheck) {
         if (i->currentIndex() == -1) {
             return true;
-        } else return false;
+        } else
+            return false;
     }
 }
 
@@ -503,7 +529,8 @@ QLabel *MainWindow::returnWarningString(int warningType) {
             warningLabel->setText("Please select a com port before pressing start");
             break;
         case NOSET:
-            warningLabel->setText("Please create or select a set before pressing start");
+            warningLabel->setText(
+                    "Please create or select a set before pressing start");
             break;
     }
     return warningLabel;
@@ -593,6 +620,7 @@ void MainWindow::stopOutput() { outputThread.abort = true; }
 void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
+    qDebug()<<"clicked";
     QString qUrl = QString::fromStdString(url);
     QDesktopServices::openUrl(QUrl(qUrl));
 }

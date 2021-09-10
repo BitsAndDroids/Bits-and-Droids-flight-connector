@@ -45,6 +45,7 @@ SOURCES += \
     settings/formBuilder.cpp \
     settings/optionsmenu.cpp \
     settings/outputmenu.cpp \
+    settings/coordinates.cpp \
     settings/settingshandler.cpp \
     settings/settingsranges.cpp \
     sources/Engine.cpp \
@@ -79,6 +80,7 @@ HEADERS += \
     settings/formBuilder.h \
     settings/optionsmenu.h \
     settings/outputmenu.h \
+    settings/coordinates.h \
     settings/settingshandler.h \
     settings/settingsranges.h \
     qcustomplot.h

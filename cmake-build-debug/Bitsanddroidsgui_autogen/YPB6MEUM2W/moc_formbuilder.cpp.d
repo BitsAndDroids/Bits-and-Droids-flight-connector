@@ -5,6 +5,7 @@ C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/cmake-build-
   C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/outputs/set.h \
   C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/outputs/sethandler.h \
   C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/qcustomplot.h \
+  C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/settings/coordinates.h \
   C:/Documents\ and\ Settings/Dave\ Riedel/Documents/Bitsanddroidsgui/settings/settingshandler.h \
   C:/MINGW64/include/c++/4.8.3/algorithm \
   C:/MINGW64/include/c++/4.8.3/backward/auto_ptr.h \

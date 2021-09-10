@@ -63,7 +63,9 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
                                  eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
-DualWorker::DualWorker() {}
+DualWorker::DualWorker() {
+
+}
 void sendDualToArduino(float received, std::string prefix, int index,
                        int mode) {
   int intVal;
@@ -156,7 +158,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
             for (int i = 0; i < dualCast->outputBundles->size(); i++) {
               if (dualCast->outputBundles->at(i)->isOutputInBundle(
                       output->getId())) {
-                qDebug() << "FOUND IN SET";
+                  qDebug() << "FOUND IN SET " << i <<" bundles" << dualCast->outputBundles->size();
                 bundle = i;
               }
             }
@@ -244,7 +246,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 }
 
 void DualWorker::addBundle(outputBundle *bundle) {
-  this->outputBundles->append(bundle);
+  outputBundles->append(bundle);
 }
 
 void DualWorker::RadioEvents() {

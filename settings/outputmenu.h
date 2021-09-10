@@ -8,35 +8,54 @@
 #include "settingshandler.h"
 
 namespace Ui {
-class OutputMenu;
+    class OutputMenu;
 }
 
 class OutputMenu : public QWidget {
-  Q_OBJECT
+Q_OBJECT
 
- public:
-  explicit OutputMenu(QWidget *parent = nullptr);
-  ~OutputMenu();
+public:
+    explicit OutputMenu(QWidget *parent = nullptr);
 
- public slots:
-  void addNewSet();
-  void removeSetAction(QString id);
-  void editSet(QString id);
-  void saveEdit();
- signals:
-  void addSet();
-  void setEdited(QString id);
-  void saveEdited();
-  Q_SIGNAL void removeSet(QString id);
+    ~OutputMenu();
 
- private:
-  int activeSet;
-  SettingsHandler settingsHandler;
-  Ui::OutputMenu *ui;
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
-                                      QSettings::IniFormat);
+    bool isOpen() {
+        return open;
+    }
+
+public slots:
+
+    void addNewSet();
+
+    void removeSetAction(QString id);
+
+    void editSet(QString id);
+
+    void saveEdit();
+
+signals:
+
+    void closedOutputMenu();
+
+    void addSet();
+
+    void setEdited(QString id);
+
+    void saveEdited();
+
+    Q_SIGNAL void removeSet(QString id);
+
+private:
+    bool open = false;
+    int activeSet;
+    SettingsHandler settingsHandler;
+    Ui::OutputMenu *ui;
+    QString path =
+            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
+                                        QSettings::IniFormat);
+
+    void closeEvent(QCloseEvent *event) override;
 };
 
 #endif  // OUTPUTMENU_H

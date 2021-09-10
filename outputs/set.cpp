@@ -4,25 +4,26 @@
 
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <utility>
 
 set::set() {
 
 }
 
 set::set(QString setName) {
-    this->setName = setName;
+    this->setName = std::move(setName);
 
 }
 
 set::set(QString setName, int id) {
-    this->setName = setName;
+    this->setName = std::move(setName);
     this->setId = id;
 }
 
 set::set(QString setName, int id, QMap<int, Output *> outputs) {
-    this->setName = setName;
+    this->setName = std::move(setName);
     this->setId = id;
-    this->outputs = outputs;
+    this->outputs = std::move(outputs);
 }
 
 
@@ -33,7 +34,7 @@ void set::addOutput(Output *outputToAdd) {
 }
 
 void set::setOutputs(QMap<int, Output *> newOutputs) {
-    this->outputs = newOutputs;
+    this->outputs = std::move(newOutputs);
 }
 
 void set::clearOutputs() {

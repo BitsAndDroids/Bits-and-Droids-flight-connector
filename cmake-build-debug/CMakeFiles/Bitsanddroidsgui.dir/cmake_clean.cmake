@@ -21,6 +21,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Bitsanddroidsgui.dir/outputs/set.cpp.obj"
   "CMakeFiles/Bitsanddroidsgui.dir/outputs/sethandler.cpp.obj"
   "CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.obj"
+  "CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj"
   "CMakeFiles/Bitsanddroidsgui.dir/settings/formbuilder.cpp.obj"
   "CMakeFiles/Bitsanddroidsgui.dir/settings/optionsmenu.cpp.obj"
   "CMakeFiles/Bitsanddroidsgui.dir/settings/outputmenu.cpp.obj"

@@ -29,7 +29,7 @@ public:
 
     QHBoxLayout *generateComBlock();
 
-    QVBoxLayout *generateRange(QString header);
+    static QVBoxLayout *generateRange(const QString &header);
 
     QVBoxLayout *createRudderRow();
 
@@ -40,20 +40,20 @@ public:
 
     int getAmountOfEngines() { return engineHeaders.size(); };
 
-    QTabWidget *generateOutputTabs();
+    static QTabWidget *generateOutputTabs();
 
-    QVBoxLayout *generateOutputSetList();
+    static QVBoxLayout *generateOutputSetList();
 
-    QGridLayout *generateOutputControls();
+    QGridLayout *generateOutputControls() const;
     // QVBoxLayout *generateActiveSet();
 
-    QWidget *generateSetRow(set setForRow);
+    QWidget *generateSetRow(const set &setForRow);
 
     QHBoxLayout *generateOutputRow(Output *output);
 
-    QWidget *generateActiveSet(set *selectedSet);
+    static QWidget *generateActiveSet(set *selectedSet);
 
-    QLabel *generateHeader(QString text);
+    static QLabel *generateHeader(const QString &text);
 
     QWidget *generateComSelector(bool setsNeeded, int mode);
 
@@ -63,7 +63,9 @@ public:
 
     QList<QString> getAvailableComPorts() { return availableComPorts; };
 
-    QList<struct coordinates> * getCoordinates();
+    QStringList getRudderCalibrateLabels() { return rudderObjectNames; };
+
+    QList<struct coordinates> *getCoordinates();
 
 private slots:
 
@@ -81,10 +83,12 @@ private slots:
 
     void removeComWidget();
 
+    void rudderTextChanged();
 
     void updateX();
 
-//
+    void reverseClicked();
+
     void updateY();
 
 signals:
@@ -104,6 +108,9 @@ signals:
     void addPressed(int mode);
 
 private:
+    QStringList rudderObjectNames = {"rudderMinLE", "rudderNeutralLE",
+                                     "rudderMaxLE"};
+    QList<int> axisValues = {-16383,-10000,0,0,0,10000,16383};
     QChart *chart;
     QCustomPlot *cplot;
     QLineSeries *series;
@@ -124,6 +131,12 @@ private:
     QVBoxLayout *generateCurveCol(int valAxis, int valRange);
 
     void changeSlider();
+
+    int minRudderValue = 0;
+
+    int maxRudderValue = 1023;
+
+    int neutralRudderValue = (maxRudderValue - minRudderValue) / 2;
 
 
 };

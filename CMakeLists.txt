@@ -89,6 +89,8 @@ add_executable(Bitsanddroidsgui
         sources/SerialReader.cpp
         qcustomplot.cpp
         qcustomplot.h
+        settings/coordinates.cpp
+        settings/coordinates.h
 
      )
 target_link_libraries(Bitsanddroidsgui

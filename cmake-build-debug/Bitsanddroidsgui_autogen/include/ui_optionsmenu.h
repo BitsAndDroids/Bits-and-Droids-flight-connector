@@ -47,18 +47,35 @@ public:
     QRadioButton *rb25;
     QPushButton *saveSettingsBtn;
     QPushButton *pushButton_3;
+    QWidget *sensitivityWidget;
     QButtonGroup *buttonGroup;
 
     void setupUi(QWidget *optionsMenu)
     {
         if (optionsMenu->objectName().isEmpty())
             optionsMenu->setObjectName(QString::fromUtf8("optionsMenu"));
-        optionsMenu->resize(896, 857);
+        optionsMenu->resize(1094, 857);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(optionsMenu->sizePolicy().hasHeightForWidth());
         optionsMenu->setSizePolicy(sizePolicy);
+        optionsMenu->setStyleSheet(QString::fromUtf8("QSlider::groove:horizontal {\n"
+"    border: 1px solid #999999;\n"
+"    height: 8px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
+"	width: 250px;\n"
+"    text-align:left;\n"
+"    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);\n"
+"    margin: 2px 0;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #00409F, stop:1 #64C0FB);\n"
+"    border: 1px solid #5c5c5c;\n"
+"    width: 18px;\n"
+"    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+"    border-radius: 3px;\n"
+"}"));
         formLayoutWidget = new QWidget(optionsMenu);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
         formLayoutWidget->setGeometry(QRect(20, 70, 302, 311));
@@ -164,10 +181,13 @@ public:
 
         saveSettingsBtn = new QPushButton(optionsMenu);
         saveSettingsBtn->setObjectName(QString::fromUtf8("saveSettingsBtn"));
-        saveSettingsBtn->setGeometry(QRect(710, 100, 151, 23));
+        saveSettingsBtn->setGeometry(QRect(20, 390, 151, 23));
         pushButton_3 = new QPushButton(optionsMenu);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(710, 70, 151, 23));
+        pushButton_3->setGeometry(QRect(20, 420, 151, 23));
+        sensitivityWidget = new QWidget(optionsMenu);
+        sensitivityWidget->setObjectName(QString::fromUtf8("sensitivityWidget"));
+        sensitivityWidget->setGeometry(QRect(660, 70, 481, 571));
 
         retranslateUi(optionsMenu);
 

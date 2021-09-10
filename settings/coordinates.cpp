@@ -4,20 +4,12 @@
 
 #include "coordinates.h"
 
-coordinates::coordinates(float x, float y) {
-    this->x = x;
-    this->y = y;
+coordinates::coordinates(float xToSet, float yToSet) {
+  x = xToSet;
+  y = yToSet;
 }
 
-float coordinates::getX() {
-    return this->x;
-}
-float coordinates::getY() {
-    return this->y;
-}
-void coordinates::setX(float x) {
-    this->x = x;
-}
-void coordinates::setY(float y) {
-    this->y = y;
-}
+float coordinates::getX() const { return x; }
+float coordinates::getY() const { return y; }
+void coordinates::setX(float newX) { x = newX; }
+void coordinates::setY(float newY) { y = newY; }

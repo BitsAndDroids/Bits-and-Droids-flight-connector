@@ -525,6 +525,30 @@ qcustomplot.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Bitsanddroidsgui.dir\build.make CMakeFiles/Bitsanddroidsgui.dir/qcustomplot.cpp.s
 .PHONY : qcustomplot.cpp.s
 
+settings/coordinates.obj: settings/coordinates.cpp.obj
+.PHONY : settings/coordinates.obj
+
+# target to build an object file
+settings/coordinates.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Bitsanddroidsgui.dir\build.make CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.obj
+.PHONY : settings/coordinates.cpp.obj
+
+settings/coordinates.i: settings/coordinates.cpp.i
+.PHONY : settings/coordinates.i
+
+# target to preprocess a source file
+settings/coordinates.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Bitsanddroidsgui.dir\build.make CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.i
+.PHONY : settings/coordinates.cpp.i
+
+settings/coordinates.s: settings/coordinates.cpp.s
+.PHONY : settings/coordinates.s
+
+# target to generate assembly for a file
+settings/coordinates.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Bitsanddroidsgui.dir\build.make CMakeFiles/Bitsanddroidsgui.dir/settings/coordinates.cpp.s
+.PHONY : settings/coordinates.cpp.s
+
 settings/formbuilder.obj: settings/formbuilder.cpp.obj
 .PHONY : settings/formbuilder.obj
 
@@ -847,6 +871,9 @@ help:
 	@echo ... qcustomplot.obj
 	@echo ... qcustomplot.i
 	@echo ... qcustomplot.s
+	@echo ... settings/coordinates.obj
+	@echo ... settings/coordinates.i
+	@echo ... settings/coordinates.s
 	@echo ... settings/formbuilder.obj
 	@echo ... settings/formbuilder.i
 	@echo ... settings/formbuilder.s
