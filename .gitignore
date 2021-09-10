@@ -1,3 +1,5 @@
 
 *.user
 *.pro
+cmake-build-debug
+cmake-build-release
