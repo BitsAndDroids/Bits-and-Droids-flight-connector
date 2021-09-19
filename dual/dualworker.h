@@ -34,6 +34,7 @@ class DualWorker : public QThread {
  private:
   // ...
   SettingsHandler settingsHandler;
+  SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
   outputHandler outputHandler;
   QList<outputBundle *> *outputBundles = new QList<outputBundle *>();
   InputSwitchHandler *dualInputHandler = new class InputSwitchHandler();
@@ -42,7 +43,11 @@ class DualWorker : public QThread {
 
   static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                   void *pContext);
+  double dataF = 1.;
 
+  SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
+  InputEnum radioDefs = InputEnum();
+  InputMapper radioMap = InputMapper();
   QList<Output *> outputsToMap;
   QStringList *keys = new QStringList();
 

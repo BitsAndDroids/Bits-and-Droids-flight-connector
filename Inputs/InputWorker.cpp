@@ -21,29 +21,24 @@
 // Declare a global object
 SerialPort *arduinoInput[10];
 
-HANDLE hInputSimConnect = NULL;
+HANDLE hInputSimConnect;
+//
+
+//// Attempt at WASM
+double dataF = 1.;
 
 // Definition of the client data area format
-double data = 1.;
 using namespace std;
-InputEnum defs = InputEnum();
+enum DATA_DEFINE_ID {
+    DEFINITION_1 = 12,
+    };
 InputWorker::InputWorker() {}
-InputMapper mapper = InputMapper();
-InputSwitchHandler handler = InputSwitchHandler();
 
-enum GROUP_ID {
-  GROUP0,
-  GROUP_A = 1,
+enum EVENT_ID {
+  EVENT_SIM_START,
+  EVENT_WASM = 2,
 };
-
 int x = 0;
-enum DATA_REQUEST_ID {
-
-  REQUEST_THROTTLE,
-  REQUEST_MIXTURE,
-  REQUEST_PROPS,
-  REQUEST_1 = 10,
-};
 
 void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                       void *pContext) {
@@ -54,8 +49,11 @@ void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
     case SIMCONNECT_RECV_ID_CLIENT_DATA: {
       // Cast incoming data into interpretable format for this event.
-      SIMCONNECT_RECV_CLIENT_DATA *pObjData =
-          (SIMCONNECT_RECV_CLIENT_DATA *)pData;
+      auto *pObjData = (SIMCONNECT_RECV_CLIENT_DATA *)pData;
+      auto *pUserData = (double *)&pObjData->dwData;
+
+      // For demonstration, the actual data value is pointed to by pUserData.
+      double myData = *pUserData;
 
       printf("Request ID = %d.\n", pObjData->dwRequestID);
       break;
@@ -65,10 +63,6 @@ void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
       break;
   }
 }
-
-enum INPUT_ID {
-  INPUT0,
-};
 
 void InputWorker::inputEvents() {
   HRESULT hr;
@@ -87,10 +81,24 @@ void InputWorker::inputEvents() {
   }
 
   while (!abortInput) {
-    if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "data", NULL, 0, 0, 0))) {
+    if (SUCCEEDED(
+            SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0, 0, 0))) {
+      printf("\nConnected to Flight Simulator!");
+      SimConnect_MapClientDataNameToID(hInputSimConnect, "shared",
+                                       ClientDataID);
+      cout << "CLIENTNAME: " << hr << endl;
+      hr = SimConnect_CreateClientData(
+          hInputSimConnect, ClientDataID, sizeof(dataF),
+          SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
+      cout << "CLIENTDATA: " << hr << endl;
+
+      hr = SimConnect_MapClientEventToSimEvent(hInputSimConnect, EVENT_WASM,
+                                               "LVAR_ACCESS.EFIS");
+      hr = SimConnect_SetClientData(hInputSimConnect, ClientDataID, DEFINITION_1, SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, sizeof(dataF), &dataF);
+      cout << "MAPCTOE: " << hr << endl;
       handler.connect = hInputSimConnect;
 
-      handler.object = SIMCONNECT_OBJECT_ID_USER;
+      handler.object = objectID;
       mapper.mapEvents(hInputSimConnect);
 
       connected = true;
@@ -101,14 +109,15 @@ void InputWorker::inputEvents() {
               handler.receivedString[i], DATA_LENGTH);
 
           if (hasRead) {
+
             if (connected) {
               emit updateLastStatusUI("Connected to game");
               handler.switchHandling(i);
             }
-            lastVal = handler.receivedString[i];
+            //lastVal = handler.receivedString[i];
           }
 
-          emit updateLastValUI(QString::fromStdString(lastVal));
+          //emit updateLastValUI(QString::fromStdString(lastVal));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }

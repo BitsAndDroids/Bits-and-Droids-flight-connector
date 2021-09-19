@@ -87,6 +87,10 @@ private:
     int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
 
     int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
+
+    void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+
+    void sendWASMCommand(int index);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

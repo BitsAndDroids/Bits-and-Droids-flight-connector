@@ -14,6 +14,9 @@
 #include <string>
 
 #include <cstdio>
+#include "InputMapper.h"
+#include "InputSwitchHandler.h"
+
 /*!
   \class InputWorker
   \brief The InputWorker class
@@ -43,7 +46,11 @@ class InputWorker : public QThread {
  private:
   SettingsHandler settingsHandler;
   std::string lastVal;
+  SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+    SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
   std::string lastStatus;
+  InputMapper mapper = InputMapper();
+  InputSwitchHandler handler = InputSwitchHandler();
   QStringList keys = *settingsHandler.retrieveKeys("inputCom");
   std::string prefix;
   void inputEvents();

@@ -7,10 +7,8 @@
 #include <tchar.h>
 #include <windows.h>
 
+#include <cstdio>
 #include <string>
-
-#include "stdio.h"
-
 
 bool connectionError = false;
 float prevSpeed = 0.0f;
@@ -19,9 +17,14 @@ int eps = 1;
 
 bool lastConnectionState = false;
 SerialPort *ports[10];
-SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+
+// SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+//// Attempt at WASM
+// double dataF = 1.;
+// SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
+
 int quit = 0;
-HANDLE hSimConnect = NULL;
+HANDLE hSimConnect = nullptr;
 
 struct Struct1 {
   char title[256];
@@ -40,7 +43,7 @@ struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
 };
 
-enum EVENT_ID { EVENT_SIM_START };
+enum EVENT_ID { EVENT_SIM_START, EVENT_WASM = 2 };
 
 enum DATA_DEFINE_ID {
   DEFINITION_PDR,
@@ -56,10 +59,13 @@ enum DATA_REQUEST_ID {
 using namespace std;
 SerialPort *arduinoTest;
 OutputWorker::OutputWorker() {}
-void sendToArduino(float received, std::string prefix, int index, int mode) {
+void sendToArduino(float received, const std::string &prefix, int index,
+                   int mode) {
   int intVal;
   std::string input_string;
-
+  //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
+  //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+  //                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
   if (mode != 4) {
     cout << "0 checked" << endl;
     intVal = static_cast<int>(received);
@@ -99,7 +105,7 @@ void sendToArduino(float received, std::string prefix, int index, int mode) {
   delete[] c_string;
 }
 
-void sendCharToArduino(const char *received, std::string prefix) {
+void sendCharToArduino(const char *received, const std::string &prefix) {
   if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
@@ -130,13 +136,13 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext) {
   HRESULT hr;
 
-  OutputWorker *outputCast = static_cast<OutputWorker *>(pContext);
+  auto *outputCast = static_cast<OutputWorker *>(pContext);
 
   int updatePerXFrames = 3;
 
   switch (pData->dwID) {
     case SIMCONNECT_RECV_ID_EVENT: {
-      SIMCONNECT_RECV_EVENT *evt = (SIMCONNECT_RECV_EVENT *)pData;
+      auto *evt = (SIMCONNECT_RECV_EVENT *)pData;
 
       switch (evt->uEventID) {
         case EVENT_SIM_START:
@@ -165,12 +171,11 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
     case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
       qDebug() << "si";
-      SIMCONNECT_RECV_SIMOBJECT_DATA *pObjData =
-          (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
+      auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
 
       switch (pObjData->dwRequestID) {
         case REQUEST_STRING: {
-          Struct1 *pS = (Struct1 *)&pObjData->dwData;
+          auto *pS = (Struct1 *)&pObjData->dwData;
           sendCharToArduino(pS->title, "999");
           cout << "Plane: " << pS->title << endl;
           break;
@@ -186,7 +191,7 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
             string valString = std::to_string(pS->datum[count].value);
             int id = pS->datum[count].id;
             Output *output = outputCast->outputHandler.findOutputById(id);
-            int bundle = NULL;
+            int bundle = 0;
 
             for (int i = 0; i < outputCast->outputBundles->size(); i++) {
               if (outputCast->outputBundles->at(i)->isOutputInBundle(
@@ -257,10 +262,10 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
               }
               case 9: {
-                  qDebug()<<"interesting"<<pS->datum[count].value;
-                  sendToArduino(pS->datum[count].value, prefix, bundle, 0);
+                qDebug() << "interesting" << pS->datum[count].value;
+                sendToArduino(pS->datum[count].value, prefix, bundle, 0);
 
-                  break;
+                break;
               }
 
               default:
@@ -310,9 +315,16 @@ void OutputWorker::testDataRequest() {
   qDebug() << "attempted";
   while (!connected && !abort) {
     qDebug() << "attempted";
-    if (SUCCEEDED(SimConnect_Open(&hSimConnect, "data", NULL, 0, 0, 0))) {
+    if (SUCCEEDED(SimConnect_Open(&hSimConnect, "outputs", NULL, 0, 0, 0))) {
       printf("\nConnected to Flight Simulator!");
       connected = true;
+      //      SimConnect_MapClientDataNameToID(hSimConnect, "outputs",
+      //      ClientDataID);
+      // SimConnect_CreateClientData(hSimConnect,
+      //      ClientDataID, sizeof(dataF),
+      //                                  SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
+      //      hr = SimConnect_MapClientEventToSimEvent(hSimConnect, EVENT_WASM,
+      //                                               "LVAR_ACCESS.EFIS");
       emit updateLastValUI("Connected to the game");
 
       // DATA

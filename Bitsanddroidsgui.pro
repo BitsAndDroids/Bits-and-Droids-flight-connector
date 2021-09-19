@@ -1,5 +1,6 @@
 QT = core gui sql serialport network charts
 QT += printsupport
+QT += testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -8,6 +9,8 @@ CONFIG += serialport
 CONFIG += charts
 
 CONFIG += object_parallel_to_source
+CONFIG += testcase
+CONFIG += no_testcase_installs
 LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
@@ -53,7 +56,9 @@ SOURCES += \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/range.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    tests/tests.cpp
+
 
 
 HEADERS += \
@@ -83,7 +88,8 @@ HEADERS += \
     settings/coordinates.h \
     settings/settingshandler.h \
     settings/settingsranges.h \
-    qcustomplot.h
+    qcustomplot.h \
+    tests/tests.h
 
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"

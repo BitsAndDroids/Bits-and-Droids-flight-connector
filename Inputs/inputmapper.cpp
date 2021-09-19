@@ -1,4 +1,5 @@
 #include "Inputs/InputMapper.h"
+
 #include <windows.h>
 
 InputEnum definitionsMap;
@@ -8,6 +9,10 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
   SimConnect_MapClientEventToSimEvent(mapConnect,
                                       definitionsMap.DATA_EX_THROTTLE_1_AXIS,
                                       "THROTTLE1_AXIS_SET_EX1");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_SIM_PAUSE_ON, "PAUSE_ON");
+    SimConnect_MapClientEventToSimEvent(
+            mapConnect, definitionsMap.DEFINITION_SIM_PAUSE_OFF, "PAUSE_OFF");
   SimConnect_MapClientEventToSimEvent(mapConnect,
                                       definitionsMap.DATA_EX_THROTTLE_2_AXIS,
                                       "THROTTLE2_AXIS_SET_EX1");
