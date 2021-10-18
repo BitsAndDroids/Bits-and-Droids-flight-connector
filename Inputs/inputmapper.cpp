@@ -1408,4 +1408,6 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
   SimConnect_MapClientEventToSimEvent(mapConnect,
                                       definitionsMap.DEFINITION_ENG_AUTO_IGN_1,
                                       "TOGGLE_MASTER_IGNITION_SWITCH");
+    SimConnect_MapClientEventToSimEvent(mapConnect,definitionsMap.DEFINITION_ADF_FRQ_PUSH,
+                                        "adf_frqTransfert");
 }

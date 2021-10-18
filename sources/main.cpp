@@ -1,8 +1,6 @@
 #include <outputs/set.h>
-#include <tests/tests.h>
 
 #include <QApplication>
-#include <QTest>
 
 #include "headers/mainwindow.h"
 

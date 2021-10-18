@@ -568,6 +568,7 @@ void InputSwitchHandler::sendWASMCommand(int index) {
             connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
             SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
     cout << "WASM ATTEMPT: " << hr << endl;
+
 }
 
 void InputSwitchHandler::sendBasicCommandOn(
@@ -575,6 +576,7 @@ void InputSwitchHandler::sendBasicCommandOn(
     SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
 }
 
 void InputSwitchHandler::sendBasicCommandOff(
@@ -1103,6 +1105,11 @@ void InputSwitchHandler::switchHandling(int index) {
                                      index);
                     break;
                 }
+                case 201: {
+                    sendBasicCommand(inputDefinitions.DEFINITION_ENG_AUTO_IGN_1,index);
+                    break;
+                }
+
 
                 case 250: {
                     sendBasicCommand(inputDefinitions.DEFINITION_G1000_PFD_ZOOMOUT_BUTTON,
@@ -3305,6 +3312,9 @@ void InputSwitchHandler::switchHandling(int index) {
                 case 909: {
                     sendBasicCommand(inputDefinitions.DEFINITION_SIM_PAUSE_OFF,index);
                     break;
+                }
+                case 910: {
+                    sendWASMCommand(prefixVal);
                 }
 
                 case 900: {

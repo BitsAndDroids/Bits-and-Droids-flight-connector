@@ -6,7 +6,7 @@
 #include <qstandardpaths.h>
 #include <tchar.h>
 #include <windows.h>
-
+#include <iostream>
 #include <cstdio>
 #include <string>
 
@@ -25,7 +25,7 @@ SerialPort *ports[10];
 
 int quit = 0;
 HANDLE hSimConnect = nullptr;
-
+float dataRecv = 1.0f;
 struct Struct1 {
   char title[256];
 };
@@ -43,25 +43,53 @@ struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
 };
 
-enum EVENT_ID { EVENT_SIM_START, EVENT_WASM = 2 };
+struct SimVar {
+    int ID;
+    int Offset;
+    float data;
+};
+
+SimVar testVar = {
+        1000,
+        sizeof(float),
+        1.0f
+};
+
+
+
+SimVar testVarB = {
+        1001,
+        sizeof(float) * 2,
+        1.0f
+};
+SimVar simVars[2] = {testVar, testVarB};
+
+enum EVENT_ID { EVENT_SIM_START, EVENT_WASM = 3 };
 
 enum DATA_DEFINE_ID {
   DEFINITION_PDR,
   DEFINITION_STRING,
+  DEFINITION_WASM_REQUEST = 13
 
 };
 
 enum DATA_REQUEST_ID {
   REQUEST_PDR,
   REQUEST_STRING,
+  REQUEST_WASM,
 };
 
+int outputClientDataId = 2;
 using namespace std;
 SerialPort *arduinoTest;
 OutputWorker::OutputWorker() {}
 void sendToArduino(float received, const std::string &prefix, int index,
                    int mode) {
   int intVal;
+  std::string prefixString = prefix;
+  if(stoi(prefix) < 1000){
+      prefixString += " ";
+  }
   std::string input_string;
   //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
   //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
@@ -75,13 +103,14 @@ void sendToArduino(float received, const std::string &prefix, int index,
     } else {
       intVal = 1;
     }
+      input_string = prefixString + std::to_string(intVal);
   }
 
   if (mode == 3) {
-    input_string = prefix + std::to_string(received);
+    input_string = prefixString + std::to_string(received);
   } else {
     const auto value = intVal;
-    input_string = prefix + std::to_string(value);
+    input_string = prefixString + std::to_string(value);
   }
 
   cout << "size: " << input_string.size() << endl;
@@ -145,6 +174,10 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
       auto *evt = (SIMCONNECT_RECV_EVENT *)pData;
 
       switch (evt->uEventID) {
+          case 3:{
+              qDebug()<<"EVENT WASM TRIGGERED";
+              break;
+          }
         case EVENT_SIM_START:
 
           hr = SimConnect_RequestDataOnSimObject(
@@ -164,23 +197,43 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
           break;
 
         default:
+            qDebug()<<evt->uEventID<<"que";
           break;
       }
       break;
     }
+    case SIMCONNECT_RECV_ID_CLIENT_DATA:{
+        auto pObjData = (SIMCONNECT_RECV_CLIENT_DATA *)pData;
+        int bundle = 0;
+
+        Output *output = outputCast->outputHandler.findOutputById(pObjData->dwRequestID);
+        for (int i = 0; i < outputCast->outputBundles->size(); i++) {
+            if (outputCast->outputBundles->at(i)->isOutputInBundle(
+                    output->getId())) {
+                qDebug() << "FOUND IN SET";
+                bundle = i;
+            }
+        }
+        qDebug()<<"DATA: "<<pObjData->dwData <<"ID: "<<pObjData->dwID <<pObjData->dwRequestID <<pObjData->dwDefineID<<pObjData->dwObjectID ;
+        if(pObjData->dwRequestID > 999 && pObjData->dwRequestID < 2000){
+            sendToArduino(pObjData->dwData,std::to_string(pObjData->dwRequestID),bundle,4);
+            }
+        }
+        break;
 
     case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
-      qDebug() << "si";
+
       auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
 
       switch (pObjData->dwRequestID) {
+
         case REQUEST_STRING: {
           auto *pS = (Struct1 *)&pObjData->dwData;
           sendCharToArduino(pS->title, "999");
           cout << "Plane: " << pS->title << endl;
           break;
         }
-
+              qDebug() << "found something";
         case REQUEST_PDR: {
           int count = 0;
           auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
@@ -288,7 +341,7 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
     }
 
     default:
-      // printf("\n Unknown dwID: %d", pData->dwID);
+       printf("\n Unknown dwID: %d", pData->dwID);
       // cout << pData->dwVersion << "id" << pData->dwID << endl;
       break;
   }
@@ -317,6 +370,40 @@ void OutputWorker::testDataRequest() {
     qDebug() << "attempted";
     if (SUCCEEDED(SimConnect_Open(&hSimConnect, "outputs", NULL, 0, 0, 0))) {
       printf("\nConnected to Flight Simulator!");
+
+       hr = SimConnect_MapClientDataNameToID(hSimConnect,"wasm.responses",2);
+       cout<< "hr" << hr<<endl;
+
+       hr =   SimConnect_CreateClientData(hSimConnect,2,4096,SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
+        cout<< "hr" << hr<<endl;
+
+       hr =  SimConnect_AddToClientDataDefinition(hSimConnect,0,0,sizeof(dataRecv),0,0);
+        cout<< "hr" << hr<<endl;
+
+
+        for(auto & simVar: simVars){
+            SimConnect_AddToClientDataDefinition(hSimConnect,simVar.ID,simVar.Offset,sizeof(float),0,0);
+            SimConnect_RequestClientData(
+                    hSimConnect,
+                    2,
+                    simVar.ID,
+                    simVar.ID,
+                    SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
+                    SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED,
+                    0,
+                    0,
+                    0
+            );
+        }
+       // hr =  SimConnect_RequestClientData(hSimConnect, 2,0,0,SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED,0,0,0);
+        cout<< "hr" << hr<<endl;
+
+        SimConnect_CallDispatch(hSimConnect,MyDispatchProcRD,this);
+        //SimConnect_MapClientEventToSimEvent(hSimConnect, EVENT_WASM,
+         //                                   "wasm.responses");
+
+        //SimConnect_AddClientEventToNotificationGroup(hSimConnect, 1, EVENT_WASM, true);
+
       connected = true;
       //      SimConnect_MapClientDataNameToID(hSimConnect, "outputs",
       //      ClientDataID);
@@ -337,7 +424,9 @@ void OutputWorker::testDataRequest() {
                                              "1sec");
 
       while (!abort) {
+
         SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, this);
+
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
     }

@@ -30,8 +30,8 @@ double dataF = 1.;
 // Definition of the client data area format
 using namespace std;
 enum DATA_DEFINE_ID {
-    DEFINITION_1 = 12,
-    };
+  DEFINITION_1 = 12,
+};
 InputWorker::InputWorker() {}
 
 enum EVENT_ID {
@@ -67,6 +67,26 @@ void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 void InputWorker::inputEvents() {
   HRESULT hr;
   abortInput = false;
+  auto rudderCurveList = QList<coordinates>();
+  if (!settingsHandler
+           .retrieveSubSetting("rudderSeries", "axis", QString::number(0))
+           ->isNull()) {
+    for (int i = 0; i < 7; i++) {
+      QString value = "axis" + QString::number(i);
+      auto foundAxis =
+          settingsHandler
+              .retrieveSubSetting("rudderSeries", "axis", QString::number(i))
+              ->toFloat();
+      auto foundVal =
+          settingsHandler
+              .retrieveSubSetting("rudderSeries", "value", QString::number(i))
+              ->toFloat();
+      auto *foundCoords = new coordinates(foundAxis, foundVal);
+      std::cout << foundCoords->getX() << "X" << std::endl;
+      rudderCurveList.append(*foundCoords);
+    }
+    handler.setRudderCurve(rudderCurveList);
+  }
   keys = *settingsHandler.retrieveKeys("inputComs");
   for (int i = 0; i < keys.size(); i++) {
     const char *savedPort;
@@ -81,8 +101,8 @@ void InputWorker::inputEvents() {
   }
 
   while (!abortInput) {
-    if (SUCCEEDED(
-            SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0, 0, 0))) {
+    if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0,
+                                  0, 0))) {
       printf("\nConnected to Flight Simulator!");
       SimConnect_MapClientDataNameToID(hInputSimConnect, "shared",
                                        ClientDataID);
@@ -94,7 +114,9 @@ void InputWorker::inputEvents() {
 
       hr = SimConnect_MapClientEventToSimEvent(hInputSimConnect, EVENT_WASM,
                                                "LVAR_ACCESS.EFIS");
-      hr = SimConnect_SetClientData(hInputSimConnect, ClientDataID, DEFINITION_1, SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, sizeof(dataF), &dataF);
+      hr = SimConnect_SetClientData(
+          hInputSimConnect, ClientDataID, DEFINITION_1,
+          SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, sizeof(dataF), &dataF);
       cout << "MAPCTOE: " << hr << endl;
       handler.connect = hInputSimConnect;
 
@@ -109,15 +131,14 @@ void InputWorker::inputEvents() {
               handler.receivedString[i], DATA_LENGTH);
 
           if (hasRead) {
-
             if (connected) {
               emit updateLastStatusUI("Connected to game");
               handler.switchHandling(i);
             }
-            //lastVal = handler.receivedString[i];
+            // lastVal = handler.receivedString[i];
           }
 
-          //emit updateLastValUI(QString::fromStdString(lastVal));
+          // emit updateLastValUI(QString::fromStdString(lastVal));
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
