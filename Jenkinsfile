@@ -6,7 +6,7 @@ pipeline{
         checkout scm      
       }
     }
-    stage ('Build) {
+    stage ('Build') {
         md -p output
         qmake Bitsanddroidsgui.pro
         make
