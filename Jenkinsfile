@@ -1,17 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage
-        ('Checkout code') {
+        stage ('Checkout code') {
             steps {
-                checkout
-                scm
+                checkout scm
             }
         }
         stage('Build') {
-            md - p output
-            qmake Bitsanddroidsgui.pro
-            make
+            steps {
+                md - p output
+                qmake Bitsanddroidsgui.pro
+                make
+            }
         }
     }
 }
