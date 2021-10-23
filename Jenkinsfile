@@ -4,17 +4,17 @@ pipeline {
         stage ('Checkout code') {
             steps {
                 checkout scm
-                bat "copy SimConnect.dll /release"
-                bat "copy Qt5Charts.dll /release"
-                bat "copy Qt5Core.dll /release"
-                bat "copy Qt5Gui.dll /release"
-                bat "copy Qt5Network.dll /release"
-                bat "copy Qt5PrintSupport.dll /release"
-                 bat "copy Qt5SerialPort.dll /release"
-                 bat "copy Qt5Svg.dll /release"
-                 bat "copy Qt5Widgets.dll /release"
-                bat "copy libssl-1_1-x64.dll /release"
-                bat "copy libcrypto-1_1-x64.dll /release"
+                bat "xcopy SimConnect.dll /release/SimConnect.dll"
+                bat "xcopy Qt5Charts.dll /release/Qt5Charts.dll"
+                bat "xcopy Qt5Core.dll /release/Qt5Core.dll"
+                bat "xcopy Qt5Gui.dll /release/Qt5Gui.dll"
+                bat "xcopy Qt5Network.dll /release/Qt5Network.dll"
+                bat "xcopy Qt5PrintSupport.dll /release/Qt5PrintSupport.dll"
+                 bat "xcopy Qt5SerialPort.dll /release/Qt5SerialPort.dll"
+                 bat "xcopy Qt5Svg.dll /release/Qt5Svg.dll"
+                 bat "xcopy Qt5Widgets.dll /release/Qt5Widgets.dll"
+                bat "xcopy libssl-1_1-x64.dll /release/libssl-1_1-x64.dll"
+                bat "xcopy libcrypto-1_1-x64.dll /release/libcrypto-1_1-x64.dll"
                 
             }
         }
