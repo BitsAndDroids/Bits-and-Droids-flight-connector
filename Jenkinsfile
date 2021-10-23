@@ -13,6 +13,8 @@ pipeline {
                  bat "move Qt5SerialPort.dll /release"
                  bat "move Qt5Svg.dll /release"
                  bat "move Qt5Widgets.dll /release"
+                bat "move libssl-1_1-x64.dll /release"
+                bat "move libcrypto-1_1-x64.dll /release"
                 
             }
         }
