@@ -10,9 +10,8 @@ pipeline {
               }
                 stage('Build'){
                         steps {
-                                QtWindows/5.15.0/mingw81_64/bin/qmake && make && make check
-                                mkdir BitsAndDroidsGui
-                                qmake Bitsanddroidsgui.pro -spec win32-g++
+                            sh 'qmake'
+                            sh 'make'
                         }
     }
         }
