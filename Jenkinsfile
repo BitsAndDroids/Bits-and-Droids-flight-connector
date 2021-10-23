@@ -1,3 +1,4 @@
+jenkinfsile
 pipeline {
         
         stages{
@@ -12,5 +13,5 @@ pipeline {
             make
                         }
     }
-
-   
+        }
+}
