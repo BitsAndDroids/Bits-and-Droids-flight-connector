@@ -4,7 +4,7 @@ pipeline {
         stage ('Checkout code') {
             steps {
                 checkout scm
-                bat "xcopy *.dll /release"       
+                bat "xcopy *.dll  /release /s /e"       
             }
         }
         stage('Build') {
