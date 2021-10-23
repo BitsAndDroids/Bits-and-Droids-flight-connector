@@ -4,7 +4,7 @@ pipeline {
         stage ('Checkout code') {
             steps {
                 checkout scm
-                bat "copy Simconnect.dll /release"
+                bat "move Simconnect.dll /release"
                 bat "move Qt5Charts.dll /release"
                 bat "move Qt5Core.dll /release"
                 bat "move Qt5Gui.dll /release"
