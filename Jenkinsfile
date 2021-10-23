@@ -1,2 +1,2 @@
 md BitsAndDroidsGui
-qmake sources/main.cpp
+qmake Bitsanddroidsgui.pro
