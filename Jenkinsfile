@@ -3,6 +3,6 @@ node {
   checkout scm
   stage'Build'
   sh "mkd -p output"
-  sh 'qmake'
+  sh 'qmake Bitsanddroidsgui.pro'
   sh 'make'
      }
