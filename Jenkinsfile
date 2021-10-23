@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat "C:/QtWindows/5.15.0/mingw81_64/bin/qmake.exe -spec win32-g++ j-16"
+                bat "C:/QtWindows/5.15.0/mingw81_64/bin/qmake.exe -r -spec win32-g++"
                 bat "mingw32-make.exe"
             }
         }
