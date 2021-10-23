@@ -10,6 +10,7 @@ pipeline {
               }
                 stage('Build'){
                         steps {
+                                mkdir BitsAndDroidsGui
                                 qmake Bitsanddroidsgui.pro -spec win32-g++
                         }
     }
