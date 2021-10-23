@@ -4,7 +4,7 @@ pipeline {
         stage ('Checkout code') {
             steps {
                 checkout scm
-                bat "copy *.dll '\\release'"       
+                bat "copy *.dll ../release"       
             }
         }
         stage('Build') {
