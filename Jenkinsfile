@@ -10,7 +10,7 @@ pipeline {
                 bat "move Qt5Gui.dll /release"
                 bat "move Qt5Network.dll /release"
                 bat "move Qt5PrintSupport.dll /release"
-                 bat "move Qt5PSerialPort.dll /release"
+                 bat "move Qt5SerialPort.dll /release"
                  bat "move Qt5Svg.dll /release"
                  bat "move Qt5Widgets.dll /release"
                 
