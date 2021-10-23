@@ -1,7 +1,7 @@
 jenkinfsile
-agent any
+
 pipeline {
-        
+        agent any
         stages{
                 stage('Checkout code') {
                 steps {
