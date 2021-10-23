@@ -1,5 +1,7 @@
-stage 'Checkout code' 
-checkout scm
-stage'Build'
-sh 'qmake'
-sh 'make'
+node {
+  stage 'Checkout code' 
+  checkout scm
+  stage'Build'
+  sh 'qmake'
+  sh 'make'
+     }
