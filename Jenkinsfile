@@ -8,9 +8,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                md -p output
-                qmake Bitsanddroidsgui.pro
-                make
+                sh "md - p output"
+                sh "qmake Bitsanddroidsgui.pro"
+                sh "make"
             }
         }
     }
