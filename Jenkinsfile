@@ -11,7 +11,6 @@ pipeline {
                 stage('Build'){
                         steps {
                                 qmake Bitsanddroidsgui.pro
-            make
                         }
     }
         }
