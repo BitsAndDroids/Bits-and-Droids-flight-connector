@@ -1,9 +1,16 @@
-stage('Checkout code') {
-        steps {
-            checkout scm
-         
-        }
+pipeline {
+        
+        stages{
+                stage('Checkout code') {
+                steps {
+                    checkout scm
+                }
+              }
+                stage('Build'){
+                        steps {
+                                qmake Bitsanddroidsgui.pro
+            make
+                        }
     }
 
-   qmake Bitsanddroidsgui.pro
-            make
+   
