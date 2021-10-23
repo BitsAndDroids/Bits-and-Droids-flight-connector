@@ -1,4 +1,5 @@
 jenkinfsile
+agent any
 pipeline {
         
         stages{
