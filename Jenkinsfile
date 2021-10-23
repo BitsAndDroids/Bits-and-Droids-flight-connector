@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat "Bitsanddroidsgui.pro"
+                bat "qmake Bitsanddroidsgui.pro"
                 bat "make"
             }
         }
