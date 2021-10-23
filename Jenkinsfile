@@ -4,17 +4,17 @@ pipeline {
         stage ('Checkout code') {
             steps {
                 checkout scm
-                bat "move Simconnect.dll /release"
-                bat "move Qt5Charts.dll /release"
-                bat "move Qt5Core.dll /release"
-                bat "move Qt5Gui.dll /release"
-                bat "move Qt5Network.dll /release"
-                bat "move Qt5PrintSupport.dll /release"
-                 bat "move Qt5SerialPort.dll /release"
-                 bat "move Qt5Svg.dll /release"
-                 bat "move Qt5Widgets.dll /release"
-                bat "move libssl-1_1-x64.dll /release"
-                bat "move libcrypto-1_1-x64.dll /release"
+                bat "copy SimConnect.dll /release"
+                bat "copy Qt5Charts.dll /release"
+                bat "copy Qt5Core.dll /release"
+                bat "copy Qt5Gui.dll /release"
+                bat "copy Qt5Network.dll /release"
+                bat "copy Qt5PrintSupport.dll /release"
+                 bat "copy Qt5SerialPort.dll /release"
+                 bat "copy Qt5Svg.dll /release"
+                 bat "copy Qt5Widgets.dll /release"
+                bat "copy libssl-1_1-x64.dll /release"
+                bat "copy libcrypto-1_1-x64.dll /release"
                 
             }
         }
