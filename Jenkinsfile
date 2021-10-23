@@ -1,5 +1,5 @@
-md -p "C:\Users\Dave Riedel\Documents\BitsanddroidsguiJenkinsBuild"
-cd "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui"
+md -p "C:\\Users\\Dave Riedel\\Documents\\BitsanddroidsguiJenkinsBuild"
+cd "C:\\Users\\Dave Riedel\\Documents\\Bitsanddroidsgui"
 #qmake Bitsanddroidsgui.pro
 #ls
 #make
