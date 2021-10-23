@@ -1,8 +1,17 @@
-node {
-  stage 'Checkout code' 
-  checkout scm
-  stage'Build'
-  sh "md -p output"
-  sh 'qmake Bitsanddroidsgui.pro'
-  sh 'make'
+pipeline{
+  agent any
+  stages {
+    stage ('Checkout code'){
+      steps{
+        checkout scm      
+      }
+    }
+    stage ('Build) {
+        md -p output
+        qmake Bitsanddroidsgui.pro
+        make
+           }
      }
+          
+  
+}
