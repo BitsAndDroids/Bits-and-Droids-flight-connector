@@ -1,12 +1,19 @@
-QT = core gui sql serialport network charts
+QT = core gui sql serialport network
 QT += printsupport
-
+QT += charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+BUILDDIR = $$PWD/release
+
+OBJECTS_DIR = $${BUILDDIR}
+MOC_DIR = $${BUILDDIR}
+RCC_DIR = $${BUILDDIR}
+UI_DIR = $${BUILDDIR}
 
 CONFIG += c++17
 CONFIG += openssl
 CONFIG += serialport
-CONFIG += charts
+
 
 CONFIG += object_parallel_to_source
 
