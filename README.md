@@ -4,7 +4,7 @@ Repositry for the mfs2020 flight connector by Bits and Droids
 This project runs on the QT UI framework https://www.qt.io/download-open-source
 
 # Tools needed to compile
-Qt version 5.15
+Qt version 6.2
 Qt additions:
   - Qt Charts
   - Qt Serialport
