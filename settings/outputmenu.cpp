@@ -1,14 +1,15 @@
 #include "outputmenu.h"
-#include "formbuilder.h"
-#include<headers/mainwindow.h>
-#include "ui_outputmenu.h"
+
+#include <headers/mainwindow.h>
 
 #include <QLabel>
+
+#include "formbuilder.h"
+#include "ui_outputmenu.h"
 
 FormBuilder formBuilder;
 outputHandler outputHandler;
 SetHandler setHandler;
-
 
 OutputMenu::OutputMenu(QWidget *parent)
     : QWidget(parent), ui(new Ui::OutputMenu) {
@@ -29,7 +30,7 @@ OutputMenu::OutputMenu(QWidget *parent)
   ui->containerLayout->addLayout(activeLayout);
 
   QStringList *keys = settingsHandler.retrieveKeys("sets");
-  for (const auto & foundSet : *foundSets) {
+  for (const auto &foundSet : *foundSets) {
     // qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
     ui->widget->findChild<QVBoxLayout *>("outputSetList")
         ->addWidget(formBuilder.generateSetRow(foundSet));
@@ -50,13 +51,13 @@ OutputMenu::OutputMenu(QWidget *parent)
 }
 
 OutputMenu::~OutputMenu() {
-    emit OutputMenu::closedOutputMenu();
-    qDebug()<<"closed here";
-    delete ui;
+  emit OutputMenu::closedOutputMenu();
+  qDebug() << "closed here";
+  delete ui;
 }
 void OutputMenu::closeEvent(QCloseEvent *event) {
-    qDebug()<<'clEvent';
-    delete this;
+  qDebug() << 'clEvent';
+  delete this;
 }
 
 void OutputMenu::addNewSet() {
@@ -88,8 +89,7 @@ void OutputMenu::editSet(QString id) {
 
   ui->widget->adjustSize();
 
-  auto *container =
-      ui->widget->findChild<QVBoxLayout *>("activeContainer");
+  auto *container = ui->widget->findChild<QVBoxLayout *>("activeContainer");
   QWidget *setActiveWidget = formBuilder.generateActiveSet(&setFound);
   container->addWidget(setActiveWidget);
 
@@ -124,12 +124,12 @@ void OutputMenu::saveEdit() {
   QList<QCheckBox *> cbList = ui->widget->findChildren<QCheckBox *>();
   set setToEdit = setHandler.getSetById(QString::number(activeSet));
   setToEdit.clearOutputs();
-  for (auto & i : cbList) {
+  for (auto &i : cbList) {
     if (i->isChecked()) {
       QString cbName = i->objectName();
       qDebug() << cbName;
       Output *outputSelected =
-          outputHandler.findOutputById(cbName.midRef(2).toInt());
+          outputHandler.findOutputById(cbName.mid(2).toInt());
       ;
 
       qDebug() << outputSelected->getCbText();

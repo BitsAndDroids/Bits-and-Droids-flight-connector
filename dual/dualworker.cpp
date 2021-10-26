@@ -96,8 +96,14 @@ DualWorker::DualWorker() {}
 void sendDualToArduino(float received, std::string prefix, int index,
                        int mode) {
     int intVal;
+    std::string prefixString = prefix;
+    if(stoi(prefix) < 1000){
+        prefixString += " ";
+    }
     std::string input_string;
-
+    //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
+    //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+    //                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
     if (mode != 4) {
         cout << "0 checked" << endl;
         intVal = static_cast<int>(received);
@@ -107,13 +113,14 @@ void sendDualToArduino(float received, std::string prefix, int index,
         } else {
             intVal = 1;
         }
+        input_string = prefixString + std::to_string(intVal);
     }
 
     if (mode == 3) {
-        input_string = prefix + std::to_string(received);
+        input_string = prefixString + std::to_string(received);
     } else {
         const auto value = intVal;
-        input_string = prefix + std::to_string(value);
+        input_string = prefixString + std::to_string(value);
     }
 
     cout << "size: " << input_string.size() << endl;
@@ -130,6 +137,7 @@ void sendDualToArduino(float received, std::string prefix, int index,
             dualPorts[index]->writeSerialPort(c_string, 6);
         }
     } else {
+        cout << "WHERE DOEST THIS COME FROM " << c_string << endl;
         dualPorts[index]->writeSerialPort(c_string, input_string.size() + 1);
     }
     input_string.clear();
@@ -203,7 +211,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                         string valString = std::to_string(pS->datum[count].value);
                         int id = pS->datum[count].id;
                         Output *output = dualCast->outputHandler.findOutputById(id);
-                        int bundle = NULL;
+                        int bundle = 0;
 
                         for (int i = 0; i < dualCast->outputBundles->size(); i++) {
                             if (dualCast->outputBundles->at(i)->isOutputInBundle(
@@ -337,6 +345,7 @@ void DualWorker::RadioEvents() {
             SimConnect_MapClientDataNameToID(dualSimConnect, "shared",
                                              ClientDataID);
 
+
             SimConnect_CreateClientData(dualSimConnect,
                                         ClientDataID, sizeof(dataF),
                                         SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
@@ -370,14 +379,11 @@ void DualWorker::RadioEvents() {
                     SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
                     0, 3);
 
-            hr = SimConnect_MapClientDataNameToID(dualSimConnect,"wasm.responses",2);
-            cout<< "hr" << hr<<endl;
+            SimConnect_MapClientDataNameToID(dualSimConnect,"wasm.responses",2);
 
-            hr =   SimConnect_CreateClientData(dualSimConnect,2,4096,SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
-            cout<< "hr" << hr<<endl;
+            SimConnect_CreateClientData(dualSimConnect,2,4096,SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
 
-            hr =  SimConnect_AddToClientDataDefinition(dualSimConnect,0,0,sizeof(dualDataRecv),0,0);
-            cout<< "hr" << hr<<endl;
+            SimConnect_AddToClientDataDefinition(dualSimConnect,0,0,sizeof(dualDataRecv),0,0);
 
             for(auto & simVar: dualSimVars){
                 SimConnect_AddToClientDataDefinition(dualSimConnect,simVar.ID,simVar.Offset,sizeof(float),0,0);

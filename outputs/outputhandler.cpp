@@ -8,6 +8,7 @@ outputHandler::outputHandler() { readOutputs(); }
 // const QJsonObject &json
 
 void outputHandler::readOutputs() {
+    availableOutputs.clear();
   QFile file_obj("outputs.json");
   file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
   QByteArray json_bytes = file_obj.readAll();

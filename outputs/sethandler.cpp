@@ -69,6 +69,20 @@ QList<set> *SetHandler::loadSets() {
     return setListFound;
 }
 
+void SetHandler::updateSets(){
+    outputHandler.readOutputs();
+    for(auto & setFound : *setList){
+        auto outputMap = QMap<int,Output *>();
+        for(auto & output : setFound.getOutputs()){
+            auto outputChecked = outputHandler.findOutputById(output->getId());
+            outputMap.insert(outputChecked->getId(),outputChecked);
+        }
+        setFound.setOutputs(outputMap);
+        saveSet(&setFound);
+    }
+
+}
+
 set SetHandler::getSetById(QString id) {
     set setFound;
     QJsonDocument foundSetJson =

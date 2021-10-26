@@ -1,17 +1,40 @@
-QT = core gui sql serialport network charts
+QT = core gui serialport network
 QT += printsupport
-QT += testlib
+QT += charts
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+
+CONFIG += object_parallel_to_source
+
 
 CONFIG += c++17
 CONFIG += openssl
-CONFIG += serialport
-CONFIG += charts
+MOC_DIR= $$PWD/objects
+OBJECTS_DIR= $$PWD/objects
 
-CONFIG += object_parallel_to_source
-CONFIG += testcase
-CONFIG += no_testcase_installs
-LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+# using shell_path() to correct path depending on platform
+# escaping quotes and backslashes for file paths
+copydata.commands = $(COPY_FILE) \"$$shell_path($$PWD\\dist)\" \"$$shell_path($$OUT_PWD)\\release\"
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
+copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"C:\\Users\\Dave Riedel\\AppData\Local\\Packages\\Microsoft.FlightSimulator_8wekyb3d8bbwe\\LocalCache\\Packages\\Community\"
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
+copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"$$shell_path($$OUT_PWD)\\release\"
+first.depends = $(first) copydata
+export(first.depends)
+export(copydata.commands)
+QMAKE_EXTRA_TARGETS += first copydata
+
+
+LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
     INCLUDEPATH += "C:/Projects/Build Output/include/"
@@ -20,10 +43,10 @@ win64 {
     INCLUDEPATH += "C:/MSFS SDK/WASM/wasi-sysroot/include"
     INCLUDEPATH += "C:/Program Files (x86)/Windows Kits/10/Include"
     CONFIG(debug, debug|release) {
-        LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+        LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
     }
     else {
-         LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_5_15_0_MinGW_64_bit-Release/release/SimConnect.dll"
+         LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
 
     }
 }
@@ -55,11 +78,7 @@ SOURCES += \
     sources/SerialPort.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
-    sources/range.cpp \
-    qcustomplot.cpp \
-    tests/tests.cpp
-
-
+    sources/range.cpp
 
 HEADERS += \
     Inputs/InputMapper.h \
@@ -87,9 +106,7 @@ HEADERS += \
     settings/outputmenu.h \
     settings/coordinates.h \
     settings/settingshandler.h \
-    settings/settingsranges.h \
-    qcustomplot.h \
-    tests/tests.h
+    settings/settingsranges.h
 
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
@@ -113,7 +130,7 @@ DISTFILES += \
     doc/bits-and-droids-flight-sim-connector.index \
     fonts/DSEG7Classic-Bold.ttf \
     fonts/DSEG7Classic-Regular.ttf \
-    json/outputs.json \
+    outputs.json \
     html/bits-and-droids-flight-sim-connector.index \
     images/refreshicon.png \
     packages/package.xml \
@@ -122,3 +139,6 @@ DISTFILES += \
 RESOURCES += \
     Resources.qrc\
     outputs.json
+
+
+

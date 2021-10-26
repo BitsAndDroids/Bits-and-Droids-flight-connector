@@ -5,9 +5,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_PREFIX_PATH "C:/QtWindows/5.15.0/mingw81_64/lib/cmake")
+set(CMAKE_PREFIX_PATH "C:/QtWindows/6.2.0/mingw81_64/lib/cmake")
 
-find_package(Qt5 COMPONENTS
+find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
@@ -87,19 +87,19 @@ add_executable(Bitsanddroidsgui
         sources/range.cpp
         sources/SerialPort.cpp
         sources/SerialReader.cpp
-        qcustomplot.cpp
-        qcustomplot.h
         settings/coordinates.cpp
         settings/coordinates.h
 
      )
+
+
 target_link_libraries(Bitsanddroidsgui
-        Qt5::Widgets
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Charts
-        Qt5::Network
-        Qt5::SerialPort
+        Qt6::Widgets
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Charts
+        Qt6::Network
+        Qt6::SerialPort
         )
 if (WIN32)
     set(DEBUG_SUFFIX)
@@ -125,7 +125,7 @@ if (WIN32)
     foreach (QT_LIB Core Gui Widgets)
         add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy
-                "${QT_INSTALL_PATH}/bin/Qt5${QT_LIB}${DEBUG_SUFFIX}.dll"
+                "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
 endif ()

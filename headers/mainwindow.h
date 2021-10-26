@@ -135,6 +135,8 @@ class MainWindow : public QMainWindow {
 
   void openOutputMenu();
 
+  void installWasm();
+
   void untick();
 
   void loadComPortData();
@@ -148,6 +150,7 @@ class MainWindow : public QMainWindow {
   QLabel *returnWarningString(int warningType);
 
   void clearChildrenFromLayout(QLayout *);
+  void copyFolder(QString sourceFolder, QString destinationFolder);
 };
 
 #endif  // MAINWINDOW_H

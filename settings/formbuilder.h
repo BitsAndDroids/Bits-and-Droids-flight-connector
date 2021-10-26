@@ -4,141 +4,138 @@
 #include <outputs/outputhandler.h>
 #include <outputs/set.h>
 #include <outputs/sethandler.h>
-#include "coordinates.h"
 #include <qstring.h>
 #include <qtabwidget.h>
 
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QtCharts>
-#include <qcustomplot.h>
+
+#include "coordinates.h"
 #include "settingshandler.h"
 
 class FormBuilder : public QObject {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-    FormBuilder();
-    //~FormBuilder();
+ public:
+  FormBuilder();
+  //~FormBuilder();
 
-    QVBoxLayout *RangeBuilder();
+  QVBoxLayout *RangeBuilder();
 
-    void loadComPortData();
+  void loadComPortData();
 
-    QVBoxLayout *generateComColumn(int index);
+  QVBoxLayout *generateComColumn(int index);
 
-    QHBoxLayout *generateComBlock();
+  QHBoxLayout *generateComBlock();
 
-    static QVBoxLayout *generateRange(const QString &header);
+  static QVBoxLayout *generateRange(const QString &header);
 
-    QVBoxLayout *createRudderRow();
+  QVBoxLayout *createRudderRow();
 
-    QStringList comHeaders = {"Inputs", "Outputs", "Both"};
-    QStringList rangeHeaders;
-    QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
-    QStringList engineHeaders;
+  QStringList comHeaders = {"Inputs", "Outputs", "Both"};
+  QStringList rangeHeaders;
+  QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
+  QStringList engineHeaders;
 
-    int getAmountOfEngines() { return engineHeaders.size(); };
+  int getAmountOfEngines() { return engineHeaders.size(); };
 
-    static QTabWidget *generateOutputTabs();
+  static QTabWidget *generateOutputTabs();
 
-    static QVBoxLayout *generateOutputSetList();
+  static QVBoxLayout *generateOutputSetList();
 
-    QGridLayout *generateOutputControls() const;
-    // QVBoxLayout *generateActiveSet();
+  QGridLayout *generateOutputControls() const;
+  // QVBoxLayout *generateActiveSet();
 
-    QWidget *generateSetRow(const set &setForRow);
+  QWidget *generateSetRow(const set &setForRow);
 
-    QHBoxLayout *generateOutputRow(Output *output);
+  QHBoxLayout *generateOutputRow(Output *output);
 
-    static QWidget *generateActiveSet(set *selectedSet);
+  static QWidget *generateActiveSet(set *selectedSet);
 
-    static QLabel *generateHeader(const QString &text);
+  static QLabel *generateHeader(const QString &text);
 
-    QWidget *generateComSelector(bool setsNeeded, int mode);
+  QWidget *generateComSelector(bool setsNeeded, int mode);
 
-    QWidget *generateComControls(int mode);
+  QWidget *generateComControls(int mode);
 
-    QList<set> *getAvailableSets() { return availableSets; };
+  QList<set> *getAvailableSets() { return availableSets; };
 
-    QList<QString> getAvailableComPorts() { return availableComPorts; };
+  QList<QString> getAvailableComPorts() { return availableComPorts; };
 
-    QStringList getRudderCalibrateLabels() { return rudderObjectNames; };
+  QStringList getRudderCalibrateLabels() { return rudderObjectNames; };
 
-    QList<struct coordinates> *getCoordinates();
+  QList<struct coordinates> *getCoordinates();
 
-private slots:
+  QWidget *generateComSelector(bool setsNeeded, int mode, int index);
 
-    void localRemove();
+ private slots:
 
-    void localEdit();
+  void localRemove();
 
-    void localStart();
+  void localEdit();
 
-    void localRefreshed();
+  void localStart();
 
-    void localStop();
+  void localRefreshed();
 
-    void localAdd();
+  void localStop();
 
-    void removeComWidget();
+  void localAdd();
 
-    void rudderTextChanged();
+  void removeComWidget();
 
-    void updateX();
+  void rudderTextChanged();
 
-    void reverseClicked();
+  void updateX();
 
-    void updateY();
+  void reverseClicked();
 
-signals:
+  void updateY();
 
-    void addSet();
+ signals:
 
-    void setEdited(QString id);
+  void addSet();
 
-    void removeSet(QString id);
+  void setEdited(QString id);
 
-    void startPressed(int mode);
+  void removeSet(QString id);
 
-    void refreshPressed(int mode);
+  void startPressed(int mode);
 
-    void stopPressed(int mode);
+  void refreshPressed(int mode);
 
-    void addPressed(int mode);
+  void stopPressed(int mode);
 
-private:
-    QStringList rudderObjectNames = {"rudderMinLE", "rudderNeutralLE",
-                                     "rudderMaxLE"};
-    QList<int> axisValues = {-16383,-10000,0,0,0,10000,16383};
-    QChart *chart;
-    QCustomPlot *cplot;
-    QLineSeries *series;
-    QChartView *chartView;
-    QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
-    SetHandler setHandler;
-    SettingsHandler settingsHandler;
-    QList<set> *availableSets;
-    QList<QString> availableComPorts;
+  void addPressed(int mode);
 
+ private:
+  QStringList rudderObjectNames = {"rudderMinLE", "rudderNeutralLE",
+                                   "rudderMaxLE"};
+  QList<int> axisValues = {-16383, -10000, 0, 0, 0, 10000, 16383};
+  QChart *chart;
 
-    void updateChart();
+  QLineSeries *series;
+  QChartView *chartView;
+  QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
+  SetHandler setHandler;
+  SettingsHandler settingsHandler;
+  QList<set> *availableSets;
+  QList<QString> availableComPorts;
 
+  void updateChart();
 
-    QList<coordinates> pointsToPlot;
+  QList<coordinates> pointsToPlot;
 
+  QVBoxLayout *generateCurveCol(int valAxis, int valRange);
 
-    QVBoxLayout *generateCurveCol(int valAxis, int valRange);
+  void changeSlider();
 
-    void changeSlider();
+  int minRudderValue = 0;
 
-    int minRudderValue = 0;
+  int maxRudderValue = 1023;
 
-    int maxRudderValue = 1023;
-
-    int neutralRudderValue = (maxRudderValue - minRudderValue) / 2;
-
-
+  int neutralRudderValue = (maxRudderValue - minRudderValue) / 2;
 };
 
 #endif  // FORMBUILDER_H

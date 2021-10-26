@@ -368,17 +368,15 @@ void OutputWorker::testDataRequest() {
   qDebug() << "attempted";
   while (!connected && !abort) {
     qDebug() << "attempted";
-    if (SUCCEEDED(SimConnect_Open(&hSimConnect, "outputs", NULL, 0, 0, 0))) {
-      printf("\nConnected to Flight Simulator!");
+    if (SUCCEEDED(SimConnect_Open(&hSimConnect, "outputs", nullptr, 0, nullptr, 0))) {
+
+       printf("\nConnected to Flight Simulator!");
 
        hr = SimConnect_MapClientDataNameToID(hSimConnect,"wasm.responses",2);
-       cout<< "hr" << hr<<endl;
 
        hr =   SimConnect_CreateClientData(hSimConnect,2,4096,SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
-        cout<< "hr" << hr<<endl;
 
        hr =  SimConnect_AddToClientDataDefinition(hSimConnect,0,0,sizeof(dataRecv),0,0);
-        cout<< "hr" << hr<<endl;
 
 
         for(auto & simVar: simVars){
@@ -395,32 +393,21 @@ void OutputWorker::testDataRequest() {
                     0
             );
         }
-       // hr =  SimConnect_RequestClientData(hSimConnect, 2,0,0,SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED,0,0,0);
-        cout<< "hr" << hr<<endl;
+
 
         SimConnect_CallDispatch(hSimConnect,MyDispatchProcRD,this);
-        //SimConnect_MapClientEventToSimEvent(hSimConnect, EVENT_WASM,
-         //                                   "wasm.responses");
-
-        //SimConnect_AddClientEventToNotificationGroup(hSimConnect, 1, EVENT_WASM, true);
 
       connected = true;
-      //      SimConnect_MapClientDataNameToID(hSimConnect, "outputs",
-      //      ClientDataID);
-      // SimConnect_CreateClientData(hSimConnect,
-      //      ClientDataID, sizeof(dataF),
-      //                                  SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
-      //      hr = SimConnect_MapClientEventToSimEvent(hSimConnect, EVENT_WASM,
-      //                                               "LVAR_ACCESS.EFIS");
+
       emit updateLastValUI("Connected to the game");
 
       // DATA
 
       outputMapper.mapOutputs(outputsToMap, hSimConnect);
 
-      // Request an event when the simulation starts
 
-      hr = SimConnect_SubscribeToSystemEvent(hSimConnect, EVENT_SIM_START,
+
+      SimConnect_SubscribeToSystemEvent(hSimConnect, EVENT_SIM_START,
                                              "1sec");
 
       while (!abort) {

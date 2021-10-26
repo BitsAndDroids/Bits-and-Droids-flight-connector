@@ -1,5 +1,6 @@
 {
-  "Fuel": [{
+  "Fuel": [
+   {
       "id": 12,
       "outputName": "FUEL SELECTED QUANTITY PERCENT",
       "metric": "Percent Over 100",
@@ -8,6 +9,16 @@
       "cbText":"Fuel quantity %",
       "prefix": 275,
       "type":1
+    },
+{
+      "id": 500,
+      "outputName": "AUTOPILOT AIRSPEED HOLD VAR",
+      "metric": "knots",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"AP airspeed var",
+      "prefix":700 ,
+      "type":0
     },
     {
       "id": 104,
@@ -395,7 +406,7 @@
       "id": 1,
       "outputName": "PLANE ALT ABOVE GROUND",
       "metric": "Feet",
-      "updateEvery": 10,
+      "updateEvery": 100,
       "dataType": 0,
       "cbText":"Feet above ground",
       "prefix": 312,
@@ -466,7 +477,7 @@
       "id": 11,
       "outputName": "INDICATED ALTITUDE",
       "metric": "Feet",
-      "updateEvery": 10,
+      "updateEvery": 1000,
       "dataType": 0,
       "cbText":"Indicated altitude",
       "prefix": 335,
@@ -778,42 +789,42 @@
     {
       "id": 18,
       "outputName": "NAV ACTIVE FREQUENCY:1",
-      "metric": "MHz",
+      "metric": "Khz",
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"NAV 1 active",
       "prefix": 910,
-      "type":0
+      "type":8
     },
     {
       "id": 19,
       "outputName": "NAV STANDBY FREQUENCY:1",
-      "metric": "MHz",
+      "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"NAV 1 standby",
       "prefix": 911,
-      "type":0
+      "type":8
     },
     {
       "id": 20,
       "outputName": "NAV ACTIVE FREQUENCY:2",
-      "metric": "MHz",
+      "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"NAV 2 active",
       "prefix":912 ,
-      "type":0
+      "type":8
     },
     {
       "id": 21,
       "outputName": "NAV STANDBY FREQUENCY:2",
-      "metric": "MHz",
+      "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"NAV 2 standby",
       "prefix":913 ,
-      "type":0
+      "type":8
     },
     {
       "id": 22,
@@ -1003,7 +1014,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Taxi lights",
-      "prefix": 033,
+      "prefix": 33,
       "type":4
     },
     {
@@ -1127,6 +1138,27 @@
       "prefix": 333,
       "type":4
     },
+{
+      "id": 1000,
+      "outputName": "STALL WARNING",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Master caution",
+      "prefix": 1000,
+      "type":4
+    },
+{
+      "id": 1001,
+      "outputName": "STALL WARNING",
+      "metric": "Bool",
+      "updateEvery": 0,
+      "dataType": 0,
+      "cbText":"(bool) Master warning",
+      "prefix": 1001,
+      "type":4
+    },
+
     {
       "id": 51,
       "outputName": "OVERSPEED WARNING",

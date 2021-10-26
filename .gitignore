@@ -4,3 +4,11 @@
 .idea
 cmake-build-debug
 cmake-build-release
+.qmake.stash
+bitsanddroids.qdocconf
+Bitsanddroidsgui.pro.qtds
+Bitsanddroidsgui.pro.user.0ff2580
+Bitsanddroidsgui.pro.user.26aeae6
+capi.dll
+dasync.dll
+/release

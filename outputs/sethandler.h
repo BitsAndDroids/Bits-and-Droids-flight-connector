@@ -7,27 +7,34 @@
 #include <QList>
 #include <QSettings>
 #include <QStandardPaths>
-
+#include "outputhandler.h"
 #include "set.h"
 
 class SetHandler {
- public:
-  SetHandler();
+public:
+    SetHandler();
 
-  QList<set> *loadSets();
+    QList<set> *loadSets();
 
-  set fromJson(QJsonDocument *docToConvert);
-  void removeSet(QString id);
-  QList<set> *getSets() { return setList; };
-  set getSetById(QString id);
+    set fromJson(QJsonDocument *docToConvert);
 
-  set *saveSet(set *setToSave);
+    void removeSet(QString id);
 
- private:
-  SettingsHandler settingsHandler;
+    QList<set> *getSets() { return setList; };
 
-  // QList<set*> *savedSets = new QList<set*>();
-  QList<set> *setList;
+    set getSetById(QString id);
+
+    set *saveSet(set *setToSave);
+
+    void updateSets();
+
+private:
+    SettingsHandler settingsHandler;
+    outputHandler outputHandler;
+    // QList<set*> *savedSets = new QList<set*>();
+    QList<set> *setList;
+
+
 };
 
 #endif  // SETHANDLER_H

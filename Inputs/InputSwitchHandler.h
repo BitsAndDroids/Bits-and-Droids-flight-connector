@@ -2,6 +2,7 @@
 #define INPUTSWITCHHANDLER_H
 
 #include <headers/Engine.h>
+#include <headers/SimConnect.h>
 #include <headers/constants.h>
 #include <headers/range.h>
 #include <qmutex.h>
@@ -17,8 +18,6 @@
 #include <QThread>
 #include <cstdio>
 #include <string>
-
-#include "headers/SimConnect.h"
 
 using namespace std;
 

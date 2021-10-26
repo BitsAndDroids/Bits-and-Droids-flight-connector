@@ -1,11 +1,13 @@
 #include "headers/mainwindow.h"
 
 #include <qdesktopservices.h>
+
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <settings/optionsmenu.h>
 #include <settings/outputmenu.h>
 
+#include <QDir>
 #include <QNetworkAccessManager>
 #include <iostream>
 #include <string>
@@ -15,10 +17,11 @@
 void MainWindow::untick() {}
 
 void MainWindow::openSettings() {
-    if(!optionMenuOpen){
+    if (!optionMenuOpen) {
         optionMenuOpen = true;
         QWidget *wdg = new optionsMenu;
-        connect(wdg, SIGNAL(closedOptionsMenu()), this, SIGNAL(closedOptionsMenu()));
+        connect(wdg, SIGNAL(closedOptionsMenu()), this,
+                SIGNAL(closedOptionsMenu()));
         wdg->show();
     }
 }
@@ -27,11 +30,11 @@ void MainWindow::outputMenuClosed() {
     outputMenuOpen = false;
     qDebug() << "closed";
 }
+
 void MainWindow::optionMenuClosed() {
     optionMenuOpen = false;
     qDebug() << "closed";
 }
-
 
 void MainWindow::openOutputMenu() {
     if (!outputMenuOpen) {
@@ -58,6 +61,49 @@ void MainWindow::loadComPortData() {
         }
 }
 
+void MainWindow::installWasm() {
+    qDebug() << "start install";
+    QString sourceString =
+            QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
+
+    QString destinationString =
+            QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+            "/Packages/Microsoft.FlightSimulator_"
+            "8wekyb3d8bbwe/LocalCache/packages/Community/BitsAndDroidsModule";
+    copyFolder(sourceString, destinationString);
+}
+
+void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
+    qDebug() << "Dest path = " << destinationFolder;
+    QDir sourceDir(sourceFolder);
+
+    QDir destinationDir(destinationFolder);
+
+    if (!sourceDir.exists()) {
+        qDebug() << "dest not found";
+        return;
+    }
+
+    if (!destinationDir.exists()) {
+        destinationDir.mkdir(destinationFolder);
+        qDebug() << "Dir not present";
+    }
+
+    QStringList files = sourceDir.entryList(QDir::Files);
+    qDebug() << files.size() << " Files found";
+    for (int i = 0; i < files.count(); i++) {
+        QString sourceName = sourceFolder + "/" + files[i];
+        QString destName = destinationFolder + "/" + files[i];
+        QFile::copy(sourceName, destName);
+    }
+    QStringList dirs = sourceDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+    for (auto &dir: dirs) {
+        QString sourceName = sourceFolder + "/" + dir;
+        QString destinationName = destinationFolder + "/" + dir;
+        copyFolder(sourceName, destinationName);
+    }
+}
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     updateButton = ui->updateButton;
@@ -72,12 +118,6 @@ MainWindow::MainWindow(QWidget *parent)
             &MainWindow::optionMenuClosed);
     loadComPortData();
 
-    // This block itterates through the updated com ports list. This is to ensure
-    // that the user doesn't have to re-select his previous com port Does this
-    // only on bootup to avoid conflicts down the road If no com port found
-    // defaults to blank to make clear to the user the previous com port is no
-    // longer available
-
     qRegisterMetaType<QList<QString>>("QList<QString>");
     // STYLE AFFECTING SECTION
     //-----------------------
@@ -87,8 +127,11 @@ MainWindow::MainWindow(QWidget *parent)
     qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     auto *openSettings = new QAction("&Settings", this);
     auto *openOutputMenu = new QAction("&Outputs", this);
+    auto *installWasm = new QAction("&Install WASM", this);
     QMenu *Settings = menuBar()->addMenu("&Settings");
     QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
+    QMenu *WasmInstall = menuBar()->addMenu("&WASM");
+    WasmInstall->addAction(installWasm);
     OutputSettings->addAction(openOutputMenu);
     Settings->addAction(openSettings);
 
@@ -98,6 +141,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(openOutputMenu, &QAction::triggered, this,
             &MainWindow::openOutputMenu);
+    connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
+
     connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
     connect(&formbuilder, &FormBuilder::addPressed, this, &MainWindow::addCom);
     connect(&formbuilder, &FormBuilder::stopPressed, this, &MainWindow::stopMode);
@@ -130,26 +175,6 @@ MainWindow::MainWindow(QWidget *parent)
     inContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,
                                                QSizePolicy::Expanding);
 
-    QStringList *inputKeys = settingsHandler.retrieveKeys("inputComs");
-    for (int i = 0; i < inputKeys->size(); i++) {
-        QWidget *comSelector = formbuilder.generateComSelector(false, 1);
-        inContainer->addWidget(comSelector);
-
-        QString comName =
-                settingsHandler.retrieveSetting("inputComs", inputKeys->at(i))
-                        ->toString()
-                        .mid(7);
-        qDebug() << comName;
-        auto *comboBox = comSelector->findChild<QComboBox *>();
-        int index = getComboxIndex(comboBox, comName);
-        qDebug() << index;
-        comboBox->setCurrentIndex(index);
-    }
-
-    if (inputKeys->empty()) {
-        inContainer->addWidget(formbuilder.generateComSelector(false, 1));
-    }
-
     auto inputWarningBox = new QVBoxLayout();
     inputWarningBox->setObjectName("inputWarningBox");
     inContainer->addLayout(inputWarningBox);
@@ -167,26 +192,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     outContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,
                                                 QSizePolicy::Expanding);
-    QStringList *outputKeys = settingsHandler.retrieveKeys("outputComs");
-
-    for (int i = 0; i < outputKeys->size(); i++) {
-        QWidget *comSelector = formbuilder.generateComSelector(true, 2);
-        outContainer->addWidget(comSelector);
-
-        QString comName =
-                settingsHandler.retrieveSetting("outputComs", outputKeys->at(i))
-                        ->toString()
-                        .mid(7);
-        qDebug() << comName;
-        auto *comboBox = comSelector->findChild<QComboBox *>();
-        int index = getComboxIndex(comboBox, comName);
-        qDebug() << index;
-        comboBox->setCurrentIndex(index);
-    }
-
-    if (outputKeys->empty()) {
-        outContainer->addWidget(formbuilder.generateComSelector(true, 2));
-    }
 
     auto outputWarningBox = new QVBoxLayout();
     outputWarningBox->setObjectName("outputWarningBox");
@@ -195,6 +200,7 @@ MainWindow::MainWindow(QWidget *parent)
     // DUAL MODE
     QVBoxLayout *dualContainer = ui->dualLayoutContainer;
     QWidget *dualWidget = ui->dualWidgetContainer;
+
     auto *shadowDual = new QGraphicsDropShadowEffect();
     shadowDual->setBlurRadius(20);
     shadowDual->setOffset(2, 2);
@@ -205,26 +211,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     dualContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,
                                                  QSizePolicy::Expanding);
-    QStringList *dualkKeys = settingsHandler.retrieveKeys("dualComs");
-
-    for (int i = 0; i < dualkKeys->size(); i++) {
-        QWidget *comSelector = formbuilder.generateComSelector(true, 3);
-        dualContainer->addWidget(comSelector);
-
-        QString comName =
-                settingsHandler.retrieveSetting("dualComs", dualkKeys->at(i))
-                        ->toString()
-                        .mid(7);
-        qDebug() << comName;
-        auto *comboBox = comSelector->findChild<QComboBox *>();
-        int index = getComboxIndex(comboBox, comName);
-        qDebug() << index;
-        comboBox->setCurrentIndex(index);
-    }
-
-    if (dualkKeys->empty()) {
-        dualContainer->addWidget(formbuilder.generateComSelector(true, 3));
-    }
 
     auto dualWarningBox = new QVBoxLayout();
     dualWarningBox->setObjectName("dualWarningBox");
@@ -236,6 +222,74 @@ MainWindow::MainWindow(QWidget *parent)
     mgr->get(
             QNetworkRequest(QUrl("https://www.bitsanddroids.com/assets/"
                                  "downloads/connector/version.html")));
+
+    // THIS SECTION POPULATES THE COMBOBOXES
+    auto widgetsToSet = QList<QWidget *>();
+    widgetsToSet.append(dualWidget);
+    widgetsToSet.append(outWidget);
+    widgetsToSet.append(inWidget);
+
+    for (auto &widget: widgetsToSet) {
+        QString setGroupName;
+        QString comGroupName;
+        QString name = widget->objectName();
+        int mode = 0;
+        if (name == "dualWidgetContainer") {
+            setGroupName = "dualSets";
+            comGroupName = "dualComs";
+            mode = 3;
+        } else if (name == "outWidgetContainer") {
+            setGroupName = "outputSets";
+            comGroupName = "outputComs";
+            mode = 2;
+        } else {
+            comGroupName = "inputComs";
+            mode = 1;
+        }
+
+        QStringList *outputKeys = settingsHandler.retrieveKeys(comGroupName);
+
+        for (int i = 0; i < outputKeys->size(); i++) {
+            QWidget *comSelector = formbuilder.generateComSelector(true, mode, i);
+            widget->layout()->addWidget(comSelector);
+        }
+
+        if (outputKeys->empty()) {
+            widget->layout()->addWidget(
+                    formbuilder.generateComSelector(true, mode, 0));
+        }
+
+        auto comboBoxes = widget->findChildren<QComboBox *>();
+        int itterations = comboBoxes.size();
+        if (itterations > 1) {
+            itterations = itterations / 2;
+        }
+
+        for (int i = 0; i < itterations; i++) {
+            auto comComboBox =
+                    widget->findChild<QComboBox *>("comBox" + QString::number(i));
+            auto lastComSaved =
+                    settingsHandler
+                            .retrieveSetting(comGroupName, "com" + QString::number(i))
+                            ->toString()
+                            .mid(4);
+            comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
+            qDebug() << "LAST COM SAVED " << lastComSaved;
+
+            if (comGroupName != "inputComs") {
+                auto comboBox =
+                        widget->findChild<QComboBox *>("setBox" + QString::number(i));
+
+                auto lastSetId =
+                        settingsHandler
+                                .retrieveSetting(setGroupName, "set" + QString::number(i))
+                                ->toString();
+                auto setFound = setHandler->getSetById(lastSetId);
+                auto setName = setFound.getSetName();
+                comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+            }
+        }
+    }
 
     this->adjustSize();
 }
@@ -250,11 +304,10 @@ void MainWindow::onfinish(QNetworkReply *rep) {
             QStringList versionCut = str.split("~");
 
             if (versionCut[1].toStdString() != version) {
-
                 std::string nr = versionCut[1].toStdString();
                 std::string buttonText = "New update available: " + nr;
                 ui->updateButton->setText(QString::fromStdString(buttonText));
-                //url = versionCut[3].toStdString();
+                // url = versionCut[3].toStdString();
             } else {
                 ui->updateButton->setVisible(false);
                 ui->updateButton->setText("Up to date v: " + versionCut[1]);
@@ -279,9 +332,11 @@ void MainWindow::startMode(int mode) {
             startInputs();
             break;
         case 2:
+            setHandler->updateSets();
             startOutputs();
             break;
         case 3:
+            setHandler->updateSets();
             startDual();
             break;
         default:
@@ -302,7 +357,7 @@ void MainWindow::startInputs() {
         QString key;
 
         for (int i = 0; i < comList.size(); i++) {
-            key = "inputCom" + QString::number(i);
+            key = "com" + QString::number(i);
             comboBoxName = "comboBoxRow" + QString::number(i);
 
             QString keyValue = comList[i]->currentText();
@@ -339,8 +394,8 @@ void MainWindow::startOutputs() {
 
     widget = ui->outWidgetContainer;
 
-    settingsHandler.clearKeys("outputcoms");
-    settingsHandler.clearKeys("outputComSet");
+    settingsHandler.clearKeys("outputComs");
+    settingsHandler.clearKeys("outputSets");
 
     QRegularExpression search("comBox");
     QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
@@ -355,14 +410,14 @@ void MainWindow::startOutputs() {
         QList<Output *> outputsToMap;
         outputThread.clearBundles();
         for (int i = 0; i < comList.size(); i++) {
-            key = "outputCom" + QString::number(i);
-            setKey = "outputSet" + QString::number(i);
+            key = "com" + QString::number(i);
+            setKey = "set" + QString::number(i);
 
             QString keyValue = comList[i]->currentText();
             QString setKeyValue = setList[i]->currentText();
 
             std::cout << keyValue.toStdString() << std::endl;
-            settingsHandler.storeValue("outputcoms", key,
+            settingsHandler.storeValue("outputComs", key,
                                        convertComPort(keyValue).c_str());
 
             int index = setList[i]->currentIndex();
@@ -384,7 +439,7 @@ void MainWindow::startOutputs() {
 
             bundle->setOutputsInSet(*outputs);
             outputThread.addBundle(bundle);
-            settingsHandler.storeValue("outputComSet", setKey, id);
+            settingsHandler.storeValue("outputSets", setKey, id);
         }
         outputThread.abort = false;
         outputThread.start();
@@ -417,7 +472,7 @@ void MainWindow::startDual() {
 
     widget = ui->dualWidgetContainer;
     settingsHandler.clearKeys("dualComs");
-    settingsHandler.clearKeys("dualComSet");
+    settingsHandler.clearKeys("dualSets");
 
     QRegularExpression search("comBox");
     QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
@@ -434,8 +489,8 @@ void MainWindow::startDual() {
         qDebug() << "sets available" << comList.size();
         dualThread.clearBundles();
         for (int i = 0; i < comList.size(); i++) {
-            key = "dualCom" + QString::number(i);
-            setKey = "dualSet" + QString::number(i);
+            key = "com" + QString::number(i);
+            setKey = "set" + QString::number(i);
 
             QString keyValue = comList[i]->currentText();
             QString setKeyValue = setList[i]->currentText();
@@ -453,10 +508,6 @@ void MainWindow::startDual() {
 
             set active = setHandler->getSetById(QString::number(id));
             bundle->setSet(active);
-            //    const char *spString = convertComPort(keyValue).c_str();
-            //    SerialPort *port = new SerialPort(spString);
-            //    bundle->setSerialPortString(&spString);
-            //    bundle->setSerialPort(*port);
 
             auto *outputs = new QMap<int, Output *>();
             *outputs = active.getOutputs();
@@ -468,7 +519,7 @@ void MainWindow::startDual() {
             bundle->setOutputsInSet(*outputs);
             dualThread.addBundle(bundle);
             cout << "added" << endl;
-            settingsHandler.storeValue("dualComSet", setKey, id);
+            settingsHandler.storeValue("dualSets", setKey, id);
         }
 
         //    ui->stopButton->setVisible(true);
@@ -503,7 +554,7 @@ void MainWindow::startDual() {
 }
 
 bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
-    for (auto &i : toCheck) {
+    for (auto &i: toCheck) {
         if (i->currentIndex() == -1) {
             return true;
         } else
@@ -562,7 +613,7 @@ void MainWindow::refreshComs(int mode) {
         qDebug() << "hit size:" << comList.size();
 
         comList[i]->clear();
-        for (auto &com : coms) {
+        for (auto &com: coms) {
             comList[i]->addItem(com);
             qDebug() << com;
         }
@@ -605,7 +656,7 @@ void MainWindow::addCom(int mode) {
             break;
     }
 
-    layout->addWidget(formbuilder.generateComSelector(set, mode));
+    layout->addWidget(formbuilder.generateComSelector(set, mode, 99));
     qDebug() << "addCom" << mode;
 }
 
@@ -620,7 +671,7 @@ void MainWindow::stopOutput() { outputThread.abort = true; }
 void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
-    qDebug()<<"clicked";
+    qDebug() << "clicked";
     QString qUrl = QString::fromStdString(url);
     QDesktopServices::openUrl(QUrl(qUrl));
 }
