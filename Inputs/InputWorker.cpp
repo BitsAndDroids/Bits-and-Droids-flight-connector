@@ -88,7 +88,9 @@ void InputWorker::inputEvents() {
     handler.setRudderCurve(rudderCurveList);
   }
   keys = *settingsHandler.retrieveKeys("inputComs");
-  for (int i = 0; i < keys.size(); i++) {
+  int keySize = keys.size();
+  int succesfullConnected = 0;
+  for (int i = 0; i < keySize; i++) {
     const char *savedPort;
     savedPort = settingsHandler.retrieveSetting("inputComs", keys[i])
                     ->toString()
@@ -96,13 +98,22 @@ void InputWorker::inputEvents() {
                     .c_str();
 
     arduinoInput[i] = new SerialPort(savedPort);
+    if (arduinoInput[i]->isConnected()) {
+      emit(BoardConnectionMade(1, 1));
+      succesfullConnected++;
+    }
     std::cout << i << "Is connected: " << arduinoInput[i]->isConnected()
               << std::endl;
   }
+  if (succesfullConnected == keySize) {
+    emit(BoardConnectionMade(2, 1));
+  }
 
   while (!abortInput) {
+    emit(GameConnectionMade(1, 1));
     if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0,
                                   0, 0))) {
+      emit(GameConnectionMade(2, 1));
       printf("\nConnected to Flight Simulator!");
       SimConnect_MapClientDataNameToID(hInputSimConnect, "shared",
                                        ClientDataID);
@@ -132,7 +143,6 @@ void InputWorker::inputEvents() {
 
           if (hasRead) {
             if (connected) {
-              emit updateLastStatusUI("Connected to game");
               handler.switchHandling(i);
             }
             // lastVal = handler.receivedString[i];
@@ -143,11 +153,9 @@ void InputWorker::inputEvents() {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
 
-      emit updateLastStatusUI("Connection closed");
+
       if (connected) {
         connected = false;
-      } else {
-        emit updateLastStatusUI("No connection to the game");
       }
     }
   }
@@ -158,18 +166,13 @@ void InputWorker::inputEvents() {
       arduinoInput[i]->closeSerial();
     }
   }
-  cout << "we are here" << endl;
+
   quit();
 }
 
 InputWorker::~InputWorker() {
   abortInput = true;
   connected = false;
-  //  for (int i = 0; i < keys.size(); i++) {
-  //    if (arduinoInput[i]->isConnected()) {
-  //      arduinoInput[i]->closeSerial();
-  //    }
-  //  }
 
   mutex.lock();
 

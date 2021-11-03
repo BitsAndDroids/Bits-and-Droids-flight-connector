@@ -1,5 +1,6 @@
 #ifndef INPUTWORKER_H
 #define INPUTWORKER_H
+
 #include <headers/SimConnect.h>
 #include <qmutex.h>
 #include <qsettings.h>
@@ -22,42 +23,53 @@
   \brief The InputWorker class
  */
 class InputWorker : public QThread {
-  Q_OBJECT
-  void run() override { inputEvents(); }
+Q_OBJECT
 
- signals:
-  void updateLastValUI(QString lastVal);
-  void updateLastStatusUI(QString lastStatus);
+    void run() override { inputEvents(); }
 
- public:
-  InputWorker();
-  ~InputWorker() override;
-  QMutex mutex;
-  QWaitCondition condition;
+signals:
 
-  bool connected;
-  bool abortInput;
+    void updateLastValUI(QString lastVal);
+
+    void updateLastStatusUI(QString lastStatus);
+
+    void GameConnectionMade(int con, int mode);
+
+    void BoardConnectionMade(int con, int mode);
+
+public:
+    InputWorker();
+
+    ~InputWorker() override;
+
+    QMutex mutex;
+    QWaitCondition condition;
+
+    bool connected;
+    bool abortInput;
 
 
- private slots:
+private slots:
 
-  // void switchHandling(int index);
+    // void switchHandling(int index);
 
- private:
-  SettingsHandler settingsHandler;
-  std::string lastVal;
-  SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+private:
+    SettingsHandler settingsHandler;
+    std::string lastVal;
+    SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
     SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
-  std::string lastStatus;
-  InputMapper mapper = InputMapper();
-  InputSwitchHandler handler = InputSwitchHandler();
-  QStringList keys = *settingsHandler.retrieveKeys("inputCom");
-  std::string prefix;
-  void inputEvents();
+    std::string lastStatus;
+    InputMapper mapper = InputMapper();
+    InputSwitchHandler handler = InputSwitchHandler();
+    QStringList keys = *settingsHandler.retrieveKeys("inputCom");
+    std::string prefix;
 
-  UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor);
-  static void MyDispatchProcInput(SIMCONNECT_RECV* pData, DWORD cbData,
-                                  void* pContext);
+    void inputEvents();
+
+    UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor);
+
+    static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
+                                    void *pContext);
 };
 
 #endif  // INPUTWORKER_H

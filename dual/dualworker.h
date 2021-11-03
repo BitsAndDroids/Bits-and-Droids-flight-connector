@@ -24,45 +24,62 @@
 #include "headers/SimConnect.h"
 
 #include "strsafe.h"
+
 typedef QList<QString> ComsList;
+
 class DualWorker : public QThread {
-  Q_OBJECT
-  void run() override { RadioEvents(); }
- signals:
-  void updateActiveCom1(QList<QString> lastActiveCom);
+Q_OBJECT
 
- private:
-  // ...
-  SettingsHandler settingsHandler;
-  SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
-  outputHandler outputHandler;
-  QList<outputBundle *> *outputBundles = new QList<outputBundle *>();
-  InputSwitchHandler *dualInputHandler = new class InputSwitchHandler();
-  InputMapper dualInputMapper = InputMapper();
-  outputMapper dualOutputMapper = outputMapper();
+    void run() override { RadioEvents(); }
 
-  static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
-                                  void *pContext);
-  double dataF = 1.;
+signals:
 
-  SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
-  InputEnum radioDefs = InputEnum();
-  InputMapper radioMap = InputMapper();
-  QList<Output *> outputsToMap;
-  QStringList *keys = new QStringList();
+    void updateActiveCom1(QList<QString> lastActiveCom);
 
- public:
-  void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
+    void GameConnectionMade(int con, int mode);
 
-  void addBundle(outputBundle *bundle);
-  bool abortDual;
-  DualWorker();
-  ~DualWorker();
-  QMutex mutex;
-  QWaitCondition condition;
-  void RadioEvents();
-  void clearBundles();
- public slots:
+    void BoardConnectionMade(int con, int mode);
+
+private:
+    // ...
+    SettingsHandler settingsHandler;
+    SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+    outputHandler outputHandler;
+    QList<outputBundle *> *outputBundles = new QList<outputBundle *>();
+    InputSwitchHandler *dualInputHandler = new class InputSwitchHandler();
+    InputMapper dualInputMapper = InputMapper();
+    outputMapper dualOutputMapper = outputMapper();
+
+    static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
+                                    void *pContext);
+
+    double dataF = 1.;
+
+    SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
+    InputEnum radioDefs = InputEnum();
+    InputMapper radioMap = InputMapper();
+    QList<Output *> outputsToMap;
+    QStringList *keys = new QStringList();
+
+public:
+    void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
+
+    void addBundle(outputBundle *bundle);
+
+    bool abortDual;
+
+    DualWorker();
+
+    ~DualWorker();
+
+    QMutex mutex;
+    QWaitCondition condition;
+
+    void RadioEvents();
+
+    void clearBundles();
+
+public slots:
 };
 
 #endif  // DUALWORKER_H
