@@ -49,8 +49,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[58];
-    char stringdata0[372];
+    const uint offsetsAndSize[64];
+    char stringdata0[415];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -84,7 +84,10 @@ QT_MOC_LITERAL(318, 14), // "QNetworkReply*"
 QT_MOC_LITERAL(333, 3), // "rep"
 QT_MOC_LITERAL(337, 14), // "convertComPort"
 QT_MOC_LITERAL(352, 11), // "std::string"
-QT_MOC_LITERAL(364, 7) // "comText"
+QT_MOC_LITERAL(364, 7), // "comText"
+QT_MOC_LITERAL(372, 18), // "GameConnectionMade"
+QT_MOC_LITERAL(391, 3), // "con"
+QT_MOC_LITERAL(395, 19) // "BoardConnectionMade"
 
     },
     "MainWindow\0closedOutputMenu\0\0"
@@ -96,7 +99,8 @@ QT_MOC_LITERAL(364, 7) // "comText"
     "startMode\0refreshComs\0stopMode\0addCom\0"
     "on_updateButton_clicked\0outputMenuClosed\0"
     "optionMenuClosed\0onfinish\0QNetworkReply*\0"
-    "rep\0convertComPort\0std::string\0comText"
+    "rep\0convertComPort\0std::string\0comText\0"
+    "GameConnectionMade\0con\0BoardConnectionMade"
 };
 #undef QT_MOC_LITERAL
 
@@ -106,7 +110,7 @@ static const uint qt_meta_data_MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -114,28 +118,30 @@ static const uint qt_meta_data_MainWindow[] = {
        9,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  134,    2, 0x06,    1 /* Public */,
-       3,    0,  135,    2, 0x06,    2 /* Public */,
-       4,    1,  136,    2, 0x06,    3 /* Public */,
-       6,    1,  139,    2, 0x06,    5 /* Public */,
-       7,    1,  142,    2, 0x06,    7 /* Public */,
-       8,    1,  145,    2, 0x06,    9 /* Public */,
-      10,    1,  148,    2, 0x06,   11 /* Public */,
-      11,    1,  151,    2, 0x06,   13 /* Public */,
-      12,    1,  154,    2, 0x06,   15 /* Public */,
+       1,    0,  146,    2, 0x06,    1 /* Public */,
+       3,    0,  147,    2, 0x06,    2 /* Public */,
+       4,    1,  148,    2, 0x06,    3 /* Public */,
+       6,    1,  151,    2, 0x06,    5 /* Public */,
+       7,    1,  154,    2, 0x06,    7 /* Public */,
+       8,    1,  157,    2, 0x06,    9 /* Public */,
+      10,    1,  160,    2, 0x06,   11 /* Public */,
+      11,    1,  163,    2, 0x06,   13 /* Public */,
+      12,    1,  166,    2, 0x06,   15 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      13,    1,  157,    2, 0x0a,   17 /* Public */,
-      14,    1,  160,    2, 0x0a,   19 /* Public */,
-      16,    1,  163,    2, 0x0a,   21 /* Public */,
-      17,    1,  166,    2, 0x0a,   23 /* Public */,
-      18,    1,  169,    2, 0x0a,   25 /* Public */,
-      19,    1,  172,    2, 0x0a,   27 /* Public */,
-      20,    0,  175,    2, 0x08,   29 /* Private */,
-      21,    0,  176,    2, 0x08,   30 /* Private */,
-      22,    0,  177,    2, 0x08,   31 /* Private */,
-      23,    1,  178,    2, 0x08,   32 /* Private */,
-      26,    1,  181,    2, 0x08,   34 /* Private */,
+      13,    1,  169,    2, 0x0a,   17 /* Public */,
+      14,    1,  172,    2, 0x0a,   19 /* Public */,
+      16,    1,  175,    2, 0x0a,   21 /* Public */,
+      17,    1,  178,    2, 0x0a,   23 /* Public */,
+      18,    1,  181,    2, 0x0a,   25 /* Public */,
+      19,    1,  184,    2, 0x0a,   27 /* Public */,
+      20,    0,  187,    2, 0x08,   29 /* Private */,
+      21,    0,  188,    2, 0x08,   30 /* Private */,
+      22,    0,  189,    2, 0x08,   31 /* Private */,
+      23,    1,  190,    2, 0x08,   32 /* Private */,
+      26,    1,  193,    2, 0x08,   34 /* Private */,
+      29,    2,  196,    2, 0x0a,   36 /* Public */,
+      31,    2,  201,    2, 0x0a,   39 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -160,6 +166,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 24,   25,
     0x80000000 | 27, QMetaType::QString,   28,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   30,    9,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,   30,    9,
 
        0        // eod
 };
@@ -191,6 +199,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 18: _t->onfinish((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
         case 19: { std::string _r = _t->convertComPort((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< std::string*>(_a[0]) = std::move(_r); }  break;
+        case 20: _t->GameConnectionMade((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 21: _t->BoardConnectionMade((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -280,7 +290,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QList<QString>, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QNetworkReply *, std::false_type>, QtPrivate::TypeAndForceComplete<std::string, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QNetworkReply *, std::false_type>, QtPrivate::TypeAndForceComplete<std::string, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>
 
 
 >,
@@ -307,13 +317,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 22;
     }
     return _id;
 }

@@ -13,3 +13,5 @@ capi.dll
 dasync.dll
 /release
 /debug
+/objects/
+*.o

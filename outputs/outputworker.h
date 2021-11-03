@@ -25,6 +25,9 @@ class OutputWorker : public QThread {
  signals:
   void updateLastValUI(QString lastVal);
   void updateLastStatusUI(QString lastStatus);
+  void GameConnectionMade(int con, int mode);
+  void BoardConnectionMade(int con, int mode);
+
 
  public:
   OutputWorker();
@@ -42,6 +45,8 @@ class OutputWorker : public QThread {
   void setOutputsToMap(QList<Output*> list) { this->outputsToMap = list; };
 
   void addBundle(outputBundle* bundle);
+
+
 
  private:
   outputMapper outputMapper;
