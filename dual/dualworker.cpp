@@ -33,7 +33,7 @@ float radianDualToDegreeFloat(double rec) {
   double radian = rec;
   return (radian * (180 / pi));
 }
-float dualDataRecv = 1.0f;
+float dualDataRecv = 1.2f;
 enum GROUP_ID { GROUP0 = 2, GROUP_A = 1 };
 enum INPUT_ID {
   INPUT0,
@@ -176,7 +176,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
       qDebug() << "DATA: " << pObjData->dwData << "ID: " << pObjData->dwID
                << pObjData->dwRequestID << pObjData->dwDefineID
                << pObjData->dwObjectID;
-      if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 2000) {
+      if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
         sendDualToArduino(pObjData->dwData,
                           std::to_string(pObjData->dwRequestID), bundle, 4);
       }
@@ -287,7 +287,20 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
   }
 }
+void DualWorker::updateEventFile(){
+    char arrayTest[256] = "9999";
 
+    puts(arrayTest);
+    qDebug() << arrayTest;
+
+    //  SimConnect_TransmitClientEvent(
+    //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+    //      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
+    SimConnect_SetClientData(dualSimConnect, 1, 12,
+                             SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
+                             &arrayTest);
+}
 void DualWorker::addBundle(outputBundle *bundle) {
   outputBundles->append(bundle);
 }
@@ -331,7 +344,7 @@ void DualWorker::RadioEvents() {
 
       SimConnect_MapClientDataNameToID(dualSimConnect, "shared", ClientDataID);
 
-      SimConnect_CreateClientData(dualSimConnect, ClientDataID, sizeof(dataF),
+      SimConnect_CreateClientData(dualSimConnect, ClientDataID, 256,
                                   SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
 
       SimConnect_RequestClientData(dualSimConnect, ClientDataID, REQUEST_1,
@@ -339,19 +352,20 @@ void DualWorker::RadioEvents() {
                                    SIMCONNECT_CLIENT_DATA_PERIOD_SECOND,
                                    SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT);
 
-      SimConnect_MapClientEventToSimEvent(dualSimConnect, EVENT_WASM,
-                                          "LVAR_ACCESS.EFIS");
+//      SimConnect_MapClientEventToSimEvent(dualSimConnect, EVENT_WASM,
+//                                          "LVAR_ACCESS.EFIS");
 
-      SimConnect_AddClientEventToNotificationGroup(dualSimConnect, GROUP_A,
-                                                   EVENT_WASM, true);
+//      SimConnect_AddClientEventToNotificationGroup(dualSimConnect, GROUP_A,
+//                                                   EVENT_WASM, true);
 
-      SimConnect_SetNotificationGroupPriority(
-          dualSimConnect, GROUP_A, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
+//      SimConnect_SetNotificationGroupPriority(
+//          dualSimConnect, GROUP_A, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
 
       SimConnect_SetClientData(dualSimConnect, ClientDataID, DEFINITION_1,
                                SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0,
-                               sizeof(dataF), &dataF);
+                               256, &dataF);
 
+        SimConnect_AddToClientDataDefinition(dualSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO,256,0);
       dualInputHandler->connect = dualSimConnect;
       dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
 

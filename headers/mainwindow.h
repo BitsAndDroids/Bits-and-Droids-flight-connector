@@ -57,6 +57,7 @@ public slots:
     void addCom(int mode);
 
 signals:
+    void updateEventFile();
 
     void closedOutputMenu();
 
@@ -77,6 +78,7 @@ signals:
     void addPressed(int mode);
 
 private slots:
+    void localUpdateEventFile();
 
     void on_updateButton_clicked();
 

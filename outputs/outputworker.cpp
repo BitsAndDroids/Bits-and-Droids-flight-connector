@@ -85,9 +85,7 @@ void sendToArduino(float received, const std::string &prefix, int index,
     prefixString += " ";
   }
   std::string input_string;
-  //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
-  //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-  //                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
   if (mode != 4) {
     cout << "0 checked" << endl;
     intVal = static_cast<int>(received);
@@ -342,6 +340,7 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
 void OutputWorker::testDataRequest() {
   HRESULT hr;
+
   abort = false;
   keys = settingsHandler.retrieveKeys("outputcoms");
   int keySize = keys->size();
@@ -381,7 +380,7 @@ void OutputWorker::testDataRequest() {
       SimConnect_CreateClientData(
           hSimConnect, 2, 4096, SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
 
-      SimConnect_AddToClientDataDefinition(hSimConnect, 0, 0,
+      SimConnect_AddToClientDataDefinition(hSimConnect, 12, 0,
                                                 sizeof(dataRecv), 0, 0);
 
       emit(GameConnectionMade(2, 2));

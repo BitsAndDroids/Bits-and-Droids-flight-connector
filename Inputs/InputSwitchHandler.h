@@ -86,7 +86,8 @@ class InputSwitchHandler {
 
   void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
 
-  void sendWASMCommand(int index);
+
+  void sendWASMCommand(int index, int value);
 };
 
 #endif  // INPUTSWITCHHANDLER_H
