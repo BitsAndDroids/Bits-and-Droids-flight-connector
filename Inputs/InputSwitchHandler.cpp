@@ -235,6 +235,7 @@ void InputSwitchHandler::setFlaps(int index) {
 
 void InputSwitchHandler::set_throttle_values(int index) {
   // Throttle control
+
   int engineBuffer[4];
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -556,16 +557,21 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
   hr = SimConnect_TransmitClientEvent(
       connect, 0, eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
       SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
   cout << hr << endl;
 }
 
-void InputSwitchHandler::sendWASMCommand(int index) {
-  HRESULT hr;
+void InputSwitchHandler::sendWASMCommand(int index, int value) {
+  std::string testString = std::to_string(index) + " " + std::to_string(value);
 
-  hr = SimConnect_TransmitClientEvent(
-      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-  cout << "WASM ATTEMPT: " << hr << endl;
+  char arrayTest[256];
+  strcpy(arrayTest, testString.c_str());
+  puts(arrayTest);
+  qDebug() << arrayTest;
+
+  SimConnect_SetClientData(connect, 1, 12,
+                           SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
+                           &arrayTest);
 }
 
 void InputSwitchHandler::sendBasicCommandOn(
@@ -594,7 +600,9 @@ void InputSwitchHandler::switchHandling(int index) {
   //
   if (strlen(receivedString[index]) > 2) {
     cout << "Yes" << endl;
-    prefix = std::string(&receivedString[index][0], &receivedString[index][3]);
+    prefix = std::string(&receivedString[index][0], &receivedString[index][4]);
+    qDebug() << "PREFIX: " << prefix.c_str();
+
     try {
       int prefixVal = stoi(prefix);
 
@@ -2679,207 +2687,7 @@ void InputSwitchHandler::switchHandling(int index) {
                            index);
           break;
         }
-        case 753: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 754: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 755: {
-          // ZOOMIN
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 756: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 757: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 758: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 759: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 760: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 761: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 762: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 763: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 764: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 765: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 766: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 767: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 768: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 769: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 770: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 771: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 772: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 773: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 774: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 775: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 776: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 777: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 778: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 779: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 780: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 781: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 782: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 783: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 784: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 785: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 786: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 787: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 788: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 789: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 790: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 791: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 792: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 793: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 794: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 795: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 796: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 797: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 798: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 799: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 800: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 801: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 802: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
+
         case 803: {
           sendBasicCommand(inputDefinitions.DEFINITION_AP_MAX_BANK_INC, index);
           break;
@@ -2916,390 +2724,7 @@ void InputSwitchHandler::switchHandling(int index) {
                            index);
           break;
         }
-        case 811: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 812: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 813: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 814: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 815: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 816: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 817: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 818: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 819: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 820: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 821: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 822: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 823: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 824: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 825: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 826: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 827: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 828: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 829: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 830: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 831: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 832: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 833: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 834: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
 
-        case 835: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 836: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 837: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 838: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 839: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 840: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 841: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 842: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 843: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 844: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 845: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 846: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 847: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 848: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 849: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 850: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 851: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 852: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 853: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 854: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 855: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 856: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 857: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 858: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 859: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 860: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 861: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 862: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 863: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 864: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 865: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 866: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 867: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 868: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 869: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 870: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 871: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 872: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 873: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 874: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 875: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 876: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 877: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 878: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 879: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 880: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 881: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 882: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 883: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 884: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 885: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 886: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 887: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 888: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 889: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 890: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 891: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 892: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-
-        case 893: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 894: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 895: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 896: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 897: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 898: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 899: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 903: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 904: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 905: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 906: {
-          sendWASMCommand(prefixVal);
-          break;
-        }
-        case 907: {
-          cout << "yes7" << prefixVal << endl;
-          sendWASMCommand(prefixVal);
-          break;
-        }
         case 908: {
           sendBasicCommand(inputDefinitions.DEFINITION_SIM_PAUSE_ON, index);
           break;
@@ -3307,9 +2732,6 @@ void InputSwitchHandler::switchHandling(int index) {
         case 909: {
           sendBasicCommand(inputDefinitions.DEFINITION_SIM_PAUSE_OFF, index);
           break;
-        }
-        case 910: {
-          sendWASMCommand(prefixVal);
         }
 
         case 900: {
@@ -3325,6 +2747,15 @@ void InputSwitchHandler::switchHandling(int index) {
           break;
         }
         default: {
+          int value = 0;
+          bool valFound = std::strlen(receivedString[index]) > 6;
+          if (valFound) {
+            value = stoi(std::string(reinterpret_cast<const char *>(
+                                         &receivedString[index]))
+                             .substr(4));
+          }
+          qDebug() << "test";
+          sendWASMCommand(prefixVal, 0);
           break;
         }
       }

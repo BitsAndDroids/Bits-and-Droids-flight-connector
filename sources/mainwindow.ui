@@ -111,6 +111,13 @@ QCheckBox{
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="9" column="0">
+     <widget class="QLabel" name="labelLastVal">
+      <property name="text">
+       <string>test</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QPushButton" name="updateButton">
       <property name="enabled">
@@ -132,11 +139,30 @@ QCheckBox{
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
-     <widget class="QLabel" name="labelLastVal">
-      <property name="text">
-       <string/>
-      </property>
+    <item row="19" column="0">
+     <widget class="QWidget" name="messagesWidget" native="true">
+      <layout class="QHBoxLayout" name="messagesWidgetLayout">
+       <property name="leftMargin">
+        <number>10</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="labelLastVal_2">
+         <property name="text">
+          <string>test</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelLastStatus">
+         <property name="text">
+          <string>test</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="1" column="0">
@@ -181,32 +207,6 @@ border-radius:4px;
       </layout>
      </widget>
     </item>
-    <item row="19" column="0">
-     <widget class="QWidget" name="messagesWidget" native="true">
-      <layout class="QHBoxLayout" name="messagesWidgetLayout">
-       <property name="leftMargin">
-        <number>10</number>
-       </property>
-       <property name="topMargin">
-        <number>10</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="labelLastVal_2">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="labelLastStatus">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -215,7 +215,7 @@ border-radius:4px;
      <x>0</x>
      <y>0</y>
      <width>1058</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

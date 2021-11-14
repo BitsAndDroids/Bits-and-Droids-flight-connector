@@ -53,7 +53,7 @@ private:
     static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext);
 
-    double dataF = 1.;
+    double dataF = 1.2;
 
     SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
     InputEnum radioDefs = InputEnum();
@@ -80,6 +80,8 @@ public:
     void clearBundles();
 
 public slots:
+
+    void updateEventFile();
 };
 
 #endif  // DUALWORKER_H

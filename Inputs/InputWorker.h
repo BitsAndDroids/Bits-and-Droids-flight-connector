@@ -47,7 +47,9 @@ public:
 
     bool connected;
     bool abortInput;
+public slots:
 
+    void updateEventFile();
 
 private slots:
 
