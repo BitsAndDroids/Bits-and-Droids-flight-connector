@@ -59,6 +59,7 @@ SOURCES += \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
     dual/dualworker.cpp \
+    events/eventwindow.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -86,6 +87,7 @@ HEADERS += \
     Inputs/InputWorker.h \
     Inputs/inputenum.h \
     dual/dualworker.h \
+    events/eventwindow.h \
     headers/Engine.h \
     headers/constants.h \
     headers/mainwindow.h \
@@ -111,6 +113,7 @@ HEADERS += \
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
+    events/eventwindow.ui \
     sources/mainwindow.ui \
     settings/optionsmenu.ui \
     settings/outputmenu.ui

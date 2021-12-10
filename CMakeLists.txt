@@ -89,6 +89,9 @@ add_executable(Bitsanddroidsgui
         sources/SerialReader.cpp
         settings/coordinates.cpp
         settings/coordinates.h
+        events/eventwindow.cpp
+        events/eventwindow.h
+        events/eventwindow.ui
 
      )
 

@@ -602,6 +602,7 @@ void InputSwitchHandler::switchHandling(int index) {
     cout << "Yes" << endl;
     prefix = std::string(&receivedString[index][0], &receivedString[index][4]);
     qDebug() << "PREFIX: " << prefix.c_str();
+    qDebug() <<"STRING: "<<receivedString[index];
 
     try {
       int prefixVal = stoi(prefix);
@@ -2748,14 +2749,15 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         default: {
           int value = 0;
-          bool valFound = std::strlen(receivedString[index]) > 6;
+          bool valFound = std::strlen(receivedString[index]) > 5;
           if (valFound) {
             value = stoi(std::string(reinterpret_cast<const char *>(
                                          &receivedString[index]))
                              .substr(4));
           }
-          qDebug() << "test";
-          sendWASMCommand(prefixVal, 0);
+
+          sendWASMCommand(prefixVal, value);
+          cout<<value<<"val"<<endl;
           break;
         }
       }
