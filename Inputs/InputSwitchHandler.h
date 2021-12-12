@@ -55,11 +55,14 @@ class InputSwitchHandler {
 
  private:
   std::string prefix;
-  QList<coordinates> rudderCurve = {
+  QList<coordinates> defaultCurve = {
       {coordinates(0, -16383)},  {coordinates(250, -10000)},
       {coordinates(400, 0)},     {coordinates(500, 0)},
       {coordinates(600, 0)},     {coordinates(750, 10000)},
       {coordinates(1023, 16383)}};
+  QList<coordinates> rudderCurve, brakeCurve, aileronCurve, elevatorCurve = defaultCurve;
+
+  int calibratedRange(int value, QList<coordinates> curve);
 
   void setElevatorTrim(int index);
 

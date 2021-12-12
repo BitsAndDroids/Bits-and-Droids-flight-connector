@@ -4,6 +4,7 @@
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
+#include <settings/calibrateaxismenu.h>
 #include <settings/optionsmenu.h>
 #include <settings/outputmenu.h>
 
@@ -44,7 +45,14 @@ void MainWindow::openOutputMenu() {
     wdg->show();
   }
 }
-
+void MainWindow::openCalibrateAxis(){
+    if (!calibrateAxisOpen) {
+      calibrateAxisOpen = true;
+      QWidget *wdg = new CalibrateAxisMenu;
+      connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
+      wdg->show();
+    }
+}
 void MainWindow::openEditEventMenu() {
   if (!outputMenuOpen) {
     editEventMenuOpen = true;
@@ -164,18 +172,24 @@ MainWindow::MainWindow(QWidget *parent)
   // TOOLBAR MENU
   qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   auto *openSettings = new QAction("&Settings", this);
+  auto *calibrateAxis = new QAction("&Calibrate axis", this);
   auto *openOutputMenu = new QAction("&Outputs", this);
   auto *openEditEventWindow = new QAction("&Edit events", this);
   auto *installWasm = new QAction("&Install WASM", this);
+  auto *WasmUpdateEventFile = new QAction("&Update event file", this);
+
   QMenu *Settings = menuBar()->addMenu("&Settings");
   QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
   QMenu *WasmInstall = menuBar()->addMenu("&WASM");
-  auto *WasmUpdateEventFile = new QAction("&Update event file", this);
+
+
+
   WasmInstall->addAction(WasmUpdateEventFile);
   WasmInstall->addAction(installWasm);
   OutputSettings->addAction(openOutputMenu);
   WasmInstall->addAction(openEditEventWindow);
   Settings->addAction(openSettings);
+  Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
 
@@ -184,7 +198,7 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::localUpdateEventFile);
   connect(WasmUpdateEventFile, &QAction::triggered, this,
           &MainWindow::localUpdateEventFile);
-
+  connect(calibrateAxis, &QAction::triggered,this,&MainWindow::openCalibrateAxis);
   connect(openOutputMenu, &QAction::triggered, this,
           &MainWindow::openOutputMenu);
   connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);

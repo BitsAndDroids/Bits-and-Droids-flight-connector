@@ -41,7 +41,7 @@ optionsMenu::optionsMenu(QWidget *parent)
     // uiOptions->vlEngineRange->addLayout(builder->createRudderRow());
     uiOptions->vlEngineRange->addLayout(builder->RangeBuilder());
     auto sensLayout = new QVBoxLayout();
-    sensLayout->addLayout(builder->createRudderRow());
+    sensLayout->addLayout(builder->createAxisRow("rudder"));
     uiOptions->sensitivityWidget->setLayout(sensLayout);
     uiOptions->sensitivityWidget->layout()->setAlignment(Qt::AlignTop);
 

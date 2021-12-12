@@ -21,38 +21,44 @@ FormBuilder::FormBuilder() {
     rangeHeaders.append("Propeller " + QString::number(i + 1));
   }
   rangeHeaders.append("Flaps");
-  auto keys = settingsHandler.retrieveSubKeys("rudderSeries", "axis");
-  if (!keys->isEmpty()) {
-    auto axisKeys = settingsHandler.retrieveSubKeys("rudderSeries", "axis");
-    auto valueKeys = settingsHandler.retrieveSubKeys("rudderSeries", "value");
-    for (int i = 0; i < axisKeys->size(); i++) {
-      float x = settingsHandler
-                    .retrieveSubSetting("rudderSeries", "axis", axisKeys->at(i))
-                    ->toFloat();
-      float y =
-          settingsHandler
-              .retrieveSubSetting("rudderSeries", "value", valueKeys->at(i))
-              ->toFloat();
-      coordinates coord(x, y);
-      cout << coord.getY() << " : " << coord.getX() << endl;
-      pointsToPlot.append(coord);
-    }
-  }
+
 
   cout << "bye" << endl;
   availableSets = setHandler.getSets();
 }
+void FormBuilder::loadPointsToPlot(QStringList axis){
+    for(int i = 0; i < axis.size(); i++){
+        rangeHeaders.append("Flaps");
+        auto keys = settingsHandler.retrieveSubKeys(axis[i] + "Series", "axis");
+        if (!keys->isEmpty()) {
+          auto axisKeys = settingsHandler.retrieveSubKeys(axis[i] +"Series", "axis");
+          auto valueKeys = settingsHandler.retrieveSubKeys(axis[i] +"Series", "value");
+          for (int i = 0; i < axisKeys->size(); i++) {
+            float x = settingsHandler
+                          .retrieveSubSetting(axis[i] +"Series", "axis", axisKeys->at(i))
+                          ->toFloat();
+            float y =
+                settingsHandler
+                    .retrieveSubSetting(axis[i] +"Series", "value", valueKeys->at(i))
+                    ->toFloat();
+            coordinates coord(x, y);
+            cout << coord.getY() << " : " << coord.getX() << endl;
+            pointsToPlot[i].append(coord);
+          }
+    }
 
-QVBoxLayout *FormBuilder::createRudderRow() {
+    }
+}
+QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
   auto *layout = new QVBoxLayout();
-  layout->setObjectName("rudderCalibrateLayout");
+  layout->setObjectName(name + "CalibrateLayout");
   series = new QLineSeries();
   series->setName("spline");
   //*series << QPointF(11, 1) << QPointF(13, 3);
   chart = new QChart();
   chart->legend()->hide();
   chart->addSeries(series);
-  chart->setTitle("Rudder curve");
+  chart->setTitle( name + " curve");
 
   // chart->createDefaultAxes();
 
@@ -96,7 +102,7 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   series->attachAxis(yAxis);
 
   chartView = new QChartView(chart);
-  chartView->setObjectName("rudderChartView");
+  chartView->setObjectName(name + "ChartView");
   chartView->setMinimumSize(350, 250);
   chartView->setMaximumSize(350, 250);
   chartView->adjustSize();
@@ -105,8 +111,8 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   layout->addWidget(chartView);
   int sliders = 3;
   QStringList sliderLabels = {"Deadzone", "Sensitivity -", "Sensitivity +"};
-  QStringList sliderNames = {"rudderDeadzone", "rudderMinSensitivity",
-                             "rudderPlusSensitivity"};
+  QStringList sliderNames = {name + "Deadzone", name + "rudderMinSensitivity",
+                             name + "rudderPlusSensitivity"};
   for (int i = 0; i < sliders; i++) {
     auto layoutRow = new QHBoxLayout();
 
@@ -152,7 +158,7 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   }
   auto reversedLabel = new QLabel("Reversed");
   auto rudderReversedCb = new QCheckBox();
-  rudderReversedCb->setObjectName("rudderReversed");
+  rudderReversedCb->setObjectName(name + "Reversed");
   connect(rudderReversedCb, &QCheckBox::clicked, this,
           &FormBuilder::reverseClicked);
   rudderValueRow->addWidget(reversedLabel);
@@ -180,11 +186,11 @@ QVBoxLayout *FormBuilder::createRudderRow() {
         {coordinates(static_cast<float>(maxRudderValue), max)}};
 
     for (auto &i : coords) {
-      pointsToPlot.append(i);
+      pointsToPlot[number].append(i);
       series->append(i.getX(), i.getY());
     }
   } else {
-    for (auto &i : pointsToPlot) {
+    for (auto &i : pointsToPlot[number]) {
       series->append(i.getX(), i.getY());
     }
   }
@@ -193,58 +199,58 @@ QVBoxLayout *FormBuilder::createRudderRow() {
   return layout;
 }
 
-void FormBuilder::rudderTextChanged() {
+void FormBuilder::rudderTextChanged(int number) {
   auto senderLineEdit = qobject_cast<QLineEdit *>(sender());
   int valueToChange = senderLineEdit->text().toInt();
   int index = rudderObjectNames.indexOf(senderLineEdit->objectName());
   switch (index) {
     case 0:
-      pointsToPlot[0].setX(static_cast<float>(valueToChange));
+      pointsToPlot[number][0].setX(static_cast<float>(valueToChange));
       minRudderValue = valueToChange;
       break;
     case 1:
-      pointsToPlot[3].setX(static_cast<float>(valueToChange));
+      pointsToPlot[number][3].setX(static_cast<float>(valueToChange));
       neutralRudderValue = valueToChange;
       break;
     case 2:
-      pointsToPlot[6].setX(static_cast<float>(valueToChange));
+      pointsToPlot[number][6].setX(static_cast<float>(valueToChange));
       maxRudderValue = valueToChange;
       break;
     default:
       break;
   }
-  updateChart();
+  updateChart(number);
 }
-void FormBuilder::reverseClicked() {
+void FormBuilder::reverseClicked(int number) {
   auto sendCb = qobject_cast<QCheckBox *>(sender());
   for (int i = 0; i < pointsToPlot.size(); i++) {
     if (sendCb->isChecked()) {
-      pointsToPlot[i].setY(axisValues[axisValues.size() - 1 - i]);
+      pointsToPlot[number][i].setY(axisValues[axisValues.size() - 1 - i]);
     } else {
-      pointsToPlot[i].setY(axisValues[i]);
+      pointsToPlot[number][i].setY(axisValues[i]);
     }
   }
-  updateChart();
+  updateChart(number);
 }
-QList<coordinates> *FormBuilder::getCoordinates() { return &pointsToPlot; }
+QList<coordinates> *FormBuilder::getCoordinates(int number) { return &pointsToPlot[number]; }
 
-void FormBuilder::updateY() {
+void FormBuilder::updateY(int number) {
   auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
   auto index = pressedBtn->objectName().right(1).toInt();
-  pointsToPlot[index].setY(static_cast<float>(pressedBtn->text().toInt()));
+  pointsToPlot[number][index].setY(static_cast<float>(pressedBtn->text().toInt()));
   // cout << "Y" << index << " val" << pointsToPlot[index].y << endl;
-  updateChart();
+  updateChart(number);
 }
 
-void FormBuilder::updateX() {
+void FormBuilder::updateX(int number) {
   auto *pressedBtn = qobject_cast<QLineEdit *>(sender());
   auto index = pressedBtn->objectName().right(1).toInt();
-  pointsToPlot[index].setX(static_cast<float>(pressedBtn->text().toInt()));
+  pointsToPlot[number][index].setX(static_cast<float>(pressedBtn->text().toInt()));
   // cout << "X" << index << " val" << pointsToPlot[index].x << endl;
-  updateChart();
+  updateChart(number);
 }
 
-void FormBuilder::changeSlider() {
+void FormBuilder::changeSlider(int number) {
   auto slider = qobject_cast<QSlider *>(sender());
   cout << slider->objectName().toStdString() << " name" << endl;
   float value = 0;
@@ -252,27 +258,27 @@ void FormBuilder::changeSlider() {
   if (slider->objectName() == "rudderMinSensitivity") {
     value = static_cast<float>(slider->value() / 100.0) * 511.0f;
 
-    pointsToPlot[1] = {static_cast<float>(neutralRudderValue) - value,
-                       pointsToPlot[1].getY()};
+    pointsToPlot[number][1] = {static_cast<float>(neutralRudderValue) - value,
+                       pointsToPlot[number][1].getY()};
   }
   if (slider->objectName() == "rudderDeadzone") {
     value = 1023.0f * static_cast<float>(slider->value() / 100.0);
 
-    pointsToPlot[2] = {static_cast<float>(neutralRudderValue) - (value / 2), 0};
-    pointsToPlot[4] = {static_cast<float>(neutralRudderValue) + (value / 2), 0};
+    pointsToPlot[number][2] = {static_cast<float>(neutralRudderValue) - (value / 2), 0};
+    pointsToPlot[number][4] = {static_cast<float>(neutralRudderValue) + (value / 2), 0};
   }
   if (slider->objectName() == "rudderPlusSensitivity") {
     value = static_cast<float>((slider->value() / 100.0) * 511.0f);
-    pointsToPlot[5] = {(float)neutralRudderValue + value,
-                       pointsToPlot[pointsToPlot.size() - 2].getY()};
+    pointsToPlot[number][5] = {(float)neutralRudderValue + value,
+                       pointsToPlot[number][pointsToPlot.size() - 2].getY()};
   }
 
-  updateChart();
+  updateChart(number);
 }
 
-void FormBuilder::updateChart() {
+void FormBuilder::updateChart(int number) {
   series->clear();
-  for (auto &i : pointsToPlot) {
+  for (auto &i : pointsToPlot[number]) {
     series->append(i.getX(), i.getY());
   }
   chart->removeAxis(chart->axes(Qt::Horizontal).back());
@@ -284,7 +290,7 @@ void FormBuilder::updateChart() {
   chartView->update();
 }
 
-QVBoxLayout *FormBuilder::generateCurveCol(int valAxis, int valRange) {
+QVBoxLayout *FormBuilder::generateCurveCol(int number,int valAxis, int valRange) {
   auto *colEntries = new QVBoxLayout();
   auto *inputFieldRange = new QLineEdit();
   auto *inputFieldAxis = new QLineEdit();
@@ -294,7 +300,7 @@ QVBoxLayout *FormBuilder::generateCurveCol(int valAxis, int valRange) {
   inputFieldAxis->setObjectName("y" + index);
 
   coordinates coords = {(float)valRange, (float)valAxis};
-  pointsToPlot.append(coords);
+  pointsToPlot[number].append(coords);
 
   colEntries->addWidget(inputFieldRange);
   colEntries->addWidget(inputFieldAxis);

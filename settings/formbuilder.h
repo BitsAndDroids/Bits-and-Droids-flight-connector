@@ -31,7 +31,7 @@ class FormBuilder : public QObject {
 
   static QVBoxLayout *generateRange(const QString &header);
 
-  QVBoxLayout *createRudderRow();
+  QVBoxLayout *createAxisRow(QString name, int number);
 
   QStringList comHeaders = {"Inputs", "Outputs", "Both"};
   QStringList rangeHeaders;
@@ -65,11 +65,12 @@ class FormBuilder : public QObject {
 
   QStringList getRudderCalibrateLabels() { return rudderObjectNames; };
 
-  QList<struct coordinates> *getCoordinates();
+  QList<struct coordinates> *getCoordinates(int number);
 
   QWidget *generateComSelector(bool setsNeeded, int mode, int index);
 
- private slots:
+  void loadPointsToPlot(QStringList axis);
+private slots:
 
   void localRemove();
 
@@ -85,13 +86,13 @@ class FormBuilder : public QObject {
 
   void removeComWidget();
 
-  void rudderTextChanged();
+  void rudderTextChanged(int number);
 
-  void updateX();
+  void updateX(int number);
 
-  void reverseClicked();
+  void reverseClicked(int number);
 
-  void updateY();
+  void updateY(int number);
 
  signals:
 
@@ -123,13 +124,14 @@ class FormBuilder : public QObject {
   QList<set> *availableSets;
   QList<QString> availableComPorts;
 
-  void updateChart();
+  void updateChart(int number);
 
-  QList<coordinates> pointsToPlot;
+  QList<QList<coordinates>> pointsToPlot;
 
-  QVBoxLayout *generateCurveCol(int valAxis, int valRange);
 
-  void changeSlider();
+  QVBoxLayout *generateCurveCol(int number, int valAxis, int valRange);
+
+  void changeSlider(int number);
 
   int minRudderValue = 0;
 

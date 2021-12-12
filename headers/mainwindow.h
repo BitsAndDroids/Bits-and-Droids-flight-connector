@@ -90,7 +90,8 @@ class MainWindow : public QMainWindow {
 
   std::string convertComPort(QString comText);
 
- public slots:
+  void openCalibrateAxis();
+public slots:
 
   void GameConnectionMade(int con, int mode);
 
@@ -102,6 +103,7 @@ class MainWindow : public QMainWindow {
   SettingsHandler settingsHandler;
 
   bool outputMenuOpen = false;
+  bool calibrateAxisOpen = false;
   bool optionMenuOpen = false;
   bool editEventMenuOpen = false;
 
