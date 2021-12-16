@@ -30,8 +30,12 @@ public:
     QAction *menuItemOptions;
     QWidget *centralwidget;
     QGridLayout *gridLayout;
-    QPushButton *updateButton;
     QLabel *labelLastVal;
+    QPushButton *updateButton;
+    QWidget *messagesWidget;
+    QHBoxLayout *messagesWidgetLayout;
+    QLabel *labelLastVal_2;
+    QLabel *labelLastStatus;
     QWidget *connectionsVWidget;
     QHBoxLayout *connectionsContainerLayout;
     QWidget *inWidgetContainer;
@@ -40,10 +44,6 @@ public:
     QVBoxLayout *outLayoutContainer;
     QWidget *dualWidgetContainer;
     QVBoxLayout *dualLayoutContainer;
-    QWidget *messagesWidget;
-    QHBoxLayout *messagesWidgetLayout;
-    QLabel *labelLastVal_2;
-    QLabel *labelLastStatus;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -152,6 +152,11 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        labelLastVal = new QLabel(centralwidget);
+        labelLastVal->setObjectName(QString::fromUtf8("labelLastVal"));
+
+        gridLayout->addWidget(labelLastVal, 9, 0, 1, 1);
+
         updateButton = new QPushButton(centralwidget);
         updateButton->setObjectName(QString::fromUtf8("updateButton"));
         updateButton->setEnabled(true);
@@ -162,10 +167,23 @@ public:
 
         gridLayout->addWidget(updateButton, 0, 0, 1, 1);
 
-        labelLastVal = new QLabel(centralwidget);
-        labelLastVal->setObjectName(QString::fromUtf8("labelLastVal"));
+        messagesWidget = new QWidget(centralwidget);
+        messagesWidget->setObjectName(QString::fromUtf8("messagesWidget"));
+        messagesWidgetLayout = new QHBoxLayout(messagesWidget);
+        messagesWidgetLayout->setObjectName(QString::fromUtf8("messagesWidgetLayout"));
+        messagesWidgetLayout->setContentsMargins(10, 10, -1, -1);
+        labelLastVal_2 = new QLabel(messagesWidget);
+        labelLastVal_2->setObjectName(QString::fromUtf8("labelLastVal_2"));
 
-        gridLayout->addWidget(labelLastVal, 9, 0, 1, 1);
+        messagesWidgetLayout->addWidget(labelLastVal_2);
+
+        labelLastStatus = new QLabel(messagesWidget);
+        labelLastStatus->setObjectName(QString::fromUtf8("labelLastStatus"));
+
+        messagesWidgetLayout->addWidget(labelLastStatus);
+
+
+        gridLayout->addWidget(messagesWidget, 19, 0, 1, 1);
 
         connectionsVWidget = new QWidget(centralwidget);
         connectionsVWidget->setObjectName(QString::fromUtf8("connectionsVWidget"));
@@ -208,28 +226,10 @@ public:
 
         gridLayout->addWidget(connectionsVWidget, 1, 0, 1, 1);
 
-        messagesWidget = new QWidget(centralwidget);
-        messagesWidget->setObjectName(QString::fromUtf8("messagesWidget"));
-        messagesWidgetLayout = new QHBoxLayout(messagesWidget);
-        messagesWidgetLayout->setObjectName(QString::fromUtf8("messagesWidgetLayout"));
-        messagesWidgetLayout->setContentsMargins(10, 10, -1, -1);
-        labelLastVal_2 = new QLabel(messagesWidget);
-        labelLastVal_2->setObjectName(QString::fromUtf8("labelLastVal_2"));
-
-        messagesWidgetLayout->addWidget(labelLastVal_2);
-
-        labelLastStatus = new QLabel(messagesWidget);
-        labelLastStatus->setObjectName(QString::fromUtf8("labelLastStatus"));
-
-        messagesWidgetLayout->addWidget(labelLastStatus);
-
-
-        gridLayout->addWidget(messagesWidget, 19, 0, 1, 1);
-
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1058, 21));
+        menubar->setGeometry(QRect(0, 0, 1058, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -244,10 +244,10 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Bits and droids connector", nullptr));
         menuItemOptions->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
+        labelLastVal->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
         updateButton->setText(QCoreApplication::translate("MainWindow", "There is no update avaialable", nullptr));
-        labelLastVal->setText(QString());
-        labelLastVal_2->setText(QString());
-        labelLastStatus->setText(QString());
+        labelLastVal_2->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
+        labelLastStatus->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
     } // retranslateUi
 
 };

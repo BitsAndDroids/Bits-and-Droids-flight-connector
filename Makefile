@@ -33,7 +33,7 @@ IDC           = idc
 IDL           = midl
 ZIP           = zip -r -9
 DEF_FILE      = 
-RES_FILE      = BitsAndDroidsGui_res.o
+RES_FILE      = "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\objects\BitsAndDroidsGui_res.o"
 SED           = $(QMAKE) -install sed
 MOVE          = move
 SUBTARGETS    =  \
@@ -402,6 +402,21 @@ clean: debug-clean release-clean  FORCE
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
 	-$(DEL_FILE) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\Bitsanddroidsgui.exe.debug" .qmake.stash
+
+first: $(first) copydata
+
+copydata:
+	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
+
+first: $(first) copydata
+
+copydata:
+	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
+
+first: $(first) copydata
+
+copydata:
+	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
 
 debug-mocclean:
 	$(MAKE) -f $(MAKEFILE).Debug mocclean
