@@ -41,7 +41,6 @@ optionsMenu::optionsMenu(QWidget *parent)
   // uiOptions->vlEngineRange->addLayout(builder->createRudderRow());
   uiOptions->vlEngineRange->addLayout(builder->RangeBuilder());
   auto sensLayout = new QVBoxLayout();
-  sensLayout->addLayout(builder->createAxisRow("rudder", 0));
   uiOptions->sensitivityWidget->setLayout(sensLayout);
   uiOptions->sensitivityWidget->layout()->setAlignment(Qt::AlignTop);
 
@@ -110,26 +109,6 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
   settingsHandler.storeValue("Settings", "CBR",
                              uiOptions->baudComboBox->currentText());
 
-  QList<coordinates> *coords = builder->getCoordinates(1);
-  QStringList sliderNames = {"rudderDeadzone", "rudderMinSensitivity",
-                             "rudderPlusSensitivity"};
-  for (const auto &sliderName : sliderNames) {
-    auto *sliderFound =
-        uiOptions->sensitivityWidget->findChild<QSlider *>(sliderName);
-    cout << sliderFound->objectName().toStdString() << endl;
-    settingsHandler.storeSubGroup(
-        "rudderSeries", "sliders", sliderName,
-        uiOptions->sensitivityWidget->findChild<QSlider *>(sliderName)
-            ->value());
-  }
-
-  for (int i = 0; i < coords->size(); i++) {
-    settingsHandler.storeSubGroup("rudderSeries", "axis", QString::number(i),
-                                  coords->at(i).getX());
-    settingsHandler.storeSubGroup("rudderSeries", "value", QString::number(i),
-                                  coords->at(i).getY());
-  }
-
   QList<QLineEdit *> rangeLineEdits =
       uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
@@ -137,13 +116,7 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
                                rangeLineEdit->text());
   }
-  QStringList rudderLineEdits = builder->getCalibrateLabels();
-  for (auto &i : rudderLineEdits) {
-    auto rudderValsFound =
-        uiOptions->sensitivityWidget->findChild<QLineEdit *>(i)->text().toInt();
-    settingsHandler.storeSubGroup("rudderSeries", "calibrations", i,
-                                  rudderValsFound);
-  }
+
 
   QString idleStr = "Engine " + QString::number(1) + "Min";
   int idleCutoff = settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();

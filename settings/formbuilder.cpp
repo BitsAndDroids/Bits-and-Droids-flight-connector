@@ -26,25 +26,29 @@ FormBuilder::FormBuilder() {
   availableSets = setHandler.getSets();
 }
 void FormBuilder::loadPointsToPlot(QStringList axis) {
+   pointsToPlot.clear();
+
   for (int i = 0; i < axis.size(); i++) {
-    rangeHeaders.append("Flaps");
-    auto keys = settingsHandler.retrieveSubKeys(axis[i] + "2Series", "axis");
+      auto coordsToPlot = new QList<coordinates>();
+      pointsToPlot.append(*coordsToPlot);
+    auto keys = settingsHandler.retrieveSubKeys(axis[i] + "Series", "axis");
     if (!keys->isEmpty()) {
       auto axisKeys =
           settingsHandler.retrieveSubKeys(axis[i] + "Series", "axis");
       auto valueKeys =
           settingsHandler.retrieveSubKeys(axis[i] + "Series", "value");
-      for (int i = 0; i < axisKeys->size(); i++) {
+      for (int j = 0; j < axisKeys->size(); j++) {
         float x =
             settingsHandler
-                .retrieveSubSetting(axis[i] + "Series", "axis", axisKeys->at(i))
+                .retrieveSubSetting(axis[i] + "Series", "axis", axisKeys->at(j))
                 ->toFloat();
         float y = settingsHandler
                       .retrieveSubSetting(axis[i] + "Series", "value",
-                                          valueKeys->at(i))
+                                          valueKeys->at(j))
                       ->toFloat();
         coordinates *coord = new coordinates(x, y);
         cout << coord->getY() << " : " << coord->getX() << endl;
+
         pointsToPlot[i].append(*coord);
       }
     }
@@ -57,8 +61,7 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
   auto serie = new QLineSeries();
   serie->setName(QString::number(number) + "spline");
   series.append(serie);
-  auto coordsToPlot = new QList<coordinates>();
-  pointsToPlot.append(*coordsToPlot);
+
   //*series << QPointF(11, 1) << QPointF(13, 3);
 
   charts.append(new QChart());
@@ -158,7 +161,7 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
         break;
     }
 
-    lineEdit->setObjectName(QString::number(number) + name + objectNames.at(i));
+    lineEdit->setObjectName(name + objectNames.at(i));
     lineEdit->setMaximumWidth(50);
     connect(lineEdit, &QLineEdit::textEdited, this,
             &FormBuilder::rudderTextChanged);

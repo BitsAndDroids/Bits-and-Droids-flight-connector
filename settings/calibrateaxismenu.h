@@ -1,6 +1,8 @@
 #ifndef CALIBRATEAXISMENU_H
 #define CALIBRATEAXISMENU_H
 
+#include "formBuilder.h"
+
 #include <QWidget>
 #include <qgridlayout.h>
 
@@ -20,6 +22,9 @@ private:
     Ui::CalibrateAxisMenu *ui;
     QStringList curves = {"Rudder", "Toe brakes", "Aileron","Elevator"};
     QGridLayout *GenerateCurveLayouts();
+    void saveSettings();
+    FormBuilder* builder = new FormBuilder();
+    SettingsHandler settingsHandler = SettingsHandler();
 };
 
 #endif // CALIBRATEAXISMENU_H
