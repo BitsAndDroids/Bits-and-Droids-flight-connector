@@ -20,7 +20,7 @@ class FormBuilder : public QObject {
  public:
   FormBuilder();
   //~FormBuilder();
-
+  QStringList getCalibrateLabels() { return objectNames; };
   QVBoxLayout *RangeBuilder();
 
   void loadComPortData();
@@ -31,13 +31,13 @@ class FormBuilder : public QObject {
 
   static QVBoxLayout *generateRange(const QString &header);
 
-  QVBoxLayout *createRudderRow();
+  QVBoxLayout *createAxisRow(QString name, int number);
 
   QStringList comHeaders = {"Inputs", "Outputs", "Both"};
   QStringList rangeHeaders;
   QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
   QStringList engineHeaders;
-
+  void setCurves(QStringList);
   int getAmountOfEngines() { return engineHeaders.size(); };
 
   static QTabWidget *generateOutputTabs();
@@ -63,12 +63,11 @@ class FormBuilder : public QObject {
 
   QList<QString> getAvailableComPorts() { return availableComPorts; };
 
-  QStringList getRudderCalibrateLabels() { return rudderObjectNames; };
-
-  QList<struct coordinates> *getCoordinates();
+  QList<struct coordinates> *getCoordinates(int number);
 
   QWidget *generateComSelector(bool setsNeeded, int mode, int index);
 
+  void loadPointsToPlot(QStringList axis);
  private slots:
 
   void localRemove();
@@ -86,15 +85,18 @@ class FormBuilder : public QObject {
   void removeComWidget();
 
   void rudderTextChanged();
+  void updateXCall();
+  void updateYCall();
 
-  void updateX();
+  void updateX(int number, int index, int value);
 
   void reverseClicked();
 
-  void updateY();
+  void updateY(int number, int index, int value);
 
  signals:
-
+  void updateXSignal(int number, int index, int value);
+  void updateYSignal(int number, int index, int value);
   void addSet();
 
   void setEdited(QString id);
@@ -110,24 +112,24 @@ class FormBuilder : public QObject {
   void addPressed(int mode);
 
  private:
-  QStringList rudderObjectNames = {"rudderMinLE", "rudderNeutralLE",
-                                   "rudderMaxLE"};
+  QStringList curves;
+  QStringList objectNames = {"MinLE", "NeutralLE", "MaxLE"};
   QList<int> axisValues = {-16383, -10000, 0, 0, 0, 10000, 16383};
-  QChart *chart;
+  QList<QChart *> charts = QList<QChart *>();
 
-  QLineSeries *series;
-  QChartView *chartView;
+  QList<QLineSeries *> series = QList<QLineSeries *>();
+  QList<QChartView *> chartViews = QList<QChartView *>();
   QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
   SetHandler setHandler;
   SettingsHandler settingsHandler;
   QList<set> *availableSets;
   QList<QString> availableComPorts;
 
-  void updateChart();
+  void updateChart(int number);
 
-  QList<coordinates> pointsToPlot;
+  QList<QList<coordinates>> pointsToPlot = QList<QList<coordinates>>();
 
-  QVBoxLayout *generateCurveCol(int valAxis, int valRange);
+  QVBoxLayout *generateCurveCol(int number, int valAxis, int valRange);
 
   void changeSlider();
 

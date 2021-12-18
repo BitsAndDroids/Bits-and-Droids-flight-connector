@@ -5,8 +5,10 @@
 #include <tchar.h>
 #include <windows.h>
 
+#include <QList>
 #include <future>
 #include <iostream>
+#include <qlist.h>
 #include <string>
 
 #include "inputenum.h"
@@ -187,8 +189,8 @@ void InputSwitchHandler::controlYoke(int index) {
         for (int i = 0; i < 2; i++) {
           yoke[i] = yokeBuffer[i];
         }
-        int mappedElevator = mapValueToAxis(yoke[0], 300, 8000);
-        int mappedAileron = mapValueToAxis(yoke[1], 300, 800);
+        int mappedElevator = calibratedRange(yoke[0], curves[2]);
+        int mappedAileron = calibratedRange(yoke[1], curves[3]);
         cout << "percentage Elevator: " << mappedElevator << endl;
         sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_ELEVATOR_SET,
                               mappedElevator);
@@ -429,7 +431,30 @@ void InputSwitchHandler::setElevatorTrim(int index) {
     cout << "error in trim" << endl;
   }
 }
-
+int InputSwitchHandler::calibratedRange(int value, QList<coordinates> curve){
+    int axis;
+    if (static_cast<float>(value) <= curve[1].getX()) {
+      axis =
+          mapCoordinates(value, curve[0], curve.at(1));
+    }
+    // minCurve
+    else if (static_cast<float>(value) < curve[2].getX()) {
+      axis =
+          mapCoordinates(value, curve[1], curve[2]);
+    }
+    // deadzone
+    else if (static_cast<float>(value) >= curve[2].getX() &&
+             static_cast<float>(value) <= curve[4].getX()) {
+      axis = 0;
+    } else if (static_cast<float>(value) <= curve[5].getX()) {
+      axis = mapCoordinates(static_cast<float>(value),
+                                  curve[4], curve[5]);
+    } else if (static_cast<float>(value) <= curve[6].getX()) {
+      axis = mapCoordinates(static_cast<float>(value),
+                                  curve[5], curve[6]);
+    }
+    return axis;
+}
 void InputSwitchHandler::setRudder(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
@@ -440,26 +465,7 @@ void InputSwitchHandler::setRudder(int index) {
       if (counter == 1) {
         int analogValue = stoi(token);
         // minimum to first point
-        if (static_cast<float>(analogValue) <= rudderCurve[1].getX()) {
-          rudderAxis =
-              mapCoordinates(analogValue, rudderCurve[0], rudderCurve.at(1));
-        }
-        // minCurve
-        else if (static_cast<float>(analogValue) < rudderCurve[2].getX()) {
-          rudderAxis =
-              mapCoordinates(analogValue, rudderCurve[1], rudderCurve[2]);
-        }
-        // deadzone
-        else if (static_cast<float>(analogValue) >= rudderCurve[2].getX() &&
-                 static_cast<float>(analogValue) <= rudderCurve[4].getX()) {
-          rudderAxis = 0;
-        } else if (static_cast<float>(analogValue) <= rudderCurve[5].getX()) {
-          rudderAxis = mapCoordinates(static_cast<float>(analogValue),
-                                      rudderCurve[4], rudderCurve[5]);
-        } else if (static_cast<float>(analogValue) <= rudderCurve[6].getX()) {
-          rudderAxis = mapCoordinates(static_cast<float>(analogValue),
-                                      rudderCurve[5], rudderCurve[6]);
-        }
+        rudderAxis = calibratedRange(analogValue, rudderCurve);
       }
       cout << rudderAxis << " AXIS" << endl;
       token = strtok_s(nullptr, " ", &next_token);
@@ -492,11 +498,12 @@ void InputSwitchHandler::setBrakeAxis(int index) {
 
     counter = 0;
     while (token != nullptr && counter < 3) {
+        int value = stoi(token);
       if (counter == 1) {
-        leftBrake = stoi(token);
+        leftBrake = calibratedRange(value,curves[1]);
       }
       if (counter == 2) {
-        rightBrake = stoi(token);
+        rightBrake = calibratedRange(value, curves[1]);
       }
       token = strtok_s(nullptr, " ", &next_token);
       counter++;
@@ -602,6 +609,7 @@ void InputSwitchHandler::switchHandling(int index) {
     cout << "Yes" << endl;
     prefix = std::string(&receivedString[index][0], &receivedString[index][4]);
     qDebug() << "PREFIX: " << prefix.c_str();
+    qDebug() <<"STRING: "<<receivedString[index];
 
     try {
       int prefixVal = stoi(prefix);
@@ -2748,14 +2756,15 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         default: {
           int value = 0;
-          bool valFound = std::strlen(receivedString[index]) > 6;
+          bool valFound = std::strlen(receivedString[index]) > 5;
           if (valFound) {
             value = stoi(std::string(reinterpret_cast<const char *>(
                                          &receivedString[index]))
                              .substr(4));
           }
-          qDebug() << "test";
-          sendWASMCommand(prefixVal, 0);
+
+          sendWASMCommand(prefixVal, value);
+          cout<<value<<"val"<<endl;
           break;
         }
       }
@@ -2766,6 +2775,6 @@ void InputSwitchHandler::switchHandling(int index) {
   }
 }
 
-void InputSwitchHandler::setRudderCurve(QList<coordinates> curve) {
-  this->rudderCurve = std::move(curve);
+void InputSwitchHandler::setCurve(QList<coordinates> curve,int index) {
+  this->curves[index] = std::move(curve);
 }

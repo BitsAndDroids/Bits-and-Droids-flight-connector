@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include <string>
+#include <utility>
 
 #define DATA_LENGTH 255
 #define MAX_RETURNED_ITEMS 255
@@ -58,9 +59,9 @@ struct dualSimVar {
   float data;
 };
 
-dualSimVar dualTestVar = {1000, sizeof(float), 1.0f};
+dualSimVar dualTestVar = {1000, 0, 1.0f};
 
-dualSimVar dualTestVarB = {1001, sizeof(float) * 2, 1.0f};
+dualSimVar dualTestVarB = {1001, sizeof(float) * 1, 1.0f};
 dualSimVar dualSimVars[2] = {dualTestVar, dualTestVarB};
 struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
@@ -100,6 +101,7 @@ void sendDualToArduino(float received, std::string prefix, int index,
     } else {
       intVal = 1;
     }
+    cout<<"VALUE = " << intVal<<endl;
     input_string = prefixString + std::to_string(intVal);
   }
 
@@ -128,13 +130,17 @@ void sendDualToArduino(float received, std::string prefix, int index,
     dualPorts[index]->writeSerialPort(c_string, input_string.size() + 1);
   }
   input_string.clear();
+
   delete[] c_string;
 }
-
+void DualWorker::lastReceived(QString value){
+    emit updateLastValUI(std::move(value));
+}
 void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                      void *pContext) {
   HRESULT hr;
   auto *dualCast = static_cast<DualWorker *>(pContext);
+
   switch (pData->dwID) {
     case SIMCONNECT_RECV_ID_EVENT: {
       auto *evt = (SIMCONNECT_RECV_EVENT *)pData;
@@ -142,7 +148,7 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
       switch (evt->uEventID) {
         case EVENT_SIM_START: {
           // Now the sim is running, request information on the user aircraft
-          hr = SimConnect_RequestDataOnSimObject(
+          SimConnect_RequestDataOnSimObject(
               dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
               SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
               SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
@@ -221,6 +227,8 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
             qDebug() << "MODE" << mode << "PREFIX"
                      << QString::fromStdString(prefix)
                      << pS->datum[count].value;
+
+
             switch (mode) {
               case 0: {
                 qDebug() << "normal";
@@ -273,12 +281,15 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
             }
             ++count;
+              dualCast->lastReceived( QString::fromStdString(prefix)+ " "+QString::number(pS->datum[count].value));
           }
+
           break;
         }
         default:
           break;
       }
+
       break;
     }
     case SIMCONNECT_RECV_ID_QUIT: {

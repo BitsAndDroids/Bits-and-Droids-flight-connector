@@ -11,7 +11,7 @@ CONFIG += object_parallel_to_source
 CONFIG += c++17
 CONFIG += openssl
 MOC_DIR= $$PWD/objects
-OBJECTS_DIR= $$PWD/objects
+#OBJECTS_DIR= $$PWD/objects
 
 # using shell_path() to correct path depending on platform
 # escaping quotes and backslashes for file paths
@@ -34,7 +34,7 @@ export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
 
 
-LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
+LIBS += "C:\Users\dave-\Documents\GitHub\build-Bitsanddroidsgui-Desktop_Qt_6_2_1_MinGW_64_bit-Release\SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
     INCLUDEPATH += "C:/Projects/Build Output/include/"
@@ -59,6 +59,7 @@ SOURCES += \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
     dual/dualworker.cpp \
+    events/eventwindow.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -68,6 +69,7 @@ SOURCES += \
     outputs/outputworker.cpp \
     outputs/set.cpp \
     outputs/sethandler.cpp \
+    settings/calibrateaxismenu.cpp \
     settings/formBuilder.cpp \
     settings/optionsmenu.cpp \
     settings/outputmenu.cpp \
@@ -86,6 +88,7 @@ HEADERS += \
     Inputs/InputWorker.h \
     Inputs/inputenum.h \
     dual/dualworker.h \
+    events/eventwindow.h \
     headers/Engine.h \
     headers/constants.h \
     headers/mainwindow.h \
@@ -101,6 +104,7 @@ HEADERS += \
     outputs/outputworker.h \
     outputs/set.h \
     outputs/sethandler.h \
+    settings/calibrateaxismenu.h \
     settings/formBuilder.h \
     settings/optionsmenu.h \
     settings/outputmenu.h \
@@ -111,6 +115,8 @@ HEADERS += \
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
+    events/eventwindow.ui \
+    settings/calibrateaxismenu.ui \
     sources/mainwindow.ui \
     settings/optionsmenu.ui \
     settings/outputmenu.ui
@@ -139,6 +145,7 @@ DISTFILES += \
 RESOURCES += \
     Resources.qrc\
     outputs.json
+
 
 
 

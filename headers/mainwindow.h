@@ -22,148 +22,150 @@
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
+ public:
+  MainWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
+  ~MainWindow();
 
-    void startInputs();
+  void startInputs();
 
-    void startOutputs();
+  void startOutputs();
 
-    void on_btnSwitchNav1_clicked();
+  void on_btnSwitchNav1_clicked();
 
-    int getComboxIndex(QComboBox *comboBox, QString value);
+  int getComboxIndex(QComboBox *comboBox, QString value);
 
+ public slots:
+
+  void onUpdateLastValUI(const QString &lastVal);
+
+  void onUpdateLastStatusUI(const QString &lastStatus);
+
+  void startMode(int mode);
+
+  void refreshComs(int mode);
+
+  void stopMode(int mode);
+
+  void addCom(int mode);
+
+ signals:
+  void updateEventFile();
+
+  void closedOutputMenu();
+
+  void closedOptionsMenu();
+
+  void updateLastValUI(QString lastVal);
+
+  void updateLastStatusUI(QString lastVal);
+
+  void updateActiveCom1(QList<QString> lastVal);
+
+  void startPressed(int mode);
+
+  void refreshPressed(int mode);
+
+  void stopPressed(int mode);
+
+  void addPressed(int mode);
+
+ private slots:
+  void localUpdateEventFile();
+
+  void on_updateButton_clicked();
+
+  void outputMenuClosed();
+
+  void optionMenuClosed();
+
+  void onfinish(QNetworkReply *rep);
+
+  std::string convertComPort(QString comText);
+
+  void openCalibrateAxis();
 public slots:
 
-    void onUpdateLastValUI(const QString &lastVal);
+  void GameConnectionMade(int con, int mode);
 
-    void onUpdateLastStatusUI(const QString &lastStatus);
+  void BoardConnectionMade(int con, int mode);
 
-    void startMode(int mode);
+ private:
+  enum warnings { NOSET, NOCOMPORT };
+  SetHandler *setHandler = new SetHandler();
+  SettingsHandler settingsHandler;
 
-    void refreshComs(int mode);
+  bool outputMenuOpen = false;
+  bool calibrateAxisOpen = false;
+  bool optionMenuOpen = false;
+  bool editEventMenuOpen = false;
 
-    void stopMode(int mode);
+  void stopInput();
 
-    void addCom(int mode);
+  void stopOutput();
 
-signals:
-    void updateEventFile();
+  void stopDual();
 
-    void closedOutputMenu();
+  QString prevInputComInt;
+  QList<QString> chopStrInput;
 
-    void closedOptionsMenu();
+  QString prevRowComInt;
+  QList<QString> chopStrRow;
+  int amntSets = 0;
+  bool loadedSet = false;
 
-    void updateLastValUI(QString lastVal);
+  QString prevOutputComInt;
+  QList<QString> chopStrOutput;
+  bool setBlockVisible = true;
+  bool extraInputOptionsVisible = true;
+  int inputComRowCounter = 1;
+  QList<QString> availableComPorts;
+  QString m_sSettingsFile;
+  std::string url = "https://www.bitsanddroids.com/downloads";
+  std::string lastValueRec = "";
 
-    void updateLastStatusUI(QString lastVal);
+  void loadSettings();
 
-    void updateActiveCom1(QList<QString> lastVal);
+  const char *portNameLocal;
+  QPushButton *updateButton;
+  QPushButton *switchButton;
+  DualWorker dualThread;
+  OutputWorker outputThread;
+  InputWorker inputThread;
+  QList<set> *availableSets;
+  FormBuilder formbuilder;
+  Ui::MainWindow *ui;
 
-    void startPressed(int mode);
+  void openSettings();
 
-    void refreshPressed(int mode);
+  void openOutputMenu();
 
-    void stopPressed(int mode);
+  void openEditEventMenu();
 
-    void addPressed(int mode);
+  void installWasm();
 
-private slots:
-    void localUpdateEventFile();
+  void untick();
 
-    void on_updateButton_clicked();
+  void loadComPortData();
 
-    void outputMenuClosed();
+  void on_btnSwitchComm1_clicked();
 
-    void optionMenuClosed();
+  void startDual();
 
-    void onfinish(QNetworkReply *rep);
+  bool checkIfComboIsEmpty(QList<QComboBox *>);
 
-    std::string convertComPort(QString comText);
+  QLabel *returnWarningString(int warningType);
 
-public slots:
+  void clearChildrenFromLayout(QLayout *);
 
-    void GameConnectionMade(int con, int mode);
-
-    void BoardConnectionMade(int con, int mode);
-
-private:
-    enum warnings {
-        NOSET, NOCOMPORT
-    };
-    SetHandler *setHandler = new SetHandler();
-    SettingsHandler settingsHandler;
-
-    bool outputMenuOpen = false;
-    bool optionMenuOpen = false;
-
-    void stopInput();
-
-    void stopOutput();
-
-    void stopDual();
-
-    QString prevInputComInt;
-    QList<QString> chopStrInput;
-
-    QString prevRowComInt;
-    QList<QString> chopStrRow;
-    int amntSets = 0;
-    bool loadedSet = false;
-
-    QString prevOutputComInt;
-    QList<QString> chopStrOutput;
-    bool setBlockVisible = true;
-    bool extraInputOptionsVisible = true;
-    int inputComRowCounter = 1;
-    QList<QString> availableComPorts;
-    QString m_sSettingsFile;
-    std::string url = "https://www.bitsanddroids.com/downloads";
-    std::string lastValueRec = "";
-
-    void loadSettings();
-
-    const char *portNameLocal;
-    QPushButton *updateButton;
-    QPushButton *switchButton;
-    DualWorker dualThread;
-    OutputWorker outputThread;
-    InputWorker inputThread;
-    QList<set> *availableSets;
-    FormBuilder formbuilder;
-    Ui::MainWindow *ui;
-
-    void openSettings();
-
-    void openOutputMenu();
-
-    void installWasm();
-
-    void untick();
-
-    void loadComPortData();
-
-    void on_btnSwitchComm1_clicked();
-
-    void startDual();
-
-    bool checkIfComboIsEmpty(QList<QComboBox *>);
-
-    QLabel *returnWarningString(int warningType);
-
-    void clearChildrenFromLayout(QLayout *);
-
-    void copyFolder(QString sourceFolder, QString destinationFolder);
-
+  void copyFolder(QString sourceFolder, QString destinationFolder);
 };
 
 #endif  // MAINWINDOW_H

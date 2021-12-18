@@ -40,6 +40,8 @@ signals:
 
     void BoardConnectionMade(int con, int mode);
 
+    void updateLastValUI(QString lastVal);
+
 private:
     // ...
     SettingsHandler settingsHandler;
@@ -60,6 +62,7 @@ private:
     InputMapper radioMap = InputMapper();
     QList<Output *> outputsToMap;
     QStringList *keys = new QStringList();
+    void lastReceived(QString value);
 
 public:
     void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
