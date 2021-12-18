@@ -56,6 +56,7 @@ private slots:
     // void switchHandling(int index);
 
 private:
+    QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron","Elevator"};
     SettingsHandler settingsHandler;
     std::string lastVal;
     SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;

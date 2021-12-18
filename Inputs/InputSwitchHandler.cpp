@@ -189,8 +189,8 @@ void InputSwitchHandler::controlYoke(int index) {
         for (int i = 0; i < 2; i++) {
           yoke[i] = yokeBuffer[i];
         }
-        int mappedElevator = calibratedRange(yoke[0], aileronCurve);
-        int mappedAileron = calibratedRange(yoke[1], elevatorCurve);
+        int mappedElevator = calibratedRange(yoke[0], curves[2]);
+        int mappedAileron = calibratedRange(yoke[1], curves[3]);
         cout << "percentage Elevator: " << mappedElevator << endl;
         sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_ELEVATOR_SET,
                               mappedElevator);
@@ -500,10 +500,10 @@ void InputSwitchHandler::setBrakeAxis(int index) {
     while (token != nullptr && counter < 3) {
         int value = stoi(token);
       if (counter == 1) {
-        leftBrake = calibratedRange(value,brakeCurve);
+        leftBrake = calibratedRange(value,curves[1]);
       }
       if (counter == 2) {
-        rightBrake = calibratedRange(value, brakeCurve);
+        rightBrake = calibratedRange(value, curves[1]);
       }
       token = strtok_s(nullptr, " ", &next_token);
       counter++;
@@ -2775,6 +2775,6 @@ void InputSwitchHandler::switchHandling(int index) {
   }
 }
 
-void InputSwitchHandler::setRudderCurve(QList<coordinates> curve) {
-  this->rudderCurve = std::move(curve);
+void InputSwitchHandler::setCurve(QList<coordinates> curve,int index) {
+  this->curves[index] = std::move(curve);
 }

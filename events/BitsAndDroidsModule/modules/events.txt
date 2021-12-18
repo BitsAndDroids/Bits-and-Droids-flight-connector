@@ -221,7 +221,6 @@
 0 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 0 != if{ 0 (>K:ELECT_FUEL_PUMP1_SET) }^0#2502$0
 //General
 (>K:AXIS_SPOILER_SET)^9#3000-700+930$0//
-
 //PFD COMBOS
 (>H:AS530_RightLargeKnob_Left) (>H:AS3000_PFD_BottomKnob_Large_DEC) (>H:AS1000_MFD_FMS_Lower_DEC)^0#5000$0//PFD Group  -
 (>H:AS530_RightLargeKnob_Right) (>H:AS3000_PFD_BottomKnob_Large_INC) (>H:AS1000_MFD_FMS_Lower_INC)^0#5001$0//PFD Group  +

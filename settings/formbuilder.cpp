@@ -26,11 +26,11 @@ FormBuilder::FormBuilder() {
   availableSets = setHandler.getSets();
 }
 void FormBuilder::loadPointsToPlot(QStringList axis) {
-   pointsToPlot.clear();
+  pointsToPlot.clear();
 
   for (int i = 0; i < axis.size(); i++) {
-      auto coordsToPlot = new QList<coordinates>();
-      pointsToPlot.append(*coordsToPlot);
+    auto coordsToPlot = new QList<coordinates>();
+    pointsToPlot.append(*coordsToPlot);
     auto keys = settingsHandler.retrieveSubKeys(axis[i] + "Series", "axis");
     if (!keys->isEmpty()) {
       auto axisKeys =
@@ -73,11 +73,11 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
 
   auto *xAxis = new QValueAxis();
 
-  if (!settingsHandler
-           .retrieveSubSetting(name + "Series", "calibrations",
-                               name + objectNames.at(0))
-           ->isNull()) {
-    for (int i = 0; i < objectNames.size(); i++) {
+  for (int i = 0; i < objectNames.size(); i++) {
+    if (!settingsHandler
+             .retrieveSubSetting(objectNames[i] + "Series", "calibrations",
+                                 name + objectNames.at(i))
+             ->isNull()) {
       int valFound = settingsHandler
                          .retrieveSubSetting(name + "Series", "calibrations",
                                              name + objectNames.at(i))

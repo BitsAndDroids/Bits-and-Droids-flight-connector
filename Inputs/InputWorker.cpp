@@ -81,25 +81,29 @@ void InputWorker::updateEventFile(){
 void InputWorker::inputEvents() {
     HRESULT hr;
     abortInput = false;
+    for(int i = 0; i < curveStrings.size(); i ++){
+
+
     auto rudderCurveList = QList<coordinates>();
     if (!settingsHandler
-            .retrieveSubSetting("rudderSeries", "axis", QString::number(0))
+            .retrieveSubSetting(curveStrings[i] + "Series", "axis", QString::number(0))
             ->isNull()) {
-        for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 7; j++) {
             QString value = "axis" + QString::number(i);
             auto foundAxis =
                     settingsHandler
-                            .retrieveSubSetting("rudderSeries", "axis", QString::number(i))
+                            .retrieveSubSetting(curveStrings[i] + "Series", "axis", QString::number(j))
                             ->toFloat();
             auto foundVal =
                     settingsHandler
-                            .retrieveSubSetting("rudderSeries", "value", QString::number(i))
+                            .retrieveSubSetting(curveStrings[i] + "Series", "value", QString::number(j))
                             ->toFloat();
             auto *foundCoords = new coordinates(foundAxis, foundVal);
             std::cout << foundCoords->getX() << "X" << std::endl;
             rudderCurveList.append(*foundCoords);
         }
-        handler.setRudderCurve(rudderCurveList);
+        handler.setCurve(rudderCurveList, i);
+    }
     }
     keys = *settingsHandler.retrieveKeys("inputComs");
     int keySize = keys.size();

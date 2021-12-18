@@ -244,10 +244,10 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Bits and droids connector", nullptr));
         menuItemOptions->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
-        labelLastVal->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
+        labelLastVal->setText(QString());
         updateButton->setText(QCoreApplication::translate("MainWindow", "There is no update avaialable", nullptr));
-        labelLastVal_2->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
-        labelLastStatus->setText(QCoreApplication::translate("MainWindow", "test", nullptr));
+        labelLastVal_2->setText(QString());
+        labelLastStatus->setText(QString());
     } // retranslateUi
 
 };
