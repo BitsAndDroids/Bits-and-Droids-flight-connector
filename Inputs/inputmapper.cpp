@@ -11,8 +11,8 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
                                       "THROTTLE1_AXIS_SET_EX1");
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_SIM_PAUSE_ON, "PAUSE_ON");
-    SimConnect_MapClientEventToSimEvent(
-            mapConnect, definitionsMap.DEFINITION_SIM_PAUSE_OFF, "PAUSE_OFF");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_SIM_PAUSE_OFF, "PAUSE_OFF");
   SimConnect_MapClientEventToSimEvent(mapConnect,
                                       definitionsMap.DATA_EX_THROTTLE_2_AXIS,
                                       "THROTTLE2_AXIS_SET_EX1");
@@ -1408,6 +1408,6 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
   SimConnect_MapClientEventToSimEvent(mapConnect,
                                       definitionsMap.DEFINITION_ENG_AUTO_IGN_1,
                                       "TOGGLE_MASTER_IGNITION_SWITCH");
-    SimConnect_MapClientEventToSimEvent(mapConnect,definitionsMap.DEFINITION_ADF_FRQ_PUSH,
-                                        "adf_frqTransfert");
+  SimConnect_MapClientEventToSimEvent(
+      mapConnect, definitionsMap.DEFINITION_ADF_FRQ_PUSH, "adf_frqTransfert");
 }

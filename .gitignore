@@ -15,3 +15,4 @@ dasync.dll
 /debug
 /objects
 *.o
+*.Debug

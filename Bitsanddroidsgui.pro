@@ -34,7 +34,7 @@ export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
 
 
-LIBS += "C:\Users\dave-\Documents\GitHub\build-Bitsanddroidsgui-Desktop_Qt_6_2_1_MinGW_64_bit-Release\SimConnect.dll"
+LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
 RC_FILE = BitsAndDroidsGui.rc
 win64 {
     INCLUDEPATH += "C:/Projects/Build Output/include/"

@@ -35,7 +35,7 @@ class InputSwitchHandler {
   Range propellerRanges[constants::supportedPropellerLevers];
   Range flapsRange;
 
-    void setCurve(QList<coordinates> curve, int index);
+  void setCurve(QList<coordinates> curve, int index);
 
   float reverseAxis = -23000.0;
  private slots:
@@ -57,12 +57,15 @@ class InputSwitchHandler {
   std::string prefix;
   QList<coordinates> defaultCurve = {
       {coordinates(0, -16383)},  {coordinates(250, -10000)},
-      {coordinates(400, 0)},     {coordinates(500, 0)},
-      {coordinates(600, 0)},     {coordinates(750, 10000)},
+      {coordinates(500, 0)},     {coordinates(511, 0)},
+      {coordinates(522, 0)},     {coordinates(750, 10000)},
       {coordinates(1023, 16383)}};
-  QList<coordinates> rudderCurve, brakeCurve, aileronCurve, elevatorCurve = defaultCurve;
-  QList<QList<coordinates>> curves = {rudderCurve, brakeCurve, aileronCurve,elevatorCurve};
-  QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron","Elevator"};
+  QList<coordinates> rudderCurve, brakeCurve, aileronCurve,
+      elevatorCurve = defaultCurve;
+  QList<QList<coordinates>> curves = QList<QList<coordinates>>()
+                                     << rudderCurve << brakeCurve
+                                     << aileronCurve << elevatorCurve;
+  QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
   int calibratedRange(int value, QList<coordinates> curve);
 
   void setElevatorTrim(int index);
@@ -90,10 +93,10 @@ class InputSwitchHandler {
 
   void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
 
-
   void sendWASMCommand(int index, int value);
 
-
+  int calibratedRange(int value, QList<coordinates> *curve);
+  int calibratedRange(int value, int index);
 };
 
 #endif  // INPUTSWITCHHANDLER_H
