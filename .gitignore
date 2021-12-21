@@ -16,3 +16,7 @@ dasync.dll
 /objects
 *.o
 *.Debug
+*.Release
+Makefile
+Makefile.Debug
+Makefile.Release
