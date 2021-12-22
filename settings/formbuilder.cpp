@@ -186,15 +186,15 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
         {coordinates(static_cast<float>(minRudderValue), min)},
         {coordinates(
             static_cast<float>(neutralRudderValue) -
-                static_cast<float>((maxRudderValue - neutralRudderValue)),
+                static_cast<float>((maxRudderValue - neutralRudderValue) / 2),
             axisValues[1])},
         {coordinates(500, axisValues[2])},
         {coordinates(static_cast<float>(neutralRudderValue), axisValues[2])},
         {coordinates(522, axisValues[2])},
         {coordinates(
             static_cast<float>(neutralRudderValue) +
-                static_cast<float>((maxRudderValue - neutralRudderValue)),
-            axisValues[3])},
+                static_cast<float>((maxRudderValue - neutralRudderValue) / 2),
+            axisValues[5])},
         {coordinates(static_cast<float>(maxRudderValue), max)}};
 
     for (auto &i : *coords) {
@@ -277,13 +277,11 @@ void FormBuilder::setCurves(QStringList namesToSet) { curves = namesToSet; }
 void FormBuilder::changeSlider() {
   auto slider = qobject_cast<QSlider *>(sender());
   int number = slider->objectName().first(1).toInt();
-  cout << slider->objectName().toStdString() << " name" << endl;
   float value = 0;
   QString name = curves.at(number);
   if (slider->objectName() ==
       QString::number(number) + name + "MinSensitivity") {
     value = static_cast<float>(slider->value() / 100.0) * 511.0f;
-
     pointsToPlot[number][1] = {static_cast<float>(neutralRudderValue) - value,
                                pointsToPlot[number][1].getY()};
   }
@@ -300,7 +298,7 @@ void FormBuilder::changeSlider() {
     value = static_cast<float>((slider->value() / 100.0) * 511.0f);
     pointsToPlot[number][5] = {
         (float)neutralRudderValue + value,
-        pointsToPlot[number][pointsToPlot.size() - 2].getY()};
+        pointsToPlot[number][pointsToPlot[number].size() - 2].getY()};
   }
 
   updateChart(number);

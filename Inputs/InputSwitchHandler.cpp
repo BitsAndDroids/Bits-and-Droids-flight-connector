@@ -612,8 +612,8 @@ void InputSwitchHandler::switchHandling(int index) {
   if (strlen(receivedString[index]) > 2) {
     cout << "Yes" << endl;
     prefix = std::string(&receivedString[index][0], &receivedString[index][4]);
-    qDebug() << "PREFIX: " << prefix.c_str();
-    qDebug() << "STRING: " << receivedString[index];
+    cout << "PREFIX: " << prefix.c_str() << endl;
+    cout << "STRING: " << receivedString[index] << endl;
 
     try {
       int prefixVal = stoi(prefix);
@@ -2760,7 +2760,7 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         default: {
           int value = 0;
-          bool valFound = std::strlen(receivedString[index]) > 5;
+          bool valFound = std::strlen(receivedString[index]) > 6;
           if (valFound) {
             value = stoi(std::string(reinterpret_cast<const char *>(
                                          &receivedString[index]))

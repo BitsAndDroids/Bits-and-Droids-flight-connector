@@ -16,6 +16,7 @@ class EventWindow : public QWidget {
 
  private:
   Ui::EventWindow *ui;
+  void readFile();
 };
 
 #endif  // EVENTWINDOW_H

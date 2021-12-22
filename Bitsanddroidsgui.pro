@@ -80,7 +80,7 @@ SOURCES += \
     sources/SerialPort.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
-    sources/range.cpp
+    sources/range.cpp \
 
 HEADERS += \
     Inputs/InputMapper.h \
