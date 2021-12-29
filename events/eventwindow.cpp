@@ -98,7 +98,7 @@ EventWindow::EventWindow(QWidget *parent)
   auto eventGrid = new QGridLayout();
   readFile();
 
-  eventTable->setRowCount(tableRows.size() + 1);
+  eventTable->setRowCount(tableRows.size());
   eventTable->setColumnCount(headers.size());
   eventTable->setHorizontalHeaderLabels(headers);
   eventTable->verticalHeader()->setVisible(false);
@@ -210,6 +210,7 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
 
 void EventWindow::addEventBtnPressed() {
   tableRow *newTableRow = new tableRow();
+  eventTable->setRowCount(eventTable->rowCount() + 1);
   newTableRow->prefix = "0000";
   newTableRow->event = "Your event goes here";
   newTableRow->comment = "Comments go here";
@@ -217,7 +218,6 @@ void EventWindow::addEventBtnPressed() {
   newTableRow->type = "0";
   tableRows.append(*newTableRow);
   fillRow(tableRows.size() - 1);
-  eventTable->setRowCount(eventTable->rowCount() + 1);
 }
 
 void EventWindow::saveBtnPressed() {
