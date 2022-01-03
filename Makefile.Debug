@@ -259,6 +259,9 @@ debug/qrc_Resources.cpp: Resources.qrc \
 		images/starterImage.png \
 		fonts/DSEG7Classic-Bold.ttf \
 		fonts/DSEG7Classic-Regular.ttf \
+		fonts/Roboto-Bold.ttf \
+		fonts/Roboto-Regular.ttf \
+		fonts/Roboto-Black.ttf \
 		images/refreshicon.png \
 		images/toggleUp.png \
 		images/toggleDown.png \
@@ -513,8 +516,9 @@ objects/moc_dualworker.cpp: dual/dualworker.h \
 	C:\QtWindows\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/Dave Riedel/Documents/Bitsanddroidsgui/objects/moc_predefs.h" -IC:/QtWindows/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/Dave Riedel/Documents/Bitsanddroidsgui" -I"C:/Program Files/OpenSSL-Win64/include" -IC:/QtWindows/6.2.0/mingw81_64/include -IC:/QtWindows/6.2.0/mingw81_64/include/QtPrintSupport -IC:/QtWindows/6.2.0/mingw81_64/include/QtCharts -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGL -IC:/QtWindows/6.2.0/mingw81_64/include/QtGui -IC:/QtWindows/6.2.0/mingw81_64/include/QtSerialPort -IC:/QtWindows/6.2.0/mingw81_64/include/QtNetwork -IC:/QtWindows/6.2.0/mingw81_64/include/QtCore -IC:/MINGW64/include -Ic:/mingw64/include/c++/4.8.3 -Ic:/mingw64/include/c++/4.8.3/x86_64-w64-mingw32 -Ic:/mingw64/include/c++/4.8.3/backward -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed -Ic:/mingw64/x86_64-w64-mingw32/include dual\dualworker.h -o objects\moc_dualworker.cpp
 
 objects/moc_eventwindow.cpp: events/eventwindow.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidgetItem \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtablewidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtableview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
@@ -539,6 +543,10 @@ objects/moc_eventwindow.cpp: events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractitemview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qframe.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
@@ -641,6 +649,22 @@ objects/moc_eventwindow.cpp: events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qabstractitemmodel.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qitemselectionmodel.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qstyleoption.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvalidator.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qslider.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractslider.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qstyle.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabbar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qrubberband.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
 		objects/moc_predefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/bin/moc.exe
 	C:\QtWindows\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/Dave Riedel/Documents/Bitsanddroidsgui/objects/moc_predefs.h" -IC:/QtWindows/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/Dave Riedel/Documents/Bitsanddroidsgui" -I"C:/Program Files/OpenSSL-Win64/include" -IC:/QtWindows/6.2.0/mingw81_64/include -IC:/QtWindows/6.2.0/mingw81_64/include/QtPrintSupport -IC:/QtWindows/6.2.0/mingw81_64/include/QtCharts -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGL -IC:/QtWindows/6.2.0/mingw81_64/include/QtGui -IC:/QtWindows/6.2.0/mingw81_64/include/QtSerialPort -IC:/QtWindows/6.2.0/mingw81_64/include/QtNetwork -IC:/QtWindows/6.2.0/mingw81_64/include/QtCore -IC:/MINGW64/include -Ic:/mingw64/include/c++/4.8.3 -Ic:/mingw64/include/c++/4.8.3/x86_64-w64-mingw32 -Ic:/mingw64/include/c++/4.8.3/backward -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed -Ic:/mingw64/x86_64-w64-mingw32/include events\eventwindow.h -o objects\moc_eventwindow.cpp
@@ -3837,8 +3861,9 @@ debug/dual/dualworker.o: dual/dualworker.cpp dual/dualworker.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\dual\dualworker.o dual\dualworker.cpp
 
 debug/events/eventwindow.o: events/eventwindow.cpp events/eventwindow.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidgetItem \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtablewidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtableview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
@@ -3863,6 +3888,10 @@ debug/events/eventwindow.o: events/eventwindow.cpp events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractitemview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qframe.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
@@ -3965,22 +3994,69 @@ debug/events/eventwindow.o: events/eventwindow.cpp events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qabstractitemmodel.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qitemselectionmodel.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qstyleoption.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractspinbox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvalidator.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qslider.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractslider.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qstyle.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabbar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qrubberband.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qcombobox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfile.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfiledevice.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QFont \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QGridLayout \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QGroupBox \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgroupbox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHeaderView \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qheaderview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QLabel \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlabel.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qframe.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpicture.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtextdocument.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QMessageBox \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qmessagebox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qdialog.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QPushButton \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qpushbutton.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractbutton.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QString \
-		ui_eventwindow.h
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidget \
+		ui_eventwindow.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QVariant \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qeventloop.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfuture.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfutureinterface.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmutex.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qresultstore.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfuture_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qthreadpool.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qthread.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qelapsedtimer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrunnable.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qexception.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qapplicationpermission.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qguiapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputmethod.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qguiapplication_platform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\events\eventwindow.o events\eventwindow.cpp
 
 debug/outputs/activeoutputs.o: outputs/activeoutputs.cpp outputs/outputEnum.h \
@@ -9317,6 +9393,7 @@ debug/sources/mainwindow.o: sources/mainwindow.cpp headers/mainwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
 		events/eventwindow.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidgetItem \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtSerialPort/qserialportinfo.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtSerialPort/qserialportglobal.h \
 		settings/calibrateaxismenu.h \
