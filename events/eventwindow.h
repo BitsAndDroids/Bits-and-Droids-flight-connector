@@ -24,11 +24,17 @@ class EventWindow : public QWidget {
 
   void writeFile();
   void fillRow(int index);
+  QString checkSpaces(std::string stringToCheck);
+  void closeEvent(QCloseEvent *event) override;
  private slots:
   void cellTextChanged(QTableWidgetItem *);
   void comboBoxChanged();
   void saveBtnPressed();
   void addEventBtnPressed();
+  void delChanged();
+
+ signals:
+  void closedEventWindow();
 };
 
 #endif  // EVENTWINDOW_H

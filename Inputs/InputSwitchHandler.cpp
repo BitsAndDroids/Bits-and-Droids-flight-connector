@@ -392,12 +392,12 @@ void InputSwitchHandler::set_prop_values(int index) {
         token = strtok_s(nullptr, " ", &next_token);
         counter++;
       }
-      if (counter == 2) {
+      if (counter == 3) {
         for (int i = 0; i < 2; i++) {
-          cout << propAxisBuffer[i] << endl;
+          cout << "BUFF" << propAxisBuffer[i] << endl;
           mappedProps[i] = mapValueToAxis(propAxisBuffer[i],
-                                          propellerRanges[i].getMinRange(),
-                                          propellerRanges[i].getMaxRange());
+                                          propellerRanges[0].getMinRange(),
+                                          propellerRanges[0].getMaxRange());
         }
 
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
@@ -405,9 +405,9 @@ void InputSwitchHandler::set_prop_values(int index) {
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
                               mappedProps[1]);
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
-                              mappedProps[2]);
+                              mappedProps[0]);
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4,
-                              mappedProps[3]);
+                              mappedProps[1]);
       }
     }
   } catch (const std::exception &e) {

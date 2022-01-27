@@ -6,7 +6,9 @@
 
 #include <QtCharts>
 #include <QtSerialPort>
+#include <fstream>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -76,28 +78,29 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
   for (int i = 0; i < objectNames.size(); i++) {
     if (!settingsHandler
              .retrieveSubSetting(objectNames[i] + "Series", "calibrations",
-                                 name + objectNames.at(i))
+                                 objectNames.at(i))
              ->isNull()) {
       int valFound = settingsHandler
-                         .retrieveSubSetting(name + "Series", "calibrations",
-                                             name + objectNames.at(i))
+                         .retrieveSubSetting(objectNames[i] + "Series",
+                                             "calibrations", objectNames.at(i))
                          ->toInt();
+      cout << valFound << endl;
       switch (i) {
         case 0:
-          minRudderValue = valFound;
+          minValue[number] = valFound;
           break;
         case 1:
-          neutralRudderValue = valFound;
+          neutralValue[number] = valFound;
           break;
         case 2:
-          maxRudderValue = valFound;
+          maxValue[number] = valFound;
           break;
         default:
           break;
       }
     }
   }
-  xAxis->setRange(minRudderValue, maxRudderValue);
+  xAxis->setRange(minValue[number], maxValue[number]);
   xAxis->setLabelFormat("%i");
 
   auto *yAxis = new QValueAxis();
@@ -149,19 +152,20 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
     auto lineEdit = new QLineEdit();
     switch (i) {
       case 0:
-        lineEdit->setText(QString::number(minRudderValue));
+        lineEdit->setText(QString::number(minValue[number]));
         break;
       case 1:
-        lineEdit->setText(QString::number(neutralRudderValue));
+        lineEdit->setText(QString::number(neutralValue[number]));
         break;
       case 2:
-        lineEdit->setText(QString::number(maxRudderValue));
+        lineEdit->setText(QString::number(maxValue[number]));
         break;
       default:
         break;
     }
 
-    lineEdit->setObjectName(name + objectNames.at(i));
+    lineEdit->setObjectName(QString::number(number) + QString::number(i) +
+                            name + objectNames.at(i));
     lineEdit->setMaximumWidth(50);
     connect(lineEdit, &QLineEdit::textEdited, this,
             &FormBuilder::rudderTextChanged);
@@ -183,19 +187,19 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
   if (pointsToPlot[number].isEmpty()) {
     cout << "empty" << endl;
     QList<coordinates> *coords = new QList<coordinates>{
-        {coordinates(static_cast<float>(minRudderValue), min)},
-        {coordinates(
-            static_cast<float>(neutralRudderValue) -
-                static_cast<float>((maxRudderValue - neutralRudderValue) / 2),
-            axisValues[1])},
+        {coordinates(static_cast<float>(minValue[number]), min)},
+        {coordinates(static_cast<float>(neutralValue[number]) -
+                         static_cast<float>(
+                             (maxValue[number] - neutralValue[number]) / 2),
+                     axisValues[1])},
         {coordinates(500, axisValues[2])},
-        {coordinates(static_cast<float>(neutralRudderValue), axisValues[2])},
+        {coordinates(static_cast<float>(neutralValue[number]), axisValues[2])},
         {coordinates(522, axisValues[2])},
-        {coordinates(
-            static_cast<float>(neutralRudderValue) +
-                static_cast<float>((maxRudderValue - neutralRudderValue) / 2),
-            axisValues[5])},
-        {coordinates(static_cast<float>(maxRudderValue), max)}};
+        {coordinates(static_cast<float>(neutralValue[number]) +
+                         static_cast<float>(
+                             (maxValue[number] - neutralValue[number]) / 2),
+                     axisValues[5])},
+        {coordinates(static_cast<float>(maxValue[number]), max)}};
 
     for (auto &i : *coords) {
       pointsToPlot[number].append(i);
@@ -213,22 +217,24 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
 }
 
 void FormBuilder::rudderTextChanged() {
-  qDebug() << "Got";
   auto senderLineEdit = qobject_cast<QLineEdit *>(sender());
   int valueToChange = senderLineEdit->text().toInt();
-  int index = senderLineEdit->objectName().first(1).toInt();
+  int index = QString(senderLineEdit->objectName().at(1)).toInt();
+  int table = senderLineEdit->objectName().first(1).toInt();
+  qDebug() << table << " table + "
+           << "Got" << index << " " << senderLineEdit->objectName();
   switch (index) {
     case 0:
-      pointsToPlot[index][0].setX(static_cast<float>(valueToChange));
-      minRudderValue = valueToChange;
+      pointsToPlot[table][0].setX(static_cast<float>(valueToChange));
+      minValue[table] = valueToChange;
       break;
     case 1:
-      pointsToPlot[index][3].setX(static_cast<float>(valueToChange));
-      neutralRudderValue = valueToChange;
+      pointsToPlot[table][3].setX(static_cast<float>(valueToChange));
+      neutralValue[table] = valueToChange;
       break;
     case 2:
-      pointsToPlot[index][6].setX(static_cast<float>(valueToChange));
-      maxRudderValue = valueToChange;
+      pointsToPlot[table][6].setX(static_cast<float>(valueToChange));
+      maxValue[table] = valueToChange;
       break;
     default:
       break;
@@ -282,22 +288,22 @@ void FormBuilder::changeSlider() {
   if (slider->objectName() ==
       QString::number(number) + name + "MinSensitivity") {
     value = static_cast<float>(slider->value() / 100.0) * 511.0f;
-    pointsToPlot[number][1] = {static_cast<float>(neutralRudderValue) - value,
+    pointsToPlot[number][1] = {static_cast<float>(neutralValue[number]) - value,
                                pointsToPlot[number][1].getY()};
   }
   if (slider->objectName() == QString::number(number) + name + "Deadzone") {
     value = 1023.0f * static_cast<float>(slider->value() / 100.0);
 
     pointsToPlot[number][2] = {
-        static_cast<float>(neutralRudderValue) - (value / 2), 0};
+        static_cast<float>(neutralValue[number]) - (value / 2), 0};
     pointsToPlot[number][4] = {
-        static_cast<float>(neutralRudderValue) + (value / 2), 0};
+        static_cast<float>(neutralValue[number]) + (value / 2), 0};
   }
   if (slider->objectName() ==
       QString::number(number) + name + "PlusSensitivity") {
     value = static_cast<float>((slider->value() / 100.0) * 511.0f);
     pointsToPlot[number][5] = {
-        (float)neutralRudderValue + value,
+        (float)neutralValue[number] + value,
         pointsToPlot[number][pointsToPlot[number].size() - 2].getY()};
   }
 
@@ -311,7 +317,7 @@ void FormBuilder::updateChart(int number) {
   }
   charts[number]->removeAxis(charts[number]->axes(Qt::Horizontal).back());
   auto *xAxis = new QValueAxis();
-  xAxis->setRange(minRudderValue, maxRudderValue);
+  xAxis->setRange(minValue[number], maxValue[number]);
   xAxis->setLabelFormat("%i");
   charts[number]->addAxis(xAxis, Qt::AlignBottom);
   series[number]->attachAxis(xAxis);
@@ -429,17 +435,9 @@ QVBoxLayout *FormBuilder::generateComColumn(int index) {
 QGridLayout *FormBuilder::generateOutputControls() const {
   auto *outputControls = new QGridLayout();
   outputControls->setAlignment(Qt::AlignLeft);
-  auto *setName = new QLineEdit();
-  setName->setMaximumWidth(150);
-  setName->setObjectName("leSetName");
-  auto *setNameLabel = new QLabel("Set name");
-
-  auto *saveSet = new QPushButton("Save set");
+  auto *saveSet = new QPushButton("Add set");
   connect(saveSet, &QAbstractButton::clicked, this, &FormBuilder::addSet);
-
-  outputControls->addWidget(setNameLabel, 0, 0);
-  outputControls->addWidget(setName, 0, 1, Qt::AlignLeft);
-  outputControls->addWidget(saveSet, 2, 0);
+  outputControls->addWidget(saveSet, 0, 0);
   return outputControls;
 }
 
@@ -461,7 +459,7 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
   auto *activeWidget = new QWidget();
   activeWidget->setObjectName("activeWidget");
   auto *activeSet = new QVBoxLayout();
-
+  activeSet->setAlignment(Qt::AlignTop);
   auto *setNameHeader = new QLabel(selectedSet->getSetName());
   setNameHeader->setObjectName("setNameHeader");
   QFont headerFont = setNameHeader->font();
@@ -491,7 +489,7 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
   activeSet->addLayout(outputList);
   activeSet->addLayout(outputGrid);
   activeWidget->setLayout(activeSet);
-
+  activeWidget->adjustSize();
   return activeWidget;
 }
 
@@ -532,10 +530,12 @@ QTabWidget *FormBuilder::generateOutputTabs() {
   auto categorieList = outputHandler.getCategoryStrings();
   auto categorizedOutputs = outputHandler.getOutputsCategorized();
 
-  for (int i = 0; i < categorieList.size(); i++) {
+  for (int i = 0; i < categorizedOutputs.size(); i++) {
     auto *newTab = new QWidget();
     auto *cbGridLayout = new QGridLayout();
     cbGridLayout->setAlignment(Qt::AlignTop);
+    cout << "GENERATED " << categorizedOutputs[i].size() << " OUTPUTS IN SET "
+         << i << " / " << categorizedOutputs.size() << endl;
     for (int j = 0; j < categorizedOutputs[i].size(); j++) {
       auto *checkbox = new QCheckBox();
       checkbox->setMinimumHeight(30);
@@ -556,7 +556,7 @@ QTabWidget *FormBuilder::generateOutputTabs() {
     outputTabs->addTab(newTab, categorieList[i]);
   }
 
-  outputTabs->setMinimumSize(600, 400);
+  // outputTabs->setMinimumSize(600, 400);
   outputTabs->adjustSize();
   return outputTabs;
 }

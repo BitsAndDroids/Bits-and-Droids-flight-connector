@@ -1,61 +1,67 @@
 #ifndef OUTPUTMENU_H
 #define OUTPUTMENU_H
 
+#include <outputs/outputhandler.h>
+#include <outputs/sethandler.h>
+
 #include <QSettings>
 #include <QStandardPaths>
 #include <QWidget>
 
+#include "formBuilder.h"
 #include "settingshandler.h"
 
 namespace Ui {
-    class OutputMenu;
+class OutputMenu;
 }
 
 class OutputMenu : public QWidget {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-    explicit OutputMenu(QWidget *parent = nullptr);
+ public:
+  explicit OutputMenu(QWidget *parent = nullptr);
 
-    ~OutputMenu();
+  ~OutputMenu();
 
-    bool isOpen() {
-        return open;
-    }
+  bool isOpen() { return open; }
 
-public slots:
+ public slots:
 
-    void addNewSet();
+  void addNewSet();
 
-    void removeSetAction(QString id);
+  void removeSetAction(QString id);
 
-    void editSet(QString id);
+  void editSet(QString id);
 
-    void saveEdit();
+  void saveEdit();
 
-signals:
+ signals:
 
-    void closedOutputMenu();
+  void closedOutputMenu();
 
-    void addSet();
+  void addSet();
 
-    void setEdited(QString id);
+  void setEdited(QString id);
 
-    void saveEdited();
+  void saveEdited();
 
-    Q_SIGNAL void removeSet(QString id);
+  Q_SIGNAL void removeSet(QString id);
 
-private:
-    bool open = false;
-    int activeSet;
-    SettingsHandler settingsHandler;
-    Ui::OutputMenu *ui;
-    QString path =
-            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
-                                        QSettings::IniFormat);
+ private:
+  bool open = false;
+  int activeSet;
+  SettingsHandler settingsHandler;
+  SetHandler setHandler;
+  FormBuilder formBuilder;
 
-    void closeEvent(QCloseEvent *event) override;
+  outputHandler *outputHandler = new class outputHandler();
+  Ui::OutputMenu *ui;
+  QString path =
+      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
+                                      QSettings::IniFormat);
+
+  void closeEvent(QCloseEvent *event) override;
 };
 
 #endif  // OUTPUTMENU_H

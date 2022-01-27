@@ -61,6 +61,8 @@ class MainWindow : public QMainWindow {
 
   void closedOutputMenu();
 
+  void closedEventWindow();
+
   void closedOptionsMenu();
 
   void updateLastValUI(QString lastVal);
@@ -85,13 +87,14 @@ class MainWindow : public QMainWindow {
   void outputMenuClosed();
 
   void optionMenuClosed();
+  void eventWindowClosed();
 
   void onfinish(QNetworkReply *rep);
 
   std::string convertComPort(QString comText);
 
   void openCalibrateAxis();
-public slots:
+ public slots:
 
   void GameConnectionMade(int con, int mode);
 
@@ -103,9 +106,9 @@ public slots:
   SettingsHandler settingsHandler;
 
   bool outputMenuOpen = false;
+  bool eventwindowOpen = false;
   bool calibrateAxisOpen = false;
   bool optionMenuOpen = false;
-  bool editEventMenuOpen = false;
 
   void stopInput();
 

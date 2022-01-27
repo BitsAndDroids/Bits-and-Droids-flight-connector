@@ -345,7 +345,7 @@ void OutputWorker::testDataRequest() {
   keys = settingsHandler.retrieveKeys("outputcoms");
   int keySize = keys->size();
   int succesfullConnected = 0;
-    emit(BoardConnectionMade(0, 2));
+  emit(BoardConnectionMade(0, 2));
   for (int i = 0; i < keySize; i++) {
     ports[i] = new SerialPort(
         settingsHandler.retrieveSetting("outputcoms", keys->at(i))
@@ -356,11 +356,10 @@ void OutputWorker::testDataRequest() {
     if (ports[i]->isConnected()) {
       cout << "CONNECTED" << endl;
       emit(BoardConnectionMade(1, 2));
-        succesfullConnected++;
+      succesfullConnected++;
     } else {
       cout << "NOT CONNECTED" << endl;
     }
-
   }
   if (succesfullConnected == keySize) {
     emit(BoardConnectionMade(2, 2));
@@ -374,33 +373,22 @@ void OutputWorker::testDataRequest() {
     if (SUCCEEDED(
             SimConnect_Open(&hSimConnect, "outputs", nullptr, 0, nullptr, 0))) {
       printf("\nConnected to Flight Simulator!");
-
+      outputMapper->mapOutputs(outputsToMap, hSimConnect);
       SimConnect_MapClientDataNameToID(hSimConnect, "wasm.responses", 2);
 
-      SimConnect_CreateClientData(
-          hSimConnect, 2, 4096, SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
+      SimConnect_CreateClientData(hSimConnect, 2, 4096,
+                                  SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
 
-      SimConnect_AddToClientDataDefinition(hSimConnect, 12, 0,
-                                                sizeof(dataRecv), 0, 0);
+      SimConnect_AddToClientDataDefinition(hSimConnect, 12, 0, sizeof(dataRecv),
+                                           0, 0);
 
       emit(GameConnectionMade(2, 2));
-
-      for (auto &simVar : simVars) {
-        SimConnect_AddToClientDataDefinition(
-            hSimConnect, simVar.ID, simVar.Offset, sizeof(float), 0, 0);
-        SimConnect_RequestClientData(
-            hSimConnect, 2, simVar.ID, simVar.ID,
-            SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
-            SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED, 0, 0, 0);
-      }
 
       SimConnect_CallDispatch(hSimConnect, MyDispatchProcRD, this);
 
       connected = true;
 
       // DATA
-
-      outputMapper.mapOutputs(outputsToMap, hSimConnect);
 
       SimConnect_SubscribeToSystemEvent(hSimConnect, EVENT_SIM_START, "1sec");
 

@@ -10,43 +10,45 @@
 #include "output.h"
 
 class set {
-public:
-    set();
+ public:
+  set();
 
-    explicit set(QString setName);
+  explicit set(QString setName);
 
-    // void addOutput(Output outputToAdd);
+  // void addOutput(Output outputToAdd);
 
-    QMap<int, Output *> getOutputs() { return outputs; };
+  QMap<int, Output *> getOutputs() { return this->outputs; };
 
-    int getID() const { return setId; };
+  int getID() const { return setId; };
 
-    QString getSetName() const { return setName; };
+  QString getSetName() const { return setName; };
 
-    void setOutputs(QMap<int, Output *> newOutputs);
+  void setOutputs(QMap<int, Output *> newOutputs);
 
-    void setSetName(QString name) { this->setName = std::move(name); };
+  void setSetName(QString name) { this->setName = std::move(name); };
 
-    void setSetId(int id) { this->setId = id; };
+  void setSetId(int id) { this->setId = id; };
 
-    void deleteSet();
+  void deleteSet();
 
-    void saveSet();
+  void saveSet();
 
-    set(QString setName, int id);
+  set(QString setName, int id);
 
-    static set fromJson(QJsonDocument *docToConvert);
+  static set fromJson(QJsonDocument *docToConvert);
 
-    set(QString setName, int id, QMap<int, Output *>);
+  set(QString setName, int id, QMap<int, Output *>);
 
-    void addOutput(Output *outputToAdd);
+  void addOutput(Output *outputToAdd);
 
-    void clearOutputs();
+  void clearOutputs();
 
-private:
-    QString setName;
-    int setId = 0;
-    QMap<int, Output *> outputs;
+  void removeOutput(int id);
+
+ private:
+  QString setName;
+  int setId = 0;
+  QMap<int, Output *> outputs = QMap<int, Output *>();
 };
 
 #endif  // SET_H

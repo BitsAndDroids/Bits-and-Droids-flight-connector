@@ -1,6 +1,7 @@
-(L:Generic_Master_Caution_Active)^3#1000$0//
-(L:Generic_Master_Warning_Active)^3#1001$0//
-//G1000
+(L:Generic_Master_Caution_Active)^3b#1000$0//
+(L:Generic_Master_Warning_Active)^3b#1001$0//
+1000 * (L:AUX_pound_USED)^3f#1003$0.1//Fuel used
+(>L:AUTOPILOT_roll, enum)^1#9888$0//
 (>H:AS1000_PFD_FPL_Push)^0# 753$0//
 (>H:AS1000_PFD_PROC_Push)^0# 754$0//
 (>H:AS1000_PFD_RANGE_INC)^0# 755$0//
@@ -148,33 +149,32 @@
 (>H:adf_frqTransfert)^0# 910$0//
 (A:AUTOPILOT ALTITUDE LOCK VAR, feet) 100 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Up)^0#2000$0// altitude ap + 100//
 (A:AUTOPILOT ALTITUDE LOCK VAR, feet) 1000 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Up)^0#2001$0// altitude ap + 1000//
-(A:AUTOPILOT ALTITUDE LOCK VAR, feet) -100 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Down)^0#2002$0// altitude ap - 100//
-(A:AUTOPILOT ALTITUDE LOCK VAR, feet) -1000 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Down)^0#2003$0// altitude ap - 1000//
+(A:AUTOPILOT ALTITUDE LOCK VAR, feet) - 100 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Down)^0#2002$0// altitude ap - 100//
+(A:AUTOPILOT ALTITUDE LOCK VAR, feet) - 1000 + (>K:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Down)^0#2003$0// altitude ap - 1000//
 (>H:AS3000_PFD_BARO_INC)^0#2004$0//
 (>H:AS3000_PFD_BARO_DEC)^0#2005$0//
-//A320
 (>H:A320_Neo_CDU_MODE_MANAGED_SPEED)^0#2006$0// Managed speed CDU
 (>H:A320_Neo_FCU_MODE_MANAGED_SPEED)^0#2007$0// Managed speed FCU
 (>H:A320_Neo_CDU_MODE_SELECTED_SPEED)^0#2008$0// Selected seed CDU
 (>H:A320_Neo_EXPEDITE_MODE)^0#2009$0// Expedite mode
 (>H:A320_Neo_FCU_HDG_PUSH)^0#2010$0// FCU heading push
 (>H:A320_Neo_FCU_HDG_PULL)^0#2011$0// FCU heading pull
-(A:AUTOPILOT HEADING SLOT INDEX, Number) 1 == if{ (>K:A32NX.FCU_HDG_PUSH) } els{ (>K:A32NX.FCU_HDG_PULL) }^0#2012$0//Heading push pull togle
-(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) if{ (>H:A320_Neo_FCU_AP_INC_TRACK) } els{ 1 (>K:HEADING_BUG_INC) (>H:A320_Neo_CDU_AP_INC_HEADING) }^0#2013$0// FCU heading inc
-(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) if{ (>H:A320_Neo_FCU_AP_DEC_TRACK) } els{ 1 (>K:HEADING_BUG_DEC) (>H:A320_Neo_CDU_AP_DEC_HEADING) }^0#2014$0// FCU heading dec
-(L:XMLVAR_AirSpeedIsInMach) if{ 1 (>K:AP_MACH_VAR_INC) } els{ 1 (>K:AP_SPD_VAR_INC) } (>H:A320_Neo_CDU_AP_INC_SPEED)^0#2015$0// FCU speed inc
-(L:XMLVAR_AirSpeedIsInMach) if{ 1 (>K:AP_MACH_VAR_DEC) } els{ 1 (>K:AP_SPD_VAR_DEC) } (>H:A320_Neo_CDU_AP_DEC_SPEED)^0#2016$0// FCU speed dec
+(A:AUTOPILOT HEADING SLOT INDEX, Number) 1 == if { (>K:A32NX.FCU_HDG_PUSH) } els { (>K:A32NX.FCU_HDG_PULL) }^0#2012$0//Heading push pull togle
+(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) if { (>H:A320_Neo_FCU_AP_INC_TRACK) } els { 1 (>K:HEADING_BUG_INC) (>H:A320_Neo_CDU_AP_INC_HEADING) }^0#2013$0// FCU heading inc
+(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) if { (>H:A320_Neo_FCU_AP_DEC_TRACK) } els { 1 (>K:HEADING_BUG_DEC) (>H:A320_Neo_CDU_AP_DEC_HEADING) }^0#2014$0// FCU heading dec
+(L:XMLVAR_AirSpeedIsInMach) if { 1 (>K:AP_MACH_VAR_INC) } els { 1 (>K:AP_SPD_VAR_INC) } (>H:A320_Neo_CDU_AP_INC_SPEED)^0#2015$0// FCU speed inc
+(L:XMLVAR_AirSpeedIsInMach) if { 1 (>K:AP_MACH_VAR_DEC) } els { 1 (>K:AP_SPD_VAR_DEC) } (>H:A320_Neo_CDU_AP_DEC_SPEED)^0#2016$0// FCU speed dec
 (>H:A320_Neo_FCU_SPEED_PULL)^0#2017$0// FCU speed pull
 (>H:A320_Neo_FCU_SPEED_PUSH)^0#2018$0// FCU speed push
-(A:AUTOPILOT SPEED SLOT INDEX, Number) 1 == if{ (>K:A32NX.FCU_SPD_PUSH) } els{ (>K:A32NX.FCU_SPD_PULL) }^0#2019$0// Speed push pull toggle
-(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) 1 == if{ (>H:A320_Neo_FCU_AP_INC_FPA) } els{ 3 (>K:AP_VS_VAR_INC)  (>H:A320_Neo_FCU_VS_INC) }^0#2020$0// FCU vertical speed inc
-(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) 1 == if{ (>H:A320_Neo_FCU_AP_DEC_FPA) } els{ 3 (>K:AP_VS_VAR_DEC) (>H:A320_Neo_FCU_VS_DEC) }^0#2021$0// FCU vertical speed dec
+(A:AUTOPILOT SPEED SLOT INDEX, Number) 1 == if { (>K:A32NX.FCU_SPD_PUSH) } els { (>K:A32NX.FCU_SPD_PULL) }^0#2019$0// Speed push pull toggle
+(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) 1 == if { (>H:A320_Neo_FCU_AP_INC_FPA) } els { 3 (>K:AP_VS_VAR_INC)  (>H:A320_Neo_FCU_VS_INC) }^0#2020$0// FCU vertical speed inc
+(L:A32NX_TRK_FPA_MODE_ACTIVE, bool) 1 == if { (>H:A320_Neo_FCU_AP_DEC_FPA) } els { 3 (>K:AP_VS_VAR_DEC) (>H:A320_Neo_FCU_VS_DEC) }^0#2021$0// FCU vertical speed dec
 (>H:A320_Neo_FCU_VS_PULL) (>H:A320_Neo_CDU_VS)^0#2022$0// FCU vs pull
 (>H:A320_Neo_FCU_VS_PUSH) (>H:A320_Neo_CDU_VS)^0#2023$0// FCU vs push
-(L:MF_VS_TOG,Bool) if{ (>H:A320_Neo_FCU_VS_ZERO) } els{ (>H:A320_Neo_FCU_VS_HOLD) } (L:MF_VS_TOG,Bool) ! (>L:MF_VS_TOG,Bool)^0#2024$0// FCU vs push pull toggle
+(L:MF_VS_TOG,Bool) if { (>H:A320_Neo_FCU_VS_ZERO) } els { (>H:A320_Neo_FCU_VS_HOLD) } (L:MF_VS_TOG,Bool) ! (>L:MF_VS_TOG,Bool)^0#2024$0// FCU vs push pull toggle
 (>H:A320_Neo_FCU_ALT_PULL) (>H:A320_Neo_CDU_MODE_SELECTED_ALTITUDE)^0#2025$0// Selected altitude pull
 (>H:A320_Neo_FCU_ALT_PUSH) (>H:A320_Neo_CDU_MODE_MANAGED_ALTITUDE)^0#2026$0// Selected altitude push
-(A:AUTOPILOT ALTITUDE SLOT INDEX, Number) 1 == if{ (>K:A32NX.FCU_ALT_PUSH) } els{ (>K:A32NX.FCU_ALT_PULL) }^0#2027$0// Altitude push toggle
+(A:AUTOPILOT ALTITUDE SLOT INDEX, Number) 1 == if { (>K:A32NX.FCU_ALT_PUSH) } els { (>K:A32NX.FCU_ALT_PULL) }^0#2027$0// Altitude push toggle
 3 (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) (L:XMLVAR_Autopilot_Altitude_Increment) + (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) (L:XMLVAR_Autopilot_Altitude_Increment) % - 49000 min (>K:2:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Up) (>H:A320_Neo_CDU_AP_INC_ALT)^0#2028$0//Alt inc
 3 (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) (L:XMLVAR_Autopilot_Altitude_Increment) - (L:XMLVAR_Autopilot_Altitude_Increment) (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) (L:XMLVAR_Autopilot_Altitude_Increment) % - (L:XMLVAR_Autopilot_Altitude_Increment) % + 100 max (>K:2:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Down) (>H:A320_Neo_CDU_AP_DEC_ALT)^0#2029$0//alt dec
 3 (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) 100 + (A:AUTOPILOT ALTITUDE LOCK VAR:3, feet) 100 % - 49000 min (>K:2:AP_ALT_VAR_SET_ENGLISH) (>H:AP_KNOB_Up) (>H:A320_Neo_CDU_AP_INC_ALT)^0#2030$0// alt inc 100
@@ -215,17 +215,13 @@
 (L:A32NX_TRK_FPA_MODE_ACTIVE) ! (>L:A32NX_TRK_FPA_MODE_ACTIVE)^0#2065$0//FPA mode
 (>H:AS3000_PFD_1_SOFTKEYS_1) (>H:AS1000_PFD_SOFTKEYS_1)^0#9000$0//
 (L:XMLVAR_SWITCH_OVHD_INTLT_SEATBELT_Position) ! (>K:CABIN_SEATBELTS_ALERT_SWITCH_TOGGLE)^0#9001$0//
-//TBM930
-2 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 2 != if{ 2 (>K:ELECT_FUEL_PUMP1_SET) }^0#2500$0//
-1 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 1 != if{ 1 (>K:ELECT_FUEL_PUMP1_SET) }^0#2501$0//
-0 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 0 != if{ 0 (>K:ELECT_FUEL_PUMP1_SET) }^0#2502$0//
-//General
-(>K:AXIS_SPOILER_SET)^9#3000-700+930$0//
-//PFD COMBOS
+2 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 2 != if { 2 (>K:ELECT_FUEL_PUMP1_SET) }^0#2500$0//
+1 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 1 != if { 1 (>K:ELECT_FUEL_PUMP1_SET) }^0#2501$0//
+0 (>L:XMLVAR_BoostFuelPump, Number) (A:GENERAL ENG FUEL PUMP SWITCH EX1:1, Enum) 0 != if { 0 (>K:ELECT_FUEL_PUMP1_SET) }^0#2502$0//
 (>H:AS530_RightLargeKnob_Left) (>H:AS3000_PFD_BottomKnob_Large_DEC) (>H:AS1000_PFD_FMS_Lower_DEC)^0#5000$0//PFD Group  -
 (>H:AS530_RightLargeKnob_Right) (>H:AS3000_PFD_BottomKnob_Large_INC) (>H:AS1000_PFD_FMS_Lower_INC)^0#5001$0//PFD Group  +
 (>H:AS530_RightSmallKnob_Left) (>H:AS3000_TSC_Vertical_TopKnob_Large_DEC) (>H:AS1000_PFD_FMS_Upper_DEC)^0#5002$0//PFD Page -
-(>H:AS530_RightSmallKnob_Right) (>H:AS3000_TSC_Vertical_TopKnob_Large_INC)(>H:AS1000_PFD_FMS_Upper_INC)^0#5003$0//PFD Page +
+(>H:AS530_RightSmallKnob_Right) (>H:AS3000_TSC_Vertical_TopKnob_Large_INC) (>H:AS1000_PFD_FMS_Upper_INC)^0#5003$0//PFD Page +
 (>H:AS530_RightSmallKnob_Push) (>H:AS530_ENT_Push) (>H:AS3000_PFD_BottomKnob_Push) (>H:AS1000_PFD_ENT_Push)^0#5004$0//PFD Enter
 (>H:AS530_MENU_Push) (>H:AS1000_PFD_MENU_Push)^0#5005$0//PFD Menu
 (>H:AS530_PROC_Push) (>H:AS1000_PFD_PROC_Push)^0#5006$0//PFD Procedure
@@ -246,3 +242,8 @@
 (>H:AS3000_PFD_1_SOFTKEYS_10) (>H:AS1000_PFD_SOFTKEYS_10)^0#5021$0//PFD Softkey 10
 (>H:AS3000_PFD_1_SOFTKEYS_11) (>H:AS1000_PFD_SOFTKEYS_11)^0#5022$0//PFD Softkey 11
 (>H:AS3000_PFD_1_SOFTKEYS_12) (>H:AS1000_PFD_SOFTKEYS_12)^0#5023$0//PFD Softkey 12
+(L:FuelQuantity)^3b#7001$0//Comments go here
+(L:G1000_FuelUsedRef)^3b#7002$0//Comments go here
+(L:ENG_FUEL_FLOW_GPH_1)^3f#7003$0//Comments go here
+(L:ENG_FUEL_FLOW_GPH_2)^3i#7004$0//Comments go here
+AS3000_PFD_1_SOFTKEYS_12) (>H:AS1000_PFD_SOFTKEYS_12)^0#5023$0//PFD Softkey 12

@@ -11,7 +11,7 @@ CONFIG += object_parallel_to_source
 CONFIG += c++17
 CONFIG += openssl
 MOC_DIR= $$PWD/objects
-#OBJECTS_DIR= $$PWD/objects
+OBJECTS_DIR= $$PWD/objects
 
 # using shell_path() to correct path depending on platform
 # escaping quotes and backslashes for file paths
@@ -21,17 +21,17 @@ export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
 
-copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"C:\\Users\\Dave Riedel\\AppData\Local\\Packages\\Microsoft.FlightSimulator_8wekyb3d8bbwe\\LocalCache\\Packages\\Community\"
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
+#copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"C:\\Users\\Dave Riedel\\AppData\Local\\Packages\\Microsoft.FlightSimulator_8wekyb3d8bbwe\\LocalCache\\Packages\\Community\"
+#first.depends = $(first) copydata
+#export(first.depends)
+#export(copydata.commands)
+#QMAKE_EXTRA_TARGETS += first copydata
 
-copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"$$shell_path($$OUT_PWD)\\release\"
-first.depends = $(first) copydata
-export(first.depends)
-export(copydata.commands)
-QMAKE_EXTRA_TARGETS += first copydata
+#copydata.commands = $(COPY_DIR) \"$$shell_path($$PWD\\events)\" \"$$shell_path($$OUT_PWD)\\release\"
+#first.depends = $(first) copydata
+#export(first.depends)
+#export(copydata.commands)
+#QMAKE_EXTRA_TARGETS += first copydata
 
 
 LIBS += "C:/Users/Dave Riedel/Documents/build-Bitsanddroidsgui-Desktop_Qt_6_2_0_MinGW_64_bit-Release/release/SimConnect.dll"
@@ -121,7 +121,7 @@ FORMS += \
     settings/optionsmenu.ui \
     settings/outputmenu.ui
 
-TRANSLATIONS += \
+TRANSLATIONS += \Nou
     Bitsanddroidsgui_en_US.ts
 
 # Default rules for deployment.

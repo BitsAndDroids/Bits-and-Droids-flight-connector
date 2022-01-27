@@ -1,5 +1,6 @@
 #include "eventwindow.h"
 
+#include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qfile.h>
 #include <qstring.h>
@@ -86,23 +87,25 @@ struct tableRow {
   std::string prefix;
   std::string event;
   std::string type;
+  std::string datatype;
   std::string updateEvery;
   std::string comment;
 };
 enum modes { INPUT = 0, INPUTVALUE = 1, OUTPUT = 3, AXIS = 9 };
 
 QList<tableRow> tableRows = QList<tableRow>();
+QList<int> tableRowsToDelete = QList<int>();
 QList<int> rowsChanged = QList<int>();
 EventWindow::EventWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::EventWindow) {
   ui->setupUi(this);
-  QStringList headers = {"Prefix", "Event", "Type", "Update every", "Comment"};
+  this->setWindowTitle("Event editor");
+  QStringList headers = {"Prefix",       "Event",   "Type",  "Datatype",
+                         "Update every", "Comment", "Remove"};
   auto eventGrid = new QGridLayout();
   readFile();
   int loadedFontID =
       QFontDatabase::addApplicationFont(":/fonts/Roboto-Black.ttf");
-  int loadedFontID2 =
-      QFontDatabase::addApplicationFont(":/fonts/Roboto-Regular.ttf");
   cout << "FONT LOADED" << loadedFontID << endl;
   QFont Triforce("Roboto Black", 11, 900);
   eventTable->horizontalHeader()->setFont(Triforce);
@@ -113,8 +116,9 @@ EventWindow::EventWindow(QWidget *parent)
   eventTable->verticalHeader()->setVisible(false);
   eventTable->setColumnWidth(0, 50);
   eventTable->setColumnWidth(1, 450);
-  eventTable->setColumnWidth(4, 250);
-  eventTable->setMinimumWidth(980);
+  eventTable->setColumnWidth(5, 250);
+  eventTable->setColumnWidth(6, 80);
+  eventTable->setMinimumWidth(1150);
   eventTable->setMinimumHeight(490);
   eventTable->setSortingEnabled(true);
 
@@ -212,7 +216,22 @@ void EventWindow::fillRow(int index) {
       typeComboBox->setCurrentIndex(3);
       break;
   }
+  auto dataTypeCombobox = new QComboBox();
+  dataTypeCombobox->setObjectName("cb" + QString::number(index));
 
+  dataTypeCombobox->addItems({"Int", "Float", "Bool"});
+
+  if (tableRows[index].datatype == "i") {
+    dataTypeCombobox->setCurrentIndex(0);
+  } else if (tableRows[index].datatype == "f") {
+    dataTypeCombobox->setCurrentIndex(1);
+  } else if (tableRows[index].datatype == "b") {
+    dataTypeCombobox->setCurrentIndex(2);
+  }
+  dataTypeCombobox->setObjectName("dt" + QString::number(index));
+
+  QTableWidgetItem *naDatatype = new QTableWidgetItem("n/a");
+  naDatatype->setFlags(Qt::ItemIsSelectable);
   prefixCell->setFont(Triforce);
   eventCell->setFont(Triforce);
   commentCell->setFont(Triforce);
@@ -220,14 +239,38 @@ void EventWindow::fillRow(int index) {
 
   typeComboBox->setFocusPolicy(Qt::StrongFocus);
   typeComboBox->installEventFilter(this);
+  auto *removeToggle = new QCheckBox();
+  removeToggle->setStyleSheet("margin-left:50%; margin-right:50%;");
+  removeToggle->setObjectName("del" + QString::number(index));
+  connect(removeToggle, &QCheckBox::stateChanged, this,
+          &EventWindow::delChanged);
   connect(typeComboBox, &QComboBox::currentIndexChanged, this,
           &EventWindow::comboBoxChanged);
   eventTable->setItem(index, 0, prefixCell);
   eventTable->setItem(index, 1, eventCell);
   eventTable->setCellWidget(index, 2, typeComboBox);
-  eventTable->setItem(index, 3, updateEveryCell);
-  eventTable->setItem(index, 4, commentCell);
+  if (tableRows[index].type == "3") {
+    eventTable->setCellWidget(index, 3, dataTypeCombobox);
+  } else {
+    eventTable->setItem(index, 3, naDatatype);
+  }
+
+  eventTable->setItem(index, 4, updateEveryCell);
+  eventTable->setItem(index, 5, commentCell);
+  eventTable->setCellWidget(index, 6, removeToggle);
   eventTable->blockSignals(false);
+}
+void EventWindow::delChanged() {
+  auto sendCb = qobject_cast<QCheckBox *>(sender());
+
+  int index = sendCb->objectName().mid(3).toInt();
+  cout << "INDEX: " << index
+       << " CBNAME: " << sendCb->objectName().toStdString().c_str() << endl;
+  if (sendCb->checkState() == Qt::Checked) {
+    tableRowsToDelete.append(index);
+  } else {
+    tableRowsToDelete.remove(tableRowsToDelete.indexOf(index));
+  }
 }
 void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
   std::string textToCompare;
@@ -247,6 +290,7 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
       textToCompare = tableRows[changedItem->row()].comment;
       break;
   }
+
   QFont font;
   if (textToCompare != changedItem->text().toStdString()) {
     changedItem->setForeground(QColor(1, 150, 11));
@@ -257,11 +301,14 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
     font.setBold(false);
     changedItem->setForeground(QColor(0, 0, 0));
   }
+
   changedItem->setFont(font);
   changedItem->tableWidget()->blockSignals(false);
   if (checkIfRowChanged(changedItem->row())) {
-    rowsChanged.append(changedItem->row());
-    cout << "Changed" << changedItem->row() << endl;
+    if (rowsChanged.indexOf(changedItem->row()) == -1) {
+      rowsChanged.append(changedItem->row());
+      cout << "Changed" << changedItem->row() << endl;
+    }
   }
   cout << changedItem->text().toStdString() << endl;
 }
@@ -289,11 +336,19 @@ void EventWindow::saveBtnPressed() {
     }
   }
   auto saveMessageBox = new QMessageBox();
-  if (rowsChanged.size() > 0) {
-    saveMessageBox->setText(QString::number(rowsChanged.size()) +
-                            " Changes have been found");
+  if (rowsChanged.size() > 0 || tableRowsToDelete.size() > 0) {
+    saveMessageBox->setText(
+        QString::number(rowsChanged.size() + tableRowsToDelete.size()) +
+        " Changes have been found");
     saveMessageBox->setInformativeText("Do you want to save these changes?");
     QString detailedText = "";
+
+    for (auto &toRemove : tableRowsToDelete) {
+      detailedText += "DELETE: ";
+      detailedText += QString::fromStdString(tableRows[toRemove].prefix) + " ";
+      detailedText += QString::fromStdString(tableRows[toRemove].event) + "\n";
+    }
+
     for (auto &changed : rowsChanged) {
       detailedText +=
           "OLD VALUE: " + QString::fromStdString(tableRows[changed].prefix);
@@ -302,7 +357,7 @@ void EventWindow::saveBtnPressed() {
           (" " + QString::fromStdString(tableRows[changed].comment));
       detailedText += " -> NEW VALUE: " + eventTable->item(changed, 0)->text();
       detailedText += (" " + eventTable->item(changed, 1)->text());
-      detailedText += (" " + eventTable->item(changed, 4)->text() + "\n");
+      detailedText += (" " + eventTable->item(changed, 5)->text() + "\n");
     }
 
     saveMessageBox->setDetailedText(detailedText);
@@ -316,19 +371,22 @@ void EventWindow::saveBtnPressed() {
   } else {
     saveMessageBox->setText("No changes have been made");
   }
+
   int ret = saveMessageBox->exec();
   for (auto &changed : rowsChanged) {
     cout << changed << endl;
   }
+
   switch (ret) {
     case QMessageBox::Save:
+
       for (auto &changedRow : rowsChanged) {
         tableRows[changedRow].prefix =
             eventTable->item(changedRow, 0)->text().toStdString();
         tableRows[changedRow].event =
             eventTable->item(changedRow, 1)->text().toStdString();
         tableRows[changedRow].comment =
-            eventTable->item(changedRow, 4)->text().toStdString();
+            eventTable->item(changedRow, 5)->text().toStdString();
         int newType =
             this->findChild<QComboBox *>("cb" + QString::number(changedRow))
                 ->currentIndex();
@@ -348,6 +406,32 @@ void EventWindow::saveBtnPressed() {
             break;
         }
         tableRows[changedRow].type = to_string(newType);
+        if (tableRows[changedRow].type == "3") {
+          int newDatatype =
+              this->findChild<QComboBox *>("dt" + QString::number(changedRow))
+                  ->currentIndex();
+          std::string dtNewStr = "";
+          switch (newDatatype) {
+            case 0:
+              dtNewStr = "i";
+              break;
+            case 1:
+              dtNewStr = "f";
+              break;
+            case 2:
+              dtNewStr = "b";
+              break;
+            default:
+              dtNewStr = "i";
+              break;
+          }
+
+          tableRows[changedRow].datatype = dtNewStr;
+        }
+      }
+      for (auto &del : tableRowsToDelete) {
+        eventTable->removeRow(del);
+        tableRows.remove(del);
       }
       writeFile();
       break;
@@ -360,19 +444,52 @@ void EventWindow::writeFile() {
   cout << "WRITEFILE" << endl;
   QString applicationPath =
       qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/";
-  QFile newEventsFile(applicationPath + "newEvents.txt");
+  QFile newEventsFile(applicationPath + "events.txt");
   newEventsFile.open(QIODevice::ReadWrite);
   QTextStream out(&newEventsFile);
   for (auto &row : tableRows) {
-    out << QString::fromStdString(row.event) << "^"
-        << QString::fromStdString(row.type) << "#"
-        << QString::fromStdString(Utils::padLeft(row.prefix, 4)) << "$"
-        << QString::fromStdString(row.updateEvery) << "//"
-        << QString::fromStdString(row.comment)
+    QString typeString = "";
+    if (row.type == "3") {
+      typeString = QString::fromStdString(row.type) +
+                   QString::fromStdString(row.datatype);
+    } else {
+      typeString = QString::fromStdString(row.type);
+    }
+    QString formattedAxis = "";
+    if (row.type == "9") {
+      formattedAxis = "-0+1023";
+    }
+    QString formattedEvent = checkSpaces(row.event);
+    out << formattedEvent << "^" << typeString
+        << "#" + QString::fromStdString(Utils::padLeft(row.prefix, 4))
+        << formattedAxis << "$" << QString::fromStdString(row.updateEvery)
+        << "//" << QString::fromStdString(row.comment)
 
         << "\n";
   }
   newEventsFile.close();
+}
+QString EventWindow::checkSpaces(std::string stringToCheck) {
+  std::vector<size_t> *vec = new std::vector<size_t>();
+
+  std::string charsToFind[] = {"{", "}", "+", "-", "/", "*", "(", ")"};
+  for (auto &c : charsToFind) {
+    size_t pos = stringToCheck.find(c);
+    while (pos != std::string::npos) {
+      if (pos < stringToCheck.size() - 1 && stringToCheck[pos + 1] != ' ' &&
+          c != "(") {
+        stringToCheck.insert(pos + 1, " ");
+      }
+      if (pos > 0 && stringToCheck[pos - 1] != ' ' && c != ")") {
+        stringToCheck.insert(pos, " ");
+      }
+
+      pos = stringToCheck.find(c, pos + c.size());
+    }
+  }
+  std::string formattedString = stringToCheck;
+
+  return QString::fromStdString(stringToCheck);
 }
 
 void EventWindow::comboBoxChanged() {
@@ -380,7 +497,30 @@ void EventWindow::comboBoxChanged() {
   int index = stoi(senderComboBox->objectName().toStdString().substr(2));
   cout << index << endl;
   if (checkIfRowChanged(index)) {
-    rowsChanged.append(index);
+    if (rowsChanged.indexOf(index) == -1) {
+      rowsChanged.append(index);
+    }
+  }
+  if (senderComboBox->currentIndex() == 3) {
+    auto dataTypeCombobox = new QComboBox();
+    dataTypeCombobox->setObjectName("cb" + QString::number(index));
+
+    dataTypeCombobox->addItems({"Int", "Float", "Bool"});
+
+    if (tableRows[index].datatype == "i") {
+      dataTypeCombobox->setCurrentIndex(0);
+    } else if (tableRows[index].datatype == "f") {
+      dataTypeCombobox->setCurrentIndex(1);
+    } else if (tableRows[index].datatype == "b") {
+      dataTypeCombobox->setCurrentIndex(2);
+    }
+    dataTypeCombobox->setObjectName("dt" + QString::number(index));
+    eventTable->setCellWidget(index, 3, dataTypeCombobox);
+  } else {
+    eventTable->removeCellWidget(index, 3);
+    QTableWidgetItem *naTextWidget = new QTableWidgetItem("n/a");
+    naTextWidget->setFlags(Qt::ItemIsSelectable);
+    eventTable->setItem(index, 3, naTextWidget);
   }
 }
 
@@ -431,7 +571,15 @@ bool EventWindow::checkIfRowChanged(int index) {
   return false;
 }
 
-EventWindow::~EventWindow() { delete ui; }
+EventWindow::~EventWindow() {
+  emit EventWindow::closedEventWindow();
+  delete ui;
+}
+
+void EventWindow::closeEvent(QCloseEvent *event) {
+  qDebug() << 'clEvent';
+  delete this;
+}
 void EventWindow::readFile() {
   QString applicationPath =
       qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/events.txt";
@@ -453,6 +601,9 @@ void EventWindow::readFile() {
       newRow->prefix = row.substr(prefixDelimiter + 1, 4);
       newRow->event = row.substr(0, modeDelimiter);
       newRow->type = row.substr(modeDelimiter + 1, 1);
+      if (newRow->type == "3") {
+        newRow->datatype = row.substr(modeDelimiter + 2, 1);
+      }
 
       newRow->updateEvery =
           row.substr(updateEveryDelimiter + 1,
