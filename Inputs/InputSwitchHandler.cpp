@@ -1,6 +1,7 @@
 
 #include "InputSwitchHandler.h"
 
+#include <qlist.h>
 #include <qsettings.h>
 #include <tchar.h>
 #include <windows.h>
@@ -8,7 +9,6 @@
 #include <QList>
 #include <future>
 #include <iostream>
-#include <qlist.h>
 #include <string>
 
 #include "inputenum.h"
@@ -67,6 +67,15 @@ InputSwitchHandler::InputSwitchHandler() {
       int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
 
       enginelist[i] = Engine(minRange, idleCutoff, maxRange, i + 1);
+    }
+    for (auto &curve : curves) {
+      curve.append(coordinates(0, -16383));
+      curve.append(coordinates(250, -10000));
+      curve.append(coordinates(400, 0));
+      curve.append(coordinates(500, 0));
+      curve.append(coordinates(600, 0));
+      curve.append(coordinates(750, 10000));
+      curve.append(coordinates(1023, 16383));
     }
 
     if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
@@ -189,8 +198,8 @@ void InputSwitchHandler::controlYoke(int index) {
         for (int i = 0; i < 2; i++) {
           yoke[i] = yokeBuffer[i];
         }
-        int mappedElevator = calibratedRange(yoke[0], curves[2]);
-        int mappedAileron = calibratedRange(yoke[1], curves[3]);
+        int mappedElevator = calibratedRange(yoke[0], 3);
+        int mappedAileron = calibratedRange(yoke[1], 2);
         cout << "percentage Elevator: " << mappedElevator << endl;
         sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_ELEVATOR_SET,
                               mappedElevator);
@@ -383,12 +392,12 @@ void InputSwitchHandler::set_prop_values(int index) {
         token = strtok_s(nullptr, " ", &next_token);
         counter++;
       }
-      if (counter == 2) {
+      if (counter == 3) {
         for (int i = 0; i < 2; i++) {
-          cout << propAxisBuffer[i] << endl;
+          cout << "BUFF" << propAxisBuffer[i] << endl;
           mappedProps[i] = mapValueToAxis(propAxisBuffer[i],
-                                          propellerRanges[i].getMinRange(),
-                                          propellerRanges[i].getMaxRange());
+                                          propellerRanges[0].getMinRange(),
+                                          propellerRanges[0].getMaxRange());
         }
 
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
@@ -396,9 +405,9 @@ void InputSwitchHandler::set_prop_values(int index) {
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
                               mappedProps[1]);
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
-                              mappedProps[2]);
+                              mappedProps[0]);
         sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4,
-                              mappedProps[3]);
+                              mappedProps[1]);
       }
     }
   } catch (const std::exception &e) {
@@ -431,29 +440,28 @@ void InputSwitchHandler::setElevatorTrim(int index) {
     cout << "error in trim" << endl;
   }
 }
-int InputSwitchHandler::calibratedRange(int value, QList<coordinates> curve){
-    int axis;
-    if (static_cast<float>(value) <= curve[1].getX()) {
-      axis =
-          mapCoordinates(value, curve[0], curve.at(1));
-    }
-    // minCurve
-    else if (static_cast<float>(value) < curve[2].getX()) {
-      axis =
-          mapCoordinates(value, curve[1], curve[2]);
-    }
-    // deadzone
-    else if (static_cast<float>(value) >= curve[2].getX() &&
-             static_cast<float>(value) <= curve[4].getX()) {
-      axis = 0;
-    } else if (static_cast<float>(value) <= curve[5].getX()) {
-      axis = mapCoordinates(static_cast<float>(value),
-                                  curve[4], curve[5]);
-    } else if (static_cast<float>(value) <= curve[6].getX()) {
-      axis = mapCoordinates(static_cast<float>(value),
-                                  curve[5], curve[6]);
-    }
-    return axis;
+int InputSwitchHandler::calibratedRange(int value, int index) {
+  int axis;
+
+  if (static_cast<float>(value) <= curves[index][1].getX()) {
+    axis = mapCoordinates(value, curves[index][0], curves[index].at(1));
+  }
+  // minCurve
+  else if (static_cast<float>(value) < curves[index][2].getX()) {
+    axis = mapCoordinates(value, curves[index][1], curves[index][2]);
+  }
+  // deadzone
+  else if (static_cast<float>(value) >= curves[index][2].getX() &&
+           static_cast<float>(value) <= curves[index][4].getX()) {
+    axis = 0;
+  } else if (static_cast<float>(value) <= curves[index][5].getX()) {
+    axis = mapCoordinates(static_cast<float>(value), curves[index][4],
+                          curves[index][5]);
+  } else if (static_cast<float>(value) <= curves[index][6].getX()) {
+    axis = mapCoordinates(static_cast<float>(value), curves[index][5],
+                          curves[index][6]);
+  }
+  return axis;
 }
 void InputSwitchHandler::setRudder(int index) {
   try {
@@ -465,7 +473,7 @@ void InputSwitchHandler::setRudder(int index) {
       if (counter == 1) {
         int analogValue = stoi(token);
         // minimum to first point
-        rudderAxis = calibratedRange(analogValue, rudderCurve);
+        rudderAxis = calibratedRange(analogValue, 0);
       }
       cout << rudderAxis << " AXIS" << endl;
       token = strtok_s(nullptr, " ", &next_token);
@@ -498,33 +506,29 @@ void InputSwitchHandler::setBrakeAxis(int index) {
 
     counter = 0;
     while (token != nullptr && counter < 3) {
-        int value = stoi(token);
+      int value = stoi(token);
       if (counter == 1) {
-        leftBrake = calibratedRange(value,curves[1]);
+        leftBrake = calibratedRange(value, 1);
       }
       if (counter == 2) {
-        rightBrake = calibratedRange(value, curves[1]);
+        rightBrake = calibratedRange(value, 1);
       }
       token = strtok_s(nullptr, " ", &next_token);
       counter++;
     }
-    int diff = std::abs(leftBrake - oldLeftBrake);
-    cout << diff << endl;
-    if (diff < 3000 || oldRightBrake == NULL) {
-      SimConnect_TransmitClientEvent(
-          connect, 0, inputDefinitions.DEFINITION_AXIS_RIGHT_BRAKE_SET,
-          rightBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-          SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-      oldLeftBrake = leftBrake;
-    }
-    diff = std::abs(rightBrake - oldRightBrake);
-    if (diff < 3000 || oldLeftBrake == NULL) {
-      SimConnect_TransmitClientEvent(
-          connect, 0, inputDefinitions.DEFINITION_AXIS_LEFT_BRAKE_SET,
-          leftBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-          SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-      oldRightBrake = rightBrake;
-    }
+    cout << oldLeftBrake << "OLD L BRAKE" << endl;
+    SimConnect_TransmitClientEvent(
+        connect, 0, inputDefinitions.DEFINITION_AXIS_RIGHT_BRAKE_SET,
+        rightBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+    oldLeftBrake = leftBrake;
+
+    SimConnect_TransmitClientEvent(
+        connect, 0, inputDefinitions.DEFINITION_AXIS_LEFT_BRAKE_SET, leftBrake,
+        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+    oldRightBrake = rightBrake;
+
   } catch (const std::exception &e) {
     cout << "error in brakes" << endl;
   }
@@ -608,8 +612,8 @@ void InputSwitchHandler::switchHandling(int index) {
   if (strlen(receivedString[index]) > 2) {
     cout << "Yes" << endl;
     prefix = std::string(&receivedString[index][0], &receivedString[index][4]);
-    qDebug() << "PREFIX: " << prefix.c_str();
-    qDebug() <<"STRING: "<<receivedString[index];
+    cout << "PREFIX: " << prefix.c_str() << endl;
+    cout << "STRING: " << receivedString[index] << endl;
 
     try {
       int prefixVal = stoi(prefix);
@@ -2756,7 +2760,7 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         default: {
           int value = 0;
-          bool valFound = std::strlen(receivedString[index]) > 5;
+          bool valFound = std::strlen(receivedString[index]) > 6;
           if (valFound) {
             value = stoi(std::string(reinterpret_cast<const char *>(
                                          &receivedString[index]))
@@ -2764,7 +2768,7 @@ void InputSwitchHandler::switchHandling(int index) {
           }
 
           sendWASMCommand(prefixVal, value);
-          cout<<value<<"val"<<endl;
+          cout << value << "val" << endl;
           break;
         }
       }
@@ -2775,6 +2779,12 @@ void InputSwitchHandler::switchHandling(int index) {
   }
 }
 
-void InputSwitchHandler::setCurve(QList<coordinates> curve,int index) {
-  this->curves[index] = std::move(curve);
+void InputSwitchHandler::setCurve(QList<coordinates> curve, int index) {
+  curves[index].clear();
+  for (auto &coord : curve) {
+    curves[index].append(coord);
+  }
+
+  cout << "received value:" << curve[3].getX() << "saved  value "
+       << curves[index][3].getX() << " ";
 }

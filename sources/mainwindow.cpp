@@ -17,6 +17,12 @@
 
 void MainWindow::untick() {}
 
+void MainWindow::outputMenuClosed() { outputMenuOpen = false; }
+
+void MainWindow::eventWindowClosed() { eventwindowOpen = false; }
+
+void MainWindow::optionMenuClosed() { optionMenuOpen = false; }
+
 void MainWindow::openSettings() {
   if (!optionMenuOpen) {
     optionMenuOpen = true;
@@ -27,16 +33,6 @@ void MainWindow::openSettings() {
   }
 }
 
-void MainWindow::outputMenuClosed() {
-  outputMenuOpen = false;
-  qDebug() << "closed";
-}
-
-void MainWindow::optionMenuClosed() {
-  optionMenuOpen = false;
-  qDebug() << "closed";
-}
-
 void MainWindow::openOutputMenu() {
   if (!outputMenuOpen) {
     outputMenuOpen = true;
@@ -45,18 +41,20 @@ void MainWindow::openOutputMenu() {
     wdg->show();
   }
 }
-void MainWindow::openCalibrateAxis(){
-    if (!calibrateAxisOpen) {
-      calibrateAxisOpen = true;
-      QWidget *wdg = new CalibrateAxisMenu;
-      connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
-      wdg->show();
-    }
+void MainWindow::openCalibrateAxis() {
+  if (!calibrateAxisOpen) {
+    calibrateAxisOpen = true;
+    QWidget *wdg = new CalibrateAxisMenu;
+    connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
+    wdg->show();
+  }
 }
 void MainWindow::openEditEventMenu() {
-  if (!outputMenuOpen) {
-    editEventMenuOpen = true;
+  if (!eventwindowOpen) {
+    eventwindowOpen = true;
     QWidget *wdg = new EventWindow;
+    connect(wdg, SIGNAL(closedEventWindow()), this,
+            SIGNAL(closedEventWindow()));
     wdg->show();
   }
 }
@@ -79,7 +77,7 @@ void MainWindow::loadComPortData() {
 
 void MainWindow::installWasm() {
   bool customPathFound =
-      settingsHandler.retrieveSetting("Settings", "communityFolderPathLE");
+      settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel");
   QString pathfound;
   QString sourceString =
       QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
@@ -87,7 +85,7 @@ void MainWindow::installWasm() {
   if (customPathFound) {
     qDebug() << "custom path found";
     pathfound =
-        settingsHandler.retrieveSetting("Settings", "communityFolderPathLE")
+        settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
             ->toString();
   } else {
     QString windowsStorePath =
@@ -104,6 +102,27 @@ void MainWindow::installWasm() {
       pathfound = windowsStorePath;
     } else if (steamFound) {
       pathfound = steamPath;
+    } else {
+      auto notFoundMessage = new QMessageBox();
+      notFoundMessage->setInformativeText(
+          "Could not automatically find the community folder");
+      notFoundMessage->setStandardButtons(QMessageBox::Save |
+                                          QMessageBox::Cancel);
+      int ret = notFoundMessage->exec();
+
+      switch (ret) {
+        case QMessageBox::Save: {
+          QFileDialog dialog(this);
+          dialog.setFileMode(QFileDialog::Directory);
+
+          QString communityFolderPath = dialog.getExistingDirectory();
+          settingsHandler.storeValue("Settings", "communityFolderPathLabel",
+                                     communityFolderPath);
+          break;
+        }
+        case QMessageBox::Cancel:
+          break;
+      }
     }
   }
 
@@ -162,6 +181,8 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::outputMenuClosed);
   connect(this, &MainWindow::closedOptionsMenu, this,
           &MainWindow::optionMenuClosed);
+  connect(this, &MainWindow::closedEventWindow, this,
+          &MainWindow::eventWindowClosed);
   loadComPortData();
 
   qRegisterMetaType<QList<QString>>("QList<QString>");
@@ -182,8 +203,6 @@ MainWindow::MainWindow(QWidget *parent)
   QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
   QMenu *WasmInstall = menuBar()->addMenu("&WASM");
 
-
-
   WasmInstall->addAction(WasmUpdateEventFile);
   WasmInstall->addAction(installWasm);
   OutputSettings->addAction(openOutputMenu);
@@ -198,7 +217,8 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::localUpdateEventFile);
   connect(WasmUpdateEventFile, &QAction::triggered, this,
           &MainWindow::localUpdateEventFile);
-  connect(calibrateAxis, &QAction::triggered,this,&MainWindow::openCalibrateAxis);
+  connect(calibrateAxis, &QAction::triggered, this,
+          &MainWindow::openCalibrateAxis);
   connect(openOutputMenu, &QAction::triggered, this,
           &MainWindow::openOutputMenu);
   connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
@@ -591,7 +611,7 @@ void MainWindow::startOutputs() {
   if (!emptyDualSet && !emptyDualCom) {
     QString key;
     QString setKey;
-    QList<Output *> outputsToMap;
+    QList<Output *> outputsToMap = QList<Output *>();
     outputThread.clearBundles();
     for (int i = 0; i < comList.size(); i++) {
       key = "com" + QString::number(i);

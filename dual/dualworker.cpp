@@ -44,6 +44,9 @@ enum EVENT_ID {
   EVENT_WASM = 2,
   EVENT_WASMINC = 3,
 };
+struct dataStr {
+  float val;
+};
 
 enum DATA_DEFINE_ID {
   DEFINITION_PDR_RADIO,
@@ -53,16 +56,16 @@ enum DATA_DEFINE_ID {
 
 };
 
-struct dualSimVar {
-  int ID;
-  int Offset;
-  float data;
-};
+// struct dualSimVar {
+//  int ID;
+//  int Offset;
+//  float data;
+//};
 
-dualSimVar dualTestVar = {1000, 0, 1.0f};
+// dualSimVar dualTestVar = {1000, 0, 1.0f};
 
-dualSimVar dualTestVarB = {1001, sizeof(float) * 1, 1.0f};
-dualSimVar dualSimVars[2] = {dualTestVar, dualTestVarB};
+// dualSimVar dualTestVarB = {1001, sizeof(float) * 1, 1.0f};
+// dualSimVar dualSimVars[2] = {dualTestVar, dualTestVarB};
 struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
 };
@@ -92,8 +95,9 @@ void sendDualToArduino(float received, std::string prefix, int index,
   //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
   //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
   //                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-  if (mode != 4) {
+  if (mode != 99) {
     cout << "0 checked" << endl;
+    cout << "VALUE = " << received << endl;
     intVal = static_cast<int>(received);
   } else {
     if (received == 0) {
@@ -101,12 +105,13 @@ void sendDualToArduino(float received, std::string prefix, int index,
     } else {
       intVal = 1;
     }
-    cout<<"VALUE = " << intVal<<endl;
+    cout << "VALUE = " << std::fixed << received << endl;
     input_string = prefixString + std::to_string(intVal);
   }
 
-  if (mode == 3) {
+  if (mode == 3 || mode == 97) {
     input_string = prefixString + std::to_string(received);
+    cout << "float " << input_string << endl;
   } else {
     const auto value = intVal;
     input_string = prefixString + std::to_string(value);
@@ -133,8 +138,8 @@ void sendDualToArduino(float received, std::string prefix, int index,
 
   delete[] c_string;
 }
-void DualWorker::lastReceived(QString value){
-    emit updateLastValUI(std::move(value));
+void DualWorker::lastReceived(QString value) {
+  emit updateLastValUI(std::move(value));
 }
 void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                      void *pContext) {
@@ -179,12 +184,17 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
           bundle = i;
         }
       }
+      dataStr *data = (dataStr *)&pObjData->dwData;
+      cout << "STRUCT TEST" << data->val << endl;
       qDebug() << "DATA: " << pObjData->dwData << "ID: " << pObjData->dwID
                << pObjData->dwRequestID << pObjData->dwDefineID
                << pObjData->dwObjectID;
+
       if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-        sendDualToArduino(pObjData->dwData,
-                          std::to_string(pObjData->dwRequestID), bundle, 4);
+        sendDualToArduino(
+            data->val, std::to_string(pObjData->dwRequestID), bundle,
+            dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
+                ->getType());
       }
     } break;
     case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
@@ -227,7 +237,6 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
             qDebug() << "MODE" << mode << "PREFIX"
                      << QString::fromStdString(prefix)
                      << pS->datum[count].value;
-
 
             switch (mode) {
               case 0: {
@@ -281,7 +290,8 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                 break;
             }
             ++count;
-              dualCast->lastReceived( QString::fromStdString(prefix)+ " "+QString::number(pS->datum[count].value));
+            dualCast->lastReceived(QString::fromStdString(prefix) + " " +
+                                   QString::number(pS->datum[count].value));
           }
 
           break;
@@ -298,19 +308,19 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
   }
 }
-void DualWorker::updateEventFile(){
-    char arrayTest[256] = "9999";
+void DualWorker::updateEventFile() {
+  char arrayTest[256] = "9999";
 
-    puts(arrayTest);
-    qDebug() << arrayTest;
+  puts(arrayTest);
+  qDebug() << arrayTest;
 
-    //  SimConnect_TransmitClientEvent(
-    //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-    //      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+  //  SimConnect_TransmitClientEvent(
+  //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+  //      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 
-    SimConnect_SetClientData(dualSimConnect, 1, 12,
-                             SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
-                             &arrayTest);
+  SimConnect_SetClientData(dualSimConnect, 1, 12,
+                           SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
+                           &arrayTest);
 }
 void DualWorker::addBundle(outputBundle *bundle) {
   outputBundles->append(bundle);
@@ -332,7 +342,7 @@ void DualWorker::RadioEvents() {
     if (dualPorts[i]->isConnected()) {
       cout << "CONNECTED" << endl;
       emit(BoardConnectionMade(1, 3));
-        successfullyConnected++;
+      successfullyConnected++;
     } else {
       cout << "NOT CONNECTED" << endl;
     }
@@ -358,38 +368,26 @@ void DualWorker::RadioEvents() {
       SimConnect_CreateClientData(dualSimConnect, ClientDataID, 256,
                                   SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
 
-      SimConnect_RequestClientData(dualSimConnect, ClientDataID, REQUEST_1,
-                                   DEFINITION_1,
-                                   SIMCONNECT_CLIENT_DATA_PERIOD_SECOND,
-                                   SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT);
+      //      SimConnect_MapClientEventToSimEvent(dualSimConnect, EVENT_WASM,
+      //                                          "LVAR_ACCESS.EFIS");
 
-//      SimConnect_MapClientEventToSimEvent(dualSimConnect, EVENT_WASM,
-//                                          "LVAR_ACCESS.EFIS");
+      //      SimConnect_AddClientEventToNotificationGroup(dualSimConnect,
+      //      GROUP_A,
+      //                                                   EVENT_WASM, true);
 
-//      SimConnect_AddClientEventToNotificationGroup(dualSimConnect, GROUP_A,
-//                                                   EVENT_WASM, true);
-
-//      SimConnect_SetNotificationGroupPriority(
-//          dualSimConnect, GROUP_A, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
+      //      SimConnect_SetNotificationGroupPriority(
+      //          dualSimConnect, GROUP_A, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
 
       SimConnect_SetClientData(dualSimConnect, ClientDataID, DEFINITION_1,
-                               SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0,
-                               256, &dataF);
+                               SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
+                               &dataF);
 
-        SimConnect_AddToClientDataDefinition(dualSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO,256,0);
+      SimConnect_AddToClientDataDefinition(
+          dualSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
       dualInputHandler->connect = dualSimConnect;
       dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
 
       dualInputMapper.mapEvents(dualSimConnect);
-      SimConnect_SubscribeToSystemEvent(dualSimConnect, EVENT_SIM_START,
-                                        "1sec");
-      dualOutputMapper.mapOutputs(outputsToMap, dualSimConnect);
-      SimConnect_RequestDataOnSimObject(
-          dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
-          SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
-          SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
-              SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
-          0, 3);
 
       SimConnect_MapClientDataNameToID(dualSimConnect, "wasm.responses", 2);
 
@@ -399,14 +397,31 @@ void DualWorker::RadioEvents() {
       SimConnect_AddToClientDataDefinition(dualSimConnect, 0, 0,
                                            sizeof(dualDataRecv), 0, 0);
 
-      for (auto &simVar : dualSimVars) {
-        SimConnect_AddToClientDataDefinition(
-            dualSimConnect, simVar.ID, simVar.Offset, sizeof(float), 0, 0);
-        SimConnect_RequestClientData(
-            dualSimConnect, 2, simVar.ID, simVar.ID,
-            SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
-            SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED, 0, 0, 0);
-      }
+      SimConnect_RequestClientData(dualSimConnect, ClientDataID, REQUEST_1,
+                                   DEFINITION_1,
+                                   SIMCONNECT_CLIENT_DATA_PERIOD_SECOND,
+                                   SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT);
+
+      //      for (auto &simVar : dualSimVars) {
+      //        SimConnect_AddToClientDataDefinition(
+      //            dualSimConnect, simVar.ID, simVar.Offset, sizeof(float), 0,
+      //            0);
+      //        SimConnect_RequestClientData(
+      //            dualSimConnect, 2, simVar.ID, simVar.ID,
+      //            SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
+      //            SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED, 0, 0, 0);
+      //      }
+      dualOutputMapper->mapOutputs(outputsToMap, dualSimConnect);
+      SimConnect_SubscribeToSystemEvent(dualSimConnect, EVENT_SIM_START,
+                                        "1sec");
+
+      SimConnect_RequestDataOnSimObject(
+          dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
+          SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
+          SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
+              SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
+          0, 3);
+
       while (!abortDual) {
         SimConnect_CallDispatch(dualSimConnect, MyDispatchProcInput, this);
 
@@ -444,7 +459,7 @@ DualWorker::~DualWorker() {
       dualPorts[i]->closeSerial();
     }
   }
-    abortDual = true;
+  abortDual = true;
   mutex.lock();
 
   condition.wakeOne();

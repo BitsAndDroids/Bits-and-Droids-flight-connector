@@ -28,7 +28,6 @@ class OutputWorker : public QThread {
   void GameConnectionMade(int con, int mode);
   void BoardConnectionMade(int con, int mode);
 
-
  public:
   OutputWorker();
   ~OutputWorker();
@@ -46,10 +45,8 @@ class OutputWorker : public QThread {
 
   void addBundle(outputBundle* bundle);
 
-
-
  private:
-  outputMapper outputMapper;
+  outputMapper* outputMapper = new class outputMapper();
   bool connected = false;
   QList<Output*> outputsToMap;
   QList<outputBundle*>* outputBundles = new QList<outputBundle*>();

@@ -133,11 +133,12 @@ class FormBuilder : public QObject {
 
   void changeSlider();
 
-  int minRudderValue = 0;
+  int minValue[4] = {0, 0, 0, 0};
 
-  int maxRudderValue = 1023;
+  int maxValue[4] = {1023, 1023, 1023, 1023};
 
-  int neutralRudderValue = (maxRudderValue - minRudderValue) / 2;
+  int neutralValue[4] = {((1023 - 0) / 2), ((1023 - 0) / 2), ((1023 - 0) / 2),
+                         ((1023 - 0) / 2)};
 };
 
 #endif  // FORMBUILDER_H

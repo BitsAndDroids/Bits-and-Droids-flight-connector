@@ -17,5 +17,8 @@
         <file>images/avionicsSwitchOn.png</file>
         <file>images/refreshicon.png</file>
         <file>json/outputs.json</file>
+        <file>fonts/Roboto-Black.ttf</file>
+        <file>fonts/Roboto-Bold.ttf</file>
+        <file>fonts/Roboto-Regular.ttf</file>
     </qresource>
 </RCC>

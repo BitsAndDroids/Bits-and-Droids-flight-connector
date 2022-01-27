@@ -13,7 +13,18 @@ void optionsMenu::closeEvent(QCloseEvent *event) {
   qDebug() << 'clEvent';
   delete this;
 }
+void optionsMenu::selectFile() {
+  QFileDialog dialog(this);
+  dialog.setFileMode(QFileDialog::Directory);
+  QString communityFolderPath = dialog.getExistingDirectory();
+  cout << communityFolderPath.toStdString().c_str() << endl;
+  if (!communityFolderPath.isNull()) {
+    auto pathLabel = this->findChild<QLabel *>("communityFolderPathLabel");
 
+    pathLabel->setText(communityFolderPath);
+    pathLabel->adjustSize();
+  }
+}
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
   uiOptions->setupUi(this);
@@ -31,12 +42,20 @@ optionsMenu::optionsMenu(QWidget *parent)
           settingsHandler.retrieveSetting("Setting", "CBR")->toString());
     }
   }
-  auto communityFolderPathLBL = new QLabel("Community folder path");
-  auto communityFolderPathLE = new QLineEdit();
-  communityFolderPathLE->setObjectName("communityFolderPathLE");
-  uiOptions->vlOptions->addWidget(communityFolderPathLBL);
-  uiOptions->vlOptions->addWidget(communityFolderPathLE);
+  auto communityFolderPathLabel = new QLabel();
+  auto communityFolderFileBtn = new QPushButton("Select community folder");
+  connect(communityFolderFileBtn, &QPushButton::clicked, this,
+          &optionsMenu::selectFile);
+  communityFolderFileBtn->setMaximumWidth(150);
+  communityFolderPathLabel->setMaximumWidth(250);
 
+  communityFolderPathLabel->setWordWrap(true);
+  communityFolderPathLabel->setSizePolicy(QSizePolicy::Preferred,
+                                          QSizePolicy::MinimumExpanding);
+  uiOptions->vlOptions->addWidget(communityFolderFileBtn);
+  communityFolderPathLabel->setObjectName("communityFolderPathLabel");
+  uiOptions->vlOptions->addWidget(communityFolderPathLabel);
+  uiOptions->vlOptions->setSizeConstraint(QLayout::SetMinimumSize);
   uiOptions->vlOptions->setAlignment(Qt::AlignTop);
   // uiOptions->vlEngineRange->addLayout(builder->createRudderRow());
   uiOptions->vlEngineRange->addLayout(builder->RangeBuilder());
@@ -82,6 +101,13 @@ optionsMenu::optionsMenu(QWidget *parent)
       uiOptions->buttonGroup->button(value)->click();
     }
   }
+  if (!settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+           ->isNull()) {
+    communityFolderPathLabel->setText(
+        settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+            ->toString());
+    communityFolderPathLabel->adjustSize();
+  }
 }
 
 optionsMenu::~optionsMenu() {
@@ -90,21 +116,17 @@ optionsMenu::~optionsMenu() {
 }
 
 void optionsMenu::on_saveSettingsBtn_clicked() {
+  QLabel *communityFolderPath =
+      this->findChild<QLabel *>("communityFolderPathLabel");
+  settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
+                             communityFolderPath->text());
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
   qDebug() << "size" << allLabels.size();
   for (auto allLabel : allLabels) {
     QString name = allLabel->objectName();
     qDebug() << "Clicked" << name;
-    // Only if someone adds a custom path save the location
-    if (name == "communityFolderPathLE") {
-      QString pathText = allLabel->text();
-      if (!pathText.isNull()) {
-        settingsHandler.storeValue("Settings", name, pathText);
-      }
-    } else {
-      settingsHandler.storeValue("Settings", name, allLabel->text());
-    }
+    settingsHandler.storeValue("Settings", name, allLabel->text());
   }
   settingsHandler.storeValue("Settings", "CBR",
                              uiOptions->baudComboBox->currentText());
@@ -116,7 +138,6 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
                                rangeLineEdit->text());
   }
-
 
   QString idleStr = "Engine " + QString::number(1) + "Min";
   int idleCutoff = settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();

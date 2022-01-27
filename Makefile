@@ -406,17 +406,7 @@ distclean: debug-distclean release-distclean  FORCE
 first: $(first) copydata
 
 copydata:
-	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
-
-first: $(first) copydata
-
-copydata:
-	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
-
-first: $(first) copydata
-
-copydata:
-	$(COPY_DIR) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\events" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
+	$(COPY_FILE) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\dist" "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\release"
 
 debug-mocclean:
 	$(MAKE) -f $(MAKEFILE).Debug mocclean

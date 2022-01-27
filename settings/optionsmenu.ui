@@ -75,7 +75,7 @@ QSlider::handle:horizontal {
        </size>
       </property>
       <property name="text">
-       <string>100</string>
+       <string>5</string>
       </property>
      </widget>
     </item>
@@ -104,7 +104,7 @@ QSlider::handle:horizontal {
        </size>
       </property>
       <property name="text">
-       <string>15</string>
+       <string>3</string>
       </property>
      </widget>
     </item>
@@ -191,7 +191,7 @@ QSlider::handle:horizontal {
     </font>
    </property>
    <property name="text">
-    <string>Advanced options (altering these values can impact performance)</string>
+    <string>Advanced options (can impact performance)</string>
    </property>
   </widget>
   <widget class="QFrame" name="widgetRanges">

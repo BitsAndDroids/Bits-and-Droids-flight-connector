@@ -1,10 +1,6 @@
-#include <outputs/set.h>
-
 #include <QApplication>
 
 #include "headers/mainwindow.h"
-
-const char* portName;
 
 int main(int argc, char* argv[])
 

@@ -4,31 +4,37 @@
 
 #include <QLabel>
 
-#include "formbuilder.h"
 #include "ui_outputmenu.h"
-
-FormBuilder formBuilder;
-outputHandler outputHandler;
-SetHandler setHandler;
 
 OutputMenu::OutputMenu(QWidget *parent)
     : QWidget(parent), ui(new Ui::OutputMenu) {
   ui->setupUi(this);
   auto *foundSets = new QList<set>();
   foundSets = setHandler.getSets();
-
+  this->setWindowTitle("Output menu");
   connect(&formBuilder, &FormBuilder::addSet, this, &OutputMenu::addNewSet);
   connect(&formBuilder, &FormBuilder::setEdited, this, &OutputMenu::editSet);
+  auto gridLayout = new QGridLayout();
+  gridLayout->setObjectName("gridFrame");
+  auto leftCol = new QVBoxLayout();
+  leftCol->setAlignment(Qt::AlignTop);
+  auto rightCol = new QVBoxLayout();
+  rightCol->setAlignment(Qt::AlignTop);
+  rightCol->setObjectName("rightCol");
+  leftCol->addLayout(formBuilder.generateOutputSetList());
 
-  ui->containerLayout->setAlignment(Qt::AlignLeft);
-  ui->containerLayout->addLayout(formBuilder.generateOutputSetList());
-  ui->containerLayout->addLayout(formBuilder.generateOutputControls());
+  //  gridLayout->addLayout(formBuilder.generateOutputControls(), 2, 0);
+  //  gridLayout->addLayout(formBuilder.generateOutputSetList(), 1, 0);
+  gridLayout->addLayout(leftCol, 0, 0);
+
+  // ui->containerLayout->setAlignment(Qt::AlignLeft);
+  ui->containerLayout->addLayout(gridLayout);
 
   auto *activeLayout = new QVBoxLayout();
   activeLayout->setObjectName("activeContainer");
 
-  ui->containerLayout->addLayout(activeLayout);
-
+  // gridLayout->addLayout(activeLayout, 2, 0);
+  // rightCol->addLayout(activeLayout);
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   for (const auto &foundSet : *foundSets) {
     // qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
@@ -36,12 +42,20 @@ OutputMenu::OutputMenu(QWidget *parent)
         ->addWidget(formBuilder.generateSetRow(foundSet));
   }
 
-  ui->containerLayout->addWidget(formBuilder.generateOutputTabs());
-
   auto *saveEdit = new QPushButton("Save edit");
   saveEdit->setObjectName("btnSsaveEdit");
   connect(saveEdit, &QAbstractButton::clicked, this, &OutputMenu::saveEdit);
-  ui->containerLayout->addWidget(saveEdit);
+  // gridLayout->addWidget(saveEdit, 4, 1);
+  auto buttonRow = new QHBoxLayout();
+  buttonRow->addLayout(formBuilder.generateOutputControls());
+  buttonRow->addWidget(saveEdit);
+  leftCol->addLayout(buttonRow);
+  auto rightGrid = new QGridLayout();
+  rightGrid->setObjectName("rightGrid");
+  rightGrid->addLayout(activeLayout, 1, 0);
+  rightCol->addLayout(rightGrid);
+  rightGrid->addWidget(formBuilder.generateOutputTabs(), 0, 0);
+  gridLayout->addLayout(rightCol, 0, 1);
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
   ui->widget->adjustSize();
   this->adjustSize();
@@ -62,16 +76,23 @@ void OutputMenu::closeEvent(QCloseEvent *event) {
 
 void OutputMenu::addNewSet() {
   auto *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
-  set *newSet = new set(lineEditName->text());
 
-  set *setSaved = setHandler.saveSet(newSet);
-  ui->widget->findChild<QVBoxLayout *>("outputSetList")
-      ->addWidget(formBuilder.generateSetRow(*setSaved));
+  bool ok;
+  QString name =
+      QInputDialog::getText(this, tr("Name"), tr("Enter a name:"),
+                            QLineEdit::Normal, QDir::home().dirName(), &ok);
+  if (ok && !name.isEmpty()) {
+    auto *newSet = new set(name);
+
+    set *setSaved = setHandler.saveSet(newSet);
+    ui->widget->findChild<QVBoxLayout *>("outputSetList")
+        ->addWidget(formBuilder.generateSetRow(*setSaved));
+  }
 }
 
 void OutputMenu::removeSetAction(QString id) {
   // QPushButton *btn = qobject_cast<QPushButton*>(test);
-  qDebug() << id.toInt();
+  std::cout << id.toInt() << " : SET TO DELETE" << std::endl;
   auto removeWidget = ui->widget->findChild<QWidget *>(id);
   removeWidget->hide();
   setHandler.removeSet(id);
@@ -89,10 +110,11 @@ void OutputMenu::editSet(QString id) {
 
   ui->widget->adjustSize();
 
-  auto *container = ui->widget->findChild<QVBoxLayout *>("activeContainer");
+  auto *container = ui->widget->findChild<QGridLayout *>("rightGrid");
   QWidget *setActiveWidget = formBuilder.generateActiveSet(&setFound);
-  container->addWidget(setActiveWidget);
-
+  container->setAlignment(Qt::AlignTop);
+  // container->addWidget(setActiveWidget, 0, 0);
+  container->addWidget(setActiveWidget, 1, 0);
   auto *setHeader = ui->widget->findChild<QLabel *>("setNameHeader");
 
   setHeader->setText(setFound.getSetName());
@@ -112,9 +134,12 @@ void OutputMenu::editSet(QString id) {
   QMap<int, Output *> outputsToToggle = setFound.getOutputs();
   QMap<int, Output *>::iterator i;
   for (i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
-    ui->widget
-        ->findChild<QCheckBox *>("cb" + QString::number(i.value()->getId()))
-        ->setChecked(true);
+    if (this->findChild<QCheckBox *>("cb" +
+                                     QString::number(i.value()->getId()))) {
+      ui->widget
+          ->findChild<QCheckBox *>("cb" + QString::number(i.value()->getId()))
+          ->setChecked(true);
+    }
   }
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->adjustSize();
   ui->widget->adjustSize();
@@ -127,13 +152,11 @@ void OutputMenu::saveEdit() {
   for (auto &i : cbList) {
     if (i->isChecked()) {
       QString cbName = i->objectName();
-      qDebug() << cbName;
-      Output *outputSelected =
-          outputHandler.findOutputById(cbName.mid(2).toInt());
-      ;
-
-      qDebug() << outputSelected->getCbText();
-      setToEdit.addOutput(outputSelected);
+      if (outputHandler->findOutputById(cbName.mid(2).toInt())) {
+        Output *outputSelected =
+            outputHandler->findOutputById(cbName.mid(2).toInt());
+        setToEdit.addOutput(outputSelected);
+      }
     }
   }
 
