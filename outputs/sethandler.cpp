@@ -70,8 +70,10 @@ void SetHandler::updateSets() {
     auto outputMap = QMap<int, Output *>();
     for (auto &output : setFound.getOutputs()) {
       auto outputChecked = outputHandler->findOutputById(output->getId());
-
-      outputMap.insert(outputChecked->getId(), outputChecked);
+      if (outputChecked->getId() != -1) {
+        outputMap.insert(outputChecked->getId(), outputChecked);
+        qDebug() << "after";
+      }
     }
     setFound.setOutputs(outputMap);
     saveSet(&setFound);
@@ -108,18 +110,22 @@ set SetHandler::fromJson(QJsonDocument *docToConvert) {
     foundOutput->setOffset(tempObj.value("offset").toInt());
     auto test = outputHandler->getAvailableOutputs();
     if (outputHandler->getAvailableOutputs().size() > 0) {
-      if (outputHandler->findOutputById(foundOutput->getId() != -1)) {
+      if (outputHandler->findOutputById(foundOutput->getType() != -1)) {
+        std::cout << "OUI" << std::endl;
         outputsConverted->insert(foundOutput->getId(), foundOutput);
       } else {
+        std::cout << "No" << std::endl;
         removeOutputFromSet(convertedSet.getID(), foundOutput->getId());
       }
     }
   }
+  std::cout << "HIT" << std::endl;
   convertedSet.setOutputs(*outputsConverted);
   return convertedSet;
 }
 void SetHandler::removeOutputFromSet(int setId, int outputId) {
   set setFound = getSetById(QString::number(setId));
+  std::cout << "remove from set" << std::endl;
   setFound.removeOutput(outputId);
   saveSet(&setFound);
 }

@@ -122,10 +122,6 @@ void outputHandler::readOutputs() {
 
         newRow->setCbText(
             QString::fromStdString(row.substr(commentDelimiter + 2)));
-        std::cout << row << std::endl;
-        std::cout << "CUSTOM EVENT="
-                  << newRow->getCbText().toStdString().c_str()
-                  << "OFFSET = " << newRow->getOffset() << std::endl;
 
         availableOutputs.insert(newRow->getId(), newRow);
         offsetCounter++;
@@ -135,14 +131,13 @@ void outputHandler::readOutputs() {
   }
   outputsCategorized.append(*outputCategory);
   file.close();
-  std::cout << applicationPath.toStdString() << std::endl;
   qDebug() << availableOutputs.size()
            << " outputs saved in sets:" << outputsCategorized.size()
            << " AVAILABLE " << availableOutputs.size();
 }
 Output *outputHandler::findOutputById(int idToFind) {
   qDebug() << "SEARCHING FOR " << idToFind;
-  qDebug() << availableOutputs[idToFind] << "FOUND";
+  // qDebug() << availableOutputs[idToFind] << "FOUND";
   if (!availableOutputs.contains(idToFind)) {
     auto emptyOutput =
         new Output(-1, "empty", "none", 0.0, -1, "empty", -1, -1);
