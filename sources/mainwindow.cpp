@@ -897,5 +897,5 @@ int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
   }
   return index;
 }
-
+void MainWindow::closeEvent(QCloseEvent *event) { delete ui; }
 MainWindow::~MainWindow() { delete ui; }

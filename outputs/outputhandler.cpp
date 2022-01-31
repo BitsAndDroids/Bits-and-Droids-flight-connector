@@ -143,5 +143,11 @@ void outputHandler::readOutputs() {
 Output *outputHandler::findOutputById(int idToFind) {
   qDebug() << "SEARCHING FOR " << idToFind;
   qDebug() << availableOutputs[idToFind] << "FOUND";
-  return availableOutputs[idToFind];
+  if (!availableOutputs.contains(idToFind)) {
+    auto emptyOutput =
+        new Output(-1, "empty", "none", 0.0, -1, "empty", -1, -1);
+    return emptyOutput;
+  } else {
+    return availableOutputs[idToFind];
+  }
 }

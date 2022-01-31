@@ -96,6 +96,7 @@ enum modes { INPUT = 0, INPUTVALUE = 1, OUTPUT = 3, AXIS = 9 };
 QList<tableRow> tableRows = QList<tableRow>();
 QList<int> tableRowsToDelete = QList<int>();
 QList<int> rowsChanged = QList<int>();
+
 EventWindow::EventWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::EventWindow) {
   ui->setupUi(this);
@@ -103,10 +104,13 @@ EventWindow::EventWindow(QWidget *parent)
   QStringList headers = {"Prefix",       "Event",   "Type",  "Datatype",
                          "Update every", "Comment", "Remove"};
   auto eventGrid = new QGridLayout();
+  tableRows.clear();
+  tableRowsToDelete.clear();
+  rowsChanged.clear();
   readFile();
   int loadedFontID =
       QFontDatabase::addApplicationFont(":/fonts/Roboto-Black.ttf");
-  cout << "FONT LOADED" << loadedFontID << endl;
+
   QFont Triforce("Roboto Black", 11, 900);
   eventTable->horizontalHeader()->setFont(Triforce);
   eventTable->setRowCount(tableRows.size());
@@ -142,9 +146,6 @@ EventWindow::EventWindow(QWidget *parent)
 
   addBtn->setFont(Triforce);
   QFontDatabase db;
-  for (int i = 0; i < db.families().size(); i++) {
-    qDebug() << db.families().at(i);
-  }
   QHBoxLayout *btnRow = new QHBoxLayout();
   eventGrid->addLayout(btnRow, 1, 1);
   btnRow->addWidget(addBtn);
@@ -264,8 +265,6 @@ void EventWindow::delChanged() {
   auto sendCb = qobject_cast<QCheckBox *>(sender());
 
   int index = sendCb->objectName().mid(3).toInt();
-  cout << "INDEX: " << index
-       << " CBNAME: " << sendCb->objectName().toStdString().c_str() << endl;
   if (sendCb->checkState() == Qt::Checked) {
     tableRowsToDelete.append(index);
   } else {
@@ -381,6 +380,7 @@ void EventWindow::saveBtnPressed() {
     case QMessageBox::Save:
 
       for (auto &changedRow : rowsChanged) {
+        cout << "CHANGED " << endl;
         tableRows[changedRow].prefix =
             eventTable->item(changedRow, 0)->text().toStdString();
         tableRows[changedRow].event =
@@ -405,6 +405,8 @@ void EventWindow::saveBtnPressed() {
             newType = 3;
             break;
         }
+        tableRows[changedRow].updateEvery =
+            eventTable->item(changedRow, 4)->text().toStdString();
         tableRows[changedRow].type = to_string(newType);
         if (tableRows[changedRow].type == "3") {
           int newDatatype =
@@ -430,8 +432,11 @@ void EventWindow::saveBtnPressed() {
         }
       }
       for (auto &del : tableRowsToDelete) {
+        cout << "FOUND DELETE" << tableRows[del].event << endl;
         eventTable->removeRow(del);
-        tableRows.remove(del);
+        tableRows.removeAt(del);
+        cout << "FOUND DELETE AFTER" << tableRows[del].event << endl;
+        cout << "DELTED " << del << endl;
       }
       writeFile();
       break;
@@ -446,6 +451,7 @@ void EventWindow::writeFile() {
       qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/";
   QFile newEventsFile(applicationPath + "events.txt");
   newEventsFile.open(QIODevice::ReadWrite);
+  newEventsFile.resize(0);
   QTextStream out(&newEventsFile);
   for (auto &row : tableRows) {
     QString typeString = "";
@@ -495,7 +501,6 @@ QString EventWindow::checkSpaces(std::string stringToCheck) {
 void EventWindow::comboBoxChanged() {
   auto senderComboBox = qobject_cast<QComboBox *>(sender());
   int index = stoi(senderComboBox->objectName().toStdString().substr(2));
-  cout << index << endl;
   if (checkIfRowChanged(index)) {
     if (rowsChanged.indexOf(index) == -1) {
       rowsChanged.append(index);
@@ -516,11 +521,16 @@ void EventWindow::comboBoxChanged() {
     }
     dataTypeCombobox->setObjectName("dt" + QString::number(index));
     eventTable->setCellWidget(index, 3, dataTypeCombobox);
+    eventTable->removeCellWidget(index, 4);
+    QTableWidgetItem *emptyUpdateEvery = new QTableWidgetItem("0");
+    eventTable->setItem(index, 4, emptyUpdateEvery);
+
   } else {
     eventTable->removeCellWidget(index, 3);
     QTableWidgetItem *naTextWidget = new QTableWidgetItem("n/a");
     naTextWidget->setFlags(Qt::ItemIsSelectable);
     eventTable->setItem(index, 3, naTextWidget);
+    eventTable->setItem(index, 4, naTextWidget);
   }
 }
 
@@ -577,8 +587,8 @@ EventWindow::~EventWindow() {
 }
 
 void EventWindow::closeEvent(QCloseEvent *event) {
-  qDebug() << 'clEvent';
-  delete this;
+  emit EventWindow::closedEventWindow();
+  delete ui;
 }
 void EventWindow::readFile() {
   QString applicationPath =

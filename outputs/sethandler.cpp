@@ -70,6 +70,7 @@ void SetHandler::updateSets() {
     auto outputMap = QMap<int, Output *>();
     for (auto &output : setFound.getOutputs()) {
       auto outputChecked = outputHandler->findOutputById(output->getId());
+
       outputMap.insert(outputChecked->getId(), outputChecked);
     }
     setFound.setOutputs(outputMap);
@@ -107,7 +108,7 @@ set SetHandler::fromJson(QJsonDocument *docToConvert) {
     foundOutput->setOffset(tempObj.value("offset").toInt());
     auto test = outputHandler->getAvailableOutputs();
     if (outputHandler->getAvailableOutputs().size() > 0) {
-      if (outputHandler->findOutputById(foundOutput->getId())) {
+      if (outputHandler->findOutputById(foundOutput->getId() != -1)) {
         outputsConverted->insert(foundOutput->getId(), foundOutput);
       } else {
         removeOutputFromSet(convertedSet.getID(), foundOutput->getId());

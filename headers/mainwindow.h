@@ -101,6 +101,7 @@ class MainWindow : public QMainWindow {
   void BoardConnectionMade(int con, int mode);
 
  private:
+  void closeEvent(QCloseEvent *event) override;
   enum warnings { NOSET, NOCOMPORT };
   SetHandler *setHandler = new SetHandler();
   SettingsHandler settingsHandler;
