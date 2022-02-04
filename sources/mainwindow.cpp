@@ -620,7 +620,6 @@ void MainWindow::startOutputs() {
       QString keyValue = comList[i]->currentText();
       QString setKeyValue = setList[i]->currentText();
 
-      std::cout << keyValue.toStdString() << std::endl;
       settingsHandler.storeValue("outputComs", key,
                                  convertComPort(keyValue).c_str());
 
@@ -699,7 +698,6 @@ void MainWindow::startDual() {
       QString keyValue = comList[i]->currentText();
       QString setKeyValue = setList[i]->currentText();
       qDebug() << setKeyValue;
-      std::cout << keyValue.toStdString() << std::endl;
       settingsHandler.storeValue("dualComs", key,
                                  convertComPort(keyValue).c_str());
 
@@ -722,7 +720,6 @@ void MainWindow::startDual() {
       dualThread.setOutputsToMap(outputsToMap);
       bundle->setOutputsInSet(*outputs);
       dualThread.addBundle(bundle);
-      cout << "added" << endl;
       settingsHandler.storeValue("dualSets", setKey, id);
     }
 
