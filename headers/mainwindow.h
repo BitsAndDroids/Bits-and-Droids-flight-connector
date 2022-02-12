@@ -64,6 +64,7 @@ class MainWindow : public QMainWindow {
   void closedEventWindow();
 
   void closedOptionsMenu();
+  void closedCalibrateAxisMenu();
 
   void updateLastValUI(QString lastVal);
 
@@ -85,7 +86,7 @@ class MainWindow : public QMainWindow {
   void on_updateButton_clicked();
 
   void outputMenuClosed();
-
+  void calibrateAxisMenuClosed();
   void optionMenuClosed();
   void eventWindowClosed();
 
@@ -108,7 +109,7 @@ class MainWindow : public QMainWindow {
 
   bool outputMenuOpen = false;
   bool eventwindowOpen = false;
-  bool calibrateAxisOpen = false;
+  bool calibrateAxisMenuOpen = false;
   bool optionMenuOpen = false;
 
   void stopInput();

@@ -46,7 +46,10 @@ CalibrateAxisMenu::CalibrateAxisMenu(QWidget *parent)
   }
 }
 
-CalibrateAxisMenu::~CalibrateAxisMenu() { delete ui; }
+CalibrateAxisMenu::~CalibrateAxisMenu() {
+  emit CalibrateAxisMenu::closedCalibrateAxisMenu();
+  delete ui;
+}
 
 void CalibrateAxisMenu::saveSettings() {
   for (int i = 0; i < curves.size(); i++) {
@@ -113,3 +116,4 @@ QGridLayout *CalibrateAxisMenu::GenerateCurveLayouts() {
   curveGrid->addWidget(saveBtn, 2, 0);
   return curveGrid;
 }
+void CalibrateAxisMenu::closeEvent(QCloseEvent *event) { delete this; }

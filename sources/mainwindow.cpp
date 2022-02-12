@@ -18,6 +18,7 @@
 void MainWindow::untick() {}
 
 void MainWindow::outputMenuClosed() { outputMenuOpen = false; }
+void MainWindow::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
 
 void MainWindow::eventWindowClosed() { eventwindowOpen = false; }
 
@@ -42,10 +43,11 @@ void MainWindow::openOutputMenu() {
   }
 }
 void MainWindow::openCalibrateAxis() {
-  if (!calibrateAxisOpen) {
-    calibrateAxisOpen = true;
+  if (!calibrateAxisMenuOpen) {
+    calibrateAxisMenuOpen = true;
     QWidget *wdg = new CalibrateAxisMenu;
-    connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
+    connect(wdg, SIGNAL(closedCalibrateAxisMenu()), this,
+            SIGNAL(closedCalibrateAxisMenu()));
     wdg->show();
   }
 }
@@ -181,6 +183,8 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::optionMenuClosed);
   connect(this, &MainWindow::closedEventWindow, this,
           &MainWindow::eventWindowClosed);
+  connect(this, &MainWindow::closedCalibrateAxisMenu, this,
+          &MainWindow::calibrateAxisMenuClosed);
   loadComPortData();
 
   qRegisterMetaType<QList<QString>>("QList<QString>");

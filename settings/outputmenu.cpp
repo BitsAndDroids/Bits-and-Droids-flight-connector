@@ -69,10 +69,7 @@ OutputMenu::~OutputMenu() {
   qDebug() << "closed here";
   delete ui;
 }
-void OutputMenu::closeEvent(QCloseEvent *event) {
-  qDebug() << 'clEvent';
-  delete this;
-}
+void OutputMenu::closeEvent(QCloseEvent *event) { delete this; }
 
 void OutputMenu::addNewSet() {
   auto *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
