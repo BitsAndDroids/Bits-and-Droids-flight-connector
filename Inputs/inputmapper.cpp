@@ -570,7 +570,7 @@ void InputMapper::mapEvents(HANDLE mapConnect) {
       "COM_RADIO_WHOLE_INC");
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_COM2_RADIO_WHOLE_DEC,
-      "COM2_RADIO_WHOLE_INC");
+      "COM2_RADIO_WHOLE_DEC");
   SimConnect_MapClientEventToSimEvent(
       mapConnect, definitionsMap.DEFINITION_COM2_RADIO_WHOLE_INC,
       "COM2_RADIO_WHOLE_INC");
