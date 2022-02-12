@@ -13,9 +13,41 @@ CalibrateAxisMenu::CalibrateAxisMenu(QWidget *parent)
   ui->setupUi(this);
   builder->loadPointsToPlot(curves);
   this->setLayout(GenerateCurveLayouts());
+  int counter = 0;
+  for (auto &curve : curves) {
+    if (!settingsHandler
+             .retrieveSubSetting(curve + "Series", "sliders",
+                                 QString::number(counter) + curve + "Deadzone")
+             ->isNull()) {
+      this->findChild<QSlider *>(QString::number(counter) + curve + "Deadzone")
+          ->setValue(settingsHandler
+                         .retrieveSubSetting(
+                             curve + "Series", "sliders",
+                             QString::number(counter) + curve + "Deadzone")
+                         ->toInt());
+
+      this->findChild<QSlider *>(QString::number(counter) + curve +
+                                 "MinSensitivity")
+          ->setValue(settingsHandler
+                         .retrieveSubSetting(curve + "Series", "sliders",
+                                             QString::number(counter) + curve +
+                                                 "MinSensitivity")
+                         ->toInt());
+
+      this->findChild<QSlider *>(QString::number(counter) + curve +
+                                 "PlusSensitivity")
+          ->setValue(settingsHandler
+                         .retrieveSubSetting(curve + "Series", "sliders",
+                                             QString::number(counter) + curve +
+                                                 "PlusSensitivity")
+                         ->toInt());
+    }
+    counter++;
+  }
 }
 
 CalibrateAxisMenu::~CalibrateAxisMenu() { delete ui; }
+
 void CalibrateAxisMenu::saveSettings() {
   for (int i = 0; i < curves.size(); i++) {
     QList<coordinates> *coords = builder->getCoordinates(i);
@@ -30,7 +62,7 @@ void CalibrateAxisMenu::saveSettings() {
       settingsHandler.storeSubGroup(curves[i] + "Series", "sliders", sliderName,
                                     sliderFound->value());
     }
-    cout << coords->size() << "size" << endl;
+    QStringList rudderLineEdits = builder->getCalibrateLabels();
     for (int j = 0; j < coords->size(); j++) {
       cout << i << endl;
       settingsHandler.storeSubGroup(curves[i] + "Series", "axis",
@@ -38,12 +70,23 @@ void CalibrateAxisMenu::saveSettings() {
       settingsHandler.storeSubGroup(curves[i] + "Series", "value",
                                     QString::number(j), coords->at(j).getY());
     }
-    QStringList rudderLineEdits = builder->getCalibrateLabels();
-    for (auto &line : rudderLineEdits) {
+
+    for (int j = 0; j < rudderLineEdits.size(); j++) {
+      cout << (QString::number(i) + QString::number(j) + curves[i] +
+               rudderLineEdits[j])
+                  .toStdString()
+                  .c_str()
+           << endl;
+      // Format of the lineEdit objectnames =
+      // <NrOfCurve><Nr1-3><NameOfCurve><NameOfLineEditType>
       auto rudderValsFound =
-          findChild<QLineEdit *>(curves[i] + line)->text().toInt();
-      settingsHandler.storeSubGroup(curves[i] + "Series", "calibrations", line,
-                                    rudderValsFound);
+          findChild<QLineEdit *>(QString::number(i) + QString::number(j) +
+                                 curves[i] + rudderLineEdits[j])
+              ->text()
+              .toInt();
+
+      settingsHandler.storeSubGroup(curves[i] + "Series", "calibrations",
+                                    rudderLineEdits[j], rudderValsFound);
     }
   }
 }
@@ -63,30 +106,7 @@ QGridLayout *CalibrateAxisMenu::GenerateCurveLayouts() {
                          counter % 2);
     counter++;
   }
-  for (auto &curve : curves) {
-    if (!settingsHandler
-             .retrieveSubSetting(curve + "Series", "sliders",
-                                 curve + "Deadzone")
-             ->isNull()) {
-      this->findChild<QSlider *>(curve + "Deadzone")
-          ->setValue(settingsHandler
-                         .retrieveSubSetting(curve + "Series", "sliders",
-                                             curve + "Deadzone")
-                         ->toInt());
-      this->findChild<QSlider *>(curve + "MinSensitivity")
-          ->setValue(settingsHandler
-                         .retrieveSubSetting(curve + "Series", "sliders",
-                                             curve + "MinSensitivity")
-                         ->toInt());
 
-      this->findChild<QSlider *>(curve + "PlusSensitivity")
-          ->setValue(settingsHandler
-                         .retrieveSubSetting(curve + "Series", "sliders",
-                                             curve + "PlusSensitivity")
-                         ->toInt());
-      // Range handling
-    }
-  }
   auto saveBtn = new QPushButton("Save");
   connect(saveBtn, &QPushButton::clicked, this,
           &CalibrateAxisMenu::saveSettings);

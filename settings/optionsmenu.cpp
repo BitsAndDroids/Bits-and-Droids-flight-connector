@@ -9,10 +9,7 @@
 
 using namespace std;
 
-void optionsMenu::closeEvent(QCloseEvent *event) {
-  qDebug() << 'clEvent';
-  delete this;
-}
+void optionsMenu::closeEvent(QCloseEvent *event) { delete this; }
 void optionsMenu::selectFile() {
   QFileDialog dialog(this);
   dialog.setFileMode(QFileDialog::Directory);
@@ -28,7 +25,6 @@ void optionsMenu::selectFile() {
 optionsMenu::optionsMenu(QWidget *parent)
     : QWidget(parent), uiOptions(new Ui::optionsMenu) {
   uiOptions->setupUi(this);
-
   QStringList keys = *settingsHandler.retrieveKeys("Settings");
   if (!keys.empty()) {
     foreach (const QString &key, keys) {

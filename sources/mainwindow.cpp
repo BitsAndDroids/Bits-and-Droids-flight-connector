@@ -127,7 +127,6 @@ void MainWindow::installWasm() {
   }
 
   QString destinationString = pathfound + "/BitsAndDroidsModule";
-  std::cout << "destination: " << destinationString.toStdString() << std::endl;
   copyFolder(sourceString, destinationString);
 }
 
@@ -171,10 +170,9 @@ void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
-  updateButton = ui->updateButton;
   ui->setupUi(this);
-  std::cout << "11111" << std::endl;
-  std::cout << inputComRowCounter << "Rows init" << std::endl;
+
+  updateButton = ui->updateButton;
 
   availableSets = formbuilder.getAvailableSets();
   connect(this, &MainWindow::closedOutputMenu, this,
@@ -811,15 +809,11 @@ void MainWindow::refreshComs(int mode) {
   QList<QString> coms = formbuilder.getAvailableComPorts();
 
   for (int i = 0; i < comList.size(); i++) {
-    qDebug() << "hit size:" << comList.size();
-
     comList[i]->clear();
     for (auto &com : coms) {
       comList[i]->addItem(com);
-      qDebug() << com;
     }
   }
-  qDebug() << "refresh" << mode;
 }
 
 void MainWindow::stopMode(int mode) {
