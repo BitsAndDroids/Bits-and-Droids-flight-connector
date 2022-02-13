@@ -470,12 +470,19 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
   activeSet->addWidget(setNameHeader);
 
   auto *outputGrid = new QGridLayout();
+
+  auto gridWidget = new QWidget();
+
   int columnCounter = 0;
   int rowCounter = 0;
+  int amntOfCols = 3;
+
   QMap<int, Output *> outputsInSet = selectedSet->getOutputs();
   QMap<int, Output *>::Iterator i;
+
+  int outputsPerRow = outputsInSet.size() / amntOfCols;
   for (i = outputsInSet.begin(); i != outputsInSet.end(); i++) {
-    if (rowCounter % 5 == 0) {
+    if (rowCounter == outputsPerRow && columnCounter < amntOfCols - 1) {
       columnCounter++;
       rowCounter = 0;
     }
@@ -483,22 +490,37 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
     auto *outputName = new QLabel(i.value()->getCbText());
     outputGrid->addWidget(outputName, rowCounter, columnCounter);
   }
+  outputGrid->setAlignment(Qt::AlignTop);
+
+  gridWidget->setLayout(outputGrid);
+  gridWidget->setMinimumHeight(350);
+  gridWidget->setMaximumHeight(350);
+
+  QScrollArea *activeScroll = new QScrollArea();
+  activeScroll->setMinimumHeight(250);
+  activeScroll->setMaximumHeight(250);
+
+  activeScroll->setWidget(gridWidget);
 
   auto *outputList = new QVBoxLayout();
+
   outputList->setObjectName("savedOutputs");
 
   activeSet->addLayout(outputList);
-  activeSet->addLayout(outputGrid);
+  activeSet->addWidget(activeScroll);
   activeWidget->setLayout(activeSet);
+  // activeWidget->setMinimumHeight(350);
   activeWidget->adjustSize();
+
   return activeWidget;
 }
 
 QWidget *FormBuilder::generateSetRow(const set &setForRow) {
   auto *setRowContainer = new QWidget();
   setRowContainer->setSizePolicy(QSizePolicy::Preferred,
-                                 QSizePolicy::Expanding);
-  setRowContainer->setMinimumHeight(20);
+                                 QSizePolicy::Preferred);
+  setRowContainer->setMinimumHeight(15);
+  setRowContainer->setMaximumHeight(15);
   auto *setRow = new QHBoxLayout();
   auto *setRowLabel = new QLabel(setForRow.getSetName());
 
@@ -519,7 +541,7 @@ QWidget *FormBuilder::generateSetRow(const set &setForRow) {
   setRowContainer->setPalette(Qt::white);
   setRowContainer->setObjectName(QString::number(setForRow.getID()));
   setRowContainer->setMinimumSize(600, 50);
-  setRowContainer->setMaximumSize(3000, 100);
+  setRowContainer->setMaximumSize(3000, 50);
   return setRowContainer;
 }
 

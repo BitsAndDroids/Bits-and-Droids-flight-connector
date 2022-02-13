@@ -30,11 +30,15 @@ OutputMenu::OutputMenu(QWidget *parent)
   // ui->containerLayout->setAlignment(Qt::AlignLeft);
   ui->containerLayout->addLayout(gridLayout);
 
+  ui->widget->findChild<QVBoxLayout *>("outputSetList")
+      ->setAlignment(Qt::AlignTop);
+
   auto *activeLayout = new QVBoxLayout();
   activeLayout->setObjectName("activeContainer");
 
   // gridLayout->addLayout(activeLayout, 2, 0);
   // rightCol->addLayout(activeLayout);
+
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   for (const auto &foundSet : *foundSets) {
     // qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
@@ -49,15 +53,20 @@ OutputMenu::OutputMenu(QWidget *parent)
   auto buttonRow = new QHBoxLayout();
   buttonRow->addLayout(formBuilder.generateOutputControls());
   buttonRow->addWidget(saveEdit);
+  buttonRow->setAlignment(Qt::AlignTop);
   leftCol->addLayout(buttonRow);
   auto rightGrid = new QGridLayout();
   rightGrid->setObjectName("rightGrid");
   rightGrid->addLayout(activeLayout, 1, 0);
   rightCol->addLayout(rightGrid);
+
   rightGrid->addWidget(formBuilder.generateOutputTabs(), 0, 0);
   gridLayout->addLayout(rightCol, 0, 1);
+
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
+
   ui->widget->adjustSize();
+
   this->adjustSize();
 
   connect(&formBuilder, &FormBuilder::removeSet, this,
@@ -101,8 +110,9 @@ void OutputMenu::editSet(QString id) {
 
   qDebug() << "a";
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(true);
+  ui->widget->findChild<QTabWidget *>("outputTabWidget")->setMaximumHeight(450);
   auto *widgetFound = ui->widget->findChild<QWidget *>("activeWidget");
-  qDebug() << "deleted";
+
   delete widgetFound;
 
   ui->widget->adjustSize();
@@ -110,26 +120,19 @@ void OutputMenu::editSet(QString id) {
   auto *container = ui->widget->findChild<QGridLayout *>("rightGrid");
   QWidget *setActiveWidget = formBuilder.generateActiveSet(&setFound);
   container->setAlignment(Qt::AlignTop);
-  // container->addWidget(setActiveWidget, 0, 0);
+
+  container->parentWidget()->setMinimumHeight(650);
+  container->parentWidget()->setMaximumHeight(650);
   container->addWidget(setActiveWidget, 1, 0);
   auto *setHeader = ui->widget->findChild<QLabel *>("setNameHeader");
 
   setHeader->setText(setFound.getSetName());
 
-  qDebug() << "b";
-  //    QVBoxLayout *outputList =
-  //    ui->widget->findChild<QVBoxLayout*>("savedOutputs");
-
-  //    QMap<int, Output*> map = setFound.getOutputs();
-  //    QMap<int, Output*>::Iterator i;
-  //    for(i = map.begin(); i != map.end(); i ++){
-  //       outputList->addLayout(formBuilder.generateOutputRow(i.value()));
-  //       qDebug()<<"outputs"<<i.value()->getCbText();
-  //    }
-
   activeSet = id.toInt();
+
   QMap<int, Output *> outputsToToggle = setFound.getOutputs();
   QMap<int, Output *>::iterator i;
+
   for (i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
     if (this->findChild<QCheckBox *>("cb" +
                                      QString::number(i.value()->getId()))) {
@@ -138,8 +141,7 @@ void OutputMenu::editSet(QString id) {
           ->setChecked(true);
     }
   }
-  ui->widget->findChild<QTabWidget *>("outputTabWidget")->adjustSize();
-  ui->widget->adjustSize();
+
   this->adjustSize();
 }
 void OutputMenu::saveEdit() {
