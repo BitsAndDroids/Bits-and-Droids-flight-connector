@@ -215,7 +215,7 @@ MainWindow::MainWindow(QWidget *parent)
   QAction *hide_action = new QAction("Show/Hide", icon);
 
   QMenu *tray_icon_menu = new QMenu;
-  tray_icon_menu->addAction(hide_action);
+  // tray_icon_menu->addAction(hide_action);
   tray_icon_menu->addAction(quit_action);
 
   icon->setContextMenu(tray_icon_menu);
