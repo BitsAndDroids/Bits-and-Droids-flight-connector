@@ -83,7 +83,7 @@ class DualWorker : public QThread {
 
  public slots:
 
-  void updateEventFile();
+  void sendWASMCommand(char cmd);
 };
 
 #endif  // DUALWORKER_H

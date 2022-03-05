@@ -308,12 +308,16 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
   }
 }
-void DualWorker::updateEventFile() {
+void DualWorker::sendWASMCommand(char cmd) {
   char arrayTest[256] = "9999";
+  arrayTest[0] = '9';
+  arrayTest[1] = '9';
+  arrayTest[2] = '9';
+  arrayTest[3] = (char)cmd;
 
   puts(arrayTest);
   qDebug() << arrayTest;
-
+  cout << arrayTest << " WASM send" << endl;
   //  SimConnect_TransmitClientEvent(
   //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
   //      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
@@ -411,6 +415,7 @@ void DualWorker::RadioEvents() {
       //            SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
       //            SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED, 0, 0, 0);
       //      }
+      sendWASMCommand('8');
       dualOutputMapper->mapOutputs(outputsToMap, dualSimConnect);
       SimConnect_SubscribeToSystemEvent(dualSimConnect, EVENT_SIM_START,
                                         "1sec");

@@ -205,6 +205,23 @@ MainWindow::MainWindow(QWidget *parent)
   QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
   QMenu *WasmInstall = menuBar()->addMenu("&WASM");
 
+  auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
+
+  connect(icon, &QSystemTrayIcon::activated, this, &MainWindow::toggleOpen);
+
+  QAction *quit_action = new QAction("Exit", icon);
+  connect(quit_action, &QAction::triggered, this, &MainWindow::exitProgram);
+
+  QAction *hide_action = new QAction("Show/Hide", icon);
+
+  QMenu *tray_icon_menu = new QMenu;
+  tray_icon_menu->addAction(hide_action);
+  tray_icon_menu->addAction(quit_action);
+
+  icon->setContextMenu(tray_icon_menu);
+
+  icon->show();
+
   WasmInstall->addAction(WasmUpdateEventFile);
   WasmInstall->addAction(installWasm);
   OutputSettings->addAction(openOutputMenu);
@@ -419,13 +436,13 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::localUpdateEventFile() {
   if (dualThread.isRunning()) {
     connect(this, &MainWindow::updateEventFile, &dualThread,
-            &DualWorker::updateEventFile);
+            &DualWorker::sendWASMCommand);
 
-    emit updateEventFile();
+    emit updateEventFile('9');
   } else if (inputThread.isRunning()) {
     connect(this, &MainWindow::updateEventFile, &inputThread,
-            &InputWorker::updateEventFile);
-    emit updateEventFile();
+            &InputWorker::sendWASMCommand);
+    emit updateEventFile('9');
   }
 }
 void MainWindow::GameConnectionMade(int con, int mode) {
@@ -892,5 +909,43 @@ int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
   }
   return index;
 }
-void MainWindow::closeEvent(QCloseEvent *event) { delete ui; }
+void MainWindow::closeEvent(QCloseEvent *event) {
+  if (closing) {
+    event->accept();
+  } else {
+    this->hide();
+    event->ignore();
+  }
+}
 MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::changeEvent(QEvent *e) {
+  switch (e->type()) {
+    case QEvent::LanguageChange:
+      this->ui->retranslateUi(this);
+      break;
+    case QEvent::WindowStateChange: {
+      if (this->windowState() & Qt::WindowMinimized) {
+        QTimer::singleShot(250, this, SLOT(hide()));
+      }
+
+      break;
+    }
+    default:
+      break;
+  }
+
+  QMainWindow::changeEvent(e);
+}
+
+void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
+  if (reason == QSystemTrayIcon::Trigger) {
+    if (isVisible()) {
+      hide();
+    } else {
+      show();
+      activateWindow();
+    }
+  }
+}
+void MainWindow::exitProgram() { delete this; }

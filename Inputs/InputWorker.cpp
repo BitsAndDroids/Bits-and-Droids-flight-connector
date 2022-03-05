@@ -64,11 +64,14 @@ void InputWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
       break;
   }
 }
-void InputWorker::updateEventFile() {
+void InputWorker::sendWASMCommand(char cmd) {
   char arrayTest[256] = "9999";
+  arrayTest[0] = '9';
+  arrayTest[1] = '9';
+  arrayTest[2] = '9';
+  arrayTest[3] = cmd;
 
   puts(arrayTest);
-  qDebug() << arrayTest;
 
   //  SimConnect_TransmitClientEvent(
   //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
@@ -155,7 +158,7 @@ void InputWorker::inputEvents() {
       mapper.mapEvents(hInputSimConnect);
 
       connected = true;
-
+      sendWASMCommand('8');
       while (!abortInput && connected) {
         for (int i = 0; i < keys.size(); i++) {
           const auto hasRead = arduinoInput[i]->readSerialPort(

@@ -57,7 +57,7 @@ class MainWindow : public QMainWindow {
   void addCom(int mode);
 
  signals:
-  void updateEventFile();
+  void updateEventFile(int cmd);
 
   void closedOutputMenu();
 
@@ -102,7 +102,11 @@ class MainWindow : public QMainWindow {
   void BoardConnectionMade(int con, int mode);
 
  private:
+  bool closing = false;
+  void exitProgram();
+  void toggleOpen(QSystemTrayIcon::ActivationReason reason);
   void closeEvent(QCloseEvent *event) override;
+  void changeEvent(QEvent *e) override;
   enum warnings { NOSET, NOCOMPORT };
   SetHandler *setHandler = new SetHandler();
   SettingsHandler settingsHandler;

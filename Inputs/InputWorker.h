@@ -12,9 +12,9 @@
 #include <windows.h>
 
 #include <QObject>
+#include <cstdio>
 #include <string>
 
-#include <cstdio>
 #include "InputMapper.h"
 #include "InputSwitchHandler.h"
 
@@ -23,56 +23,56 @@
   \brief The InputWorker class
  */
 class InputWorker : public QThread {
-Q_OBJECT
+  Q_OBJECT
 
-    void run() override { inputEvents(); }
+  void run() override { inputEvents(); }
 
-signals:
+ signals:
 
-    void updateLastValUI(QString lastVal);
+  void updateLastValUI(QString lastVal);
 
-    void updateLastStatusUI(QString lastStatus);
+  void updateLastStatusUI(QString lastStatus);
 
-    void GameConnectionMade(int con, int mode);
+  void GameConnectionMade(int con, int mode);
 
-    void BoardConnectionMade(int con, int mode);
+  void BoardConnectionMade(int con, int mode);
 
-public:
-    InputWorker();
+ public:
+  InputWorker();
 
-    ~InputWorker() override;
+  ~InputWorker() override;
 
-    QMutex mutex;
-    QWaitCondition condition;
+  QMutex mutex;
+  QWaitCondition condition;
 
-    bool connected;
-    bool abortInput;
-public slots:
+  bool connected;
+  bool abortInput;
+ public slots:
 
-    void updateEventFile();
+  void sendWASMCommand(char cmd);
 
-private slots:
+ private slots:
 
-    // void switchHandling(int index);
+  // void switchHandling(int index);
 
-private:
-    QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron","Elevator"};
-    SettingsHandler settingsHandler;
-    std::string lastVal;
-    SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
-    SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
-    std::string lastStatus;
-    InputMapper mapper = InputMapper();
-    InputSwitchHandler handler = InputSwitchHandler();
-    QStringList keys = *settingsHandler.retrieveKeys("inputCom");
-    std::string prefix;
+ private:
+  QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
+  SettingsHandler settingsHandler;
+  std::string lastVal;
+  SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
+  SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
+  std::string lastStatus;
+  InputMapper mapper = InputMapper();
+  InputSwitchHandler handler = InputSwitchHandler();
+  QStringList keys = *settingsHandler.retrieveKeys("inputCom");
+  std::string prefix;
 
-    void inputEvents();
+  void inputEvents();
 
-    UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor);
+  UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor);
 
-    static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
-                                    void *pContext);
+  static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
+                                  void *pContext);
 };
 
 #endif  // INPUTWORKER_H
