@@ -1,5 +1,6 @@
 #include "optionsmenu.h"
 
+#include <elements/mcheckbox.h>
 #include <qstandardpaths.h>
 
 #include <iostream>
@@ -38,6 +39,25 @@ optionsMenu::optionsMenu(QWidget *parent)
           settingsHandler.retrieveSetting("Setting", "CBR")->toString());
     }
   }
+
+  auto cbCloseToTray = new mCheckBox("Close to tray", "cbCloseToTray", true);
+  uiOptions->vlOptions->addWidget(cbCloseToTray->generateCheckbox());
+
+  auto cbStartupMenu = new mCheckBox("Run on startup", "cbRunOnStartup", false);
+  uiOptions->vlOptions->addWidget(cbStartupMenu->generateCheckbox());
+
+  // Loading the saved checkbox states
+  if (!settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->isNull()) {
+    this->findChild<QCheckBox *>("cbCloseToTray")
+        ->setChecked(
+            settingsHandler.retrieveSetting("Settings", "cbCloseToTray")
+                ->toBool());
+    this->findChild<QCheckBox *>("cbRunOnStartup")
+        ->setChecked(
+            settingsHandler.retrieveSetting("Settings", "cbRunOnStartup")
+                ->toBool());
+  }
+
   auto communityFolderPathLabel = new QLabel();
   auto communityFolderFileBtn = new QPushButton("Select community folder");
   connect(communityFolderFileBtn, &QPushButton::clicked, this,
@@ -116,6 +136,38 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
       this->findChild<QLabel *>("communityFolderPathLabel");
   settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
                              communityFolderPath->text());
+
+  // Checkboxes that affect the application behavior on closing / startup
+  auto cbCloseToTray = this->findChild<QCheckBox *>("cbCloseToTray");
+  settingsHandler.storeValue("Settings", "cbCloseToTray",
+                             cbCloseToTray->isChecked());
+
+  auto cbStartup = this->findChild<QCheckBox *>("cbRunOnStartup");
+  settingsHandler.storeValue("Settings", "cbRunOnStartup",
+                             cbStartup->isChecked());
+
+  // The default startup path is
+  // (C:\Users\<USER>\AppData\Roaming\Microsoft\Windows\Start
+  // Menu\Programs\Startup
+  auto startupPath =
+      QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation) +
+      "/Startup/";
+
+  if (cbStartup->isChecked()) {
+    // This will create a shortcut in the startup menu
+    // This will also overwrite any existing links(of the connector) already
+    // pressent.
+    QFile::link("Bitsanddroidsgui.exe",
+                startupPath + "Bitsanddroidsgui.exe.lnk");
+
+  } else {
+    QFile file(startupPath + "Bitsanddroidsgui.exe.lnk");
+
+    if (file.exists()) {
+      file.remove();
+    }
+  }
+
   QList<QLineEdit *> allLabels =
       uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
   qDebug() << "size" << allLabels.size();

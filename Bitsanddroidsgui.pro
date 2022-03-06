@@ -59,6 +59,7 @@ SOURCES += \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
     dual/dualworker.cpp \
+    elements/mcheckbox.cpp \
     events/eventwindow.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     Inputs/InputWorker.h \
     Inputs/inputenum.h \
     dual/dualworker.h \
+    elements/mcheckbox.h \
     events/eventwindow.h \
     headers/Engine.h \
     headers/constants.h \

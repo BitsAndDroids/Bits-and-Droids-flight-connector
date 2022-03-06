@@ -910,33 +910,18 @@ int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
   return index;
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
-  if (closing) {
-    event->accept();
+  if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
+    if (closing) {
+      event->accept();
+    } else {
+      this->hide();
+      event->ignore();
+    }
   } else {
-    this->hide();
-    event->ignore();
+    exitProgram();
   }
 }
 MainWindow::~MainWindow() { delete ui; }
-
-void MainWindow::changeEvent(QEvent *e) {
-  switch (e->type()) {
-    case QEvent::LanguageChange:
-      this->ui->retranslateUi(this);
-      break;
-    case QEvent::WindowStateChange: {
-      if (this->windowState() & Qt::WindowMinimized) {
-        QTimer::singleShot(250, this, SLOT(hide()));
-      }
-
-      break;
-    }
-    default:
-      break;
-  }
-
-  QMainWindow::changeEvent(e);
-}
 
 void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
   if (reason == QSystemTrayIcon::Trigger) {

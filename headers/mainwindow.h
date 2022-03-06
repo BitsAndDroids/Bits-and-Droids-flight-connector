@@ -106,7 +106,7 @@ class MainWindow : public QMainWindow {
   void exitProgram();
   void toggleOpen(QSystemTrayIcon::ActivationReason reason);
   void closeEvent(QCloseEvent *event) override;
-  void changeEvent(QEvent *e) override;
+
   enum warnings { NOSET, NOCOMPORT };
   SetHandler *setHandler = new SetHandler();
   SettingsHandler settingsHandler;
