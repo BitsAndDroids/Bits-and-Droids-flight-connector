@@ -76,7 +76,30 @@ void MainWindow::loadComPortData() {
                              serialPortInfo.description());
   }
 }
+void MainWindow::toggleAdvanced() {
+  auto inWidget = this->findChild<QWidget *>("inWidgetContainer");
+  auto outWidget = this->findChild<QWidget *>("outWidgetContainer");
+  auto dualWidget = this->findChild<QWidget *>("dualWidgetContainer");
+  auto headerLabel = this->findChild<QWidget *>("headerDUAL");
+  inWidget->setVisible(advancedMode);
+  outWidget->setVisible(advancedMode);
+  headerLabel->setVisible(advancedMode);
+  if (!advancedMode) {
+    dualWidget->resize(150, dualWidget->height());
+    dualWidget->layout()->setSizeConstraint(QLayout::SetMinimumSize);
+    dualWidget->adjustSize();
 
+    ui->centralwidget->resize(250, this->height());
+    ui->centralwidget->setMinimumWidth(250);
+    ui->centralwidget->layout()->setSizeConstraint(QLayout::SetMinimumSize);
+    ui->centralwidget->adjustSize();
+    this->adjustSize();
+  } else {
+  }
+  settingsHandler.storeValue("Settings", "advancedMode", advancedMode);
+  advancedMode = !advancedMode;
+  cout << "PRESSED" << endl;
+}
 void MainWindow::installWasm() {
   bool customPathFound =
       settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel");
@@ -195,6 +218,7 @@ MainWindow::MainWindow(QWidget *parent)
   // TOOLBAR MENU
   qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   auto *openSettings = new QAction("&Settings", this);
+  auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
   auto *calibrateAxis = new QAction("&Calibrate axis", this);
   auto *openOutputMenu = new QAction("&Outputs", this);
   auto *openEditEventWindow = new QAction("&Edit events", this);
@@ -227,6 +251,7 @@ MainWindow::MainWindow(QWidget *parent)
   OutputSettings->addAction(openOutputMenu);
   WasmInstall->addAction(openEditEventWindow);
   Settings->addAction(openSettings);
+  Settings->addAction(toggleAdvancedAction);
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
@@ -241,7 +266,8 @@ MainWindow::MainWindow(QWidget *parent)
   connect(openOutputMenu, &QAction::triggered, this,
           &MainWindow::openOutputMenu);
   connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
-
+  connect(toggleAdvancedAction, &QAction::triggered, this,
+          &MainWindow::toggleAdvanced);
   connect(&outputThread, &OutputWorker::BoardConnectionMade, this,
           &MainWindow::BoardConnectionMade);
   connect(&outputThread, &OutputWorker::GameConnectionMade, this,
@@ -396,14 +422,17 @@ MainWindow::MainWindow(QWidget *parent)
       if (setsNeeded) {
         auto comboBox =
             widget->findChild<QComboBox *>("setBox" + QString::number(i));
-
-        auto lastSetId =
-            settingsHandler
-                .retrieveSetting(setGroupName, "set" + QString::number(i))
-                ->toString();
-        auto setFound = setHandler->getSetById(lastSetId);
-        auto setName = setFound.getSetName();
-        comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+        if (!settingsHandler
+                 .retrieveSetting(setGroupName, "set" + QString::number(i))
+                 ->isNull()) {
+          auto lastSetId =
+              settingsHandler
+                  .retrieveSetting(setGroupName, "set" + QString::number(i))
+                  ->toString();
+          auto setFound = setHandler->getSetById(lastSetId);
+          auto setName = setFound.getSetName();
+          comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+        }
       }
     }
 
@@ -430,7 +459,9 @@ MainWindow::MainWindow(QWidget *parent)
     widgetContainer->setLayout(connectionRow);
     widget->layout()->addWidget(widgetContainer);
   }
-
+  if (!settingsHandler.retrieveSetting("Settings", "advancedMode")->toBool()) {
+    toggleAdvanced();
+  }
   this->adjustSize();
 }
 void MainWindow::localUpdateEventFile() {
@@ -717,31 +748,35 @@ void MainWindow::startDual() {
       QString keyValue = comList[i]->currentText();
       QString setKeyValue = setList[i]->currentText();
       qDebug() << setKeyValue;
+
       settingsHandler.storeValue("dualComs", key,
                                  convertComPort(keyValue).c_str());
 
       qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
-      int index = setList[i]->currentIndex();
+      if (!(setKeyValue == "No outputs")) {
+        int index = setList[i]->currentIndex() - 1;
 
-      int id = availableSets->at(index).getID();
+        int id = availableSets->at(index).getID();
 
-      auto *bundle = new outputBundle();
+        auto *bundle = new outputBundle();
 
-      set active = setHandler->getSetById(QString::number(id));
-      bundle->setSet(active);
+        set active = setHandler->getSetById(QString::number(id));
+        bundle->setSet(active);
 
-      auto *outputs = new QMap<int, Output *>();
-      *outputs = active.getOutputs();
-      QMap<int, Output *>::iterator j;
-      for (j = outputs->begin(); j != outputs->end(); j++) {
-        outputsToMap.append(j.value());
+        auto *outputs = new QMap<int, Output *>();
+        *outputs = active.getOutputs();
+        QMap<int, Output *>::iterator j;
+        for (j = outputs->begin(); j != outputs->end(); j++) {
+          outputsToMap.append(j.value());
+        }
+        dualThread.setOutputsToMap(outputsToMap);
+        bundle->setOutputsInSet(*outputs);
+        dualThread.addBundle(bundle);
+        settingsHandler.storeValue("dualSets", setKey, id);
+      } else {
+        settingsHandler.removeSetting("dualSets", setKey);
       }
-      dualThread.setOutputsToMap(outputsToMap);
-      bundle->setOutputsInSet(*outputs);
-      dualThread.addBundle(bundle);
-      settingsHandler.storeValue("dualSets", setKey, id);
     }
-
     //    ui->stopButton->setVisible(true);
     //    QString comText = ui->outputComboBoxBase->currentText();
     // std::string comNr

@@ -55,6 +55,7 @@ SOURCES       = Inputs\InputSwitchHandler.cpp \
 		Inputs\inputenum.cpp \
 		Inputs\inputmapper.cpp \
 		dual\dualworker.cpp \
+		elements\mcheckbox.cpp \
 		events\eventwindow.cpp \
 		outputs\activeoutputs.cpp \
 		outputs\output.cpp \
@@ -92,6 +93,7 @@ OBJECTS       = objects/Inputs/InputSwitchHandler.o \
 		objects/Inputs/inputenum.o \
 		objects/Inputs/inputmapper.o \
 		objects/dual/dualworker.o \
+		objects/elements/mcheckbox.o \
 		objects/events/eventwindow.o \
 		objects/outputs/activeoutputs.o \
 		objects/outputs/output.o \
@@ -141,6 +143,7 @@ DIST          = bitsAndDroids \
 		Inputs\InputWorker.h \
 		Inputs\inputenum.h \
 		dual\dualworker.h \
+		elements\mcheckbox.h \
 		events\eventwindow.h \
 		headers\Engine.h \
 		headers\constants.h \
@@ -168,6 +171,7 @@ DIST          = bitsAndDroids \
 		Inputs\inputenum.cpp \
 		Inputs\inputmapper.cpp \
 		dual\dualworker.cpp \
+		elements\mcheckbox.cpp \
 		events\eventwindow.cpp \
 		outputs\activeoutputs.cpp \
 		outputs\output.cpp \
@@ -213,10 +217,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) Bitsanddroidsgui.zip $(SOURCES) $(DIST) Bitsanddroidsgui.pro ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\spec_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\device_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\sanitize.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\gcc-base.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\g++-base.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\windows-vulkan.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\g++-win32.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\windows-desktop.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\qconfig.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_chartsqml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_chartsqml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core5compat.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core5compat_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_help.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_linguist_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_network.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt_functions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\win32-g++\qmake.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exclusive_builds.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\toolchain.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\default_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\default_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resolve_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\default_post.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\build_pass.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resolve_target.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\separate_debug_info.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qml_debug.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\entrypoint.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\precompile_header.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\warn_on.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resources_functions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resources.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\moc.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\opengl.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\uic.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qmake_use.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\file_copies.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\windows.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\testcase_targets.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exceptions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\yacc.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\lex.prf Bitsanddroidsgui.pro Resources.qrc release\qmake_qmake_immediate.qrc ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6PrintSupport.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Charts.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6OpenGLWidgets.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Widgets.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6OpenGL.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Gui.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6SerialPort.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Network.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Core.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6EntryPoint.prl \Nou \Nou  Resources.qrc release\qmake_qmake_immediate.qrc ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\data\dummy.cpp Inputs\InputMapper.h Inputs\InputSwitchHandler.h Inputs\InputWorker.h Inputs\inputenum.h dual\dualworker.h events\eventwindow.h headers\Engine.h headers\constants.h headers\mainwindow.h headers\SerialPort.hpp headers\SimConnect.h headers\range.h outputs\activeoutputs.h outputs\output.h outputs\outputbundle.h outputs\outputenum.h outputs\outputhandler.h outputs\outputmapper.h outputs\outputworker.h outputs\set.h outputs\sethandler.h settings\calibrateaxismenu.h settings\formBuilder.h settings\optionsmenu.h settings\outputmenu.h settings\coordinates.h settings\settingshandler.h settings\settingsranges.h  Inputs\InputSwitchHandler.cpp Inputs\InputWorker.cpp Inputs\inputenum.cpp Inputs\inputmapper.cpp dual\dualworker.cpp events\eventwindow.cpp outputs\activeoutputs.cpp outputs\output.cpp outputs\outputbundle.cpp outputs\outputenum.cpp outputs\outputhandler.cpp outputs\outputmapper.cpp outputs\outputworker.cpp outputs\set.cpp outputs\sethandler.cpp settings\calibrateaxismenu.cpp settings\formBuilder.cpp settings\optionsmenu.cpp settings\outputmenu.cpp settings\coordinates.cpp settings\settingshandler.cpp settings\settingsranges.cpp sources\Engine.cpp sources\SerialPort.cpp sources\main.cpp sources\mainwindow.cpp sources\range.cpp events\eventwindow.ui settings\calibrateaxismenu.ui sources\mainwindow.ui settings\optionsmenu.ui settings\outputmenu.ui    
+	$(ZIP) Bitsanddroidsgui.zip $(SOURCES) $(DIST) Bitsanddroidsgui.pro ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\spec_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\device_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\sanitize.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\gcc-base.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\g++-base.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\windows_vulkan_sdk.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\windows-vulkan.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\g++-win32.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\common\windows-desktop.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\qconfig.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_ext_freetype.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_ext_libpng.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_charts.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_charts_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_chartsqml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_chartsqml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core5compat.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core5compat_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_dbus.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_dbus_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_entrypoint_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_fb_support_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_help.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssettings.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssettings_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_linguist.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_linguist_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_network.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_packetprotocol_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcore.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlcore_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldebug_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmldom_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickshapes_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_tools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uiplugin.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\modules\qt_lib_zlib_private.pri ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt_functions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\win32-g++\qmake.conf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\spec_post.prf .qmake.stash ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exclusive_builds.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\toolchain.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\default_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\default_pre.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resolve_config.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\default_post.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\build_pass.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resolve_target.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\separate_debug_info.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qml_debug.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\entrypoint.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\precompile_header.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\warn_on.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qt.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resources_functions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\resources.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\moc.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\opengl.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\uic.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\qmake_use.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\file_copies.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\win32\windows.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\testcase_targets.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\exceptions.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\yacc.prf ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\lex.prf Bitsanddroidsgui.pro Resources.qrc release\qmake_qmake_immediate.qrc ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6PrintSupport.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Charts.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6OpenGLWidgets.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Widgets.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6OpenGL.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Gui.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6SerialPort.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Network.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6Core.prl ..\..\..\..\QtWindows\6.2.0\mingw81_64\lib\Qt6EntryPoint.prl \Nou \Nou  Resources.qrc release\qmake_qmake_immediate.qrc ..\..\..\..\QtWindows\6.2.0\mingw81_64\mkspecs\features\data\dummy.cpp Inputs\InputMapper.h Inputs\InputSwitchHandler.h Inputs\InputWorker.h Inputs\inputenum.h dual\dualworker.h elements\mcheckbox.h events\eventwindow.h headers\Engine.h headers\constants.h headers\mainwindow.h headers\SerialPort.hpp headers\SimConnect.h headers\range.h outputs\activeoutputs.h outputs\output.h outputs\outputbundle.h outputs\outputenum.h outputs\outputhandler.h outputs\outputmapper.h outputs\outputworker.h outputs\set.h outputs\sethandler.h settings\calibrateaxismenu.h settings\formBuilder.h settings\optionsmenu.h settings\outputmenu.h settings\coordinates.h settings\settingshandler.h settings\settingsranges.h  Inputs\InputSwitchHandler.cpp Inputs\InputWorker.cpp Inputs\inputenum.cpp Inputs\inputmapper.cpp dual\dualworker.cpp elements\mcheckbox.cpp events\eventwindow.cpp outputs\activeoutputs.cpp outputs\output.cpp outputs\outputbundle.cpp outputs\outputenum.cpp outputs\outputhandler.cpp outputs\outputmapper.cpp outputs\outputworker.cpp outputs\set.cpp outputs\sethandler.cpp settings\calibrateaxismenu.cpp settings\formBuilder.cpp settings\optionsmenu.cpp settings\outputmenu.cpp settings\coordinates.cpp settings\settingshandler.cpp settings\settingsranges.cpp sources\Engine.cpp sources\SerialPort.cpp sources\main.cpp sources\mainwindow.cpp sources\range.cpp events\eventwindow.ui settings\calibrateaxismenu.ui sources\mainwindow.ui settings\optionsmenu.ui settings\outputmenu.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) objects\Inputs\InputSwitchHandler.o objects\Inputs\InputWorker.o objects\Inputs\inputenum.o objects\Inputs\inputmapper.o objects\dual\dualworker.o objects\events\eventwindow.o objects\outputs\activeoutputs.o objects\outputs\output.o objects\outputs\outputbundle.o objects\outputs\outputenum.o objects\outputs\outputhandler.o objects\outputs\outputmapper.o objects\outputs\outputworker.o objects\outputs\set.o objects\outputs\sethandler.o objects\settings\calibrateaxismenu.o objects\settings\formBuilder.o objects\settings\optionsmenu.o objects\settings\outputmenu.o objects\settings\coordinates.o objects\settings\settingshandler.o objects\settings\settingsranges.o objects\sources\Engine.o objects\sources\SerialPort.o objects\sources\main.o objects\sources\mainwindow.o objects\sources\range.o objects\release\qrc_Resources.o objects\release\qrc_qmake_qmake_immediate.o objects\objects\moc_InputWorker.o objects\objects\moc_dualworker.o objects\objects\moc_eventwindow.o objects\objects\moc_mainwindow.o objects\objects\moc_outputworker.o objects\objects\moc_calibrateaxismenu.o objects\objects\moc_formBuilder.o objects\objects\moc_optionsmenu.o objects\objects\moc_outputmenu.o
+	-$(DEL_FILE) objects\Inputs\InputSwitchHandler.o objects\Inputs\InputWorker.o objects\Inputs\inputenum.o objects\Inputs\inputmapper.o objects\dual\dualworker.o objects\elements\mcheckbox.o objects\events\eventwindow.o objects\outputs\activeoutputs.o objects\outputs\output.o objects\outputs\outputbundle.o objects\outputs\outputenum.o objects\outputs\outputhandler.o objects\outputs\outputmapper.o objects\outputs\outputworker.o objects\outputs\set.o objects\outputs\sethandler.o objects\settings\calibrateaxismenu.o objects\settings\formBuilder.o objects\settings\optionsmenu.o objects\settings\outputmenu.o objects\settings\coordinates.o objects\settings\settingshandler.o objects\settings\settingsranges.o objects\sources\Engine.o objects\sources\SerialPort.o objects\sources\main.o objects\sources\mainwindow.o objects\sources\range.o objects\release\qrc_Resources.o objects\release\qrc_qmake_qmake_immediate.o objects\objects\moc_InputWorker.o objects\objects\moc_dualworker.o objects\objects\moc_eventwindow.o objects\objects\moc_mainwindow.o objects\objects\moc_outputworker.o objects\objects\moc_calibrateaxismenu.o objects\objects\moc_formBuilder.o objects\objects\moc_optionsmenu.o objects\objects\moc_outputmenu.o
 	-$(DEL_FILE) "C:\Users\Dave Riedel\Documents\Bitsanddroidsgui\objects\BitsAndDroidsGui_res.o"
 
 distclean: clean 
@@ -1427,11 +1431,9 @@ objects/moc_outputworker.cpp: outputs/outputworker.h \
 	C:\QtWindows\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/Dave Riedel/Documents/Bitsanddroidsgui/objects/moc_predefs.h" -IC:/QtWindows/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/Dave Riedel/Documents/Bitsanddroidsgui" -I"C:/Program Files/OpenSSL-Win64/include" -IC:/QtWindows/6.2.0/mingw81_64/include -IC:/QtWindows/6.2.0/mingw81_64/include/QtPrintSupport -IC:/QtWindows/6.2.0/mingw81_64/include/QtCharts -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGL -IC:/QtWindows/6.2.0/mingw81_64/include/QtGui -IC:/QtWindows/6.2.0/mingw81_64/include/QtSerialPort -IC:/QtWindows/6.2.0/mingw81_64/include/QtNetwork -IC:/QtWindows/6.2.0/mingw81_64/include/QtCore -IC:/MINGW64/include -Ic:/mingw64/include/c++/4.8.3 -Ic:/mingw64/include/c++/4.8.3/x86_64-w64-mingw32 -Ic:/mingw64/include/c++/4.8.3/backward -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed -Ic:/mingw64/x86_64-w64-mingw32/include outputs\outputworker.h -o objects\moc_outputworker.cpp
 
 objects/moc_calibrateaxismenu.cpp: settings/calibrateaxismenu.h \
-		settings/formBuilder.h \
-		outputs/outputhandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -1452,13 +1454,19 @@ objects/moc_calibrateaxismenu.cpp: settings/calibrateaxismenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstring.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -1472,78 +1480,41 @@ objects/moc_calibrateaxismenu.cpp: settings/calibrateaxismenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmath.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qproperty.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
-		outputs/output.h \
-		outputs/set.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
-		outputs/sethandler.h \
-		settings/settingshandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsize.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpoint.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsize.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpalette.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcolor.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qrgb.h \
@@ -1556,34 +1527,68 @@ objects/moc_calibrateaxismenu.cpp: settings/calibrateaxismenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qline.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcursor.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qbitmap.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qkeysequence.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpointingdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qscreen.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QRect \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSize \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSizeF \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
+		settings/formBuilder.h \
+		outputs/outputhandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
+		outputs/output.h \
+		outputs/set.h \
+		outputs/sethandler.h \
+		settings/settingshandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHBoxLayout \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QLabel \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlabel.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qframe.h \
@@ -1946,7 +1951,6 @@ objects/moc_calibrateaxismenu.cpp: settings/calibrateaxismenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/QtOpenGLWidgetsDepends \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsversion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qchartglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtcharts-config.h \
@@ -2644,14 +2648,11 @@ objects/moc_formBuilder.cpp: settings/formBuilder.h \
 	C:\QtWindows\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/Dave Riedel/Documents/Bitsanddroidsgui/objects/moc_predefs.h" -IC:/QtWindows/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/Dave Riedel/Documents/Bitsanddroidsgui" -I"C:/Program Files/OpenSSL-Win64/include" -IC:/QtWindows/6.2.0/mingw81_64/include -IC:/QtWindows/6.2.0/mingw81_64/include/QtPrintSupport -IC:/QtWindows/6.2.0/mingw81_64/include/QtCharts -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGL -IC:/QtWindows/6.2.0/mingw81_64/include/QtGui -IC:/QtWindows/6.2.0/mingw81_64/include/QtSerialPort -IC:/QtWindows/6.2.0/mingw81_64/include/QtNetwork -IC:/QtWindows/6.2.0/mingw81_64/include/QtCore -IC:/MINGW64/include -Ic:/mingw64/include/c++/4.8.3 -Ic:/mingw64/include/c++/4.8.3/x86_64-w64-mingw32 -Ic:/mingw64/include/c++/4.8.3/backward -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed -Ic:/mingw64/x86_64-w64-mingw32/include settings\formBuilder.h -o objects\moc_formBuilder.cpp
 
 objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
-		settings/settingshandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydataops.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
+		headers/Engine.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -2672,15 +2673,25 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstring.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydataops.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringliteral.h \
@@ -2689,14 +2700,13 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
@@ -2714,48 +2724,6 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qproperty.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		settings/formbuilder.h \
-		outputs/outputhandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
-		outputs/output.h \
-		outputs/set.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
-		outputs/sethandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -2773,6 +2741,8 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qline.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -2783,18 +2753,54 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpointingdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qscreen.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QRect \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSize \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSizeF \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		settings/formbuilder.h \
+		outputs/outputhandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
+		outputs/output.h \
+		outputs/set.h \
+		outputs/sethandler.h \
+		settings/settingshandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHBoxLayout \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
@@ -3163,7 +3169,6 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/QtOpenGLWidgetsDepends \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsversion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qchartglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtcharts-config.h \
@@ -3248,7 +3253,6 @@ objects/moc_optionsmenu.cpp: settings/optionsmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qxylegendmarker.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtchartsversion.h \
 		settings/coordinates.h \
-		headers/Engine.h \
 		objects/moc_predefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/bin/moc.exe
 	C:\QtWindows\6.2.0\mingw81_64\bin\moc.exe $(DEFINES) --include "C:/Users/Dave Riedel/Documents/Bitsanddroidsgui/objects/moc_predefs.h" -IC:/QtWindows/6.2.0/mingw81_64/mkspecs/win32-g++ -I"C:/Users/Dave Riedel/Documents/Bitsanddroidsgui" -I"C:/Program Files/OpenSSL-Win64/include" -IC:/QtWindows/6.2.0/mingw81_64/include -IC:/QtWindows/6.2.0/mingw81_64/include/QtPrintSupport -IC:/QtWindows/6.2.0/mingw81_64/include/QtCharts -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtWidgets -IC:/QtWindows/6.2.0/mingw81_64/include/QtOpenGL -IC:/QtWindows/6.2.0/mingw81_64/include/QtGui -IC:/QtWindows/6.2.0/mingw81_64/include/QtSerialPort -IC:/QtWindows/6.2.0/mingw81_64/include/QtNetwork -IC:/QtWindows/6.2.0/mingw81_64/include/QtCore -IC:/MINGW64/include -Ic:/mingw64/include/c++/4.8.3 -Ic:/mingw64/include/c++/4.8.3/x86_64-w64-mingw32 -Ic:/mingw64/include/c++/4.8.3/backward -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include -Ic:/mingw64/lib64/gcc/x86_64-w64-mingw32/4.8.3/include-fixed -Ic:/mingw64/x86_64-w64-mingw32/include settings\optionsmenu.h -o objects\moc_optionsmenu.cpp
@@ -4321,6 +4325,144 @@ objects/dual/dualworker.o: dual/dualworker.cpp dual/dualworker.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QWaitCondition
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\dual\dualworker.o dual\dualworker.cpp
 
+objects/elements/mcheckbox.o: elements/mcheckbox.cpp elements/mcheckbox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qcheckbox.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtcore-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsystemdetection.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qprocessordetection.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcompilerdetection.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtypeinfo.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainerfwd.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsysinfo.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlogging.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qflags.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qatomic.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbasicatomic.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qgenericatomic.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qatomic_cxx11.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qabstractbutton.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsize.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstring.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qchar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydataops.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayalgorithms.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringliteral.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringalgorithms.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qanystringview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterator.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpoint.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcolor.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qrgb.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qrgba64.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcompare.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterable.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmath.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qproperty.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qimage.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixelformat.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtransform.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpolygon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qregion.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qline.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qkeysequence.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpalette.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qbrush.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfont.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcursor.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qbitmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qevent.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpointingdevice.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputdevice.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qscreen.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QRect \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSize \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSizeF \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHBoxLayout \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\elements\mcheckbox.o elements\mcheckbox.cpp
+
 objects/events/eventwindow.o: events/eventwindow.cpp events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidgetItem \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtablewidget.h \
@@ -4499,7 +4641,28 @@ objects/events/eventwindow.o: events/eventwindow.cpp events/eventwindow.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qpushbutton.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QString \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QTableWidget \
-		ui_eventwindow.h
+		ui_eventwindow.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QVariant \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qeventloop.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfuture.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfutureinterface.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmutex.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qresultstore.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qfuture_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qthreadpool.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qthread.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qelapsedtimer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrunnable.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qexception.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qapplicationpermission.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qguiapplication.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputmethod.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qguiapplication_platform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\events\eventwindow.o events\eventwindow.cpp
 
 objects/outputs/activeoutputs.o: outputs/activeoutputs.cpp outputs/outputEnum.h \
@@ -5319,11 +5482,9 @@ objects/outputs/sethandler.o: outputs/sethandler.cpp outputs/sethandler.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\outputs\sethandler.o outputs\sethandler.cpp
 
 objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/calibrateaxismenu.h \
-		settings/formBuilder.h \
-		outputs/outputhandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -5344,13 +5505,19 @@ objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/ca
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstring.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -5364,78 +5531,41 @@ objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/ca
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcompare.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvarlengtharray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopeguard.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatastream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevicebase.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterable.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetacontainer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainerinfo.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtaggedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmath.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qproperty.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
-		outputs/output.h \
-		outputs/set.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
-		outputs/sethandler.h \
-		settings/settingshandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsize.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpoint.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsize.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpalette.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcolor.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qrgb.h \
@@ -5448,34 +5578,68 @@ objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/ca
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qline.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qcursor.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qbitmap.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qkeysequence.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpointingdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qscreen.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QRect \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSize \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSizeF \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
+		settings/formBuilder.h \
+		outputs/outputhandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
+		outputs/output.h \
+		outputs/set.h \
+		outputs/sethandler.h \
+		settings/settingshandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHBoxLayout \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayout.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlayoutitem.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qgridlayout.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QLabel \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qlabel.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qframe.h \
@@ -5838,7 +6002,6 @@ objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/ca
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/QtOpenGLWidgetsDepends \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsversion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qchartglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtcharts-config.h \
@@ -5923,7 +6086,8 @@ objects/settings/calibrateaxismenu.o: settings/calibrateaxismenu.cpp settings/ca
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qxylegendmarker.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtchartsversion.h \
 		settings/coordinates.h \
-		ui_calibrateaxismenu.h
+		ui_calibrateaxismenu.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\settings\calibrateaxismenu.o settings\calibrateaxismenu.cpp
 
 objects/settings/formBuilder.o: settings/formBuilder.cpp settings/formbuilder.h \
@@ -6541,14 +6705,11 @@ objects/settings/formBuilder.o: settings/formBuilder.cpp settings/formbuilder.h 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\settings\formBuilder.o settings\formBuilder.cpp
 
 objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h \
-		settings/settingshandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydataops.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
+		headers/Engine.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qconfig.h \
@@ -6569,15 +6730,25 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qglobalstatic.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnumeric.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qversiontagging.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnamespace.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtmetamacros.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstring.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qchar.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearray.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrefcount.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydata.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpair.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydatapointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qarraydataops.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearrayview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringliteral.h \
@@ -6586,14 +6757,13 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhashfunctions.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiterator.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qbytearraylist.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringlist.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qalgorithms.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qobject.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcoreevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmetatype.h \
@@ -6611,48 +6781,6 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qproperty.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpropertyprivate.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		settings/formbuilder.h \
-		outputs/outputhandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
-		outputs/output.h \
-		outputs/set.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
-		outputs/sethandler.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtguiglobal.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qtgui-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmargins.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpaintdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qrect.h \
@@ -6670,6 +6798,8 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qregion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qline.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpixmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfont.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontmetrics.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qfontinfo.h \
@@ -6680,18 +6810,54 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qevent.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qiodevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qpointer.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qurl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qvariant.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qmap.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qhash.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdebug.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qtextstream.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstringconverter.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qset.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qeventpoint.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvector2d.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qvectornd.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qpointingdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qinputdevice.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qscreen.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QList \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QObject \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QRect \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSize \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSizeF \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/QTransform \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qnativeinterface.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qloggingcategory.h \
+		settings/formbuilder.h \
+		outputs/outputhandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonObject \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonobject.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborvalue.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qdatetime.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcalendar.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qlocale.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qcborcommon.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qregularexpression.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/quuid.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QMap \
+		outputs/output.h \
+		outputs/set.h \
+		outputs/sethandler.h \
+		settings/settingshandler.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qstandardpaths.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QSettings \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qsettings.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QJsonArray \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/qjsonarray.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QStandardPaths \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qtabwidget.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtGui/qicon.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QHBoxLayout \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/qboxlayout.h \
@@ -7060,7 +7226,6 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/QtOpenGLWidgetsDepends \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
-		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QWidget \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsversion.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qchartglobal.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtcharts-config.h \
@@ -7145,8 +7310,18 @@ objects/settings/optionsmenu.o: settings/optionsmenu.cpp settings/optionsmenu.h 
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qxylegendmarker.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCharts/qtchartsversion.h \
 		settings/coordinates.h \
-		headers/Engine.h \
-		ui_optionsmenu.h
+		elements/mcheckbox.h \
+		ui_optionsmenu.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QButtonGroup \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QCheckBox \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QComboBox \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QFrame \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QLineEdit \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QPushButton \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QRadioButton \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QSpacerItem \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\settings\optionsmenu.o settings\optionsmenu.cpp
 
 objects/settings/outputmenu.o: settings/outputmenu.cpp settings/outputmenu.h \
@@ -7798,7 +7973,9 @@ objects/settings/outputmenu.o: settings/outputmenu.cpp settings/outputmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QFlags \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
-		ui_outputmenu.h
+		ui_outputmenu.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\settings\outputmenu.o settings\outputmenu.cpp
 
 objects/settings/coordinates.o: settings/coordinates.cpp settings/coordinates.h
@@ -9878,7 +10055,13 @@ objects/sources/mainwindow.o: sources/mainwindow.cpp headers/mainwindow.h \
 		settings/optionsmenu.h \
 		settings/outputmenu.h \
 		../../../../QtWindows/6.2.0/mingw81_64/include/QtCore/QDir \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QApplication \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QGridLayout \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QMenuBar \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QPushButton \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QStatusBar \
+		../../../../QtWindows/6.2.0/mingw81_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objects\sources\mainwindow.o sources\mainwindow.cpp
 
 objects/sources/range.o: sources/range.cpp headers/range.h

@@ -3,6 +3,7 @@ objects/Inputs/InputWorker.o
 objects/Inputs/inputenum.o
 objects/Inputs/inputmapper.o
 objects/dual/dualworker.o
+objects/elements/mcheckbox.o
 objects/events/eventwindow.o
 objects/outputs/activeoutputs.o
 objects/outputs/output.o

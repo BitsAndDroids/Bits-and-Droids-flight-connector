@@ -586,6 +586,7 @@ QTabWidget *FormBuilder::generateOutputTabs() {
 
 void FormBuilder::loadComPortData() {
   availableComPorts.clear();
+
   foreach (const QSerialPortInfo &serialPortInfo,
            QSerialPortInfo::availablePorts()) {
     availableComPorts.append(serialPortInfo.portName() + " | " +
@@ -613,6 +614,7 @@ void FormBuilder::localEdit() {
 
 QLabel *FormBuilder::generateHeader(const QString &text) {
   auto *header = new QLabel(text);
+  header->setObjectName("header" + text);
   QFont font = header->font();
   font.setPointSize(16);
   header->setFont(font);
@@ -633,6 +635,7 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
   comPortComboBox->setMinimumWidth(150);
   if (setsNeeded) {
     auto *setComboBox = new QComboBox();
+    setComboBox->addItem("No outputs");
     for (const auto &availableSet : *availableSets) {
       setComboBox->addItem(availableSet.getSetName());
     }

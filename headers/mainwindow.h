@@ -95,6 +95,7 @@ class MainWindow : public QMainWindow {
   std::string convertComPort(QString comText);
 
   void openCalibrateAxis();
+  void toggleAdvanced();
  public slots:
 
   void GameConnectionMade(int con, int mode);
@@ -102,6 +103,7 @@ class MainWindow : public QMainWindow {
   void BoardConnectionMade(int con, int mode);
 
  private:
+  bool advancedMode = false;
   bool closing = false;
   void exitProgram();
   void toggleOpen(QSystemTrayIcon::ActivationReason reason);

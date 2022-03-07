@@ -27,11 +27,20 @@ public:
         if (OutputMenu->objectName().isEmpty())
             OutputMenu->setObjectName(QString::fromUtf8("OutputMenu"));
         OutputMenu->resize(746, 509);
+        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(OutputMenu->sizePolicy().hasHeightForWidth());
+        OutputMenu->setSizePolicy(sizePolicy);
         widget = new QWidget(OutputMenu);
         widget->setObjectName(QString::fromUtf8("widget"));
         widget->setGeometry(QRect(10, 10, 721, 1500));
+        sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy);
         containerLayout = new QVBoxLayout(widget);
+        containerLayout->setSpacing(10);
         containerLayout->setObjectName(QString::fromUtf8("containerLayout"));
+        containerLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
 
         retranslateUi(OutputMenu);
 

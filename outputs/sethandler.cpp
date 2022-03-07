@@ -111,15 +111,12 @@ set SetHandler::fromJson(QJsonDocument *docToConvert) {
     auto test = outputHandler->getAvailableOutputs();
     if (outputHandler->getAvailableOutputs().size() > 0) {
       if (outputHandler->findOutputById(foundOutput->getType() != -1)) {
-        std::cout << "OUI" << std::endl;
         outputsConverted->insert(foundOutput->getId(), foundOutput);
       } else {
-        std::cout << "No" << std::endl;
         removeOutputFromSet(convertedSet.getID(), foundOutput->getId());
       }
     }
   }
-  std::cout << "HIT" << std::endl;
   convertedSet.setOutputs(*outputsConverted);
   return convertedSet;
 }

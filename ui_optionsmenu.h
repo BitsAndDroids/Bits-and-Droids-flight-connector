@@ -198,15 +198,15 @@ public:
     {
         optionsMenu->setWindowTitle(QCoreApplication::translate("optionsMenu", "Settings", nullptr));
         waitXMsBeforeSendingLabel->setText(QCoreApplication::translate("optionsMenu", "Wait X ms before sending", nullptr));
-        waitXMsBeforeSendingLineEdit->setText(QCoreApplication::translate("optionsMenu", "100", nullptr));
+        waitXMsBeforeSendingLineEdit->setText(QCoreApplication::translate("optionsMenu", "5", nullptr));
         updateEveryXFramesLabel->setText(QCoreApplication::translate("optionsMenu", "Update every X frames", nullptr));
-        updateEveryXFramesLineEdit->setText(QCoreApplication::translate("optionsMenu", "15", nullptr));
+        updateEveryXFramesLineEdit->setText(QCoreApplication::translate("optionsMenu", "3", nullptr));
         label->setText(QCoreApplication::translate("optionsMenu", "Baudrate:", nullptr));
         baudComboBox->setItemText(0, QCoreApplication::translate("optionsMenu", "115200", nullptr));
         baudComboBox->setItemText(1, QCoreApplication::translate("optionsMenu", "9600", nullptr));
         baudComboBox->setItemText(2, QCoreApplication::translate("optionsMenu", "256000", nullptr));
 
-        checkBox->setText(QCoreApplication::translate("optionsMenu", "Advanced options (altering these values can impact performance)", nullptr));
+        checkBox->setText(QCoreApplication::translate("optionsMenu", "Advanced options (can impact performance)", nullptr));
         label_2->setText(QCoreApplication::translate("optionsMenu", "Select the max reverse throttle range", nullptr));
         rb15->setText(QCoreApplication::translate("optionsMenu", "15% (TBM, Beechcraft)", nullptr));
         rb20->setText(QCoreApplication::translate("optionsMenu", "20% (787, A320, Caravan)", nullptr));

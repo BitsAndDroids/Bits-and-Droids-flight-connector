@@ -454,6 +454,9 @@ void EventWindow::writeFile() {
   newEventsFile.resize(0);
   QTextStream out(&newEventsFile);
   for (auto &row : tableRows) {
+    if (row.updateEvery == "n/a") {
+      row.updateEvery = "0";
+    }
     QString typeString = "";
     if (row.type == "3") {
       typeString = QString::fromStdString(row.type) +
