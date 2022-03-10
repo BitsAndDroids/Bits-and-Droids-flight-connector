@@ -90,8 +90,6 @@ class MainWindow : public QMainWindow {
   void optionMenuClosed();
   void eventWindowClosed();
 
-  void onfinish(QNetworkReply *rep);
-
   std::string convertComPort(QString comText);
 
   void openCalibrateAxis();
@@ -180,6 +178,7 @@ class MainWindow : public QMainWindow {
   void copyFolder(QString sourceFolder, QString destinationFolder);
   bool updateApplication();
   void unzip(QString zipfilename, QString filename);
+  void checkForUpdates();
 };
 
 #endif  // MAINWINDOW_H

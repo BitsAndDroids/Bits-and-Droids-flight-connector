@@ -463,6 +463,7 @@ int InputSwitchHandler::calibratedRange(int value, int index) {
   }
   return axis;
 }
+
 void InputSwitchHandler::setRudder(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);

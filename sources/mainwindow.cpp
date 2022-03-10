@@ -151,9 +151,7 @@ void MainWindow::installWasm() {
   QString destinationString = pathfound + "/BitsAndDroidsModule";
 
   copyFolder(sourceString, destinationString);
-
-  QFile::copy(applicationEventsPath,
-              pathfound + "/BitsAndDroidsModule/modules/events.txt");
+  qDebug() << applicationEventsPath;
 }
 
 void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
@@ -163,7 +161,7 @@ void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
   QDir destinationDir(destinationFolder);
 
   if (!sourceDir.exists()) {
-    qDebug() << "dest not found";
+    qDebug() << "dest not found" << sourceDir;
     return;
   }
 
@@ -177,7 +175,8 @@ void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
   for (int i = 0; i < files.count(); i++) {
     QString sourceName = sourceFolder + "/" + files[i];
     QString destName = destinationFolder + "/" + files[i];
-    if (!sourceName.contains("events")) {
+    if (!(files[i] == ("events.txt"))) {
+      qDebug() << "Coppied " << files[i];
       QFile::copy(sourceName, destName);
     }
   }
@@ -266,7 +265,7 @@ MainWindow::MainWindow(QWidget *parent)
   connect(openOutputMenu, &QAction::triggered, this,
           &MainWindow::openOutputMenu);
   connect(updateApplication, &QAction::triggered, this,
-          &MainWindow::updateApplication);
+          &MainWindow::checkForUpdates);
   connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
   connect(toggleAdvancedAction, &QAction::triggered, this,
           &MainWindow::toggleAdvanced);
@@ -358,13 +357,6 @@ MainWindow::MainWindow(QWidget *parent)
   auto dualWarningBox = new QVBoxLayout();
   dualWarningBox->setObjectName("dualWarningBox");
   dualContainer->addLayout(dualWarningBox);
-
-  auto *mgr = new QNetworkAccessManager(this);
-  connect(mgr, &QNetworkAccessManager::finished, this, &MainWindow::onfinish);
-  connect(mgr, &QNetworkAccessManager::finished, mgr, &QObject::deleteLater);
-  mgr->get(
-      QNetworkRequest(QUrl("https://www.bitsanddroids.com/assets/"
-                           "downloads/connector/version.html")));
 
   // THIS SECTION POPULATES THE COMBOBOXES
   auto widgetsToSet = QList<QWidget *>();
@@ -464,45 +456,36 @@ MainWindow::MainWindow(QWidget *parent)
   if (!settingsHandler.retrieveSetting("Settings", "advancedMode")->toBool()) {
     toggleAdvanced();
   }
+  checkForUpdates();
   settingsHandler.checkEventFilePresent();
   this->adjustSize();
 }
-
-bool MainWindow::updateApplication() {
-  QDir::setCurrent(qApp->applicationDirPath());
-  QProcess process;
-  process.start("ConnectorMaintenanceTool");
-
-  // Wait until the update tool is finished
-  process.waitForFinished();
-
-  if (process.error() != QProcess::UnknownError) {
-    qDebug() << "Error checking for updates";
-    return false;
+void MainWindow::checkForUpdates() {
+  QDir::setCurrent("C:/Program Files (x86)/BitsAndDroids");
+  QProcess *process = new QProcess(this);
+  process->start(
+      "\"C:/Program Files (x86)/BitsAndDroids/ConnectorMaintenanceTool\" ch");
+  process->waitForFinished();
+  QByteArray data = process->readAllStandardOutput();
+  qDebug() << data;
+  auto mb = new QMessageBox();
+  if (data.contains("no updates available")) {
+    ui->updateButton->setText("Update available");
+    ui->updateButton->setVisible(true);
+  } else if (data.contains("Wait until it finishes")) {
+    mb->setText(
+        "Another instance of the maintenance tool is already running\n Please "
+        "close it before trying again.");
+    mb->exec();
   }
-
-  // Read the output
-  QByteArray data = process.readAllStandardOutput();
-
-  // No output means no updates available
-  // Note that the exit code will also be 1, but we don't use that
-  // Also note that we should parse the output instead of just checking if it is
-  // empty if we want specific update info
-  if (data.isEmpty()) {
-    qDebug() << "No updates available";
-    return false;
-  }
-
-  // Call the maintenance tool binary
-  // Note: we start it detached because this application need to close for the
-  // update
-  QStringList args("--updater");
-  bool success = QProcess::startDetached("maintenancetool", args);
-
-  // Close the application
-  qApp->closeAllWindows();
 }
+
 void MainWindow::localUpdateEventFile() {
+  QFile::remove(pathHandler.getCommunityFolderPath() +
+                "/BitsAndDroidsModule/modules/events.txt");
+  QFile::copy(applicationEventsPath,
+              pathHandler.getCommunityFolderPath() +
+                  "/BitsAndDroidsModule/modules/events.txt");
   if (dualThread.isRunning()) {
     connect(this, &MainWindow::updateEventFile, &dualThread,
             &DualWorker::sendWASMCommand);
@@ -583,29 +566,6 @@ void MainWindow::BoardConnectionMade(int con, int mode) {
     boardRadioButton->setStyleSheet(
         "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
         "green; border-radius: 7px;height: 12px; width: 12px;}");
-  }
-}
-
-void MainWindow::onfinish(QNetworkReply *rep) {
-  try {
-    if (rep->error() == QNetworkReply::NoError) {
-      QByteArray bts = rep->readAll();
-
-      QString str(bts);
-
-      QStringList versionCut = str.split("~");
-
-      if (versionCut[1].toStdString() != version) {
-        std::string nr = versionCut[1].toStdString();
-        std::string buttonText = "New update available: " + nr;
-        ui->updateButton->setText(QString::fromStdString(buttonText));
-        // url = versionCut[3].toStdString();
-      } else {
-        ui->updateButton->setVisible(false);
-        ui->updateButton->setText("Up to date v: " + versionCut[1]);
-      }
-    }
-  } catch (...) {
   }
 }
 
@@ -966,9 +926,10 @@ void MainWindow::stopOutput() {
 void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
-  qDebug() << "clicked";
-  QString qUrl = QString::fromStdString(url);
-  QDesktopServices::openUrl(QUrl(qUrl));
+  QProcess *process = new QProcess(this);
+  process->startDetached(
+      "\"C:/Program Files (x86)/BitsAndDroids/ConnectorMaintenanceTool\"");
+  exitProgram();
 }
 
 int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
