@@ -81,11 +81,8 @@ void outputHandler::readOutputs() {
     outputsCategorized.append(*outputCategory);
   }
   QList<Output> *outputCategory = new QList<Output>();
-  QString applicationPath =
-      qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/events.txt";
-  qDebug() << applicationPath;
 
-  std::ifstream file(applicationPath.toStdString());
+  std::ifstream file(applicationEventsPath.toStdString());
   std::string row;
   int offsetCounter = 0;
   while (std::getline(file, row)) {

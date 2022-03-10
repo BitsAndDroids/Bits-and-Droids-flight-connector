@@ -1,6 +1,9 @@
 #ifndef EVENTWINDOW_H
 #define EVENTWINDOW_H
+#include <handlers/pathhandler.h>
+#include <qstandardpaths.h>
 
+#include <QApplication>
 #include <QTableWidgetItem>
 #include <QWidget>
 
@@ -16,6 +19,8 @@ class EventWindow : public QWidget {
   ~EventWindow();
 
  private:
+  PathHandler pathHandler;
+  QString applicationEventsPath = pathHandler.getWritableEventPath();
   Ui::EventWindow *ui;
   void readFile();
   bool eventFilter(QObject *obj, QEvent *e);

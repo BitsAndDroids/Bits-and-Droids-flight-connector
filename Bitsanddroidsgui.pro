@@ -61,6 +61,7 @@ SOURCES += \
     dual/dualworker.cpp \
     elements/mcheckbox.cpp \
     events/eventwindow.cpp \
+    handlers/pathhandler.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     dual/dualworker.h \
     elements/mcheckbox.h \
     events/eventwindow.h \
+    handlers/pathhandler.h \
     headers/Engine.h \
     headers/constants.h \
     headers/mainwindow.h \

@@ -28,6 +28,7 @@ public:
 
     QVariant *retrieveSubSetting(QString group, QString subGroup, QString key);
 
+    void checkEventFilePresent();
 private:
     QString path =
             QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);

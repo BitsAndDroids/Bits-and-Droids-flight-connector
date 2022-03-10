@@ -446,10 +446,9 @@ void EventWindow::saveBtnPressed() {
 }
 
 void EventWindow::writeFile() {
-  cout << "WRITEFILE" << endl;
-  QString applicationPath =
-      qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/";
-  QFile newEventsFile(applicationPath + "events.txt");
+  QFile newEventsFile(applicationEventsPath);
+  cout << "WRITEFILE " << newEventsFile.fileName().toStdString().c_str()
+       << endl;
   newEventsFile.open(QIODevice::ReadWrite);
   newEventsFile.resize(0);
   QTextStream out(&newEventsFile);
@@ -594,11 +593,7 @@ void EventWindow::closeEvent(QCloseEvent *event) {
   delete ui;
 }
 void EventWindow::readFile() {
-  QString applicationPath =
-      qApp->applicationDirPath() + "/BitsAndDroidsModule/modules/events.txt";
-  qDebug() << applicationPath;
-
-  std::ifstream file(applicationPath.toStdString());
+  std::ifstream file(applicationEventsPath.toStdString());
   std::string row;
 
   while (std::getline(file, row)) {

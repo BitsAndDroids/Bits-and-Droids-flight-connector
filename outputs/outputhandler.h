@@ -1,6 +1,8 @@
 #ifndef OUTPUTHANDLER_H
 #define OUTPUTHANDLER_H
 
+#include <handlers/pathhandler.h>
+
 #include <QJsonObject>
 #include <QMap>
 
@@ -21,6 +23,8 @@ class outputHandler {
   QStringList categoryStrings;
   QList<QList<Output>> outputsCategorized;
   QMap<int, Output*> availableOutputs = QMap<int, Output*>();
+  PathHandler pathHandler;
+  QString applicationEventsPath = pathHandler.getWritableEventPath();
 };
 
 #endif  // OUTPUTHANDLER_H

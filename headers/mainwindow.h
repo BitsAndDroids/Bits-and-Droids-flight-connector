@@ -108,7 +108,8 @@ class MainWindow : public QMainWindow {
   void exitProgram();
   void toggleOpen(QSystemTrayIcon::ActivationReason reason);
   void closeEvent(QCloseEvent *event) override;
-
+  PathHandler pathHandler;
+  QString applicationEventsPath = pathHandler.getWritableEventPath();
   enum warnings { NOSET, NOCOMPORT };
   SetHandler *setHandler = new SetHandler();
   SettingsHandler settingsHandler;
@@ -177,6 +178,8 @@ class MainWindow : public QMainWindow {
   void clearChildrenFromLayout(QLayout *);
 
   void copyFolder(QString sourceFolder, QString destinationFolder);
+  bool updateApplication();
+  void unzip(QString zipfilename, QString filename);
 };
 
 #endif  // MAINWINDOW_H

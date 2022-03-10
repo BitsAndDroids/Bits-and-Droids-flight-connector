@@ -101,17 +101,14 @@ void MainWindow::toggleAdvanced() {
   cout << "PRESSED" << endl;
 }
 void MainWindow::installWasm() {
-  bool customPathFound =
-      settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel");
+  bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
   QString pathfound;
   QString sourceString =
       QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
   qDebug() << "start install";
   if (customPathFound) {
     qDebug() << "custom path found";
-    pathfound =
-        settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
-            ->toString();
+    pathfound = pathHandler.getCommunityFolderPath();
   } else {
     QString windowsStorePath =
         QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
@@ -152,7 +149,11 @@ void MainWindow::installWasm() {
   }
 
   QString destinationString = pathfound + "/BitsAndDroidsModule";
+
   copyFolder(sourceString, destinationString);
+
+  QFile::copy(applicationEventsPath,
+              pathfound + "/BitsAndDroidsModule/modules/events.txt");
 }
 
 void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
@@ -176,14 +177,9 @@ void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
   for (int i = 0; i < files.count(); i++) {
     QString sourceName = sourceFolder + "/" + files[i];
     QString destName = destinationFolder + "/" + files[i];
-    if (QFile::exists(destName)) {
-      if (files[i].contains("events")) {
-        QString newPath = destName + "Old";
-        QFile::copy(destName, newPath);
-      }
-      QFile::remove(destName);
+    if (!sourceName.contains("events")) {
+      QFile::copy(sourceName, destName);
     }
-    QFile::copy(sourceName, destName);
   }
   QStringList dirs = sourceDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
   for (auto &dir : dirs) {
@@ -218,14 +214,16 @@ MainWindow::MainWindow(QWidget *parent)
   // TOOLBAR MENU
   qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   auto *openSettings = new QAction("&Settings", this);
+
   auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
   auto *calibrateAxis = new QAction("&Calibrate axis", this);
   auto *openOutputMenu = new QAction("&Outputs", this);
   auto *openEditEventWindow = new QAction("&Edit events", this);
   auto *installWasm = new QAction("&Install WASM", this);
   auto *WasmUpdateEventFile = new QAction("&Update event file", this);
-
+  auto *updateApplication = new QAction("Check for updates", this);
   QMenu *Settings = menuBar()->addMenu("&Settings");
+  QMenu *viewMenu = menuBar()->addMenu("&View");
   QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
   QMenu *WasmInstall = menuBar()->addMenu("&WASM");
 
@@ -248,10 +246,12 @@ MainWindow::MainWindow(QWidget *parent)
 
   WasmInstall->addAction(WasmUpdateEventFile);
   WasmInstall->addAction(installWasm);
+  viewMenu->addAction(toggleAdvancedAction);
   OutputSettings->addAction(openOutputMenu);
   WasmInstall->addAction(openEditEventWindow);
   Settings->addAction(openSettings);
-  Settings->addAction(toggleAdvancedAction);
+  Settings->addAction(updateApplication);
+
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
@@ -265,6 +265,8 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::openCalibrateAxis);
   connect(openOutputMenu, &QAction::triggered, this,
           &MainWindow::openOutputMenu);
+  connect(updateApplication, &QAction::triggered, this,
+          &MainWindow::updateApplication);
   connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
   connect(toggleAdvancedAction, &QAction::triggered, this,
           &MainWindow::toggleAdvanced);
@@ -462,7 +464,43 @@ MainWindow::MainWindow(QWidget *parent)
   if (!settingsHandler.retrieveSetting("Settings", "advancedMode")->toBool()) {
     toggleAdvanced();
   }
+  settingsHandler.checkEventFilePresent();
   this->adjustSize();
+}
+
+bool MainWindow::updateApplication() {
+  QDir::setCurrent(qApp->applicationDirPath());
+  QProcess process;
+  process.start("ConnectorMaintenanceTool");
+
+  // Wait until the update tool is finished
+  process.waitForFinished();
+
+  if (process.error() != QProcess::UnknownError) {
+    qDebug() << "Error checking for updates";
+    return false;
+  }
+
+  // Read the output
+  QByteArray data = process.readAllStandardOutput();
+
+  // No output means no updates available
+  // Note that the exit code will also be 1, but we don't use that
+  // Also note that we should parse the output instead of just checking if it is
+  // empty if we want specific update info
+  if (data.isEmpty()) {
+    qDebug() << "No updates available";
+    return false;
+  }
+
+  // Call the maintenance tool binary
+  // Note: we start it detached because this application need to close for the
+  // update
+  QStringList args("--updater");
+  bool success = QProcess::startDetached("maintenancetool", args);
+
+  // Close the application
+  qApp->closeAllWindows();
 }
 void MainWindow::localUpdateEventFile() {
   if (dualThread.isRunning()) {
