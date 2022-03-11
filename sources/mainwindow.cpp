@@ -395,40 +395,8 @@ MainWindow::MainWindow(QWidget *parent)
       widget->layout()->addWidget(
           formbuilder.generateComSelector(true, mode, 0));
     }
-
-    auto comboBoxes = widget->findChildren<QComboBox *>();
-    int itterations = comboBoxes.size();
-    if (itterations > 1) {
-      itterations = itterations / 2;
-    }
-
-    for (int i = 0; i < itterations; i++) {
-      auto comComboBox =
-          widget->findChild<QComboBox *>("comBox" + QString::number(i));
-      auto lastComSaved =
-          settingsHandler
-              .retrieveSetting(comGroupName, "com" + QString::number(i))
-              ->toString()
-              .mid(4);
-      comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
-      qDebug() << "LAST COM SAVED " << lastComSaved;
-
-      if (setsNeeded) {
-        auto comboBox =
-            widget->findChild<QComboBox *>("setBox" + QString::number(i));
-        if (!settingsHandler
-                 .retrieveSetting(setGroupName, "set" + QString::number(i))
-                 ->isNull()) {
-          auto lastSetId =
-              settingsHandler
-                  .retrieveSetting(setGroupName, "set" + QString::number(i))
-                  ->toString();
-          auto setFound = setHandler->getSetById(lastSetId);
-          auto setName = setFound.getSetName();
-          comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
-        }
-      }
-    }
+    restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName,
+                                  setsNeeded);
 
     auto widgetContainer = new QWidget();
     auto connectionRow = new QHBoxLayout();
@@ -456,27 +424,79 @@ MainWindow::MainWindow(QWidget *parent)
   if (!settingsHandler.retrieveSetting("Settings", "advancedMode")->toBool()) {
     toggleAdvanced();
   }
-  checkForUpdates();
+  checkForUpdates(true);
   settingsHandler.checkEventFilePresent();
   this->adjustSize();
 }
-void MainWindow::checkForUpdates() {
-  QDir::setCurrent("C:/Program Files (x86)/BitsAndDroids");
+void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
+                                               QString comGroupName,
+                                               QString setGroupName,
+                                               bool setsNeeded) {
+  auto comboBoxes = widget->findChildren<QComboBox *>();
+  int itterations = comboBoxes.size();
+  if (itterations > 1) {
+    itterations = itterations / 2;
+  }
+
+  for (int i = 0; i < itterations; i++) {
+    auto comComboBox =
+        widget->findChild<QComboBox *>("comBox" + QString::number(i));
+    if (!(comComboBox == nullptr)) {
+      auto lastComSaved =
+          settingsHandler
+              .retrieveSetting(comGroupName, "com" + QString::number(i))
+              ->toString()
+              .mid(4);
+      if (getComboxIndex(comComboBox, lastComSaved) != -10) {
+        comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
+      } else {
+        qDebug() << "ELSE";
+        comComboBox->addItem("Not connected");
+        qDebug() << "ADDED NOT CONNECTED";
+        comComboBox->setCurrentIndex(
+            getComboxIndex(comComboBox, "Not connected"));
+      }
+
+      qDebug() << "LAST COM SAVED " << lastComSaved;
+
+      if (setsNeeded) {
+        auto comboBox =
+            widget->findChild<QComboBox *>("setBox" + QString::number(i));
+        if (!settingsHandler
+                 .retrieveSetting(setGroupName, "set" + QString::number(i))
+                 ->isNull()) {
+          auto lastSetId =
+              settingsHandler
+                  .retrieveSetting(setGroupName, "set" + QString::number(i))
+                  ->toString();
+          auto setFound = setHandler->getSetById(lastSetId);
+          auto setName = setFound.getSetName();
+          comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+        }
+      }
+    }
+  }
+}
+void MainWindow::checkForUpdates(bool silentCheck) {
   QProcess *process = new QProcess(this);
-  process->start(
-      "\"C:/Program Files (x86)/BitsAndDroids/ConnectorMaintenanceTool\" ch");
+  process->start(pathHandler.getMaintenanceToolPath() + " ch");
   process->waitForFinished();
-  QByteArray data = process->readAllStandardOutput();
+  QByteArray data = process->readAll();
   qDebug() << data;
   auto mb = new QMessageBox();
-  if (data.contains("no updates available")) {
-    ui->updateButton->setText("Update available");
-    ui->updateButton->setVisible(true);
+  ui->updateButton->setVisible(false);
+  if (data.contains("no updates available") && !silentCheck) {
+    mb->setText("No updates available");
+    mb->exec();
   } else if (data.contains("Wait until it finishes")) {
+    auto mb = new QMessageBox();
     mb->setText(
         "Another instance of the maintenance tool is already running\n Please "
         "close it before trying again.");
     mb->exec();
+  } else if (data.contains("update name")) {
+    ui->updateButton->setText("Update available");
+    ui->updateButton->setVisible(true);
   }
 }
 
@@ -600,7 +620,7 @@ void MainWindow::startInputs() {
   auto *widget = new QWidget();
   inputThread.abortInput = false;
   widget = ui->inWidgetContainer;
-  settingsHandler.clearKeys("inputComs");
+  settingsHandler.clearKeys("runningInputComs");
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
   bool emptyInputCom = checkIfComboIsEmpty(comList);
@@ -613,6 +633,8 @@ void MainWindow::startInputs() {
       comboBoxName = "comboBoxRow" + QString::number(i);
 
       QString keyValue = comList[i]->currentText();
+      settingsHandler.storeValue("runningInputComs", key,
+                                 convertComPort(keyValue).c_str());
       settingsHandler.storeValue("inputComs", key,
                                  convertComPort(keyValue).c_str());
     }
@@ -646,8 +668,8 @@ void MainWindow::startOutputs() {
 
   widget = ui->outWidgetContainer;
 
-  settingsHandler.clearKeys("outputComs");
-  settingsHandler.clearKeys("outputSets");
+  settingsHandler.clearKeys("runningOutputComs");
+  settingsHandler.clearKeys("runningOutputSets");
 
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
@@ -668,6 +690,8 @@ void MainWindow::startOutputs() {
       QString keyValue = comList[i]->currentText();
       QString setKeyValue = setList[i]->currentText();
 
+      settingsHandler.storeValue("runningOutputComs", key,
+                                 convertComPort(keyValue).c_str());
       settingsHandler.storeValue("outputComs", key,
                                  convertComPort(keyValue).c_str());
 
@@ -690,6 +714,7 @@ void MainWindow::startOutputs() {
 
       bundle->setOutputsInSet(*outputs);
       outputThread.addBundle(bundle);
+      settingsHandler.storeValue("runningOutputSets", setKey, id);
       settingsHandler.storeValue("outputSets", setKey, id);
     }
     outputThread.abort = false;
@@ -722,8 +747,8 @@ void MainWindow::startDual() {
   auto *widget = new QWidget();
 
   widget = ui->dualWidgetContainer;
-  settingsHandler.clearKeys("dualComs");
-  settingsHandler.clearKeys("dualSets");
+  settingsHandler.clearKeys("runningDualComs");
+  settingsHandler.clearKeys("runningDualSets");
 
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
@@ -740,41 +765,45 @@ void MainWindow::startDual() {
     qDebug() << "sets available" << comList.size();
     dualThread.clearBundles();
     for (int i = 0; i < comList.size(); i++) {
-      key = "com" + QString::number(i);
-      setKey = "set" + QString::number(i);
+      if (!(comList[i]->currentText().contains("Not connected"))) {
+        key = "com" + QString::number(i);
+        setKey = "set" + QString::number(i);
 
-      QString keyValue = comList[i]->currentText();
-      QString setKeyValue = setList[i]->currentText();
-      qDebug() << setKeyValue;
+        QString keyValue = comList[i]->currentText();
+        QString setKeyValue = setList[i]->currentText();
+        qDebug() << setKeyValue;
 
-      settingsHandler.storeValue("dualComs", key,
-                                 convertComPort(keyValue).c_str());
+        settingsHandler.storeValue("runningDualComs", key,
+                                   convertComPort(keyValue).c_str());
+        settingsHandler.storeValue("dualComs", key,
+                                   convertComPort(keyValue).c_str());
 
-      qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
-      if (!(setKeyValue == "No outputs")) {
-        int index = setList[i]->currentIndex() - 1;
+        qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
+        if (!(setKeyValue == "No outputs")) {
+          int index = setList[i]->currentIndex() - 1;
 
-        int id = availableSets->at(index).getID();
+          int id = availableSets->at(index).getID();
 
-        auto *bundle = new outputBundle();
+          auto *bundle = new outputBundle();
 
-        set active = setHandler->getSetById(QString::number(id));
-        bundle->setSet(active);
+          set active = setHandler->getSetById(QString::number(id));
+          bundle->setSet(active);
 
-        auto *outputs = new QMap<int, Output *>();
-        *outputs = active.getOutputs();
-        QMap<int, Output *>::iterator j;
-        for (j = outputs->begin(); j != outputs->end(); j++) {
-          outputsToMap.append(j.value());
+          auto *outputs = new QMap<int, Output *>();
+          *outputs = active.getOutputs();
+          QMap<int, Output *>::iterator j;
+          for (j = outputs->begin(); j != outputs->end(); j++) {
+            outputsToMap.append(j.value());
+          }
+          dualThread.setOutputsToMap(outputsToMap);
+          bundle->setOutputsInSet(*outputs);
+          dualThread.addBundle(bundle);
+          settingsHandler.storeValue("runningDualSets", setKey, id);
+          settingsHandler.storeValue("dualSets", setKey, id);
         }
-        dualThread.setOutputsToMap(outputsToMap);
-        bundle->setOutputsInSet(*outputs);
-        dualThread.addBundle(bundle);
-        settingsHandler.storeValue("dualSets", setKey, id);
-      } else {
-        settingsHandler.removeSetting("dualSets", setKey);
       }
     }
+
     //    ui->stopButton->setVisible(true);
     //    QString comText = ui->outputComboBoxBase->currentText();
     // std::string comNr
@@ -813,6 +842,7 @@ bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
     } else
       return false;
   }
+  return true;
 }
 
 void MainWindow::clearChildrenFromLayout(QLayout *toClear) {
@@ -842,20 +872,30 @@ QLabel *MainWindow::returnWarningString(int warningType) {
 
 void MainWindow::refreshComs(int mode) {
   auto *widget = new QWidget();
+  QString comGroupName;
+  QString setGroupName;
+  bool setsNeeded = true;
 
   switch (mode) {
     case 1:
       widget = ui->inWidgetContainer;
+      comGroupName = "inputComs";
+      setsNeeded = false;
       break;
     case 2:
       widget = ui->outWidgetContainer;
+      setGroupName = "outputSets";
+      comGroupName = "outputComs";
       break;
     case 3:
       widget = ui->dualWidgetContainer;
+      setGroupName = "dualSets";
+      comGroupName = "dualComs";
       break;
     default:
       break;
   }
+
   QRegularExpression search("comBox");
   QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
   formbuilder.loadComPortData();
@@ -868,6 +908,7 @@ void MainWindow::refreshComs(int mode) {
       comList[i]->addItem(com);
     }
   }
+  restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
 }
 
 void MainWindow::stopMode(int mode) {
@@ -927,20 +968,23 @@ void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
   QProcess *process = new QProcess(this);
-  process->startDetached(
-      "\"C:/Program Files (x86)/BitsAndDroids/ConnectorMaintenanceTool\"");
+  process->startDetached(pathHandler.getMaintenanceToolPath());
+  process->waitForFinished();
   exitProgram();
 }
 
 int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
-  int index = 0;
+  int index = -10;
   qDebug() << value;
-  for (int i = 0; i < comboBox->count(); i++) {
-    QString text = comboBox->itemText(i);
-    if (text.contains(value)) {
-      index = i;
+  if (!value.isNull()) {
+    for (int i = 0; i < comboBox->count(); i++) {
+      QString text = comboBox->itemText(i);
+      if (text.contains(value)) {
+        index = i;
+      }
     }
   }
+  qDebug() << "INDEX " << index;
   return index;
 }
 void MainWindow::closeEvent(QCloseEvent *event) {

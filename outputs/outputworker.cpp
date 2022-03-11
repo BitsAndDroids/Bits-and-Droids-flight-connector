@@ -342,13 +342,13 @@ void OutputWorker::testDataRequest() {
   HRESULT hr;
 
   abort = false;
-  keys = settingsHandler.retrieveKeys("outputcoms");
+  keys = settingsHandler.retrieveKeys("runningOutputcoms");
   int keySize = keys->size();
   int succesfullConnected = 0;
   emit(BoardConnectionMade(0, 2));
   for (int i = 0; i < keySize; i++) {
     ports[i] = new SerialPort(
-        settingsHandler.retrieveSetting("outputcoms", keys->at(i))
+        settingsHandler.retrieveSetting("runningOutputcoms", keys->at(i))
             ->toString()
             .toStdString()
             .c_str());

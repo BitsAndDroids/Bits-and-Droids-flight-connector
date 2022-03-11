@@ -81,6 +81,7 @@ class MainWindow : public QMainWindow {
   void addPressed(int mode);
 
  private slots:
+
   void localUpdateEventFile();
 
   void on_updateButton_clicked();
@@ -178,7 +179,9 @@ class MainWindow : public QMainWindow {
   void copyFolder(QString sourceFolder, QString destinationFolder);
   bool updateApplication();
   void unzip(QString zipfilename, QString filename);
-  void checkForUpdates();
+  void checkForUpdates(bool silentCheck);
+  void restoreStoredValuesComboBoxes(QWidget *widget, QString comGroupName,
+                                     QString setGroupName, bool setsNeeded);
 };
 
 #endif  // MAINWINDOW_H

@@ -333,15 +333,15 @@ void DualWorker::addBundle(outputBundle *bundle) {
 void DualWorker::RadioEvents() {
   HRESULT hr;
 
-  keys = settingsHandler.retrieveKeys("dualComs");
+  keys = settingsHandler.retrieveKeys("runningDualComs");
   int keySize = keys->size();
   int successfullyConnected = 0;
   for (int i = 0; i < keySize; i++) {
-    dualPorts[i] =
-        new SerialPort(settingsHandler.retrieveSetting("dualComs", keys->at(i))
-                           ->toString()
-                           .toStdString()
-                           .c_str());
+    dualPorts[i] = new SerialPort(
+        settingsHandler.retrieveSetting("runningDualComs", keys->at(i))
+            ->toString()
+            .toStdString()
+            .c_str());
 
     if (dualPorts[i]->isConnected()) {
       cout << "CONNECTED" << endl;

@@ -5,6 +5,7 @@ objects/Inputs/inputmapper.o
 objects/dual/dualworker.o
 objects/elements/mcheckbox.o
 objects/events/eventwindow.o
+objects/handlers/pathhandler.o
 objects/outputs/activeoutputs.o
 objects/outputs/output.o
 objects/outputs/outputbundle.o

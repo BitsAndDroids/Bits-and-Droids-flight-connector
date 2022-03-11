@@ -107,12 +107,12 @@ void InputWorker::inputEvents() {
       handler.setCurve(*rudderCurveList, i);
     }
   }
-  keys = *settingsHandler.retrieveKeys("inputComs");
+  keys = *settingsHandler.retrieveKeys("runningInputComs");
   int keySize = keys.size();
   int succesfullConnected = 0;
   for (int i = 0; i < keySize; i++) {
     const char *savedPort;
-    savedPort = settingsHandler.retrieveSetting("inputComs", keys[i])
+    savedPort = settingsHandler.retrieveSetting("runningInputComs", keys[i])
                     ->toString()
                     .toStdString()
                     .c_str();
