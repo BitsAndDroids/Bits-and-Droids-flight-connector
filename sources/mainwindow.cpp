@@ -7,7 +7,7 @@
 #include <settings/calibrateaxismenu.h>
 #include <settings/optionsmenu.h>
 #include <settings/outputmenu.h>
-
+#include <library/librarygeneratorwindow.h>
 #include <QDir>
 #include <QNetworkAccessManager>
 #include <iostream>
@@ -60,7 +60,13 @@ void MainWindow::openEditEventMenu() {
     wdg->show();
   }
 }
-
+void MainWindow::openGenerateLibraryMenu(){
+    if(generateLibraryMenuOpen){
+        generateLibraryMenuOpen = true;
+        QWidget *wdg = new LibraryGeneratowWindow;
+        wdg->show();
+    }
+}
 std::string MainWindow::convertComPort(QString comText) {
   std::string val =
       R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
@@ -215,6 +221,7 @@ MainWindow::MainWindow(QWidget *parent)
   auto *openSettings = new QAction("&Settings", this);
 
   auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
+  auto *libraryGenerator = new QAction("&Generate library", this);
   auto *calibrateAxis = new QAction("&Calibrate axis", this);
   auto *openOutputMenu = new QAction("&Outputs", this);
   auto *openEditEventWindow = new QAction("&Edit events", this);
@@ -222,6 +229,7 @@ MainWindow::MainWindow(QWidget *parent)
   auto *WasmUpdateEventFile = new QAction("&Update event file", this);
   auto *updateApplication = new QAction("Check for updates", this);
   QMenu *Settings = menuBar()->addMenu("&Settings");
+  QMenu *libraryMenu = menuBar()->addMenu("&Library");
   QMenu *viewMenu = menuBar()->addMenu("&View");
   QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
   QMenu *WasmInstall = menuBar()->addMenu("&WASM");
@@ -254,6 +262,7 @@ MainWindow::MainWindow(QWidget *parent)
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
+  libraryMenu->addAction(libraryGenerator);
 
   // SIGNALS + SLOTS
   connect(WasmUpdateEventFile, &QAction::triggered, this,
@@ -273,6 +282,7 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::BoardConnectionMade);
   connect(&outputThread, &OutputWorker::GameConnectionMade, this,
           &MainWindow::GameConnectionMade);
+  connect(&libraryGenerator, &QAction::triggered, this, &MainWindow::openGenerateLibraryMenu);
 
   connect(&inputThread, &InputWorker::BoardConnectionMade, this,
           &MainWindow::BoardConnectionMade);

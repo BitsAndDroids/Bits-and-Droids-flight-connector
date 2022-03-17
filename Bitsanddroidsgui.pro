@@ -62,6 +62,8 @@ SOURCES += \
     elements/mcheckbox.cpp \
     events/eventwindow.cpp \
     handlers/pathhandler.cpp \
+    library/librarygenerator.cpp \
+    library/librarygeneratorwindow.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -99,6 +101,9 @@ HEADERS += \
     headers/SerialPort.hpp \
     headers/SimConnect.h \
     headers/range.h \
+    library/librarygenerator.h \
+    library/librarygeneratorwidget.h \
+    library/librarygeneratorwindow.h \
     outputs/activeoutputs.h \
     outputs/output.h \
     outputs/outputbundle.h \
@@ -120,6 +125,7 @@ HEADERS += \
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"
 FORMS += \
     events/eventwindow.ui \
+    library/librarygeneratorwindow.ui \
     settings/calibrateaxismenu.ui \
     sources/mainwindow.ui \
     settings/optionsmenu.ui \
