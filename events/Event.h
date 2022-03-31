@@ -1,96 +1,44 @@
 //
 // Created by dave- on 3/30/2022.
 //
-
+#include "EventDataType.h"
+#include "EventType.h"
 #ifndef BITSANDDROIDSGUI_EVENT_H
 #define BITSANDDROIDSGUI_EVENT_H
-class Event{
+class Event {
+ private:
+  int prefix;
+  std::string event;
+  EventType type;
+  EventDatatype datatype;
+  float updateEvery;
+  std::string comment;
 
-public:
-    Event();
-    int getPrefix() const;
+ public:
+  Event(){};
+  int getPrefix() const { return prefix; }
 
-    void setPrefix(int prefix);
+  void setPrefix(int prefix) { Event::prefix = prefix; }
 
-    const std::string &getEvent() const;
+  const std::string getEvent() const { return event; }
 
-    void setEvent(const std::string &event);
+  void setEvent(const std::string &event) { Event::event = event; }
 
-    int getType() const;
+  EventType getType() const { return type; }
 
-    void setType(int type);
+  void setType(EventType type) { Event::type = type; }
 
-    std::string getDatatype() const;
+  EventDatatype getDatatype() const { return datatype; }
 
-    void setDatatype(std::string datatype);
+  void setDatatype(EventDatatype datatype) { Event::datatype = datatype; }
 
-    float getUpdateEvery() const;
+  float getUpdateEvery() const { return updateEvery; }
 
-    void setUpdateEvery(float updateEvery);
+  void setUpdateEvery(float updateEvery) { this->updateEvery = updateEvery; }
 
-    const std::string &getComment() const;
+  const std::string getComment() const { return comment; }
 
-    void setComment(const std::string &comment);
-
-private:
-    int prefix;
-    std::string event;
-    int type;
-    std::string datatype;
-    float updateEvery;
-    std::string comment;
+  void setComment(const std::string &comment) { Event::comment = comment; }
 };
 
-Event::Event() {
-
-}
-
-int Event::getPrefix() const {
-    return prefix;
-}
-
-void Event::setPrefix(int prefix) {
-    Event::prefix = prefix;
-}
-
-const std::string &Event::getEvent() const {
-    return event;
-}
-
-void Event::setEvent(const std::string &event) {
-    Event::event = event;
-}
-
-int Event::getType() const {
-    return type;
-}
-
-void Event::setType(int type) {
-    Event::type = type;
-}
-
-std::string Event::getDatatype() const {
-    return datatype;
-}
-
-void Event::setDatatype(std::string datatype) {
-    Event::datatype = datatype;
-}
-
-float Event::getUpdateEvery() const {
-    return updateEvery;
-}
-
-void Event::setUpdateEvery(float updateEvery) {
-    Event::updateEvery = updateEvery;
-}
-
-const std::string &Event::getComment() const {
-    return comment;
-}
-
-void Event::setComment(const std::string &comment) {
-    Event::comment = comment;
-}
-
-#endif //BITSANDDROIDSGUI_EVENT_H
+#endif  // BITSANDDROIDSGUI_EVENT_H

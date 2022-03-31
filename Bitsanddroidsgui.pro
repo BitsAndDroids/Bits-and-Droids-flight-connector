@@ -58,6 +58,8 @@ SOURCES += \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
+    events/EventDataType.cpp \
+    events/EventType.cpp \
     dual/dualworker.cpp \
     elements/mcheckbox.cpp \
     events/eventwindow.cpp \
@@ -88,6 +90,9 @@ SOURCES += \
     sources/range.cpp \
 
 HEADERS += \
+    events/EventDataType.h \
+    events/EventType.h \
+    events/Event.h \
     Inputs/InputMapper.h \
     Inputs/InputSwitchHandler.h \
     Inputs/InputWorker.h \
@@ -103,7 +108,6 @@ HEADERS += \
     headers/SimConnect.h \
     headers/range.h \
     library/librarygenerator.h \
-    library/librarygeneratorwidget.h \
     library/librarygeneratorwindow.h \
     library/platform.h \
     outputs/activeoutputs.h \
