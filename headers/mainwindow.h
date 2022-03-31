@@ -95,7 +95,8 @@ class MainWindow : public QMainWindow {
 
   void openCalibrateAxis();
   void toggleAdvanced();
- public slots:
+  void openGenerateLibraryMenu();
+public slots:
 
   void GameConnectionMade(int con, int mode);
 
@@ -117,6 +118,7 @@ class MainWindow : public QMainWindow {
   bool eventwindowOpen = false;
   bool calibrateAxisMenuOpen = false;
   bool optionMenuOpen = false;
+  bool generateLibraryMenuOpen = false;
 
   void stopInput();
 

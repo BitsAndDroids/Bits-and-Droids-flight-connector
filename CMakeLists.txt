@@ -5,7 +5,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-set(CMAKE_PREFIX_PATH "C:/QtWindows/6.2.0/mingw81_64/lib/cmake")
+set(CMAKE_PREFIX_PATH "C:/Qt/6.2.1/mingw81_64/")
 
 find_package(Qt6 COMPONENTS
         Core
@@ -26,7 +26,10 @@ include_directories(settings)
 include_directories(sources)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(Bitsanddroidsgui
-
+        library/librarygenerator.cpp
+        library/librarygenerator.h
+        library/librarygeneratorwidget.cpp
+        library/librarygenerator.h
         dual/dualworker.cpp
         dual/dualworker.h
         headers/constants.h
@@ -93,7 +96,7 @@ add_executable(Bitsanddroidsgui
         events/eventwindow.h
         events/eventwindow.ui
 
-     )
+        events/Event.h)
 
 
 target_link_libraries(Bitsanddroidsgui

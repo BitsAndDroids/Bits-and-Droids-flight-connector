@@ -64,6 +64,7 @@ SOURCES += \
     handlers/pathhandler.cpp \
     library/librarygenerator.cpp \
     library/librarygeneratorwindow.cpp \
+    library/platform.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -104,6 +105,7 @@ HEADERS += \
     library/librarygenerator.h \
     library/librarygeneratorwidget.h \
     library/librarygeneratorwindow.h \
+    library/platform.h \
     outputs/activeoutputs.h \
     outputs/output.h \
     outputs/outputbundle.h \
