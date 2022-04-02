@@ -1124,7 +1124,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Landing lights",
-      "prefix":144 ,
+      "prefix":144,
       "type":4
     }
   ],
