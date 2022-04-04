@@ -54,6 +54,8 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
+logging/MessageCaster.cpp \
+logging/Logger.cpp \
     Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
@@ -90,6 +92,8 @@ SOURCES += \
     sources/range.cpp \
 
 HEADERS += \
+logging/MessageCaster.h \
+logging/Logger.h \
     events/EventDataType.h \
     events/EventType.h \
     events/Event.h \

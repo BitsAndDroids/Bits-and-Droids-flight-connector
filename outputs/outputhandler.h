@@ -12,13 +12,14 @@ class outputHandler {
  public:
   outputHandler();
   QStringList getCategoryStrings() { return categoryStrings; };
-  void addCategoryString(QString category);
+  void addCategoryString(const QString& category);
   QList<QList<Output>> getOutputsCategorized() { return outputsCategorized; };
   QMap<int, Output*> getAvailableOutputs() { return this->availableOutputs; };
   Output* findOutputById(int id);
   void readOutputs();
 
  private:
+    static bool updateOutputsRequired;
   // const QJsonObject &json
   QStringList categoryStrings;
   QList<QList<Output>> outputsCategorized;
