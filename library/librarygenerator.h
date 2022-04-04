@@ -8,6 +8,7 @@ class libraryGenerator
 public:
     libraryGenerator();
 
+    void writeFile();
 };
 
 #endif // LIBRARYGENERATOR_H

@@ -1,13 +1,14 @@
 #include "headers/mainwindow.h"
 
 #include <events/eventwindow.h>
+#include <library/librarygeneratorwindow.h>
 #include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <settings/calibrateaxismenu.h>
 #include <settings/optionsmenu.h>
 #include <settings/outputmenu.h>
-#include <library/librarygeneratorwindow.h>
+
 #include <QDir>
 #include <QNetworkAccessManager>
 #include <iostream>
@@ -60,12 +61,12 @@ void MainWindow::openEditEventMenu() {
     wdg->show();
   }
 }
-void MainWindow::openGenerateLibraryMenu(){
-    if(generateLibraryMenuOpen){
-        generateLibraryMenuOpen = true;
-        QWidget *wdg = new LibraryGeneratowWindow;
-        wdg->show();
-    }
+void MainWindow::openGenerateLibraryMenu() {
+  if (generateLibraryMenuOpen) {
+    generateLibraryMenuOpen = true;
+    QWidget *wdg = new LibraryGeneratowWindow;
+    wdg->show();
+  }
 }
 std::string MainWindow::convertComPort(QString comText) {
   std::string val =
@@ -282,7 +283,8 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::BoardConnectionMade);
   connect(&outputThread, &OutputWorker::GameConnectionMade, this,
           &MainWindow::GameConnectionMade);
-  connect(&libraryGenerator, &QAction::triggered, this, &MainWindow::openGenerateLibraryMenu);
+  connect(libraryGenerator, &QAction::triggered, this,
+          &MainWindow::openGenerateLibraryMenu);
 
   connect(&inputThread, &InputWorker::BoardConnectionMade, this,
           &MainWindow::BoardConnectionMade);

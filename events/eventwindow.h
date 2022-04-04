@@ -29,7 +29,7 @@ class EventWindow : public QWidget {
 
   void writeFile();
   void fillRow(int index);
-  QString checkSpaces(std::string stringToCheck);
+  static QString checkSpaces(std::string stringToCheck);
   void closeEvent(QCloseEvent *event) override;
  private slots:
   void cellTextChanged(QTableWidgetItem *);
