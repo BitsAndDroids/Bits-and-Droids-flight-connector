@@ -263,7 +263,7 @@ MainWindow::MainWindow(QWidget *parent)
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
-  // libraryMenu->addAction(libraryGenerator);
+  libraryMenu->addAction(libraryGenerator);
 
   // SIGNALS + SLOTS
   connect(WasmUpdateEventFile, &QAction::triggered, this,
@@ -283,7 +283,7 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::BoardConnectionMade);
   connect(&outputThread, &OutputWorker::GameConnectionMade, this,
           &MainWindow::GameConnectionMade);
-  connect(&libraryGenerator, &QAction::triggered, this,
+  connect(libraryGenerator, &QAction::triggered, this,
           &MainWindow::openGenerateLibraryMenu);
 
   connect(&inputThread, &InputWorker::BoardConnectionMade, this,

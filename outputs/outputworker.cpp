@@ -5,7 +5,6 @@
 
 #include <qsettings.h>
 #include <qstandardpaths.h>
-#include <tchar.h>
 #include <windows.h>
 
 #include <cstdio>

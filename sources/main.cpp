@@ -2,17 +2,17 @@
 
 #include "headers/mainwindow.h"
 
-int main(int argc, char* argv[])
 
+int main(int argc, char* argv[])
 {
   QApplication a(argc, argv);
 
-  a.setApplicationName("BitsAndDroidsFlightConnector");
-  a.setOrganizationName("Bits and Droids");
-  a.setOrganizationDomain("www.bitsanddroids.com");
-  MainWindow w;
+  QApplication::setApplicationName("BitsAndDroidsFlightConnector");
+  QApplication::setOrganizationName("Bits and Droids");
+  QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
+  MainWindow w;
   w.show();
 
-  return a.exec();
+  return QApplication::exec();
 }

@@ -54,16 +54,21 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
+logging/MessageCaster.cpp \
+logging/Logger.cpp \
     Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
     Inputs/inputmapper.cpp \
+    events/EventDataType.cpp \
+    events/EventType.cpp \
     dual/dualworker.cpp \
     elements/mcheckbox.cpp \
     events/eventwindow.cpp \
     handlers/pathhandler.cpp \
     library/librarygenerator.cpp \
     library/librarygeneratorwindow.cpp \
+    library/platform.cpp \
     outputs/activeoutputs.cpp \
     outputs/output.cpp \
     outputs/outputbundle.cpp \
@@ -87,6 +92,11 @@ SOURCES += \
     sources/range.cpp \
 
 HEADERS += \
+logging/MessageCaster.h \
+logging/Logger.h \
+    events/EventDataType.h \
+    events/EventType.h \
+    events/Event.h \
     Inputs/InputMapper.h \
     Inputs/InputSwitchHandler.h \
     Inputs/InputWorker.h \
@@ -102,8 +112,8 @@ HEADERS += \
     headers/SimConnect.h \
     headers/range.h \
     library/librarygenerator.h \
-    library/librarygeneratorwidget.h \
     library/librarygeneratorwindow.h \
+    library/platform.h \
     outputs/activeoutputs.h \
     outputs/output.h \
     outputs/outputbundle.h \
