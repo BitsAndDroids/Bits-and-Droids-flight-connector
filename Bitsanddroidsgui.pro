@@ -12,7 +12,7 @@ CONFIG += c++17
 CONFIG += openssl
 MOC_DIR= $$PWD/objects
 OBJECTS_DIR= $$PWD/objects
-
+TARGET = BitsAndDroidsConnector
 # using shell_path() to correct path depending on platform
 # escaping quotes and backslashes for file paths
 copydata.commands = $(COPY_FILE) \"$$shell_path($$PWD\\dist)\" \"$$shell_path($$OUT_PWD)\\release\"

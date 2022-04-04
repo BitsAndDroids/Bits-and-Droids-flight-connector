@@ -11,6 +11,7 @@ OutputMenu::OutputMenu(QWidget *parent)
   ui->setupUi(this);
   auto *foundSets = new QList<set>();
   foundSets = setHandler.getSets();
+
   this->setWindowTitle("Output menu");
   connect(&formBuilder, &FormBuilder::addSet, this, &OutputMenu::addNewSet);
   connect(&formBuilder, &FormBuilder::setEdited, this, &OutputMenu::editSet);
@@ -23,11 +24,8 @@ OutputMenu::OutputMenu(QWidget *parent)
   rightCol->setObjectName("rightCol");
   leftCol->addLayout(formBuilder.generateOutputSetList());
 
-  //  gridLayout->addLayout(formBuilder.generateOutputControls(), 2, 0);
-  //  gridLayout->addLayout(formBuilder.generateOutputSetList(), 1, 0);
   gridLayout->addLayout(leftCol, 0, 0);
 
-  // ui->containerLayout->setAlignment(Qt::AlignLeft);
   ui->containerLayout->addLayout(gridLayout);
 
   ui->widget->findChild<QVBoxLayout *>("outputSetList")
@@ -36,12 +34,8 @@ OutputMenu::OutputMenu(QWidget *parent)
   auto *activeLayout = new QVBoxLayout();
   activeLayout->setObjectName("activeContainer");
 
-  // gridLayout->addLayout(activeLayout, 2, 0);
-  // rightCol->addLayout(activeLayout);
-
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   for (const auto &foundSet : *foundSets) {
-    // qDebug()<<foundSets->at(i).getSetName()<< "wuttie";
     ui->widget->findChild<QVBoxLayout *>("outputSetList")
         ->addWidget(formBuilder.generateSetRow(foundSet));
   }
@@ -49,7 +43,7 @@ OutputMenu::OutputMenu(QWidget *parent)
   auto *saveEdit = new QPushButton("Save edit");
   saveEdit->setObjectName("btnSsaveEdit");
   connect(saveEdit, &QAbstractButton::clicked, this, &OutputMenu::saveEdit);
-  // gridLayout->addWidget(saveEdit, 4, 1);
+
   auto buttonRow = new QHBoxLayout();
   buttonRow->addLayout(formBuilder.generateOutputControls());
   buttonRow->addWidget(saveEdit);
@@ -66,6 +60,7 @@ OutputMenu::OutputMenu(QWidget *parent)
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
 
   ui->widget->adjustSize();
+  this->setMinimumSize(640, 350);
 
   this->adjustSize();
 
@@ -142,7 +137,7 @@ void OutputMenu::editSet(QString id) {
     }
   }
 
-  this->adjustSize();
+  this->resize(1200, 650);
 }
 void OutputMenu::saveEdit() {
   QList<QCheckBox *> cbList = ui->widget->findChildren<QCheckBox *>();
