@@ -263,7 +263,7 @@ MainWindow::MainWindow(QWidget *parent)
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
-  libraryMenu->addAction(libraryGenerator);
+  // libraryMenu->addAction(libraryGenerator);
 
   // SIGNALS + SLOTS
   connect(WasmUpdateEventFile, &QAction::triggered, this,
