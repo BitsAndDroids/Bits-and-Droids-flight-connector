@@ -13,6 +13,7 @@ private:
 
 public:
     static void showWarningMessage(const QString& error);
+    static void showCompleteMessage(const QString& error);
 };
 
 
