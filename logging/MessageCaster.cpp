@@ -11,3 +11,10 @@ void MessageCaster::showWarningMessage(const QString& error) {
     errorMessageBox->setText(error);
     errorMessageBox->exec();
 }
+
+void MessageCaster::showCompleteMessage(const QString& message){
+    auto messageBox = new QMessageBox();
+    messageBox->setIcon(QMessageBox::Information);
+    messageBox->setText(message);
+    messageBox->exec();
+}
