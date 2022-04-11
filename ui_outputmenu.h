@@ -32,11 +32,16 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(OutputMenu->sizePolicy().hasHeightForWidth());
         OutputMenu->setSizePolicy(sizePolicy);
+        OutputMenu->setMinimumSize(QSize(275, 350));
         widget = new QWidget(OutputMenu);
         widget->setObjectName(QString::fromUtf8("widget"));
         widget->setGeometry(QRect(10, 10, 721, 1500));
-        sizePolicy.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
-        widget->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(10);
+        sizePolicy1.setVerticalStretch(10);
+        sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy1);
+        widget->setMinimumSize(QSize(275, 350));
         containerLayout = new QVBoxLayout(widget);
         containerLayout->setSpacing(10);
         containerLayout->setObjectName(QString::fromUtf8("containerLayout"));
