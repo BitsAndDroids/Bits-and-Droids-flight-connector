@@ -754,7 +754,7 @@
       "dataType": 0,
       "cbText":"Com 1 active",
       "prefix":900 ,
-      "type":0
+      "type":8
     },
     {
       "id": 14,
@@ -764,7 +764,7 @@
       "dataType": 0,
       "cbText":"Com 2 active",
       "prefix":902 ,
-      "type":0
+      "type":8
     },
     {
       "id": 16,
@@ -774,7 +774,7 @@
       "dataType": 0,
       "cbText":"Com 1 standby",
       "prefix":901 ,
-      "type":0
+      "type":8
     },
     {
       "id": 17,
@@ -784,7 +784,7 @@
       "dataType": 0,
       "cbText":"Com 2 standby",
       "prefix":903 ,
-      "type":0
+      "type":8
     },
     {
       "id": 18,
@@ -794,7 +794,7 @@
       "dataType": 0,
       "cbText":"NAV 1 active",
       "prefix": 910,
-      "type":0
+      "type":8
     },
     {
       "id": 19,
@@ -804,7 +804,7 @@
       "dataType": 0,
       "cbText":"NAV 1 standby",
       "prefix": 911,
-      "type":0
+      "type":8
     },
     {
       "id": 20,
@@ -814,7 +814,7 @@
       "dataType": 0,
       "cbText":"NAV 2 active",
       "prefix":912 ,
-      "type":0
+      "type":8
     },
     {
       "id": 21,
@@ -824,7 +824,7 @@
       "dataType": 0,
       "cbText":"NAV 2 standby",
       "prefix":913 ,
-      "type":0
+      "type":8
     },
     {
       "id": 22,
@@ -1140,7 +1140,7 @@
     },
 {
       "id": 1000,
-      "outputName": "MASTER CAUTION",
+      "outputName": "STALL WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
@@ -1150,7 +1150,7 @@
     },
 {
       "id": 1001,
-      "outputName": "MASTER WARNING",
+      "outputName": "STALL WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,

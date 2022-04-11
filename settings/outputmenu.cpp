@@ -54,7 +54,7 @@ OutputMenu::OutputMenu(QWidget *parent)
   rightGrid->addLayout(activeLayout, 1, 0);
   rightCol->addLayout(rightGrid);
 
-  rightGrid->addWidget(formBuilder.generateOutputTabs(), 0, 0);
+  rightGrid->addWidget(FormBuilder::generateOutputTabs(), 0, 0);
   gridLayout->addLayout(rightCol, 0, 1);
 
   ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
