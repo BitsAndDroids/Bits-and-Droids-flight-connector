@@ -239,7 +239,7 @@ MainWindow::MainWindow(QWidget *parent)
   auto *installWasm = new QAction("&Install WASM", this);
   auto *WasmUpdateEventFile = new QAction("&Update event file", this);
   auto *updateApplication = new QAction("Check for updates", this);
-  QMenu *codeMenu = menuBar()->addMenu("&Code");
+  //QMenu *codeMenu = menuBar()->addMenu("&Code");
   QMenu *Settings = menuBar()->addMenu("&Settings");
   QMenu *libraryMenu = menuBar()->addMenu("&Library");
   QMenu *viewMenu = menuBar()->addMenu("&View");
@@ -270,7 +270,7 @@ MainWindow::MainWindow(QWidget *parent)
   WasmInstall->addAction(openEditEventWindow);
   Settings->addAction(openSettings);
   Settings->addAction(updateApplication);
-  codeMenu->addAction(generateCode);
+  //codeMenu->addAction(generateCode);
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
