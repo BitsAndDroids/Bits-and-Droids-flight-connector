@@ -20,5 +20,6 @@
         <file>fonts/Roboto-Black.ttf</file>
         <file>fonts/Roboto-Bold.ttf</file>
         <file>fonts/Roboto-Regular.ttf</file>
+        <file>codegenerator/boards/boardimages/proMicroPinout.png</file>
     </qresource>
 </RCC>

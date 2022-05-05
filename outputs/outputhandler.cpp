@@ -48,7 +48,7 @@ void outputHandler::readOutputs() {
     std::cout << "STRING F" << cat.toStdString() << std::endl;
   }
   for (int i = 0; i < categoryStrings.size() - 1; i++) {
-    QList<Output> *outputCategory = new QList<Output>;
+    auto *outputCategory = new QList<Output>;
     QJsonArray array = outputJSON.value(categoryStrings[i]).toArray();
     foreach (const QJsonValue &v, array) {
       QJsonObject obj = v.toObject();
@@ -57,7 +57,7 @@ void outputHandler::readOutputs() {
       std::string JSONoutputName =
           obj.value("outputName").toString().toStdString();
       std::string JSONmetric = obj.value("metric").toString().toStdString();
-      float JSONupdateEvery = obj.value("updateEvery").toDouble();
+      float JSONupdateEvery = (float)obj.value("updateEvery").toDouble();
       int JSONdataType = obj.value("dataType").toInt();
       QString JSONcbText = obj.value("cbText").toString();
       int prefix = obj.value("prefix").toInt();
@@ -70,7 +70,7 @@ void outputHandler::readOutputs() {
       //          std::to_string(i * 10) +
       //          std::to_string(outputCategory->size());
       //      std::cout << "ID = " << stoi(idFormat) << std::endl;
-      Output *foundOutput =
+      auto *foundOutput =
           new Output(JSONid, JSONoutputName, JSONmetric, JSONupdateEvery,
                      JSONdataType, JSONcbText, prefix, type);
       outputCategory->append(*foundOutput);
@@ -80,17 +80,17 @@ void outputHandler::readOutputs() {
     }
     outputsCategorized.append(*outputCategory);
   }
-  QList<Output> *outputCategory = new QList<Output>();
+  auto *outputCategory = new QList<Output>();
 
   std::ifstream file(applicationEventsPath.toStdString());
   std::string row;
   int offsetCounter = 0;
   while (std::getline(file, row)) {
-    int modeDelimiter = row.find("^");
-    int prefixDelimiter = row.find("#");
+    int modeDelimiter =(int) row.find('^');
+    int prefixDelimiter =(int) row.find('#');
 
-    int updateEveryDelimiter = row.find("$");
-    int commentDelimiter = row.find("//");
+    int updateEveryDelimiter = (int)row.find('$');
+    int commentDelimiter =(int) row.find("//");
     if (row.front() == ' ') {
       row.erase(0, 1);
     }
@@ -98,7 +98,7 @@ void outputHandler::readOutputs() {
       std::string type = row.substr(modeDelimiter + 1, 1);
       if (type == "3") {
         int prefixId = stoi(row.substr(prefixDelimiter + 1, 4));
-        Output *newRow = new Output();
+        auto *newRow = new Output();
         // To accomodate old event system
         newRow->setId(prefixId);
         newRow->setPrefix(prefixId);
@@ -115,7 +115,7 @@ void outputHandler::readOutputs() {
         newRow->setUpdateEvery(
             stof(row.substr(updateEveryDelimiter + 1,
                             commentDelimiter - updateEveryDelimiter - 1)));
-        newRow->setOffset(sizeof(float) * offsetCounter);
+        newRow->setOffset((int)sizeof(float) * offsetCounter);
 
         newRow->setCbText(
             QString::fromStdString(row.substr(commentDelimiter + 2)));

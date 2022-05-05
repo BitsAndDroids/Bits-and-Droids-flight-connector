@@ -54,6 +54,10 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
+codegenerator/CodeGeneratorWindow.cpp \
+    codegenerator/boards/Board.cpp \
+    codegenerator/components/Part.cpp \
+    codegenerator/components/Pushbutton.cpp \
     Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
@@ -90,6 +94,10 @@ SOURCES += \
     sources/range.cpp \
 
 HEADERS += \
+codegenerator/CodeGeneratorWindow.h \
+    codegenerator/boards/Board.h \
+    codegenerator/components/Part.h \
+    codegenerator/components/Pushbutton.h \
     events/EventDataType.h \
     events/EventType.h \
     events/Event.h \

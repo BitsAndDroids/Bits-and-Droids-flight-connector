@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 
+#include "codegenerator/CodeGeneratorWindow.h"
 #include "ui_mainwindow.h"
 
 void MainWindow::untick() {}
@@ -68,6 +69,15 @@ void MainWindow::openGenerateLibraryMenu() {
     wdg->show();
   }
 }
+void MainWindow::openGenerateCodeMenu() {
+  std::cout << "hit" << std::endl;
+  if (!generateCodeMenuOpen) {
+    generateCodeMenuOpen = true;
+    QWidget *wdg = new CodeGeneratorWindow;
+    wdg->show();
+  }
+}
+
 std::string MainWindow::convertComPort(QString comText) {
   std::string val =
       R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
@@ -220,7 +230,7 @@ MainWindow::MainWindow(QWidget *parent)
   // TOOLBAR MENU
   qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   auto *openSettings = new QAction("&Settings", this);
-
+  auto *generateCode = new QAction("&Code", this);
   auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
   auto *libraryGenerator = new QAction("&Generate library", this);
   auto *calibrateAxis = new QAction("&Calibrate axis", this);
@@ -229,6 +239,7 @@ MainWindow::MainWindow(QWidget *parent)
   auto *installWasm = new QAction("&Install WASM", this);
   auto *WasmUpdateEventFile = new QAction("&Update event file", this);
   auto *updateApplication = new QAction("Check for updates", this);
+  QMenu *codeMenu = menuBar()->addMenu("&Code");
   QMenu *Settings = menuBar()->addMenu("&Settings");
   QMenu *libraryMenu = menuBar()->addMenu("&Library");
   QMenu *viewMenu = menuBar()->addMenu("&View");
@@ -259,7 +270,7 @@ MainWindow::MainWindow(QWidget *parent)
   WasmInstall->addAction(openEditEventWindow);
   Settings->addAction(openSettings);
   Settings->addAction(updateApplication);
-
+  codeMenu->addAction(generateCode);
   Settings->addAction(calibrateAxis);
 
   Settings->addAction("Version " + QString(constants::VERSION));
@@ -285,6 +296,9 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::GameConnectionMade);
   connect(libraryGenerator, &QAction::triggered, this,
           &MainWindow::openGenerateLibraryMenu);
+
+  connect(generateCode, &QAction::triggered, this,
+          &MainWindow::openGenerateCodeMenu);
 
   connect(&inputThread, &InputWorker::BoardConnectionMade, this,
           &MainWindow::BoardConnectionMade);
