@@ -505,7 +505,7 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
     gridWidget->setMinimumHeight(350);
     gridWidget->setMaximumHeight(350);
 
-    QScrollArea *activeScroll = new QScrollArea();
+    auto *activeScroll = new QScrollArea();
     activeScroll->setMinimumHeight(250);
     activeScroll->setMaximumHeight(250);
 
@@ -662,9 +662,45 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
     connect(removeButton, &QAbstractButton::clicked, this,
             &FormBuilder::removeComWidget);
     comRow->addWidget(removeButton);
+
+    auto autoRunCB = new QCheckBox();
+    autoRunCB->setText("autorun");
+    autoRunCB->setObjectName("auto"+ QString::number(mode) + QString::number(index));
+    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
+    comRow->addWidget(autoRunCB);
     return comSelector;
 }
+void FormBuilder::autoRunChanged(){
+    auto senderCB = qobject_cast<QCheckBox *>(sender());
 
+    int mode = senderCB->objectName().mid(4,1).toInt();
+    int index = senderCB->objectName().mid(5).toInt();
+    QString group;
+    switch(mode){
+        case INPUTMODE:  {
+            group = "inputARIndex";
+            break;
+        }
+
+        case OUTPUTMODE: {
+            group = "outputARIndex";
+            break;
+        }
+
+        case DUALMODE:   {
+            group = "dualARIndex";
+            break;
+        }
+        default: break;
+    }
+
+    settingsHandler.storeValue(group,QString::number(index),senderCB->isChecked());
+
+
+
+
+
+}
 QWidget *FormBuilder::generateComControls(int mode) {
     auto *comControls = new QWidget();
     auto *comControlRow = new QHBoxLayout();

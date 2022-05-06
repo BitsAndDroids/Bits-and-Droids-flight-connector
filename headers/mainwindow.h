@@ -189,6 +189,9 @@ class MainWindow : public QMainWindow {
                                      QString setGroupName, bool setsNeeded);
 
 
+    void saveAutoRunStates(int mode);
+
+    void loadAutoRunState();
 };
 
 #endif  // MAINWINDOW_H

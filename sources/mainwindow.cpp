@@ -2,7 +2,6 @@
 
 #include <events/eventwindow.h>
 #include <library/librarygeneratorwindow.h>
-#include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <settings/calibrateaxismenu.h>
@@ -10,13 +9,13 @@
 #include <settings/outputmenu.h>
 
 #include <QDir>
-#include <QNetworkAccessManager>
 #include <iostream>
 #include <string>
 
 #include "codegenerator/CodeGeneratorWindow.h"
 #include "ui_mainwindow.h"
 #include "logging/MessageCaster.h"
+#include "enums/ModeEnum.h"
 
 void MainWindow::untick() {}
 
@@ -459,6 +458,7 @@ MainWindow::MainWindow(QWidget *parent)
         toggleAdvanced();
     }
     checkForUpdates(true);
+    loadAutoRunState();
     settingsHandler.checkEventFilePresent();
     this->adjustSize();
 }
@@ -716,6 +716,7 @@ void MainWindow::startInputs() {
             outWarningBox->addWidget(returnWarningString(NOCOMPORT));
         }
     }
+    saveAutoRunStates(INPUTMODE);
 }
 
 void MainWindow::startOutputs() {
@@ -796,6 +797,7 @@ void MainWindow::startOutputs() {
             outWarningBox->addWidget(returnWarningString(NOSET));
         }
     }
+    saveAutoRunStates(OUTPUTMODE);
 }
 
 void MainWindow::startDual() {
@@ -819,6 +821,7 @@ void MainWindow::startDual() {
         QList<Output *> outputsToMap;
         qDebug() << "sets available" << comList.size();
         dualThread.clearBundles();
+
         for (int i = 0; i < comList.size(); i++) {
             if (!(comList[i]->currentText().contains("Not connected"))) {
                 key = "com" + QString::number(i);
@@ -890,7 +893,52 @@ void MainWindow::startDual() {
             dualWarningBox->addWidget(returnWarningString(NOSET));
         }
     }
+    saveAutoRunStates(DUALMODE);
 }
+
+void MainWindow::saveAutoRunStates(int mode){
+    QRegularExpression searchAuto("auto" + QString::number(mode));
+    auto autoList = this->findChildren<QCheckBox *>(searchAuto);
+    QString group;
+    switch(mode){
+        case INPUTMODE:{
+            group = "inputARIndex";
+            break;
+        }
+        case OUTPUTMODE:{
+            group = "outputARIndex";
+            break;
+        }
+        case DUALMODE:{
+            group = "dualARIndex";
+            break;
+        }
+        default:
+            break;
+    }
+    for(auto &cb : autoList){
+        int index = cb->objectName().mid(5).toInt();
+        settingsHandler.storeValue(group,QString::number(index),cb->isChecked());
+    }
+}
+
+void MainWindow::loadAutoRunState(){
+    QRegularExpression searchAuto("auto");
+    auto autoList = this->findChildren<QCheckBox *>(searchAuto);
+    QString group;
+    for(auto &cb : autoList){
+        int mode = cb->objectName().mid(4,1).toInt();
+        QString index = cb->objectName().mid(5);
+        switch(mode){
+            case INPUTMODE: group="inputARIndex"; break;
+            case OUTPUTMODE: group="outputARIndex"; break;
+            case DUALMODE : group="dualARIndex"; break;
+        }
+        cb->setChecked(settingsHandler.retrieveSetting(group,index)->toBool());
+
+    }
+}
+
 
 bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
     for (auto &i: toCheck) {
