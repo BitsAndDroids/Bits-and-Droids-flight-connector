@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "logging/MessageCaster.h"
 #include "ui_eventwindow.h"
 
 using namespace std;
@@ -231,7 +232,7 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
       cout << "Changed" << changedItem->row() << endl;
     }
   }
-  cout << changedItem->text().toStdString() << endl;
+  cout << changedItem->text().toStdString() << "CHANGED" << endl;
 }
 
 void EventWindow::addEventBtnPressed() {
@@ -300,7 +301,7 @@ void EventWindow::saveBtnPressed() {
   if (ret == QMessageBox::Save) {
     for (auto &changedRow : rowsChanged) {
       auto row = tableRows[changedRow];
-      cout << "CHANGED " << endl;
+
       tableRows[changedRow].setPrefix(
           eventTable->item(changedRow, 0)->text().toInt());
       tableRows[changedRow].setEvent(
@@ -313,6 +314,7 @@ void EventWindow::saveBtnPressed() {
       tableRows[changedRow].setType(EventType(
           this->findChild<QComboBox *>("cbt" + QString::number(changedRow))
               ->currentIndex()));
+
       if (tableRows[changedRow].getType().getTypeIndex() == 3) {
         tableRows[changedRow].setDatatype(EventDatatype(
             this->findChild<QComboBox *>("cbdt" + QString::number(changedRow))
@@ -320,11 +322,8 @@ void EventWindow::saveBtnPressed() {
       }
     }
     for (auto &del : tableRowsToDelete) {
-      cout << "FOUND DELETE" << tableRows[del].getEvent() << endl;
       eventTable->removeRow(del);
       tableRows.removeAt(del);
-      cout << "FOUND DELETE AFTER" << tableRows[del].getEvent() << endl;
-      cout << "DELTED " << del << endl;
     }
     writeFile();
   }
@@ -367,6 +366,11 @@ void EventWindow::writeFile() {
         << "\n";
   }
   newEventsFile.close();
+  QFile::remove(pathHandler.getCommunityFolderPath() +
+                "/BitsAndDroidsModule/modules/events.txt");
+  QFile::copy(applicationEventsPath,
+              pathHandler.getCommunityFolderPath() +
+                  "/BitsAndDroidsModule/modules/events.txt");
 }
 
 QString EventWindow::checkSpaces(std::string stringToCheck) {
@@ -391,7 +395,7 @@ QString EventWindow::checkSpaces(std::string stringToCheck) {
 
 void EventWindow::comboBoxChanged() {
   auto senderComboBox = qobject_cast<QComboBox *>(sender());
-  int index = stoi(senderComboBox->objectName().toStdString().substr(2));
+  int index = stoi(senderComboBox->objectName().toStdString().substr(3));
   if (checkIfRowChanged(index)) {
     if (rowsChanged.indexOf(index) == -1) {
       rowsChanged.append(index);
@@ -399,13 +403,13 @@ void EventWindow::comboBoxChanged() {
   }
   if (senderComboBox->currentIndex() == 3) {
     auto dataTypeCombobox = new QComboBox();
-    dataTypeCombobox->setObjectName("cbdt" + QString::number(index));
+    dataTypeCombobox->setObjectName("cbt" + QString::number(index));
 
     dataTypeCombobox->addItems(EventDatatype::getTypeLibrary());
     dataTypeCombobox->setCurrentIndex(
         tableRows[index].getDatatype().getDatatypeIndex());
 
-    dataTypeCombobox->setObjectName("dt" + QString::number(index));
+    dataTypeCombobox->setObjectName("cbdt" + QString::number(index));
     eventTable->setCellWidget(index, 3, dataTypeCombobox);
     eventTable->removeCellWidget(index, 4);
     auto *emptyUpdateEvery = new QTableWidgetItem("0");
@@ -453,6 +457,7 @@ bool EventWindow::checkIfRowChanged(int index) {
     return !b;
   }));
 }
+
 EventWindow::~EventWindow() {
   emit EventWindow::closedEventWindow();
   delete ui;
@@ -466,32 +471,42 @@ void EventWindow::closeEvent(QCloseEvent *event) {
 void EventWindow::readFile() {
   std::ifstream file(applicationEventsPath.toStdString());
   std::string row;
-
+  int index = 0;
   while (std::getline(file, row)) {
-    int modeDelimiter = (int)row.find('^');
-    int prefixDelimiter = (int)row.find('#');
-    int updateEveryDelimiter = (int)row.find('$');
-    int commentDelimiter = (int)row.find("//");
-    if (row.front() == ' ') {
-      row.erase(0, 1);
-    }
-    if (row.size() > 25 && row.at(0) != '/') {
-      auto newRow = new Event();
-      newRow->setPrefix(stoi(row.substr(prefixDelimiter + 1, 4)));
-      newRow->setEvent(row.substr(0, modeDelimiter));
-      newRow->setType(EventType(stoi(row.substr(modeDelimiter + 1, 1))));
-      if (newRow->getType().getTypeIndex() == 3)
-        newRow->setDatatype(
-            EventDatatype(EventDatatype::getTypeLibraryParseShorthand().indexOf(
-                QString::fromStdString(row.substr(modeDelimiter + 2, 1)))));
+    index++;
+    try {
+      if (row.size() > 25 && row.at(0) != '/') {
+        int modeDelimiter = (int)row.find('^');
+        int prefixDelimiter = (int)row.find('#');
+        int updateEveryDelimiter = (int)row.find('$');
+        int commentDelimiter = (int)row.find("//");
+        if (row.front() == ' ') {
+          row.erase(0, 1);
+        }
 
-      newRow->setUpdateEvery(
-          stof(row.substr(updateEveryDelimiter + 1,
-                          commentDelimiter - updateEveryDelimiter - 1)));
-      newRow->setComment(row.substr(commentDelimiter + 2));
+        auto newRow = new Event();
+        newRow->setPrefix(stoi(row.substr(prefixDelimiter + 1, 4)));
+        newRow->setEvent(row.substr(0, modeDelimiter));
+        newRow->setType(EventType(stoi(row.substr(modeDelimiter + 1, 1))));
+        if (newRow->getType().getTypeIndex() == 3)
+          newRow->setDatatype(EventDatatype(
+              (int)EventDatatype::getTypeLibraryParseShorthand().indexOf(
+                  QString::fromStdString(row.substr(modeDelimiter + 2, 1)))));
 
-      tableRows.append(*newRow);
-      qDebug() << newRow->getComment().c_str();
+        newRow->setUpdateEvery(
+            stof(row.substr(updateEveryDelimiter + 1,
+                            commentDelimiter - updateEveryDelimiter - 1)));
+        newRow->setComment(row.substr(commentDelimiter + 2));
+
+        tableRows.append(*newRow);
+        qDebug() << newRow->getComment().c_str();
+      }
+    } catch (const std::exception &e) {
+      //#TODO write to logger
+      auto errorString = "Event file error in line " + QString::number(index) +
+                         "\n" + QString::fromStdString(row) + "\nReason(" +
+                         e.what() + " failed)";
+      MessageCaster::showWarningMessage(errorString);
     }
   }
   file.close();

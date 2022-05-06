@@ -16,6 +16,7 @@
 
 #include "codegenerator/CodeGeneratorWindow.h"
 #include "ui_mainwindow.h"
+#include "logging/MessageCaster.h"
 
 void MainWindow::untick() {}
 
@@ -125,7 +126,7 @@ void MainWindow::toggleAdvanced() {
 }
 
 void MainWindow::installWasm() {
-    bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
+    try {bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
     QString pathfound;
     QString sourceString =
             QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
@@ -156,27 +157,29 @@ void MainWindow::installWasm() {
                                                 QMessageBox::Cancel);
             int ret = notFoundMessage->exec();
 
-            switch (ret) {
-                case QMessageBox::Save: {
+            if (ret == QMessageBox::Save) {
                     QFileDialog dialog(this);
                     dialog.setFileMode(QFileDialog::Directory);
 
                     QString communityFolderPath = dialog.getExistingDirectory();
                     settingsHandler.storeValue("Settings", "communityFolderPathLabel",
                                                communityFolderPath);
-                    break;
-                }
-                case QMessageBox::Cancel:
-                    break;
+
             }
         }
-    }
+
 
     QString destinationString = pathfound + "/BitsAndDroidsModule";
 
     copyFolder(sourceString, destinationString);
     qDebug() << applicationEventsPath;
-}
+MessageCaster::showCompleteMessage("WASM was sucesfully installed");
+        }
+    }
+        catch (...) {
+            MessageCaster::showWarningMessage("Could not install WASM module");
+        }
+    }
 
 void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
     qDebug() << "Dest path = " << destinationFolder;
@@ -280,13 +283,12 @@ MainWindow::MainWindow(QWidget *parent)
     Settings->addAction(calibrateAxis);
 
     Settings->addAction("Version " + QString(constants::VERSION));
-    libraryMenu->addAction(libraryGenerator);
+    // libraryMenu->addAction(libraryGenerator);
 
     // SIGNALS + SLOTS
     connect(WasmUpdateEventFile, &QAction::triggered, this,
             &MainWindow::localUpdateEventFile);
-    connect(WasmUpdateEventFile, &QAction::triggered, this,
-            &MainWindow::localUpdateEventFile);
+
     connect(calibrateAxis, &QAction::triggered, this,
             &MainWindow::openCalibrateAxis);
     connect(openOutputMenu, &QAction::triggered, this,
@@ -488,6 +490,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
                         getComboxIndex(comComboBox, "Not connected"));
             }
 
+            qDebug() << "LAST COM SAVED " << lastComSaved;
 
             if (setsNeeded) {
                 auto comboBox =
@@ -540,7 +543,7 @@ void MainWindow::checkForUpdates(bool silentCheck) {
 }
 
 void MainWindow::localUpdateEventFile() {
-    QFile::remove(pathHandler.getCommunityFolderPath() +
+    try {QFile::remove(pathHandler.getCommunityFolderPath() +
                   "/BitsAndDroidsModule/modules/events.txt");
     QFile::copy(applicationEventsPath,
                 pathHandler.getCommunityFolderPath() +
@@ -554,6 +557,18 @@ void MainWindow::localUpdateEventFile() {
         connect(this, &MainWindow::updateEventFile, &inputThread,
                 &InputWorker::sendWASMCommand);
         emit updateEventFile('9');
+    }else{
+            throw std::invalid_argument("Could not update");
+        }
+        MessageCaster::showCompleteMessage("Successfully updated the event file");
+    }
+    //This catches the specific error thrown when no output is running
+    //Since we send a command over SimConnect to the WASM module we need to have a connection that is alive
+    catch (const std::invalid_argument &i){
+        MessageCaster::showWarningMessage("Please start the connector before updating the remote event file");
+    }
+    catch(const std::exception& e){
+        MessageCaster::showWarningMessage("Something went wrong updating the event file");
     }
 }
 

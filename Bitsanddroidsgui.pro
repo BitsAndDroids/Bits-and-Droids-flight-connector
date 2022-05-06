@@ -12,7 +12,7 @@ CONFIG += c++17
 CONFIG += openssl
 MOC_DIR= $$PWD/objects
 OBJECTS_DIR= $$PWD/objects
-
+TARGET = BitsAndDroidsConnector
 # using shell_path() to correct path depending on platform
 # escaping quotes and backslashes for file paths
 copydata.commands = $(COPY_FILE) \"$$shell_path($$PWD\\dist)\" \"$$shell_path($$OUT_PWD)\\release\"
@@ -54,6 +54,8 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
+logging/MessageCaster.cpp \
+logging/Logger.cpp \
 
 codegenerator/CodeGeneratorWindow.cpp \
     codegenerator/boards/Board.cpp \
@@ -95,6 +97,8 @@ codegenerator/CodeGeneratorWindow.cpp \
     sources/range.cpp \
 
 HEADERS += \
+logging/MessageCaster.h \
+logging/Logger.h \
 codegenerator/CodeGeneratorWindow.h \
     codegenerator/boards/Board.h \
     codegenerator/components/Part.h \

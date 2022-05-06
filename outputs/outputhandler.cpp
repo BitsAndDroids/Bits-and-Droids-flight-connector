@@ -1,23 +1,34 @@
 #include "outputhandler.h"
 
+#include <logging/MessageCaster.h>
+
 #include <QApplication>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonParseError>
+#include <QMessageBox>
 #include <fstream>
 #include <iostream>
 
-outputHandler::outputHandler() { readOutputs(); }
+bool outputHandler::updateOutputsRequired = true;
+QMap<int, Output *> outputHandler::availableOutputs = QMap<int, Output *>();
+QList<QList<Output>> outputHandler::outputsCategorized = QList<QList<Output>>();
+QStringList outputHandler::categoryStrings = QStringList();
 
-void outputHandler::addCategoryString(QString category) {
+outputHandler::outputHandler() {
+  if (updateOutputsRequired) {
+    readOutputs();
+    updateOutputsRequired = false;
+  }
+}
+
+void outputHandler::addCategoryString(const QString &category) {
   categoryStrings.append(category);
 }
-// const QJsonObject &json
 
 void outputHandler::readOutputs() {
-  availableOutputs.clear();
-  outputsCategorized.clear();
-  categoryStrings.clear();
+  outputHandler::availableOutputs.clear();
+  outputHandler::outputsCategorized.clear();
   QFile file_obj("outputs.json");
   file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
   QByteArray json_bytes = file_obj.readAll();
@@ -66,10 +77,6 @@ void outputHandler::readOutputs() {
       // TODO I want to migrate to a dynamic ID system
       // Challenge is to preserve old sets
 
-      //      std::string idFormat =
-      //          std::to_string(i * 10) +
-      //          std::to_string(outputCategory->size());
-      //      std::cout << "ID = " << stoi(idFormat) << std::endl;
       auto *foundOutput =
           new Output(JSONid, JSONoutputName, JSONmetric, JSONupdateEvery,
                      JSONdataType, JSONcbText, prefix, type);
@@ -85,45 +92,55 @@ void outputHandler::readOutputs() {
   std::ifstream file(applicationEventsPath.toStdString());
   std::string row;
   int offsetCounter = 0;
+  int index = 0;
   while (std::getline(file, row)) {
-    int modeDelimiter =(int) row.find('^');
+    try {
+      index++;
+      if (row.size() > 25 && row.at(0) != '/') {int modeDelimiter =(int) row.find('^');
     int prefixDelimiter =(int) row.find('#');
 
-    int updateEveryDelimiter = (int)row.find('$');
+        int updateEveryDelimiter = (int)row.find('$');
     int commentDelimiter =(int) row.find("//");
     if (row.front() == ' ') {
       row.erase(0, 1);
     }
-    if (row.size() > 25 && row.at(0) != '/') {
-      std::string type = row.substr(modeDelimiter + 1, 1);
-      if (type == "3") {
-        int prefixId = stoi(row.substr(prefixDelimiter + 1, 4));
-        auto *newRow = new Output();
-        // To accomodate old event system
-        newRow->setId(prefixId);
-        newRow->setPrefix(prefixId);
-        std::string datatype = row.substr(modeDelimiter + 2, 1);
-        if (datatype == "f") {
-          newRow->setType(97);
-        } else if (datatype == "i") {
-          newRow->setType(98);
-        } else if (datatype == "b") {
-          newRow->setType(99);
+
+        std::string type = row.substr(modeDelimiter + 1, 1);
+        if (type == "3") {
+          int prefixId = stoi(row.substr(prefixDelimiter + 1, 4));
+          auto *newRow = new Output();
+          // To accomodate old event system
+          newRow->setId(prefixId);
+          newRow->setPrefix(prefixId);
+          std::string datatype = row.substr(modeDelimiter + 2, 1);
+          if (datatype == "f") {
+            newRow->setType(97);
+          } else if (datatype == "i") {
+            newRow->setType(98);
+          } else if (datatype == "b") {
+            newRow->setType(99);
+          }
+
+          newRow->setOutputName(row.substr(0, modeDelimiter));
+          newRow->setUpdateEvery(
+              stof(row.substr(updateEveryDelimiter + 1,
+                              commentDelimiter - updateEveryDelimiter - 1)));
+          newRow->setOffset((int)sizeof(float) * offsetCounter);
+
+          newRow->setCbText(
+              QString::fromStdString(row.substr(commentDelimiter + 2)));
+
+          availableOutputs.insert(newRow->getId(), newRow);
+          offsetCounter++;
+          outputCategory->append(*newRow);
         }
-
-        newRow->setOutputName(row.substr(0, modeDelimiter));
-        newRow->setUpdateEvery(
-            stof(row.substr(updateEveryDelimiter + 1,
-                            commentDelimiter - updateEveryDelimiter - 1)));
-        newRow->setOffset((int)sizeof(float) * offsetCounter);
-
-        newRow->setCbText(
-            QString::fromStdString(row.substr(commentDelimiter + 2)));
-
-        availableOutputs.insert(newRow->getId(), newRow);
-        offsetCounter++;
-        outputCategory->append(*newRow);
       }
+    } catch (const std::exception &e) {
+      //#TODO write to logger
+      auto errorString = "Event file error in line " + QString::number(index) +
+                         "\n" + QString::fromStdString(row) + "\nReason(" +
+                         e.what() + " failed)";
+      MessageCaster::showWarningMessage(errorString);
     }
   }
   outputsCategorized.append(*outputCategory);
@@ -132,6 +149,7 @@ void outputHandler::readOutputs() {
            << " outputs saved in sets:" << outputsCategorized.size()
            << " AVAILABLE " << availableOutputs.size();
 }
+
 Output *outputHandler::findOutputById(int idToFind) {
   qDebug() << "SEARCHING FOR " << idToFind;
   // qDebug() << availableOutputs[idToFind] << "FOUND";

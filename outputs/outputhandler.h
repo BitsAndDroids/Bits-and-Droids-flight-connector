@@ -12,17 +12,19 @@ class outputHandler {
  public:
   outputHandler();
   QStringList getCategoryStrings() { return categoryStrings; };
-  void addCategoryString(QString category);
+  void addCategoryString(const QString& category);
   QList<QList<Output>> getOutputsCategorized() { return outputsCategorized; };
-  QMap<int, Output*> getAvailableOutputs() { return this->availableOutputs; };
+  QMap<int, Output*> getAvailableOutputs() { return availableOutputs; };
   Output* findOutputById(int id);
   void readOutputs();
 
  private:
+  static bool updateOutputsRequired;
+  static QMap<int, Output*> availableOutputs;
+  static QList<QList<Output>> outputsCategorized;
+  static QStringList categoryStrings;
   // const QJsonObject &json
-  QStringList categoryStrings;
-  QList<QList<Output>> outputsCategorized;
-  QMap<int, Output*> availableOutputs = QMap<int, Output*>();
+
   PathHandler pathHandler;
   QString applicationEventsPath = pathHandler.getWritableEventPath();
 
