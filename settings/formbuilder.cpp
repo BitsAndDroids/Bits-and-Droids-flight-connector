@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <utility>
+#include "enums/ModeEnum.h"
 
 using namespace std;
 
@@ -188,7 +189,7 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
 
     if (pointsToPlot[number].isEmpty()) {
         cout << "empty" << endl;
-        auto *coords = new QList<coordinates>{
+        auto *coords = new QList <coordinates>{
                 {coordinates(static_cast<float>(minValue[number]), min)},
                 {coordinates(static_cast<float>(neutralValue[number]) -
                              static_cast<float>(
@@ -257,7 +258,7 @@ void FormBuilder::reverseClicked() {
     updateChart(number);
 }
 
-QList<coordinates> *FormBuilder::getCoordinates(int number) {
+QList <coordinates> *FormBuilder::getCoordinates(int number) {
     return &pointsToPlot[number];
 }
 
@@ -485,7 +486,7 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
     int rowCounter = 0;
     int amntOfCols = 3;
 
-    QMap<int, Output *> outputsInSet = selectedSet->getOutputs();
+    QMap < int, Output * > outputsInSet = selectedSet->getOutputs();
     QMap<int, Output *>::Iterator i;
 
     int outputsPerRow = outputsInSet.size() / amntOfCols;
@@ -595,11 +596,12 @@ QTabWidget *FormBuilder::generateOutputTabs() {
 void FormBuilder::loadComPortData() {
     availableComPorts.clear();
 
-            foreach (const QSerialPortInfo &serialPortInfo,
-                     QSerialPortInfo::availablePorts()) {
-            availableComPorts.append(serialPortInfo.portName() + " | " +
-                                     serialPortInfo.description());
-        }
+    foreach(
+    const QSerialPortInfo &serialPortInfo,
+    QSerialPortInfo::availablePorts()) {
+        availableComPorts.append(serialPortInfo.portName() + " | " +
+                                 serialPortInfo.description());
+    }
 }
 
 QHBoxLayout *FormBuilder::generateOutputRow(Output *output) {
@@ -653,7 +655,7 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
     }
 
     auto *removeButton = new QPushButton("-");
-    removeButton->setObjectName("del" + mode + index);
+    removeButton->setObjectName("del" + QString::number(mode) + QString::number(index));
     removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     removeButton->setMinimumSize(20, 20);
     removeButton->setMaximumSize(20, 20);
@@ -732,33 +734,89 @@ void FormBuilder::removeComWidget() {
     QWidget *senderWidget = qobject_cast<QWidget *>(sender()->parent());
 
     try {
-        int mode = senderWidget->objectName().mid(2, 1).toInt();
-        int index = senderWidget->objectName().mid(3, 1).toInt();
-
+        int mode = sender()->objectName().mid(3, 1).toInt();
+        int index = sender()->objectName().right(1).toInt();
+        std::cout << "INDEX" << QString::number(index).toStdString() << std::endl;
         QString group;
 
-        if (mode == 1) {
+        if (mode == INPUTMODE) {
 
             group = "inputComs";
 
-        } else if (mode == 2) {
+        } else if (mode == OUTPUTMODE) {
 
             group = "outputComs";
             settingsHandler.removeSetting("outputSets", "set" + QString::number(index));
 
-        } else if (mode == 3) {
+        } else if (mode == DUALMODE) {
 
             group = "dualComs";
             settingsHandler.removeSetting("dualSets", "set" + QString::number(index));
         }
 
         settingsHandler.removeSetting(group, "com" + QString::number(index));
-
+        adjustIndexes(mode, index);
     } catch (std::exception &e) {
         qDebug("%s", e.what());
     }
 
     delete senderWidget;
+}
+
+void FormBuilder::adjustIndexes(int mode, int index) {
+
+    QString group;
+    QString setGroup;
+
+    switch (mode) {
+        case 1: {
+            group = "inputComs";
+            break;
+        }
+        case 2: {
+            group = "outputComs";
+            setGroup = "outputSets";
+            break;
+        }
+        case 3: {
+            group = "dualComs";
+            setGroup = "dualSets";
+            break;
+        }
+        default:
+            break;
+    }
+
+    auto keys = settingsHandler.retrieveKeys(group);
+
+    QString setKey = "set";
+    QString comKey = "com";
+
+    if (index < keys->size()) {
+        for (const auto & key : *keys) {
+            int comIndex = key.right(1).toInt();
+            if (comIndex > index) {
+                auto value = settingsHandler.retrieveSetting(group, key)->toString();
+                settingsHandler.storeValue(group, comKey + QString::number(comIndex - 1), value);
+
+            }
+        }
+    }
+    settingsHandler.removeSetting(group, comKey + QString::number(keys->size()));
+    if (mode == OUTPUTMODE || mode == DUALMODE) {
+
+        auto setKeys = settingsHandler.retrieveKeys(setGroup);
+        for (const auto & i : *setKeys) {
+            int setIndex = i.right(1).toInt();
+            if (setIndex > index) {
+                auto setValue = settingsHandler.retrieveSetting(setGroup, i)->toString();
+                settingsHandler.storeValue(setGroup, setKey + QString::number(setIndex - 1), setValue);
+            }
+        }
+        settingsHandler.removeSetting(setGroup, setKey + QString::number(setKeys->size()));
+
+    }
+
 }
 
 void FormBuilder::localStart() {
@@ -798,4 +856,8 @@ void FormBuilder::localAdd() {
 
     int mode = pressedBtn->objectName().left(1).toInt();
     emit addPressed(mode);
+}
+
+void FormBuilder::adjustIndexes(int index) {
+
 }

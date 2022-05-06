@@ -97,7 +97,7 @@ add_executable(Bitsanddroidsgui
         events/eventwindow.h
         events/eventwindow.ui
 
-        events/Event.h events/EventType.cpp events/EventType.h events/EventDatatype.cpp events/EventDatatype.h codegenerator/boards/Board.cpp codegenerator/boards/Board.h codegenerator/components/Part.cpp codegenerator/components/Part.h codegenerator/components/Pushbutton.cpp codegenerator/components/Pushbutton.h codegenerator/CodeGeneratorWindow.cpp codegenerator/CodeGeneratorWindow.h)
+        events/Event.h events/EventType.cpp events/EventType.h events/EventDatatype.cpp events/EventDatatype.h codegenerator/boards/Board.cpp codegenerator/boards/Board.h codegenerator/components/Part.cpp codegenerator/components/Part.h codegenerator/components/Pushbutton.cpp codegenerator/components/Pushbutton.h codegenerator/CodeGeneratorWindow.cpp codegenerator/CodeGeneratorWindow.h enums/ModeEnum.h)
 
 
 target_link_libraries(Bitsanddroidsgui
