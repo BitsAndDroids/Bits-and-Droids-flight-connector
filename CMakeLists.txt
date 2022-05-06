@@ -97,7 +97,7 @@ add_executable(Bitsanddroidsgui
         events/eventwindow.h
         events/eventwindow.ui
 
-        events/Event.h events/EventType.cpp events/EventType.h events/EventDatatype.cpp events/EventDatatype.h logging/Logger.cpp logging/Logger.h logging/MessageCaster.cpp logging/MessageCaster.h)
+        events/Event.h events/EventType.cpp events/EventType.h events/EventDatatype.cpp events/EventDatatype.h logging/Logger.cpp logging/Logger.h logging/MessageCaster.cpp logging/MessageCaster.h elements/ModeIndexCheckbox.cpp elements/ModeIndexCheckbox.h elements/ModeIndexCombobox.cpp elements/ModeIndexCombobox.h)
 
 
 target_link_libraries(Bitsanddroidsgui

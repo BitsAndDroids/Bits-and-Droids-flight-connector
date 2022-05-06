@@ -9,7 +9,8 @@
 #include <qpushbutton.h>
 #include <qstandardpaths.h>
 #include <settings/formbuilder.h>
-
+#include <elements/ModeIndexCombobox.h>
+#include <elements/ModeIndexCheckbox.h>
 #include <QCoreApplication>
 #include <QFile>
 #include <QMainWindow>
@@ -40,7 +41,7 @@ class MainWindow : public QMainWindow {
 
   void on_btnSwitchNav1_clicked();
 
-  int getComboxIndex(QComboBox *comboBox, QString value);
+  static int getComboxIndex(ModeIndexCombobox *comboBox, const QString& value);
 
  public slots:
 
@@ -175,11 +176,11 @@ class MainWindow : public QMainWindow {
 
   void startDual();
 
-  bool checkIfComboIsEmpty(QList<QComboBox *>);
+  static bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *>&);
 
-  QLabel *returnWarningString(int warningType);
+  static QLabel *returnWarningString(int warningType);
 
-  void clearChildrenFromLayout(QLayout *);
+  static void clearChildrenFromLayout(QLayout *);
 
   void copyFolder(QString sourceFolder, QString destinationFolder);
   bool updateApplication();
@@ -192,6 +193,8 @@ class MainWindow : public QMainWindow {
     void saveAutoRunStates(int mode);
 
     void loadAutoRunState();
+
+    QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression& pattern);
 };
 
 #endif  // MAINWINDOW_H

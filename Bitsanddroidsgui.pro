@@ -68,6 +68,8 @@ SOURCES += \
     events/EventType.cpp \
     dual/dualworker.cpp \
     elements/mcheckbox.cpp \
+    elements/ModeIndexCheckbox.cpp\
+    elements/ModeIndexCombobox.cpp \
     events/eventwindow.cpp \
     handlers/pathhandler.cpp \
     library/librarygenerator.cpp \
@@ -95,6 +97,7 @@ SOURCES += \
     sources/mainwindow.cpp \
     sources/range.cpp \
 
+
 HEADERS += \
     logging/MessageCaster.h \
     logging/Logger.h \
@@ -111,6 +114,8 @@ HEADERS += \
     Inputs/inputenum.h \
     dual/dualworker.h \
     elements/mcheckbox.h \
+    elements/ModeIndexCheckbox.h\
+    elements/ModeIndexCombobox.h \
     events/eventwindow.h \
     handlers/pathhandler.h \
     headers/Engine.h \

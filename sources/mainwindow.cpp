@@ -16,6 +16,8 @@
 #include "ui_mainwindow.h"
 #include "logging/MessageCaster.h"
 #include "enums/ModeEnum.h"
+#include "elements/ModeIndexCheckbox.h"
+#include "elements/ModeIndexCombobox.h"
 
 void MainWindow::untick() {}
 
@@ -467,7 +469,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
                                                QString comGroupName,
                                                QString setGroupName,
                                                bool setsNeeded) {
-    auto comboBoxes = widget->findChildren<QComboBox *>();
+    auto comboBoxes = widget->findChildren<ModeIndexCombobox *>();
     int itterations = comboBoxes.size();
     if (itterations > 1) {
         itterations = itterations / 2;
@@ -475,7 +477,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
 
     for (int i = 0; i < itterations; i++) {
         auto comComboBox =
-                widget->findChild<QComboBox *>("comBox" + QString::number(i));
+                widget->findChild<ModeIndexCombobox *>("comBox" + QString::number(i));
         if (comComboBox != nullptr) {
             auto lastComSaved =
                     settingsHandler
@@ -494,7 +496,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
 
             if (setsNeeded) {
                 auto comboBox =
-                        widget->findChild<QComboBox *>("setBox" + QString::number(i));
+                        widget->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
                 if (!settingsHandler
                         .retrieveSetting(setGroupName, "set" + QString::number(i))
                         ->isNull()) {
@@ -677,7 +679,7 @@ void MainWindow::startInputs() {
     widget = ui->inWidgetContainer;
     settingsHandler.clearKeys("runningInputComs");
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
     bool emptyInputCom = checkIfComboIsEmpty(comList);
     if (!emptyInputCom) {
         QString comboBoxName;
@@ -728,10 +730,10 @@ void MainWindow::startOutputs() {
     settingsHandler.clearKeys("runningOutputSets");
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
 
     QRegularExpression searchSets("setBox");
-    QList<QComboBox *> setList = widget->findChildren<QComboBox *>(searchSets);
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
     bool emptyDualSet = checkIfComboIsEmpty(setList);
     bool emptyDualCom = checkIfComboIsEmpty(comList);
     if (!emptyDualSet && !emptyDualCom) {
@@ -808,10 +810,10 @@ void MainWindow::startDual() {
     settingsHandler.clearKeys("runningDualSets");
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
 
     QRegularExpression searchSets("setBox");
-    QList<QComboBox *> setList = widget->findChildren<QComboBox *>(searchSets);
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
 
     bool emptyDualSet = checkIfComboIsEmpty(setList);
     bool emptyDualCom = checkIfComboIsEmpty(comList);
@@ -895,10 +897,12 @@ void MainWindow::startDual() {
     }
     saveAutoRunStates(DUALMODE);
 }
+QList<ModeIndexCheckbox *> MainWindow::getCheckboxesByPattern(const QRegularExpression& pattern){
+    return this->findChildren<ModeIndexCheckbox *>(pattern);
+}
 
 void MainWindow::saveAutoRunStates(int mode){
-    QRegularExpression searchAuto("auto" + QString::number(mode));
-    auto autoList = this->findChildren<QCheckBox *>(searchAuto);
+    auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
     QString group;
     switch(mode){
         case INPUTMODE:{
@@ -917,22 +921,23 @@ void MainWindow::saveAutoRunStates(int mode){
             break;
     }
     for(auto &cb : autoList){
-        int index = cb->objectName().mid(5).toInt();
-        settingsHandler.storeValue(group,QString::number(index),cb->isChecked());
+        QString index = QString::number(cb->getIndex());
+        settingsHandler.storeValue(group,index,cb->isChecked());
     }
 }
 
 void MainWindow::loadAutoRunState(){
     QRegularExpression searchAuto("auto");
-    auto autoList = this->findChildren<QCheckBox *>(searchAuto);
+    auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
     QString group;
     for(auto &cb : autoList){
-        int mode = cb->objectName().mid(4,1).toInt();
-        QString index = cb->objectName().mid(5);
+        int mode = cb->getMode();
+        QString index = QString::number(cb->getIndex());
         switch(mode){
             case INPUTMODE: group="inputARIndex"; break;
             case OUTPUTMODE: group="outputARIndex"; break;
             case DUALMODE : group="dualARIndex"; break;
+            default: break;
         }
         cb->setChecked(settingsHandler.retrieveSetting(group,index)->toBool());
 
@@ -940,7 +945,7 @@ void MainWindow::loadAutoRunState(){
 }
 
 
-bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
+bool MainWindow::checkIfComboIsEmpty(const QList<ModeIndexCombobox *>& toCheck) {
     for (auto &i: toCheck) {
         if (i->currentIndex() == -1) {
             return true;
@@ -970,7 +975,7 @@ QLabel *MainWindow::returnWarningString(int warningType) {
         case NOSET:
             warningLabel->setText(
                     "Please create or select a set before pressing start");
-            break;
+        default: break;
     }
     return warningLabel;
 }
@@ -1002,15 +1007,15 @@ void MainWindow::refreshComs(int mode) {
     }
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
     formbuilder.loadComPortData();
-    auto sets = *formbuilder.getAvailableSets();
+
     QList<QString> coms = formbuilder.getAvailableComPorts();
 
-    for (int i = 0; i < comList.size(); i++) {
-        comList[i]->clear();
+    for (auto & i : comList) {
+        i->clear();
         for (auto &com: coms) {
-            comList[i]->addItem(com);
+            i->addItem(com);
         }
     }
     restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
@@ -1053,9 +1058,8 @@ void MainWindow::addCom(int mode) {
         default:
             break;
     }
-
-    layout->addWidget(formbuilder.generateComSelector(set, mode, 99));
-    qDebug() << "addCom" << mode;
+    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
+    layout->addWidget(formbuilder.generateComSelector(set, mode, (int)indexList.size()));
 }
 
 void MainWindow::stopInput() {
@@ -1072,15 +1076,14 @@ void MainWindow::stopOutput() {
 void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
-    QProcess *process = new QProcess(this);
+    auto *process = new QProcess(this);
     process->startDetached(pathHandler.getMaintenanceToolPath());
     process->waitForFinished();
     exitProgram();
 }
 
-int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
+int MainWindow::getComboxIndex(ModeIndexCombobox *comboBox, const QString& value) {
     int index = -10;
-    qDebug() << value;
     if (!value.isNull()) {
         for (int i = 0; i < comboBox->count(); i++) {
             QString text = comboBox->itemText(i);
