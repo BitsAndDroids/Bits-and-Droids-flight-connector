@@ -27,6 +27,8 @@ class outputHandler {
 
   PathHandler pathHandler;
   QString applicationEventsPath = pathHandler.getWritableEventPath();
+
+    void addCategoryString(const QString &category);
 };
 
 #endif  // OUTPUTHANDLER_H

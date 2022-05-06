@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 
+#include "codegenerator/CodeGeneratorWindow.h"
 #include "ui_mainwindow.h"
 #include "logging/MessageCaster.h"
 
@@ -74,6 +75,15 @@ void MainWindow::openGenerateLibraryMenu() {
     }
 }
 
+void MainWindow::openGenerateCodeMenu() {
+    std::cout << "hit" << std::endl;
+    if (!generateCodeMenuOpen) {
+        generateCodeMenuOpen = true;
+        QWidget *wdg = new CodeGeneratorWindow;
+        wdg->show();
+    }
+}
+
 std::string MainWindow::convertComPort(QString comText) {
     std::string val =
             R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
@@ -116,40 +126,38 @@ void MainWindow::toggleAdvanced() {
 }
 
 void MainWindow::installWasm() {
-    try {
-        bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
-        QString pathfound;
-        QString sourceString =
-                QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-        qDebug() << "start install";
+    try {bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
+    QString pathfound;
+    QString sourceString =
+            QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
+    qDebug() << "start install";
+    if (customPathFound) {
+        qDebug() << "custom path found";
+        pathfound = pathHandler.getCommunityFolderPath();
+    } else {
+        QString windowsStorePath =
+                QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+                "/Packages/Microsoft.FlightSimulator_"
+                "8wekyb3d8bbwe/LocalCache/packages/Community";
+        bool windowsFound = QDir(windowsStorePath).exists();
+        QString steamPath =
+                QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) +
+                "/AppData/Roaming/Microsoft Flight Simulator/Packages/Community";
+        bool steamFound = QDir(steamPath).exists();
 
-        if (customPathFound) {
-            qDebug() << "custom path found";
-            pathfound = pathHandler.getCommunityFolderPath();
+        if (windowsFound) {
+            pathfound = windowsStorePath;
+        } else if (steamFound) {
+            pathfound = steamPath;
         } else {
-            QString windowsStorePath =
-                    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
-                    "/Packages/Microsoft.FlightSimulator_"
-                    "8wekyb3d8bbwe/LocalCache/packages/Community";
-            bool windowsFound = QDir(windowsStorePath).exists();
-            QString steamPath =
-                    QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) +
-                    "/AppData/Roaming/Microsoft Flight Simulator/Packages/Community";
-            bool steamFound = QDir(steamPath).exists();
+            auto notFoundMessage = new QMessageBox();
+            notFoundMessage->setInformativeText(
+                    "Could not automatically find the community folder");
+            notFoundMessage->setStandardButtons(QMessageBox::Save |
+                                                QMessageBox::Cancel);
+            int ret = notFoundMessage->exec();
 
-            if (windowsFound) {
-                pathfound = windowsStorePath;
-            } else if (steamFound) {
-                pathfound = steamPath;
-            } else {
-                auto notFoundMessage = new QMessageBox();
-                notFoundMessage->setInformativeText(
-                        "Could not automatically find the community folder");
-                notFoundMessage->setStandardButtons(QMessageBox::Save |
-                                                    QMessageBox::Cancel);
-                int ret = notFoundMessage->exec();
-
-                if (ret == QMessageBox::Save) {
+            if (ret == QMessageBox::Save) {
                     QFileDialog dialog(this);
                     dialog.setFileMode(QFileDialog::Directory);
 
@@ -157,15 +165,15 @@ void MainWindow::installWasm() {
                     settingsHandler.storeValue("Settings", "communityFolderPathLabel",
                                                communityFolderPath);
 
-                }
             }
+        }
 
 
-            QString destinationString = pathfound + "/BitsAndDroidsModule";
+    QString destinationString = pathfound + "/BitsAndDroidsModule";
 
-            copyFolder(sourceString, destinationString);
-            qDebug() << applicationEventsPath;
-            MessageCaster::showCompleteMessage("WASM was sucesfully installed");
+    copyFolder(sourceString, destinationString);
+    qDebug() << applicationEventsPath;
+MessageCaster::showCompleteMessage("WASM was sucesfully installed");
         }
     }
         catch (...) {
@@ -173,39 +181,38 @@ void MainWindow::installWasm() {
         }
     }
 
-    void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
-        qDebug() << "Dest path = " << destinationFolder;
-        QDir sourceDir(sourceFolder);
+void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
+    qDebug() << "Dest path = " << destinationFolder;
+    QDir sourceDir(sourceFolder);
 
-        QDir destinationDir(destinationFolder);
+    QDir destinationDir(destinationFolder);
 
-        if (!sourceDir.exists()) {
-            qDebug() << "dest not found" << sourceDir;
-            return;
+    if (!sourceDir.exists()) {
+        qDebug() << "dest not found" << sourceDir;
+        return;
+    }
+
+    if (!destinationDir.exists()) {
+        destinationDir.mkdir(destinationFolder);
+        qDebug() << "Dir not present";
+    }
+
+    QStringList files = sourceDir.entryList(QDir::Files);
+    qDebug() << files.size() << " Files found";
+    for (int i = 0; i < files.count(); i++) {
+        QString sourceName = sourceFolder + "/" + files[i];
+        QString destName = destinationFolder + "/" + files[i];
+        if (!(files[i] == ("events.txt"))) {
+            qDebug() << "Coppied " << files[i];
+            QFile::copy(sourceName, destName);
         }
-
-        if (!destinationDir.exists()) {
-            destinationDir.mkdir(destinationFolder);
-            qDebug() << "Dir not present";
-        }
-
-        QStringList files = sourceDir.entryList(QDir::Files);
-        qDebug() << files.size() << " Files found";
-        for (int i = 0; i < files.count(); i++) {
-            QString sourceName = sourceFolder + "/" + files[i];
-            QString destName = destinationFolder + "/" + files[i];
-            if (!(files[i] == ("events.txt"))) {
-                qDebug() << "Coppied " << files[i];
-                QFile::copy(sourceName, destName);
-            }
-        }
-        QStringList dirs = sourceDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-        for (auto &dir: dirs) {
-            QString sourceName = sourceFolder + "/" + dir;
-            QString destinationName = destinationFolder + "/" + dir;
-            copyFolder(sourceName, destinationName);
-        }
-
+    }
+    QStringList dirs = sourceDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
+    for (auto &dir: dirs) {
+        QString sourceName = sourceFolder + "/" + dir;
+        QString destinationName = destinationFolder + "/" + dir;
+        copyFolder(sourceName, destinationName);
+    }
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -231,9 +238,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->messagesWidgetLayout->setAlignment(Qt::AlignBottom);
 
     // TOOLBAR MENU
-    qDebug() << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     auto *openSettings = new QAction("&Settings", this);
-
+    auto *generateCode = new QAction("&Code", this);
     auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
     auto *libraryGenerator = new QAction("&Generate library", this);
     auto *calibrateAxis = new QAction("&Calibrate axis", this);
@@ -242,6 +248,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto *installWasm = new QAction("&Install WASM", this);
     auto *WasmUpdateEventFile = new QAction("&Update event file", this);
     auto *updateApplication = new QAction("Check for updates", this);
+    //QMenu *codeMenu = menuBar()->addMenu("&Code");
     QMenu *Settings = menuBar()->addMenu("&Settings");
     QMenu *libraryMenu = menuBar()->addMenu("&Library");
     QMenu *viewMenu = menuBar()->addMenu("&View");
@@ -252,12 +259,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(icon, &QSystemTrayIcon::activated, this, &MainWindow::toggleOpen);
 
-    QAction *quit_action = new QAction("Exit", icon);
+    auto *quit_action = new QAction("Exit", icon);
     connect(quit_action, &QAction::triggered, this, &MainWindow::exitProgram);
 
-    QAction *hide_action = new QAction("Show/Hide", icon);
+    auto *hide_action = new QAction("Show/Hide", icon);
 
-    QMenu *tray_icon_menu = new QMenu;
+    auto *tray_icon_menu = new QMenu;
     // tray_icon_menu->addAction(hide_action);
     tray_icon_menu->addAction(quit_action);
 
@@ -272,7 +279,7 @@ MainWindow::MainWindow(QWidget *parent)
     WasmInstall->addAction(openEditEventWindow);
     Settings->addAction(openSettings);
     Settings->addAction(updateApplication);
-
+    //codeMenu->addAction(generateCode);
     Settings->addAction(calibrateAxis);
 
     Settings->addAction("Version " + QString(constants::VERSION));
@@ -281,6 +288,7 @@ MainWindow::MainWindow(QWidget *parent)
     // SIGNALS + SLOTS
     connect(WasmUpdateEventFile, &QAction::triggered, this,
             &MainWindow::localUpdateEventFile);
+
     connect(calibrateAxis, &QAction::triggered, this,
             &MainWindow::openCalibrateAxis);
     connect(openOutputMenu, &QAction::triggered, this,
@@ -296,6 +304,9 @@ MainWindow::MainWindow(QWidget *parent)
             &MainWindow::GameConnectionMade);
     connect(libraryGenerator, &QAction::triggered, this,
             &MainWindow::openGenerateLibraryMenu);
+
+    connect(generateCode, &QAction::triggered, this,
+            &MainWindow::openGenerateCodeMenu);
 
     connect(&inputThread, &InputWorker::BoardConnectionMade, this,
             &MainWindow::BoardConnectionMade);
@@ -465,7 +476,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
     for (int i = 0; i < itterations; i++) {
         auto comComboBox =
                 widget->findChild<QComboBox *>("comBox" + QString::number(i));
-        if (!(comComboBox == nullptr)) {
+        if (comComboBox != nullptr) {
             auto lastComSaved =
                     settingsHandler
                             .retrieveSetting(comGroupName, "com" + QString::number(i))
@@ -474,9 +485,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
             if (getComboxIndex(comComboBox, lastComSaved) != -10) {
                 comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
             } else {
-                qDebug() << "ELSE";
                 comComboBox->addItem("Not connected");
-                qDebug() << "ADDED NOT CONNECTED";
                 comComboBox->setCurrentIndex(
                         getComboxIndex(comComboBox, "Not connected"));
             }
@@ -489,13 +498,21 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
                 if (!settingsHandler
                         .retrieveSetting(setGroupName, "set" + QString::number(i))
                         ->isNull()) {
-                    auto lastSetId =
-                            settingsHandler
-                                    .retrieveSetting(setGroupName, "set" + QString::number(i))
-                                    ->toString();
-                    auto setFound = setHandler->getSetById(lastSetId);
-                    auto setName = setFound.getSetName();
-                    comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+                    //If the saved setting is not set to "no" which indicates No set saved for inputs only in 'dual' mode
+                    if (settingsHandler
+                                .retrieveSetting(setGroupName, "set" + QString::number(i))
+                                ->toString() != "na") {
+                        auto lastSetId =
+                                settingsHandler
+                                        .retrieveSetting(setGroupName, "set" + QString::number(i))
+                                        ->toString();
+                        auto setFound = setHandler->getSetById(lastSetId);
+                        auto setName = setFound.getSetName();
+
+                        comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
+                    } else{
+                        comboBox->setCurrentIndex(0);
+                    }
                 }
             }
         }
@@ -526,22 +543,21 @@ void MainWindow::checkForUpdates(bool silentCheck) {
 }
 
 void MainWindow::localUpdateEventFile() {
-    try {
-        QFile::remove(pathHandler.getCommunityFolderPath() +
-                      "/BitsAndDroidsModule/modules/events.txt");
-        QFile::copy(applicationEventsPath,
-                    pathHandler.getCommunityFolderPath() +
-                    "/BitsAndDroidsModule/modules/events.txt");
-        if (dualThread.isRunning()) {
-            connect(this, &MainWindow::updateEventFile, &dualThread,
-                    &DualWorker::sendWASMCommand);
+    try {QFile::remove(pathHandler.getCommunityFolderPath() +
+                  "/BitsAndDroidsModule/modules/events.txt");
+    QFile::copy(applicationEventsPath,
+                pathHandler.getCommunityFolderPath() +
+                "/BitsAndDroidsModule/modules/events.txt");
+    if (dualThread.isRunning()) {
+        connect(this, &MainWindow::updateEventFile, &dualThread,
+                &DualWorker::sendWASMCommand);
 
-            emit updateEventFile('9');
-        } else if (inputThread.isRunning()) {
-            connect(this, &MainWindow::updateEventFile, &inputThread,
-                    &InputWorker::sendWASMCommand);
-            emit updateEventFile('9');
-        } else{
+        emit updateEventFile('9');
+    } else if (inputThread.isRunning()) {
+        connect(this, &MainWindow::updateEventFile, &inputThread,
+                &InputWorker::sendWASMCommand);
+        emit updateEventFile('9');
+    }else{
             throw std::invalid_argument("Could not update");
         }
         MessageCaster::showCompleteMessage("Successfully updated the event file");
@@ -839,6 +855,8 @@ void MainWindow::startDual() {
                     dualThread.addBundle(bundle);
                     settingsHandler.storeValue("runningDualSets", setKey, id);
                     settingsHandler.storeValue("dualSets", setKey, id);
+                } else {
+                    settingsHandler.storeValue("dualSets", setKey, "na");
                 }
             }
         }

@@ -96,15 +96,14 @@ void outputHandler::readOutputs() {
   while (std::getline(file, row)) {
     try {
       index++;
-      if (row.size() > 25 && row.at(0) != '/') {
-        int modeDelimiter = (int)row.find('^');
-        int prefixDelimiter = (int)row.find('#');
+      if (row.size() > 25 && row.at(0) != '/') {int modeDelimiter =(int) row.find('^');
+    int prefixDelimiter =(int) row.find('#');
 
         int updateEveryDelimiter = (int)row.find('$');
-        int commentDelimiter = (int)row.find("//");
-        if (row.front() == ' ') {
-          row.erase(0, 1);
-        }
+    int commentDelimiter =(int) row.find("//");
+    if (row.front() == ' ') {
+      row.erase(0, 1);
+    }
 
         std::string type = row.substr(modeDelimiter + 1, 1);
         if (type == "3") {

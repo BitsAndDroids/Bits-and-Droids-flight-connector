@@ -56,6 +56,11 @@ win64 {
 SOURCES += \
 logging/MessageCaster.cpp \
 logging/Logger.cpp \
+
+codegenerator/CodeGeneratorWindow.cpp \
+    codegenerator/boards/Board.cpp \
+    codegenerator/components/Part.cpp \
+    codegenerator/components/Pushbutton.cpp \
     Inputs/InputSwitchHandler.cpp \
     Inputs/InputWorker.cpp \
     Inputs/inputenum.cpp \
@@ -94,6 +99,10 @@ logging/Logger.cpp \
 HEADERS += \
 logging/MessageCaster.h \
 logging/Logger.h \
+codegenerator/CodeGeneratorWindow.h \
+    codegenerator/boards/Board.h \
+    codegenerator/components/Part.h \
+    codegenerator/components/Pushbutton.h \
     events/EventDataType.h \
     events/EventType.h \
     events/Event.h \

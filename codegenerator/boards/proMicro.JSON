@@ -1,0 +1,128 @@
+{
+  "name":"Pro-Micro",
+  "imagePath": "proMicroPinout.png",
+  "leftPins": [
+    {
+      "digital":"0",
+      "analog":"",
+      "extraFunctionality": ["TX"]
+    },
+    {
+      "digital":"1",
+      "analog":"",
+      "extraFunctionality": ["RX"]
+    },
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["GND"]
+    },
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["GND"]
+    },
+    {
+      "digital":"2",
+      "analog":"",
+      "extraFunctionality": ["SDA"]
+    },
+    {
+      "digital":"3",
+      "analog":"",
+      "extraFunctionality": ["PWM", "SCL"]
+    },
+    {
+      "digital":"4",
+      "analog":"A6",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"5",
+      "analog":"",
+      "extraFunctionality": ["PWM"]
+    },
+    {
+      "digital":"6",
+      "analog":"A7",
+      "extraFunctionality": ["PWM"]
+    },
+    {
+      "digital":"7",
+      "analog":"",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"8",
+      "analog":"A8",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"9",
+      "analog":"A9",
+      "extraFunctionality": ["PWM"]
+    }
+  ],
+  "rightPins": [
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["RAW"]
+    },
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["GND"]
+    },
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["RST"]
+    },
+    {
+      "digital":"",
+      "analog":"",
+      "extraFunctionality": ["VCC"]
+    },
+    {
+      "digital":"21",
+      "analog":"A3",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"20",
+      "analog":"A2",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"19",
+      "analog":"A1",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"18",
+      "analog":"A0",
+      "extraFunctionality": []
+    },
+    {
+      "digital":"15",
+      "analog":"",
+      "extraFunctionality": ["SCLK"]
+    },
+    {
+      "digital":"14",
+      "analog":"",
+      "extraFunctionality": ["MISO"]
+    },
+    {
+      "digital":"16",
+      "analog":"",
+      "extraFunctionality": ["MOSI"]
+    },
+    {
+      "digital":"10",
+      "analog":"A10",
+      "extraFunctionality": ["PWM"]
+    }
+  ]
+}

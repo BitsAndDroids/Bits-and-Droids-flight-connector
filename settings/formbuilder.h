@@ -22,7 +22,6 @@ class FormBuilder : public QObject {
   //~FormBuilder();
   QStringList getCalibrateLabels() { return objectNames; };
   QVBoxLayout *RangeBuilder();
-
   void loadComPortData();
 
   QVBoxLayout *generateComColumn(int index);
@@ -139,6 +138,12 @@ class FormBuilder : public QObject {
 
   int neutralValue[4] = {((1023 - 0) / 2), ((1023 - 0) / 2), ((1023 - 0) / 2),
                          ((1023 - 0) / 2)};
+
+    void adjustIndexes();
+
+    void adjustIndexes(int index);
+
+    void adjustIndexes(int mode, int index);
 };
 
 #endif  // FORMBUILDER_H

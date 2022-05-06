@@ -93,6 +93,7 @@ class MainWindow : public QMainWindow {
 
   std::string convertComPort(QString comText);
 
+  void openGenerateCodeMenu();
   void openCalibrateAxis();
   void toggleAdvanced();
   void openGenerateLibraryMenu();
@@ -120,6 +121,7 @@ class MainWindow : public QMainWindow {
   bool calibrateAxisMenuOpen = false;
   bool optionMenuOpen = false;
   bool generateLibraryMenuOpen = false;
+  bool generateCodeMenuOpen = false;
 
   void stopInput();
 
@@ -185,6 +187,8 @@ class MainWindow : public QMainWindow {
   void checkForUpdates(bool silentCheck);
   void restoreStoredValuesComboBoxes(QWidget *widget, QString comGroupName,
                                      QString setGroupName, bool setsNeeded);
+
+
 };
 
 #endif  // MAINWINDOW_H
