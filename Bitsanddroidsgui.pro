@@ -96,6 +96,7 @@ SOURCES += \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/range.cpp \
+    rungaurd/RunGuard.cpp
 
 
 HEADERS += \
@@ -143,7 +144,8 @@ HEADERS += \
     settings/coordinates.h \
     settings/settingshandler.h \
     settings/settingsranges.h \
-    enums/ModeEnum.h
+    enums/ModeEnum.h \
+    rungaurd/RunGuard.h
 
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"

@@ -23,178 +23,198 @@
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
-  Q_OBJECT
+Q_OBJECT
 
- public:
-  MainWindow(QWidget *parent = nullptr);
+public:
+    MainWindow(QWidget *parent = nullptr);
 
-  ~MainWindow();
+    ~MainWindow();
 
-  void startInputs();
 
-  void startOutputs();
+    void on_btnSwitchNav1_clicked();
 
-  void on_btnSwitchNav1_clicked();
+    static int getComboxIndex(ModeIndexCombobox *comboBox, const QString &value);
 
-  static int getComboxIndex(ModeIndexCombobox *comboBox, const QString& value);
+public slots:
 
- public slots:
+    void onUpdateLastValUI(const QString &lastVal);
 
-  void onUpdateLastValUI(const QString &lastVal);
+    void onUpdateLastStatusUI(const QString &lastStatus);
 
-  void onUpdateLastStatusUI(const QString &lastStatus);
+    void startMode(int mode);
 
-  void startMode(int mode);
+    void refreshComs(int mode);
 
-  void refreshComs(int mode);
+    void stopMode(int mode);
 
-  void stopMode(int mode);
+    void addCom(int mode);
 
-  void addCom(int mode);
+signals:
 
- signals:
-  void updateEventFile(int cmd);
+    void updateEventFile(int cmd);
 
-  void closedOutputMenu();
+    void closedOutputMenu();
 
-  void closedEventWindow();
+    void closedEventWindow();
 
-  void closedOptionsMenu();
-  void closedCalibrateAxisMenu();
+    void closedOptionsMenu();
 
-  void updateLastValUI(QString lastVal);
+    void closedCalibrateAxisMenu();
 
-  void updateLastStatusUI(QString lastVal);
+    void updateLastValUI(QString lastVal);
 
-  void updateActiveCom1(QList<QString> lastVal);
+    void updateLastStatusUI(QString lastVal);
 
-  void startPressed(int mode);
+    void updateActiveCom1(QList<QString> lastVal);
 
-  void refreshPressed(int mode);
+    void startPressed(int mode);
 
-  void stopPressed(int mode);
+    void refreshPressed(int mode);
 
-  void addPressed(int mode);
+    void stopPressed(int mode);
 
- private slots:
+    void addPressed(int mode);
 
-  void localUpdateEventFile();
+private slots:
 
-  void on_updateButton_clicked();
+    void localUpdateEventFile();
 
-  void outputMenuClosed();
-  void calibrateAxisMenuClosed();
-  void optionMenuClosed();
-  void eventWindowClosed();
+    void on_updateButton_clicked();
 
-  std::string convertComPort(QString comText);
+    void outputMenuClosed();
 
-  void openGenerateCodeMenu();
-  void openCalibrateAxis();
-  void toggleAdvanced();
-  void openGenerateLibraryMenu();
+    void calibrateAxisMenuClosed();
 
- public slots:
+    void optionMenuClosed();
 
-  void GameConnectionMade(int con, int mode);
+    void eventWindowClosed();
 
-  void BoardConnectionMade(int con, int mode);
+    std::string convertComPort(QString comText);
 
- private:
-  bool advancedMode = false;
-  bool closing = false;
-  void exitProgram();
-  void toggleOpen(QSystemTrayIcon::ActivationReason reason);
-  void closeEvent(QCloseEvent *event) override;
-  PathHandler pathHandler;
-  QString applicationEventsPath = pathHandler.getWritableEventPath();
-  enum warnings { NOSET, NOCOMPORT };
-  SetHandler *setHandler = new SetHandler();
-  SettingsHandler settingsHandler;
+    void openGenerateCodeMenu();
 
-  bool outputMenuOpen = false;
-  bool eventwindowOpen = false;
-  bool calibrateAxisMenuOpen = false;
-  bool optionMenuOpen = false;
-  bool generateLibraryMenuOpen = false;
-  bool generateCodeMenuOpen = false;
+    void openCalibrateAxis();
 
-  void stopInput();
+    void toggleAdvanced();
 
-  void stopOutput();
+    void openGenerateLibraryMenu();
 
-  void stopDual();
+public slots:
 
-  QString prevInputComInt;
-  QList<QString> chopStrInput;
+    void GameConnectionMade(int con, int mode);
 
-  QString prevRowComInt;
-  QList<QString> chopStrRow;
-  int amntSets = 0;
-  bool loadedSet = false;
+    void BoardConnectionMade(int con, int mode);
 
-  QString prevOutputComInt;
-  QList<QString> chopStrOutput;
-  bool setBlockVisible = true;
-  bool extraInputOptionsVisible = true;
-  int inputComRowCounter = 1;
-  QList<QString> availableComPorts;
-  QString m_sSettingsFile;
-  std::string url = "https://www.bitsanddroids.com/downloads";
-  std::string lastValueRec = "";
+private:
+    bool advancedMode = false;
+    bool closing = false;
 
-  void loadSettings();
+    void exitProgram();
 
-  const char *portNameLocal;
-  QPushButton *updateButton;
-  QPushButton *switchButton;
-  DualWorker dualThread;
-  OutputWorker outputThread;
-  InputWorker inputThread;
-  QList<set> *availableSets;
-  FormBuilder formbuilder;
-  Ui::MainWindow *ui;
+    void toggleOpen(QSystemTrayIcon::ActivationReason reason);
 
-  void openSettings();
+    void closeEvent(QCloseEvent *event) override;
 
-  void openOutputMenu();
+    PathHandler pathHandler;
+    QString applicationEventsPath = pathHandler.getWritableEventPath();
+    enum warnings {
+        NOSET, NOCOMPORT
+    };
+    SetHandler *setHandler = new SetHandler();
+    SettingsHandler settingsHandler;
 
-  void openEditEventMenu();
+    bool outputMenuOpen = false;
+    bool eventwindowOpen = false;
+    bool calibrateAxisMenuOpen = false;
+    bool optionMenuOpen = false;
+    bool generateLibraryMenuOpen = false;
+    bool generateCodeMenuOpen = false;
 
-  void installWasm();
+    void stopInput();
 
-  void untick();
+    void stopOutput();
 
-  void loadComPortData();
+    void stopDual();
 
-  void on_btnSwitchComm1_clicked();
+    QString prevInputComInt;
+    QList<QString> chopStrInput;
 
-  void startDual();
+    QString prevRowComInt;
+    QList<QString> chopStrRow;
+    int amntSets = 0;
+    bool loadedSet = false;
 
-  static bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *>&);
+    QString prevOutputComInt;
+    QList<QString> chopStrOutput;
+    bool setBlockVisible = true;
+    bool extraInputOptionsVisible = true;
+    int inputComRowCounter = 1;
+    QList<QString> availableComPorts;
+    QString m_sSettingsFile;
+    std::string url = "https://www.bitsanddroids.com/downloads";
+    std::string lastValueRec = "";
 
-  static QLabel *returnWarningString(int warningType);
+    void loadSettings();
 
-  static void clearChildrenFromLayout(QLayout *);
+    const char *portNameLocal;
+    QPushButton *updateButton;
+    QPushButton *switchButton;
+    DualWorker dualThread;
+    OutputWorker outputThread;
+    InputWorker inputThread;
+    QList<set> *availableSets;
+    FormBuilder formbuilder;
+    Ui::MainWindow *ui;
 
-  void copyFolder(QString sourceFolder, QString destinationFolder);
-  bool updateApplication();
-  void unzip(QString zipfilename, QString filename);
-  void checkForUpdates(bool silentCheck);
-  void restoreStoredValuesComboBoxes(QWidget *widget, QString comGroupName,
-                                     QString setGroupName, bool setsNeeded);
+    void openSettings();
+
+    void openOutputMenu();
+
+    void openEditEventMenu();
+
+    void installWasm();
+
+    void untick();
+
+    void loadComPortData();
+
+    void on_btnSwitchComm1_clicked();
+
+    void startDual(bool autoStart);
+
+    void startInputs(bool autoStart);
+
+    void startOutputs(bool autoStart);
+
+
+    static bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &);
+
+    static QLabel *returnWarningString(int warningType);
+
+    static void clearChildrenFromLayout(QLayout *);
+
+    void copyFolder(const QString &sourceFolder, const QString &destinationFolder);
+
+    bool updateApplication();
+
+    void unzip(QString zipfilename, QString filename);
+
+    void checkForUpdates(bool silentCheck);
+
+    void restoreStoredValuesComboBoxes(QWidget *widget, const QString &comGroupName,
+                                       const QString &setGroupName, bool setsNeeded);
 
 
     void saveAutoRunStates(int mode);
 
     void loadAutoRunState();
 
-    QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression& pattern);
+    QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
 };
 
 #endif  // MAINWINDOW_H
