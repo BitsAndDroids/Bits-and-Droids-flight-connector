@@ -2,7 +2,6 @@
 
 #include <events/eventwindow.h>
 #include <library/librarygeneratorwindow.h>
-#include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <settings/calibrateaxismenu.h>
@@ -10,13 +9,15 @@
 #include <settings/outputmenu.h>
 
 #include <QDir>
-#include <QNetworkAccessManager>
 #include <iostream>
 #include <string>
 
 #include "codegenerator/CodeGeneratorWindow.h"
 #include "ui_mainwindow.h"
 #include "logging/MessageCaster.h"
+#include "enums/ModeEnum.h"
+#include "elements/ModeIndexCheckbox.h"
+#include "elements/ModeIndexCombobox.h"
 
 void MainWindow::untick() {}
 
@@ -126,38 +127,37 @@ void MainWindow::toggleAdvanced() {
 }
 
 void MainWindow::installWasm() {
-    try {bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
-    QString pathfound;
-    QString sourceString =
-            QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-    qDebug() << "start install";
-    if (customPathFound) {
-        qDebug() << "custom path found";
-        pathfound = pathHandler.getCommunityFolderPath();
-    } else {
-        QString windowsStorePath =
-                QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
-                "/Packages/Microsoft.FlightSimulator_"
-                "8wekyb3d8bbwe/LocalCache/packages/Community";
-        bool windowsFound = QDir(windowsStorePath).exists();
-        QString steamPath =
-                QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) +
-                "/AppData/Roaming/Microsoft Flight Simulator/Packages/Community";
-        bool steamFound = QDir(steamPath).exists();
-
-        if (windowsFound) {
-            pathfound = windowsStorePath;
-        } else if (steamFound) {
-            pathfound = steamPath;
+    try {
+        bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
+        QString pathfound;
+        QString sourceString =
+                QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
+        if (customPathFound) {
+            pathfound = pathHandler.getCommunityFolderPath();
         } else {
-            auto notFoundMessage = new QMessageBox();
-            notFoundMessage->setInformativeText(
-                    "Could not automatically find the community folder");
-            notFoundMessage->setStandardButtons(QMessageBox::Save |
-                                                QMessageBox::Cancel);
-            int ret = notFoundMessage->exec();
+            QString windowsStorePath =
+                    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
+                    "/Packages/Microsoft.FlightSimulator_"
+                    "8wekyb3d8bbwe/LocalCache/packages/Community";
+            bool windowsFound = QDir(windowsStorePath).exists();
+            QString steamPath =
+                    QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) +
+                    "/AppData/Roaming/Microsoft Flight Simulator/Packages/Community";
+            bool steamFound = QDir(steamPath).exists();
 
-            if (ret == QMessageBox::Save) {
+            if (windowsFound) {
+                pathfound = windowsStorePath;
+            } else if (steamFound) {
+                pathfound = steamPath;
+            } else {
+                auto notFoundMessage = new QMessageBox();
+                notFoundMessage->setInformativeText(
+                        "Could not automatically find the community folder");
+                notFoundMessage->setStandardButtons(QMessageBox::Save |
+                                                    QMessageBox::Cancel);
+                int ret = notFoundMessage->exec();
+
+                if (ret == QMessageBox::Save) {
                     QFileDialog dialog(this);
                     dialog.setFileMode(QFileDialog::Directory);
 
@@ -165,23 +165,23 @@ void MainWindow::installWasm() {
                     settingsHandler.storeValue("Settings", "communityFolderPathLabel",
                                                communityFolderPath);
 
+                }
             }
-        }
 
 
-    QString destinationString = pathfound + "/BitsAndDroidsModule";
+            QString destinationString = pathfound + "/BitsAndDroidsModule";
 
-    copyFolder(sourceString, destinationString);
-    qDebug() << applicationEventsPath;
-MessageCaster::showCompleteMessage("WASM was sucesfully installed");
-        }
-    }
-        catch (...) {
-            MessageCaster::showWarningMessage("Could not install WASM module");
+            copyFolder(sourceString, destinationString);
+            qDebug() << applicationEventsPath;
+            MessageCaster::showCompleteMessage("WASM was sucesfully installed");
         }
     }
+    catch (...) {
+        MessageCaster::showWarningMessage("Could not install WASM module");
+    }
+}
 
-void MainWindow::copyFolder(QString sourceFolder, QString destinationFolder) {
+void MainWindow::copyFolder(const QString& sourceFolder, const QString& destinationFolder) {
     qDebug() << "Dest path = " << destinationFolder;
     QDir sourceDir(sourceFolder);
 
@@ -459,23 +459,29 @@ MainWindow::MainWindow(QWidget *parent)
         toggleAdvanced();
     }
     checkForUpdates(true);
+    loadAutoRunState();
     settingsHandler.checkEventFilePresent();
+    if(settingsHandler.retrieveSetting("Settings","cbAutorun")->toBool()){
+        startInputs(true);
+        startDual(true);
+        startOutputs(true);
+    }
     this->adjustSize();
 }
 
 void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
-                                               QString comGroupName,
-                                               QString setGroupName,
+                                               const QString& comGroupName,
+                                               const QString& setGroupName,
                                                bool setsNeeded) {
-    auto comboBoxes = widget->findChildren<QComboBox *>();
-    int itterations = comboBoxes.size();
+    auto comboBoxes = widget->findChildren<ModeIndexCombobox *>();
+    int itterations = (int)comboBoxes.size();
     if (itterations > 1) {
         itterations = itterations / 2;
     }
 
     for (int i = 0; i < itterations; i++) {
         auto comComboBox =
-                widget->findChild<QComboBox *>("comBox" + QString::number(i));
+                widget->findChild<ModeIndexCombobox *>("comBox" + QString::number(i));
         if (comComboBox != nullptr) {
             auto lastComSaved =
                     settingsHandler
@@ -494,7 +500,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
 
             if (setsNeeded) {
                 auto comboBox =
-                        widget->findChild<QComboBox *>("setBox" + QString::number(i));
+                        widget->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
                 if (!settingsHandler
                         .retrieveSetting(setGroupName, "set" + QString::number(i))
                         ->isNull()) {
@@ -510,7 +516,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
                         auto setName = setFound.getSetName();
 
                         comboBox->setCurrentIndex(getComboxIndex(comboBox, setName));
-                    } else{
+                    } else {
                         comboBox->setCurrentIndex(0);
                     }
                 }
@@ -520,7 +526,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
 }
 
 void MainWindow::checkForUpdates(bool silentCheck) {
-    QProcess *process = new QProcess(this);
+    auto *process = new QProcess(this);
     process->start(pathHandler.getMaintenanceToolPath() + " ch");
     process->waitForFinished();
     QByteArray data = process->readAll();
@@ -543,31 +549,32 @@ void MainWindow::checkForUpdates(bool silentCheck) {
 }
 
 void MainWindow::localUpdateEventFile() {
-    try {QFile::remove(pathHandler.getCommunityFolderPath() +
-                  "/BitsAndDroidsModule/modules/events.txt");
-    QFile::copy(applicationEventsPath,
-                pathHandler.getCommunityFolderPath() +
-                "/BitsAndDroidsModule/modules/events.txt");
-    if (dualThread.isRunning()) {
-        connect(this, &MainWindow::updateEventFile, &dualThread,
-                &DualWorker::sendWASMCommand);
+    try {
+        QFile::remove(pathHandler.getCommunityFolderPath() +
+                      "/BitsAndDroidsModule/modules/events.txt");
+        QFile::copy(applicationEventsPath,
+                    pathHandler.getCommunityFolderPath() +
+                    "/BitsAndDroidsModule/modules/events.txt");
+        if (dualThread.isRunning()) {
+            connect(this, &MainWindow::updateEventFile, &dualThread,
+                    &DualWorker::sendWASMCommand);
 
-        emit updateEventFile('9');
-    } else if (inputThread.isRunning()) {
-        connect(this, &MainWindow::updateEventFile, &inputThread,
-                &InputWorker::sendWASMCommand);
-        emit updateEventFile('9');
-    }else{
+            emit updateEventFile('9');
+        } else if (inputThread.isRunning()) {
+            connect(this, &MainWindow::updateEventFile, &inputThread,
+                    &InputWorker::sendWASMCommand);
+            emit updateEventFile('9');
+        } else {
             throw std::invalid_argument("Could not update");
         }
         MessageCaster::showCompleteMessage("Successfully updated the event file");
     }
-    //This catches the specific error thrown when no output is running
-    //Since we send a command over SimConnect to the WASM module we need to have a connection that is alive
-    catch (const std::invalid_argument &i){
+        //This catches the specific error thrown when no output is running
+        //Since we send a command over SimConnect to the WASM module we need to have a connection that is alive
+    catch (const std::invalid_argument &i) {
         MessageCaster::showWarningMessage("Please start the connector before updating the remote event file");
     }
-    catch(const std::exception& e){
+    catch (const std::exception &e) {
         MessageCaster::showWarningMessage("Something went wrong updating the event file");
     }
 }
@@ -656,28 +663,28 @@ void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
 void MainWindow::startMode(int mode) {
     switch (mode) {
         case 1:
-            startInputs();
+            startInputs(false);
             break;
         case 2:
             setHandler->updateSets();
-            startOutputs();
+            startOutputs(false);
             break;
         case 3:
             setHandler->updateSets();
-            startDual();
+            startDual(false);
             break;
         default:
             break;
     }
 }
 
-void MainWindow::startInputs() {
+void MainWindow::startInputs(bool autoStart) {
     auto *widget = new QWidget();
     inputThread.abortInput = false;
     widget = ui->inWidgetContainer;
     settingsHandler.clearKeys("runningInputComs");
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
     bool emptyInputCom = checkIfComboIsEmpty(comList);
     if (!emptyInputCom) {
         QString comboBoxName;
@@ -712,13 +719,14 @@ void MainWindow::startInputs() {
         clearChildrenFromLayout(outWarningBox);
 
         // always true, check is in here for if I ever add more error messages
-        if (emptyInputCom) {
-            outWarningBox->addWidget(returnWarningString(NOCOMPORT));
-        }
+
+        outWarningBox->addWidget(returnWarningString(NOCOMPORT));
+
     }
+    saveAutoRunStates(INPUTMODE);
 }
 
-void MainWindow::startOutputs() {
+void MainWindow::startOutputs(bool autoStart) {
     auto *widget = new QWidget();
 
     widget = ui->outWidgetContainer;
@@ -727,10 +735,10 @@ void MainWindow::startOutputs() {
     settingsHandler.clearKeys("runningOutputSets");
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
 
     QRegularExpression searchSets("setBox");
-    QList<QComboBox *> setList = widget->findChildren<QComboBox *>(searchSets);
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
     bool emptyDualSet = checkIfComboIsEmpty(setList);
     bool emptyDualCom = checkIfComboIsEmpty(comList);
     if (!emptyDualSet && !emptyDualCom) {
@@ -796,9 +804,10 @@ void MainWindow::startOutputs() {
             outWarningBox->addWidget(returnWarningString(NOSET));
         }
     }
+    saveAutoRunStates(OUTPUTMODE);
 }
 
-void MainWindow::startDual() {
+void MainWindow::startDual(bool autoStart) {
     auto *widget = new QWidget();
 
     widget = ui->dualWidgetContainer;
@@ -806,10 +815,10 @@ void MainWindow::startDual() {
     settingsHandler.clearKeys("runningDualSets");
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
 
     QRegularExpression searchSets("setBox");
-    QList<QComboBox *> setList = widget->findChildren<QComboBox *>(searchSets);
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
 
     bool emptyDualSet = checkIfComboIsEmpty(setList);
     bool emptyDualCom = checkIfComboIsEmpty(comList);
@@ -819,6 +828,7 @@ void MainWindow::startDual() {
         QList<Output *> outputsToMap;
         qDebug() << "sets available" << comList.size();
         dualThread.clearBundles();
+
         for (int i = 0; i < comList.size(); i++) {
             if (!(comList[i]->currentText().contains("Not connected"))) {
                 key = "com" + QString::number(i);
@@ -890,9 +900,65 @@ void MainWindow::startDual() {
             dualWarningBox->addWidget(returnWarningString(NOSET));
         }
     }
+    saveAutoRunStates(DUALMODE);
 }
 
-bool MainWindow::checkIfComboIsEmpty(QList<QComboBox *> toCheck) {
+QList<ModeIndexCheckbox *> MainWindow::getCheckboxesByPattern(const QRegularExpression &pattern) {
+    return this->findChildren<ModeIndexCheckbox *>(pattern);
+}
+
+void MainWindow::saveAutoRunStates(int mode) {
+    auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
+    QString group;
+    switch (mode) {
+        case INPUTMODE: {
+            group = "inputARIndex";
+            break;
+        }
+        case OUTPUTMODE: {
+            group = "outputARIndex";
+            break;
+        }
+        case DUALMODE: {
+            group = "dualARIndex";
+            break;
+        }
+        default:
+            break;
+    }
+    for (auto &cb: autoList) {
+        QString index = QString::number(cb->getIndex());
+        settingsHandler.storeValue(group, index, cb->isChecked());
+    }
+}
+
+void MainWindow::loadAutoRunState() {
+    QRegularExpression searchAuto("auto");
+    auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
+    QString group;
+    for (auto &cb: autoList) {
+        int mode = cb->getMode();
+        QString index = QString::number(cb->getIndex());
+        switch (mode) {
+            case INPUTMODE:
+                group = "inputARIndex";
+                break;
+            case OUTPUTMODE:
+                group = "outputARIndex";
+                break;
+            case DUALMODE :
+                group = "dualARIndex";
+                break;
+            default:
+                break;
+        }
+        cb->setChecked(settingsHandler.retrieveSetting(group, index)->toBool());
+
+    }
+}
+
+
+bool MainWindow::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) {
     for (auto &i: toCheck) {
         if (i->currentIndex() == -1) {
             return true;
@@ -922,6 +988,7 @@ QLabel *MainWindow::returnWarningString(int warningType) {
         case NOSET:
             warningLabel->setText(
                     "Please create or select a set before pressing start");
+        default:
             break;
     }
     return warningLabel;
@@ -954,15 +1021,15 @@ void MainWindow::refreshComs(int mode) {
     }
 
     QRegularExpression search("comBox");
-    QList<QComboBox *> comList = widget->findChildren<QComboBox *>(search);
+    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
     formbuilder.loadComPortData();
-    auto sets = *formbuilder.getAvailableSets();
+
     QList<QString> coms = formbuilder.getAvailableComPorts();
 
-    for (int i = 0; i < comList.size(); i++) {
-        comList[i]->clear();
+    for (auto &i: comList) {
+        i->clear();
         for (auto &com: coms) {
-            comList[i]->addItem(com);
+            i->addItem(com);
         }
     }
     restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
@@ -1005,9 +1072,8 @@ void MainWindow::addCom(int mode) {
         default:
             break;
     }
-
-    layout->addWidget(formbuilder.generateComSelector(set, mode, 99));
-    qDebug() << "addCom" << mode;
+    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
+    layout->addWidget(formbuilder.generateComSelector(set, mode, (int) indexList.size()));
 }
 
 void MainWindow::stopInput() {
@@ -1024,15 +1090,14 @@ void MainWindow::stopOutput() {
 void MainWindow::stopDual() { dualThread.abortDual = true; }
 
 void MainWindow::on_updateButton_clicked() {
-    QProcess *process = new QProcess(this);
+    auto *process = new QProcess(this);
     process->startDetached(pathHandler.getMaintenanceToolPath());
     process->waitForFinished();
     exitProgram();
 }
 
-int MainWindow::getComboxIndex(QComboBox *comboBox, QString value) {
+int MainWindow::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
     int index = -10;
-    qDebug() << value;
     if (!value.isNull()) {
         for (int i = 0; i < comboBox->count(); i++) {
             QString text = comboBox->itemText(i);

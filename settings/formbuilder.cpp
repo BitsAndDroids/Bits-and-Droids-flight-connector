@@ -10,6 +10,8 @@
 #include <string>
 #include <utility>
 #include "enums/ModeEnum.h"
+#include "elements/ModeIndexCheckbox.h"
+#include "elements/ModeIndexCombobox.h"
 
 using namespace std;
 
@@ -505,7 +507,7 @@ QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
     gridWidget->setMinimumHeight(350);
     gridWidget->setMaximumHeight(350);
 
-    QScrollArea *activeScroll = new QScrollArea();
+    auto *activeScroll = new QScrollArea();
     activeScroll->setMinimumHeight(250);
     activeScroll->setMaximumHeight(250);
 
@@ -635,21 +637,19 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
     auto *comSelector = new QWidget();
     auto *comRow = new QHBoxLayout();
     comSelector->setLayout(comRow);
-    auto *comPortComboBox = new QComboBox();
-    comPortComboBox->setObjectName("comBox" + QString::number(index));
+    auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
     for (auto &availableComPort: availableComPorts) {
         comPortComboBox->addItem(availableComPort);
     }
     comRow->addWidget(comPortComboBox);
     comPortComboBox->setMinimumWidth(150);
     if (setsNeeded) {
-        auto *setComboBox = new QComboBox();
+        auto *setComboBox = new ModeIndexCombobox("setBox",index);
         setComboBox->addItem("No outputs");
         for (const auto &availableSet: *availableSets) {
             setComboBox->addItem(availableSet.getSetName());
         }
         setComboBox->setMinimumWidth(150);
-        setComboBox->setObjectName("setBox" + QString::number(index));
         comRow->addWidget(setComboBox);
         qDebug() << setComboBox->objectName();
     }
@@ -662,9 +662,44 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
     connect(removeButton, &QAbstractButton::clicked, this,
             &FormBuilder::removeComWidget);
     comRow->addWidget(removeButton);
+
+    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
+    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
+    comRow->addWidget(autoRunCB);
     return comSelector;
 }
+void FormBuilder::autoRunChanged(){
+    auto senderCB = qobject_cast<ModeIndexCheckbox *>(sender());
 
+    int mode = senderCB->getMode();
+    QString index = QString::number(senderCB->getIndex());
+    QString group;
+    switch(mode){
+        case INPUTMODE:  {
+            group = "inputARIndex";
+            break;
+        }
+
+        case OUTPUTMODE: {
+            group = "outputARIndex";
+            break;
+        }
+
+        case DUALMODE:   {
+            group = "dualARIndex";
+            break;
+        }
+        default: break;
+    }
+    if(!settingsHandler.retrieveSetting(group,index)->isNull()) {
+        settingsHandler.storeValue(group, index, senderCB->isChecked());
+    }
+
+
+
+
+
+}
 QWidget *FormBuilder::generateComControls(int mode) {
     auto *comControls = new QWidget();
     auto *comControlRow = new QHBoxLayout();
@@ -735,27 +770,29 @@ void FormBuilder::removeComWidget() {
 
     try {
         int mode = sender()->objectName().mid(3, 1).toInt();
-        int index = sender()->objectName().right(1).toInt();
-        std::cout << "INDEX" << QString::number(index).toStdString() << std::endl;
+        QString index = sender()->objectName().right(1);
         QString group;
-
+        QString arGroup;
         if (mode == INPUTMODE) {
 
             group = "inputComs";
+            arGroup = "inputARIndex";
 
         } else if (mode == OUTPUTMODE) {
 
             group = "outputComs";
-            settingsHandler.removeSetting("outputSets", "set" + QString::number(index));
+            arGroup = "outputARIndex";
+            settingsHandler.removeSetting("outputSets", "set" + index);
 
         } else if (mode == DUALMODE) {
 
             group = "dualComs";
-            settingsHandler.removeSetting("dualSets", "set" + QString::number(index));
+            arGroup = "dualARIndex";
+            settingsHandler.removeSetting("dualSets", "set" + index);
         }
-
-        settingsHandler.removeSetting(group, "com" + QString::number(index));
-        adjustIndexes(mode, index);
+        settingsHandler.removeSetting(arGroup,index);
+        settingsHandler.removeSetting(group, "com" + index);
+        adjustIndexes(mode, index.toInt());
     } catch (std::exception &e) {
         qDebug("%s", e.what());
     }
@@ -767,20 +804,24 @@ void FormBuilder::adjustIndexes(int mode, int index) {
 
     QString group;
     QString setGroup;
+    QString arGroup;
 
     switch (mode) {
         case 1: {
             group = "inputComs";
+            arGroup = "inputARIndex";
             break;
         }
         case 2: {
             group = "outputComs";
             setGroup = "outputSets";
+            arGroup = "outputARIndex";
             break;
         }
         case 3: {
             group = "dualComs";
             setGroup = "dualSets";
+            arGroup = "dualARIndex";
             break;
         }
         default:
@@ -788,13 +829,14 @@ void FormBuilder::adjustIndexes(int mode, int index) {
     }
 
     auto keys = settingsHandler.retrieveKeys(group);
+    auto arKeys = settingsHandler.retrieveKeys(arGroup);
 
     QString setKey = "set";
     QString comKey = "com";
 
     if (index < keys->size()) {
         for (const auto & key : *keys) {
-            int comIndex = key.right(1).toInt();
+            int comIndex = key.mid(comKey.size()).toInt();
             if (comIndex > index) {
                 auto value = settingsHandler.retrieveSetting(group, key)->toString();
                 settingsHandler.storeValue(group, comKey + QString::number(comIndex - 1), value);
@@ -807,7 +849,7 @@ void FormBuilder::adjustIndexes(int mode, int index) {
 
         auto setKeys = settingsHandler.retrieveKeys(setGroup);
         for (const auto & i : *setKeys) {
-            int setIndex = i.right(1).toInt();
+            int setIndex = i.mid(setKey.size()).toInt();
             if (setIndex > index) {
                 auto setValue = settingsHandler.retrieveSetting(setGroup, i)->toString();
                 settingsHandler.storeValue(setGroup, setKey + QString::number(setIndex - 1), setValue);
@@ -815,6 +857,13 @@ void FormBuilder::adjustIndexes(int mode, int index) {
         }
         settingsHandler.removeSetting(setGroup, setKey + QString::number(setKeys->size()));
 
+    }
+    for(const auto & arKey : *arKeys){
+        int arIndex = arKey.toInt();
+        if(arIndex > index){
+            auto value = settingsHandler.retrieveSetting(arGroup, arKey)->toBool();
+            settingsHandler.storeValue(arGroup,QString::number(arIndex - 1), value);
+        }
     }
 
 }

@@ -1,18 +1,23 @@
 #include <QApplication>
 
 #include "headers/mainwindow.h"
+#include "rungaurd/RunGuard.h"
 
 
-int main(int argc, char* argv[])
-{
-  QApplication a(argc, argv);
+int main(int argc, char *argv[]) {
 
-  QApplication::setApplicationName("BitsAndDroidsFlightConnector");
-  QApplication::setOrganizationName("Bits and Droids");
-  QApplication::setOrganizationDomain("www.bitsanddroids.com");
+    RunGuard guard("BitsAndDroidsConnector");
+    if(!guard.tryToRun())
+        return 0;
 
-  MainWindow w;
-  w.show();
+    QApplication a(argc, argv);
 
-  return QApplication::exec();
+    QApplication::setApplicationName("BitsAndDroidsFlightConnector");
+    QApplication::setOrganizationName("Bits and Droids");
+    QApplication::setOrganizationDomain("www.bitsanddroids.com");
+
+    MainWindow w;
+    w.show();
+
+    return QApplication::exec();
 }

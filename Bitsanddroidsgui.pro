@@ -54,10 +54,9 @@ win64 {
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 SOURCES += \
-logging/MessageCaster.cpp \
-logging/Logger.cpp \
-
-codegenerator/CodeGeneratorWindow.cpp \
+    logging/MessageCaster.cpp \
+    logging/Logger.cpp \
+    codegenerator/CodeGeneratorWindow.cpp \
     codegenerator/boards/Board.cpp \
     codegenerator/components/Part.cpp \
     codegenerator/components/Pushbutton.cpp \
@@ -69,6 +68,8 @@ codegenerator/CodeGeneratorWindow.cpp \
     events/EventType.cpp \
     dual/dualworker.cpp \
     elements/mcheckbox.cpp \
+    elements/ModeIndexCheckbox.cpp\
+    elements/ModeIndexCombobox.cpp \
     events/eventwindow.cpp \
     handlers/pathhandler.cpp \
     library/librarygenerator.cpp \
@@ -95,11 +96,13 @@ codegenerator/CodeGeneratorWindow.cpp \
     sources/main.cpp \
     sources/mainwindow.cpp \
     sources/range.cpp \
+    rungaurd/RunGuard.cpp
+
 
 HEADERS += \
-logging/MessageCaster.h \
-logging/Logger.h \
-codegenerator/CodeGeneratorWindow.h \
+    logging/MessageCaster.h \
+    logging/Logger.h \
+    codegenerator/CodeGeneratorWindow.h \
     codegenerator/boards/Board.h \
     codegenerator/components/Part.h \
     codegenerator/components/Pushbutton.h \
@@ -112,6 +115,8 @@ codegenerator/CodeGeneratorWindow.h \
     Inputs/inputenum.h \
     dual/dualworker.h \
     elements/mcheckbox.h \
+    elements/ModeIndexCheckbox.h\
+    elements/ModeIndexCombobox.h \
     events/eventwindow.h \
     handlers/pathhandler.h \
     headers/Engine.h \
@@ -138,7 +143,9 @@ codegenerator/CodeGeneratorWindow.h \
     settings/outputmenu.h \
     settings/coordinates.h \
     settings/settingshandler.h \
-    settings/settingsranges.h
+    settings/settingsranges.h \
+    enums/ModeEnum.h \
+    rungaurd/RunGuard.h
 
 
 INCLUDEPATH += "C:/Program Files/OpenSSL-Win64/include"

@@ -15,135 +15,150 @@
 #include "settingshandler.h"
 
 class FormBuilder : public QObject {
-  Q_OBJECT
+Q_OBJECT
 
- public:
-  FormBuilder();
-  //~FormBuilder();
-  QStringList getCalibrateLabels() { return objectNames; };
-  QVBoxLayout *RangeBuilder();
-  void loadComPortData();
+public:
+    FormBuilder();
 
-  QVBoxLayout *generateComColumn(int index);
+    //~FormBuilder();
+    QStringList getCalibrateLabels() { return objectNames; };
 
-  QHBoxLayout *generateComBlock();
+    QVBoxLayout *RangeBuilder();
 
-  static QVBoxLayout *generateRange(const QString &header);
+    void loadComPortData();
 
-  QVBoxLayout *createAxisRow(QString name, int number);
+    QVBoxLayout *generateComColumn(int index);
 
-  QStringList comHeaders = {"Inputs", "Outputs", "Both"};
-  QStringList rangeHeaders;
-  QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
-  QStringList engineHeaders;
-  void setCurves(QStringList);
-  int getAmountOfEngines() { return engineHeaders.size(); };
+    QHBoxLayout *generateComBlock();
 
-  static QTabWidget *generateOutputTabs();
+    static QVBoxLayout *generateRange(const QString &header);
 
-  static QVBoxLayout *generateOutputSetList();
+    QVBoxLayout *createAxisRow(QString name, int number);
 
-  QGridLayout *generateOutputControls() const;
-  // QVBoxLayout *generateActiveSet();
+    QStringList comHeaders = {"Inputs", "Outputs", "Both"};
+    QStringList rangeHeaders;
+    QStringList engineLabels = {"Reverse", "Idle cutoff", "Max"};
+    QStringList engineHeaders;
 
-  QWidget *generateSetRow(const set &setForRow);
+    void setCurves(QStringList);
 
-  QHBoxLayout *generateOutputRow(Output *output);
+    int getAmountOfEngines() { return engineHeaders.size(); };
 
-  static QWidget *generateActiveSet(set *selectedSet);
+    static QTabWidget *generateOutputTabs();
 
-  static QLabel *generateHeader(const QString &text);
+    static QVBoxLayout *generateOutputSetList();
 
-  QWidget *generateComSelector(bool setsNeeded, int mode);
+    QGridLayout *generateOutputControls() const;
+    // QVBoxLayout *generateActiveSet();
 
-  QWidget *generateComControls(int mode);
+    QWidget *generateSetRow(const set &setForRow);
 
-  QList<set> *getAvailableSets() { return availableSets; };
+    QHBoxLayout *generateOutputRow(Output *output);
 
-  QList<QString> getAvailableComPorts() { return availableComPorts; };
+    static QWidget *generateActiveSet(set *selectedSet);
 
-  QList<struct coordinates> *getCoordinates(int number);
+    static QLabel *generateHeader(const QString &text);
 
-  QWidget *generateComSelector(bool setsNeeded, int mode, int index);
+    QWidget *generateComSelector(bool setsNeeded, int mode);
 
-  void loadPointsToPlot(QStringList axis);
- private slots:
+    QWidget *generateComControls(int mode);
 
-  void localRemove();
+    QList<set> *getAvailableSets() { return availableSets; };
 
-  void localEdit();
+    QList<QString> getAvailableComPorts() { return availableComPorts; };
 
-  void localStart();
+    QList<struct coordinates> *getCoordinates(int number);
 
-  void localRefreshed();
+    QWidget *generateComSelector(bool setsNeeded, int mode, int index);
 
-  void localStop();
+    void loadPointsToPlot(QStringList axis);
 
-  void localAdd();
+private slots:
 
-  void removeComWidget();
+    void localRemove();
 
-  void rudderTextChanged();
-  void updateXCall();
-  void updateYCall();
+    void localEdit();
 
-  void updateX(int number, int index, int value);
+    void localStart();
 
-  void reverseClicked();
+    void localRefreshed();
 
-  void updateY(int number, int index, int value);
+    void localStop();
 
- signals:
-  void updateXSignal(int number, int index, int value);
-  void updateYSignal(int number, int index, int value);
-  void addSet();
+    void localAdd();
 
-  void setEdited(QString id);
+    void autoRunChanged();
 
-  void removeSet(QString id);
+    void removeComWidget();
 
-  void startPressed(int mode);
+    void rudderTextChanged();
 
-  void refreshPressed(int mode);
+    void updateXCall();
 
-  void stopPressed(int mode);
+    void updateYCall();
 
-  void addPressed(int mode);
+    void updateX(int number, int index, int value);
 
- private:
-  QStringList curves;
-  QStringList objectNames = {"MinLE", "NeutralLE", "MaxLE"};
-  QList<int> axisValues = {-16383, -10000, 0, 0, 0, 10000, 16383};
-  QList<QChart *> charts = QList<QChart *>();
+    void reverseClicked();
 
-  QList<QLineSeries *> series = QList<QLineSeries *>();
-  QList<QChartView *> chartViews = QList<QChartView *>();
-  QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
-  SetHandler setHandler;
-  SettingsHandler settingsHandler;
-  QList<set> *availableSets;
-  QList<QString> availableComPorts;
+    void updateY(int number, int index, int value);
 
-  void updateChart(int number);
+signals:
 
-  QList<QList<coordinates>> pointsToPlot = QList<QList<coordinates>>();
+    void updateXSignal(int number, int index, int value);
 
-  QVBoxLayout *generateCurveCol(int number, int valAxis, int valRange);
+    void updateYSignal(int number, int index, int value);
 
-  void changeSlider();
+    void addSet();
 
-  int minValue[4] = {0, 0, 0, 0};
+    void setEdited(QString id);
 
-  int maxValue[4] = {1023, 1023, 1023, 1023};
+    void removeSet(QString id);
 
-  int neutralValue[4] = {((1023 - 0) / 2), ((1023 - 0) / 2), ((1023 - 0) / 2),
-                         ((1023 - 0) / 2)};
+    void startPressed(int mode);
+
+    void refreshPressed(int mode);
+
+    void stopPressed(int mode);
+
+    void addPressed(int mode);
+
+private:
+    QStringList curves;
+    QStringList objectNames = {"MinLE", "NeutralLE", "MaxLE"};
+    QList<int> axisValues = {-16383, -10000, 0, 0, 0, 10000, 16383};
+    QList<QChart *> charts = QList<QChart *>();
+
+    QList<QLineSeries *> series = QList<QLineSeries *>();
+    QList<QChartView *> chartViews = QList<QChartView *>();
+    QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
+    SetHandler setHandler;
+    SettingsHandler settingsHandler;
+    QList<set> *availableSets;
+    QList<QString> availableComPorts;
+
+    void updateChart(int number);
+
+    QList<QList<coordinates>> pointsToPlot = QList<QList<coordinates>>();
+
+    QVBoxLayout *generateCurveCol(int number, int valAxis, int valRange);
+
+    void changeSlider();
+
+    int minValue[4] = {0, 0, 0, 0};
+
+    int maxValue[4] = {1023, 1023, 1023, 1023};
+
+    int neutralValue[4] = {((1023 - 0) / 2), ((1023 - 0) / 2), ((1023 - 0) / 2),
+                           ((1023 - 0) / 2)};
 
     void adjustIndexes();
 
     void adjustIndexes(int index);
 
     void adjustIndexes(int mode, int index);
+
+
 };
 
 #endif  // FORMBUILDER_H
