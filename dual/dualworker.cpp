@@ -82,7 +82,9 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
                                  SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
-DualWorker::DualWorker() {}
+DualWorker::DualWorker() {
+    dualInputHandler->setRanges();
+}
 
 void sendDualToArduino(float received, std::string prefix, int index,
                        int mode) {
@@ -318,9 +320,7 @@ void DualWorker::sendWASMCommand(char cmd) {
   puts(arrayTest);
   qDebug() << arrayTest;
   cout << arrayTest << " WASM send" << endl;
-  //  SimConnect_TransmitClientEvent(
-  //      connect, object, 2, index, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-  //      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
 
   SimConnect_SetClientData(dualSimConnect, 1, 12,
                            SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
@@ -332,7 +332,7 @@ void DualWorker::addBundle(outputBundle *bundle) {
 
 void DualWorker::RadioEvents() {
   HRESULT hr;
-
+  dualInputHandler->setRanges();
   keys = settingsHandler.retrieveKeys("runningDualComs");
   int keySize = keys->size();
   int successfullyConnected = 0;

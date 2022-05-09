@@ -121,12 +121,11 @@ optionsMenu::~optionsMenu() {
 }
 
 void optionsMenu::on_saveSettingsBtn_clicked() {
-    QLabel *communityFolderPath =
+    auto *communityFolderPath =
             this->findChild<QLabel *>("communityFolderPathLabel");
     settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
                                communityFolderPath->text());
-    PathHandler pathHandler;
-    pathHandler.setCommunityFolderPath(communityFolderPath->text());
+    PathHandler::setCommunityFolderPath(communityFolderPath->text());
 
     // Checkboxes that affect the application behavior on closing / startup
     auto cbCloseToTray = this->findChild<QCheckBox *>("cbCloseToTray");

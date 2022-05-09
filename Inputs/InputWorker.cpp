@@ -33,7 +33,9 @@ enum DATA_DEFINE_ID {
   DEFINITION_1 = 12,
 };
 
-InputWorker::InputWorker() {}
+InputWorker::InputWorker() {
+    handler.setRanges();
+}
 
 enum EVENT_ID {
   EVENT_SIM_START,
@@ -84,6 +86,7 @@ void InputWorker::sendWASMCommand(char cmd) {
 void InputWorker::inputEvents() {
   HRESULT hr;
   abortInput = false;
+  handler.setRanges();
   for (int i = 0; i < curveStrings.size(); i++) {
     auto rudderCurveList = new QList<coordinates>();
     if (!settingsHandler
@@ -91,7 +94,7 @@ void InputWorker::inputEvents() {
                                  QString::number(0))
              ->isNull()) {
       for (int j = 0; j < 7; j++) {
-        QString value = "axis" + QString::number(i);
+        auto value = "axis" + QString::number(i);
         auto foundAxis = settingsHandler
                              .retrieveSubSetting(curveStrings[i] + "Series",
                                                  "axis", QString::number(j))
@@ -145,13 +148,6 @@ void InputWorker::inputEvents() {
       SimConnect_AddToClientDataDefinition(
           hInputSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
 
-      cout << "CLIENTDATA: " << hr << endl;
-
-      //      hr = SimConnect_MapClientEventToSimEvent(hInputSimConnect,
-      //      EVENT_WASM,
-      //                                               "LVAR_ACCESS.EFIS");
-
-      cout << "MAPCTOE: " << hr << endl;
       handler.connect = hInputSimConnect;
 
       handler.object = objectID;
@@ -200,4 +196,5 @@ InputWorker::~InputWorker() {
 
   condition.wakeOne();
   mutex.unlock();
+  delete this;
 }
