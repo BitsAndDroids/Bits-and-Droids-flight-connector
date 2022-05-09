@@ -88,27 +88,7 @@ optionsMenu::optionsMenu(QWidget *parent)
     uiOptions->sensitivityWidget->setLayout(sensLayout);
     uiOptions->sensitivityWidget->layout()->setAlignment(Qt::AlignTop);
 
-    if (!settingsHandler
-            .retrieveSubSetting("rudderSeries", "sliders", "rudderDeadzone")
-            ->isNull()) {
-        uiOptions->sensitivityWidget->findChild<QSlider *>("rudderDeadzone")
-                ->setValue(
-                        settingsHandler
-                                .retrieveSubSetting("rudderSeries", "sliders", "rudderDeadzone")
-                                ->toInt());
-        uiOptions->sensitivityWidget->findChild<QSlider *>("rudderMinSensitivity")
-                ->setValue(settingsHandler
-                                   .retrieveSubSetting("rudderSeries", "sliders",
-                                                       "rudderMinSensitivity")
-                                   ->toInt());
 
-        uiOptions->sensitivityWidget->findChild<QSlider *>("rudderPlusSensitivity")
-                ->setValue(settingsHandler
-                                   .retrieveSubSetting("rudderSeries", "sliders",
-                                                       "rudderPlusSensitivity")
-                                   ->toInt());
-        // Range handling
-    }
     uiOptions->sensitivityWidget->adjustSize();
     QStringList rangeKeys = *settingsHandler.retrieveKeys("Ranges");
     if (!rangeKeys.empty()) {
