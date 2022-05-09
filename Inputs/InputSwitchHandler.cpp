@@ -52,81 +52,84 @@ int oldRightBrake;
 InputEnum inputDefinitions = InputEnum();
 
 InputSwitchHandler::InputSwitchHandler() {
-  if (!settingsHandler.retrieveSetting("Ranges", "flapsmin")->isNull()) {
-    for (int i = 0; i < constants::supportedEngines; i++) {
-      QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
-
-      int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
-      cout << minRange << endl;
-
-      QString idleStr = "Engine " + QString::number(i + 1) + "Idle cutoff";
-      int idleCutoff =
-          settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
-
-      QString maxStr = "Engine " + QString::number(i + 1) + "Max";
-      int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
-
-      enginelist[i] = Engine(minRange, idleCutoff, maxRange, i + 1);
-    }
-    for (auto &curve : curves) {
-      curve.append(coordinates(0, -16383));
-      curve.append(coordinates(250, -10000));
-      curve.append(coordinates(400, 0));
-      curve.append(coordinates(500, 0));
-      curve.append(coordinates(600, 0));
-      curve.append(coordinates(750, 10000));
-      curve.append(coordinates(1023, 16383));
-    }
-
-    if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
-             ->isNull()) {
-      reverseAxis =
-          settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
-              ->toFloat();
-    }
-
-    for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-      QString minStr = "Mixture " + QString::number(i + 1) + "Min";
-      int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
-      cout << minRange << endl;
-
-      QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
-      int maxRange =
-          settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
-
-      mixtureRanges[i] = Range(minRange, maxRange);
-    }
-    for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-      QString minStr = "Propeller " + QString::number(i + 1) + "Min";
-      int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
-
-      QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
-      int maxRange =
-          settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
-
-      propellerRanges[i] = Range(minRange, maxRange);
-    }
-    int minFlaps =
-        settingsHandler.retrieveSetting("Ranges", "FlapsMin")->toInt();
-    int maxFlaps =
-        settingsHandler.retrieveSetting("Ranges", "FlapsMax")->toInt();
-    flapsRange = Range(minFlaps, maxFlaps);
-
-  } else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
-    for (int i = 0; i < constants::supportedEngines; i++) {
-      enginelist[i] = Engine(0, 0, 1023, i);
-    }
-    for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-      mixtureRanges[i] = Range(0, 1023);
-    }
-    for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-      propellerRanges[i] = Range(0, 1023);
-    }
-
-    flapsRange = Range(0, 1023);
-  }
+  setRanges();
 }
 
+void InputSwitchHandler::setRanges(){
+    if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+        for (int i = 0; i < constants::supportedEngines; i++) {
+            QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
+
+            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+            cout << "MIN SET"<<minRange << endl;
+
+            QString idleStr = "Engine " + QString::number(i + 1) + "Idle cutoff";
+            int idleCutoff =
+                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+
+            QString maxStr = "Engine " + QString::number(i + 1) + "Max";
+            int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
+
+            enginelist[i] = Engine(minRange, idleCutoff, maxRange, i + 1);
+        }
+        for (auto &curve : curves) {
+            curve.append(coordinates(0, -16383));
+            curve.append(coordinates(250, -10000));
+            curve.append(coordinates(400, 0));
+            curve.append(coordinates(500, 0));
+            curve.append(coordinates(600, 0));
+            curve.append(coordinates(750, 10000));
+            curve.append(coordinates(1023, 16383));
+        }
+
+        if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
+                ->isNull()) {
+            reverseAxis =
+                    settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
+                            ->toFloat();
+        }
+
+        for (int i = 0; i < constants::supportedMixtureLevers; i++) {
+            QString minStr = "Mixture " + QString::number(i + 1) + "Min";
+            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+            cout << minRange << endl;
+
+            QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
+            int maxRange =
+                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+
+            mixtureRanges[i] = Range(minRange, maxRange);
+        }
+        for (int i = 0; i < constants::supportedPropellerLevers; i++) {
+            QString minStr = "Propeller " + QString::number(i + 1) + "Min";
+            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+
+            QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
+            int maxRange =
+                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+
+            propellerRanges[i] = Range(minRange, maxRange);
+        }
+        int minFlaps =
+                settingsHandler.retrieveSetting("Ranges", "FlapsMin")->toInt();
+        int maxFlaps =
+                settingsHandler.retrieveSetting("Ranges", "FlapsMax")->toInt();
+        flapsRange = Range(minFlaps, maxFlaps);
+
+    } else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+        for (int i = 0; i < constants::supportedEngines; i++) {
+            enginelist[i] = Engine(0, 0, 1023, i);
+        }
+        for (int i = 0; i < constants::supportedMixtureLevers; i++) {
+            mixtureRanges[i] = Range(0, 1023);
+        }
+        for (int i = 0; i < constants::supportedPropellerLevers; i++) {
+            propellerRanges[i] = Range(0, 1023);
+        }
+
+        flapsRange = Range(0, 1023);
+    }
+}
 UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
   UINT32 Remainder = 0, Quotient = 0, Result = 0;
   Remainder = Num % Divider;
@@ -216,12 +219,9 @@ void InputSwitchHandler::controlYoke(int index) {
 void InputSwitchHandler::setFlaps(int index) {
   try {
     token = strtok_s(receivedString[index], " ", &next_token);
-    cout << receivedString[index] << endl;
     counter = 0;
 
     while (token != nullptr && counter < 2) {
-      cout << token << ":Counter" << counter << endl;
-
       if (token != nullptr) {
         const auto incVal = strtod(token, nullptr);
 

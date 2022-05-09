@@ -461,11 +461,13 @@ MainWindow::MainWindow(QWidget *parent)
     checkForUpdates(true);
     loadAutoRunState();
     settingsHandler.checkEventFilePresent();
-    if(settingsHandler.retrieveSetting("Settings","cbAutorun")->toBool()){
-        startInputs(true);
-        startDual(true);
-        startOutputs(true);
-    }
+//    if(settingsHandler.retrieveSetting("Settings","cbAutorun")->toBool()){
+//        if(advancedMode) {
+//            startInputs(true);
+//            startOutputs(true);
+//        }
+//        startDual(true);
+//    }
     this->adjustSize();
 }
 
@@ -728,7 +730,8 @@ void MainWindow::startInputs(bool autoStart) {
 
 void MainWindow::startOutputs(bool autoStart) {
     auto *widget = new QWidget();
-
+    auto *startButton =
+            ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
     widget = ui->outWidgetContainer;
 
     settingsHandler.clearKeys("runningOutputComs");
@@ -742,6 +745,9 @@ void MainWindow::startOutputs(bool autoStart) {
     bool emptyDualSet = checkIfComboIsEmpty(setList);
     bool emptyDualCom = checkIfComboIsEmpty(comList);
     if (!emptyDualSet && !emptyDualCom) {
+        startButton->setChecked(true);
+        startButton->setText("Start");
+        startButton->setEnabled(false);
         QString key;
         QString setKey;
         QList<Output *> outputsToMap = QList<Output *>();
@@ -783,8 +789,7 @@ void MainWindow::startOutputs(bool autoStart) {
         outputThread.abort = false;
         outputThread.start();
     } else {
-        auto *startButton =
-                ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
+
         startButton->setChecked(false);
         startButton->setText("Start");
         startButton->setEnabled(true);
@@ -809,7 +814,10 @@ void MainWindow::startOutputs(bool autoStart) {
 
 void MainWindow::startDual(bool autoStart) {
     auto *widget = new QWidget();
-
+    auto *startButton =
+            ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
+    auto *stopButton =
+            ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
     widget = ui->dualWidgetContainer;
     settingsHandler.clearKeys("runningDualComs");
     settingsHandler.clearKeys("runningDualSets");
@@ -826,6 +834,9 @@ void MainWindow::startDual(bool autoStart) {
         QString key;
         QString setKey;
         QList<Output *> outputsToMap;
+        startButton->setChecked(true);
+        startButton->setText("Start");
+        startButton->setEnabled(false);
         qDebug() << "sets available" << comList.size();
         dualThread.clearBundles();
 
@@ -870,6 +881,8 @@ void MainWindow::startDual(bool autoStart) {
                 }
             }
         }
+        stopButton->setChecked(false);
+        stopButton->setStyleSheet("background-color:#E20303");
 
         //    ui->stopButton->setVisible(true);
         //    QString comText = ui->outputComboBoxBase->currentText();
@@ -879,14 +892,12 @@ void MainWindow::startDual(bool autoStart) {
         dualThread.abortDual = false;
         dualThread.start();
     } else {
-        auto *startButton =
-                ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
+
         startButton->setChecked(false);
         startButton->setText("Start");
         startButton->setEnabled(true);
 
-        auto *stopButton =
-                ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
+
         stopButton->setChecked(true);
         stopButton->setStyleSheet("background-color:#0F4C5C");
 

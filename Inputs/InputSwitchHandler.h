@@ -38,7 +38,10 @@ class InputSwitchHandler {
   void setCurve(QList<coordinates> curve, int index);
 
   float reverseAxis = -23000.0;
- private slots:
+
+    void setRanges();
+
+private slots:
   SettingsHandler settingsHandler;
 
   void set_throttle_values(int index);
@@ -97,6 +100,7 @@ class InputSwitchHandler {
 
   int calibratedRange(int value, QList<coordinates> *curve);
   int calibratedRange(int value, int index);
+
 };
 
 #endif  // INPUTSWITCHHANDLER_H

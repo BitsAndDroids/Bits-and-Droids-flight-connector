@@ -663,9 +663,9 @@ QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
             &FormBuilder::removeComWidget);
     comRow->addWidget(removeButton);
 
-    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
-    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
-    comRow->addWidget(autoRunCB);
+//    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
+//    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
+//    comRow->addWidget(autoRunCB);
     return comSelector;
 }
 void FormBuilder::autoRunChanged(){
