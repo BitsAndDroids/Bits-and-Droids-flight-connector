@@ -754,7 +754,7 @@
       "dataType": 0,
       "cbText":"Com 1 active",
       "prefix":900 ,
-      "type":0
+      "type":8
     },
     {
       "id": 14,
@@ -764,7 +764,7 @@
       "dataType": 0,
       "cbText":"Com 2 active",
       "prefix":902 ,
-      "type":0
+      "type":8
     },
     {
       "id": 16,
@@ -774,7 +774,7 @@
       "dataType": 0,
       "cbText":"Com 1 standby",
       "prefix":901 ,
-      "type":0
+      "type":8
     },
     {
       "id": 17,
@@ -784,7 +784,7 @@
       "dataType": 0,
       "cbText":"Com 2 standby",
       "prefix":903 ,
-      "type":0
+      "type":8
     },
     {
       "id": 18,
@@ -1014,7 +1014,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Taxi lights",
-      "prefix": 33,
+      "prefix": 133,
       "type":4
     },
     {
@@ -1024,7 +1024,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Strobe lights",
-      "prefix":34 ,
+      "prefix":134 ,
       "type":4
     },
     {
@@ -1034,7 +1034,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Panel lights",
-      "prefix":35 ,
+      "prefix":135 ,
       "type":4
     },
     {
@@ -1044,7 +1044,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Recognition lights",
-      "prefix": 36,
+      "prefix": 136,
       "type":4
     },
     {
@@ -1054,7 +1054,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Wing lights",
-      "prefix": 37,
+      "prefix": 137,
       "type":4
     },
     {
@@ -1064,7 +1064,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Logo lights",
-      "prefix":38 ,
+      "prefix":138 ,
       "type":4
     },
     {
@@ -1074,7 +1074,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Cabin lights",
-      "prefix":39 ,
+      "prefix":139 ,
       "type":4
     },
     {
@@ -1084,7 +1084,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Head light",
-      "prefix":40 ,
+      "prefix":140 ,
       "type":4
     },
     {
@@ -1094,7 +1094,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Brake lights (not the brakes!)",
-      "prefix":41 ,
+      "prefix":141 ,
       "type":4
     },
     {
@@ -1104,7 +1104,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) NAV lights",
-      "prefix":42 ,
+      "prefix":142 ,
       "type":4
     },
     {
@@ -1114,7 +1114,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Beacon lights",
-      "prefix": 43,
+      "prefix": 143,
       "type":4
     },
     {
@@ -1124,7 +1124,7 @@
       "updateEvery": 0,
       "dataType": 0,
       "cbText":"(bool) Landing lights",
-      "prefix":44 ,
+      "prefix":144 ,
       "type":4
     }
   ],
