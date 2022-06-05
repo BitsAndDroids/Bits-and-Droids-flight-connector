@@ -566,10 +566,11 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
   HRESULT hr;
   string sizeTest = receivedString[index];
   cout << "size: " << sizeTest.length() << endl;
-  hr = SimConnect_TransmitClientEvent(
-      connect, 0, eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-      SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-
+  if(sizeTest.size() == 6) {
+      hr = SimConnect_TransmitClientEvent(
+              connect, 0, eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+              SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+  }
   cout << hr << endl;
 }
 
