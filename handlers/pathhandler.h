@@ -3,7 +3,7 @@
 
 #include <qstandardpaths.h>
 #include <qstring.h>
-#include <settings/settingshandler.h>
+#include "settingshandler.h"
 
 class PathHandler {
  public:
