@@ -243,6 +243,7 @@ void EventWindow::addEventBtnPressed() {
   newEvent->setComment("Comments go here");
   newEvent->setUpdateEvery(0);
   newEvent->setType(EventType(0));
+  rowsChanged.append((int)tableRows.size());
   tableRows.append(*newEvent);
   fillRow((int)tableRows.size() - 1);
 }
