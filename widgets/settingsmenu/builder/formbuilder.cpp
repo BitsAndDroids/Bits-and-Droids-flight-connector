@@ -709,9 +709,9 @@ QWidget *FormBuilder::generateComControls(int mode) {
     // REFRESH BTN
     auto *refreshButton = new QPushButton();
 
-    refreshButton->setIcon(QIcon("images/refreshicon.png"));
+    refreshButton->setIcon(QIcon("resources/images/refreshicon.png"));
     refreshButton->setStyleSheet(
-            "border-image:url(:/images/refreshicon.png); background-color:#fff;");
+            "border-image:url(:resources/images/refreshicon.png); background-color:#fff;");
     refreshButton->setObjectName(QString::number(mode) + "refreshBtn");
 
     refreshButton->setMinimumSize(15, 15);

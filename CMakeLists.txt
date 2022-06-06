@@ -95,16 +95,7 @@ set(Resources_resource_files
         "resources/fonts/Roboto-Black.ttf"
         "resources/fonts/Roboto-Bold.ttf"
         "resources/fonts/Roboto-Regular.ttf"
-        "resources/images/SwitchArrow.png"
-        "resources/images/avionicsSwitchOff.png"
-        "resources/images/avionicsSwitchOn.png"
-        "resources/images/batterySwitch.png"
-        "resources/images/batterySwitchOff.png"
         "resources/images/refreshicon.png"
-        "resources/images/starterImage.png"
-        "resources/images/starterImageOff.png"
-        "resources/images/toggleDown.png"
-        "resources/images/toggleUp.png"
         )
 
 qt_add_executable(
