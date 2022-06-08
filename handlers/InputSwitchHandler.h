@@ -101,6 +101,7 @@ private slots:
   int calibratedRange(int value, QList<coordinates> *curve);
   int calibratedRange(int value, int index);
 
+    void setAxisValue(int index, const int *value, int *oldValue);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

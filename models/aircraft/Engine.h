@@ -1,18 +1,20 @@
 #ifndef ENGINE_H
 #define ENGINE_H
-class Engine {
+
+#include "Axis.h"
+
+class Engine : public Axis{
  public:
-  Engine(int minRange, int idleIndex, int maxRange, int engNmbr);
+
+  Engine(int minRange, int maxRange, int idleIndex, int engNmbr);
   Engine();
-  int getMinRange() const { return minRange; };
-  int getMaxRange() const { return maxRange; };
+
   int getIdleIndex() const { return idleIndex; };
   int getEngNmbr() const { return engNmbr; };
 
  private:
-  int minRange;
+
   int idleIndex;
-  int maxRange;
   int engNmbr;
 };
 
