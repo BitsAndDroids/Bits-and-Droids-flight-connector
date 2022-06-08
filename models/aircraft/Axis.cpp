@@ -6,9 +6,10 @@
 
 Axis::Axis() {}
 
-Axis::Axis(int min, int max) {
+Axis::Axis(int min, int max, InputEnum event) {
     this->min = min;
     this->max = max;
+    this->event = event;
 }
 
 int Axis::getCurrentValue() const {

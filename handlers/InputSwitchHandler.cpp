@@ -75,7 +75,7 @@ InputSwitchHandler::InputSwitchHandler() {
 
 void InputSwitchHandler::setRanges() {
     if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
-        for (int i = 0; i < constants::supportedEngines; i++) {
+        for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
 
             int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
@@ -135,7 +135,7 @@ void InputSwitchHandler::setRanges() {
         flapsRange = Range(minFlaps, maxFlaps);
 
     } else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
-        for (int i = 0; i < constants::supportedEngines; i++) {
+        for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
             enginelist[i] = Engine(0, 0, 1023, i);
         }
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
@@ -293,7 +293,7 @@ void InputSwitchHandler::set_throttle_values(int index) {
                 counter++;
             }
             if (counter == 5) {
-                for (int i = 0; i < constants::supportedEngines; i++) {
+                for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
                     cout << engineBuffer[i] << endl;
                     mappedEngines[i] = mapThrottleValueToAxis(
                             engineBuffer[i], (float)enginelist[i].Axis::getMin(),
@@ -345,7 +345,7 @@ int InputSwitchHandler::setAxisValue(int index, Axis *axis) {
 //                counter++;
 //            }
 //            if (counter == 5) {
-//                for (int i = 0; i < constants::supportedEngines; i++) {
+//                for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
 //                    cout << engineBuffer[i] << endl;
 //                    mappedEngines[i] = mapThrottleValueToAxis(
 //                            engineBuffer[i], enginelist[i].getMinRange(),

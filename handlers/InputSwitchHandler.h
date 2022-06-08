@@ -22,84 +22,98 @@
 using namespace std;
 
 class InputSwitchHandler {
- public:
-  InputSwitchHandler();
+public:
+    InputSwitchHandler();
 
-  void switchHandling(int index);
+    void switchHandling(int index);
 
-  char receivedString[10][255];
-  HANDLE connect;
-  SIMCONNECT_OBJECT_ID object;
-  std::array<Engine, constants::supportedEngines> enginelist;
-  Range mixtureRanges[constants::supportedMixtureLevers];
-  Range propellerRanges[constants::supportedPropellerLevers];
-  Range flapsRange;
+    char receivedString[10][255];
+    HANDLE connect;
+    SIMCONNECT_OBJECT_ID object;
+    std::array<Engine, constants::SUPPORTEDENGINES> enginelist;
+    Range mixtureRanges[constants::supportedMixtureLevers];
+    Range propellerRanges[constants::supportedPropellerLevers];
+    Range flapsRange;
 
-  void setCurve(QList<coordinates> curve, int index);
+    void setCurve(QList<coordinates> curve, int index);
 
-  float reverseAxis = -23000.0;
+    float reverseAxis = -23000.0;
 
     void setRanges();
 
 private slots:
-  SettingsHandler settingsHandler;
+    SettingsHandler settingsHandler;
 
-  void set_throttle_values(int index);
+    void set_throttle_values(int index);
 
-  void setMixtureValues(int index);
+    void setMixtureValues(int index);
 
-  void set_prop_values(int index);
+    void set_prop_values(int index);
 
-  int setComs(int index, int comNo);
+    int setComs(int index, int comNo);
 
-  void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
-  void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
- private:
-  std::string prefix;
-  QList<coordinates> defaultCurve = {
-      {coordinates(0, -16383)},  {coordinates(250, -10000)},
-      {coordinates(500, 0)},     {coordinates(511, 0)},
-      {coordinates(522, 0)},     {coordinates(750, 10000)},
-      {coordinates(1023, 16383)}};
-  QList<coordinates> rudderCurve, brakeCurve, aileronCurve,
-      elevatorCurve = defaultCurve;
-  QList<QList<coordinates>> curves = QList<QList<coordinates>>()
-                                     << rudderCurve << brakeCurve
-                                     << aileronCurve << elevatorCurve;
-  QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
-  int calibratedRange(int value, QList<coordinates> curve);
+private:
+    Axis engines[constants::SUPPORTEDENGINES];
+    Axis mixture[constants::SUPPORTEDENGINES];
+    Axis props[constants::SUPPORTEDENGINES];
+    Axis toebrakes[2];
+    Axis rudder;
+    Axis flaps;
+    Axis aileron;
+    Axis elevator;
 
-  void setElevatorTrim(int index);
+    std::string prefix;
+    QList<coordinates> defaultCurve = {
+            {coordinates(0, -16383)},
+            {coordinates(250, -10000)},
+            {coordinates(500, 0)},
+            {coordinates(511, 0)},
+            {coordinates(522, 0)},
+            {coordinates(750, 10000)},
+            {coordinates(1023, 16383)}};
+    QList<coordinates> rudderCurve, brakeCurve, aileronCurve,
+            elevatorCurve = defaultCurve;
+    QList<QList<coordinates>> curves = QList<QList<coordinates>>()
+            << rudderCurve << brakeCurve
+            << aileronCurve << elevatorCurve;
+    QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
 
-  void setFlaps(int index);
+    int calibratedRange(int value, QList<coordinates> curve);
 
-  void setRudder(int index);
+    void setElevatorTrim(int index);
 
-  void setBrakeAxis(int index);
+    void setFlaps(int index);
 
-  void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
+    void setRudder(int index);
 
-  void controlYoke(int index);
+    void setBrakeAxis(int index);
 
-  void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
 
-  int mapThrottleValueToAxis(int value, float reverse, float max,
-                             int idleCutoff);
+    void controlYoke(int index);
 
-  int mapCoordinates(coordinates toMap);
+    void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
 
-  int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
+    int mapThrottleValueToAxis(int value, float reverse, float max,
+                               int idleCutoff);
 
-  int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
+    int mapCoordinates(coordinates toMap);
 
-  void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+    int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
 
-  void sendWASMCommand(int index, int value);
+    int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
 
-  int calibratedRange(int value, QList<coordinates> *curve);
-  int calibratedRange(int value, int index);
+    void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+
+    void sendWASMCommand(int index, int value);
+
+    int calibratedRange(int value, QList<coordinates> *curve);
+
+    int calibratedRange(int value, int index);
 
     void setAxisValue(int index, const int *value, int *oldValue);
 

@@ -7,6 +7,7 @@
 
 
 #include <enums/AxisTypeEnum.h>
+#include <enums/inputenum.h>
 
 class Axis {
 private:
@@ -14,11 +15,12 @@ private:
     int oldValue = 0;
     int min = 0;
     int max = 0;
+    InputEnum event;
     AxisTypes axisType = AXIS;
 
 public:
     Axis();
-    Axis(int min, int max);
+    Axis(int min, int max, InputEnum event);
 
     int getCurrentValue() const;
 
