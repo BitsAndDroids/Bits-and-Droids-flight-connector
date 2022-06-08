@@ -43,3 +43,7 @@ void Axis::setMax(int max) {
     Axis::max = max;
 }
 
+void Axis::setType(AxisTypes type) {
+    this->axisType = type;
+}
+

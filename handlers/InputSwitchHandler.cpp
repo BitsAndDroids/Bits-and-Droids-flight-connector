@@ -325,19 +325,19 @@ void InputSwitchHandler::set_throttle_values(int index) {
 }
 
 int InputSwitchHandler::setAxisValue(int index, Axis *axis) {
-
-    if (*value < 10) {
-        if (*oldValue < 20) {
-            *oldValue = *value;
+    if (axis->getCurrentValue() < 10) {
+        if (axis->getOldValue() < 20) {
+            axis->setOldValue(axis->getCurrentValue());
         }
     } else {
 
-        if (*value == 98) {
-            *value = 100;
+        if (axis->getCurrentValue() == 98) {
+            axis->setCurrentValue(100);
         }
-        *oldValue = *value;
+        *axis->setOldValue(axis->getCurrentValue();
 
     }
+    if(axis.ty)
     return mapValueToAxis(*value,);
 }
 

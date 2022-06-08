@@ -102,6 +102,8 @@ private slots:
   int calibratedRange(int value, int index);
 
     void setAxisValue(int index, const int *value, int *oldValue);
+
+    int setAxisValue(int index, Axis *axis);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

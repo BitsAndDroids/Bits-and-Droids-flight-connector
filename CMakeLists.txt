@@ -34,6 +34,7 @@ set(PROJECT_SOURCES
         elements/mcheckbox.cpp elements/mcheckbox.h
 
         enums/ModeEnum.h
+        enums/AxisTypeEnum.h
         enums/inputenum.cpp enums/inputenum.h
         enums/outputenum.cpp enums/outputEnum.h
 

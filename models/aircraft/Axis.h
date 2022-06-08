@@ -6,12 +6,15 @@
 #define BITSANDDROIDSCONNECTOR_AXIS_H
 
 
+#include <enums/AxisTypeEnum.h>
+
 class Axis {
 private:
     int currentValue = 0;
     int oldValue = 0;
     int min = 0;
     int max = 0;
+    AxisTypes axisType = AXIS;
 
 public:
     Axis();
@@ -31,9 +34,9 @@ public:
 
     void setMax(int max);
 
-//setters
-
     int getMax() const;
+
+    void setType(AxisTypes type);
 };
 
 
