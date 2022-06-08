@@ -6,7 +6,7 @@
 
 Axis::Axis() {}
 
-Axis::Axis(int min, int max, InputEnum event) {
+Axis::Axis(int min, int max, InputEnum::DATA_DEFINE_ID_INPUT event) {
     this->min = min;
     this->max = max;
     this->event = event;

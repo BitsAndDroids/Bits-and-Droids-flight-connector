@@ -6,7 +6,7 @@
 class Engine : public Axis{
  public:
 
-  Engine(int minRange, int maxRange, int idleIndex, int engNmbr);
+    Engine(int minRange, int maxRange, int idleIndex, int engNmbr, InputEnum::DATA_DEFINE_ID_INPUT event);
   Engine();
 
   int getIdleIndex() const { return idleIndex; };

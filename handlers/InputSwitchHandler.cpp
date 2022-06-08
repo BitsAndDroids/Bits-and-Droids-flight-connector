@@ -75,6 +75,11 @@ InputSwitchHandler::InputSwitchHandler() {
 
 void InputSwitchHandler::setRanges() {
     if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+        InputEnum::DATA_DEFINE_ID_INPUT engineEvents[]={
+                inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
+                inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
+                inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
+                inputDefinitions.DATA_EX_THROTTLE_4_AXIS};
         for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
 
@@ -88,7 +93,8 @@ void InputSwitchHandler::setRanges() {
             QString maxStr = "Engine " + QString::number(i + 1) + "Max";
             int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
 
-            enginelist[i] = Engine(minRange, idleCutoff, maxRange, i + 1);
+            engines[i] = Engine(minRange, idleCutoff, maxRange, i + 1, engineEvents[i]);
+
         }
         for (auto &curve: curves) {
             curve.append(coordinates(0, -16383));
