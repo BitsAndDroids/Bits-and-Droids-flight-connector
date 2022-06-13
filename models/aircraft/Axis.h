@@ -31,8 +31,6 @@ public:
     void setOldMappedValue(int oldMappedValue);
 
     Axis();
-
-    Axis(float min, float max);
     Axis(InputEnum::DATA_DEFINE_ID_INPUT event);
     Axis(float min, float max, InputEnum::DATA_DEFINE_ID_INPUT event);
     Axis(float min, float max, InputTypeEnum type, InputEnum::DATA_DEFINE_ID_INPUT event);

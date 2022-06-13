@@ -38,6 +38,7 @@ set(PROJECT_SOURCES
         enums/AxisTypeEnum.h
         enums/inputenum.cpp enums/inputenum.h
         enums/outputenum.cpp enums/outputEnum.h
+        enums/CurveTypeEnum.h
 
         models/events/Event.h
         models/events/EventDatatype.cpp models/events/EventDatatype.h
@@ -55,6 +56,8 @@ set(PROJECT_SOURCES
         models/settings/settingsranges.cpp models/settings/settingsranges.h
         models/aircraft/Engine.cpp
         models/settings/range.cpp
+        models/aircraft/Axis.cpp models/aircraft/Axis.h
+        models/aircraft/CurveAxis.cpp models/aircraft/CurveAxis.h
 
         widgets/eventeditor/eventwindow.cpp widgets/eventeditor/eventwindow.h widgets/eventeditor/eventwindow.ui
         widgets/codegenerator/CodeGeneratorWindow.cpp widgets/codegenerator/CodeGeneratorWindow.h
@@ -86,7 +89,7 @@ set(PROJECT_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" models/aircraft/Axis.cpp models/aircraft/Axis.h models/aircraft/CurveAxis.cpp models/aircraft/CurveAxis.h enums/CurveTypeEnum.h)
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"

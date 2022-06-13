@@ -10,5 +10,5 @@ static enum CurveTypeEnum {
     RIGHTBRAKE,
     AILERON,
     ELEVATOR
-} types;
+} curveTypes;
 #endif //BITSANDDROIDSCONNECTOR_CURVETYPEENUM_H

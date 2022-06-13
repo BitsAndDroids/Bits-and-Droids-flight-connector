@@ -16,7 +16,7 @@
 using namespace std;
 
 FormBuilder::FormBuilder() {
-    for (int i = 0; i < constants::SUPPORTEDENGINES; i++) {
+    for (int i = 0; i < constants::supportedEngines; i++) {
         engineHeaders.append("Engine " + QString::number(i + 1));
     }
     for (int i = 0; i < constants::supportedMixtureLevers; i++) {

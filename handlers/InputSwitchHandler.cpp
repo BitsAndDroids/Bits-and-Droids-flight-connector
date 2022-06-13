@@ -19,12 +19,7 @@
 #include "InputSwitchHandler.h"
 
 #include <qlist.h>
-#include <qsettings.h>
-#include <tchar.h>
 #include <windows.h>
-
-#include <QList>
-#include <future>
 #include <iostream>
 #include <string>
 
@@ -89,16 +84,6 @@ void InputSwitchHandler::setRanges() {
             enginelist[i] = new Engine(minRange, idleCutoff, maxRange, ENGINE, engineEvents[i]);
         }
 
-        for (auto &curve: curves) {
-            curve.append(coordinates(0, -16383));
-            curve.append(coordinates(250, -10000));
-            curve.append(coordinates(400, 0));
-            curve.append(coordinates(500, 0));
-            curve.append(coordinates(600, 0));
-            curve.append(coordinates(750, 10000));
-            curve.append(coordinates(1023, 16383));
-        }
-
         if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
                 ->isNull()) {
             reverseAxis =
@@ -138,10 +123,10 @@ void InputSwitchHandler::setRanges() {
             enginelist[i] = new Engine(0, 0, 1023, ENGINE, engineEvents[i]);
         }
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-            mixtureRanges[i] = Axis(0, 1023);
+            mixtureRanges[i] = Axis(0, 1023,mixtureEvents[i]);
         }
         for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-            propellerRanges[i] = Axis(0, 1023);
+            propellerRanges[i] = Axis(0, 1023,propEvents[i]);
         }
 
         flapsRange = Axis(0, 1023, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);

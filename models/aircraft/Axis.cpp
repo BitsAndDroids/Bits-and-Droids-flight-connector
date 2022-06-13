@@ -6,10 +6,7 @@
 
 Axis::Axis() {}
 
-Axis::Axis(float min, float max) {
-    this->min = min;
-    this->max = max;
-}
+
 Axis::Axis(float min, float max, InputEnum::DATA_DEFINE_ID_INPUT event) {
     this->min = min;
     this->max = max;
@@ -82,10 +79,6 @@ InputEnum::DATA_DEFINE_ID_INPUT Axis::getEvent() const {
 }
 
 Axis::Axis(InputEnum::DATA_DEFINE_ID_INPUT event) {
-
-}
-
-void Axis::setType(AxisTypes type) {
-    this->axisType = type;
+    this->event = event;
 }
 

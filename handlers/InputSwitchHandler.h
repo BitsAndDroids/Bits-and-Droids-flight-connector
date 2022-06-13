@@ -64,26 +64,15 @@ private:
     Axis mixtureRanges[constants::supportedMixtureLevers];
     Axis propellerRanges[constants::supportedPropellerLevers];
     Axis flapsRange;
-    QList<coordinates> defaultCurve = {
-            {coordinates(0, -16383)},
-            {coordinates(250, -10000)},
-            {coordinates(500, 0)},
-            {coordinates(511, 0)},
-            {coordinates(522, 0)},
-            {coordinates(750, 10000)},
-            {coordinates(1023, 16383)}};
-    QList<coordinates> rudderCurve, brakeCurve, aileronCurve,
-            elevatorCurve = defaultCurve;
-    QList<QList<coordinates>> curves = QList<QList<coordinates>>()
-            << rudderCurve << brakeCurve
-            << aileronCurve << elevatorCurve;
+
     QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
-    CurveAxis brakeAxis[2] = nullptr;
-    CurveAxis rudderAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RUDDER_SET, defaultCurve);
-    CurveAxis leftBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_LEFT_BRAKE_SET, defaultCurve);
-    CurveAxis rightBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RIGHT_BRAKE_SET, defaultCurve);
-    CurveAxis aileronAxis = CurveAxis(InputEnum::DEFINITION_AXIS_AILERONS_SET, defaultCurve);
-    CurveAxis elevatorAxis = CurveAxis(InputEnum::DEFINITION_AXIS_ELEVATOR_SET, defaultCurve);
+
+    CurveAxis rudderAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RUDDER_SET);
+    CurveAxis leftBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_LEFT_BRAKE_SET);
+    CurveAxis rightBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RIGHT_BRAKE_SET);
+    CurveAxis brakeAxis[2] = {leftBrakeAxis, rightBrakeAxis};
+    CurveAxis aileronAxis = CurveAxis(InputEnum::DEFINITION_AXIS_AILERONS_SET);
+    CurveAxis elevatorAxis = CurveAxis(InputEnum::DEFINITION_AXIS_ELEVATOR_SET);
 
     int calibratedRange(int value, QList<coordinates> curve);
 

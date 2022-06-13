@@ -1,12 +1,6 @@
 #include "models/aircraft/Engine.h"
 
-Engine::Engine(
-        float minRange,
-        float idleIndex,
-        float maxRange) : Axis(minRange,maxRange) {
-  this->idleIndex = idleIndex;
-  this->engNmbr = engNmbr;
-}
+
 Engine::Engine(
         float minRange,
         float idleIndex,

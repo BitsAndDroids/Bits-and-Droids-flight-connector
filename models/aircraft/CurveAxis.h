@@ -23,6 +23,7 @@ class CurveAxis: public Axis {
             {coordinates(1023, 16383)}};
 public:
     CurveAxis(InputEnum::DATA_DEFINE_ID_INPUT event, const QList<coordinates> &curve);
+    CurveAxis(InputEnum::DATA_DEFINE_ID_INPUT event);
     void clearCurve();
     void setCurve(QList<coordinates> &);
     coordinates getCoordinates(int index);

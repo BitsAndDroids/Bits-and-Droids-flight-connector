@@ -6,7 +6,7 @@
 class Engine : public Axis{
  public:
 
-  Engine(float minRange, float maxRange, float idleIndex);
+
   Engine();
 
     Engine(float minRange, float idleIndex, float maxRange, InputEnum::DATA_DEFINE_ID_INPUT event);
