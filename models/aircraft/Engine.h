@@ -6,15 +6,19 @@
 class Engine : public Axis{
  public:
 
-  Engine(int minRange, int maxRange, int idleIndex, int engNmbr);
+  Engine(float minRange, float maxRange, float idleIndex);
   Engine();
 
-  int getIdleIndex() const { return idleIndex; };
-  int getEngNmbr() const { return engNmbr; };
+    Engine(float minRange, float idleIndex, float maxRange, InputEnum::DATA_DEFINE_ID_INPUT event);
+
+    Engine(float minRange, float idleIndex, float maxRange, InputTypeEnum type, InputEnum::DATA_DEFINE_ID_INPUT event);
+
+    float getIdleIndex() const { return idleIndex; };
+
 
  private:
 
-  int idleIndex;
+    float idleIndex;
   int engNmbr;
 };
 

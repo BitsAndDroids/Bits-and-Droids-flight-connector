@@ -6,17 +6,36 @@
 #define BITSANDDROIDSCONNECTOR_AXIS_H
 
 
+#include "enums/inputenum.h"
+#include "enums/InputTypeEnum.h"
 class Axis {
 private:
+
+
     int currentValue = 0;
     int oldValue = 0;
-    int min = 0;
-    int max = 0;
+    int mappedValue = 0;
+    int oldMappedValue = 0;
+    InputTypeEnum type = AXIS;
+    InputEnum::DATA_DEFINE_ID_INPUT event;
+    float min = 0;
+    float max = 0;
 
 public:
-    Axis();
-    Axis(int min, int max);
+    int getMappedValue() const;
 
+    void setMappedValue(int mappedValueToSet);
+
+    int getOldMappedValue() const;
+
+    void setOldMappedValue(int oldMappedValue);
+
+    Axis();
+
+    Axis(float min, float max);
+    Axis(InputEnum::DATA_DEFINE_ID_INPUT event);
+    Axis(float min, float max, InputEnum::DATA_DEFINE_ID_INPUT event);
+    Axis(float min, float max, InputTypeEnum type, InputEnum::DATA_DEFINE_ID_INPUT event);
     int getCurrentValue() const;
 
     void setCurrentValue(int currentValue);
@@ -25,15 +44,20 @@ public:
 
     void setOldValue(int oldValue);
 
-    int getMin() const;
+    float getMin() const;
 
-    void setMin(int min);
+    void setMin(float min);
 
-    void setMax(int max);
+    void setMax(float max);
 
-//setters
+    void setEvent(InputEnum::DATA_DEFINE_ID_INPUT);
 
-    int getMax() const;
+    float getMax() const;
+
+    InputTypeEnum getType() const;
+
+    InputEnum::DATA_DEFINE_ID_INPUT getEvent() const;
+
 };
 
 

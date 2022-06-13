@@ -6,17 +6,27 @@
 
 Axis::Axis() {}
 
-Axis::Axis(int min, int max) {
+Axis::Axis(float min, float max) {
     this->min = min;
     this->max = max;
 }
-
+Axis::Axis(float min, float max, InputEnum::DATA_DEFINE_ID_INPUT event) {
+    this->min = min;
+    this->max = max;
+    this->event = event;
+}
+Axis::Axis(float min, float max, InputTypeEnum type, InputEnum::DATA_DEFINE_ID_INPUT event) {
+    this->min = min;
+    this->max = max;
+    this->type = type;
+    this->event = event;
+}
 int Axis::getCurrentValue() const {
     return currentValue;
 }
 
 void Axis::setCurrentValue(int currentValue) {
-    Axis::currentValue = currentValue;
+    this->currentValue = currentValue;
 }
 
 int Axis::getOldValue() const {
@@ -24,22 +34,54 @@ int Axis::getOldValue() const {
 }
 
 void Axis::setOldValue(int oldValue) {
-    Axis::oldValue = oldValue;
+    this->oldValue = oldValue;
 }
 
-int Axis::getMin() const {
+float Axis::getMin() const {
     return min;
 }
 
-void Axis::setMin(int min) {
-    Axis::min = min;
+void Axis::setMin(float min) {
+    this->min = min;
 }
 
-int Axis::getMax() const {
+float Axis::getMax() const {
     return max;
 }
 
-void Axis::setMax(int max) {
+void Axis::setMax(float max) {
     Axis::max = max;
+}
+
+int Axis::getMappedValue() const {
+    return mappedValue;
+}
+
+void Axis::setMappedValue(int mappedValueToSet) {
+    this->mappedValue = mappedValueToSet;
+}
+
+int Axis::getOldMappedValue() const {
+    return oldMappedValue;
+}
+
+void Axis::setOldMappedValue(int oldMappedValue) {
+    Axis::oldMappedValue = oldMappedValue;
+}
+
+void Axis::setEvent(InputEnum::DATA_DEFINE_ID_INPUT event) {
+    this->event = event;
+}
+
+InputTypeEnum Axis::getType() const {
+    return type;
+}
+
+InputEnum::DATA_DEFINE_ID_INPUT Axis::getEvent() const {
+    return event;
+}
+
+Axis::Axis(InputEnum::DATA_DEFINE_ID_INPUT event) {
+
 }
 

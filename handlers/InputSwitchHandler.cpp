@@ -29,6 +29,7 @@
 #include <string>
 
 #include "enums/inputenum.h"
+#include "enums/CurveTypeEnum.h"
 #include <models/aircraft/axis.h>
 
 //#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
@@ -41,31 +42,10 @@ bool inputs[5];
 
 int counter = 0;
 
-int yoke[2] = {0, 0};
-int oldYoke[2] = {0, 0};
+
 float closedAxis = -16383.0;
 float openAxis = 16383.0;
 
-double oldValThrottle[4];
-double oldValMixture[2];
-
-int mappedEngines[4];
-int mappedProps[4];
-int mappedMixture[4];
-
-int flaps;
-
-int trim;
-int oldTrim;
-
-int rudderAxis;
-int oldRudderAxis;
-
-int leftBrake;
-int oldLeftBrake;
-
-int rightBrake;
-int oldRightBrake;
 
 InputEnum inputDefinitions = InputEnum();
 
@@ -74,6 +54,24 @@ InputSwitchHandler::InputSwitchHandler() {
 }
 
 void InputSwitchHandler::setRanges() {
+    InputEnum::DATA_DEFINE_ID_INPUT engineEvents[] = {
+            inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
+            inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
+            inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
+            inputDefinitions.DATA_EX_THROTTLE_4_AXIS};
+
+    InputEnum::DATA_DEFINE_ID_INPUT mixtureEvents[] = {
+            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_1,
+            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_2,
+            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_3,
+            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_4};
+
+    InputEnum::DATA_DEFINE_ID_INPUT propEvents[] = {
+            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
+            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
+            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
+            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4};
+
     if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
@@ -88,8 +86,9 @@ void InputSwitchHandler::setRanges() {
             QString maxStr = "Engine " + QString::number(i + 1) + "Max";
             int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
 
-            enginelist[i] = Engine(minRange, idleCutoff, maxRange, i + 1);
+            enginelist[i] = new Engine(minRange, idleCutoff, maxRange, ENGINE, engineEvents[i]);
         }
+
         for (auto &curve: curves) {
             curve.append(coordinates(0, -16383));
             curve.append(coordinates(250, -10000));
@@ -116,7 +115,7 @@ void InputSwitchHandler::setRanges() {
             int maxRange =
                     settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
 
-            mixtureRanges[i] = Range(minRange, maxRange);
+            mixtureRanges[i] = Axis(minRange, maxRange, mixtureEvents[i]);
         }
         for (int i = 0; i < constants::supportedPropellerLevers; i++) {
             QString minStr = "Propeller " + QString::number(i + 1) + "Min";
@@ -126,26 +125,26 @@ void InputSwitchHandler::setRanges() {
             int maxRange =
                     settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
 
-            propellerRanges[i] = Range(minRange, maxRange);
+            propellerRanges[i] = Axis(minRange, maxRange, propEvents[i]);
         }
         int minFlaps =
                 settingsHandler.retrieveSetting("Ranges", "FlapsMin")->toInt();
         int maxFlaps =
                 settingsHandler.retrieveSetting("Ranges", "FlapsMax")->toInt();
-        flapsRange = Range(minFlaps, maxFlaps);
+        flapsRange = Axis(minFlaps, maxFlaps, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);
 
     } else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
-            enginelist[i] = Engine(0, 0, 1023, i);
+            enginelist[i] = new Engine(0, 0, 1023, ENGINE, engineEvents[i]);
         }
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
-            mixtureRanges[i] = Range(0, 1023);
+            mixtureRanges[i] = Axis(0, 1023);
         }
         for (int i = 0; i < constants::supportedPropellerLevers; i++) {
-            propellerRanges[i] = Range(0, 1023);
+            propellerRanges[i] = Axis(0, 1023);
         }
 
-        flapsRange = Range(0, 1023);
+        flapsRange = Axis(0, 1023, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);
     }
 }
 
@@ -161,408 +160,229 @@ UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
 // int mapPercentageToAxis(int value) {
 //  return -24000.0 + (16383.0 - -21000.0) * ((value - 0.0) / (100.0 - 0.0));
 //}
-int InputSwitchHandler::mapThrottleValueToAxis(int value, float reverse,
-                                               float max, int idleCutoff) {
+
+void InputSwitchHandler::setCurve(QList<coordinates> curve, CurveTypeEnum curveType) {
+    CurveAxis *toSet;
+    switch (curveType) {
+        case RUDDER:
+            toSet = &rudderAxis;
+            break;
+        case LEFTBRAKE:
+            toSet = &brakeAxis[0];
+            break;
+        case RIGHTBRAKE:
+            toSet = &brakeAxis[1];
+            break;
+        case AILERON:
+            toSet = &aileronAxis;
+            break;
+        case ELEVATOR:
+            toSet = &elevatorAxis;
+            break;
+    }
+    toSet->clearCurve();
+    toSet->setCurve(curve);
+}
+
+void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
     int valueThrottle;
-    bool reversed = max < idleCutoff;
+    float idle = engine->getIdleIndex();
+    float min = engine->getMin();
+    float max = engine->getMax();
+    bool reversed = max < idle;
 
     /*First we check the orientation by determing if max < idleCutoff
   If max < idleCutoff. IF max is smaller we know the potentiometer is mounted
   backwards This affects how our logic needs to operate We want to check if the
   idle cutoff - reverse < 0 This check tells us wether or not the user wants to
   utilize the reverse range or not visa versa for the second check */
-    if ((reversed && idleCutoff - reverse < 0 && value >= idleCutoff) ||
-        (!reversed && idleCutoff - reverse > 0 && value <= idleCutoff)) {
-        valueThrottle =
-                reverseAxis + (closedAxis - reverseAxis) *
-                              ((value - reverse) / (idleCutoff - reverse));
+    if ((reversed && idle - min < 0 && (float) engine->getCurrentValue() >= idle) ||
+        (!reversed && idle - min > 0 && (float) engine->getCurrentValue() <= idle)) {
+        valueThrottle = (int) (reverseAxis + (closedAxis - reverseAxis) *
+                                             (((float) engine->getCurrentValue() - min) / (idle - min)));
     } else {
-        valueThrottle =
-                closedAxis +
-                (openAxis - closedAxis) * ((value - idleCutoff) / (max - idleCutoff));
+        valueThrottle = (int) (closedAxis +
+                               (openAxis - closedAxis) * (((float) engine->getCurrentValue() - idle) / (max - idle)));
     }
     if (valueThrottle > 16383) {
-        return 16383;
+        valueThrottle = 16383;
     }
-    return valueThrottle;
+    engine->setMappedValue(valueThrottle);
 }
 
-int mapValueToAxis(int value, float min, float max) {
-    return closedAxis + (openAxis - closedAxis) * ((value - min) / (max - min));
+void mapValueToAxis(Axis *axis) {
+    axis->setMappedValue((int)
+                                 (closedAxis + (openAxis - closedAxis) *
+                                               (((float) axis->getCurrentValue() - axis->getMin()) /
+                                                (axis->getMax() - axis->getMin()))));
 }
 
-void InputSwitchHandler::controlYoke(int index) {
+std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, int index) {
+    std::vector<int> parts;
+
     try {
         token = strtok_s(receivedString[index], " ", &next_token);
         cout << receivedString[index] << endl;
         counter = 0;
-
-        while (token != nullptr && counter < 3) {
-            cout << token << ":Counter" << counter << endl;
-            int yokeBuffer[2];
+        int bufferValues[amountOfPartsNeeded];
+        while (token != nullptr && counter < amountOfPartsNeeded + 1) {
             if (token != nullptr) {
                 const auto incVal = strtod(token, nullptr);
-
                 if (counter != 0) {
-                    if (incVal < 10.0) {
-                        if (oldYoke[counter - 1] < 20.0) {
-                            oldYoke[counter - 1] = incVal;
-                        }
-                    } else {
-                        oldYoke[counter - 1] = incVal;
-                    }
-                    yokeBuffer[counter - 1] = oldYoke[counter - 1];
+                    parts.push_back((int) incVal);
                 }
-                counter++;
                 token = strtok_s(nullptr, " ", &next_token);
-            }
-            if (counter == 3) {
-                for (int i = 0; i < 2; i++) {
-                    yoke[i] = yokeBuffer[i];
-                }
-                int mappedElevator = calibratedRange(yoke[0], 3);
-                int mappedAileron = calibratedRange(yoke[1], 2);
-                cout << "percentage Elevator: " << mappedElevator << endl;
-                sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_ELEVATOR_SET,
-                                      mappedElevator);
-                cout << "percentage Ailerons: " << mappedElevator << endl;
-                sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_AILERONS_SET,
-                                      mappedAileron);
+                counter++;
             }
         }
-    } catch (const std::exception &e) {
-        cout << "error in throttle" << endl;
+    }
+    catch (const std::exception &e) {
+        cout << "error in cutInputs()" << endl;
+    }
+    if (parts.size() == amountOfPartsNeeded) {
+        return parts;
+    }
+    parts.clear();
+    return parts;
+}
+
+void InputSwitchHandler::calibratedRange(CurveAxis *curveAxis) {
+    int axis;
+    int value = curveAxis->getCurrentValue();
+    if (static_cast<float>(value) <= curveAxis->getCoordinates(1).getX()) {
+        axis = mapCoordinates(value, curveAxis->getCoordinates(0), curveAxis->getCoordinates(1));
+    }
+        // minCurve
+    else if (static_cast<float>(value) < curveAxis->getCoordinates(2).getX()) {
+        axis = mapCoordinates(value, curveAxis->getCoordinates(1), curveAxis->getCoordinates(2));
+    }
+        // deadzone
+    else if (static_cast<float>(value) >= curveAxis->getCoordinates(2).getX() &&
+             static_cast<float>(value) <= curveAxis->getCoordinates(4).getX()) {
+        axis = 0;
+    } else if (static_cast<float>(value) <= curveAxis->getCoordinates(5).getX()) {
+        axis = mapCoordinates(static_cast<float>(value), curveAxis->getCoordinates(4),
+                              curveAxis->getCoordinates(5));
+    } else if (static_cast<float>(value) <= curveAxis->getCoordinates(6).getX()) {
+        axis = mapCoordinates(static_cast<float>(value), curveAxis->getCoordinates(5),
+                              curveAxis->getCoordinates(6));
+    }
+    curveAxis->setMappedValue(axis);
+}
+
+void InputSwitchHandler::setAxisValue(Axis *axis) {
+    int value = axis->getCurrentValue();
+    int oldValue = axis->getOldValue();
+    if (value < 10) {
+        if (oldValue < 20) {
+            axis->setOldValue(value);
+        }
+    } else {
+
+        if (value == 98) {
+            axis->setCurrentValue(100);
+        }
+        axis->setOldValue(value);
+
+    }
+    if (axis->getType() == ENGINE) {
+        mapEngineValueToAxis((Engine *) (axis));
+    } else {
+        mapValueToAxis(axis);
+    }
+
+}
+
+void InputSwitchHandler::setEngineValues(int index) {
+    // Throttle control
+    std::vector<int> engineBuffer = cutInputs(constants::supportedEngines, index);
+    cout << "BUFFERSIZE: " << engineBuffer.size() << std::endl;
+    if (engineBuffer.size() == constants::supportedEngines) {
+        for (int i = 0; i < constants::supportedEngines; i++) {
+            cout << "ENGINE " << i << " " << engineBuffer[i] << endl;
+            enginelist[i]->setCurrentValue(engineBuffer.at(i));
+            setAxisValue(enginelist[i]);
+            sendBasicCommandValue(enginelist[i]->getEvent(), enginelist[i]->getMappedValue());
+        }
     }
 }
 
 void InputSwitchHandler::setFlaps(int index) {
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-        counter = 0;
+    std::vector<int> flapsBuffer = cutInputs(1, index);
 
-        while (token != nullptr && counter < 2) {
-            if (token != nullptr) {
-                const auto incVal = strtod(token, nullptr);
-
-                if (counter != 0) {
-                    flaps = incVal;
-                    cout << flaps << endl;
-                }
-
-                token = strtok_s(nullptr, " ", &next_token);
-                counter++;
-            }
-            sendBasicCommandValue(inputDefinitions.DEFINITION_AXIS_FLAPS_SET,
-                                  mapValueToAxis(flaps, flapsRange.getMinRange(),
-                                                 flapsRange.getMaxRange()));
-        }
-    }
-
-    catch (const std::exception &e) {
-        cout << "error in flaps set" << endl;
+    if (flapsBuffer.size() == 1) {
+        flapsRange.setCurrentValue(flapsBuffer[0]);
+        setAxisValue(&flapsRange);
+        sendBasicCommandValue(flapsRange.getEvent(), flapsRange.getMappedValue());
     }
 }
 
-void InputSwitchHandler::set_throttle_values(int index) {
-    // Throttle control
 
-    int engineBuffer[4];
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-        cout << receivedString[index] << endl;
-        counter = 0;
-
-        while (token != nullptr && counter < 6) {
-            cout << token << ":Counter" << counter << endl;
-
-            if (token != nullptr) {
-                const auto incVal = strtod(token, nullptr);
-
-                if (counter != 0) {
-                    if (incVal < 10.0) {
-                        if (oldValThrottle[counter] < 20.0) {
-                            oldValThrottle[counter - 1] = incVal;
-                        }
-                    } else {
-                        oldValThrottle[counter - 1] = incVal;
-                    }
-                    engineBuffer[counter - 1] = incVal;
-                }
-
-                token = strtok_s(nullptr, " ", &next_token);
-                counter++;
-            }
-            if (counter == 5) {
-                for (int i = 0; i < constants::supportedEngines; i++) {
-                    cout << engineBuffer[i] << endl;
-                    mappedEngines[i] = mapThrottleValueToAxis(
-                            engineBuffer[i], (float)enginelist[i].Axis::getMin(),
-                            (float)enginelist[i].Axis::getMax(), enginelist[i].getIdleIndex());
-                }
-                cout << "eng "
-                     << ": " << mappedEngines[3] << endl;
-                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
-                                      mappedEngines[0]);
-                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
-                                      mappedEngines[1]);
-                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
-                                      mappedEngines[2]);
-                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_4_AXIS,
-                                      mappedEngines[3]);
-                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_1_AXIS,
-                //                              mappedEngines[0]);
-                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_2_AXIS,
-                //                              mappedEngines[1]);
-                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_3_AXIS,
-                //                              mappedEngines[2]);
-                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_4_AXIS,
-                //                              mappedEngines[3]);
-            }
-        }
-    } catch (const std::exception &e) {
-        cout << "error in throttle" << endl;
+void InputSwitchHandler::controlYoke(int index) {
+    std::vector<int> yokeBuffer = cutInputs(2, index);
+    if (yokeBuffer.size() == 2) {
+        elevatorAxis.setCurrentValue(yokeBuffer[0]);
+        aileronAxis.setCurrentValue(yokeBuffer[1]);
+        calibratedRange(&elevatorAxis);
+        calibratedRange(&aileronAxis);
+        sendBasicCommandValue(elevatorAxis.getEvent(),
+                              elevatorAxis.getMappedValue());
+        sendBasicCommandValue(aileronAxis.getEvent(),
+                              aileronAxis.getMappedValue());
     }
 }
 
-int InputSwitchHandler::setAxisValue(int index, Axis *axis) {
-
-    if (*value < 10) {
-        if (*oldValue < 20) {
-            *oldValue = *value;
-        }
-    } else {
-
-        if (*value == 98) {
-            *value = 100;
-        }
-        *oldValue = *value;
-
-    }
-    return mapValueToAxis(*value,);
-}
-
-//                token = strtok_s(nullptr, " ", &next_token);
-//                counter++;
-//            }
-//            if (counter == 5) {
-//                for (int i = 0; i < constants::supportedEngines; i++) {
-//                    cout << engineBuffer[i] << endl;
-//                    mappedEngines[i] = mapThrottleValueToAxis(
-//                            engineBuffer[i], enginelist[i].getMinRange(),
-//                            enginelist[i].getMaxRange(), enginelist[i].getIdleIndex());
-//                    cout << "minrange " << i << ": " << enginelist[i].getMinRange()
-//                         << endl;
-//                }
-//                cout << "eng "
-//                     << ": " << mappedEngines[3] << endl;
-//                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
-//                                      mappedEngines[0]);
-//                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
-//                                      mappedEngines[1]);
-//                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
-//                                      mappedEngines[2]);
-//                sendBasicCommandValue(inputDefinitions.DATA_EX_THROTTLE_4_AXIS,
-//                                      mappedEngines[3]);
-//                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_1_AXIS,
-//                //                              mappedEngines[0]);
-//                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_2_AXIS,
-//                //                              mappedEngines[1]);
-//                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_3_AXIS,
-//                //                              mappedEngines[2]);
-//                //        sendBasicCommandValue(inputDefinitions.DATA_THROTTLE_4_AXIS,
-//                //                              mappedEngines[3]);
-//            }
-//        }
-//    } catch (const std::exception &e) {
-//        cout << "error in throttle" << endl;
-//    }
-//}
 
 void InputSwitchHandler::setMixtureValues(int index) {
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-
-        counter = 0;
-
-        while (token != nullptr && counter < 3) {
-            cout << receivedString << ":Received" << endl;
-            cout << token << ":Counter" << counter << endl;
-
-            if (token != nullptr) {
-                auto incVal = strtod(token, nullptr);
-
-                if (counter != 0) {
-                    cout << incVal << std::endl;
-                    if (incVal < 10.0) {
-                        if (oldValMixture[counter - 1] < 20.0) {
-                            oldValMixture[counter - 1] = incVal;
-                        }
-                    } else {
-                        if (incVal == 98) {
-                            incVal = 100;
-                        }
-                        oldValMixture[counter - 1] = incVal;
-                    }
-
-                    mappedMixture[counter - 1] =
-                            mapValueToAxis(oldValMixture[counter - 1],
-                                           mixtureRanges[counter - 1].getMinRange(),
-                                           mixtureRanges[counter - 1].getMaxRange());
-                    cout << "counter: " << counter << " val: " << incVal << endl;
-                }
-
-                token = strtok_s(nullptr, " ", &next_token);
-
-                counter++;
-                if (counter == 2) {
-                    sendBasicCommandValue(
-                            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_1,
-                            mappedMixture[0]);
-                    sendBasicCommandValue(
-                            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_2,
-                            mappedMixture[1]);
-                    sendBasicCommandValue(
-                            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_3,
-                            mappedMixture[0]);
-                    sendBasicCommandValue(
-                            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_4,
-                            mappedMixture[1]);
-                }
-            }
+    //TODO support 4 mixture handles
+    std::vector<int> mixtureBuffer = cutInputs(2, index);
+    if (mixtureBuffer.size() == 2) {
+        for (int i = 0; i < 2; i++) {
+            mixtureRanges[i].setCurrentValue(mixtureBuffer.at(i));
+            setAxisValue(&mixtureRanges[i]);
+            sendBasicCommandValue(mixtureRanges[i].getEvent(), mixtureRanges[i].getMappedValue());
+            sendBasicCommandValue(mixtureRanges[i + 2].getEvent(), mixtureRanges[i].getMappedValue());
         }
-    } catch (const std::exception &e) {
-        cout << "error in throttle" << endl;
     }
 }
 
+
 void InputSwitchHandler::set_prop_values(int index) {
-    // Throttle control
-    int propAxisBuffer[4];
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-        cout << receivedString[index] << endl;
-        counter = 0;
-
-        while (token != nullptr && counter < 6) {
-            cout << token << ":Counter" << counter << endl;
-
-            if (token != nullptr) {
-                const auto incVal = strtod(token, nullptr);
-
-                if (counter != 0) {
-                    if (incVal < 10.0) {
-                        if (oldValThrottle[counter] < 20.0) {
-                            oldValThrottle[counter - 1] = incVal;
-                        }
-                    } else {
-                        oldValThrottle[counter - 1] = incVal;
-                    }
-                    propAxisBuffer[counter - 1] = incVal;
-                }
-
-                token = strtok_s(nullptr, " ", &next_token);
-                counter++;
-            }
-            if (counter == 3) {
-                for (int i = 0; i < 2; i++) {
-                    cout << "BUFF" << propAxisBuffer[i] << endl;
-                    mappedProps[i] = mapValueToAxis(propAxisBuffer[i],
-                                                    propellerRanges[0].getMinRange(),
-                                                    propellerRanges[0].getMaxRange());
-                }
-
-                sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
-                                      mappedProps[0]);
-                sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
-                                      mappedProps[1]);
-                sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
-                                      mappedProps[0]);
-                sendBasicCommandValue(inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4,
-                                      mappedProps[1]);
-            }
+    //TODO support 4 prop handles
+    std::vector<int> propBuffer = cutInputs(2, index);
+    if (propBuffer.size() == 2) {
+        for (int i = 0; i < 2; i++) {
+            propellerRanges[i].setCurrentValue(propBuffer.at(i));
+            setAxisValue(&propellerRanges[i]);
+            sendBasicCommandValue(propellerRanges[i].getEvent(), propellerRanges[i].getMappedValue());
+            sendBasicCommandValue(propellerRanges[i + 2].getEvent(), propellerRanges[i].getMappedValue());
         }
-    } catch (const std::exception &e) {
-        cout << "error in throttle" << endl;
     }
 }
 
 void InputSwitchHandler::setElevatorTrim(int index) {
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-
-        counter = 0;
-        while (token != nullptr && counter < 2) {
-            if (counter == 1) {
-                trim = stoi(token);
-            }
-            token = strtok_s(nullptr, " ", &next_token);
-            counter++;
+    std::vector<int> elevatorTrimBuffer = cutInputs(1, index);
+    if (elevatorTrimBuffer.size() == 1) {
+        elevatorTrimAxis.setCurrentValue(elevatorTrimBuffer.at(0));
+        int diff = std::abs(elevatorTrimAxis.getMappedValue() - elevatorTrimAxis.getOldMappedValue());
+        if (diff < 5000 || elevatorTrimAxis.getOldMappedValue() == NULL) {
+            sendBasicCommandValue(elevatorTrimAxis.getEvent(), elevatorTrimAxis.getMappedValue());
+            elevatorTrimAxis.setOldMappedValue(elevatorAxis.getCurrentValue());
         }
-        int diff = std::abs(trim - oldTrim);
-        cout << diff << endl;
-        if (diff < 5000 || oldTrim == NULL) {
-            SimConnect_TransmitClientEvent(
-                    connect, 0, inputDefinitions.DEFINITION_ELEVATOR_TRIM_SET, trim,
-                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-            oldTrim = trim;
-        }
-    } catch (const std::exception &e) {
-        cout << "error in trim" << endl;
     }
 }
 
-int InputSwitchHandler::calibratedRange(int value, int index) {
-    int axis;
-
-    if (static_cast<float>(value) <= curves[index][1].getX()) {
-        axis = mapCoordinates(value, curves[index][0], curves[index].at(1));
-    }
-        // minCurve
-    else if (static_cast<float>(value) < curves[index][2].getX()) {
-        axis = mapCoordinates(value, curves[index][1], curves[index][2]);
-    }
-        // deadzone
-    else if (static_cast<float>(value) >= curves[index][2].getX() &&
-             static_cast<float>(value) <= curves[index][4].getX()) {
-        axis = 0;
-    } else if (static_cast<float>(value) <= curves[index][5].getX()) {
-        axis = mapCoordinates(static_cast<float>(value), curves[index][4],
-                              curves[index][5]);
-    } else if (static_cast<float>(value) <= curves[index][6].getX()) {
-        axis = mapCoordinates(static_cast<float>(value), curves[index][5],
-                              curves[index][6]);
-    }
-    return axis;
-}
 
 void InputSwitchHandler::setRudder(int index) {
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-
-        counter = 0;
-
-        while (token != nullptr && counter < 2) {
-            if (counter == 1) {
-                int analogValue = stoi(token);
-                // minimum to first point
-                rudderAxis = calibratedRange(analogValue, 0);
-            }
-            cout << rudderAxis << " AXIS" << endl;
-            token = strtok_s(nullptr, " ", &next_token);
-            counter++;
+    std::vector<int> rudderBuffer = cutInputs(1, index);
+    if (rudderBuffer.size() == 1) {
+        rudderAxis.setCurrentValue(rudderBuffer.at(0));
+        calibratedRange(&rudderAxis);
+        int diff = std::abs(rudderAxis.getMappedValue() - rudderAxis.getOldMappedValue());
+        if (diff < 10000 || rudderAxis.getOldMappedValue() == NULL) {
+            sendBasicCommandValue(rudderAxis.getEvent(), rudderAxis.getMappedValue());
+            rudderAxis.setOldMappedValue(rudderAxis.getCurrentValue());
         }
-        int diff = std::abs(rudderAxis - oldRudderAxis);
-        cout << diff << endl;
-        if (diff < 10000 || oldRudderAxis == NULL) {
-            SimConnect_TransmitClientEvent(
-                    connect, 0, inputDefinitions.DEFINITION_AXIS_RUDDER_SET, rudderAxis,
-                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-            oldRudderAxis = rudderAxis;
-        }
-    } catch (const std::exception &e) {
-        cout << "error in rudder" << endl;
     }
 }
 
@@ -574,36 +394,19 @@ int InputSwitchHandler::mapCoordinates(int value, coordinates toMapMin,
 }
 
 void InputSwitchHandler::setBrakeAxis(int index) {
-    try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-
-        counter = 0;
-        while (token != nullptr && counter < 3) {
-            int value = stoi(token);
-            if (counter == 1) {
-                leftBrake = calibratedRange(value, 1);
+    std::vector<int> brakeBuffer = cutInputs(2, index);
+    if (brakeBuffer.size() == 2) {
+        for (int i = 0; i < 2; i++) {
+            //TODO support seperate axis calibration
+            brakeAxis[i].setCurrentValue(brakeBuffer.at(0));
+            calibratedRange(&brakeAxis[i]);
+            int diff = std::abs(brakeAxis[i].getMappedValue() - brakeAxis[i].getOldMappedValue());
+            if (diff < 10000 || brakeAxis[i].getOldMappedValue() == NULL) {
+                sendBasicCommandValue(brakeAxis[i].getEvent(), brakeAxis[i].getMappedValue());
+                brakeAxis[i].setOldMappedValue(brakeAxis[i].getCurrentValue());
             }
-            if (counter == 2) {
-                rightBrake = calibratedRange(value, 1);
-            }
-            token = strtok_s(nullptr, " ", &next_token);
-            counter++;
         }
-        cout << oldLeftBrake << "OLD L BRAKE" << endl;
-        SimConnect_TransmitClientEvent(
-                connect, 0, inputDefinitions.DEFINITION_AXIS_RIGHT_BRAKE_SET,
-                rightBrake, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-        oldLeftBrake = leftBrake;
 
-        SimConnect_TransmitClientEvent(
-                connect, 0, inputDefinitions.DEFINITION_AXIS_LEFT_BRAKE_SET, leftBrake,
-                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-        oldRightBrake = rightBrake;
-
-    } catch (const std::exception &e) {
-        cout << "error in brakes" << endl;
     }
 }
 
@@ -700,7 +503,7 @@ void InputSwitchHandler::switchHandling(int index) {
                 }
 
                 case 199: {
-                    set_throttle_values(index);
+                    setEngineValues(index);
                     break;
                 }
                 case 115: {
@@ -2853,12 +2656,4 @@ void InputSwitchHandler::switchHandling(int index) {
     }
 }
 
-void InputSwitchHandler::setCurve(QList<coordinates> curve, int index) {
-    curves[index].clear();
-    for (auto &coord: curve) {
-        curves[index].append(coord);
-    }
 
-    cout << "received value:" << curve[3].getX() << "saved  value "
-         << curves[index][3].getX() << " ";
-}

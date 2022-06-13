@@ -3,8 +3,8 @@
 namespace constants {
 inline constexpr char VERSION[]{"1.2.2"};
 inline constexpr int supportedEngines{4};
-inline constexpr int supportedMixtureLevers{2};
-inline constexpr int supportedPropellerLevers{2};
+inline constexpr int supportedMixtureLevers{4};
+inline constexpr int supportedPropellerLevers{4};
 
 }  // namespace constants
 #endif  // CONSTANTS_H

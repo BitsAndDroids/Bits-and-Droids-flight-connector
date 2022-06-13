@@ -34,6 +34,7 @@ set(PROJECT_SOURCES
         elements/mcheckbox.cpp elements/mcheckbox.h
 
         enums/ModeEnum.h
+        enums/InputTypeEnum.h
         enums/inputenum.cpp enums/inputenum.h
         enums/outputenum.cpp enums/outputEnum.h
 
@@ -84,7 +85,7 @@ set(PROJECT_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" models/aircraft/Axis.cpp models/aircraft/Axis.h)
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" models/aircraft/Axis.cpp models/aircraft/Axis.h models/aircraft/CurveAxis.cpp models/aircraft/CurveAxis.h enums/CurveTypeEnum.h)
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
