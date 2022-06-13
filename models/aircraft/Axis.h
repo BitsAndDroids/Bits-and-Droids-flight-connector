@@ -6,18 +6,18 @@
 #define BITSANDDROIDSCONNECTOR_AXIS_H
 
 
+
 #include "enums/inputenum.h"
 #include "enums/InputTypeEnum.h"
+
 class Axis {
 private:
-
-
     int currentValue = 0;
     int oldValue = 0;
+    InputEnum::DATA_DEFINE_ID_INPUT event;
+    InputTypeEnum type = AXIS;
     int mappedValue = 0;
     int oldMappedValue = 0;
-    InputTypeEnum type = AXIS;
-    InputEnum::DATA_DEFINE_ID_INPUT event;
     float min = 0;
     float max = 0;
 

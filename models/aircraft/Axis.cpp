@@ -85,3 +85,7 @@ Axis::Axis(InputEnum::DATA_DEFINE_ID_INPUT event) {
 
 }
 
+void Axis::setType(AxisTypes type) {
+    this->axisType = type;
+}
+

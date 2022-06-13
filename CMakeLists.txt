@@ -35,6 +35,7 @@ set(PROJECT_SOURCES
 
         enums/ModeEnum.h
         enums/InputTypeEnum.h
+        enums/AxisTypeEnum.h
         enums/inputenum.cpp enums/inputenum.h
         enums/outputenum.cpp enums/outputEnum.h
 
