@@ -47,6 +47,8 @@ class InputWorker : public QThread {
 
   bool connected;
   bool abortInput;
+
+  void setInputs(std::map<int, Input> inputs);
  public slots:
 
   void sendWASMCommand(char cmd);
@@ -56,6 +58,7 @@ class InputWorker : public QThread {
   // void switchHandling(int index);
 
  private:
+    std::map<int, Input> inputs = std::map<int, Input>();
   QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
   SettingsHandler settingsHandler;
   std::string lastVal;
@@ -66,6 +69,7 @@ class InputWorker : public QThread {
   InputSwitchHandler handler = InputSwitchHandler();
   QStringList keys = *settingsHandler.retrieveKeys("inputCom");
   std::string prefix;
+
 
   void inputEvents();
 

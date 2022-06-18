@@ -2,6 +2,7 @@
 #define MAX_RETURNED_ITEMS 255
 
 #include "outputworker.h"
+#include "utils/OutputConverters.h"
 
 #include <qsettings.h>
 #include <qstandardpaths.h>
@@ -76,56 +77,18 @@ SerialPort *arduinoTest;
 
 OutputWorker::OutputWorker() {}
 
-void sendToArduino(float received, const std::string &prefix, int index,
-                   int mode) {
-  int intVal;
-  std::string prefixString = prefix;
-  if (stoi(prefix) < 1000) {
-    prefixString += " ";
-  }
-  std::string input_string;
 
-  if (mode != 4) {
-    cout << "0 checked" << endl;
-    intVal = static_cast<int>(received);
-  } else {
-    if (received == 0) {
-      intVal = 0;
-    } else {
-      intVal = 1;
-    }
-    input_string = prefixString + std::to_string(intVal);
-  }
 
-  if (mode == 3) {
-    input_string = prefixString + std::to_string(received);
-  } else {
-    const auto value = intVal;
-    input_string = prefixString + std::to_string(value);
-  }
 
-  cout << "size: " << input_string.size() << endl;
-  auto *const c_string = new char[input_string.size() + 1];
-  std::copy(input_string.begin(), input_string.end(), c_string);
-  c_string[input_string.size()] = '\n';
-  cout << strlen(c_string) << endl;
-  cout << input_string << endl;
-
-  if (mode == 1) {
-    if (received < 0) {
-      ports[index]->writeSerialPort(c_string, 7);
-    } else {
-      ports[index]->writeSerialPort(c_string, 6);
-    }
-  } else {
-    cout << "WHERE DOEST THIS COME FROM " << c_string << endl;
-    ports[index]->writeSerialPort(c_string, input_string.size() + 1);
-  }
-  input_string.clear();
-  delete[] c_string;
+void sendToArduino(float received, const std::string &prefix, int bundle, int mode) {
+    OutputConverters converter = OutputConverters();
+    qDebug()<<"TEST RECEIVED "<<received;
+    std::pair<int,std::string> toSend = converter.parseOutputString(received, prefix,mode);
+    ports[bundle]->writeSerialPort(toSend.second.c_str(),toSend.first);
 }
 
 void sendCharToArduino(const char *received, const std::string &prefix) {
+
   if (!arduinoTest->isConnected()) {
     connectionError = true;
   } else {
@@ -140,17 +103,7 @@ void sendCharToArduino(const char *received, const std::string &prefix) {
   delete[] c_string;
 }
 
-int radianToDegree(double rec) {
-  double pi = 3.14159;
-  double radian = rec;
-  return (radian * (180 / pi));
-}
 
-float radianToDegreeFloat(double rec) {
-  double pi = 3.14159;
-  double radian = rec;
-  return (radian * (180 / pi));
-}
 
 void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext) {
@@ -171,14 +124,22 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
         }
         case EVENT_SIM_START:
 
-          hr = SimConnect_RequestDataOnSimObject(
+            SimConnect_RequestDataOnSimObject(
+                    hSimConnect, REQUEST_PDR, DEFINITION_PDR,
+                    SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
+                    SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
+                    SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
+                    0, updatePerXFrames);
+
+          SimConnect_RequestDataOnSimObject(
               hSimConnect, REQUEST_PDR, DEFINITION_PDR,
               SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
               SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
                   SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
               0, updatePerXFrames);
 
-          hr = SimConnect_RequestDataOnSimObject(
+
+          SimConnect_RequestDataOnSimObject(
               hSimConnect, REQUEST_STRING, DEFINITION_STRING,
               SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
               SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
@@ -216,113 +177,44 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
     } break;
 
     case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
-      auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
+        auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *) pData;
 
-      switch (pObjData->dwRequestID) {
-        case REQUEST_STRING: {
-          auto *pS = (Struct1 *)&pObjData->dwData;
-          sendCharToArduino(pS->title, "999");
-          cout << "Plane: " << pS->title << endl;
-          break;
-        }
-          qDebug() << "found something";
-        case REQUEST_PDR: {
-          int count = 0;
-          auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
-
-          while (count < (int)pObjData->dwDefineCount) {
-            string valString = std::to_string(pS->datum[count].value);
-            int id = pS->datum[count].id;
-            Output *output = outputCast->outputHandler.findOutputById(id);
-            int bundle = 0;
-
-            for (int i = 0; i < outputCast->outputBundles->size(); i++) {
-              if (outputCast->outputBundles->at(i)->isOutputInBundle(
-                      output->getId())) {
-                qDebug() << "FOUND IN SET";
-                bundle = i;
-              }
+        switch (pObjData->dwRequestID) {
+            case REQUEST_STRING: {
+                auto *pS = (Struct1 *) &pObjData->dwData;
+                sendCharToArduino(pS->title, "999");
+                cout << "Plane: " << pS->title << endl;
+                break;
             }
+                qDebug() << "found something";
+            case REQUEST_PDR: {
+                int count = 0;
+                auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
 
-            //            while (bundle == NULL) {
-            //              if
-            //              (outputCast->outputBundles->at(counter)->isOutputInBundle(
-            //                      output->getId())) {
-            //                bundle = counter;
-            //              }
-            //              counter++;
-            //            }
+                while (count < (int) pObjData->dwDefineCount) {
+                    string valString = std::to_string(pS->datum[count].value);
+                    int id = pS->datum[count].id;
+                    Output *output = outputCast->outputHandler.findOutputById(id);
+                    int bundle = 0;
 
-            qDebug() << "id" << id << "BUNDLE ID" << bundle;
+                    for (int i = 0; i < outputCast->outputBundles->size(); i++) {
+                        if (outputCast->outputBundles->at(i)->isOutputInBundle(
+                                output->getId())) {
+                            qDebug() << "FOUND IN SET";
+                            bundle = i;
+                        }
+                    }
 
-            int mode = output->getType();
-            string prefix = std::to_string(output->getPrefix());
+                    int mode = output->getType();
+                    string prefix = std::to_string(output->getPrefix());
 
-            qDebug() << "MODE" << mode << "PREFIX"
-                     << QString::fromStdString(prefix)
-                     << pS->datum[count].value;
 
-            switch (mode) {
-              case 0: {
-                sendToArduino(pS->datum[count].value, prefix, bundle, 0);
-                break;
-              }
-              case 1: {
-                cout << "daaa" << endl;
-                sendToArduino(pS->datum[count].value * 100, prefix, bundle, 0);
-                break;
-              }
-              case 2: {
-                sendToArduino(radianToDegree(pS->datum[count].value), prefix,
-                              bundle, 0);
-                break;
-              }
-              case 3: {
-                sendToArduino(pS->datum[count].value, prefix, bundle, 3);
-                break;
-              }; break;
-              case 4: {
-                sendToArduino(pS->datum[count].value, prefix, bundle, 4);
-                break;
-              }
-              case 5:;
-                break;
-              case 6: {
-                int inHg = pS->datum[count].value * 1000;
-                if (inHg % (inHg / 10) >= 5) {
-                  inHg += 10;
+                    OutputConverters converter = OutputConverters();
+                    float value = converter.converOutgoingFloatValue(pS->datum[count].value, mode);
+                    sendToArduino(value,prefix,bundle,mode);
                 }
-                sendToArduino(inHg / 10, prefix, bundle, 0);
-                break;
-              }
-              case 7: {
-                sendToArduino(pS->datum[count].value * 1.94, prefix, bundle, 0);
-                break;
-              }
-
-              case 8: {
-                sendToArduino(pS->datum[count].value / 1000, prefix, bundle, 0);
-                break;
-              }
-              case 9: {
-                qDebug() << "interesting" << pS->datum[count].value;
-                sendToArduino(pS->datum[count].value, prefix, bundle, 0);
-
-                break;
-              }
-
-              default:
-                printf("\nUnknown datum ID: %i", pS->datum[count].id);
-                break;
             }
-            ++count;
-          }
-          break;
         }
-        default:
-          break;
-      }
-      break;
     }
 
     case SIMCONNECT_RECV_ID_QUIT: {
@@ -332,7 +224,6 @@ void OutputWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
 
     default:
       printf("\n Unknown dwID: %d", pData->dwID);
-      // cout << pData->dwVersion << "id" << pData->dwID << endl;
       break;
   }
 }
@@ -365,10 +256,10 @@ void OutputWorker::testDataRequest() {
   }
 
   connected = false;
-  qDebug() << "attempted";
+
   while (!connected && !abort) {
     emit(GameConnectionMade(1, 2));
-    qDebug() << "attempted";
+
     if (SUCCEEDED(
             SimConnect_Open(&hSimConnect, "outputs", nullptr, 0, nullptr, 0))) {
       printf("\nConnected to Flight Simulator!");

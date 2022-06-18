@@ -1,0 +1,13 @@
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/BitsAndDroidsConnector.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/BitsAndDroidsConnector_other_files.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/test.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/edit_cache.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/rebuild_cache.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/BitsAndDroidsConnector_autogen_timestamp_deps.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/CMakeFiles/BitsAndDroidsConnector_autogen.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/OutputTests.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/test.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/edit_cache.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/rebuild_cache.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/OutputTests_autogen_timestamp_deps.dir
+C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests/tests/ConnectorTests/CMakeFiles/OutputTests_autogen.dir

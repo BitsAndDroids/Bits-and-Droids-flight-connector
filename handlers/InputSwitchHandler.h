@@ -11,6 +11,9 @@
 #include <qwaitcondition.h>
 #include "models/settings/coordinates.h"
 #include "handlers/settingshandler.h"
+#include "enums/CurveTypeEnum.h"
+#include "models/aircraft/CurveAxis.h"
+#include "models/commands/Input.h"
 #include <tchar.h>
 #include <windows.h>
 
@@ -22,85 +25,103 @@
 using namespace std;
 
 class InputSwitchHandler {
- public:
-  InputSwitchHandler();
+public:
+    InputSwitchHandler();
 
-  void switchHandling(int index);
+    InputSwitchHandler(std::map<int, Input> inputs, HANDLE connect);
 
-  char receivedString[10][255];
-  HANDLE connect;
-  SIMCONNECT_OBJECT_ID object;
-  std::array<Engine, constants::supportedEngines> enginelist;
-  Range mixtureRanges[constants::supportedMixtureLevers];
-  Range propellerRanges[constants::supportedPropellerLevers];
-  Range flapsRange;
+    void switchHandling(int index);
 
-  void setCurve(QList<coordinates> curve, int index);
+    char receivedString[10][255];
+    HANDLE connect;
+    SIMCONNECT_OBJECT_ID object;
+    std::array<Axis *, constants::supportedEngines> enginelist;
 
-  float reverseAxis = -23000.0;
+
+    float reverseAxis = -23000.0;
 
     void setRanges();
 
+    void setCurve(QList<coordinates> curve, CurveTypeEnum curveType);
+
 private slots:
-  SettingsHandler settingsHandler;
+    SettingsHandler settingsHandler;
 
-  void set_throttle_values(int index);
 
-  void setMixtureValues(int index);
 
-  void set_prop_values(int index);
 
-  int setComs(int index, int comNo);
+private:
+    std::map<int, Input> inputs;
+    std::string prefix;
 
-  void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    Axis elevatorTrimAxis = Axis(0, 1023, InputEnum::DEFINITION_ELEVATOR_TRIM_SET);
+    Axis mixtureRanges[constants::supportedMixtureLevers];
+    Axis propellerRanges[constants::supportedPropellerLevers];
+    Axis flapsRange;
 
-  void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
 
- private:
-  std::string prefix;
-  QList<coordinates> defaultCurve = {
-      {coordinates(0, -16383)},  {coordinates(250, -10000)},
-      {coordinates(500, 0)},     {coordinates(511, 0)},
-      {coordinates(522, 0)},     {coordinates(750, 10000)},
-      {coordinates(1023, 16383)}};
-  QList<coordinates> rudderCurve, brakeCurve, aileronCurve,
-      elevatorCurve = defaultCurve;
-  QList<QList<coordinates>> curves = QList<QList<coordinates>>()
-                                     << rudderCurve << brakeCurve
-                                     << aileronCurve << elevatorCurve;
-  QStringList curveStrings = {"Rudder", "Toe brakes", "Aileron", "Elevator"};
-  int calibratedRange(int value, QList<coordinates> curve);
+    CurveAxis rudderAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RUDDER_SET);
+    CurveAxis leftBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_LEFT_BRAKE_SET);
+    CurveAxis rightBrakeAxis = CurveAxis(InputEnum::DEFINITION_AXIS_RIGHT_BRAKE_SET);
+    CurveAxis brakeAxis[2] = {leftBrakeAxis, rightBrakeAxis};
+    CurveAxis aileronAxis = CurveAxis(InputEnum::DEFINITION_AXIS_AILERONS_SET);
+    CurveAxis elevatorAxis = CurveAxis(InputEnum::DEFINITION_AXIS_ELEVATOR_SET);
 
-  void setElevatorTrim(int index);
+    void setEngineValues(int index);
 
-  void setFlaps(int index);
+    void setMixtureValues(int index);
 
-  void setRudder(int index);
+    void set_prop_values(int index);
 
-  void setBrakeAxis(int index);
+    int setComs(int index, int comNo);
 
-  void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
+    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
-  void controlYoke(int index);
+    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
-  void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+    int calibratedRange(int value, QList<coordinates> curve);
 
-  int mapThrottleValueToAxis(int value, float reverse, float max,
-                             int idleCutoff);
+    void setElevatorTrim(int index);
 
-  int mapCoordinates(coordinates toMap);
+    void setFlaps(int index);
 
-  int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
+    void setRudder(int index);
 
-  int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
+    void setBrakeAxis(int index);
 
-  void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
 
-  void sendWASMCommand(int index, int value);
+    void controlYoke(int index);
 
-  int calibratedRange(int value, QList<coordinates> *curve);
-  int calibratedRange(int value, int index);
+    void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
 
+    int mapCoordinates(coordinates toMap);
+
+    int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
+
+    int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
+
+    void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+
+    void sendWASMCommand(int index, int value);
+
+    int calibratedRange(int value, QList<coordinates> *curve);
+
+    int calibratedRange(int value, int index);
+
+    void setAxisValue(Axis *axis);
+
+    void mapEngineValueToAxis(Engine *engine) const;
+
+    vector<int> cutInputs(int amountOfPartsNeeded, int index);
+
+
+    void calibratedRange(CurveAxis *curveAxis);
+
+    std::map<int, Input> readInputs();
+
+    void mapInputs();
 };
 
 #endif  // INPUTSWITCHHANDLER_H

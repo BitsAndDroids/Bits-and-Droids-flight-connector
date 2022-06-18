@@ -3,6 +3,12 @@
 cmake_minimum_required(VERSION 3.16)
 project(BitsAndDroidsConnector VERSION 1.0 LANGUAGES CXX)
 
+
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    enable_testing()
+    add_subdirectory(tests/ConnectorTests)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -16,64 +22,83 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Gui Network PrintSupport SerialPort Test REQUIRED)
 
 set(PROJECT_SOURCES
-        workers/InputMapper.h workers/inputmapper.cpp
+
+        main.cpp
+        constants.h
+
         handlers/InputSwitchHandler.cpp
         handlers/InputSwitchHandler.h
+        handlers/sethandler.cpp handlers/sethandler.h
+
+        workers/dualworker.cpp workers/dualworker.h
         workers/InputWorker.cpp workers/InputWorker.h
+        workers/InputMapper.h workers/inputmapper.cpp
+        workers/outputworker.cpp workers/outputworker.h
+
+        elements/ModeIndexCheckbox.cpp elements/ModeIndexCheckbox.h
+        elements/ModeIndexCombobox.cpp elements/ModeIndexCombobox.h
+        elements/mcheckbox.cpp elements/mcheckbox.h
+
+        enums/ModeEnum.h
+        enums/InputTypeEnum.h
+        enums/AxisTypeEnum.h
         enums/inputenum.cpp enums/inputenum.h
+        enums/outputenum.cpp enums/outputEnum.h
+        enums/CurveTypeEnum.h
+
+        models/events/Event.h
+        models/events/EventDatatype.cpp models/events/EventDatatype.h
+        models/events/EventType.cpp models/events/EventType.h
+        models/aircraft/Engine.h
+        models/settings/range.h
+        models/SimConnect.h
+        models/settings/range.h
+        models/library/platform.cpp models/library/platform.h
+        models/commands/activeoutputs.cpp models/commands/activeoutputs.h
+        models/commands/output.cpp models/commands/output.h
+        models/commands/outputbundle.cpp models/commands/outputbundle.h
+        models/commands/set.cpp models/commands/set.h
+        models/settings/coordinates.cpp models/settings/coordinates.h
+        models/settings/settingsranges.cpp models/settings/settingsranges.h
+        models/aircraft/Engine.cpp
+        models/settings/range.cpp
+        models/aircraft/Axis.cpp models/aircraft/Axis.h
+        models/aircraft/CurveAxis.cpp models/aircraft/CurveAxis.h
+
+        widgets/eventeditor/eventwindow.cpp widgets/eventeditor/eventwindow.h widgets/eventeditor/eventwindow.ui
         widgets/codegenerator/CodeGeneratorWindow.cpp widgets/codegenerator/CodeGeneratorWindow.h
         widgets/codegenerator/boards/Board.cpp widgets/codegenerator/boards/Board.h
         widgets/codegenerator/components/Part.cpp widgets/codegenerator/components/Part.h
         widgets/codegenerator/components/Pushbutton.cpp widgets/codegenerator/components/Pushbutton.h
-        workers/dualworker.cpp workers/dualworker.h
-        elements/ModeIndexCheckbox.cpp elements/ModeIndexCheckbox.h
-        elements/ModeIndexCombobox.cpp elements/ModeIndexCombobox.h
-        elements/mcheckbox.cpp elements/mcheckbox.h
-        enums/ModeEnum.h
-        models/events/Event.h
-        models/events/EventDatatype.cpp models/events/EventDatatype.h
-        models/events/EventType.cpp models/events/EventType.h
-        widgets/eventeditor/eventwindow.cpp widgets/eventeditor/eventwindow.h widgets/eventeditor/eventwindow.ui
-        handlers/pathhandler.cpp handlers/pathhandler.h
-        models/aircraft/Engine.h
-        serial/SerialPort.hpp
-        models/SimConnect.h
-        constants.h
         widgets/mainwindow/mainwindow.h
-        models/settings/range.h
         widgets/librarygenerator/librarygenerator.cpp widgets/librarygenerator/librarygenerator.h
         widgets/librarygenerator/librarygeneratorwindow.cpp widgets/librarygenerator/librarygeneratorwindow.h widgets/librarygenerator/librarygeneratorwindow.ui
-        models/library/platform.cpp models/library/platform.h
-        logging/Logger.cpp logging/Logger.h
-        logging/MessageCaster.cpp logging/MessageCaster.h
-        models/outputs/activeoutputs.cpp models/outputs/activeoutputs.h
-        models/outputs/output.cpp models/outputs/output.h
-        models/outputs/outputbundle.cpp models/outputs/outputbundle.h
-        enums/outputenum.cpp enums/outputEnum.h
-        handlers/outputhandler.cpp handlers/outputhandler.h
         widgets/outputmenu/outputmapper.cpp widgets/outputmenu/outputmapper.h
-        workers/outputworker.cpp workers/outputworker.h
-        models/outputs/set.cpp models/outputs/set.h
-        handlers/sethandler.cpp handlers/sethandler.h
-        rungaurd/RunGuard.cpp rungaurd/RunGuard.h
         widgets/axismenu/calibrateaxismenu.cpp widgets/axismenu/calibrateaxismenu.h widgets/axismenu/calibrateaxismenu.ui
-        models/settings/coordinates.cpp models/settings/coordinates.h
         widgets/settingsmenu/builder/formbuilder.cpp widgets/settingsmenu/builder/formbuilder.h
         widgets/settingsmenu/optionsmenu.cpp widgets/settingsmenu/optionsmenu.h widgets/settingsmenu/optionsmenu.ui
         widgets/outputmenu/outputmenu.cpp widgets/outputmenu/outputmenu.h widgets/outputmenu/outputmenu.ui
-        handlers/settingshandler.cpp handlers/settingshandler.h
-        models/settings/settingsranges.cpp models/settings/settingsranges.h
-        models/aircraft/Engine.cpp
-        serial/SerialPort.cpp
-        main.cpp
         widgets/mainwindow/mainwindow.cpp widgets/mainwindow/mainwindow.ui
-        models/settings/range.cpp
-        )
+
+        handlers/pathhandler.cpp handlers/pathhandler.h
+        handlers/outputhandler.cpp handlers/outputhandler.h
+        handlers/settingshandler.cpp handlers/settingshandler.h
+
+        serial/SerialPort.hpp serial/SerialPort.cpp
+
+        rungaurd/RunGuard.cpp rungaurd/RunGuard.h
+
+        logging/Logger.cpp logging/Logger.h
+        logging/MessageCaster.cpp logging/MessageCaster.h
+        utils/OutputConverters.cpp utils/OutputConverters.h
+        enums/OutputModesEnum.h models/commands/Input.cpp models/commands/Input.h utils/InputReader.cpp utils/InputReader.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" )
+
+
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
@@ -84,18 +109,7 @@ set(Resources_resource_files
         "resources/fonts/Roboto-Black.ttf"
         "resources/fonts/Roboto-Bold.ttf"
         "resources/fonts/Roboto-Regular.ttf"
-        "resources/images/SwitchArrow.png"
-        "resources/images/avionicsSwitchOff.png"
-        "resources/images/avionicsSwitchOn.png"
-        "resources/images/batterySwitch.png"
-        "resources/images/batterySwitchOff.png"
         "resources/images/refreshicon.png"
-        "resources/images/starterImage.png"
-        "resources/images/starterImageOff.png"
-        "resources/images/toggleDown.png"
-        "resources/images/toggleUp.png"
-        "json/outputs.json"
-
         )
 
 qt_add_executable(
@@ -103,6 +117,7 @@ qt_add_executable(
         ${PROJECT_SOURCES}
         ${APP_ICON_RESOURCE_WINDOWS}
 )
+
 
 target_link_libraries(BitsAndDroidsConnector PRIVATE
         Qt${QT_VERSION_MAJOR}::Charts
@@ -116,6 +131,7 @@ target_link_libraries(BitsAndDroidsConnector PRIVATE
         "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
         "${PROJECT_SOURCE_DIR}/dist/libssl-1_1-x64.dll"
         )
+
 
 qt6_add_resources(BitsAndDroidsConnector "Resources"
         PREFIX

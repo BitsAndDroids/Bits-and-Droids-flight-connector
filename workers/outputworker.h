@@ -14,8 +14,8 @@
 #include "serial/SerialPort.hpp"
 
 #include "models/SimConnect.h"
-#include "models/outputs/output.h"
-#include "models/outputs/outputbundle.h"
+#include "models/commands/output.h"
+#include "models/commands/outputbundle.h"
 #include "handlers/outputhandler.h"
 #include "widgets/outputmenu/outputmapper.h"
 

@@ -1,0 +1,20 @@
+//
+// Created by dave- on 6/8/2022.
+//
+
+#ifndef BITSANDDROIDSCONNECTOR_AXISTYPEENUM_H
+#define BITSANDDROIDSCONNECTOR_AXISTYPEENUM_H
+
+
+static enum AxisTypes{
+    AXIS,
+    THROTTLE,
+    RUDDER,
+    MIXTURE,
+    PROP,
+    AILERON,
+    ELEVATOR
+} axisTypes;
+
+
+#endif //BITSANDDROIDSCONNECTOR_AXISTYPEENUM_H

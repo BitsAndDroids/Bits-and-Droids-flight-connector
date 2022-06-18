@@ -1,18 +1,24 @@
 #ifndef ENGINE_H
 #define ENGINE_H
-class Engine {
+
+#include "Axis.h"
+
+class Engine : public Axis{
  public:
-  Engine(int minRange, int idleIndex, int maxRange, int engNmbr);
+
+
   Engine();
-  int getMinRange() const { return minRange; };
-  int getMaxRange() const { return maxRange; };
-  int getIdleIndex() const { return idleIndex; };
-  int getEngNmbr() const { return engNmbr; };
+
+    Engine(float minRange, float idleIndex, float maxRange, InputEnum::DATA_DEFINE_ID_INPUT event);
+
+    Engine(float minRange, float idleIndex, float maxRange, InputTypeEnum type, InputEnum::DATA_DEFINE_ID_INPUT event);
+
+    float getIdleIndex() const { return idleIndex; };
+
 
  private:
-  int minRange;
-  int idleIndex;
-  int maxRange;
+
+    float idleIndex;
   int engNmbr;
 };
 

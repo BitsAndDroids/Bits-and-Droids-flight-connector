@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="BitsAndDroidsLogo.ico">C:/BitsAndDroids/Bitsanddroidsgui/BitsAndDroidsLogo.ico</file>
+    <file alias="resources/images/BitsAndDroidsLogo.ico">C:/BitsAndDroids/Bitsanddroidsgui/resources/images/BitsAndDroidsLogo.ico</file>
+    <file alias="widgets/codegenerator/boards/boardimages/proMicroPinout.png">C:/BitsAndDroids/Bitsanddroidsgui/widgets/codegenerator/boards/boardimages/proMicroPinout.png</file>
+    <file alias="resources/fonts/DSEG7Classic-Bold.ttf">C:/BitsAndDroids/Bitsanddroidsgui/resources/fonts/DSEG7Classic-Bold.ttf</file>
+    <file alias="resources/fonts/DSEG7Classic-Regular.ttf">C:/BitsAndDroids/Bitsanddroidsgui/resources/fonts/DSEG7Classic-Regular.ttf</file>
+    <file alias="resources/fonts/Roboto-Black.ttf">C:/BitsAndDroids/Bitsanddroidsgui/resources/fonts/Roboto-Black.ttf</file>
+    <file alias="resources/fonts/Roboto-Bold.ttf">C:/BitsAndDroids/Bitsanddroidsgui/resources/fonts/Roboto-Bold.ttf</file>
+    <file alias="resources/fonts/Roboto-Regular.ttf">C:/BitsAndDroids/Bitsanddroidsgui/resources/fonts/Roboto-Regular.ttf</file>
+    <file alias="resources/images/refreshicon.png">C:/BitsAndDroids/Bitsanddroidsgui/resources/images/refreshicon.png</file>
+  </qresource>
+</RCC>
+

@@ -1,7 +1,7 @@
 #include "dualworker.h"
+#include "utils/OutputConverters.h"
 
 #include <strsafe.h>
-#include <tchar.h>
 #include <windows.h>
 
 #include <string>
@@ -23,17 +23,7 @@ struct StructOneDatum {
 };
 char receivedString[DATA_LENGTH];
 
-int radianDualToDegree(double rec) {
-  double pi = 3.14159;
-  double radian = rec;
-  return (radian * (180 / pi));
-}
 
-float radianDualToDegreeFloat(double rec) {
-  double pi = 3.14159;
-  double radian = rec;
-  return (radian * (180 / pi));
-}
 float dualDataRecv = 1.2f;
 enum GROUP_ID { GROUP0 = 2, GROUP_A = 1 };
 enum INPUT_ID {
@@ -56,16 +46,6 @@ enum DATA_DEFINE_ID {
 
 };
 
-// struct dualSimVar {
-//  int ID;
-//  int Offset;
-//  float data;
-//};
-
-// dualSimVar dualTestVar = {1000, 0, 1.0f};
-
-// dualSimVar dualTestVarB = {1001, sizeof(float) * 1, 1.0f};
-// dualSimVar dualSimVars[2] = {dualTestVar, dualTestVarB};
 struct StructDatum {
   StructOneDatum datum[MAX_RETURNED_ITEMS];
 };
@@ -83,7 +63,7 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
 }
 
 DualWorker::DualWorker() {
-    dualInputHandler->setRanges();
+    dualInputHandler.setRanges();
 }
 
 void sendDualToArduino(float received, std::string prefix, int index,
@@ -94,9 +74,7 @@ void sendDualToArduino(float received, std::string prefix, int index,
     prefixString += " ";
   }
   std::string input_string;
-  //  SimConnect_TransmitClientEvent(hSimConnect, objectID, EVENT_WASM, 2,
-  //                                 SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-  //                                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
   if (mode != 99) {
     cout << "0 checked" << endl;
     cout << "VALUE = " << received << endl;
@@ -136,6 +114,7 @@ void sendDualToArduino(float received, std::string prefix, int index,
     cout << "WHERE DOEST THIS COME FROM " << c_string << endl;
     dualPorts[index]->writeSerialPort(c_string, input_string.size() + 1);
   }
+  cout<<"OUTGOING "<<c_string<<endl;
   input_string.clear();
 
   delete[] c_string;
@@ -145,170 +124,114 @@ void DualWorker::lastReceived(QString value) {
 }
 void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                      void *pContext) {
-  HRESULT hr;
-  auto *dualCast = static_cast<DualWorker *>(pContext);
+    HRESULT hr;
+    auto *dualCast = static_cast<DualWorker *>(pContext);
 
-  switch (pData->dwID) {
-    case SIMCONNECT_RECV_ID_EVENT: {
-      auto *evt = (SIMCONNECT_RECV_EVENT *)pData;
-      cout << "EVENT ID" << evt->uEventID;
-      switch (evt->uEventID) {
-        case EVENT_SIM_START: {
-          // Now the sim is running, request information on the user aircraft
-          SimConnect_RequestDataOnSimObject(
-              dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
-              SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
-              SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
-                  SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
-              0, 3);
-          cout << "started" << endl;
+    switch (pData->dwID) {
+        case SIMCONNECT_RECV_ID_EVENT: {
+            auto *evt = (SIMCONNECT_RECV_EVENT *) pData;
+            cout << "EVENT ID" << evt->uEventID;
+            switch (evt->uEventID) {
 
-          break;
+                case EVENT_SIM_START: {
+
+                    // Now the sim is running, request information on the user aircraft
+                    SimConnect_RequestDataOnSimObject(
+                            dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
+                            SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_ONCE,
+                            SIMCONNECT_DATA_REQUEST_FLAG_DEFAULT |
+                            SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
+                            0, 3);
+
+                    SimConnect_RequestDataOnSimObject(
+                            dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
+                            SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
+                            SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
+                            SIMCONNECT_DATA_REQUEST_FLAG_TAGGED,
+                            0, 3);
+                    break;
+                }
+                case EVENT_WASMINC: {
+                    cout << "hit" << endl;
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
         }
-        case EVENT_WASMINC: {
-          cout << "hit" << endl;
-          break;
-        }
-        default:
-          break;
-      }
-      break;
-    }
-    case SIMCONNECT_RECV_ID_CLIENT_DATA: {
-      auto pObjData = (SIMCONNECT_RECV_CLIENT_DATA *)pData;
-      int bundle = 0;
-
-      Output *output =
-          dualCast->outputHandler.findOutputById(pObjData->dwRequestID);
-      for (int i = 0; i < dualCast->outputBundles->size(); i++) {
-        if (dualCast->outputBundles->at(i)->isOutputInBundle(output->getId())) {
-          qDebug() << "FOUND IN SET";
-          bundle = i;
-        }
-      }
-      dataStr *data = (dataStr *)&pObjData->dwData;
-      cout << "STRUCT TEST" << data->val << endl;
-      qDebug() << "DATA: " << pObjData->dwData << "ID: " << pObjData->dwID
-               << pObjData->dwRequestID << pObjData->dwDefineID
-               << pObjData->dwObjectID;
-
-      if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-        sendDualToArduino(
-            data->val, std::to_string(pObjData->dwRequestID), bundle,
-            dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
-                ->getType());
-      }
-    } break;
-    case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
-      cout << "hiyi" << endl;
-      auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *)pData;
-
-      switch (pObjData->dwRequestID) {
-        case REQUEST_PDR_RADIO: {
-          cout << "RADIO" << endl;
-          int count = 0;
-          auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
-
-          while (count < (int)pObjData->dwDefineCount) {
-            string valString = std::to_string(pS->datum[count].value);
-            int id = pS->datum[count].id;
-            Output *output = dualCast->outputHandler.findOutputById(id);
+        case SIMCONNECT_RECV_ID_CLIENT_DATA: {
+            auto pObjData = (SIMCONNECT_RECV_CLIENT_DATA *) pData;
             int bundle = 0;
 
+            Output *output =
+                    dualCast->outputHandler.findOutputById(pObjData->dwRequestID);
             for (int i = 0; i < dualCast->outputBundles->size(); i++) {
-              if (dualCast->outputBundles->at(i)->isOutputInBundle(
-                      output->getId())) {
-                qDebug() << "FOUND IN SET " << i << " bundles"
-                         << dualCast->outputBundles->size();
-                bundle = i;
-              }
-            }
-
-            //            while (bundle == NULL) {
-            //              if
-            //              (outputCast->outputBundles->at(counter)->isOutputInBundle(
-            //                      output->getId())) {
-            //                bundle = counter;
-            //              }
-            //              counter++;
-            //            }
-
-            qDebug() << "id" << id << "BUNDLE ID" << bundle;
-            int mode = output->getType();
-            string prefix = std::to_string(output->getPrefix());
-            qDebug() << "MODE" << mode << "PREFIX"
-                     << QString::fromStdString(prefix)
-                     << pS->datum[count].value;
-
-            switch (mode) {
-              case 0: {
-                qDebug() << "normal";
-                sendDualToArduino(pS->datum[count].value, prefix, bundle, 0);
-                break;
-              }
-              case 1: {
-                qDebug() << "YARRR";
-                sendDualToArduino(pS->datum[count].value * 100, prefix, bundle,
-                                  0);
-                break;
-              }
-              case 2: {
-                sendDualToArduino(radianDualToDegree(pS->datum[count].value),
-                                  prefix, bundle, 0);
-                break;
-              }
-              case 3: {
-                sendDualToArduino(pS->datum[count].value, prefix, bundle, 3);
-                break;
-              }; break;
-              case 4: {
-                sendDualToArduino(pS->datum[count].value, prefix, bundle, 4);
-                break;
-              }
-              case 5:;
-                break;
-              case 6: {
-                int inHg = pS->datum[count].value * 1000;
-                if (inHg % (inHg / 10) >= 5) {
-                  inHg += 10;
+                if (dualCast->outputBundles->at(i)->isOutputInBundle(output->getId())) {
+                    qDebug() << "FOUND IN SET";
+                    bundle = i;
                 }
-                sendDualToArduino(inHg / 10, prefix, bundle, 0);
-                break;
-              }
-              case 7: {
-                sendDualToArduino(pS->datum[count].value * 1.94, prefix, bundle,
-                                  0);
-                break;
-              }
-
-              case 8: {
-                sendDualToArduino(pS->datum[count].value / 1000, prefix, bundle,
-                                  0);
-                break;
-              }
-
-              default:
-                printf("\nUnknown datum ID: %i", pS->datum[count].id);
-                break;
             }
-            ++count;
-            dualCast->lastReceived(QString::fromStdString(prefix) + " " +
-                                   QString::number(pS->datum[count].value));
-          }
+            auto *data = (dataStr *) &pObjData->dwData;
+            cout << "STRUCT TEST" << data->val << endl;
+            qDebug() << "DATA: " << pObjData->dwData << "ID: " << pObjData->dwID
+                     << pObjData->dwRequestID << pObjData->dwDefineID
+                     << pObjData->dwObjectID;
 
-          break;
+            if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
+                sendDualToArduino(
+                        data->val, std::to_string(pObjData->dwRequestID), bundle,
+                        dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
+                                ->getType());
+            }
         }
-        default:
-          break;
-      }
+            break;
+        case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
+            cout << "hiyi" << endl;
+            auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *) pData;
 
-      break;
+            switch (pObjData->dwRequestID) {
+                case REQUEST_PDR_RADIO: {
+                    cout << "RADIO" << endl;
+                    int count = 0;
+                    auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
+
+                    while (count < (int) pObjData->dwDefineCount) {
+                        string valString = std::to_string(pS->datum[count].value);
+                        int id = pS->datum[count].id;
+                        Output *output = dualCast->outputHandler.findOutputById(id);
+                        int bundle = 0;
+
+                        for (int i = 0; i < dualCast->outputBundles->size(); i++) {
+                            if (dualCast->outputBundles->at(i)->isOutputInBundle(
+                                    output->getId())) {
+                                qDebug() << "FOUND IN SET " << i << " bundles"
+                                         << dualCast->outputBundles->size();
+                                bundle = i;
+                            }
+                        }
+
+                        qDebug() << "id" << id << "BUNDLE ID" << bundle;
+                        int mode = output->getType();
+                        string prefix = std::to_string(output->getPrefix());
+                        qDebug() << "MODE" << mode << "PREFIX"
+                                 << QString::fromStdString(prefix)
+                                 << pS->datum[count].value;
+
+                        OutputConverters converter = OutputConverters();
+                        float value = converter.converOutgoingFloatValue(pS->datum[count].value, mode);
+                        sendDualToArduino(value,prefix,bundle,mode);
+                        dualCast->lastReceived(QString::number(value) + " " + QString::fromStdString(prefix));
+                        break;
+                    }
+                }
+                case SIMCONNECT_RECV_ID_QUIT: {
+                    // quit = 1;
+                    break;
+                }
+            }
+        }
     }
-    case SIMCONNECT_RECV_ID_QUIT: {
-      // quit = 1;
-      break;
-    }
-  }
 }
 void DualWorker::sendWASMCommand(char cmd) {
   char arrayTest[256] = "9999";
@@ -332,7 +255,7 @@ void DualWorker::addBundle(outputBundle *bundle) {
 
 void DualWorker::RadioEvents() {
   HRESULT hr;
-  dualInputHandler->setRanges();
+
   keys = settingsHandler.retrieveKeys("runningDualComs");
   int keySize = keys->size();
   int successfullyConnected = 0;
@@ -372,15 +295,6 @@ void DualWorker::RadioEvents() {
       SimConnect_CreateClientData(dualSimConnect, ClientDataID, 256,
                                   SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED);
 
-      //      SimConnect_MapClientEventToSimEvent(dualSimConnect, EVENT_WASM,
-      //                                          "LVAR_ACCESS.EFIS");
-
-      //      SimConnect_AddClientEventToNotificationGroup(dualSimConnect,
-      //      GROUP_A,
-      //                                                   EVENT_WASM, true);
-
-      //      SimConnect_SetNotificationGroupPriority(
-      //          dualSimConnect, GROUP_A, SIMCONNECT_GROUP_PRIORITY_HIGHEST);
 
       SimConnect_SetClientData(dualSimConnect, ClientDataID, DEFINITION_1,
                                SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
@@ -388,8 +302,9 @@ void DualWorker::RadioEvents() {
 
       SimConnect_AddToClientDataDefinition(
           dualSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
-      dualInputHandler->connect = dualSimConnect;
-      dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
+        dualInputHandler = InputSwitchHandler(inputs, dualSimConnect);
+        dualInputHandler.setRanges();
+      dualInputHandler.object = SIMCONNECT_OBJECT_ID_USER;
 
       dualInputMapper.mapEvents(dualSimConnect);
 
@@ -406,15 +321,7 @@ void DualWorker::RadioEvents() {
                                    SIMCONNECT_CLIENT_DATA_PERIOD_SECOND,
                                    SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT);
 
-      //      for (auto &simVar : dualSimVars) {
-      //        SimConnect_AddToClientDataDefinition(
-      //            dualSimConnect, simVar.ID, simVar.Offset, sizeof(float), 0,
-      //            0);
-      //        SimConnect_RequestClientData(
-      //            dualSimConnect, 2, simVar.ID, simVar.ID,
-      //            SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
-      //            SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_CHANGED, 0, 0, 0);
-      //      }
+
       sendWASMCommand('8');
       dualOutputMapper->mapOutputs(outputsToMap, dualSimConnect);
       SimConnect_SubscribeToSystemEvent(dualSimConnect, EVENT_SIM_START,
@@ -434,11 +341,11 @@ void DualWorker::RadioEvents() {
 
         for (int i = 0; i < keys->size(); i++) {
           const auto hasRead = dualPorts[i]->readSerialPort(
-              dualInputHandler->receivedString[i], DATA_LENGTH);
+              dualInputHandler.receivedString[i], DATA_LENGTH);
 
           if (hasRead) {
             if (connected) {
-              dualInputHandler->switchHandling(i);
+              dualInputHandler.switchHandling(i);
               // timerStart = QTime::currentTime();
             }
           }
@@ -469,4 +376,8 @@ DualWorker::~DualWorker() {
 
   condition.wakeOne();
   mutex.unlock();
+}
+
+void DualWorker::setInputs(std::map<int, Input> inputs) {
+    this->inputs = inputs;
 }

@@ -8,7 +8,7 @@
 #include <tchar.h>
 #include <windows.h>
 
-#include "models/outputs/output.h"
+#include "models/commands/output.h"
 
 class outputMapper {
  public:

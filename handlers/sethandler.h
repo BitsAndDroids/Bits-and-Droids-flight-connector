@@ -9,7 +9,7 @@
 #include <QStandardPaths>
 
 #include "outputhandler.h"
-#include "models/outputs/set.h"
+#include "models/commands/set.h"
 
 class SetHandler {
  public:

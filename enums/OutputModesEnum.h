@@ -1,0 +1,14 @@
+//
+// Created by DaveRiedel on 15-Jun-22.
+//
+
+#ifndef BITSANDDROIDSCONNECTOR_OUTPUTMODESENUM_H
+#define BITSANDDROIDSCONNECTOR_OUTPUTMODESENUM_H
+static enum OutputModesEnum {
+    COMFREQ,
+    FLOAT,
+    FLOATCUT,
+    INT,
+    STRINGS
+} outputModes;
+#endif //BITSANDDROIDSCONNECTOR_OUTPUTMODESENUM_H
