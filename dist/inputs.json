@@ -1,0 +1,2254 @@
+{
+  "inputs": [
+    {
+      "type": 0,
+      "event": "ENG_AUTO_IGN_1",
+      "prefix": 201
+    },
+    {
+      "type": 2,
+      "event": "COM_1_SET",
+      "prefix": 100
+    },
+    {
+      "type": 2,
+      "event": "COM_2_SET",
+      "prefix": 102
+    },
+    {
+      "type": 0,
+      "event": "COM1_RADIO_WHOLE_DEC",
+      "prefix": 111
+    },
+    {
+      "type": 0,
+      "event": "COM1_RADIO_WHOLE_INC",
+      "prefix": 112
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_WHOLE_DEC",
+      "prefix": 113
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_WHOLE_INC",
+      "prefix": 114
+    },
+    {
+      "type": 0,
+      "event": "COM1_STANDBY_SWAP",
+      "prefix": 116
+    },
+    {
+      "type": 0,
+      "event": "COM_2_STANDBY_SWAP",
+      "prefix": 117
+    },
+    {
+      "type": 0,
+      "event": "NAV_1_STANDBY_SWAP",
+      "prefix": 118
+    },
+    {
+      "type": 0,
+      "event": "NAV_2_STANDBY_SWAP",
+      "prefix": 119
+    },
+    {
+      "type": 0,
+      "event": "COM_RADIO_FRACT_DEC",
+      "prefix": 124
+    },
+    {
+      "type": 0,
+      "event": "COM_RADIO_FRACT_INC",
+      "prefix": 125
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_FRACT_DEC",
+      "prefix": 120
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_FRACT_INC",
+      "prefix": 121
+    },
+    {
+      "type": 0,
+      "event": "COM_RADIO_FRACT_DEC_CARRY",
+      "prefix": 126
+    },
+    {
+      "type": 0,
+      "event": "COM_RADIO_FRACT_INC_CARRY",
+      "prefix": 127
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_FRACT_DEC_CARRY",
+      "prefix": 122
+    },
+    {
+      "type": 0,
+      "event": "COM2_RADIO_FRACT_INC_CARRY",
+      "prefix": 123
+    },
+    {
+      "type": 0,
+      "event": "NAV_1_RADIO_FRACT_INC",
+      "prefix": 128
+    },
+    {
+      "type": 0,
+      "event": "NAV_1_RADIO_FRACT_DEC",
+      "prefix": 129
+    },
+    {
+      "type": 0,
+      "event": "NAV_2_RADIO_FRACT_INC",
+      "prefix": 130
+    },
+    {
+      "type": 0,
+      "event": "NAV_2_RADIO_FRACT_DEC",
+      "prefix": 131
+    },
+    {
+      "type": 0,
+      "event": "NAV_1_RADIO_WHOLE_INC",
+      "prefix": 132
+    },
+    {
+      "type": 0,
+      "event": "NAV_1_RADIO_WHOLE_DEC",
+      "prefix": 133
+    },
+    {
+      "type": 0,
+      "event": "NAV_2_RADIO_WHOLE_INC",
+      "prefix": 134
+    },
+    {
+      "type": 0,
+      "event": "NAV_2_RADIO_WHOLE_DEC",
+      "prefix": 135
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DME1_IDENT_ENABLE",
+      "prefix": 136
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DME1_IDENT_DISABLE",
+      "prefix": 137
+    },
+    {
+      "type": 2,
+      "event": "RADIO_SELECTED_DME1_IDENT_SET",
+      "prefix": 138
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DM1E_IDENT_TOGGLE",
+      "prefix": 139
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DME2_IDENT_ENABLE",
+      "prefix": 140
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DME2_IDENT_DISABLE",
+      "prefix": 141
+    },
+    {
+      "type": 2,
+      "event": "RADIO_SELECTED_DME2_IDENT_SET",
+      "prefix": 142
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_DME2_IDENT_TOGGLE",
+      "prefix": 143
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_DME",
+      "prefix": 144
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VOR1_IDENT_ENABLE",
+      "prefix": 145
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VOR1_IDENT_DISABLE",
+      "prefix": 146
+    },
+    {
+      "type": 2,
+      "event": "RADIO_SELECTED_VOR1_IDENT_SET",
+      "prefix": 147
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VORE_IDENT_TOGGLE",
+      "prefix": 148
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VOR2_IDENT_ENABLE",
+      "prefix": 149
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VOR2_IDENT_DISABLE",
+      "prefix": 150
+    },
+    {
+      "type": 2,
+      "event": "RADIO_SELECTED_VOR2_IDENT_SET",
+      "prefix": 151
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_VOR2_IDENT_TOGGLE",
+      "prefix": 152
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_VOR",
+      "prefix": 153
+    },
+    {
+      "type": 0,
+      "event": "VOR1_OBI_DEC",
+      "prefix": 154
+    },
+    {
+      "type": 0,
+      "event": "VOR1_OBI_INC",
+      "prefix": 155
+    },
+    {
+      "type": 0,
+      "event": "VOR2_OBI_DEC",
+      "prefix": 156
+    },
+    {
+      "type": 0,
+      "event": "VOR2_OBI_INC",
+      "prefix": 157
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_ADF_IDENT_ENABLE",
+      "prefix": 158
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_ADF_IDENT_DISABLE",
+      "prefix": 159
+    },
+    {
+      "type": 2,
+      "event": "RADIO_SELECTED_ADF_IDENT_SET",
+      "prefix": 160
+    },
+    {
+      "type": 0,
+      "event": "RADIO_SELECTED_ADF_IDENT_TOGGLE",
+      "prefix": 161
+    },
+    {
+      "type": 0,
+      "event": "ADF_CARD_INC",
+      "prefix": 162
+    },
+    {
+      "type": 0,
+      "event": "ADF_CARD_DEC",
+      "prefix": 163
+    },
+    {
+      "type": 1,
+      "event": "ADF_CARD_SET",
+      "prefix": 164
+    },
+    {
+      "type": 0,
+      "event": "ADF_100_INC",
+      "prefix": 165
+    },
+    {
+      "type": 0,
+      "event": "ADF_10_INC",
+      "prefix": 166
+    },
+    {
+      "type": 0,
+      "event": "ADF_1_INC",
+      "prefix": 167
+    },
+    {
+      "type": 0,
+      "event": "ADF_100_DEC",
+      "prefix": 168
+    },
+    {
+      "type": 0,
+      "event": "ADF_10_DEC",
+      "prefix": 169
+    },
+    {
+      "type": 0,
+      "event": "ADF_1_DEC",
+      "prefix": 170
+    },
+    {
+      "type": 1,
+      "event": "ADF_COMPLETE_SET",
+      "prefix": 179
+    },
+    {
+      "type": 0,
+      "event": "ADF1_WHOLE_INC",
+      "prefix": 180
+    },
+    {
+      "type": 0,
+      "event": "ADF1_WHOLE_DEC",
+      "prefix": 181
+    },
+    {
+      "type": 0,
+      "event": "ADF2_100_INC",
+      "prefix": 182
+    },
+    {
+      "type": 0,
+      "event": "ADF2_10_INC",
+      "prefix": 183
+    },
+    {
+      "type": 0,
+      "event": "ADF2_1_INC",
+      "prefix": 184
+    },
+    {
+      "type": 0,
+      "event": "ADF2_RADIO_TENTHS_INC",
+      "prefix": 185
+    },
+    {
+      "type": 0,
+      "event": "ADF2_100_DEC",
+      "prefix": 186
+    },
+    {
+      "type": 0,
+      "event": "ADF2_10_DEC",
+      "prefix": 187
+    },
+    {
+      "type": 0,
+      "event": "ADF2_1_DEC",
+      "prefix": 188
+    },
+    {
+      "type": 0,
+      "event": "ADF2_RADIO_TENTHS_DEC",
+      "prefix": 189
+    },
+    {
+      "type": 0,
+      "event": "ADF2_WHOLE_INC",
+      "prefix": 190
+    },
+    {
+      "type": 0,
+      "event": "ADF2_WHOLE_DEC",
+      "prefix": 191
+    },
+    {
+      "type": 0,
+      "event": "ADF2_FRACT_DEC_CARRY",
+      "prefix": 192
+    },
+    {
+      "type": 0,
+      "event": "ADF2_FRACT_INC_CARRY",
+      "prefix": 193
+    },
+    {
+      "type": 1,
+      "event": "ADF2_COMPLETE_SET",
+      "prefix": 194
+    },
+    {
+      "type": 0,
+      "event": "RADIO_ADF2_IDENT_DISABLE",
+      "prefix": 195
+    },
+    {
+      "type": 0,
+      "event": "RADIO_ADF2_IDENT_ENABLE",
+      "prefix": 196
+    },
+    {
+      "type": 0,
+      "event": "RADIO_ADF2_IDENT_TOGGLE",
+      "prefix": 197
+    },
+    {
+      "type": 1,
+      "event": "RADIO_ADF2_IDENT_SET",
+      "prefix": 200
+    },
+    {
+      "type": 0,
+      "event": "ADF_FRQ_PUSH",
+      "prefix": 201
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_1000_INC",
+      "prefix": 171
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_100_INC",
+      "prefix": 172
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_10_INC",
+      "prefix": 173
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_1_INC",
+      "prefix": 174
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_1000_DEC",
+      "prefix": 175
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_100_DEC",
+      "prefix": 176
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_10_DEC",
+      "prefix": 177
+    },
+    {
+      "type": 0,
+      "event": "XPNDR_1_DEC",
+      "prefix": 178
+    },
+    {
+      "type": 1,
+      "event": "XPNDR_SET",
+      "prefix": 201
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AVIONICS1_MASTER_ON",
+      "prefix": 402
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AVIONICS1_MASTER_OFF",
+      "prefix": 401
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AVIONICS2_MASTER_ON",
+      "prefix": 404
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AVIONICS2_MASTER_OFF",
+      "prefix": 403
+    },
+    {
+      "type": 0,
+      "event": "BAT_1_ON",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "BAT_2_ON",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "BAT_1_OFF",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "BAT_2_OFF",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "PARKING_BRAKE",
+      "prefix": 420
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_MASTER_1_BATTERY",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_MASTER_2_BATTERY",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_EXTERNAL_POWER",
+      "prefix": 408
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_MASTER_BATTERY",
+      "prefix": 405
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_MASTER_ALTERNATOR",
+      "prefix": 407
+    },
+    {
+      "type": 0,
+      "event": "G1000_MFD_ZOOMIN_BUTTON",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "G1000_MFD_ZOOMOUT_BUTTON",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "AP_MASTER",
+      "prefix": 301
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_HEADING_HOLD",
+      "prefix": 302
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_ALTITUDE_HOLD",
+      "prefix": 303
+    },
+    {
+      "type": 0,
+      "event": "AP_ATT_HOLD_ON",
+      "prefix": 304
+    },
+    {
+      "type": 0,
+      "event": "AP_LOC_HOLD_ON",
+      "prefix": 305
+    },
+    {
+      "type": 0,
+      "event": "AP_APR_HOLD_ON",
+      "prefix": 306
+    },
+    {
+      "type": 0,
+      "event": "AP_HDG_HOLD_ON",
+      "prefix": 307
+    },
+    {
+      "type": 0,
+      "event": "AP_ALT_HOLD_ON",
+      "prefix": 308
+    },
+    {
+      "type": 0,
+      "event": "AP_WING_LEVELER_ON",
+      "prefix": 309
+    },
+    {
+      "type": 0,
+      "event": "AP_BC_HOLD_ON",
+      "prefix": 310
+    },
+    {
+      "type": 0,
+      "event": "AP_NAV1_HOLD_ON",
+      "prefix": 311
+    },
+    {
+      "type": 0,
+      "event": "AP_ATT_HOLD_OFF",
+      "prefix": 312
+    },
+    {
+      "type": 0,
+      "event": "AP_LOC_HOLD_OFF",
+      "prefix": 313
+    },
+    {
+      "type": 0,
+      "event": "AP_APR_HOLD_OFF",
+      "prefix": 314
+    },
+    {
+      "type": 0,
+      "event": "AP_HDG_HOLD_OFF",
+      "prefix": 315
+    },
+    {
+      "type": 0,
+      "event": "AP_ALT_HOLD_OFF",
+      "prefix": 316
+    },
+    {
+      "type": 0,
+      "event": "AP_WING_LEVELER_OFF",
+      "prefix": 317
+    },
+    {
+      "type": 0,
+      "event": "AP_BC_HOLD_OFF",
+      "prefix": 318
+    },
+    {
+      "type": 0,
+      "event": "AP_NAV1_HOLD_OFF",
+      "prefix": 319
+    },
+    {
+      "type": 0,
+      "event": "AP_AIRSPEED_HOLD",
+      "prefix": 320
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_SPEED_HOLD",
+      "prefix": 321
+    },
+    {
+      "type": 0,
+      "event": "AP_ALT_VAR_INC",
+      "prefix": 322
+    },
+    {
+      "type": 0,
+      "event": "AP_ALT_VAR_DEC",
+      "prefix": 323
+    },
+    {
+      "type": 0,
+      "event": "AP_VS_VAR_INC",
+      "prefix": 324
+    },
+    {
+      "type": 0,
+      "event": "AP_VS_VAR_DEC",
+      "prefix": 325
+    },
+    {
+      "type": 0,
+      "event": "AP_SPD_VAR_INC",
+      "prefix": 326
+    },
+    {
+      "type": 0,
+      "event": "AP_SPD_VAR_DEC",
+      "prefix": 327
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_MACH_HOLD",
+      "prefix": 328
+    },
+    {
+      "type": 0,
+      "event": "AP_MACH_VAR_INC",
+      "prefix": 329
+    },
+    {
+      "type": 0,
+      "event": "AP_MACH_VAR_DEC",
+      "prefix": 330
+    },
+    {
+      "type": 0,
+      "event": "AP_MACH_HOLD",
+      "prefix": 331
+    },
+    {
+      "type": 1,
+      "event": "AP_ALT_VAR_SET_METRIC",
+      "prefix": 332
+    },
+    {
+      "type": 1,
+      "event": "AP_VS_VAR_SET_ENGLISH",
+      "prefix": 333
+    },
+    {
+      "type": 1,
+      "event": "AP_SPD_VAR_SET",
+      "prefix": 334
+    },
+    {
+      "type": 1,
+      "event": "AP_MACH_VAR_SET",
+      "prefix": 335
+    },
+    {
+      "type": 0,
+      "event": "AP_AIRSPEED_ON",
+      "prefix": 336
+    },
+    {
+      "type": 0,
+      "event": "AP_AIRSPEED_OFF",
+      "prefix": 337
+    },
+    {
+      "type": 1,
+      "event": "AP_AIRSPEED_SET",
+      "prefix": 338
+    },
+    {
+      "type": 0,
+      "event": "AP_MACH_ON",
+      "prefix": 339
+    },
+    {
+      "type": 0,
+      "event": "AP_MACH_OFF",
+      "prefix": 340
+    },
+    {
+      "type": 1,
+      "event": "AP_MACH_SET",
+      "prefix": 341
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_ALTITUDE_ON",
+      "prefix": 342
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_ALTITUDE_OFF",
+      "prefix": 343
+    },
+    {
+      "type": 1,
+      "event": "AP_PANEL_ALTITUDE_SET",
+      "prefix": 345
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_HEADING_ON",
+      "prefix": 346
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_HEADING_OFF",
+      "prefix": 347
+    },
+    {
+      "type": 1,
+      "event": "AP_PANEL_HEADING_SET",
+      "prefix": 348
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_MACH_ON",
+      "prefix": 349
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_MACH_OFF",
+      "prefix": 350
+    },
+    {
+      "type": 1,
+      "event": "AP_PANEL_MACH_SET",
+      "prefix": 351
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_SPEED_ON",
+      "prefix": 352
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_SPEED_OFF",
+      "prefix": 353
+    },
+    {
+      "type": 1,
+      "event": "AP_PANEL_SPEED_SET",
+      "prefix": 354
+    },
+    {
+      "type": 1,
+      "event": "AP_ALT_VAR_SET_ENGLISH",
+      "prefix": 355
+    },
+    {
+      "type": 1,
+      "event": "AP_VS_VAR_SET_METRIC",
+      "prefix": 356
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_SPEED_HOLD_TOGGLE",
+      "prefix": 357
+    },
+    {
+      "type": 0,
+      "event": "AP_PANEL_MACH_HOLD_TOGGLE",
+      "prefix": 358
+    },
+    {
+      "type": 1,
+      "event": "AP_NAV_SELECT_SET",
+      "prefix": 359
+    },
+    {
+      "type": 0,
+      "event": "AP_PITCH_REF_INC_UP",
+      "prefix": 360
+    },
+    {
+      "type": 0,
+      "event": "AP_PITCH_REF_INC_DN",
+      "prefix": 361
+    },
+    {
+      "type": 0,
+      "event": "AP_PITCH_REF_SELECT",
+      "prefix": 362
+    },
+    {
+      "type": 0,
+      "event": "AP_ATT_HOLD",
+      "prefix": 304
+    },
+    {
+      "type": 0,
+      "event": "AP_LOC_HOLD",
+      "prefix": 364
+    },
+    {
+      "type": 0,
+      "event": "AP_APR_HOLD",
+      "prefix": 365
+    },
+    {
+      "type": 0,
+      "event": "AP_HDG_HOLD",
+      "prefix": 366
+    },
+    {
+      "type": 0,
+      "event": "AP_ALT_HOLD",
+      "prefix": 367
+    },
+    {
+      "type": 0,
+      "event": "AP_WING_LEVELER",
+      "prefix": 368
+    },
+    {
+      "type": 0,
+      "event": "AP_BC_HOLD",
+      "prefix": 369
+    },
+    {
+      "type": 0,
+      "event": "AP_NAV1_HOLD",
+      "prefix": 370
+    },
+    {
+      "type": 0,
+      "event": "HEADING_BUG_INC",
+      "prefix": 371
+    },
+    {
+      "type": 0,
+      "event": "HEADING_BUG_DEC",
+      "prefix": 372
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FLIGHT_DIRECTOR",
+      "prefix": 373
+    },
+    {
+      "type": 0,
+      "event": "AP_VS_HOLD",
+      "prefix": 374
+    },
+    {
+      "type": 0,
+      "event": "KOHLSMAN_INC",
+      "prefix": 375
+    },
+    {
+      "type": 0,
+      "event": "KOHLSMAN_DEC",
+      "prefix": 376
+    },
+    {
+      "type": 0,
+      "event": "AUTO_THROTTLE_ARM",
+      "prefix": 378
+    },
+    {
+      "type": 0,
+      "event": "AUTO_THROTTLE_TO_GA",
+      "prefix": 379
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_UP",
+      "prefix": 501
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_1",
+      "prefix": 502
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_2",
+      "prefix": 503
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_3",
+      "prefix": 504
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_DOWN",
+      "prefix": 505
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_INCR",
+      "prefix": 506
+    },
+    {
+      "type": 0,
+      "event": "FLAPS_DECR",
+      "prefix": 507
+    },
+    {
+      "type": 1,
+      "event": "AXIS_FLAPS_SET",
+      "prefix": 0
+    },
+    {
+      "type": 0,
+      "event": "PITOT_HEAT_TOGGLE",
+      "prefix": 508
+    },
+    {
+      "type": 0,
+      "event": "PITOT_HEAT_ON",
+      "prefix": 509
+    },
+    {
+      "type": 0,
+      "event": "PITOT_HEAT_OFF",
+      "prefix": 510
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO",
+      "prefix": 511
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_DECR",
+      "prefix": 512
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_INCR",
+      "prefix": 513
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_OFF",
+      "prefix": 514
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_RIGHT",
+      "prefix": 515
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_LEFT",
+      "prefix": 516
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_BOTH",
+      "prefix": 517
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_START",
+      "prefix": 518
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_OFF",
+      "prefix": 519
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_RIGHT",
+      "prefix": 520
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_LEFT",
+      "prefix": 521
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_BOTH",
+      "prefix": 522
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_START",
+      "prefix": 523
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_OFF",
+      "prefix": 524
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_RIGHT",
+      "prefix": 525
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_LEFT",
+      "prefix": 526
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_BOTH",
+      "prefix": 527
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_START",
+      "prefix": 528
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_OFF",
+      "prefix": 529
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_RIGHT",
+      "prefix": 530
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_LEFT",
+      "prefix": 531
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_BOTH",
+      "prefix": 532
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_START",
+      "prefix": 533
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_OFF",
+      "prefix": 534
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_RIGHT",
+      "prefix": 535
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_LEFT",
+      "prefix": 536
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_BOTH",
+      "prefix": 537
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO_START",
+      "prefix": 538
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_DECR",
+      "prefix": 539
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO1_INCR",
+      "prefix": 540
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_DECR",
+      "prefix": 541
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO2_INCR",
+      "prefix": 542
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_DECR",
+      "prefix": 543
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO3_INCR",
+      "prefix": 544
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_DECR",
+      "prefix": 545
+    },
+    {
+      "type": 0,
+      "event": "MAGNETO4_INCR",
+      "prefix": 546
+    },
+    {
+      "type": 1,
+      "event": "MAGNETO_SET",
+      "prefix": 547
+    },
+    {
+      "type": 1,
+      "event": "MAGNETO1_SET",
+      "prefix": 548
+    },
+    {
+      "type": 1,
+      "event": "MAGNETO2_SET",
+      "prefix": 549
+    },
+    {
+      "type": 1,
+      "event": "MAGNETO3_SET",
+      "prefix": 550
+    },
+    {
+      "type": 1,
+      "event": "MAGNETO4_SET",
+      "prefix": 551
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_ON",
+      "prefix": 552
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_OFF",
+      "prefix": 553
+    },
+    {
+      "type": 1,
+      "event": "ANTI_ICE_SET",
+      "prefix": 554
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_TOGGLE",
+      "prefix": 555
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_TOGGLE_ENG1",
+      "prefix": 556
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_TOGGLE_ENG2",
+      "prefix": 557
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_TOGGLE_ENG3",
+      "prefix": 558
+    },
+    {
+      "type": 0,
+      "event": "ANTI_ICE_TOGGLE_ENG4",
+      "prefix": 559
+    },
+    {
+      "type": 1,
+      "event": "ANTI_ICE_SET_ENG1",
+      "prefix": 560
+    },
+    {
+      "type": 1,
+      "event": "ANTI_ICE_SET_ENG2",
+      "prefix": 561
+    },
+    {
+      "type": 1,
+      "event": "ANTI_ICE_SET_ENG3",
+      "prefix": 562
+    },
+    {
+      "type": 1,
+      "event": "ANTI_ICE_SET_ENG4",
+      "prefix": 563
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FUEL_VALVE_ALL",
+      "prefix": 564
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FUEL_VALVE_ENG1",
+      "prefix": 565
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FUEL_VALVE_ENG2",
+      "prefix": 566
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FUEL_VALVE_ENG3",
+      "prefix": 567
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FUEL_VALVE_ENG4",
+      "prefix": 568
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_OFF",
+      "prefix": 569
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_ALL",
+      "prefix": 570
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_LEFT",
+      "prefix": 571
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_RIGHT",
+      "prefix": 572
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_LEFT_AUX",
+      "prefix": 573
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_RIGHT_AUX",
+      "prefix": 574
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_CENTER",
+      "prefix": 575
+    },
+    {
+      "type": 1,
+      "event": "FUEL_SELECTOR_SET",
+      "prefix": 576
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_OFF",
+      "prefix": 577
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_ALL",
+      "prefix": 578
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_LEFT",
+      "prefix": 579
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_RIGHT",
+      "prefix": 580
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_LEFT_AUX",
+      "prefix": 581
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_RIGHT_AUX",
+      "prefix": 582
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_CENTER",
+      "prefix": 583
+    },
+    {
+      "type": 1,
+      "event": "FUEL_SELECTOR_2_SET",
+      "prefix": 584
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_OFF",
+      "prefix": 585
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_ALL",
+      "prefix": 586
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_LEFT",
+      "prefix": 587
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_RIGHT",
+      "prefix": 588
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_LEFT_AUX",
+      "prefix": 589
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_RIGHT_AUX",
+      "prefix": 590
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_CENTER",
+      "prefix": 591
+    },
+    {
+      "type": 1,
+      "event": "FUEL_SELECTOR_3_SET",
+      "prefix": 592
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_OFF",
+      "prefix": 593
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_ALL",
+      "prefix": 594
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_LEFT",
+      "prefix": 595
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_RIGHT",
+      "prefix": 596
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_LEFT_AUX",
+      "prefix": 597
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_RIGHT_AUX",
+      "prefix": 598
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_CENTER",
+      "prefix": 599
+    },
+    {
+      "type": 1,
+      "event": "FUEL_SELECTOR_4_SET",
+      "prefix": 600
+    },
+    {
+      "type": 0,
+      "event": "CROSS_FEED_OPEN",
+      "prefix": 601
+    },
+    {
+      "type": 0,
+      "event": "CROSS_FEED_TOGGLE",
+      "prefix": 602
+    },
+    {
+      "type": 0,
+      "event": "CROSS_FEED_OFF",
+      "prefix": 603
+    },
+    {
+      "type": 0,
+      "event": "G1000_PFD_ZOOMIN_BUTTON",
+      "prefix": 251
+    },
+    {
+      "type": 0,
+      "event": "G1000_PFD_ZOOMOUT_BUTTON",
+      "prefix": 250
+    },
+    {
+      "type": 0,
+      "event": "ELEV_TRIM_DN",
+      "prefix": 604
+    },
+    {
+      "type": 0,
+      "event": "DOWN",
+      "prefix": 605
+    },
+    {
+      "type": 0,
+      "event": "ELEV_TRIM_UP",
+      "prefix": 606
+    },
+    {
+      "type": 0,
+      "event": "ELEV_UP",
+      "prefix": 607
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_ARM_TOGGLE",
+      "prefix": 608
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_ON",
+      "prefix": 609
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_OFF",
+      "prefix": 610
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_ARM_ON",
+      "prefix": 611
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_ARM_OFF",
+      "prefix": 612
+    },
+    {
+      "type": 0,
+      "event": "AILERON_TRIM_LEFT",
+      "prefix": 613
+    },
+    {
+      "type": 0,
+      "event": "AILERON_TRIM_RIGHT",
+      "prefix": 614
+    },
+    {
+      "type": 0,
+      "event": "RUDDER_TRIM_LEFT",
+      "prefix": 615
+    },
+    {
+      "type": 0,
+      "event": "RUDDER_TRIM_RIGHT",
+      "prefix": 616
+    },
+    {
+      "type": 1,
+      "event": "COWLFLAP1_SET",
+      "prefix": 617
+    },
+    {
+      "type": 1,
+      "event": "COWLFLAP2_SET",
+      "prefix": 618
+    },
+    {
+      "type": 1,
+      "event": "COWLFLAP3_SET",
+      "prefix": 619
+    },
+    {
+      "type": 1,
+      "event": "COWLFLAP4_SET",
+      "prefix": 620
+    },
+    {
+      "type": 0,
+      "event": "INC_COWL_FLAPS",
+      "prefix": 621
+    },
+    {
+      "type": 0,
+      "event": "DEC_COWL_FLAPS",
+      "prefix": 622
+    },
+    {
+      "type": 0,
+      "event": "DEC_COWL_FLAPS1",
+      "prefix": 624
+    },
+    {
+      "type": 0,
+      "event": "INC_COWL_FLAPS1",
+      "prefix": 623
+    },
+    {
+      "type": 0,
+      "event": "DEC_COWL_FLAPS2",
+      "prefix": 626
+    },
+    {
+      "type": 0,
+      "event": "DEC_COWL_FLAPS3",
+      "prefix": 628
+    },
+    {
+      "type": 0,
+      "event": "DEC_COWL_FLAPS4",
+      "prefix": 630
+    },
+    {
+      "type": 0,
+      "event": "INC_COWL_FLAPS2",
+      "prefix": 625
+    },
+    {
+      "type": 0,
+      "event": "INC_COWL_FLAPS3",
+      "prefix": 627
+    },
+    {
+      "type": 0,
+      "event": "INC_COWL_FLAPS4",
+      "prefix": 629
+    },
+    {
+      "type": 0,
+      "event": "FUEL_PUMP",
+      "prefix": 631
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ELECT_FUEL_PUMP",
+      "prefix": 632
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ELECT_FUEL_PUMP1",
+      "prefix": 634
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ELECT_FUEL_PUMP2",
+      "prefix": 636
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ELECT_FUEL_PUMP3",
+      "prefix": 638
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ELECT_FUEL_PUMP4",
+      "prefix": 640
+    },
+    {
+      "type": 0,
+      "event": "ENGINE_PRIMER",
+      "prefix": 637
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PRIMER",
+      "prefix": 638
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PRIMER1",
+      "prefix": 639
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PRIMER2",
+      "prefix": 640
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PRIMER3",
+      "prefix": 641
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PRIMER4",
+      "prefix": 642
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FEATHER_SWITCHES",
+      "prefix": 643
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FEATHER_SWITCH_1",
+      "prefix": 644
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FEATHER_SWITCH_2",
+      "prefix": 645
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FEATHER_SWITCH_3",
+      "prefix": 646
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_FEATHER_SWITCH_4",
+      "prefix": 647
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PROPELLER_SYNC",
+      "prefix": 648
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AUTOFEATHER_ARM",
+      "prefix": 649
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AFTERBURNER",
+      "prefix": 650
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AFTERBURNER1",
+      "prefix": 651
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AFTERBURNER2",
+      "prefix": 652
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AFTERBURNER3",
+      "prefix": 653
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_AFTERBURNER4",
+      "prefix": 654
+    },
+    {
+      "type": 0,
+      "event": "ENGINE",
+      "prefix": 655
+    },
+    {
+      "type": 0,
+      "event": "SPOILERS_TOGGLE",
+      "prefix": 656
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_STARTER1",
+      "prefix": 657
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_STARTER2",
+      "prefix": 658
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_STARTER3",
+      "prefix": 659
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_STARTER4",
+      "prefix": 660
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ALL_STARTERS",
+      "prefix": 661
+    },
+    {
+      "type": 0,
+      "event": "ENGINE_AUTO_START",
+      "prefix": 662
+    },
+    {
+      "type": 0,
+      "event": "ENGINE_AUTO_SHUTDOWN",
+      "prefix": 663
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_LEFT_MAIN",
+      "prefix": 664
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_LEFT_MAIN",
+      "prefix": 665
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_LEFT_MAIN",
+      "prefix": 666
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_LEFT_MAIN",
+      "prefix": 667
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_RIGHT_MAIN",
+      "prefix": 668
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_2_RIGHT_MAIN",
+      "prefix": 669
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_3_RIGHT_MAIN",
+      "prefix": 670
+    },
+    {
+      "type": 0,
+      "event": "FUEL_SELECTOR_4_RIGHT_MAIN",
+      "prefix": 671
+    },
+    {
+      "type": 0,
+      "event": "APU_STARTER",
+      "prefix": 672
+    },
+    {
+      "type": 0,
+      "event": "APU_OFF_SWITCH",
+      "prefix": 673
+    },
+    {
+      "type": 0,
+      "event": "APU_GENERATOR_SWITCH_TOGGLE",
+      "prefix": 674
+    },
+    {
+      "type": 0,
+      "event": "CABIN_NO_SMOKING_ALERT_SWITCH_TOGGLE",
+      "prefix": 675
+    },
+    {
+      "type": 0,
+      "event": "STROBES_TOGGLE",
+      "prefix": 677
+    },
+    {
+      "type": 0,
+      "event": "CABIN_SEATBELTS_ALERT_SWITCH_TOGGLE",
+      "prefix": 676
+    },
+    {
+      "type": 0,
+      "event": "ALL_LIGHTS_TOGGLE",
+      "prefix": 678
+    },
+    {
+      "type": 0,
+      "event": "PANEL_LIGHTS_TOGGLE",
+      "prefix": 679
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHTS_TOGGLE",
+      "prefix": 680
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHT_UP",
+      "prefix": 681
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHT_DOWN",
+      "prefix": 682
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHT_LEFT",
+      "prefix": 683
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHT_RIGHT",
+      "prefix": 684
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHT_HOME",
+      "prefix": 685
+    },
+    {
+      "type": 0,
+      "event": "STROBES_ON",
+      "prefix": 686
+    },
+    {
+      "type": 0,
+      "event": "STROBES_OFF",
+      "prefix": 687
+    },
+    {
+      "type": 0,
+      "event": "PANEL_LIGHTS_ON",
+      "prefix": 688
+    },
+    {
+      "type": 0,
+      "event": "PANEL_LIGHTS_OFF",
+      "prefix": 689
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHTS_ON",
+      "prefix": 690
+    },
+    {
+      "type": 0,
+      "event": "LANDING_LIGHTS_OFF",
+      "prefix": 691
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_BEACON_LIGHTS",
+      "prefix": 692
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_TAXI_LIGHTS",
+      "prefix": 693
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_LOGO_LIGHTS",
+      "prefix": 694
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_RECOGNITION_LIGHTS",
+      "prefix": 695
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_WING_LIGHTS",
+      "prefix": 696
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_NAV_LIGHTS",
+      "prefix": 697
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_CABIN_LIGHTS",
+      "prefix": 698
+    },
+    {
+      "type": 0,
+      "event": "GEAR_UP",
+      "prefix": 699
+    },
+    {
+      "type": 0,
+      "event": "GEAR_DOWN",
+      "prefix": 700
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_STRUCTURAL_DEICE",
+      "prefix": 701
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_PROPELLER_DEICE",
+      "prefix": 702
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ALTERNATOR1",
+      "prefix": 703
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ALTERNATOR2",
+      "prefix": 704
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ALTERNATOR3",
+      "prefix": 705
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_ALTERNATOR4",
+      "prefix": 706
+    },
+    {
+      "type": 0,
+      "event": "ATC",
+      "prefix": 707
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_1",
+      "prefix": 708
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_2",
+      "prefix": 709
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_3",
+      "prefix": 710
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_4",
+      "prefix": 711
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_5",
+      "prefix": 712
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_6",
+      "prefix": 713
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_7",
+      "prefix": 714
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_8",
+      "prefix": 715
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_9",
+      "prefix": 716
+    },
+    {
+      "type": 0,
+      "event": "ATC_MENU_0",
+      "prefix": 717
+    },
+    {
+      "type": 0,
+      "event": "EGT1_INC",
+      "prefix": 718
+    },
+    {
+      "type": 0,
+      "event": "EGT1_DEC",
+      "prefix": 719
+    },
+    {
+      "type": 0,
+      "event": "EGT2_INC",
+      "prefix": 720
+    },
+    {
+      "type": 0,
+      "event": "EGT2_DEC",
+      "prefix": 721
+    },
+    {
+      "type": 0,
+      "event": "EGT3_INC",
+      "prefix": 722
+    },
+    {
+      "type": 0,
+      "event": "EGT3_DEC",
+      "prefix": 723
+    },
+    {
+      "type": 0,
+      "event": "EGT4_INC",
+      "prefix": 724
+    },
+    {
+      "type": 0,
+      "event": "EGT4_DEC",
+      "prefix": 725
+    },
+    {
+      "type": 0,
+      "event": "EGT_INC",
+      "prefix": 726
+    },
+    {
+      "type": 0,
+      "event": "EGT_DEC",
+      "prefix": 727
+    },
+    {
+      "type": 0,
+      "event": "TOGGLE_GPS_DRIVES_NAV1",
+      "prefix": 728
+    },
+    {
+      "type": 0,
+      "event": "GPS_POWER_BUTTON",
+      "prefix": 729
+    },
+    {
+      "type": 0,
+      "event": "GPS_NEAREST_BUTTON",
+      "prefix": 730
+    },
+    {
+      "type": 0,
+      "event": "GPS_OBS_BUTTON",
+      "prefix": 731
+    },
+    {
+      "type": 0,
+      "event": "GPS_MSG_BUTTON",
+      "prefix": 732
+    },
+    {
+      "type": 0,
+      "event": "GPS_MSG_BUTTON_DOWN",
+      "prefix": 733
+    },
+    {
+      "type": 0,
+      "event": "GPS_MSG_BUTTON_UP",
+      "prefix": 734
+    },
+    {
+      "type": 0,
+      "event": "GPS_FLIGHTPLAN_BUTTON",
+      "prefix": 735
+    },
+    {
+      "type": 0,
+      "event": "GPS_TERRAIN_BUTTON",
+      "prefix": 736
+    },
+    {
+      "type": 0,
+      "event": "GPS_PROCEDURE_BUTTON",
+      "prefix": 737
+    },
+    {
+      "type": 0,
+      "event": "GPS_ZOOMIN_BUTTON",
+      "prefix": 738
+    },
+    {
+      "type": 0,
+      "event": "GPS_ZOOMOUT_BUTTON",
+      "prefix": 739
+    },
+    {
+      "type": 0,
+      "event": "GPS_DIRECTTO_BUTTON",
+      "prefix": 740
+    },
+    {
+      "type": 0,
+      "event": "GPS_MENU_BUTTON",
+      "prefix": 741
+    },
+    {
+      "type": 0,
+      "event": "GPS_CLEAR_BUTTON",
+      "prefix": 742
+    },
+    {
+      "type": 0,
+      "event": "GPS_CLEAR_ALL_BUTTON",
+      "prefix": 743
+    },
+    {
+      "type": 0,
+      "event": "GPS_CLEAR_BUTTON_DOWN",
+      "prefix": 744
+    },
+    {
+      "type": 0,
+      "event": "GPS_CLEAR_BUTTON_UP",
+      "prefix": 745
+    },
+    {
+      "type": 0,
+      "event": "GPS_ENTER_BUTTON",
+      "prefix": 746
+    },
+    {
+      "type": 0,
+      "event": "GPS_CURSOR_BUTTON",
+      "prefix": 747
+    },
+    {
+      "type": 0,
+      "event": "GPS_GROUP_KNOB_INC",
+      "prefix": 748
+    },
+    {
+      "type": 0,
+      "event": "GPS_GROUP_KNOB_DEC",
+      "prefix": 749
+    },
+    {
+      "type": 0,
+      "event": "GPS_PAGE_KNOB_INC",
+      "prefix": 750
+    },
+    {
+      "type": 0,
+      "event": "GPS_PAGE_KNOB_DEC",
+      "prefix": 751
+    },
+    {
+      "type": 0,
+      "event": "YAW_DAMPER_TOGGLE",
+      "prefix": 752
+    },
+    {
+      "type": 0,
+      "event": "AP_MAX_BANK_INC",
+      "prefix": 803
+    },
+    {
+      "type": 0,
+      "event": "AP_MAX_BANK_DEC",
+      "prefix": 804
+    },
+    {
+      "type": 0,
+      "event": "GYRO_DRIFT_INC",
+      "prefix": 805
+    },
+    {
+      "type": 0,
+      "event": "GYRO_DRIFT_DEC",
+      "prefix": 806
+    },
+    {
+      "type": 0,
+      "event": "TRUE_AIRSPEED_CAL_INC",
+      "prefix": 807
+    },
+    {
+      "type": 0,
+      "event": "TRUE_AIRSPEED_CAL_DEC",
+      "prefix": 808
+    },
+    {
+      "type": 0,
+      "event": "DECREASE_DECISION_HEIGHT",
+      "prefix": 809
+    },
+    {
+      "type": 0,
+      "event": "INCREASE_DECISION_HEIGHT",
+      "prefix": 810
+    },
+    {
+      "type": 0,
+      "event": "SIM_PAUSE_ON",
+      "prefix": 908
+    },
+    {
+      "type": 0,
+      "event": "SIM_PAUSE_OFF",
+      "prefix": 909
+    }
+  ]
+}

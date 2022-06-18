@@ -2,7 +2,7 @@
 #define FORMBUILDER_H
 
 #include "handlers/outputhandler.h"
-#include "models/outputs/set.h"
+#include "models/commands/set.h"
 #include "handlers/sethandler.h"
 #include <qstring.h>
 #include <qtabwidget.h>

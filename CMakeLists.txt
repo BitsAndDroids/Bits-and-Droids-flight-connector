@@ -3,6 +3,12 @@
 cmake_minimum_required(VERSION 3.16)
 project(BitsAndDroidsConnector VERSION 1.0 LANGUAGES CXX)
 
+
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    enable_testing()
+    add_subdirectory(tests/ConnectorTests)
+endif()
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -48,10 +54,10 @@ set(PROJECT_SOURCES
         models/SimConnect.h
         models/settings/range.h
         models/library/platform.cpp models/library/platform.h
-        models/outputs/activeoutputs.cpp models/outputs/activeoutputs.h
-        models/outputs/output.cpp models/outputs/output.h
-        models/outputs/outputbundle.cpp models/outputs/outputbundle.h
-        models/outputs/set.cpp models/outputs/set.h
+        models/commands/activeoutputs.cpp models/commands/activeoutputs.h
+        models/commands/output.cpp models/commands/output.h
+        models/commands/outputbundle.cpp models/commands/outputbundle.h
+        models/commands/set.cpp models/commands/set.h
         models/settings/coordinates.cpp models/settings/coordinates.h
         models/settings/settingsranges.cpp models/settings/settingsranges.h
         models/aircraft/Engine.cpp
@@ -84,12 +90,15 @@ set(PROJECT_SOURCES
 
         logging/Logger.cpp logging/Logger.h
         logging/MessageCaster.cpp logging/MessageCaster.h
-        )
+        utils/OutputConverters.cpp utils/OutputConverters.h
+        enums/OutputModesEnum.h models/commands/Input.cpp models/commands/Input.h utils/InputReader.cpp utils/InputReader.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" )
+
+
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
@@ -109,6 +118,7 @@ qt_add_executable(
         ${APP_ICON_RESOURCE_WINDOWS}
 )
 
+
 target_link_libraries(BitsAndDroidsConnector PRIVATE
         Qt${QT_VERSION_MAJOR}::Charts
         Qt${QT_VERSION_MAJOR}::Core
@@ -121,6 +131,7 @@ target_link_libraries(BitsAndDroidsConnector PRIVATE
         "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
         "${PROJECT_SOURCE_DIR}/dist/libssl-1_1-x64.dll"
         )
+
 
 qt6_add_resources(BitsAndDroidsConnector "Resources"
         PREFIX

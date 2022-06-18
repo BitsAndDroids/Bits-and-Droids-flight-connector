@@ -14,6 +14,7 @@
 
 #include <widgets/codegenerator/CodeGeneratorWindow.h>
 #include "ui_mainwindow.h"
+#include "utils/InputReader.h"
 #include <logging/MessageCaster.h>
 #include <enums/ModeEnum.h>
 #include <elements/ModeIndexCheckbox.h>
@@ -218,6 +219,13 @@ void MainWindow::copyFolder(const QString& sourceFolder, const QString& destinat
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+
+    InputReader inputReader = InputReader();
+    inputReader.readInputs();
+    dualThread.setInputs(inputReader.getInputs());
+    inputThread.setInputs(inputReader.getInputs());
+
 
     updateButton = ui->updateButton;
 
@@ -468,6 +476,7 @@ MainWindow::MainWindow(QWidget *parent)
 //        }
 //        startDual(true);
 //    }
+
     this->adjustSize();
 }
 
@@ -663,6 +672,8 @@ void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
 }
 
 void MainWindow::startMode(int mode) {
+    //Init inputs before rest of application launches
+
     switch (mode) {
         case 1:
             startInputs(false);

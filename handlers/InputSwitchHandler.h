@@ -13,6 +13,7 @@
 #include "handlers/settingshandler.h"
 #include "enums/CurveTypeEnum.h"
 #include "models/aircraft/CurveAxis.h"
+#include "models/commands/Input.h"
 #include <tchar.h>
 #include <windows.h>
 
@@ -26,6 +27,8 @@ using namespace std;
 class InputSwitchHandler {
 public:
     InputSwitchHandler();
+
+    InputSwitchHandler(std::map<int, Input> inputs, HANDLE connect);
 
     void switchHandling(int index);
 
@@ -44,20 +47,11 @@ public:
 private slots:
     SettingsHandler settingsHandler;
 
-    void setEngineValues(int index);
 
-    void setMixtureValues(int index);
-
-    void set_prop_values(int index);
-
-    int setComs(int index, int comNo);
-
-    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
-
-    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
 
 private:
+    std::map<int, Input> inputs;
     std::string prefix;
 
     Axis elevatorTrimAxis = Axis(0, 1023, InputEnum::DEFINITION_ELEVATOR_TRIM_SET);
@@ -73,6 +67,18 @@ private:
     CurveAxis brakeAxis[2] = {leftBrakeAxis, rightBrakeAxis};
     CurveAxis aileronAxis = CurveAxis(InputEnum::DEFINITION_AXIS_AILERONS_SET);
     CurveAxis elevatorAxis = CurveAxis(InputEnum::DEFINITION_AXIS_ELEVATOR_SET);
+
+    void setEngineValues(int index);
+
+    void setMixtureValues(int index);
+
+    void set_prop_values(int index);
+
+    int setComs(int index, int comNo);
+
+    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+
+    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
 
     int calibratedRange(int value, QList<coordinates> curve);
 
@@ -112,6 +118,10 @@ private:
 
 
     void calibratedRange(CurveAxis *curveAxis);
+
+    std::map<int, Input> readInputs();
+
+    void mapInputs();
 };
 
 #endif  // INPUTSWITCHHANDLER_H

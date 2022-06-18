@@ -1,0 +1,147 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"build" : "tests/ConnectorTests",
+					"jsonFile" : "directory-tests.ConnectorTests-Debug-2308c16856723c57f87c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "tests/ConnectorTests",
+					"targetIndexes" : 
+					[
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "BitsAndDroidsConnector",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "OutputTests",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4,
+						5,
+						6
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "BitsAndDroidsConnector::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BitsAndDroidsConnector-Debug-7c6c3cce4bc4224445a4.json",
+					"name" : "BitsAndDroidsConnector",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "BitsAndDroidsConnector_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BitsAndDroidsConnector_autogen-Debug-48775abadc8c988402f9.json",
+					"name" : "BitsAndDroidsConnector_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "BitsAndDroidsConnector_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BitsAndDroidsConnector_autogen_timestamp_deps-Debug-2c8ca135e29eef5b8e99.json",
+					"name" : "BitsAndDroidsConnector_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "BitsAndDroidsConnector_other_files::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-BitsAndDroidsConnector_other_files-Debug-370acb269ffcebcb5fb3.json",
+					"name" : "BitsAndDroidsConnector_other_files",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "OutputTests::@ef5efad6e41d92ec48c8",
+					"jsonFile" : "target-OutputTests-Debug-959d913e280c58a93932.json",
+					"name" : "OutputTests",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "OutputTests_autogen::@ef5efad6e41d92ec48c8",
+					"jsonFile" : "target-OutputTests_autogen-Debug-544d2cdf86dfc0a85244.json",
+					"name" : "OutputTests_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "OutputTests_autogen_timestamp_deps::@ef5efad6e41d92ec48c8",
+					"jsonFile" : "target-OutputTests_autogen_timestamp_deps-Debug-c79d206ae11cb2173409.json",
+					"name" : "OutputTests_autogen_timestamp_deps",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/BitsAndDroids/Bitsanddroidsgui/cmake-build-tests",
+		"source" : "C:/BitsAndDroids/Bitsanddroidsgui"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

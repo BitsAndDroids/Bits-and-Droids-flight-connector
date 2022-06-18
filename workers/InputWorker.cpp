@@ -88,49 +88,8 @@ void InputWorker::sendWASMCommand(char cmd) {
 void InputWorker::inputEvents() {
     HRESULT hr;
     abortInput = false;
-    handler.setRanges();
-    for (int i = 0; i < curveStrings.size(); i++) {
-        auto rudderCurveList = new QList<coordinates>();
-        if (!settingsHandler
-                .retrieveSubSetting(curveStrings[i] + "Series", "axis",
-                                    QString::number(0))
-                ->isNull()) {
-            for (int j = 0; j < 7; j++) {
-                auto value = "axis" + QString::number(i);
-                auto foundAxis = settingsHandler
-                        .retrieveSubSetting(curveStrings[i] + "Series",
-                                            "axis", QString::number(j))
-                        ->toFloat();
-                auto foundVal = settingsHandler
-                        .retrieveSubSetting(curveStrings[i] + "Series",
-                                            "value", QString::number(j))
-                        ->toFloat();
-                auto *foundCoords = new coordinates(foundAxis, foundVal);
-                std::cout << foundCoords->getX() << "X" << std::endl;
-                rudderCurveList->append(*foundCoords);
-            }
-            CurveTypeEnum type;
-            switch (i) {
-                case 0:
-                    type = RUDDER;
-                    break;
-                case 1:
-                    type = LEFTBRAKE;
-                    break;
-                case 2:
-                    type = AILERON;
-                    break;
-                case 3:
-                    type = ELEVATOR;
-                    break;
-            }
-            //TODO cleanup this mess
-            if(type == LEFTBRAKE){
-                handler.setCurve(*rudderCurveList, RIGHTBRAKE);
-            }
-            handler.setCurve(*rudderCurveList, type);
-        }
-    }
+
+
     keys = *settingsHandler.retrieveKeys("runningInputComs");
     int keySize = keys.size();
     int succesfullConnected = 0;
@@ -157,6 +116,52 @@ void InputWorker::inputEvents() {
         emit(GameConnectionMade(1, 1));
         if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0,
                                       0, 0))) {
+            handler = InputSwitchHandler(inputs, hInputSimConnect);
+            handler.setRanges();
+
+            for (int i = 0; i < curveStrings.size(); i++) {
+                auto rudderCurveList = new QList<coordinates>();
+                if (!settingsHandler
+                        .retrieveSubSetting(curveStrings[i] + "Series", "axis",
+                                            QString::number(0))
+                        ->isNull()) {
+                    for (int j = 0; j < 7; j++) {
+                        auto value = "axis" + QString::number(i);
+                        auto foundAxis = settingsHandler
+                                .retrieveSubSetting(curveStrings[i] + "Series",
+                                                    "axis", QString::number(j))
+                                ->toFloat();
+                        auto foundVal = settingsHandler
+                                .retrieveSubSetting(curveStrings[i] + "Series",
+                                                    "value", QString::number(j))
+                                ->toFloat();
+                        auto *foundCoords = new coordinates(foundAxis, foundVal);
+                        std::cout << foundCoords->getX() << "X" << std::endl;
+                        rudderCurveList->append(*foundCoords);
+                    }
+                    CurveTypeEnum type;
+                    switch (i) {
+                        case 0:
+                            type = RUDDER;
+                            break;
+                        case 1:
+                            type = LEFTBRAKE;
+                            break;
+                        case 2:
+                            type = AILERON;
+                            break;
+                        case 3:
+                            type = ELEVATOR;
+                            break;
+                    }
+                    //TODO cleanup this mess
+                    if(type == LEFTBRAKE){
+                        handler.setCurve(*rudderCurveList, RIGHTBRAKE);
+                    }
+                    handler.setCurve(*rudderCurveList, type);
+                }
+            }
+
             emit(GameConnectionMade(2, 1));
             printf("\nConnected to Flight Simulator!");
 
@@ -168,8 +173,6 @@ void InputWorker::inputEvents() {
 
             SimConnect_AddToClientDataDefinition(
                     hInputSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
-
-            handler.connect = hInputSimConnect;
 
             handler.object = objectID;
             mapper.mapEvents(hInputSimConnect);
@@ -218,4 +221,9 @@ InputWorker::~InputWorker() {
     condition.wakeOne();
     mutex.unlock();
     delete this;
+}
+
+void InputWorker::setInputs(std::map<int, Input> inputs) {
+    this->inputs = inputs;
+
 }

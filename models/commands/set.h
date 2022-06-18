@@ -7,7 +7,7 @@
 #include <QMap>
 #include <utility>
 
-#include "models/outputs/output.h"
+#include "output.h"
 
 class set {
  public:

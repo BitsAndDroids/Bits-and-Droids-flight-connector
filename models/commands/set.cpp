@@ -4,7 +4,7 @@
 #include <QJsonDocument>
 #include <utility>
 
-#include "models/outputs/output.h"
+#include "output.h"
 
 set::set() {}
 
