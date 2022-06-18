@@ -10,8 +10,23 @@ Qt additions:
   - Qt Serialport
   - Qt Graphics
 
-Add the DLLs to your build directory to compile the code
-Can also be run from third party IDE's like CLion. This requires a custom setup process you need to find yourself.
+Can also be run from third party IDE's like CLion.
+
+# Project setup
+This project includes all the files and build steps required to build the project in your favorite IDE.
+All the required DLL's are included in the dist folder which get added upon build.
+
+- Clone / download
+- Unzip
+- Run CMAKE on the CMakeLists.txt in the binary folder
+- Build
+- Run
+
+# Tests
+Tests are added to the Test folder. CMake will generate a seperate .exe for the unit tests. You're able to run these test automatically by adding the .exe to your post build setup (IDE dependent).
+
+> There are a boatload of inputs/outputs that are still missing Unit tests. All help on this front is welcome <3
+
 
 # Arduino / ESP32 library
 The libraries are a way to simplify the communication between your microcontroller and the connector. They have their own repository which can be found at:
