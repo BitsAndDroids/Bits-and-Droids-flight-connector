@@ -2,27 +2,27 @@
   "inputs": [
     {
       "type": 0,
-      "event": "ENG_AUTO_IGN_1",
+      "event": "TOGGLE_MASTER_IGNITION_SWITCH",
       "prefix": 201
     },
     {
       "type": 2,
-      "event": "COM_1_SET",
+      "event": "COM_RADIO_SET",
       "prefix": 100
     },
     {
       "type": 2,
-      "event": "COM_2_SET",
+      "event": "COM2_RADIO_SET",
       "prefix": 102
     },
     {
       "type": 0,
-      "event": "COM1_RADIO_WHOLE_DEC",
+      "event": "COM_RADIO_WHOLE_DEC",
       "prefix": 111
     },
     {
       "type": 0,
-      "event": "COM1_RADIO_WHOLE_INC",
+      "event": "COM_RADIO_WHOLE_INC",
       "prefix": 112
     },
     {
@@ -47,12 +47,12 @@
     },
     {
       "type": 0,
-      "event": "NAV_1_STANDBY_SWAP",
+      "event": "NAV1_RADIO_SWAP",
       "prefix": 118
     },
     {
       "type": 0,
-      "event": "NAV_2_STANDBY_SWAP",
+      "event": "NAV2_RADIO_SWAP",
       "prefix": 119
     },
     {
@@ -97,42 +97,42 @@
     },
     {
       "type": 0,
-      "event": "NAV_1_RADIO_FRACT_INC",
+      "event": "NAV1_RADIO_FRACT_INC",
       "prefix": 128
     },
     {
       "type": 0,
-      "event": "NAV_1_RADIO_FRACT_DEC",
+      "event": "NAV1_RADIO_FRACT_DEC",
       "prefix": 129
     },
     {
       "type": 0,
-      "event": "NAV_2_RADIO_FRACT_INC",
+      "event": "NAV2_RADIO_FRACT_INC",
       "prefix": 130
     },
     {
       "type": 0,
-      "event": "NAV_2_RADIO_FRACT_DEC",
+      "event": "NAV2_RADIO_FRACT_DEC",
       "prefix": 131
     },
     {
       "type": 0,
-      "event": "NAV_1_RADIO_WHOLE_INC",
+      "event": "NAV1_RADIO_WHOLE_INC",
       "prefix": 132
     },
     {
       "type": 0,
-      "event": "NAV_1_RADIO_WHOLE_DEC",
+      "event": "NAV1_RADIO_WHOLE_DEC",
       "prefix": 133
     },
     {
       "type": 0,
-      "event": "NAV_2_RADIO_WHOLE_INC",
+      "event": "NAV2_RADIO_WHOLE_INC",
       "prefix": 134
     },
     {
       "type": 0,
-      "event": "NAV_2_RADIO_WHOLE_DEC",
+      "event": "NAV2_RADIO_WHOLE_DEC",
       "prefix": 135
     },
     {
@@ -197,7 +197,7 @@
     },
     {
       "type": 0,
-      "event": "RADIO_SELECTED_VORE_IDENT_TOGGLE",
+      "event": "RADIO_SELECTED_VOR1_IDENT_TOGGLE",
       "prefix": 148
     },
     {
@@ -412,7 +412,7 @@
     },
     {
       "type": 0,
-      "event": "ADF_FRQ_PUSH",
+      "event": "adf_frqTransfert",
       "prefix": 201
     },
     {
@@ -461,23 +461,23 @@
       "prefix": 201
     },
     {
-      "type": 0,
-      "event": "TOGGLE_AVIONICS1_MASTER_ON",
+      "type": 4,
+      "event": "AVIONICS_MASTER_1_SET",
       "prefix": 402
     },
     {
-      "type": 0,
-      "event": "TOGGLE_AVIONICS1_MASTER_OFF",
+      "type": 5,
+      "event": "AVIONICS_MASTER_1_SET",
       "prefix": 401
     },
     {
-      "type": 0,
-      "event": "TOGGLE_AVIONICS2_MASTER_ON",
+      "type": 4,
+      "event": "AVIONICS_MASTER_2_SET",
       "prefix": 404
     },
     {
-      "type": 0,
-      "event": "TOGGLE_AVIONICS2_MASTER_OFF",
+      "type": 5,
+      "event": "AVIONICS_MASTER_2_SET",
       "prefix": 403
     },
     {
@@ -502,7 +502,7 @@
     },
     {
       "type": 0,
-      "event": "PARKING_BRAKE",
+      "event": "PARKING_BRAKES",
       "prefix": 420
     },
     {
@@ -527,7 +527,7 @@
     },
     {
       "type": 0,
-      "event": "TOGGLE_MASTER_ALTERNATOR",
+      "event": "TOGGLE_MASTER_BATTERY_ALTERNATOR",
       "prefix": 407
     },
     {

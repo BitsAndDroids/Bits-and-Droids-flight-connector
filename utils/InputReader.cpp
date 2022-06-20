@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QCoreApplication>
 #include "models/commands/Input.h"
 #include "InputReader.h"
 
@@ -12,7 +13,7 @@ InputReader::InputReader() {}
 void InputReader::readInputs() {
     //inputs.clear();
     std::map<int,Input> foundInputs;
-    QFile file_obj("inputs.json");
+    QFile file_obj(qApp->applicationDirPath() + "/inputs.json");
     file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray json_bytes = file_obj.readAll();
     file_obj.close();
