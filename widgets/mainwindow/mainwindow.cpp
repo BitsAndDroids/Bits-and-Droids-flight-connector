@@ -133,6 +133,7 @@ void MainWindow::installWasm() {
         QString pathfound;
         QString sourceString =
                 QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
+        cout<<sourceString.toStdString()<<endl;
         if (customPathFound) {
             pathfound = pathHandler.getCommunityFolderPath();
         } else {
@@ -165,19 +166,15 @@ void MainWindow::installWasm() {
                     QString communityFolderPath = dialog.getExistingDirectory();
                     settingsHandler.storeValue("Settings", "communityFolderPathLabel",
                                                communityFolderPath);
-
                 }
             }
-
-
-            QString destinationString = pathfound + "/BitsAndDroidsModule";
-
-            copyFolder(sourceString, destinationString);
-            qDebug() << applicationEventsPath;
-            MessageCaster::showCompleteMessage("WASM was sucesfully installed");
         }
+        QString destinationString = pathfound + "/BitsAndDroidsModule";
+        copyFolder(sourceString, destinationString);
+        MessageCaster::showCompleteMessage("WASM was sucesfully installed");
     }
     catch (...) {
+        cout<<"error"<<endl;
         MessageCaster::showWarningMessage("Could not install WASM module");
     }
 }

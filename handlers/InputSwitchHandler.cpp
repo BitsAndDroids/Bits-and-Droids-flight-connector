@@ -46,10 +46,10 @@ int counter = 0;
 float closedAxis = -16383.0;
 float openAxis = 16383.0;
 
-
-
 InputEnum inputDefinitions = InputEnum();
+
 InputSwitchHandler::InputSwitchHandler() {}
+
 InputSwitchHandler::InputSwitchHandler(std::map<int, Input> inputs, HANDLE connect) {
     this->inputs = std::move(inputs);
     this->connect = connect;
@@ -61,11 +61,11 @@ void InputSwitchHandler::mapInputs() {
     HRESULT hr;
     for (auto &input: inputs) {
 
-                hr =SimConnect_MapClientEventToSimEvent(connect,
-                                                    input.second.getPrefix(),
-                                                        input.second.getEvent().c_str());
+        hr = SimConnect_MapClientEventToSimEvent(connect,
+                                                 input.second.getPrefix(),
+                                                 input.second.getEvent().c_str());
 
-            cout<<input.second.getPrefix() << " EVENT " << input.second.getEvent()<< " " <<to_string(hr)<<endl;
+        cout << input.second.getPrefix() << " EVENT " << input.second.getEvent() << " " << to_string(hr) << endl;
     }
 }
 
@@ -229,7 +229,6 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, int inde
         token = strtok_s(receivedString[index], " ", &next_token);
         cout << receivedString[index] << endl;
         counter = 0;
-        int bufferValues[amountOfPartsNeeded];
         while (token != nullptr && counter < amountOfPartsNeeded + 1) {
             if (token != nullptr) {
                 const auto incVal = strtod(token, nullptr);
@@ -248,6 +247,7 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, int inde
         return parts;
     }
     parts.clear();
+    cout << "SIZE OF PARTS: " << parts.size() << endl;
     return parts;
 }
 
@@ -381,8 +381,10 @@ void InputSwitchHandler::setElevatorTrim(int index) {
 void InputSwitchHandler::setRudder(int index) {
     std::vector<int> rudderBuffer = cutInputs(1, index);
     if (rudderBuffer.size() == 1) {
+
         rudderAxis.setCurrentValue(rudderBuffer.at(0));
         calibratedRange(&rudderAxis);
+        cout << "RUDDER: " << rudderAxis.getMappedValue() << endl;
         int diff = std::abs(rudderAxis.getMappedValue() - rudderAxis.getOldMappedValue());
         if (diff < 10000 || rudderAxis.getOldMappedValue() == NULL) {
             sendBasicCommandValue(rudderAxis.getEvent(), rudderAxis.getMappedValue());
@@ -401,7 +403,7 @@ int InputSwitchHandler::mapCoordinates(int value, coordinates toMapMin,
 void InputSwitchHandler::setBrakeAxis(int index) {
     std::vector<int> brakeBuffer = cutInputs(2, index);
     if (brakeBuffer.size() == 2) {
-        for (auto & brakeAxi : brakeAxis) {
+        for (auto &brakeAxi: brakeAxis) {
             //TODO support seperate axis calibration
             brakeAxi.setCurrentValue(brakeBuffer.at(0));
             calibratedRange(&brakeAxi);
@@ -447,11 +449,12 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     string sizeTest = receivedString[index];
     cout << "size: " << sizeTest.length() << endl;
     if (sizeTest.size() == 6) {
+        cout << "SENDING COMMAND" << inputs[eventID].getEvent() << endl;
         hr = SimConnect_TransmitClientEvent(
-                connect, 0, (SIMCONNECT_CLIENT_EVENT_ID)eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
     }
-    cout <<"HR "<< hr << endl;
+    cout << "HR " << hr << endl;
 }
 
 void InputSwitchHandler::sendWASMCommand(int index, int value) {
@@ -494,16 +497,22 @@ void InputSwitchHandler::switchHandling(int index) {
 
     if (strlen(receivedString[index]) > 2) {
 
-        int prefix = stoi(std::string(&receivedString[index][0], &receivedString[index][4]));
-
-
-        Input input = inputs[prefix];
-        if (inputs.find(prefix) != inputs.end()) {
+        int prefixValue = stoi(std::string(&receivedString[index][0], &receivedString[index][4]));
+        cout << "prefixValue: " << prefixValue << endl;
+        if (inputs.count(prefixValue) > 0) {
+            Input input = inputs[prefixValue];
+            if(input.getType() == 4){
+                sendBasicCommandOff(input.getPrefix());
+            }
+            else if(input.getType() == 5){
+                sendBasicCommandOn(input.getPrefix());
+            }
             sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), index);
+
         } else {
 
             try {
-                switch (prefix) {
+                switch (prefixValue) {
                     case 198: {
                         set_prop_values(index);
                         break;
@@ -583,6 +592,7 @@ void InputSwitchHandler::switchHandling(int index) {
                         break;
                     }
                     case 901: {
+                        cout << "901" << endl;
                         setRudder(index);
                         break;
                     }
@@ -599,7 +609,7 @@ void InputSwitchHandler::switchHandling(int index) {
                                                  .substr(4));
                         }
 
-                        sendWASMCommand(prefix, value);
+                        sendWASMCommand(prefixValue, value);
                         cout << value << "val" << endl;
                         break;
                     }
