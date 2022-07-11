@@ -89,6 +89,7 @@ set(PROJECT_SOURCES
         rungaurd/RunGuard.cpp rungaurd/RunGuard.h
 
         logging/Logger.cpp logging/Logger.h
+        logging/LogWindow.cpp logging/LogWindow.h
         logging/MessageCaster.cpp logging/MessageCaster.h
         utils/OutputConverters.cpp utils/OutputConverters.h
         enums/OutputModesEnum.h models/commands/Input.cpp models/commands/Input.h utils/InputReader.cpp utils/InputReader.h)

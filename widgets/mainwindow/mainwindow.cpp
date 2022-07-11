@@ -19,6 +19,7 @@
 #include <enums/ModeEnum.h>
 #include <elements/ModeIndexCheckbox.h>
 #include <elements/ModeIndexCombobox.h>
+#include <logging/LogWindow.h>
 
 void MainWindow::untick() {}
 
@@ -38,6 +39,11 @@ void MainWindow::openSettings() {
                 SIGNAL(closedOptionsMenu()));
         wdg->show();
     }
+}
+
+void MainWindow::openLoggingWindow(){
+    QWidget *wdg = new LogWindow();
+    wdg->openWindow();
 }
 
 void MainWindow::openOutputMenu() {
@@ -86,6 +92,7 @@ void MainWindow::openGenerateCodeMenu() {
     }
 }
 
+
 std::string MainWindow::convertComPort(QString comText) {
     std::string val =
             R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
@@ -133,7 +140,7 @@ void MainWindow::installWasm() {
         QString pathfound;
         QString sourceString =
                 QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-        cout<<sourceString.toStdString()<<endl;
+        cout << sourceString.toStdString() << endl;
         if (customPathFound) {
             pathfound = pathHandler.getCommunityFolderPath();
         } else {
@@ -174,12 +181,12 @@ void MainWindow::installWasm() {
         MessageCaster::showCompleteMessage("WASM was sucesfully installed");
     }
     catch (...) {
-        cout<<"error"<<endl;
+        cout << "error" << endl;
         MessageCaster::showWarningMessage("Could not install WASM module");
     }
 }
 
-void MainWindow::copyFolder(const QString& sourceFolder, const QString& destinationFolder) {
+void MainWindow::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
     qDebug() << "Dest path = " << destinationFolder;
     QDir sourceDir(sourceFolder);
 
@@ -243,6 +250,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->messagesWidgetLayout->setAlignment(Qt::AlignBottom);
 
     // TOOLBAR MENU
+    auto *openLogging = new QAction("&Logging", this);
     auto *openSettings = new QAction("&Settings", this);
     auto *generateCode = new QAction("&Code", this);
     auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
@@ -284,6 +292,7 @@ MainWindow::MainWindow(QWidget *parent)
     WasmInstall->addAction(openEditEventWindow);
     Settings->addAction(openSettings);
     Settings->addAction(updateApplication);
+    Settings->addAction(openLogging);
     //codeMenu->addAction(generateCode);
     Settings->addAction(calibrateAxis);
 
@@ -312,6 +321,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(generateCode, &QAction::triggered, this,
             &MainWindow::openGenerateCodeMenu);
+    connect(openLogging, &QAction::triggered, this, &MainWindow::openLoggingWindow);
 
     connect(&inputThread, &InputWorker::BoardConnectionMade, this,
             &MainWindow::BoardConnectionMade);
@@ -478,11 +488,11 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
-                                               const QString& comGroupName,
-                                               const QString& setGroupName,
+                                               const QString &comGroupName,
+                                               const QString &setGroupName,
                                                bool setsNeeded) {
     auto comboBoxes = widget->findChildren<ModeIndexCombobox *>();
-    int itterations = (int)comboBoxes.size();
+    int itterations = (int) comboBoxes.size();
     if (itterations > 1) {
         itterations = itterations / 2;
     }

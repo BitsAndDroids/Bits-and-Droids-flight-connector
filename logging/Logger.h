@@ -6,7 +6,16 @@
 #define BITSANDDROIDSGUI_LOGGER_H
 
 
-class Logger {
+#include <QWidget>
+
+class Logger: public QWidget {
+    Q_OBJECT
+
+public:
+    Logger();
+    ~Logger();
+
+private:
 
 };
 

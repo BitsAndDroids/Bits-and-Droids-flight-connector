@@ -98,6 +98,8 @@ private slots:
 
     void openGenerateCodeMenu();
 
+    void openLoggingWindow();
+
     void openCalibrateAxis();
 
     void toggleAdvanced();
