@@ -5,21 +5,29 @@
 #ifndef BITSANDDROIDSCONNECTOR_LOGGERSERVICE_H
 #define BITSANDDROIDSCONNECTOR_LOGGERSERVICE_H
 
-
+#include <QWidget>
 #include <QString>
+#include "models/Log.h"
+#include "stores/LoggerStore.h"
 
-class LoggerService {
+class LoggerService: public QObject {
+Q_OBJECT
 private:
+    void writeToLogFile(const Log& log);
+    LoggerStore loggerStore = LoggerStore();
+
 public:
     LoggerService();
 
     ~LoggerService();
 
-    void logError(QString message);
+    void logError(std::string message);
 
-    void logDebug(QString message);
+    void logDebug(std::string message);
 
-    void logWarning(QString message);
+    void logWarning(std::string message);
+    signals:
+    void logReceived(Log log);
 };
 
 

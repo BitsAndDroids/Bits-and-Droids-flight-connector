@@ -42,7 +42,7 @@ void MainWindow::openSettings() {
 }
 
 void MainWindow::openLoggingWindow(){
-    QWidget *wdg = new LogWindow();
+    auto *wdg = new LogWindow();
     wdg->openWindow();
 }
 

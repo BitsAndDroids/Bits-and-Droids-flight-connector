@@ -8,19 +8,29 @@
 
 #include <QWidget>
 #include <QStringList>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include "models/Log.h"
+#include "services/LoggerService.h"
 
 class LogWindow: public QWidget {
     Q_OBJECT
 private:
-    QStringList logList;
-
+    std::vector<Log> logList;
+    LoggerService *loggerService = new LoggerService();
+    QTableWidget *logTable = new QTableWidget();
+    void loadLogs();
 public:
-    LogWindow(QWidget *parent);
+    LogWindow();
     ~LogWindow();
-
-public slots:
-    void addLogRow(QString);
     void openWindow();
+public slots:
+    void addLogRow(const Log& log);
+
+    signals:
+    void logReceived(Log log);
+
+
 };
 
 

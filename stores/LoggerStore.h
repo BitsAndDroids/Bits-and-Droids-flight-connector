@@ -6,7 +6,16 @@
 #define BITSANDDROIDSCONNECTOR_LOGGERSTORE_H
 
 
+#include <vector>
+#include "models/Log.h"
+
 class LoggerStore {
+public:
+    LoggerStore();
+    void storeLog(const Log& log);
+    std::vector<Log>* getLogs();
+private:
+    static std::vector<Log> *logs;
 
 };
 

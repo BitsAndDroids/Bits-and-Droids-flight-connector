@@ -18,7 +18,10 @@ private:
     std::time_t logTime;
 
 public:
-    Log
+    Log(std::string logMessage, LogLevel logLevel, std::time_t logTime);
+    std::string getMessage() const;
+    std::string getLevelString() const;
+    std::string getTimeString() const;
 };
 
 

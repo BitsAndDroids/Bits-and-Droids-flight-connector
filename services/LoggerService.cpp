@@ -3,8 +3,14 @@
 //
 
 #include "LoggerService.h"
+#include <utility>
+#include <logging/LogWindow.h>
 
 LoggerService::LoggerService() {
+    logError("ERROR TEST");
+    logDebug("DEBUG TEST");
+    logWarning("WARNING TEST");
+
 
 }
 
@@ -12,14 +18,23 @@ LoggerService::~LoggerService() {
 
 }
 
-void LoggerService::logError(QString message) {
-
+void LoggerService::logError(std::string message) {
+    Log log = Log(std::move(message), LogLevel::ERRORLOG, std::time(nullptr));
+    writeToLogFile(log);
 }
 
-void LoggerService::logDebug(QString message) {
-
+void LoggerService::logDebug(std::string message) {
+    Log log = Log(std::move(message), LogLevel::DEBUGLOG, std::time(nullptr));
+    writeToLogFile(log);
 }
 
-void LoggerService::logWarning(QString message) {
+void LoggerService::logWarning(std::string message) {\
+    Log log = Log(std::move(message), LogLevel::WARNINGLOG, std::time(nullptr));
+    writeToLogFile(log);
+}
 
+void LoggerService::writeToLogFile(const Log& log) {
+    loggerStore.storeLog(log);
+
+    emit logReceived(log);
 }
