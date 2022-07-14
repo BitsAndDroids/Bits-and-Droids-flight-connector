@@ -1,0 +1,14 @@
+//
+// Created by dave- on 13-7-2022.
+//
+
+#ifndef BITSANDDROIDSCONNECTOR_LOGGERSTORE_H
+#define BITSANDDROIDSCONNECTOR_LOGGERSTORE_H
+
+
+class LoggerStore {
+
+};
+
+
+#endif //BITSANDDROIDSCONNECTOR_LOGGERSTORE_H
