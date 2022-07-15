@@ -10,18 +10,28 @@
 #include <QWaitCondition>
 #include "models/SimConnect.h"
 
-class ServiceWorker: public QThread {
-    Q_OBJECT
+class ServiceWorker : public QThread {
+Q_OBJECT
+
     void run() override { startServices(); }
+
 private:
-    static void MyDispatchProcRD(SIMCONNECT_RECV* pData, DWORD cbData,
-                                 void* pContext);
+    static void MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
+                                 void *pContext);
+
     void startServices();
+
 public:
     ServiceWorker();
-    ~ServiceWorker();
+
+    ~ServiceWorker() override;
+
     QMutex mutex;
     QWaitCondition condition;
+
+public slots:
+
+    void openLogWindow();
 
 
 };

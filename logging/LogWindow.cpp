@@ -15,7 +15,7 @@ LogWindow::LogWindow() {
     logTable->horizontalHeader()->setFont(Triforce);
 
     logTable->setColumnCount(3);
-    logTable->setHorizontalHeaderLabels(QStringList() << "Level" << "Message" << "Type");
+    logTable->setHorizontalHeaderLabels(QStringList() << "Level" << "Message" << "Time");
 
     logTable->setColumnWidth(0, 100);
     logTable->setColumnWidth(1, 300);

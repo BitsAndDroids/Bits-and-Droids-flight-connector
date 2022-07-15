@@ -15,6 +15,7 @@
 #include <widgets/codegenerator/CodeGeneratorWindow.h>
 #include "ui_mainwindow.h"
 #include "utils/InputReader.h"
+#include "workers/ServiceWorker.h"
 #include <logging/MessageCaster.h>
 #include <enums/ModeEnum.h>
 #include <elements/ModeIndexCheckbox.h>
@@ -321,7 +322,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(generateCode, &QAction::triggered, this,
             &MainWindow::openGenerateCodeMenu);
-    connect(openLogging, &QAction::triggered, this, &MainWindow::openLoggingWindow);
+
+
+    serviceworker.start();
+    QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
 
     connect(&inputThread, &InputWorker::BoardConnectionMade, this,
             &MainWindow::BoardConnectionMade);

@@ -19,6 +19,7 @@
 
 #include "serial/SerialPort.hpp"
 #include "constants.h"
+#include "workers/ServiceWorker.h"
 
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
@@ -166,6 +167,7 @@ private:
     const char *portNameLocal;
     QPushButton *updateButton;
     QPushButton *switchButton;
+    ServiceWorker serviceworker;
     DualWorker dualThread;
     OutputWorker outputThread;
     InputWorker inputThread;

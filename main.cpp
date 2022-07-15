@@ -2,6 +2,7 @@
 
 #include "widgets/mainwindow/mainwindow.h"
 #include "rungaurd/RunGuard.h"
+#include "workers/ServiceWorker.h"
 
 
 int main(int argc, char *argv[]) {
