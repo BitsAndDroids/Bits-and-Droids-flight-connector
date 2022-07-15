@@ -28,6 +28,7 @@ public:
 
     QMutex mutex;
     QWaitCondition condition;
+    bool stopServiceWorker = false;
 
 public slots:
 
