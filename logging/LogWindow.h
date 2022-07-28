@@ -12,6 +12,7 @@
 #include <QTableWidgetItem>
 #include "models/Log.h"
 #include "services/LoggerService.h"
+#include "enums/LogLevelEnum.h"
 
 class LogWindow: public QWidget {
     Q_OBJECT
@@ -28,7 +29,8 @@ public slots:
     void addLogRow(const Log& log);
 
     signals:
-    void logReceived(Log log);
+    void logReceived(const Log& log);
+
 
 
 };

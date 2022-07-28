@@ -326,7 +326,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     serviceworker.start();
     QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
-
+    QObject::connect(&dualThread, &DualWorker::logMessage, &serviceworker, &ServiceWorker::logMessage);
     connect(&inputThread, &InputWorker::BoardConnectionMade, this,
             &MainWindow::BoardConnectionMade);
     connect(&inputThread, &InputWorker::GameConnectionMade, this,
@@ -577,18 +577,10 @@ void MainWindow::localUpdateEventFile() {
         QFile::copy(applicationEventsPath,
                     pathHandler.getCommunityFolderPath() +
                     "/BitsAndDroidsModule/modules/events.txt");
-        if (dualThread.isRunning()) {
-            connect(this, &MainWindow::updateEventFile, &dualThread,
-                    &DualWorker::sendWASMCommand);
+        connect(this, &MainWindow::sendWASMCommand, &serviceworker,
+                &ServiceWorker::sendWASMData);
 
-            emit updateEventFile('9');
-        } else if (inputThread.isRunning()) {
-            connect(this, &MainWindow::updateEventFile, &inputThread,
-                    &InputWorker::sendWASMCommand);
-            emit updateEventFile('9');
-        } else {
-            throw std::invalid_argument("Could not update");
-        }
+        emit sendWASMCommand("9999");
         MessageCaster::showCompleteMessage("Successfully updated the event file");
     }
         //This catches the specific error thrown when no output is running

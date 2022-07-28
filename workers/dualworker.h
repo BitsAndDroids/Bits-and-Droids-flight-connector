@@ -23,7 +23,7 @@
 
 #include "models/SimConnect.h"
 #include "strsafe.h"
-
+#include "enums/LogLevelEnum.h"
 typedef QList<QString> ComsList;
 
 class DualWorker : public QThread {
@@ -40,6 +40,9 @@ signals:
     void BoardConnectionMade(int con, int mode);
 
     void updateLastValUI(QString lastVal);
+
+    void logMessage(std::string message, LogLevel level);
+
 
 private:
     // ...

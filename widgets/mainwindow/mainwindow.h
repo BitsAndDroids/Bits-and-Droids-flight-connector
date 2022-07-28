@@ -57,7 +57,7 @@ public slots:
 
 signals:
 
-    void updateEventFile(int cmd);
+    void sendWASMCommand(const char *data);
 
     void closedOutputMenu();
 

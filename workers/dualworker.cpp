@@ -283,6 +283,7 @@ void DualWorker::RadioEvents() {
   while (!abortDual && !connected) {
     // timerStart = QTime::currentTime();
     emit(GameConnectionMade(1, 3));
+    emit(logMessage("Connecting to SimConnect", LogLevel::DEBUGLOG));
     if (SUCCEEDED(SimConnect_Open(&dualSimConnect, "dualConnect", nullptr, 0,
                                   nullptr, 0))) {
       connected = true;

@@ -8,8 +8,8 @@
 #include "LogWindow.h"
 #include <QHeaderView>
 LogWindow::LogWindow() {
-    connect(this, &LogWindow::logReceived, this, &LogWindow::addLogRow);
-    connect(loggerService, &LoggerService::logReceived, this, &LogWindow::logReceived);
+    //connect(this, &LogWindow::logReceived, this, &LogWindow::addLogRow);
+    connect(loggerService, &LoggerService::logReceived, this, &LogWindow::addLogRow);
 
     QFont Triforce("Roboto Black", 11, 900);
     logTable->horizontalHeader()->setFont(Triforce);

@@ -27,7 +27,7 @@ public:
 
     void logWarning(std::string message);
     signals:
-    void logReceived(Log log);
+    void logReceived(const Log& log);
 };
 
 

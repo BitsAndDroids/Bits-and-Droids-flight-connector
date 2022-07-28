@@ -10,8 +10,6 @@ LoggerService::LoggerService() {
     logError("ERROR TEST");
     logDebug("DEBUG TEST");
     logWarning("WARNING TEST");
-
-
 }
 
 LoggerService::~LoggerService() {
@@ -28,7 +26,7 @@ void LoggerService::logDebug(std::string message) {
     writeToLogFile(log);
 }
 
-void LoggerService::logWarning(std::string message) {\
+void LoggerService::logWarning(std::string message) {
     Log log = Log(std::move(message), LogLevel::WARNINGLOG, std::time(nullptr));
     writeToLogFile(log);
 }
@@ -38,3 +36,4 @@ void LoggerService::writeToLogFile(const Log& log) {
 
     emit logReceived(log);
 }
+
