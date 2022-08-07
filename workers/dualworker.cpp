@@ -274,8 +274,7 @@ void DualWorker::RadioEvents() {
         emit BoardConnectionMade(2, 3);
     }
 
-
-    while (!connected) {
+    while (!connected && !abortDual) {
         // timerStart = QTime::currentTime();
         emit GameConnectionMade(1, 3);
         emit logMessage("Attempt connecting to SimConnect", LogLevel::DEBUGLOG);
@@ -351,15 +350,14 @@ void DualWorker::RadioEvents() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(1));
             }
             SimConnect_Close(dualSimConnect);
+            connected = false;
         }
-        sleep(10);
+        if(!abortDual){
+            sleep(10);
+        }
+
     }
     if (!abortDual) {
-        for (int i = 0; i < keys->size(); i++) {
-            if (dualPorts[i]->isConnected()) {
-                dualPorts[i]->closeSerial();
-            }
-        }
         RadioEvents();
     } else {
         for (int i = 0; i < keys->size(); i++) {
@@ -367,27 +365,25 @@ void DualWorker::RadioEvents() {
                 dualPorts[i]->closeSerial();
             }
         }
-        quit();
     }
+    QThread::currentThread()->quit();
 }
 
 void DualWorker::clearBundles() { this->outputBundles->clear(); }
 
 DualWorker::~DualWorker() {
-
+    abortDual = true;
+    cout<<"CLOSING DUAL"<<endl;
     for (int i = 0; i < keys->size(); i++) {
         if (dualPorts[i]->isConnected()) {
             cout<<dualPorts[i]->getPortName() + " CLOSED"<<endl;
             dualPorts[i]->closeSerial();
         }
     }
-    abortDual = true;
     mutex.lock();
-
     condition.wakeOne();
     mutex.unlock();
-    this->wait();
-    this->deleteLater();
+
 }
 
 void DualWorker::setInputs(std::map<int, Input> inputsToSet) {

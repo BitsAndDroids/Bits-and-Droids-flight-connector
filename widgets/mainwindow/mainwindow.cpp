@@ -827,12 +827,13 @@ void MainWindow::startOutputs(bool autoStart) {
 }
 
 void MainWindow::startDual(bool autoStart) {
-    auto *widget = new QWidget();
+    cout<<dualThread.isRunning()<< " IS RUNNING" << endl;
+    auto widget = ui->dualWidgetContainer;
     auto *startButton =
             ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
     auto *stopButton =
             ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
-    widget = ui->dualWidgetContainer;
+
     settingsHandler.clearKeys("runningDualComs");
     settingsHandler.clearKeys("runningDualSets");
 
@@ -926,6 +927,7 @@ void MainWindow::startDual(bool autoStart) {
         }
     }
     saveAutoRunStates(DUALMODE);
+
 }
 
 QList<ModeIndexCheckbox *> MainWindow::getCheckboxesByPattern(const QRegularExpression &pattern) {
@@ -1114,9 +1116,6 @@ void MainWindow::stopOutput() {
 
 void MainWindow::stopDual() {
     dualThread.abortDual = true;
-    dualThread.wait();
-    dualThread.deleteLater();
-
 }
 
 void MainWindow::on_updateButton_clicked() {
