@@ -12,7 +12,7 @@ public:
 
     void storeValue(QString group, QString key, QVariant value);
 
-    QVariant *retrieveSetting(QString group, QString key);
+    QVariant *retrieveSetting(const QString& group, const QString& key);
 
     QStringList *retrieveKeys(QString group);
 

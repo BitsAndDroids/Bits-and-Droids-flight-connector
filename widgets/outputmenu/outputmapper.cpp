@@ -7,7 +7,6 @@
 outputMapper::outputMapper() {}
 void outputMapper::mapOutputs(QList<Output*> outputToMap,
                               HANDLE outputConnect) {
-  HRESULT hr;
   int offsetCounter = 0;
   std::cout << "OUTPUTS TO MAP " << outputToMap.size() << std::endl;
   for (auto& i : outputToMap) {
@@ -24,9 +23,10 @@ void outputMapper::mapOutputs(QList<Output*> outputToMap,
       offsetCounter++;
 
     } else {
-      hr = SimConnect_AddToDataDefinition(
+      SimConnect_AddToDataDefinition(
           outputConnect, 0, i->getOutputName().c_str(), i->getMetric().c_str(),
           SIMCONNECT_DATATYPE_FLOAT32, i->getUpdateEvery(), i->getId());
+
     }
 
     std::cout << i->getId() << std::endl;

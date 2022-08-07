@@ -57,16 +57,14 @@ void ServiceWorker::startServices() {
 
             connectionClosed = false;
 
-            //SimConnect events return a STATUS_REMOTE_DISCONNECT error
-            //if the user closes the simulator. This is a workaround.
-            //We want to return to the main loop and try to reconnect.
             while (!connectionClosed) {
                 SimConnect_CallDispatch(serviceSimconnect, MyDispatchProcRD, this);
+                sleep(1);
             }
         }
         sleep(1);
     }
-    std::cout << "DISCONNECTED FROM GAME" << std::endl;
+    emit logMessage("Disconnected from game", LogLevel::DEBUGLOG);
     SimConnect_Close(serviceSimconnect);
     if (!stopServiceWorker) {
         sleep(100);
@@ -128,7 +126,7 @@ void ServiceWorker::setConnectionClosed(bool toSet) {
 }
 
 void ServiceWorker::logMessage(std::string message, LogLevel level) {
-    std::cout<<"LOG MESSAGE: "<<message<<std::endl;
+
     switch (level) {
         case LogLevel::WARNINGLOG:
             logger.logWarning(message);

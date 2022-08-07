@@ -7,9 +7,6 @@
 #include <logging/LogWindow.h>
 
 LoggerService::LoggerService() {
-    logError("ERROR TEST");
-    logDebug("DEBUG TEST");
-    logWarning("WARNING TEST");
 }
 
 LoggerService::~LoggerService() {

@@ -34,7 +34,6 @@ enum DATA_DEFINE_ID {
 };
 
 InputWorker::InputWorker() {
-    handler.setRanges();
 }
 
 enum EVENT_ID {
@@ -116,8 +115,8 @@ void InputWorker::inputEvents() {
         emit(GameConnectionMade(1, 1));
         if (SUCCEEDED(SimConnect_Open(&hInputSimConnect, "incSimConnect", NULL, 0,
                                       0, 0))) {
-            handler = InputSwitchHandler(inputs, hInputSimConnect);
-            handler.setRanges();
+            handler = new InputSwitchHandler(inputs, hInputSimConnect);
+            handler->setRanges();
 
             for (int i = 0; i < curveStrings.size(); i++) {
                 auto rudderCurveList = new QList<coordinates>();
@@ -156,9 +155,9 @@ void InputWorker::inputEvents() {
                     }
                     //TODO cleanup this mess
                     if(type == LEFTBRAKE){
-                        handler.setCurve(*rudderCurveList, RIGHTBRAKE);
+                        handler->setCurve(*rudderCurveList, RIGHTBRAKE);
                     }
-                    handler.setCurve(*rudderCurveList, type);
+                    handler->setCurve(*rudderCurveList, type);
                 }
             }
 
@@ -174,7 +173,7 @@ void InputWorker::inputEvents() {
             SimConnect_AddToClientDataDefinition(
                     hInputSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
 
-            handler.object = objectID;
+            handler->object = objectID;
             mapper.mapEvents(hInputSimConnect);
 
             connected = true;
@@ -182,11 +181,11 @@ void InputWorker::inputEvents() {
             while (!abortInput && connected) {
                 for (int i = 0; i < keys.size(); i++) {
                     const auto hasRead = arduinoInput[i]->readSerialPort(
-                            handler.receivedString[i], DATA_LENGTH);
+                            handler->receivedString[i], DATA_LENGTH);
 
                     if (hasRead) {
                         if (connected) {
-                            handler.switchHandling(i);
+                            handler->switchHandling(i);
                         }
                         // lastVal = handler.receivedString[i];
                     }

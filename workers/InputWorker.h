@@ -66,7 +66,7 @@ class InputWorker : public QThread {
   SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
   std::string lastStatus;
   InputMapper mapper = InputMapper();
-  InputSwitchHandler handler = InputSwitchHandler();
+  InputSwitchHandler* handler;
   QStringList keys = *settingsHandler.retrieveKeys("inputCom");
   std::string prefix;
 

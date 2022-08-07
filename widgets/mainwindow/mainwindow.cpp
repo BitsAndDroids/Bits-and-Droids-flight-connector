@@ -35,14 +35,14 @@ void MainWindow::optionMenuClosed() { optionMenuOpen = false; }
 void MainWindow::openSettings() {
     if (!optionMenuOpen) {
         optionMenuOpen = true;
-        QWidget *wdg = new optionsMenu;
+        QWidget * wdg = new optionsMenu;
         connect(wdg, SIGNAL(closedOptionsMenu()), this,
                 SIGNAL(closedOptionsMenu()));
         wdg->show();
     }
 }
 
-void MainWindow::openLoggingWindow(){
+void MainWindow::openLoggingWindow() {
     auto *wdg = new LogWindow();
     wdg->openWindow();
 }
@@ -50,7 +50,7 @@ void MainWindow::openLoggingWindow(){
 void MainWindow::openOutputMenu() {
     if (!outputMenuOpen) {
         outputMenuOpen = true;
-        QWidget *wdg = new OutputMenu;
+        QWidget * wdg = new OutputMenu;
         connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
         wdg->show();
     }
@@ -59,7 +59,7 @@ void MainWindow::openOutputMenu() {
 void MainWindow::openCalibrateAxis() {
     if (!calibrateAxisMenuOpen) {
         calibrateAxisMenuOpen = true;
-        QWidget *wdg = new CalibrateAxisMenu;
+        QWidget * wdg = new CalibrateAxisMenu;
         connect(wdg, SIGNAL(closedCalibrateAxisMenu()), this,
                 SIGNAL(closedCalibrateAxisMenu()));
         wdg->show();
@@ -69,7 +69,7 @@ void MainWindow::openCalibrateAxis() {
 void MainWindow::openEditEventMenu() {
     if (!eventwindowOpen) {
         eventwindowOpen = true;
-        QWidget *wdg = new EventWindow;
+        QWidget * wdg = new EventWindow;
         connect(wdg, SIGNAL(closedEventWindow()), this,
                 SIGNAL(closedEventWindow()));
         wdg->show();
@@ -79,7 +79,7 @@ void MainWindow::openEditEventMenu() {
 void MainWindow::openGenerateLibraryMenu() {
     if (generateLibraryMenuOpen) {
         generateLibraryMenuOpen = true;
-        QWidget *wdg = new LibraryGeneratowWindow;
+        QWidget * wdg = new LibraryGeneratowWindow;
         wdg->show();
     }
 }
@@ -88,7 +88,7 @@ void MainWindow::openGenerateCodeMenu() {
     std::cout << "hit" << std::endl;
     if (!generateCodeMenuOpen) {
         generateCodeMenuOpen = true;
-        QWidget *wdg = new CodeGeneratorWindow;
+        QWidget * wdg = new CodeGeneratorWindow;
         wdg->show();
     }
 }
@@ -360,7 +360,7 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *inContainer = ui->inLayoutContainer;
 
     auto *shadow = new QGraphicsDropShadowEffect();
-    QWidget *inWidget = ui->inWidgetContainer;
+    QWidget * inWidget = ui->inWidgetContainer;
     shadow->setBlurRadius(20);
     shadow->setOffset(2, 2);
     inWidget->setGraphicsEffect(shadow);
@@ -376,7 +376,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // OUTPUTS
     QVBoxLayout *outContainer = ui->outLayoutContainer;
-    QWidget *outWidget = ui->outWidgetContainer;
+    QWidget * outWidget = ui->outWidgetContainer;
     auto *shadowOut = new QGraphicsDropShadowEffect();
     shadowOut->setBlurRadius(20);
     shadowOut->setOffset(2, 2);
@@ -394,7 +394,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // DUAL MODE
     QVBoxLayout *dualContainer = ui->dualLayoutContainer;
-    QWidget *dualWidget = ui->dualWidgetContainer;
+    QWidget * dualWidget = ui->dualWidgetContainer;
 
     auto *shadowDual = new QGraphicsDropShadowEffect();
     shadowDual->setBlurRadius(20);
@@ -439,7 +439,7 @@ MainWindow::MainWindow(QWidget *parent)
         QStringList *outputKeys = settingsHandler.retrieveKeys(comGroupName);
 
         for (int i = 0; i < outputKeys->size(); i++) {
-            QWidget *comSelector =
+            QWidget * comSelector =
                     formbuilder.generateComSelector(setsNeeded, mode, i);
             widget->layout()->addWidget(comSelector);
         }
@@ -1112,7 +1112,12 @@ void MainWindow::stopOutput() {
     outputThread.quit();
 }
 
-void MainWindow::stopDual() { dualThread.abortDual = true; }
+void MainWindow::stopDual() {
+    dualThread.abortDual = true;
+    dualThread.wait();
+    dualThread.deleteLater();
+
+}
 
 void MainWindow::on_updateButton_clicked() {
     auto *process = new QProcess(this);

@@ -448,7 +448,7 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     HRESULT hr;
     string sizeTest = receivedString[index];
     cout << "size: " << sizeTest.length() << endl;
-    if (sizeTest.size() == 6) {
+    if (sizeTest.size() == 6 || sizeTest.size() == 5) {
         cout << "SENDING COMMAND" << inputs[eventID].getEvent() << endl;
         hr = SimConnect_TransmitClientEvent(
                 connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
@@ -499,9 +499,13 @@ void InputSwitchHandler::switchHandling(int index) {
         try {
 
             int prefixValue = stoi(std::string(&receivedString[index][0], &receivedString[index][4]));
-            cout << "prefixValue: " << prefixValue << endl;
+
+
             if (inputs.count(prefixValue) > 0) {
                 Input input = inputs[prefixValue];
+                emit logMessage(
+                        "Received data: " + std::string(receivedString[index]) +" command: " + input.getEvent(),
+                        LogLevel::DEBUGLOG);
                 if (input.getType() == 4) {
                     sendBasicCommandOff(input.getPrefix());
                 } else if (input.getType() == 5) {
@@ -616,6 +620,9 @@ void InputSwitchHandler::switchHandling(int index) {
                 }
         }
         catch (std::exception &e) {
+            emit logMessage(
+                    "Received data: " + std::string(receivedString[index]) ,
+                    LogLevel::ERRORLOG);
             cout << e.what() << endl;
         }
     }
