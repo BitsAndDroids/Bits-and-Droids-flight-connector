@@ -121,10 +121,6 @@ void sendDualToArduino(float received, const std::string& prefix, int index,
     delete[] c_string;
 }
 
-void DualWorker::lastReceived(QString value) {
-    emit updateLastValUI(std::move(value));
-}
-
 void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                      void *pContext) {
     HRESULT hr;
@@ -213,7 +209,6 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                 cout<<prefix<<endl;
                         float value = dualCast->converter.converOutgoingFloatValue(pS->datum[count].value, mode);
                         sendDualToArduino(value, prefix, bundle, mode);
-                        dualCast->lastReceived(QString::number(value) + " " + QString::fromStdString(prefix));
                         std::this_thread::sleep_for(std::chrono::milliseconds(output->getDelay()));
                         count++;
 

@@ -345,10 +345,6 @@ MainWindow::MainWindow(QWidget *parent)
             &MainWindow::startMode);
     connect(&formbuilder, &FormBuilder::refreshPressed, this,
             &MainWindow::refreshComs);
-    connect(&dualThread, &DualWorker::updateLastValUI, this,
-            &MainWindow::onUpdateLastValUI);
-    connect(&inputThread, &InputWorker::updateLastStatusUI, this,
-            &MainWindow::onUpdateLastStatusUI);
     connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
             SLOT(onUpdateLastStatusUI(QString)));
 

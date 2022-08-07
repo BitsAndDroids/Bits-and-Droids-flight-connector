@@ -14,6 +14,7 @@ public:
     LoggerStore();
     void storeLog(const Log& log);
     std::vector<Log>* getLogs();
+    void clearLogs();
 private:
     static std::vector<Log> *logs;
 

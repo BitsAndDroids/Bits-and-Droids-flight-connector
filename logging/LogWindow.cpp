@@ -9,7 +9,7 @@
 #include <QHeaderView>
 #include <QTimer>
 LogWindow::LogWindow() {
-    //connect(this, &LogWindow::logReceived, this, &LogWindow::addLogRow);
+
     connect(loggerService, &LoggerService::logReceived, this, &LogWindow::addLogRow);
 
     QFont Triforce("Roboto Black", 11, 900);
@@ -64,7 +64,9 @@ LogWindow::~LogWindow() {
 }
 
 void LogWindow::loadLogs() {
+
     LoggerStore loggerStore = LoggerStore();
+    loggerStore.clearLogs();
     std::vector<Log> *logs = loggerStore.getLogs();
     const clock_t begin_time = clock();
     logTable->setRowCount((int)logs->size());

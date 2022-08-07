@@ -16,3 +16,7 @@ void LoggerStore::storeLog(const Log& log) {
 std::vector<Log> *LoggerStore::getLogs() {
     return LoggerStore::logs;
 }
+
+void LoggerStore::clearLogs() {
+    LoggerStore::logs->clear();
+}

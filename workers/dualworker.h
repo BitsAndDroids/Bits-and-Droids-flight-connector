@@ -41,8 +41,6 @@ signals:
 
     void BoardConnectionMade(int con, int mode);
 
-    void updateLastValUI(QString lastVal);
-
     void logMessage(std::string message, LogLevel level);
 
 
