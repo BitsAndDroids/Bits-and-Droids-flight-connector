@@ -138,45 +138,35 @@ void MainWindow::toggleAdvanced() {
 void MainWindow::installWasm() {
     try {
         bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
-        QString pathfound;
+        QString pathfound = "";
         QString sourceString =
                 QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
         cout << sourceString.toStdString() << endl;
         if (customPathFound) {
             pathfound = pathHandler.getCommunityFolderPath();
         } else {
-            QString windowsStorePath =
-                    QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) +
-                    "/Packages/Microsoft.FlightSimulator_"
-                    "8wekyb3d8bbwe/LocalCache/packages/Community";
-            bool windowsFound = QDir(windowsStorePath).exists();
-            QString steamPath =
-                    QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) +
-                    "/AppData/Roaming/Microsoft Flight Simulator/Packages/Community";
-            bool steamFound = QDir(steamPath).exists();
+            auto notFoundMessage = new QMessageBox();
+            notFoundMessage->setInformativeText(
+                    "Could not find the community folder");
+            notFoundMessage->setStandardButtons(QMessageBox::Save |
+                                                QMessageBox::Cancel);
+            int ret = notFoundMessage->exec();
 
-            if (windowsFound) {
-                pathfound = windowsStorePath;
-            } else if (steamFound) {
-                pathfound = steamPath;
-            } else {
-                auto notFoundMessage = new QMessageBox();
-                notFoundMessage->setInformativeText(
-                        "Could not automatically find the community folder");
-                notFoundMessage->setStandardButtons(QMessageBox::Save |
-                                                    QMessageBox::Cancel);
-                int ret = notFoundMessage->exec();
+            if (ret == QMessageBox::Save) {
+                QFileDialog dialog(this);
+                dialog.setFileMode(QFileDialog::Directory);
 
-                if (ret == QMessageBox::Save) {
-                    QFileDialog dialog(this);
-                    dialog.setFileMode(QFileDialog::Directory);
-
-                    QString communityFolderPath = dialog.getExistingDirectory();
-                    settingsHandler.storeValue("Settings", "communityFolderPathLabel",
-                                               communityFolderPath);
+                QString communityFolderPath = dialog.getExistingDirectory();
+                settingsHandler.storeValue("Settings", "communityFolderPathLabel",
+                                           communityFolderPath);
+                pathfound = communityFolderPath;
+            } else{
+                if(pathfound == ""){
+                    throw std::logic_error("No path saved");
                 }
             }
         }
+
         QString destinationString = pathfound + "/BitsAndDroidsModule";
         copyFolder(sourceString, destinationString);
         MessageCaster::showCompleteMessage("WASM was sucesfully installed");
@@ -711,7 +701,6 @@ void MainWindow::startInputs(bool autoStart) {
             settingsHandler.storeValue("inputComs", key,
                                        convertComPort(keyValue).c_str());
         }
-
         inputThread.start();
     } else {
         auto *startButton =

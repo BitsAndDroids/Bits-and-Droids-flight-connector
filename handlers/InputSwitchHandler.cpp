@@ -621,9 +621,8 @@ void InputSwitchHandler::switchHandling(int index) {
         }
         catch (std::exception &e) {
             emit logMessage(
-                    "Received data: " + std::string(receivedString[index]) ,
+                    "Received data: " + std::string(receivedString[index]) + " " + e.what(),
                     LogLevel::ERRORLOG);
-            cout << e.what() << endl;
         }
     }
 }
