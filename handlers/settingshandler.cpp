@@ -42,8 +42,8 @@ QStringList* SettingsHandler::retrieveSubKeys(QString group, QString subGroup) {
   return keys;
 }
 
-QVariant* SettingsHandler::retrieveSetting(QString group, QString key) {
-  QVariant* value = new QVariant();
+QVariant* SettingsHandler::retrieveSetting(const QString& group, const QString& key) {
+  auto* value = new QVariant();
   settings->beginGroup(group);
   *value = settings->value(key);
   settings->endGroup();

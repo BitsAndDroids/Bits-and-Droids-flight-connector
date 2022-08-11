@@ -20,7 +20,7 @@ COMMTIMEOUTS cto;
 SerialPort::SerialPort(const char *portName) {
   std::cout << portName << std::endl;
   this->connected = false;
-
+  this->portName = std::string(portName);
   this->handler =
       CreateFileA(static_cast<LPCSTR>(portName), GENERIC_READ | GENERIC_WRITE,
                   0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -128,3 +128,7 @@ bool SerialPort::isConnected() {
 }
 
 void SerialPort::closeSerial() { CloseHandle(this->handler); }
+
+std::string SerialPort::getPortName() {
+    return this->portName;
+}

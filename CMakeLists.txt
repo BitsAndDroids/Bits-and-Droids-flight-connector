@@ -34,6 +34,11 @@ set(PROJECT_SOURCES
         workers/InputWorker.cpp workers/InputWorker.h
         workers/InputMapper.h workers/inputmapper.cpp
         workers/outputworker.cpp workers/outputworker.h
+        workers/serviceworker.cpp workers/serviceworker.h
+
+        services/LoggerService.cpp services/LoggerService.h
+
+        stores/LoggerStore.cpp stores/LoggerStore.h
 
         elements/ModeIndexCheckbox.cpp elements/ModeIndexCheckbox.h
         elements/ModeIndexCombobox.cpp elements/ModeIndexCombobox.h
@@ -45,6 +50,7 @@ set(PROJECT_SOURCES
         enums/inputenum.cpp enums/inputenum.h
         enums/outputenum.cpp enums/outputEnum.h
         enums/CurveTypeEnum.h
+        enums/LogLevelEnum.h
 
         models/events/Event.h
         models/events/EventDatatype.cpp models/events/EventDatatype.h
@@ -64,6 +70,7 @@ set(PROJECT_SOURCES
         models/settings/range.cpp
         models/aircraft/Axis.cpp models/aircraft/Axis.h
         models/aircraft/CurveAxis.cpp models/aircraft/CurveAxis.h
+        models/Log.cpp models/Log.h
 
         widgets/eventeditor/eventwindow.cpp widgets/eventeditor/eventwindow.h widgets/eventeditor/eventwindow.ui
         widgets/codegenerator/CodeGeneratorWindow.cpp widgets/codegenerator/CodeGeneratorWindow.h
@@ -89,6 +96,7 @@ set(PROJECT_SOURCES
         rungaurd/RunGuard.cpp rungaurd/RunGuard.h
 
         logging/Logger.cpp logging/Logger.h
+        logging/LogWindow.cpp logging/LogWindow.h
         logging/MessageCaster.cpp logging/MessageCaster.h
         utils/OutputConverters.cpp utils/OutputConverters.h
         enums/OutputModesEnum.h models/commands/Input.cpp models/commands/Input.h utils/InputReader.cpp utils/InputReader.h)

@@ -22,6 +22,7 @@ class SerialPort {
   DWORD errors;
   SettingsHandler settingsHandler;
   int arduinoWaitTime = 15;
+  std::string portName;
 
  public:
   explicit SerialPort(const char *portName);
@@ -31,4 +32,5 @@ class SerialPort {
   bool writeSerialPort(const char *buffer, unsigned int buf_size);
   bool isConnected();
   void closeSerial();
+  std::string getPortName();
 };

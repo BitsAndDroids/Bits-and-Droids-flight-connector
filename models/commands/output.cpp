@@ -25,3 +25,8 @@ QJsonObject Output::toJson() const {
                          {"offset", this->offset}};
   return jsonOutput;
 }
+
+void Output::setDelay(uint8_t delayToSet) { this->delay = delayToSet; }
+
+uint8_t Output::getDelay() { return this->delay; }
+

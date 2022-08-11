@@ -14,6 +14,7 @@
 #include "enums/CurveTypeEnum.h"
 #include "models/aircraft/CurveAxis.h"
 #include "models/commands/Input.h"
+#include "enums/LogLevelEnum.h"
 #include <tchar.h>
 #include <windows.h>
 
@@ -24,7 +25,8 @@
 
 using namespace std;
 
-class InputSwitchHandler {
+class InputSwitchHandler: public QObject {
+    Q_OBJECT
 public:
     InputSwitchHandler();
 
@@ -43,17 +45,13 @@ public:
     void setRanges();
 
     void setCurve(QList<coordinates> curve, CurveTypeEnum curveType);
-
-private slots:
-    SettingsHandler settingsHandler;
-
-
-
+signals:
+    void logMessage(std::string message, LogLevel level);
 
 private:
     std::map<int, Input> inputs;
     std::string prefix;
-
+    SettingsHandler settingsHandler;
     Axis elevatorTrimAxis = Axis(0, 1023, InputEnum::DEFINITION_ELEVATOR_TRIM_SET);
     Axis mixtureRanges[constants::supportedMixtureLevers];
     Axis propellerRanges[constants::supportedPropellerLevers];

@@ -37,12 +37,12 @@
     },
     {
       "type": 0,
-      "event": "COM1_STANDBY_SWAP",
+      "event": "COM1_RADIO_SWAP",
       "prefix": 116
     },
     {
       "type": 0,
-      "event": "COM_2_STANDBY_SWAP",
+      "event": "COM2_RADIO_SWAP",
       "prefix": 117
     },
     {

@@ -19,6 +19,7 @@
 
 #include "serial/SerialPort.hpp"
 #include "constants.h"
+#include "workers/ServiceWorker.h"
 
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
@@ -56,7 +57,7 @@ public slots:
 
 signals:
 
-    void updateEventFile(int cmd);
+    void sendWASMCommand(const char *data);
 
     void closedOutputMenu();
 
@@ -97,6 +98,8 @@ private slots:
     std::string convertComPort(QString comText);
 
     void openGenerateCodeMenu();
+
+    void openLoggingWindow();
 
     void openCalibrateAxis();
 
@@ -164,6 +167,7 @@ private:
     const char *portNameLocal;
     QPushButton *updateButton;
     QPushButton *switchButton;
+    ServiceWorker serviceworker;
     DualWorker dualThread;
     OutputWorker outputThread;
     InputWorker inputThread;

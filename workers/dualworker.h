@@ -23,13 +23,15 @@
 
 #include "models/SimConnect.h"
 #include "strsafe.h"
+#include "enums/LogLevelEnum.h"
+#include "utils/OutputConverters.h"
 
 typedef QList<QString> ComsList;
 
 class DualWorker : public QThread {
 Q_OBJECT
 
-    void run() override { RadioEvents(); }
+    void run() override { eventLoop(); }
 
 signals:
 
@@ -39,15 +41,18 @@ signals:
 
     void BoardConnectionMade(int con, int mode);
 
-    void updateLastValUI(QString lastVal);
+    void logMessage(std::string message, LogLevel level);
+
 
 private:
     // ...
+    bool connected = false;
+    void setConnected(bool connectedToSim);
     SettingsHandler settingsHandler;
     SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
     outputHandler outputHandler;
     QList<outputBundle *> *outputBundles = new QList<outputBundle *>();
-    InputSwitchHandler dualInputHandler = InputSwitchHandler();
+    InputSwitchHandler *dualInputHandler;
     InputMapper dualInputMapper = InputMapper();
     outputMapper *dualOutputMapper = new outputMapper();
 
@@ -63,10 +68,10 @@ private:
     QStringList *keys = new QStringList();
 
     void lastReceived(QString value);
-
+    OutputConverters converter = OutputConverters();
     std::map<int, Input>inputs = std::map<int, Input>();
 public:
-    void setInputs(std::map<int, Input>inputs);
+    void setInputs(std::map<int, Input>inputsToSet);
 
     void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
 
@@ -81,7 +86,7 @@ public:
     QMutex mutex;
     QWaitCondition condition;
 
-    void RadioEvents();
+    void eventLoop();
 
     void clearBundles();
 
