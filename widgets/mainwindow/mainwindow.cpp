@@ -691,9 +691,8 @@ void MainWindow::startMode(int mode) {
 }
 
 void MainWindow::startInputs(bool autoStart) {
-    auto *widget = new QWidget();
+    auto widget = ui->inWidgetContainer;
     inputThread.abortInput = false;
-    widget = ui->inWidgetContainer;
     settingsHandler.clearKeys("runningInputComs");
     QRegularExpression search("comBox");
     QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
@@ -739,10 +738,9 @@ void MainWindow::startInputs(bool autoStart) {
 }
 
 void MainWindow::startOutputs(bool autoStart) {
-    auto *widget = new QWidget();
+    auto widget = ui->outWidgetContainer;
     auto *startButton =
             ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
-    widget = ui->outWidgetContainer;
 
     settingsHandler.clearKeys("runningOutputComs");
     settingsHandler.clearKeys("runningOutputSets");

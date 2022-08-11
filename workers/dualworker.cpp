@@ -244,7 +244,7 @@ void DualWorker::addBundle(outputBundle *bundle) {
     outputBundles->append(bundle);
 }
 
-void DualWorker::RadioEvents() {
+void DualWorker::eventLoop() {
     HRESULT hr;
 
     keys = settingsHandler.retrieveKeys("runningDualComs");
@@ -348,12 +348,13 @@ void DualWorker::RadioEvents() {
             connected = false;
         }
         if(!abortDual){
-            sleep(10);
+            std::this_thread::sleep_for(std::chrono::seconds (10));
+            eventLoop();
         }
 
     }
     if (!abortDual) {
-        RadioEvents();
+        eventLoop();
     } else {
         for (int i = 0; i < keys->size(); i++) {
             if (dualPorts[i]->isConnected()) {

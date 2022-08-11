@@ -31,7 +31,7 @@ typedef QList<QString> ComsList;
 class DualWorker : public QThread {
 Q_OBJECT
 
-    void run() override { RadioEvents(); }
+    void run() override { eventLoop(); }
 
 signals:
 
@@ -86,7 +86,7 @@ public:
     QMutex mutex;
     QWaitCondition condition;
 
-    void RadioEvents();
+    void eventLoop();
 
     void clearBundles();
 

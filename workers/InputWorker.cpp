@@ -166,7 +166,7 @@ void InputWorker::inputEvents() {
 
             SimConnect_MapClientDataNameToID(hInputSimConnect, "shared",
                                              ClientDataID);
-            hr = SimConnect_CreateClientData(
+            SimConnect_CreateClientData(
                     hInputSimConnect, ClientDataID, 4096,
                     SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
 

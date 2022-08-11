@@ -29,12 +29,10 @@ LogWindow::LogWindow() {
 void LogWindow::addLogRow(const Log& log) {
 
     this->logList.push_back(log);
-
     logTable->setRowCount((int)logList.size());
     logTable->setItem((int)logList.size() - 1, 0, new QTableWidgetItem(QString::fromStdString(log.getLevelString())));
     logTable->setItem((int)logList.size()-1, 1, new QTableWidgetItem(QString::fromStdString(log.getMessage())));
     logTable->setItem((int)logList.size()-1, 2, new QTableWidgetItem(QString::fromStdString(log.getTimeString())));
-
     logTable->scrollToBottom();
 }
 
@@ -43,7 +41,6 @@ void LogWindow::openWindow() {
     loadLogs();
     auto widgetLayout = new QVBoxLayout();
     this->setLayout(widgetLayout);
-    //this->setFixedWidth(750);
     this->resize(600, 500);
     auto logRowWidget = new QWidget();
     auto logVBoxLayout = new QVBoxLayout();
@@ -66,7 +63,6 @@ LogWindow::~LogWindow() {
 void LogWindow::loadLogs() {
 
     LoggerStore loggerStore = LoggerStore();
-    loggerStore.clearLogs();
     std::vector<Log> *logs = loggerStore.getLogs();
     const clock_t begin_time = clock();
     logTable->setRowCount((int)logs->size());
@@ -77,7 +73,6 @@ void LogWindow::loadLogs() {
     }
     const clock_t totalTime = clock() - begin_time;
     logTable->scrollToBottom();
-    std::cout<<"LOADING ROWS TOOK "<< totalTime<<std::endl;
 }
 
 
