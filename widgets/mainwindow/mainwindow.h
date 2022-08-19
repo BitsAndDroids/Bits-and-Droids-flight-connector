@@ -4,7 +4,7 @@
 #include "workers/InputWorker.h"
 #include "workers/dualworker.h"
 #include "workers/outputworker.h"
-#include "handlers/sethandler.h"
+#include "outputmenu/handlers/sethandler.h"
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qstandardpaths.h>
@@ -171,7 +171,7 @@ private:
     DualWorker dualThread;
     OutputWorker outputThread;
     InputWorker inputThread;
-    QList<set> *availableSets;
+    QList<Set> *availableSets;
     FormBuilder formbuilder;
     Ui::MainWindow *ui;
 

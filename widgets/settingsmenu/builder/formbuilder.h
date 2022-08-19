@@ -2,8 +2,8 @@
 #define FORMBUILDER_H
 
 #include "handlers/outputhandler.h"
-#include "models/commands/set.h"
-#include "handlers/sethandler.h"
+#include "models/commands/Set.h"
+#include "outputmenu/handlers/sethandler.h"
 #include <qstring.h>
 #include <qtabwidget.h>
 
@@ -51,11 +51,11 @@ public:
     QGridLayout *generateOutputControls() const;
     // QVBoxLayout *generateActiveSet();
 
-    QWidget *generateSetRow(const set &setForRow);
+    QWidget *generateSetRow(const Set &setForRow);
 
     QHBoxLayout *generateOutputRow(Output *output);
 
-    static QWidget *generateActiveSet(set *selectedSet);
+    static QWidget *generateActiveSet(Set *selectedSet);
 
     static QLabel *generateHeader(const QString &text);
 
@@ -63,7 +63,7 @@ public:
 
     QWidget *generateComControls(int mode);
 
-    QList<set> *getAvailableSets() { return availableSets; };
+    QList<Set> *getAvailableSets() { return availableSets; };
 
     QList<QString> getAvailableComPorts() { return availableComPorts; };
 
@@ -134,7 +134,7 @@ private:
     QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
     SetHandler setHandler;
     SettingsHandler settingsHandler;
-    QList<set> *availableSets;
+    QList<Set> *availableSets;
     QList<QString> availableComPorts;
 
     void updateChart(int number);

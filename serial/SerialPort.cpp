@@ -60,7 +60,7 @@ SerialPort::SerialPort(const char *portName) {
       dcbSerialParameters.fDtrControl = DTR_CONTROL_ENABLE;
 
       if (!SetCommState(handler, &dcbSerialParameters)) {
-        std::cout << "ALERT: could not set serial port parameters\n";
+        std::cout << "ALERT: could not Set serial port parameters\n";
       } else {
         this->connected = true;
         PurgeComm(this->handler, PURGE_RXCLEAR | PURGE_TXCLEAR);

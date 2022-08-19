@@ -69,7 +69,7 @@ void InputSwitchHandler::mapInputs() {
     }
 }
 
-//TODO unified set implementation
+//TODO unified Set implementation
 
 void InputSwitchHandler::setRanges() {
     InputEnum::DATA_DEFINE_ID_INPUT engineEvents[] = {

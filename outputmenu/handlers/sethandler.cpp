@@ -5,7 +5,7 @@
 
 SetHandler::SetHandler() { setList = loadSets(); }
 
-set *SetHandler::saveSet(set *setToSave) {
+Set *SetHandler::saveSet(Set *setToSave) {
   int counter;
   std::cout << "SET SAVED" << setToSave->getID() << std::endl;
   QString key;
@@ -42,9 +42,9 @@ set *SetHandler::saveSet(set *setToSave) {
   return setToSave;
 }
 
-QList<set> *SetHandler::loadSets() {
+QList<Set> *SetHandler::loadSets() {
   QList<QJsonDocument> documentList;
-  auto *setListFound = new QList<set>();
+  auto *setListFound = new QList<Set>();
 
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   std::cout << keys->size() << "keys" << std::endl;
@@ -52,7 +52,7 @@ QList<set> *SetHandler::loadSets() {
     QVariant *varFound = settingsHandler.retrieveSetting("sets", key);
     QJsonDocument foundDoc = varFound->toJsonDocument();
     QJsonObject foundObj = foundDoc.object();
-    set savedSet = fromJson(&foundDoc);
+    Set savedSet = fromJson(&foundDoc);
     setListFound->append(savedSet);
 
     documentList.append(foundDoc);
@@ -80,16 +80,16 @@ void SetHandler::updateSets() {
   }
 }
 
-set SetHandler::getSetById(QString id) {
-  set setFound;
+Set SetHandler::getSetById(QString id) {
+  Set setFound;
   QJsonDocument foundSetJson =
       settingsHandler.retrieveSetting("sets", id)->toJsonDocument();
   setFound = fromJson(&foundSetJson);
   return setFound;
 }
 
-set SetHandler::fromJson(QJsonDocument *docToConvert) {
-  set convertedSet;
+Set SetHandler::fromJson(QJsonDocument *docToConvert) {
+  Set convertedSet;
   QMap<int, Output *> *outputsConverted = new QMap<int, Output *>();
   QJsonObject objToConvert = docToConvert->object();
   convertedSet.setSetId(objToConvert.value("setId").toInt());
@@ -121,8 +121,8 @@ set SetHandler::fromJson(QJsonDocument *docToConvert) {
   return convertedSet;
 }
 void SetHandler::removeOutputFromSet(int setId, int outputId) {
-  set setFound = getSetById(QString::number(setId));
-  std::cout << "remove from set" << std::endl;
+  Set setFound = getSetById(QString::number(setId));
+  std::cout << "remove from Set" << std::endl;
   setFound.removeOutput(outputId);
   saveSet(&setFound);
 }
@@ -130,4 +130,8 @@ void SetHandler::removeSet(QString id) {
   settingsHandler.removeSetting("sets", id);
   setList->clear();
   setList = loadSets();
+}
+
+void SetHandler::exportSet(QString id) {
+
 }

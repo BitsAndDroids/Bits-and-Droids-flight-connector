@@ -17,7 +17,7 @@
 #include "models/commands/output.h"
 #include "models/commands/outputbundle.h"
 #include "handlers/outputhandler.h"
-#include "widgets/outputmenu/outputmapper.h"
+#include "OutputMenu/outputmapper.h"
 
 class OutputWorker : public QThread {
   Q_OBJECT

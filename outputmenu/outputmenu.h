@@ -2,7 +2,7 @@
 #define OUTPUTMENU_H
 
 #include "handlers/outputhandler.h"
-#include "handlers/sethandler.h"
+#include "outputmenu/handlers/sethandler.h"
 
 #include <QSettings>
 #include <QStandardPaths>
@@ -29,10 +29,6 @@ class OutputMenu : public QWidget {
 
   void addNewSet();
 
-  void removeSetAction(QString id);
-
-  void editSet(QString id);
-
   void saveEdit();
 
  signals:
@@ -45,8 +41,6 @@ class OutputMenu : public QWidget {
 
   void saveEdited();
 
-  Q_SIGNAL void removeSet(QString id);
-
  private:
   bool open = false;
   int activeSet;
@@ -55,13 +49,15 @@ class OutputMenu : public QWidget {
   FormBuilder formBuilder;
 
   outputHandler *outputHandler = new class outputHandler();
-  Ui::OutputMenu *ui;
+
   QString path =
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
                                       QSettings::IniFormat);
 
   void closeEvent(QCloseEvent *event) override;
+
+    void addMenuBar();
 };
 
 #endif  // OUTPUTMENU_H

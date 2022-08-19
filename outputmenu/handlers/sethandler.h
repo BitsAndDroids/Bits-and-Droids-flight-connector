@@ -1,39 +1,41 @@
 #ifndef SETHANDLER_H
 #define SETHANDLER_H
 
-#include "settingshandler.h"
+#include "handlers/settingshandler.h"
 
 #include <QJsonArray>
 #include <QList>
 #include <QSettings>
 #include <QStandardPaths>
 
-#include "outputhandler.h"
-#include "models/commands/set.h"
+#include "handlers/outputhandler.h"
+#include "models/commands/Set.h"
 
 class SetHandler {
  public:
   SetHandler();
   bool outputsInitialized = false;
-  QList<set> *loadSets();
+  QList<Set> *loadSets();
 
-  set fromJson(QJsonDocument *docToConvert);
+  Set fromJson(QJsonDocument *docToConvert);
 
   void removeSet(QString id);
 
-  QList<set> *getSets() { return setList; };
+  QList<Set> *getSets() { return setList; };
 
-  set getSetById(QString id);
+  Set getSetById(QString id);
 
-  set *saveSet(set *setToSave);
+  Set *saveSet(Set *setToSave);
 
   void updateSets();
+
+  void exportSet(QString id);
 
  private:
   SettingsHandler settingsHandler;
   outputHandler *outputHandler = new class outputHandler();
-  // QList<set*> *savedSets = new QList<set*>();
-  QList<set> *setList;
+  // QList<Set*> *savedSets = new QList<Set*>();
+  QList<Set> *setList;
 
   void removeOutputFromSet(int setId, int outputId);
 };

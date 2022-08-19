@@ -4,12 +4,12 @@
 #include <QMap>
 #include "serial/SerialPort.hpp"
 
-#include "set.h"
+#include "Set.h"
 
 class outputBundle {
  public:
   outputBundle();
-  void setSet(set set) { this->set = set; };
+  void setSet(Set set) { this->set = set; };
   void setSerialPort(SerialPort serialPort) { this->arduino = &serialPort; };
   void setOutputsInSet(QMap<int, Output *> outputs) {
     this->outputsInSet = outputs;
@@ -22,7 +22,7 @@ class outputBundle {
   bool isOutputInBundle(int id);
 
  private:
-  set set;
+  Set set;
   SerialPort *arduino;
   const char *portString;
   QMap<int, Output *> outputsInSet;
