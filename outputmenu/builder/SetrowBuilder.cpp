@@ -10,7 +10,7 @@ QWidget* SetrowBuilder::buildSetrowContainer(){
     auto setContainer = new QWidget();
     setContainer->setObjectName("SetListContainer");
     auto setContainerVLayout = new QVBoxLayout(setContainer);
-
+    setContainerVLayout->addItem(new QSpacerItem(0, 30, QSizePolicy::Fixed, QSizePolicy::Fixed));
     for(auto & i : *foundSets){
         buildSetrow(i, setContainerVLayout);
     }

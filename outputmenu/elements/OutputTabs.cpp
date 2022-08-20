@@ -9,8 +9,10 @@
 #include "handlers/outputhandler.h"
 
 OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
-    auto tabLayout = new QHBoxLayout();
+    auto tabLayout = new QVBoxLayout();
     this->setLayout(tabLayout);
+    tabLayout->addItem(new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed));
+    tabLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
     auto *outputTabs = new QTabWidget();
     outputTabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

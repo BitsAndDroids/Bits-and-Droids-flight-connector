@@ -77,7 +77,6 @@ OutputMenu::OutputMenu(QWidget *parent)
 //    connect(this, &OutputMenu::editSet, )
 
     this->setStyleSheet("background-color:#487f94;");
-
     this->show();
 }
 
