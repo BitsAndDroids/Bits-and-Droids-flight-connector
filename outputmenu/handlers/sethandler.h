@@ -29,15 +29,20 @@ class SetHandler {
 
   void updateSets();
 
-  void exportSet(QString id);
+  void exportSet(const QString& id, const QString& fileName);
+
+  void importSet(const QString& filePath);
 
  private:
+
   SettingsHandler settingsHandler;
   outputHandler *outputHandler = new class outputHandler();
   // QList<Set*> *savedSets = new QList<Set*>();
   QList<Set> *setList;
 
   void removeOutputFromSet(int setId, int outputId);
+
+    QJsonDocument* setToJSON(Set *setToConvert);
 };
 
 #endif  // SETHANDLER_H

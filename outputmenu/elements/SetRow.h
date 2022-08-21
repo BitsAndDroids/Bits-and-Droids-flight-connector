@@ -8,12 +8,10 @@
 
 #include <QWidget>
 #include "models/commands/Set.h"
-#include "outputmenu/outputmenu.h"
+#include "outputmenu/handlers/sethandler.h"
 
 class SetRow : public QWidget {
 Q_OBJECT
-
-
 private:
     SetHandler setHandler = SetHandler();
 private slots:
@@ -27,12 +25,14 @@ protected:
     void mousePressEvent(QMouseEvent*);
 
 public:
-    explicit SetRow(const Set &setForRow);
+    explicit SetRow(const Set &setForRow, QWidget *parent = nullptr);
 
 signals:
     void editSetSignal(QString id);
 
     void clickedSignal(QString id);
+
+    void deleteSetSignal(QString id);
 };
 
 

@@ -1,14 +1,14 @@
 #include <iostream>
 #include "outputmenu.h"
-#include "outputmenu/builder/SetrowBuilder.h"
 #include "outputmenu/builder/OutputTabBuilder.h"
 #include "outputmenu/elements/SetDetails.h"
+#include "logging/MessageCaster.h"
 
 OutputMenu::OutputMenu(QWidget *parent)
         : QWidget(parent) {
 
     this->setWindowTitle("Output menu");
-
+    this->setObjectName("outputMenu");
     auto outputMenuVLayout = new QVBoxLayout(this);
     auto outputMenuLayout = new QHBoxLayout();
     //objectname is used to identify the widget when displaying ui components
@@ -20,21 +20,32 @@ OutputMenu::OutputMenu(QWidget *parent)
     outputMenuVLayout->addLayout(outputMenuLayout);
     outputMenuLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
     //We pass this OutputMenu to the builder so it can connect showSetDetails when a setrow is clicked
-    auto setrowBuilder = SetrowBuilder(this);
     outputMenuLayout->addWidget(setrowBuilder.buildSetrowContainer());
-    outputMenuLayout->addWidget(
-            setDetaisBuilder.buildOutputDetailsContainer(QString::number(setHandler.getSets()->first().getID())));
+
+    if (!setHandler.getSets()->empty()) {
+        outputMenuLayout->addWidget(
+                setDetaisBuilder.buildOutputDetailsContainer(QString::number(setHandler.getSets()->first().getID())));
+    } else{
+        outputMenuLayout->addWidget(setDetaisBuilder.buildOutputDetailsContainer());
+    }
+
     outputMenuLayout->addWidget(outputTabBuilder.buildOutputTabContainer());
 
     this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
     this->setMinimumHeight(500);
-    this->setStyleSheet("background-color:#487f94;");
+    this->setStyleSheet("QWidget#outputMenu{background-color:#487f94;}");
     this->show();
+
+    QObject::connect(&outputTabBuilder, &OutputTabBuilder::setEdited, this, &OutputMenu::showSetDetails);
+
+    connect(&setrowBuilder, &SetrowBuilder::showSetDetailsSignal, this, &OutputMenu::showSetDetails);
+    connect(&setrowBuilder, &SetrowBuilder::editSetSignal, this, &OutputMenu::editSet);
+    connect(&setrowBuilder, &SetrowBuilder::deleteSetSignal, this, &OutputMenu::deleteSet);
+    connect(&setrowBuilder, &SetrowBuilder::createSetSignal, this, &OutputMenu::createSet);
 }
 
 OutputMenu::~OutputMenu() {
     emit OutputMenu::closedOutputMenu();
-    delete this;
 }
 
 void OutputMenu::addMenuBar() {
@@ -44,12 +55,21 @@ void OutputMenu::addMenuBar() {
                            "    spacing: 3px; /* spacing between menu bar items */\n"
                            "}");
     auto *setMenu = new QMenu("Sets");
-    setMenu->addAction("Create set");
-    setMenu->addAction("Import Set");
+
+    auto createSetAction = new QAction("Create set");
+    setMenu->addAction(createSetAction);
+
+    auto importSetAction = new QAction("Import set");
+    setMenu->addAction(importSetAction);
+
     menuBar->addMenu(setMenu);
     //display menuBar full width of window
     menuBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     this->layout()->setMenuBar(menuBar);
+
+    connect(createSetAction, &QAction::triggered, this, &OutputMenu::createSet);
+    connect(importSetAction, &QAction::triggered, this, &OutputMenu::importSet);
+
 }
 
 void OutputMenu::closeEvent(QCloseEvent *event) { delete this; }
@@ -59,70 +79,51 @@ void OutputMenu::editSet(QString id) {
     this->findChild<QWidget *>("outputTabWidget")->setVisible(true);
 }
 
-void OutputMenu::addNewSet() {
-//    auto *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
-//
-//    bool ok;
-//    QString name =
-//            QInputDialog::getText(this, tr("Name"), tr("Enter a name:"),
-//                                  QLineEdit::Normal, QDir::home().dirName(), &ok);
-//    if (ok && !name.isEmpty()) {
-//        auto *newSet = new Set(name);
-//
-//        Set *setSaved = setHandler.saveSet(newSet);
-//        ui->widget->findChild<QVBoxLayout *>("outputSetList")
-//                ->addWidget(formBuilder.generateSetRow(*setSaved));
-//    }
+void OutputMenu::createSet() {
+
+    bool ok;
+    QString name =
+            QInputDialog::getText(this, tr("Create a new set"), tr("Enter a descriptive name:"),
+                                  QLineEdit::Normal, QDir::home().dirName(), &ok);
+    if (ok && !name.isEmpty()) {
+        auto *newSet = new Set(name);
+
+        Set *setSaved = setHandler.saveSet(newSet);
+        setrowBuilder.createSet(QString::number(setSaved->getID()));
+        auto newSetsButton = this->findChild<QPushButton *>("newSetButton");
+        if(this->findChild<QPushButton *>("newSetButton")){
+            newSetsButton->setVisible(false);
+            showSetDetails(QString::number(setSaved->getID()));
+            this->adjustSize();
+            this->adjustSize();
+        }
+    }
 }
 
-//void OutputMenu::removeSetAction(QString id) {
-//    // QPushButton *btn = qobject_cast<QPushButton*>(test);
-//    std::cout << id.toInt() << " : SET TO DELETE" << std::endl;
-//    auto removeWidget = ui->widget->findChild<QWidget *>(id);
-//    removeWidget->hide();
-//    setHandler.removeSet(id);
-//    // delete removeWidget;
-//}
-//
-//void OutputMenu::editSet(QString id) {
-//    Set setFound = setHandler.getSetById(id);
-//
-//    qDebug() << "a";
-//    ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(true);
-//    ui->widget->findChild<QTabWidget *>("outputTabWidget")->setMaximumHeight(450);
-//    auto *widgetFound = ui->widget->findChild<QWidget *>("activeWidget");
-//
-//    delete widgetFound;
-//
-//    ui->widget->adjustSize();
-//
-//    auto *container = ui->widget->findChild<QGridLayout *>("rightGrid");
-//    QWidget * setActiveWidget = formBuilder.generateActiveSet(&setFound);
-//    container->setAlignment(Qt::AlignTop);
-//
-//    container->parentWidget()->setMinimumHeight(650);
-//    container->parentWidget()->setMaximumHeight(650);
-//    container->addWidget(setActiveWidget, 1, 0);
-//    auto *setHeader = ui->widget->findChild<QLabel *>("setNameHeader");
-//
-//    setHeader->setText(setFound.getSetName());
-//
-//    activeSet = id.toInt();
-//
-//    QMap<int, Output *> outputsToToggle = setFound.getOutputs();
-//    QMap<int, Output *>::iterator i;
-//
-//    for (i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
-//        if (this->findChild<QCheckBox *>("cb" +
-//                                         QString::number(i.value()->getId()))) {
-//            ui->widget
-//                    ->findChild<QCheckBox *>("cb" + QString::number(i.value()->getId()))
-//                    ->setChecked(true);
-//        }
-//    }
-//
-//    this->resize(1200, 650);
-//}
+void OutputMenu::deleteSet(QString id) {
+
+    try {
+        setHandler.removeSet(id);
+        auto widget = this->findChild<QWidget *>(id);
+        widget->setVisible(false);
+        widget->deleteLater();
+        if (setDetaisBuilder.getCurrentSetID() == id) {
+            if (!setHandler.getSets()->empty()) {
+                showSetDetails(QString::number(setHandler.getSets()->first().getID()));
+            } else {
+                this->findChild<QWidget *>("setDetailsContainer")->setVisible(false);
+            }
+        }
+    }
+    catch (std::exception &e) {
+        MessageCaster::showWarningMessage("Could not delete set\n" + QString::fromStdString(e.what()));
+    }
+    this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
+    //TODO find out why i have to call this twice
+    this->adjustSize();
+    this->adjustSize();
+}
+
 
 void OutputMenu::showSetDetails(QString id) {
     emit displaySetDetails(id);
@@ -131,31 +132,15 @@ void OutputMenu::showSetDetails(QString id) {
     this->layout()->replaceWidget(widgetFound, setDetaisBuilder.buildOutputDetailsContainer(id));
 
 
-
     this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
     widgetFound->deleteLater();
+    //TODO find out why i have to call this twice
     this->adjustSize();
     this->update();
     this->adjustSize();
 }
 
-void OutputMenu::saveEdit() {
-//    QList<QCheckBox *> cbList = ui->widget->findChildren<QCheckBox *>();
-//    Set setToEdit = setHandler.getSetById(QString::number(activeSet));
-//    setToEdit.clearOutputs();
-//    for (auto &i: cbList) {
-//        if (i->isChecked()) {
-//            QString cbName = i->objectName();
-//            if (outputHandler->findOutputById(cbName.mid(2).toInt())) {
-//                Output *outputSelected =
-//                        outputHandler->findOutputById(cbName.mid(2).toInt());
-//                setToEdit.addOutput(outputSelected);
-//            }
-//        }
-//    }
-//
-//    ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
-//    ui->widget->adjustSize();
-//    this->adjustSize();
-//    setHandler.saveSet(&setToEdit);
+void OutputMenu::importSet(){
+    auto filePath = QFileDialog::getOpenFileName(this, "Import set", "", "*.json");
+    setHandler.importSet(filePath);
 }

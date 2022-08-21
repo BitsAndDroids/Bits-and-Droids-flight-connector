@@ -19,7 +19,18 @@ QWidget* OutputDetailsBuilder::buildOutputDetailsContainer(QString id) {
     setToShow = setHandler.getSetById(std::move(id));
     auto setDetailsContainer = setDetails->generateSetDetails(this->setToShow);
 
-
     return setDetailsContainer;
 }
+QWidget* OutputDetailsBuilder::buildOutputDetailsContainer() {
+    auto setDetails = new SetDetails(this);
+    auto setPlaceholder = new Set();
+    setPlaceholder->setSetId(-1);
+    auto setDetailsContainer = setDetails->generateSetDetails(*setPlaceholder);
+    return setDetailsContainer;
+}
+
+QString OutputDetailsBuilder::getCurrentSetID() {
+    return QString::number(setToShow.getID());
+}
+
 

@@ -42,17 +42,6 @@ public:
 
     void setCurves(QStringList);
 
-    int getAmountOfEngines() { return engineHeaders.size(); };
-
-    static QTabWidget *generateOutputTabs();
-
-    static QVBoxLayout *generateOutputSetList();
-
-    QGridLayout *generateOutputControls() const;
-    // QVBoxLayout *generateActiveSet();
-
-    QWidget *generateSetRow(const Set &setForRow);
-
     QHBoxLayout *generateOutputRow(Output *output);
 
     static QWidget *generateActiveSet(Set *selectedSet);
@@ -74,10 +63,6 @@ public:
     void loadPointsToPlot(QStringList axis);
 
 private slots:
-
-    void localRemove();
-
-    void localEdit();
 
     void localStart();
 

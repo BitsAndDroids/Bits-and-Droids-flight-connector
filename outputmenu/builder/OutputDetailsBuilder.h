@@ -15,8 +15,10 @@ private:
     Set setToShow;
 public:
     OutputDetailsBuilder(QWidget *parent = nullptr);
+    QString getCurrentSetID();
 public slots:
     QWidget* buildOutputDetailsContainer(QString id);
+    QWidget* buildOutputDetailsContainer();
 
 
 };

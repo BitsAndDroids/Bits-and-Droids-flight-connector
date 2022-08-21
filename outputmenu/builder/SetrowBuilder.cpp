@@ -2,41 +2,65 @@
 // Created by DaveRiedel on 17-8-2022.
 //
 
+#include <QLabel>
+#include <QPushButton>
 #include "SetrowBuilder.h"
-#include "models/commands/Set.h"
 
-void editSet();
 
-QWidget* SetrowBuilder::buildSetrowContainer(){
-    auto setHandler = SetHandler();
-    auto *foundSets = setHandler.getSets();
-    auto setContainer = new QWidget();
-    setContainer->setObjectName("SetListContainer");
-    auto setContainerVLayout = new QVBoxLayout(setContainer);
-    setContainerVLayout->addItem(new QSpacerItem(0, 30, QSizePolicy::Fixed, QSizePolicy::Fixed));
-    for(auto & i : *foundSets){
-        buildSetrow(i, setContainerVLayout);
-    }
-    for(auto & row : setRows){
-        QObject::connect(row, &SetRow::clickedSignal, parent, &OutputMenu::showSetDetails);
-        QObject::connect(row, &SetRow::editSetSignal, parent, &OutputMenu::editSet);
-    }
-    setContainerVLayout->setAlignment(Qt::AlignTop);
-    setContainer->setStyleSheet(
-                        "border-radius:5px;"
-                        "background-color:#487f94;");
-    setContainer->setFixedWidth(375);
-
-    return setContainer;
+QWidget *SetrowBuilder::buildSetrowContainer() {
+    return this;
 }
-void SetrowBuilder::buildSetrow(const Set setForRow, QVBoxLayout* parent) {
+
+void SetrowBuilder::buildSetrow(const Set &setForRow) {
     auto setrow = new SetRow(setForRow);
+    connect(setrow, SIGNAL(clickedSignal(QString)), SIGNAL(showSetDetailsSignal(QString)));
+    connect(setrow, SIGNAL(editSetSignal(QString)), SIGNAL(editSetSignal(QString)));
+    connect(setrow, SIGNAL(deleteSetSignal(QString)), SIGNAL(deleteSetSignal(QString)));
     setRows.push_back(setrow);
-    parent->addWidget(setrow);
+    this->layout()->addWidget(setrow);
 }
 
-
-
-SetrowBuilder::SetrowBuilder(OutputMenu *parent) {
-    this->parent = parent;
+void SetrowBuilder::createSet(QString id) {
+    auto setHandler = SetHandler();
+    buildSetrow(setHandler.getSetById(id));
 }
+
+SetrowBuilder::SetrowBuilder(QWidget *parent) : QWidget(parent) {
+    auto setHandler = SetHandler();
+    this->setObjectName("setRowBuilder");
+    auto *foundSets = setHandler.getSets();
+
+    this->setObjectName("SetListContainer");
+
+    auto setContainerVLayout = new QVBoxLayout();
+    this->setLayout(setContainerVLayout);
+    setContainerVLayout->addItem(new QSpacerItem(0, 30, QSizePolicy::Fixed, QSizePolicy::Fixed));
+
+    for (auto &i: *foundSets) {
+        buildSetrow(i);
+    }
+
+    if (foundSets->empty()) {
+        auto newSetButton = new QPushButton("Click here to create your first set");
+        newSetButton->setObjectName("newSetButton");
+        newSetButton->setStyleSheet("QPushButton#newSetButton {"
+                                    "background-color: white;"
+                                    "margin:10px;"
+                                    "padding: 5px;"
+                                    "border-radius:5px;"
+                                    "font: bold 14px;"
+                                    "}");
+        setContainerVLayout->addWidget(newSetButton);
+        connect(newSetButton, &QPushButton::clicked, this, &SetrowBuilder::createSetSignal);
+    }
+
+    setContainerVLayout->setAlignment(Qt::AlignTop);
+    this->setStyleSheet(
+            "QWidget#setRowBuilder{"
+            "border-radius:5px;"
+            "background-color:#487f94;"
+            "}");
+    this->setFixedWidth(375);
+
+}
+

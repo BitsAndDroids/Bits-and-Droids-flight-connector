@@ -12,63 +12,68 @@
 #include "handlers/settingshandler.h"
 #include "outputmenu/builder/OutputDetailsBuilder.h"
 #include "outputmenu/builder/OutputTabBuilder.h"
+#include "outputmenu/builder/SetrowBuilder.h"
+
 
 namespace Ui {
-class OutputMenu;
+    class OutputMenu;
 }
 
 class OutputMenu : public QWidget {
-  Q_OBJECT
+Q_OBJECT
 
- public:
-  explicit OutputMenu(QWidget *parent = nullptr);
+public:
+    explicit OutputMenu(QWidget *parent = nullptr);
 
-  ~OutputMenu();
+    ~OutputMenu();
 
-  bool isOpen() { return open; }
+    bool isOpen() { return open; }
 
- public slots:
+signals:
 
-  void addNewSet();
+    void closedOutputMenu();
 
-  void saveEdit();
+    void displaySetDetails(QString id);
 
-  void showSetDetails(QString id);
+    void editSetSignal(QString id);
 
-  void editSet(QString id);
+    void deleteSetSignal(QString id);
 
- signals:
+    void showSetDetailsSignal(QString id);
 
-  void closedOutputMenu();
+private:
 
-  void displaySetDetails(QString id);
+    bool open = false;
+    int activeSet;
+    SettingsHandler settingsHandler;
+    SetHandler setHandler;
+    FormBuilder formBuilder;
 
-  void addSet();
+    OutputDetailsBuilder setDetaisBuilder = OutputDetailsBuilder(this);
+    OutputTabBuilder outputTabBuilder = OutputTabBuilder(this);
+    SetrowBuilder setrowBuilder = SetrowBuilder(this);
+    outputHandler *outputHandler = new class outputHandler();
 
-  void setEdited(QString id);
+    QString path =
+            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
+                                        QSettings::IniFormat);
 
-  void saveEdited();
-
- private:
-  bool open = false;
-  int activeSet;
-  SettingsHandler settingsHandler;
-  SetHandler setHandler;
-  FormBuilder formBuilder;
-  OutputDetailsBuilder setDetaisBuilder = OutputDetailsBuilder(this);
-  OutputTabBuilder outputTabBuilder = OutputTabBuilder(this);
-  outputHandler *outputHandler = new class outputHandler();
-
-  QString path =
-      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-  QSettings *settings = new QSettings(path + "/Bits and Droids/settings.ini",
-                                      QSettings::IniFormat);
-
-  void closeEvent(QCloseEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
     void addMenuBar();
 
     void editEvent(QString id);
+
+private slots:
+    void deleteSet(QString id);
+
+    void showSetDetails(QString id);
+
+    void editSet(QString id);
+
+    void importSet();
+    void createSet();
 };
 
 #endif  // OUTPUTMENU_H

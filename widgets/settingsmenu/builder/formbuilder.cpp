@@ -442,30 +442,6 @@ QVBoxLayout *FormBuilder::generateComColumn(int index) {
     return comColumn;
 }
 
-QGridLayout *FormBuilder::generateOutputControls() const {
-    auto *outputControls = new QGridLayout();
-    outputControls->setAlignment(Qt::AlignLeft);
-    auto *saveSet = new QPushButton("Add Set");
-    connect(saveSet, &QAbstractButton::clicked, this, &FormBuilder::addSet);
-    outputControls->addWidget(saveSet, 0, 0);
-    return outputControls;
-}
-
-QVBoxLayout *FormBuilder::generateOutputSetList() {
-    auto *outputSetList = new QVBoxLayout();
-    outputSetList->setObjectName("outputSetList");
-    auto *listHeader = new QLabel("Saved sets");
-    QFont font = listHeader->font();
-    font.setBold(true);
-    font.setPointSize(24);
-    listHeader->setFont(font);
-
-    outputSetList->addWidget(listHeader);
-
-    return outputSetList;
-}
-
-
 void FormBuilder::loadComPortData() {
     availableComPorts.clear();
 
@@ -482,16 +458,6 @@ QHBoxLayout *FormBuilder::generateOutputRow(Output *output) {
     auto *outputName = new QLabel(output->getCbText());
     row->addWidget(outputName);
     return row;
-}
-
-void FormBuilder::localRemove() {
-    auto *button = qobject_cast<QPushButton *>(sender());
-    emit removeSet(button->parentWidget()->objectName());
-}
-
-void FormBuilder::localEdit() {
-    auto *button = qobject_cast<QPushButton *>(sender());
-    emit setEdited(button->parentWidget()->objectName());
 }
 
 QLabel *FormBuilder::generateHeader(const QString &text) {

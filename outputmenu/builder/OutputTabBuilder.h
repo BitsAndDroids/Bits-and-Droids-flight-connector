@@ -18,6 +18,9 @@ public:
     OutputTabBuilder(QWidget *parent = nullptr);
 
     QWidget *buildOutputTabContainer();
+    signals:
+    void setEdited(QString id);
+
 
 public slots:
 

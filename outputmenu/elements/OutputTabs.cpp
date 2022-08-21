@@ -119,12 +119,11 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
                               "border-top-left-radius: 4px;"
                               "border-top-right-radius: 4px;"
                               "}");
-    outputTabs->setMinimumWidth(500);
+    outputTabs->setMinimumWidth(600);
 
     tabLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
     tabHLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
 }
 
 OutputTabs::~OutputTabs() {
-    delete this;
 }

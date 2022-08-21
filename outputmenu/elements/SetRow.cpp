@@ -5,12 +5,11 @@
 #include <QLabel>
 #include <QPushButton>
 #include <iostream>
+#include <QFileDialog>
 #include "SetRow.h"
 #include "elements/MPushButton.h"
 
-void clickSet();
-
-SetRow::SetRow(const Set &setForRow): QWidget() {
+SetRow::SetRow(const Set &setForRow, QWidget * parent): QWidget(parent) {
     this->setObjectName(QString::number(setForRow.getID()));
     auto rowHLayout = new QHBoxLayout(this);
     rowHLayout->setObjectName("setRowLayout");
@@ -40,10 +39,12 @@ SetRow::SetRow(const Set &setForRow): QWidget() {
 
 void SetRow::deleteSet(){
     setHandler.removeSet(this->objectName());
+    emit deleteSetSignal(this->objectName());
 }
 
 void SetRow::exportSet(){
-    setHandler.exportSet(this->objectName());
+    auto filePath = QFileDialog::getSaveFileName(this, "Select folder", "", "*.json");
+    setHandler.exportSet(this->objectName(), filePath);
 }
 
 void SetRow::editSet(){

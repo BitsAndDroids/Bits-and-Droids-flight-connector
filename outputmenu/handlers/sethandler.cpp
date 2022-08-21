@@ -1,7 +1,11 @@
 #include "sethandler.h"
+#include "logging/MessageCaster.h"
 
 #include <QJsonDocument>
 #include <iostream>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
 
 SetHandler::SetHandler() { setList = loadSets(); }
 
@@ -23,20 +27,8 @@ Set *SetHandler::saveSet(Set *setToSave) {
     key = QString::number(counter);
   }
 
-  auto *document = new QJsonDocument();
 
-  QMap<int, Output *> outputs = setToSave->getOutputs();
-  QJsonArray jsonArray;
-  QMap<int, Output *>::iterator i;
-  for (i = outputs.begin(); i != outputs.end(); i++) {
-    jsonArray.append(i.value()->toJson());
-  }
-  QJsonObject object{{"setName", setToSave->getSetName()},
-                     {"setId", setToSave->getID()},
-                     {"outputs", jsonArray}};
-  qDebug() << "OBJECT TO SAVE" << object;
-  document->setObject(object);
-  QVariant jsonVariant = *document;
+  QVariant jsonVariant = *setToJSON(setToSave);
   settingsHandler.storeValue("sets", key, jsonVariant);
   setList = loadSets();
   return setToSave;
@@ -96,7 +88,7 @@ Set SetHandler::fromJson(QJsonDocument *docToConvert) {
   convertedSet.setSetName(objToConvert.value("setName").toString());
 
   QJsonArray outputJSONArray = objToConvert.value("outputs").toArray();
-  qDebug() << "sizeofjsonaarray" << outputJSONArray.size();
+
   for (auto value : outputJSONArray) {
     QJsonObject tempObj = value.toObject();
 
@@ -120,6 +112,24 @@ Set SetHandler::fromJson(QJsonDocument *docToConvert) {
   convertedSet.setOutputs(*outputsConverted);
   return convertedSet;
 }
+
+QJsonDocument* SetHandler::setToJSON(Set *setToConvert) {
+    auto *document = new QJsonDocument();
+
+    QMap<int, Output *> outputs = setToConvert->getOutputs();
+    QJsonArray jsonArray;
+    QMap<int, Output *>::iterator i;
+    for (i = outputs.begin(); i != outputs.end(); i++) {
+        jsonArray.append(i.value()->toJson());
+    }
+    QJsonObject object{{"setName", setToConvert->getSetName()},
+                       {"setId", setToConvert->getID()},
+                       {"outputs", jsonArray}};
+    qDebug() << "OBJECT TO SAVE" << object;
+    document->setObject(object);
+    return document;
+}
+
 void SetHandler::removeOutputFromSet(int setId, int outputId) {
   Set setFound = getSetById(QString::number(setId));
   std::cout << "remove from Set" << std::endl;
@@ -132,6 +142,34 @@ void SetHandler::removeSet(QString id) {
   setList = loadSets();
 }
 
-void SetHandler::exportSet(QString id) {
+void SetHandler::exportSet(const QString& id, const QString &fileName) {
+    if(fileName.isEmpty()) {
+        MessageCaster::showWarningMessage("Could not export set");
+        return;
+    }
+    auto setToExport = getSetById(id);
+    QJsonDocument *jsonDoc = setToJSON(&setToExport);
+    QFile file(fileName);
+    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
+    file.write(jsonDoc->toJson());
+    file.close();
+
+}
+
+void SetHandler::importSet(const QString& path) {
+    if(path.isEmpty()) {
+        MessageCaster::showWarningMessage("Could not import set");
+        return;
+    }
+    QFile importFile = QFile(path);
+    importFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QString importFileContent = importFile.readAll();
+    auto importedJSON = QJsonDocument::fromJson(importFileContent.toUtf8());
+    auto importedSet = fromJson(&importedJSON);
+    //We create a copy to ensure the set ID doesn't collide when exchanging output sets
+    auto importedSetCopy = new Set(importedSet.getSetName());
+    importedSetCopy->setOutputs(importedSet.getOutputs());
+    saveSet(&importedSet);
+    MessageCaster::showCompleteMessage("Imported set " + importedSet.getSetName());
 
 }

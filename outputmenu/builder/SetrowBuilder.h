@@ -9,21 +9,28 @@
 #include <QWidget>
 #include <QList>
 #include <QVBoxLayout>
-#include <models/set.h>
 #include "outputmenu/elements/SetRow.h"
+#include <models/commands/Set.h>
 
-class SetrowBuilder {
+
+class SetrowBuilder: public QWidget{
+    Q_OBJECT
 private:
+    void buildSetrow(const Set& set);
 
-    void buildSetrow(const Set set, QVBoxLayout* parent);
-    QList<SetRow*> setRows = QList<SetRow*>();
-    OutputMenu *parent;
+    QList<SetRow *> setRows = QList<SetRow *>();
+
 public:
-    SetrowBuilder(OutputMenu *parent);
-    QWidget* buildSetrowContainer();
+    SetrowBuilder(QWidget *parent = nullptr);
 
-public slots:
-    void showSetDetails(QString id);
+    QWidget *buildSetrowContainer();
+    void createSet(QString id);
+signals:
+    void showSetDetailsSignal(QString);
+    void editSetSignal(QString);
+    void deleteSetSignal(QString);
+    void createSetSignal();
+
 };
 
 

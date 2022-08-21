@@ -9,6 +9,7 @@
 #include "OutputTabBuilder.h"
 #include "outputmenu/elements/OutputTabs.h"
 #include "outputmenu/handlers/sethandler.h"
+#include "logging/MessageCaster.h"
 
 QWidget *OutputTabBuilder::buildOutputTabContainer() {
     auto outputTabContainer = new OutputTabs(this);
@@ -58,4 +59,7 @@ void OutputTabBuilder::saveEditedSet(){
         }
     }
     setHandler.saveSet(&setToEdit);
+    auto messageHandler = MessageCaster();
+    emit setEdited(activeSetId);
+    messageHandler.showCompleteMessage("Set saved");
 }

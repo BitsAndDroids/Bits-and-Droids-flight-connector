@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QScrollArea>
+#include <iostream>
 #include "SetDetails.h"
 #include "models/commands/output.h"
 #include "elements/MStyleLabels.h"
@@ -25,6 +26,9 @@ struct QScrollArea * SetDetails::generateGridLayout() {
     QMap < int, Output * > outputsInSet = selectedSet->getOutputs();
     QMap<int, Output *>::Iterator i;
 
+    if(selectedSet->getID() == -1){
+        setDetailsGridLayout->addWidget(new QLabel("No set available\nCreate a new set from the menubar"), 0, 0);
+    }
 
     for (i = outputsInSet.begin(); i != outputsInSet.end(); i++) {
         auto variableLabel = new QLabel(i.value()->getCbText());
@@ -63,4 +67,5 @@ SetDetails* SetDetails::generateSetDetails(Set setToShow) {
     this->setObjectName("setDetailsContainer");
     return this;
 }
+
 
