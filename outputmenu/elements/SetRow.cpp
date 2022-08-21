@@ -4,10 +4,13 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include "Setrow.h"
+#include <iostream>
+#include "SetRow.h"
 #include "elements/MPushButton.h"
 
-Setrow::Setrow(const Set &setForRow): QWidget() {
+void clickSet();
+
+SetRow::SetRow(const Set &setForRow): QWidget() {
     this->setObjectName(QString::number(setForRow.getID()));
     auto rowHLayout = new QHBoxLayout(this);
     rowHLayout->setObjectName("setRowLayout");
@@ -20,29 +23,34 @@ Setrow::Setrow(const Set &setForRow): QWidget() {
     auto editButton = new MPushButton(this->layout());
     editButton->setIconWithPath(":/resources/images/edit.svg");
     editButton->setToolTip("Edit set");
-    connect(editButton, &QPushButton::clicked, this, &Setrow::editSet);
+    connect(editButton, &QPushButton::clicked, this, &SetRow::editSet);
 
     auto exportButton = new MPushButton(this->layout());
     exportButton->setIconWithPath(":/resources/images/export.svg");
     exportButton->setToolTip("Export set");
-    connect(exportButton, &QPushButton::clicked, this, &Setrow::exportSet);
+    connect(exportButton, &QPushButton::clicked, this, &SetRow::exportSet);
 
     auto deleteButton = new MPushButton(this->layout());
     deleteButton->setIconWithPath(":/resources/images/trashcan.svg");
     deleteButton->setToolTip("Delete set");
-    connect(deleteButton, &QPushButton::clicked, this, &Setrow::deleteSet);
+    connect(deleteButton, &QPushButton::clicked, this, &SetRow::deleteSet);
 
     this->setStyleSheet("background-color: white; border-radius:5px; padding: 5px; font-weight:bold;");
 }
 
-void Setrow::deleteSet(){
+void SetRow::deleteSet(){
     setHandler.removeSet(this->objectName());
 }
 
-void Setrow::editSet() {
+void SetRow::exportSet(){
+    setHandler.exportSet(this->objectName());
+}
+
+void SetRow::editSet(){
+    emit clickedSignal(this->objectName());
     emit editSetSignal(this->objectName());
 }
 
-void Setrow::exportSet(){
-    setHandler.exportSet(this->objectName());
+void SetRow::mousePressEvent(QMouseEvent *) {
+    emit clickedSignal(this->objectName());
 }

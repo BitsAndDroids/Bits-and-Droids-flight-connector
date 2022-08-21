@@ -8,12 +8,20 @@
 
 #include <QWidget>
 
-class OutputTabBuilder: public QWidget {
+class OutputTabBuilder : public QWidget {
 Q_OBJECT
 private:
+    QString activeSetId;
+private slots:
+    void saveEditedSet();
 public:
     OutputTabBuilder(QWidget *parent = nullptr);
-    QWidget* buildOutputTabContainer();
+
+    QWidget *buildOutputTabContainer();
+
+public slots:
+
+    void setCheckboxes(const QString& id);
 };
 
 

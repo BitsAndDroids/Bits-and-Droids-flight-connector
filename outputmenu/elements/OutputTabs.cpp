@@ -5,18 +5,22 @@
 #include <QTabWidget>
 #include <QGridLayout>
 #include <QCheckBox>
+#include <iostream>
 #include "OutputTabs.h"
 #include "handlers/outputhandler.h"
+#include "elements/MPushButton.h"
+#include "outputmenu/handlers/sethandler.h"
 
 OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
     auto tabLayout = new QVBoxLayout();
     this->setLayout(tabLayout);
+    auto tabHLayout = new QHBoxLayout();
+
     tabLayout->addItem(new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed));
-    tabLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
+    tabLayout->addLayout(tabHLayout);
+
     auto *outputTabs = new QTabWidget();
     outputTabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    outputTabs->setObjectName("outputTabWidget");
     outputHandler outputHandler;
     auto categoryList = outputHandler.getCategoryStrings();
     auto categorizedOutputs = outputHandler.getOutputsCategorized();
@@ -51,9 +55,22 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
         newTab->setLayout(cbGridLayout);
         outputTabs->addTab(newTab, categoryList[i]);
     }
-    outputTabs->setElideMode(Qt::ElideNone);
 
-    tabLayout->addWidget(outputTabs);
+    auto saveButton = new MPushButton(tabHLayout);
+    saveButton->setObjectName("saveButton");
+    saveButton->setIconWithPath(":/resources/images/save.svg");
+    saveButton->setToolTip("Save set");
+    auto buttonVLayout = new QVBoxLayout();
+    buttonVLayout->setObjectName("buttonVLayout");
+    buttonVLayout->addItem(new QSpacerItem(40, 30, QSizePolicy::Fixed, QSizePolicy::Fixed));
+    buttonVLayout->addWidget(saveButton);
+    buttonVLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
+
+    //TODO add restore to last state button
+    tabHLayout->addLayout(buttonVLayout);
+    tabHLayout->addWidget(outputTabs);
+
+    //TODO create a stylesheet file for this widget
     outputTabs->setStyleSheet("QTabWidget::pane{"
                               "border-radius:5px;"
                               "background-color:#fff;"
@@ -65,8 +82,9 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
                               "padding-left:10px;"
                               "}"
                               "QTabBar::tab:!selected {"
-                                "color:#fff;"
-                                "margin-top:0px;"
+                                "color:#000;"
+                              "background-color:#e8e8e8;"
+                                "margin-top:0px #fff;"
                               "}"
                               "QTabBar::tab:selected {"
                               "font-weight:bold;"
@@ -79,6 +97,8 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
                               "padding:5px;"
                               "border-top-left-radius: 5px;"
                               "border-top-right-radius: 5px;"
+                              "border-top: 1px solid #b8b8b8;"
+                              "border-right: 1px solid #b8b8b8;"
                               "}"
                               "QTabBar::tab:first:selected {"
                               "    margin-left: 0;"
@@ -98,12 +118,12 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
                               "bottom:-4px;"
                               "border-top-left-radius: 4px;"
                               "border-top-right-radius: 4px;"
-
                               "}");
-    outputTabs->adjustSize();
     outputTabs->setMinimumWidth(500);
-}
 
+    tabLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
+    tabHLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
+}
 
 OutputTabs::~OutputTabs() {
     delete this;

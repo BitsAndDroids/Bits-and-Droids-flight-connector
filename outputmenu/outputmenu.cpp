@@ -1,3 +1,4 @@
+#include <iostream>
 #include "outputmenu.h"
 #include "outputmenu/builder/SetrowBuilder.h"
 #include "outputmenu/builder/OutputTabBuilder.h"
@@ -10,79 +11,29 @@ OutputMenu::OutputMenu(QWidget *parent)
 
     auto outputMenuVLayout = new QVBoxLayout(this);
     auto outputMenuLayout = new QHBoxLayout();
+    //objectname is used to identify the widget when displaying ui components
+    outputMenuLayout->setObjectName("outputMenuLayout");
+
     addMenuBar();
+
     //outputMenuVLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     outputMenuVLayout->addLayout(outputMenuLayout);
-    outputMenuLayout->setAlignment({Qt::AlignTop,Qt::AlignLeft});
-    auto setrowBuilder = SetrowBuilder();
+    outputMenuLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
+    //We pass this OutputMenu to the builder so it can connect showSetDetails when a setrow is clicked
+    auto setrowBuilder = SetrowBuilder(this);
     outputMenuLayout->addWidget(setrowBuilder.buildSetrowContainer());
-    auto setDetails = new SetDetails();
-    outputMenuLayout->addWidget(setDetails->generateSetDetails(setHandler.getSets()->at(0)));
-    auto outputTabBuilder = OutputTabBuilder(this);
+    outputMenuLayout->addWidget(
+            setDetaisBuilder.buildOutputDetailsContainer(QString::number(setHandler.getSets()->first().getID())));
     outputMenuLayout->addWidget(outputTabBuilder.buildOutputTabContainer());
 
-//    connect(&formBuilder, &FormBuilder::addSet, this, &OutputMenu::addNewSet);
-//    connect(&formBuilder, &FormBuilder::setEdited, this, &OutputMenu::editSet);
-//    auto gridLayout = new QGridLayout();
-//    gridLayout->setObjectName("gridFrame");
-//    auto leftCol = new QVBoxLayout();
-//    leftCol->setAlignment(Qt::AlignTop);
-//    auto rightCol = new QVBoxLayout();
-//    rightCol->setAlignment(Qt::AlignTop);
-//    rightCol->setObjectName("rightCol");
-//    leftCol->addLayout(FormBuilder::generateOutputSetList());
-//
-//    gridLayout->addLayout(leftCol, 0, 0);
-//
-//    ui->containerLayout->addLayout(gridLayout);
-//
-//    ui->widget->findChild<QVBoxLayout *>("outputSetList")
-//            ->setAlignment(Qt::AlignTop);
-//
-//    auto *activeLayout = new QVBoxLayout();
-//    activeLayout->setObjectName("activeContainer");
-//
-//    QStringList *keys = settingsHandler.retrieveKeys("sets");
-//    for (const auto &foundSet: *foundSets) {
-//        ui->widget->findChild<QVBoxLayout *>("outputSetList")
-//                ->addWidget(formBuilder.generateSetRow(foundSet));
-//    }
-//
-//    auto *saveEdit = new QPushButton("Save edit");
-//    saveEdit->setObjectName("btnSsaveEdit");
-//    connect(saveEdit, &QAbstractButton::clicked, this, &OutputMenu::saveEdit);
-//
-//    auto buttonRow = new QHBoxLayout();
-//    buttonRow->addLayout(formBuilder.generateOutputControls());
-//    buttonRow->addWidget(saveEdit);
-//    buttonRow->setAlignment(Qt::AlignTop);
-//    leftCol->addLayout(buttonRow);
-//    auto rightGrid = new QGridLayout();
-//    rightGrid->setObjectName("rightGrid");
-//    rightGrid->addLayout(activeLayout, 1, 0);
-//    rightCol->addLayout(rightGrid);
-//
-//    rightGrid->addWidget(FormBuilder::generateOutputTabs(), 0, 0);
-//    gridLayout->addLayout(rightCol, 0, 1);
-//
-//    ui->widget->findChild<QTabWidget *>("outputTabWidget")->setVisible(false);
-//
-//    ui->widget->adjustSize();
-//    this->setMinimumSize(640, 350);
-//
-//    this->adjustSize();
-//
-//    connect(&formBuilder, &FormBuilder::removeSet, this,
-//            &OutputMenu::removeSetAction);
-//    connect(this, &OutputMenu::editSet, )
-
+    this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
+    this->setMinimumHeight(500);
     this->setStyleSheet("background-color:#487f94;");
     this->show();
 }
 
 OutputMenu::~OutputMenu() {
     emit OutputMenu::closedOutputMenu();
-    qDebug() << "closed here";
     delete this;
 }
 
@@ -102,6 +53,11 @@ void OutputMenu::addMenuBar() {
 }
 
 void OutputMenu::closeEvent(QCloseEvent *event) { delete this; }
+
+void OutputMenu::editSet(QString id) {
+    outputTabBuilder.setCheckboxes(id);
+    this->findChild<QWidget *>("outputTabWidget")->setVisible(true);
+}
 
 void OutputMenu::addNewSet() {
 //    auto *lineEditName = ui->widget->findChild<QLineEdit *>("leSetName");
@@ -167,6 +123,21 @@ void OutputMenu::addNewSet() {
 //
 //    this->resize(1200, 650);
 //}
+
+void OutputMenu::showSetDetails(QString id) {
+    emit displaySetDetails(id);
+
+    auto *widgetFound = this->findChild<SetDetails *>("setDetailsContainer");
+    this->layout()->replaceWidget(widgetFound, setDetaisBuilder.buildOutputDetailsContainer(id));
+
+
+
+    this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
+    widgetFound->deleteLater();
+    this->adjustSize();
+    this->update();
+    this->adjustSize();
+}
 
 void OutputMenu::saveEdit() {
 //    QList<QCheckBox *> cbList = ui->widget->findChildren<QCheckBox *>();

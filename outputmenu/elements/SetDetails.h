@@ -15,7 +15,7 @@ class SetDetails: public QWidget{
 private:
     Set* selectedSet;
 public:
-    SetDetails();
+    SetDetails(QWidget *parent = nullptr);
     SetDetails* generateSetDetails( Set setToShow);
     struct QScrollArea * generateGridLayout();
 };

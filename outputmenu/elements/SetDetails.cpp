@@ -9,7 +9,7 @@
 #include "models/commands/output.h"
 #include "elements/MStyleLabels.h"
 
-SetDetails::SetDetails(): QWidget() {
+SetDetails::SetDetails(QWidget *parent): QWidget(parent) {
 
 
 }
@@ -59,8 +59,8 @@ SetDetails* SetDetails::generateSetDetails(Set setToShow) {
     this->layout()->setAlignment({Qt::AlignTop, Qt::AlignLeft});
     this->layout()->addWidget(new MStyleLabels(setToShow.getSetName(), StyleEnum::HEADER));
     this->layout()->addWidget(generateGridLayout());
-    this->setMinimumWidth(375);
-
+    this->setFixedWidth(375);
+    this->setObjectName("setDetailsContainer");
     return this;
 }
 

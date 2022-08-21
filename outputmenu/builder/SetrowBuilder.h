@@ -10,19 +10,20 @@
 #include <QList>
 #include <QVBoxLayout>
 #include <models/set.h>
-#include "outputmenu/elements/Setrow.h"
+#include "outputmenu/elements/SetRow.h"
 
 class SetrowBuilder {
 private:
 
     void buildSetrow(const Set set, QVBoxLayout* parent);
-    QList<Setrow*> setRows = QList<Setrow*>();
+    QList<SetRow*> setRows = QList<SetRow*>();
+    OutputMenu *parent;
 public:
-    SetrowBuilder();
+    SetrowBuilder(OutputMenu *parent);
     QWidget* buildSetrowContainer();
 
-
-
+public slots:
+    void showSetDetails(QString id);
 };
 
 

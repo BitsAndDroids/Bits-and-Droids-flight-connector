@@ -10,7 +10,7 @@
 #include "models/commands/Set.h"
 #include "outputmenu/outputmenu.h"
 
-class Setrow : public QWidget {
+class SetRow : public QWidget {
 Q_OBJECT
 
 
@@ -23,12 +23,16 @@ private slots:
     void exportSet();
 
     void editSet();
+protected:
+    void mousePressEvent(QMouseEvent*);
 
 public:
-    explicit Setrow(const Set &setForRow);
+    explicit SetRow(const Set &setForRow);
 
 signals:
     void editSetSignal(QString id);
+
+    void clickedSignal(QString id);
 };
 
 

@@ -104,7 +104,7 @@ set(PROJECT_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" outputmenu/builder/SetrowBuilder.cpp outputmenu/builder/SetrowBuilder.h outputmenu/builder/OutputMenuBuilder.cpp outputmenu/builder/OutputMenuBuilder.h outputmenu/elements/Setrow.cpp outputmenu/elements/Setrow.h elements/MPushButton.cpp elements/MPushButton.h outputmenu/elements/OutputTabs.cpp outputmenu/elements/OutputTabs.h outputmenu/builder/OutputTabBuilder.cpp outputmenu/builder/OutputTabBuilder.h outputmenu/elements/SetDetails.cpp outputmenu/elements/SetDetails.h elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h)
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" outputmenu/builder/SetrowBuilder.cpp outputmenu/builder/SetrowBuilder.h outputmenu/builder/OutputMenuBuilder.cpp outputmenu/builder/OutputMenuBuilder.h outputmenu/elements/SetRow.cpp outputmenu/elements/SetRow.h elements/MPushButton.cpp elements/MPushButton.h outputmenu/elements/OutputTabs.cpp outputmenu/elements/OutputTabs.h outputmenu/builder/OutputTabBuilder.cpp outputmenu/builder/OutputTabBuilder.h outputmenu/elements/SetDetails.cpp outputmenu/elements/SetDetails.h elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h)
 
 
 
@@ -121,6 +121,7 @@ set(Resources_resource_files
         "resources/images/edit.svg"
         "resources/images/trashcan.svg"
         "resources/images/export.svg"
+        "resources/images/save.svg"
         )
 
 qt_add_executable(

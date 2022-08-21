@@ -10,6 +10,8 @@
 
 #include "widgets/settingsmenu/builder/formbuilder.h"
 #include "handlers/settingshandler.h"
+#include "outputmenu/builder/OutputDetailsBuilder.h"
+#include "outputmenu/builder/OutputTabBuilder.h"
 
 namespace Ui {
 class OutputMenu;
@@ -31,9 +33,15 @@ class OutputMenu : public QWidget {
 
   void saveEdit();
 
+  void showSetDetails(QString id);
+
+  void editSet(QString id);
+
  signals:
 
   void closedOutputMenu();
+
+  void displaySetDetails(QString id);
 
   void addSet();
 
@@ -47,7 +55,8 @@ class OutputMenu : public QWidget {
   SettingsHandler settingsHandler;
   SetHandler setHandler;
   FormBuilder formBuilder;
-
+  OutputDetailsBuilder setDetaisBuilder = OutputDetailsBuilder(this);
+  OutputTabBuilder outputTabBuilder = OutputTabBuilder(this);
   outputHandler *outputHandler = new class outputHandler();
 
   QString path =
@@ -58,6 +67,8 @@ class OutputMenu : public QWidget {
   void closeEvent(QCloseEvent *event) override;
 
     void addMenuBar();
+
+    void editEvent(QString id);
 };
 
 #endif  // OUTPUTMENU_H
