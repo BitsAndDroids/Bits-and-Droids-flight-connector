@@ -154,6 +154,41 @@ target_link_libraries(BitsAndDroidsConnector PRIVATE
         "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
         "${PROJECT_SOURCE_DIR}/dist/libssl-1_1-x64.dll"
         )
+
+qt6_add_resources(BitsAndDroidsConnector "Resources"
+        PREFIX
+        "/"
+        FILES
+        ${Resources_resource_files}
+        )
+
+if (win64 AND NOT CMAKE_BUILD_TYPE STREQUAL Debug)
+    target_link_libraries(BitsAndDroidsConnector PUBLIC
+            "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
+            )
+endif ()
+
+configure_file(BitsAndDroidsLogo.ico BitsAndDroidsConnector/bin/BitsAndDroidsLogo.ico COPYONLY)
+
+add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/dist" $<TARGET_FILE_DIR:BitsAndDroidsConnector>)
+add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/dist/platforms" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/platforms")
+add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/dist/styles" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/styles")
+add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/dist/iconengines" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/iconengines")
+add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
+
+#-----------------------------------------------------#
+#                   TESTING SECTION                   #
+#-----------------------------------------------------#
 enable_testing()
 include(CTest)
 include(FetchContent)
@@ -195,35 +230,3 @@ target_link_libraries(UnitTests
 gtest_discover_tests(
         UnitTests
 )
-
-qt6_add_resources(BitsAndDroidsConnector "Resources"
-        PREFIX
-        "/"
-        FILES
-        ${Resources_resource_files}
-        )
-
-if (win64 AND NOT CMAKE_BUILD_TYPE STREQUAL Debug)
-    target_link_libraries(BitsAndDroidsConnector PUBLIC
-            "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
-            )
-endif ()
-
-configure_file(BitsAndDroidsLogo.ico BitsAndDroidsConnector/bin/BitsAndDroidsLogo.ico COPYONLY)
-
-add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${PROJECT_SOURCE_DIR}/dist" $<TARGET_FILE_DIR:BitsAndDroidsConnector>)
-add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${PROJECT_SOURCE_DIR}/dist/platforms" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/platforms")
-add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${PROJECT_SOURCE_DIR}/dist/styles" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/styles")
-add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${PROJECT_SOURCE_DIR}/dist/iconengines" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/iconengines")
-add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
-
