@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QMap>
 
-#include "models/commands/output.h"
+#include <models/commands/output.h>
 
 class outputHandler {
  public:

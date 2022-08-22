@@ -142,5 +142,6 @@ void OutputMenu::showSetDetails(QString id) {
 
 void OutputMenu::importSet(){
     auto filePath = QFileDialog::getOpenFileName(this, "Import set", "", "*.json");
-    setHandler.importSet(filePath);
+    QString fileName = QInputDialog::getText(this, "Import set", "Enter a name for the set");
+    setrowBuilder.createSet(QString::number(setHandler.importSet(filePath, fileName)));
 }

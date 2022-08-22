@@ -5,7 +5,7 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
-#include <QFileDialog>
+#include <QInputDialog>
 
 SetHandler::SetHandler() { setList = loadSets(); }
 
@@ -156,20 +156,22 @@ void SetHandler::exportSet(const QString& id, const QString &fileName) {
 
 }
 
-void SetHandler::importSet(const QString& path) {
+int SetHandler::importSet(const QString& path, const QString& name) {
     if(path.isEmpty()) {
         MessageCaster::showWarningMessage("Could not import set");
-        return;
+        return 0;
     }
     QFile importFile = QFile(path);
     importFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QString importFileContent = importFile.readAll();
+
     auto importedJSON = QJsonDocument::fromJson(importFileContent.toUtf8());
     auto importedSet = fromJson(&importedJSON);
     //We create a copy to ensure the set ID doesn't collide when exchanging output sets
     auto importedSetCopy = new Set(importedSet.getSetName());
     importedSetCopy->setOutputs(importedSet.getOutputs());
-    saveSet(&importedSet);
-    MessageCaster::showCompleteMessage("Imported set " + importedSet.getSetName());
-
+    importedSetCopy->setSetName(name);
+    saveSet(importedSetCopy);
+    MessageCaster::showCompleteMessage("Imported set " + importedSetCopy->getSetName());
+    return importedSetCopy->getID();
 }

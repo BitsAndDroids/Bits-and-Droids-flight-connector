@@ -38,10 +38,8 @@ void outputHandler::readOutputs() {
     QJsonDocument json_doc = QJsonDocument::fromJson(json_bytes, &error);
 
     if (error.error != QJsonParseError::NoError) {
-        qDebug().noquote() << json_bytes[0];
-        qDebug() << "Parse error: " << error.errorString();
         for (int i = error.offset - 10; i < error.offset + 30; i++) {
-            qDebug().noquote() << json_bytes[i];
+
         }
         return;
     }

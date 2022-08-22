@@ -1,15 +1,15 @@
 #ifndef SETHANDLER_H
 #define SETHANDLER_H
 
-#include "handlers/settingshandler.h"
+
 
 #include <QJsonArray>
 #include <QList>
 #include <QSettings>
 #include <QStandardPaths>
-
-#include "handlers/outputhandler.h"
-#include "models/commands/Set.h"
+#include <handlers/settingshandler.h>
+#include <handlers/outputhandler.h>
+#include <models/commands/Set.h>
 
 class SetHandler {
  public:
@@ -31,7 +31,7 @@ class SetHandler {
 
   void exportSet(const QString& id, const QString& fileName);
 
-  void importSet(const QString& filePath);
+  int importSet(const QString& filePath, const QString& name);
 
  private:
 

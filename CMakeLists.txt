@@ -5,8 +5,7 @@ project(BitsAndDroidsConnector VERSION 1.0 LANGUAGES CXX)
 
 
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
-    enable_testing()
-    add_subdirectory(tests/ConnectorTests)
+
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -108,7 +107,8 @@ set(PROJECT_SOURCES
         outputmenu/builder/OutputTabBuilder.cpp outputmenu/builder/OutputTabBuilder.h
         outputmenu/elements/SetDetails.cpp outputmenu/elements/SetDetails.h
         elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h
-        outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h)
+        outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h
+        utils/JSONParser.cpp utils/JSONParser.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -133,6 +133,7 @@ set(Resources_resource_files
         "resources/images/save.svg"
         )
 
+
 qt_add_executable(
         BitsAndDroidsConnector WIN32
         ${PROJECT_SOURCES}
@@ -141,6 +142,7 @@ qt_add_executable(
 
 
 target_link_libraries(BitsAndDroidsConnector PRIVATE
+
         Qt${QT_VERSION_MAJOR}::Charts
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
@@ -152,7 +154,47 @@ target_link_libraries(BitsAndDroidsConnector PRIVATE
         "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
         "${PROJECT_SOURCE_DIR}/dist/libssl-1_1-x64.dll"
         )
+enable_testing()
+include(CTest)
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG release-1.12.1
+        PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+        INSTALL_COMMAND ""
+)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+include(googletest)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
+add_executable(UnitTests
+        utils/tests/UtilTests.cpp
+        outputmenu/tests/SethandlerTests.cpp
+        models/commands/Set.cpp
+        utils/OutputConverters.cpp
+        utils/tests/UtilTests.cpp
+        handlers/settingshandler.cpp
+        handlers/outputhandler.cpp
+        handlers/pathhandler.cpp
+        models/commands/output.cpp
+        logging/messagecaster.cpp
+        outputmenu/handlers/SetHandler.cpp)
+
+add_dependencies(UnitTests gtest)
+
+
+target_link_libraries(UnitTests
+        GTest::gtest_main
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::Widgets)
+
+
+gtest_discover_tests(
+        UnitTests
+)
 
 qt6_add_resources(BitsAndDroidsConnector "Resources"
         PREFIX
