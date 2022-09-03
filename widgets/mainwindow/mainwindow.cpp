@@ -6,7 +6,7 @@
 #include <qstandardpaths.h>
 #include "widgets/axismenu/calibrateaxismenu.h"
 #include "widgets/settingsmenu/optionsmenu.h"
-#include "widgets/outputmenu/outputmenu.h"
+#include "OutputMenu/outputmenu.h"
 
 #include <QDir>
 #include <iostream>
@@ -510,15 +510,15 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
                 auto comboBox =
                         widget->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
                 if (!settingsHandler
-                        .retrieveSetting(setGroupName, "set" + QString::number(i))
+                        .retrieveSetting(setGroupName, "Set" + QString::number(i))
                         ->isNull()) {
-                    //If the saved setting is not set to "no" which indicates No set saved for inputs only in 'dual' mode
+                    //If the saved setting is not Set to "no" which indicates No Set saved for inputs only in 'dual' mode
                     if (settingsHandler
-                                .retrieveSetting(setGroupName, "set" + QString::number(i))
+                                .retrieveSetting(setGroupName, "Set" + QString::number(i))
                                 ->toString() != "na") {
                         auto lastSetId =
                                 settingsHandler
-                                        .retrieveSetting(setGroupName, "set" + QString::number(i))
+                                        .retrieveSetting(setGroupName, "Set" + QString::number(i))
                                         ->toString();
                         auto setFound = setHandler->getSetById(lastSetId);
                         auto setName = setFound.getSetName();
@@ -751,7 +751,7 @@ void MainWindow::startOutputs(bool autoStart) {
         outputThread.clearBundles();
         for (int i = 0; i < comList.size(); i++) {
             key = "com" + QString::number(i);
-            setKey = "set" + QString::number(i);
+            setKey = "Set" + QString::number(i);
 
             QString keyValue = comList[i]->currentText();
             QString setKeyValue = setList[i]->currentText();
@@ -767,7 +767,7 @@ void MainWindow::startOutputs(bool autoStart) {
 
             auto *bundle = new outputBundle();
 
-            set active = setHandler->getSetById(QString::number(id));
+            Set active = setHandler->getSetById(QString::number(id));
             bundle->setSet(active);
 
             auto *outputs = new QMap<int, Output *>();
@@ -841,7 +841,7 @@ void MainWindow::startDual(bool autoStart) {
         for (int i = 0; i < comList.size(); i++) {
             if (!(comList[i]->currentText().contains("Not connected"))) {
                 key = "com" + QString::number(i);
-                setKey = "set" + QString::number(i);
+                setKey = "Set" + QString::number(i);
 
                 QString keyValue = comList[i]->currentText();
                 QString setKeyValue = setList[i]->currentText();
@@ -860,7 +860,7 @@ void MainWindow::startDual(bool autoStart) {
 
                     auto *bundle = new outputBundle();
 
-                    set active = setHandler->getSetById(QString::number(id));
+                    Set active = setHandler->getSetById(QString::number(id));
                     bundle->setSet(active);
 
                     auto *outputs = new QMap<int, Output *>();
@@ -997,7 +997,7 @@ QLabel *MainWindow::returnWarningString(int warningType) {
             break;
         case NOSET:
             warningLabel->setText(
-                    "Please create or select a set before pressing start");
+                    "Please create or select a Set before pressing start");
         default:
             break;
     }
@@ -1135,7 +1135,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     }
 }
 
-MainWindow::~MainWindow() { delete ui; }
+
 
 void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
@@ -1148,4 +1148,14 @@ void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     }
 }
 
-void MainWindow::exitProgram() { delete this; }
+MainWindow::~MainWindow() {
+    delete ui;
+}
+
+void MainWindow::exitProgram() {
+    serviceworker.setStopServiceWorker(true);
+    serviceworker.wait();
+    dualThread.abortDual = true;
+    dualThread.wait();
+    delete this;
+}

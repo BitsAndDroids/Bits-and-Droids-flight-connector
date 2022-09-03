@@ -6,8 +6,6 @@
 #include <QApplication>
 #include <utility>
 
-#include "models/settings/coordinates.h"
-
 SettingsHandler::SettingsHandler() {}
 
 void SettingsHandler::storeValue(QString group, QString key, QVariant value) {

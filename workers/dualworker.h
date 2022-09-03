@@ -5,7 +5,7 @@
 #include "handlers/InputSwitchHandler.h"
 #include "models/commands/outputbundle.h"
 #include "handlers/outputhandler.h"
-#include "widgets/outputmenu/outputmapper.h"
+#include "OutputMenu/outputmapper.h"
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <qthread.h>
@@ -89,10 +89,6 @@ public:
     void eventLoop();
 
     void clearBundles();
-
-public slots:
-
-    void sendWASMCommand(char cmd);
 
 
 };

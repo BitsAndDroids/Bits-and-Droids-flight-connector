@@ -1,0 +1,15 @@
+//
+// Created by DaveRiedel on 22-8-2022.
+//
+
+#ifndef BITSANDDROIDSCONNECTOR_JSONPARSER_H
+#define BITSANDDROIDSCONNECTOR_JSONPARSER_H
+
+
+class JSONParser {
+public:
+
+};
+
+
+#endif //BITSANDDROIDSCONNECTOR_JSONPARSER_H

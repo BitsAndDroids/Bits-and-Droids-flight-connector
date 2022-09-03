@@ -9,11 +9,11 @@
 
 #include "output.h"
 
-class set {
+class Set {
  public:
-  set();
+  Set();
 
-  explicit set(QString setName);
+  explicit Set(QString setName);
 
   // void addOutput(Output outputToAdd);
 
@@ -33,11 +33,11 @@ class set {
 
   void saveSet();
 
-  set(QString setName, int id);
+  Set(QString setName, int id);
 
-  static set fromJson(QJsonDocument *docToConvert);
+  static Set fromJson(QJsonDocument *docToConvert);
 
-  set(QString setName, int id, QMap<int, Output *>);
+  Set(QString setName, int id, QMap<int, Output *>);
 
   void addOutput(Output *outputToAdd);
 

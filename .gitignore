@@ -12,9 +12,11 @@ Bitsanddroidsgui.pro.user.26aeae6
 capi.dll
 dasync.dll
 /installer
-/release
+/cmake-build-debug-coverage
+/cmake-build-tests
 /debug
 /objects
+/tests/cmake-build-debug-coverage
 *.o
 *.Debug
 *.Release

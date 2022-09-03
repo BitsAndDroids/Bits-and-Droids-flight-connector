@@ -322,9 +322,9 @@ static const DWORD SIMCONNECT_WAYPOINT_WRAP_TO_FIRST =
 SIMCONNECT_ENUM_FLAGS SIMCONNECT_EVENT_FLAG;
 static const DWORD SIMCONNECT_EVENT_FLAG_DEFAULT = 0x00000000;
 static const DWORD SIMCONNECT_EVENT_FLAG_FAST_REPEAT_TIMER =
-    0x00000001;  // set event repeat timer to simulate fast repeat
+    0x00000001;  // Set event repeat timer to simulate fast repeat
 static const DWORD SIMCONNECT_EVENT_FLAG_SLOW_REPEAT_TIMER =
-    0x00000002;  // set event repeat timer to simulate slow repeat
+    0x00000002;  // Set event repeat timer to simulate slow repeat
 static const DWORD SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY =
     0x00000010;  // interpret GroupID parameter as priority value
 

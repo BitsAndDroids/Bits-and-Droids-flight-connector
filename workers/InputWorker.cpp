@@ -219,7 +219,6 @@ InputWorker::~InputWorker() {
 
     condition.wakeOne();
     mutex.unlock();
-    delete this;
 }
 
 void InputWorker::setInputs(std::map<int, Input> inputs) {

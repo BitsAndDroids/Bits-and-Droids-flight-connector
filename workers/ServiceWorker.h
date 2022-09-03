@@ -39,7 +39,7 @@ public:
     ~ServiceWorker() override;
 
     void setConnectionClosed(bool);
-
+    void setStopServiceWorker(bool state);
     QMutex mutex;
     QWaitCondition condition;
     bool stopServiceWorker = false;

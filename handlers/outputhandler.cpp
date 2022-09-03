@@ -1,7 +1,7 @@
 #include "outputhandler.h"
 
 #include "logging/MessageCaster.h"
-
+#include "utils/EventFileFormatter.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonArray>
@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <fstream>
 #include <iostream>
+#include <utility>
 
 bool outputHandler::updateOutputsRequired = true;
 QMap<int, Output *> outputHandler::availableOutputs = QMap<int, Output *>();
@@ -38,10 +39,8 @@ void outputHandler::readOutputs() {
     QJsonDocument json_doc = QJsonDocument::fromJson(json_bytes, &error);
 
     if (error.error != QJsonParseError::NoError) {
-        qDebug().noquote() << json_bytes[0];
-        qDebug() << "Parse error: " << error.errorString();
         for (int i = error.offset - 10; i < error.offset + 30; i++) {
-            qDebug().noquote() << json_bytes[i];
+
         }
         return;
     }
@@ -155,19 +154,31 @@ void outputHandler::readOutputs() {
 }
 
 Output *outputHandler::findOutputById(int idToFind) {
-    qDebug() << "SEARCHING FOR " << idToFind;
-    // qDebug() << availableOutputs[idToFind] << "FOUND";
     if (!availableOutputs.contains(idToFind)) {
         auto emptyOutput =
                 new Output(-1, "empty", "none", 0.0, -1, "empty", -1, -1);
         return emptyOutput;
     } else {
-        std::string delayFilters[] = {"COM","NAV"};
-        for(auto &filter: delayFilters) {
-            if(availableOutputs[idToFind]->getOutputName().find(filter) != std::string::npos) {
-                availableOutputs[idToFind]->setDelay(10);
+        if(availableOutputs.find(idToFind).value() == nullptr) {
+            return availableOutputs.find(idToFind).value();
+
+            std::string delayFilters[] = {"COM", "NAV"};
+            for (auto &filter: delayFilters) {
+                if (availableOutputs[idToFind]->getOutputName().find(filter) != std::string::npos) {
+                    availableOutputs[idToFind]->setDelay(10);
+                }
             }
         }
         return availableOutputs[idToFind];
     }
+}
+
+void outputHandler::addToEventFileDialog(Output output) {
+    QFile newEventsFile(applicationEventsPath);
+    newEventsFile.open(QIODevice::Append);
+    EventFileFormatter formatter = EventFileFormatter();
+    QString row =formatter.outputToQString(std::move(output));
+    newEventsFile.write(row.toStdString().c_str(), row.size());
+    newEventsFile.close();
+    availableOutputs.insert(output.getId(), &output);
 }

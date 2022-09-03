@@ -53,8 +53,6 @@ void FormBuilder::loadPointsToPlot(QStringList axis) {
                                             valueKeys->at(j))
                         ->toFloat();
                 auto *coord = new coordinates(x, y);
-                cout << coord->getY() << " : " << coord->getX() << endl;
-
                 pointsToPlot[i].append(*coord);
             }
         }
@@ -444,157 +442,6 @@ QVBoxLayout *FormBuilder::generateComColumn(int index) {
     return comColumn;
 }
 
-QGridLayout *FormBuilder::generateOutputControls() const {
-    auto *outputControls = new QGridLayout();
-    outputControls->setAlignment(Qt::AlignLeft);
-    auto *saveSet = new QPushButton("Add set");
-    connect(saveSet, &QAbstractButton::clicked, this, &FormBuilder::addSet);
-    outputControls->addWidget(saveSet, 0, 0);
-    return outputControls;
-}
-
-QVBoxLayout *FormBuilder::generateOutputSetList() {
-    auto *outputSetList = new QVBoxLayout();
-    outputSetList->setObjectName("outputSetList");
-    auto *listHeader = new QLabel("Saved sets");
-    QFont font = listHeader->font();
-    font.setBold(true);
-    font.setPointSize(24);
-    listHeader->setFont(font);
-
-    outputSetList->addWidget(listHeader);
-
-    return outputSetList;
-}
-
-QWidget *FormBuilder::generateActiveSet(set *selectedSet) {
-    auto *activeWidget = new QWidget();
-    activeWidget->setObjectName("activeWidget");
-    auto *activeSet = new QVBoxLayout();
-    activeSet->setAlignment(Qt::AlignTop);
-    auto *setNameHeader = new QLabel(selectedSet->getSetName());
-    setNameHeader->setObjectName("setNameHeader");
-    QFont headerFont = setNameHeader->font();
-    headerFont.setPointSize(18);
-    headerFont.setBold(true);
-    setNameHeader->setFont(headerFont);
-    activeSet->addWidget(setNameHeader);
-
-    auto *outputGrid = new QGridLayout();
-
-    auto gridWidget = new QWidget();
-
-    int columnCounter = 0;
-    int rowCounter = 0;
-    int amntOfCols = 3;
-
-    QMap < int, Output * > outputsInSet = selectedSet->getOutputs();
-    QMap<int, Output *>::Iterator i;
-
-    int outputsPerRow = outputsInSet.size() / amntOfCols;
-    for (i = outputsInSet.begin(); i != outputsInSet.end(); i++) {
-        if (rowCounter == outputsPerRow && columnCounter < amntOfCols - 1) {
-            columnCounter++;
-            rowCounter = 0;
-        }
-        rowCounter++;
-        auto *outputName = new QLabel(i.value()->getCbText());
-        outputGrid->addWidget(outputName, rowCounter, columnCounter);
-    }
-    outputGrid->setAlignment(Qt::AlignTop);
-
-    gridWidget->setLayout(outputGrid);
-    gridWidget->setMinimumHeight(350);
-    gridWidget->setMaximumHeight(350);
-
-    auto *activeScroll = new QScrollArea();
-    activeScroll->setMinimumHeight(250);
-    activeScroll->setMaximumHeight(250);
-
-    activeScroll->setWidget(gridWidget);
-
-    auto *outputList = new QVBoxLayout();
-
-    outputList->setObjectName("savedOutputs");
-
-    activeSet->addLayout(outputList);
-    activeSet->addWidget(activeScroll);
-    activeWidget->setLayout(activeSet);
-    // activeWidget->setMinimumHeight(350);
-    activeWidget->adjustSize();
-
-    return activeWidget;
-}
-
-QWidget *FormBuilder::generateSetRow(const set &setForRow) {
-    auto *setRowContainer = new QWidget();
-    setRowContainer->setSizePolicy(QSizePolicy::Preferred,
-                                   QSizePolicy::Preferred);
-    setRowContainer->setMinimumHeight(15);
-    setRowContainer->setMaximumHeight(15);
-    auto *setRow = new QHBoxLayout();
-    auto *setRowLabel = new QLabel(setForRow.getSetName());
-
-    auto *editButton = new QPushButton("Edit");
-    connect(editButton, &QAbstractButton::clicked, this, &FormBuilder::localEdit);
-
-    auto *deleteButton = new QPushButton("Delete");
-    connect(deleteButton, SIGNAL(clicked()), SLOT(localRemove()));
-    editButton->setMaximumWidth(150);
-    deleteButton->setMaximumWidth(150);
-
-    setRow->addWidget(setRowLabel);
-
-    setRow->addWidget(editButton);
-    setRow->addWidget(deleteButton);
-    setRowContainer->setLayout(setRow);
-    setRowContainer->setAutoFillBackground(true);
-    setRowContainer->setPalette(Qt::white);
-    setRowContainer->setObjectName(QString::number(setForRow.getID()));
-    setRowContainer->setMinimumSize(600, 50);
-    setRowContainer->setMaximumSize(3000, 50);
-    return setRowContainer;
-}
-
-QTabWidget *FormBuilder::generateOutputTabs() {
-    auto *outputTabs = new QTabWidget();
-    outputTabs->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    outputTabs->setObjectName("outputTabWidget");
-    outputHandler outputHandler;
-    auto categorieList = outputHandler.getCategoryStrings();
-    auto categorizedOutputs = outputHandler.getOutputsCategorized();
-
-    for (int i = 0; i < categorizedOutputs.size(); i++) {
-        auto *newTab = new QWidget();
-        auto *cbGridLayout = new QGridLayout();
-        cbGridLayout->setAlignment(Qt::AlignTop);
-        cout << "GENERATED " << categorizedOutputs[i].size() << " OUTPUTS IN SET "
-             << i << " / " << categorizedOutputs.size() << endl;
-        for (int j = 0; j < categorizedOutputs[i].size(); j++) {
-            auto *checkbox = new QCheckBox();
-            checkbox->setMinimumHeight(30);
-            QString cbText = categorizedOutputs[i][j].getCbText();
-            checkbox->setText(QString(cbText));
-            checkbox->setObjectName(
-                    "cb" + QString::number(categorizedOutputs[i][j].getId()));
-
-            if (j < 15) {
-                cbGridLayout->addWidget(checkbox, j, 0);
-            } else if (j < 30) {
-                cbGridLayout->addWidget(checkbox, j - 15, 1);
-            } else if (j < 45) {
-                cbGridLayout->addWidget(checkbox, j - 30, 2);
-            }
-        }
-        newTab->setLayout(cbGridLayout);
-        outputTabs->addTab(newTab, categorieList[i]);
-    }
-
-    // outputTabs->setMinimumSize(600, 400);
-    outputTabs->adjustSize();
-    return outputTabs;
-}
-
 void FormBuilder::loadComPortData() {
     availableComPorts.clear();
 
@@ -611,16 +458,6 @@ QHBoxLayout *FormBuilder::generateOutputRow(Output *output) {
     auto *outputName = new QLabel(output->getCbText());
     row->addWidget(outputName);
     return row;
-}
-
-void FormBuilder::localRemove() {
-    auto *button = qobject_cast<QPushButton *>(sender());
-    emit removeSet(button->parentWidget()->objectName());
-}
-
-void FormBuilder::localEdit() {
-    auto *button = qobject_cast<QPushButton *>(sender());
-    emit setEdited(button->parentWidget()->objectName());
 }
 
 QLabel *FormBuilder::generateHeader(const QString &text) {
@@ -782,13 +619,13 @@ void FormBuilder::removeComWidget() {
 
             group = "outputComs";
             arGroup = "outputARIndex";
-            settingsHandler.removeSetting("outputSets", "set" + index);
+            settingsHandler.removeSetting("outputSets", "Set" + index);
 
         } else if (mode == DUALMODE) {
 
             group = "dualComs";
             arGroup = "dualARIndex";
-            settingsHandler.removeSetting("dualSets", "set" + index);
+            settingsHandler.removeSetting("dualSets", "Set" + index);
         }
         settingsHandler.removeSetting(arGroup,index);
         settingsHandler.removeSetting(group, "com" + index);
@@ -831,7 +668,7 @@ void FormBuilder::adjustIndexes(int mode, int index) {
     auto keys = settingsHandler.retrieveKeys(group);
     auto arKeys = settingsHandler.retrieveKeys(arGroup);
 
-    QString setKey = "set";
+    QString setKey = "Set";
     QString comKey = "com";
 
     if (index < keys->size()) {

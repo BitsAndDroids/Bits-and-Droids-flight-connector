@@ -25,7 +25,7 @@ public:
     void setupUi(QWidget *OutputMenu)
     {
         if (OutputMenu->objectName().isEmpty())
-            OutputMenu->setObjectName(QString::fromUtf8("OutputMenu"));
+            OutputMenu->setObjectName(QString::fromUtf8("outputmenu"));
         OutputMenu->resize(746, 509);
         QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
         sizePolicy.setHorizontalStretch(0);
@@ -54,7 +54,7 @@ public:
 
     void retranslateUi(QWidget *OutputMenu)
     {
-        OutputMenu->setWindowTitle(QCoreApplication::translate("OutputMenu", "Form", nullptr));
+        OutputMenu->setWindowTitle(QCoreApplication::translate("outputmenu", "Form", nullptr));
     } // retranslateUi
 
 };

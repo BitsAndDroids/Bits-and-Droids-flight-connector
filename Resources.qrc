@@ -5,6 +5,9 @@
     <qresource prefix="/">
         <file>images/starterImage.png</file>
         <file>images/starterImageOff.png</file>
+        <file>images/edit.svg</file>
+        <file>images/trashcan.svg</file>
+        <file>images/export.svg</file>
         <file>BitsAndDroidsLogo.ico</file>
         <file>fonts/DSEG7Classic-Bold.ttf</file>
         <file>fonts/DSEG7Classic-Regular.ttf</file>
@@ -21,5 +24,6 @@
         <file>fonts/Roboto-Bold.ttf</file>
         <file>fonts/Roboto-Regular.ttf</file>
         <file>codegenerator/boards/boardimages/proMicroPinout.png</file>
+        <file>images/save.svg</file>
     </qresource>
 </RCC>
