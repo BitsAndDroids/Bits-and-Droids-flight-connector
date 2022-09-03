@@ -16,6 +16,7 @@ dasync.dll
 /cmake-build-tests
 /debug
 /objects
+/tests/cmake-build-debug-coverage
 *.o
 *.Debug
 *.Release

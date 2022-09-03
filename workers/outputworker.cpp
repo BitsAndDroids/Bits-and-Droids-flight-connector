@@ -302,11 +302,6 @@ void OutputWorker::testDataRequest() {
 }
 
 OutputWorker::~OutputWorker() {
-  for (int i = 0; i < keys->size(); i++) {
-    if (ports[i]->isConnected()) {
-      ports[i]->closeSerial();
-    }
-  }
   abort = true;
   mutex.lock();
 

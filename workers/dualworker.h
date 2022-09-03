@@ -90,10 +90,6 @@ public:
 
     void clearBundles();
 
-public slots:
-
-    void sendWASMCommand(char cmd);
-
 
 };
 

@@ -3,11 +3,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(BitsAndDroidsConnector VERSION 1.0 LANGUAGES CXX)
 
-
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-
-endif()
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -18,7 +13,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets svg REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Gui Network PrintSupport SerialPort Test svg REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Gui Network PrintSupport SerialPort svg REQUIRED)
 
 set(PROJECT_SOURCES
 
@@ -108,14 +103,13 @@ set(PROJECT_SOURCES
         outputmenu/elements/SetDetails.cpp outputmenu/elements/SetDetails.h
         elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h
         outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h
-        utils/JSONParser.cpp utils/JSONParser.h)
+        utils/JSONParser.cpp utils/JSONParser.h
+        utils/EventFileFormatter.cpp utils/EventFileFormatter.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc")
-
-
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" )
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
@@ -133,23 +127,19 @@ set(Resources_resource_files
         "resources/images/save.svg"
         )
 
-
 qt_add_executable(
         BitsAndDroidsConnector WIN32
         ${PROJECT_SOURCES}
         ${APP_ICON_RESOURCE_WINDOWS}
 )
 
-
 target_link_libraries(BitsAndDroidsConnector PRIVATE
-
         Qt${QT_VERSION_MAJOR}::Charts
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Gui
         Qt${QT_VERSION_MAJOR}::Network
         Qt${QT_VERSION_MAJOR}::PrintSupport
         Qt${QT_VERSION_MAJOR}::SerialPort
-        Qt${QT_VERSION_MAJOR}::Test
         Qt${QT_VERSION_MAJOR}::Widgets
         "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
         "${PROJECT_SOURCE_DIR}/dist/libssl-1_1-x64.dll"
@@ -216,16 +206,15 @@ add_executable(UnitTests
         handlers/pathhandler.cpp
         models/commands/output.cpp
         logging/messagecaster.cpp
-        outputmenu/handlers/SetHandler.cpp)
+        outputmenu/handlers/SetHandler.cpp
+        utils/EventFileFormatter.cpp)
 
 add_dependencies(UnitTests gtest)
-
 
 target_link_libraries(UnitTests
         GTest::gtest_main
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Widgets)
-
 
 gtest_discover_tests(
         UnitTests

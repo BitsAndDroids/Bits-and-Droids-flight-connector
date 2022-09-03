@@ -27,7 +27,11 @@ struct QScrollArea * SetDetails::generateGridLayout() {
     QMap<int, Output *>::Iterator i;
 
     if(selectedSet->getID() == -1){
-        setDetailsGridLayout->addWidget(new QLabel("No set available\nCreate a new set from the menubar"), 0, 0);
+        setDetailsGridLayout->addWidget(new QLabel("A set is a collection of flightsim variables.\n"
+                                                   "These sets will contain all the variables\nyou want to send to your microcontroller.\n"
+                                                   "It's recommended to create a set for each\n"
+                                                   "microcontroller you want to control.\n"
+                                                   ), 0, 0);
     }
 
     for (i = outputsInSet.begin(); i != outputsInSet.end(); i++) {

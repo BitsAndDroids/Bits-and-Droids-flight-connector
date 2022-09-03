@@ -16,13 +16,15 @@ SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
 enum DATA_DEFINE_ID {
     DEFINITION_SERVICE_DATA = 14
 };
-
+void ServiceWorker::setStopServiceWorker(bool state) {
+    stopServiceWorker = state;
+}
 void ServiceWorker::startServices() {
 
     bool connected = false;
 
 
-    while (!connected) {
+    while (!stopServiceWorker) {
         emit logMessage("Service worker trying to connect to Simconnect", LogLevel::DEBUGLOG);
         if (SUCCEEDED(SimConnect_Open(&serviceSimconnect, "serviceSimconnect", nullptr, 0,
                                       nullptr, 0))) {
@@ -49,14 +51,19 @@ void ServiceWorker::startServices() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
         }
-        std::this_thread::sleep_for(std::chrono::seconds(10));
+        //TODO replace by proper timer mechanism that can be interrupted
+        //This check ensures that we don't wait for the app to close when we want it to close
+        if (!stopServiceWorker) {
+            uint8_t counter = 0;
+            while(counter < 10 && !stopServiceWorker) {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                counter++;
+            }
+        }
     }
     emit logMessage("ServiceWorker disconnected from game", LogLevel::DEBUGLOG);
     SimConnect_Close(serviceSimconnect);
-    if (!stopServiceWorker) {
-        std::this_thread::sleep_for(std::chrono::seconds(10));
-        startServices();
-    }
+    QThread::currentThread()->quit();
 }
 
 
@@ -80,7 +87,6 @@ void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void 
                 case EVENT_1_SECOND: {
                     break;
                 }
-                    break;
             }
             break;
         }
@@ -91,13 +97,11 @@ void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void 
     }
 }
 
-
 ServiceWorker::~ServiceWorker() {
+    stopServiceWorker = true;
     mutex.lock();
-
     condition.wakeOne();
     mutex.unlock();
-    delete this;
 }
 
 void ServiceWorker::sendWASMData(const char *data) {

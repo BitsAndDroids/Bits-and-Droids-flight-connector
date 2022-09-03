@@ -1135,7 +1135,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     }
 }
 
-MainWindow::~MainWindow() { delete ui; }
+
 
 void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
@@ -1148,4 +1148,14 @@ void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     }
 }
 
-void MainWindow::exitProgram() { delete this; }
+MainWindow::~MainWindow() {
+    delete ui;
+}
+
+void MainWindow::exitProgram() {
+    serviceworker.setStopServiceWorker(true);
+    serviceworker.wait();
+    dualThread.abortDual = true;
+    dualThread.wait();
+    delete this;
+}

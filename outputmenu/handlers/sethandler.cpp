@@ -100,15 +100,21 @@ Set SetHandler::fromJson(QJsonDocument *docToConvert) {
         tempObj.value("dataType").toInt(), tempObj.value("cbText").toString(),
         tempObj.value("prefix").toInt(), tempObj.value("type").toInt());
     foundOutput->setOffset(tempObj.value("offset").toInt());
-    auto test = outputHandler->getAvailableOutputs();
+
     if (outputHandler->getAvailableOutputs().size() > 0) {
-      if (outputHandler->findOutputById(foundOutput->getType() != -1)) {
+      if (outputHandler->findOutputById(foundOutput->getId())->getId() != -1) {
         outputsConverted->insert(foundOutput->getId(), foundOutput);
+
       } else {
-        removeOutputFromSet(convertedSet.getID(), foundOutput->getId());
+          //TODO let user choose whether to delete from the set or add the output to the event file
+         MessageCaster::showWarningMessage("Could not import set, output " + QString::fromStdString(foundOutput->getOutputName()) + " not found\n" +
+         "It will be added to your event file");
+         outputHandler->addToEventFileDialog(*foundOutput);
+         outputsConverted->insert(foundOutput->getId(), foundOutput);
       }
     }
   }
+  //TODO add event to event file
   convertedSet.setOutputs(*outputsConverted);
   return convertedSet;
 }
@@ -171,7 +177,9 @@ int SetHandler::importSet(const QString& path, const QString& name) {
     auto importedSetCopy = new Set(importedSet.getSetName());
     importedSetCopy->setOutputs(importedSet.getOutputs());
     importedSetCopy->setSetName(name);
+
     saveSet(importedSetCopy);
     MessageCaster::showCompleteMessage("Imported set " + importedSetCopy->getSetName());
+
     return importedSetCopy->getID();
 }

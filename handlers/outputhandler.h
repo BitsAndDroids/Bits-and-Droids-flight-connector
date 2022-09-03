@@ -17,6 +17,7 @@ class outputHandler {
   QMap<int, Output*> getAvailableOutputs() { return availableOutputs; };
   Output* findOutputById(int id);
   void readOutputs();
+  void addToEventFileDialog(Output output);
 
  private:
   static bool updateOutputsRequired;
