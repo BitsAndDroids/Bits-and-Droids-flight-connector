@@ -1042,7 +1042,20 @@ void MainWindow::refreshComs(int mode) {
             i->addItem(com);
         }
     }
+    QRegularExpression searchSets("setBox");
     restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
+    QList<Set>* sets = setHandler->loadSets();
+
+    for (auto &i: setList) {
+        i->clear();
+        for (auto &key: *sets) {
+            i->addItem(key.getSetName());
+        }
+    }
+
+    restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
+
 }
 
 void MainWindow::stopMode(int mode) {
