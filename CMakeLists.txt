@@ -71,7 +71,7 @@ set(PROJECT_SOURCES
         widgets/codegenerator/boards/Board.cpp widgets/codegenerator/boards/Board.h
         widgets/codegenerator/components/Part.cpp widgets/codegenerator/components/Part.h
         widgets/codegenerator/components/Pushbutton.cpp widgets/codegenerator/components/Pushbutton.h
-        widgets/mainwindow/mainwindow.h
+        dashboard/Dashboard.h
         widgets/librarygenerator/librarygenerator.cpp widgets/librarygenerator/librarygenerator.h
         widgets/librarygenerator/librarygeneratorwindow.cpp widgets/librarygenerator/librarygeneratorwindow.h widgets/librarygenerator/librarygeneratorwindow.ui
         outputmenu/outputmapper.cpp outputmenu/outputmapper.h
@@ -79,7 +79,7 @@ set(PROJECT_SOURCES
         widgets/settingsmenu/builder/formbuilder.cpp widgets/settingsmenu/builder/formbuilder.h
         widgets/settingsmenu/optionsmenu.cpp widgets/settingsmenu/optionsmenu.h widgets/settingsmenu/optionsmenu.ui
         outputmenu/outputmenu.cpp outputmenu/outputmenu.h
-        widgets/mainwindow/mainwindow.cpp widgets/mainwindow/mainwindow.ui
+        dashboard/Dashboard.cpp dashboard/Dashboard.ui
 
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h

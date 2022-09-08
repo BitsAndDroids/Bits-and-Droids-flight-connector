@@ -1,5 +1,5 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading UI file 'dashboard.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.2.0
 **
@@ -50,7 +50,7 @@ public:
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+            MainWindow->setObjectName(QString::fromUtf8("dashboard"));
         MainWindow->resize(1058, 810);
         MainWindow->setAutoFillBackground(false);
         MainWindow->setStyleSheet(QString::fromUtf8("QApp{\n"
@@ -59,7 +59,7 @@ public:
 "#connectionPage{\n"
 "background-color: rgb(255, 255, 255);\n"
 "}\n"
-"QWidget#MainWindow{\n"
+"QWidget#dashboard{\n"
 "\n"
 "}\n"
 "QWidget#centralwidget{\n"
@@ -242,10 +242,10 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Bits and droids connector", nullptr));
-        menuItemOptions->setText(QCoreApplication::translate("MainWindow", "Options", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("dashboard", "Bits and droids connector", nullptr));
+        menuItemOptions->setText(QCoreApplication::translate("dashboard", "Options", nullptr));
         labelLastVal->setText(QString());
-        updateButton->setText(QCoreApplication::translate("MainWindow", "There is no update avaialable", nullptr));
+        updateButton->setText(QCoreApplication::translate("dashboard", "There is no update avaialable", nullptr));
         labelLastVal_2->setText(QString());
         labelLastStatus->setText(QString());
     } // retranslateUi

@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef DASHBOARD_H
+#define DASHBOARD_H
 
 #include "workers/InputWorker.h"
 #include "workers/dualworker.h"
@@ -24,17 +24,17 @@
 const std::string version = constants::VERSION;
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class MainWindow;
+    class Dashboard;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class Dashboard : public QMainWindow {
 Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    Dashboard(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    ~Dashboard();
 
 
     void on_btnSwitchNav1_clicked();
@@ -221,4 +221,4 @@ private:
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
 };
 
-#endif  // MAINWINDOW_H
+#endif DASHBOARD_H

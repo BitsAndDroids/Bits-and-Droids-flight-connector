@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "widgets/mainwindow/mainwindow.h"
+#include "dashboard/Dashboard.h"
 #include "rungaurd/RunGuard.h"
 #include "workers/ServiceWorker.h"
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     QApplication::setOrganizationName("Bits and Droids");
     QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
-    MainWindow w;
+    Dashboard w;
     w.show();
 
     return QApplication::exec();

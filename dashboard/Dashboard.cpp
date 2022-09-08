@@ -1,38 +1,38 @@
-#include "widgets/mainwindow/mainwindow.h"
+#include "dashboard/Dashboard.h"
 
-#include <widgets/eventeditor/eventwindow.h>
-#include <widgets/librarygenerator/librarygeneratorwindow.h>
+#include "widgets/eventeditor/eventwindow.h"
+#include "widgets/librarygenerator/librarygeneratorwindow.h"
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include "widgets/axismenu/calibrateaxismenu.h"
 #include "widgets/settingsmenu/optionsmenu.h"
-#include "OutputMenu/outputmenu.h"
+#include "outputmenu/outputmenu.h"
 
 #include <QDir>
 #include <iostream>
 #include <string>
 
-#include <widgets/codegenerator/CodeGeneratorWindow.h>
-#include "ui_mainwindow.h"
+#include "widgets/codegenerator/CodeGeneratorWindow.h"
+#include "ui_Dashboard.h"
 #include "utils/InputReader.h"
 #include "workers/ServiceWorker.h"
-#include <logging/MessageCaster.h>
-#include <enums/ModeEnum.h>
-#include <elements/ModeIndexCheckbox.h>
-#include <elements/ModeIndexCombobox.h>
-#include <logging/LogWindow.h>
+#include "logging/MessageCaster.h"
+#include "enums/ModeEnum.h"
+#include "elements/ModeIndexCheckbox.h"
+#include "elements/ModeIndexCombobox.h"
+#include "logging/LogWindow.h"
 
-void MainWindow::untick() {}
+void Dashboard::untick() {}
 
-void MainWindow::outputMenuClosed() { outputMenuOpen = false; }
+void Dashboard::outputMenuClosed() { outputMenuOpen = false; }
 
-void MainWindow::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
+void Dashboard::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
 
-void MainWindow::eventWindowClosed() { eventwindowOpen = false; }
+void Dashboard::eventWindowClosed() { eventwindowOpen = false; }
 
-void MainWindow::optionMenuClosed() { optionMenuOpen = false; }
+void Dashboard::optionMenuClosed() { optionMenuOpen = false; }
 
-void MainWindow::openSettings() {
+void Dashboard::openSettings() {
     if (!optionMenuOpen) {
         optionMenuOpen = true;
         QWidget * wdg = new optionsMenu;
@@ -42,12 +42,12 @@ void MainWindow::openSettings() {
     }
 }
 
-void MainWindow::openLoggingWindow() {
+void Dashboard::openLoggingWindow() {
     auto *wdg = new LogWindow();
     wdg->openWindow();
 }
 
-void MainWindow::openOutputMenu() {
+void Dashboard::openOutputMenu() {
     if (!outputMenuOpen) {
         outputMenuOpen = true;
         QWidget * wdg = new OutputMenu;
@@ -56,7 +56,7 @@ void MainWindow::openOutputMenu() {
     }
 }
 
-void MainWindow::openCalibrateAxis() {
+void Dashboard::openCalibrateAxis() {
     if (!calibrateAxisMenuOpen) {
         calibrateAxisMenuOpen = true;
         QWidget * wdg = new CalibrateAxisMenu;
@@ -66,7 +66,7 @@ void MainWindow::openCalibrateAxis() {
     }
 }
 
-void MainWindow::openEditEventMenu() {
+void Dashboard::openEditEventMenu() {
     if (!eventwindowOpen) {
         eventwindowOpen = true;
         QWidget * wdg = new EventWindow;
@@ -76,7 +76,7 @@ void MainWindow::openEditEventMenu() {
     }
 }
 
-void MainWindow::openGenerateLibraryMenu() {
+void Dashboard::openGenerateLibraryMenu() {
     if (generateLibraryMenuOpen) {
         generateLibraryMenuOpen = true;
         QWidget * wdg = new LibraryGeneratowWindow;
@@ -84,7 +84,7 @@ void MainWindow::openGenerateLibraryMenu() {
     }
 }
 
-void MainWindow::openGenerateCodeMenu() {
+void Dashboard::openGenerateCodeMenu() {
     std::cout << "hit" << std::endl;
     if (!generateCodeMenuOpen) {
         generateCodeMenuOpen = true;
@@ -94,13 +94,13 @@ void MainWindow::openGenerateCodeMenu() {
 }
 
 
-std::string MainWindow::convertComPort(QString comText) {
+std::string Dashboard::convertComPort(QString comText) {
     std::string val =
             R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
     return val;
 }
 
-void MainWindow::loadComPortData() {
+void Dashboard::loadComPortData() {
     availableComPorts.clear();
     availableComPorts.append("");
             foreach (const QSerialPortInfo &serialPortInfo,
@@ -110,7 +110,7 @@ void MainWindow::loadComPortData() {
         }
 }
 
-void MainWindow::toggleAdvanced() {
+void Dashboard::toggleAdvanced() {
     auto inWidget = this->findChild<QWidget *>("inWidgetContainer");
     auto outWidget = this->findChild<QWidget *>("outWidgetContainer");
     auto dualWidget = this->findChild<QWidget *>("dualWidgetContainer");
@@ -128,14 +128,12 @@ void MainWindow::toggleAdvanced() {
         ui->centralwidget->layout()->setSizeConstraint(QLayout::SetMinimumSize);
         ui->centralwidget->adjustSize();
         this->adjustSize();
-    } else {
     }
     settingsHandler.storeValue("Settings", "advancedMode", advancedMode);
     advancedMode = !advancedMode;
-    cout << "PRESSED" << endl;
 }
 
-void MainWindow::installWasm() {
+void Dashboard::installWasm() {
     try {
         bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
         QString pathfound = "";
@@ -177,7 +175,7 @@ void MainWindow::installWasm() {
     }
 }
 
-void MainWindow::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
+void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
     qDebug() << "Dest path = " << destinationFolder;
     QDir sourceDir(sourceFolder);
 
@@ -211,8 +209,8 @@ void MainWindow::copyFolder(const QString &sourceFolder, const QString &destinat
     }
 }
 
-MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow) {
+Dashboard::Dashboard(QWidget *parent)
+        : QMainWindow(parent), ui(new Ui::Dashboard) {
     ui->setupUi(this);
 
 
@@ -225,14 +223,14 @@ MainWindow::MainWindow(QWidget *parent)
     updateButton = ui->updateButton;
 
     availableSets = formbuilder.getAvailableSets();
-    connect(this, &MainWindow::closedOutputMenu, this,
-            &MainWindow::outputMenuClosed);
-    connect(this, &MainWindow::closedOptionsMenu, this,
-            &MainWindow::optionMenuClosed);
-    connect(this, &MainWindow::closedEventWindow, this,
-            &MainWindow::eventWindowClosed);
-    connect(this, &MainWindow::closedCalibrateAxisMenu, this,
-            &MainWindow::calibrateAxisMenuClosed);
+    connect(this, &Dashboard::closedOutputMenu, this,
+            &Dashboard::outputMenuClosed);
+    connect(this, &Dashboard::closedOptionsMenu, this,
+            &Dashboard::optionMenuClosed);
+    connect(this, &Dashboard::closedEventWindow, this,
+            &Dashboard::eventWindowClosed);
+    connect(this, &Dashboard::closedCalibrateAxisMenu, this,
+            &Dashboard::calibrateAxisMenuClosed);
     loadComPortData();
 
     qRegisterMetaType<QList<QString>>("QList<QString>");
@@ -261,10 +259,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
 
-    connect(icon, &QSystemTrayIcon::activated, this, &MainWindow::toggleOpen);
+    connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
 
     auto *quit_action = new QAction("Exit", icon);
-    connect(quit_action, &QAction::triggered, this, &MainWindow::exitProgram);
+    connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
 
     auto *hide_action = new QAction("Show/Hide", icon);
 
@@ -292,49 +290,49 @@ MainWindow::MainWindow(QWidget *parent)
 
     // SIGNALS + SLOTS
     connect(WasmUpdateEventFile, &QAction::triggered, this,
-            &MainWindow::localUpdateEventFile);
+            &Dashboard::localUpdateEventFile);
 
     connect(calibrateAxis, &QAction::triggered, this,
-            &MainWindow::openCalibrateAxis);
+            &Dashboard::openCalibrateAxis);
     connect(openOutputMenu, &QAction::triggered, this,
-            &MainWindow::openOutputMenu);
+            &Dashboard::openOutputMenu);
     connect(updateApplication, &QAction::triggered, this,
-            &MainWindow::checkForUpdates);
-    connect(installWasm, &QAction::triggered, this, &MainWindow::installWasm);
+            &Dashboard::checkForUpdates);
+    connect(installWasm, &QAction::triggered, this, &Dashboard::installWasm);
     connect(toggleAdvancedAction, &QAction::triggered, this,
-            &MainWindow::toggleAdvanced);
+            &Dashboard::toggleAdvanced);
     connect(&outputThread, &OutputWorker::BoardConnectionMade, this,
-            &MainWindow::BoardConnectionMade);
+            &Dashboard::BoardConnectionMade);
     connect(&outputThread, &OutputWorker::GameConnectionMade, this,
-            &MainWindow::GameConnectionMade);
+            &Dashboard::GameConnectionMade);
     connect(libraryGenerator, &QAction::triggered, this,
-            &MainWindow::openGenerateLibraryMenu);
+            &Dashboard::openGenerateLibraryMenu);
 
     connect(generateCode, &QAction::triggered, this,
-            &MainWindow::openGenerateCodeMenu);
+            &Dashboard::openGenerateCodeMenu);
 
 
     serviceworker.start();
     QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
     QObject::connect(&dualThread, &DualWorker::logMessage, &serviceworker, &ServiceWorker::logMessage);
     connect(&inputThread, &InputWorker::BoardConnectionMade, this,
-            &MainWindow::BoardConnectionMade);
+            &Dashboard::BoardConnectionMade);
     connect(&inputThread, &InputWorker::GameConnectionMade, this,
-            &MainWindow::GameConnectionMade);
+            &Dashboard::GameConnectionMade);
 
     connect(&dualThread, &DualWorker::BoardConnectionMade, this,
-            &MainWindow::BoardConnectionMade);
+            &Dashboard::BoardConnectionMade);
     connect(&dualThread, &DualWorker::GameConnectionMade, this,
-            &MainWindow::GameConnectionMade);
+            &Dashboard::GameConnectionMade);
     connect(openEditEventWindow, &QAction::triggered, this,
-            &MainWindow::openEditEventMenu);
-    connect(openSettings, &QAction::triggered, this, &MainWindow::openSettings);
-    connect(&formbuilder, &FormBuilder::addPressed, this, &MainWindow::addCom);
-    connect(&formbuilder, &FormBuilder::stopPressed, this, &MainWindow::stopMode);
+            &Dashboard::openEditEventMenu);
+    connect(openSettings, &QAction::triggered, this, &Dashboard::openSettings);
+    connect(&formbuilder, &FormBuilder::addPressed, this, &Dashboard::addCom);
+    connect(&formbuilder, &FormBuilder::stopPressed, this, &Dashboard::stopMode);
     connect(&formbuilder, &FormBuilder::startPressed, this,
-            &MainWindow::startMode);
+            &Dashboard::startMode);
     connect(&formbuilder, &FormBuilder::refreshPressed, this,
-            &MainWindow::refreshComs);
+            &Dashboard::refreshComs);
     connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
             SLOT(onUpdateLastStatusUI(QString)));
 
@@ -477,7 +475,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->adjustSize();
 }
 
-void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
+void Dashboard::restoreStoredValuesComboBoxes(QWidget *widget,
                                                const QString &comGroupName,
                                                const QString &setGroupName,
                                                bool setsNeeded) {
@@ -533,7 +531,7 @@ void MainWindow::restoreStoredValuesComboBoxes(QWidget *widget,
     }
 }
 
-void MainWindow::checkForUpdates(bool silentCheck) {
+void Dashboard::checkForUpdates(bool silentCheck) {
     auto *process = new QProcess(this);
     process->start(pathHandler.getMaintenanceToolPath() + " ch");
     process->waitForFinished();
@@ -556,14 +554,14 @@ void MainWindow::checkForUpdates(bool silentCheck) {
     }
 }
 
-void MainWindow::localUpdateEventFile() {
+void Dashboard::localUpdateEventFile() {
     try {
         QFile::remove(pathHandler.getCommunityFolderPath() +
                       "/BitsAndDroidsModule/modules/events.txt");
         QFile::copy(applicationEventsPath,
                     pathHandler.getCommunityFolderPath() +
                     "/BitsAndDroidsModule/modules/events.txt");
-        connect(this, &MainWindow::sendWASMCommand, &serviceworker,
+        connect(this, &Dashboard::sendWASMCommand, &serviceworker,
                 &ServiceWorker::sendWASMData);
 
         emit sendWASMCommand("9999");
@@ -579,7 +577,7 @@ void MainWindow::localUpdateEventFile() {
     }
 }
 
-void MainWindow::GameConnectionMade(int con, int mode) {
+void Dashboard::GameConnectionMade(int con, int mode) {
     qDebug() << "ConnectionReceived";
     auto gameRadioButton = new QRadioButton();
     switch (mode) {
@@ -615,7 +613,7 @@ void MainWindow::GameConnectionMade(int con, int mode) {
     }
 }
 
-void MainWindow::BoardConnectionMade(int con, int mode) {
+void Dashboard::BoardConnectionMade(int con, int mode) {
     qDebug() << "ConnectionReceived";
     auto boardRadioButton = new QRadioButton();
     switch (mode) {
@@ -652,15 +650,15 @@ void MainWindow::BoardConnectionMade(int con, int mode) {
 }
 
 // SLOTS
-void MainWindow::onUpdateLastValUI(const QString &lastVal) {
+void Dashboard::onUpdateLastValUI(const QString &lastVal) {
     ui->labelLastVal_2->setText(lastVal);
 }
 
-void MainWindow::onUpdateLastStatusUI(const QString &lastVal) {
+void Dashboard::onUpdateLastStatusUI(const QString &lastVal) {
     ui->labelLastStatus->setText(lastVal);
 }
 
-void MainWindow::startMode(int mode) {
+void Dashboard::startMode(int mode) {
     //Init inputs before rest of application launches
 
     switch (mode) {
@@ -680,7 +678,7 @@ void MainWindow::startMode(int mode) {
     }
 }
 
-void MainWindow::startInputs(bool autoStart) {
+void Dashboard::startInputs(bool autoStart) {
     auto widget = ui->inWidgetContainer;
     inputThread.abortInput = false;
     settingsHandler.clearKeys("runningInputComs");
@@ -726,7 +724,7 @@ void MainWindow::startInputs(bool autoStart) {
     saveAutoRunStates(INPUTMODE);
 }
 
-void MainWindow::startOutputs(bool autoStart) {
+void Dashboard::startOutputs(bool autoStart) {
     auto widget = ui->outWidgetContainer;
     auto *startButton =
             ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
@@ -809,7 +807,7 @@ void MainWindow::startOutputs(bool autoStart) {
     saveAutoRunStates(OUTPUTMODE);
 }
 
-void MainWindow::startDual(bool autoStart) {
+void Dashboard::startDual(bool autoStart) {
     cout<<dualThread.isRunning()<< " IS RUNNING" << endl;
     auto widget = ui->dualWidgetContainer;
     auto *startButton =
@@ -913,11 +911,11 @@ void MainWindow::startDual(bool autoStart) {
 
 }
 
-QList<ModeIndexCheckbox *> MainWindow::getCheckboxesByPattern(const QRegularExpression &pattern) {
+QList<ModeIndexCheckbox *> Dashboard::getCheckboxesByPattern(const QRegularExpression &pattern) {
     return this->findChildren<ModeIndexCheckbox *>(pattern);
 }
 
-void MainWindow::saveAutoRunStates(int mode) {
+void Dashboard::saveAutoRunStates(int mode) {
     auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
     QString group;
     switch (mode) {
@@ -942,7 +940,7 @@ void MainWindow::saveAutoRunStates(int mode) {
     }
 }
 
-void MainWindow::loadAutoRunState() {
+void Dashboard::loadAutoRunState() {
     QRegularExpression searchAuto("auto");
     auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
     QString group;
@@ -968,7 +966,7 @@ void MainWindow::loadAutoRunState() {
 }
 
 
-bool MainWindow::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) {
+bool Dashboard::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) {
     for (auto &i: toCheck) {
         if (i->currentIndex() == -1) {
             return true;
@@ -978,7 +976,7 @@ bool MainWindow::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) 
     return true;
 }
 
-void MainWindow::clearChildrenFromLayout(QLayout *toClear) {
+void Dashboard::clearChildrenFromLayout(QLayout *toClear) {
     if (toClear != nullptr) {
         QLayoutItem *item;
         while ((item = toClear->takeAt(0)) != nullptr) {
@@ -988,7 +986,7 @@ void MainWindow::clearChildrenFromLayout(QLayout *toClear) {
     }
 }
 
-QLabel *MainWindow::returnWarningString(int warningType) {
+QLabel *Dashboard::returnWarningString(int warningType) {
     auto warningLabel = new QLabel();
     warningLabel->setStyleSheet("color:#B33A3A");
     switch (warningType) {
@@ -1004,7 +1002,7 @@ QLabel *MainWindow::returnWarningString(int warningType) {
     return warningLabel;
 }
 
-void MainWindow::refreshComs(int mode) {
+void Dashboard::refreshComs(int mode) {
     auto *widget = new QWidget();
     QString comGroupName;
     QString setGroupName;
@@ -1058,7 +1056,7 @@ void MainWindow::refreshComs(int mode) {
 
 }
 
-void MainWindow::stopMode(int mode) {
+void Dashboard::stopMode(int mode) {
     switch (mode) {
         case 1:
             stopInput();
@@ -1077,7 +1075,7 @@ void MainWindow::stopMode(int mode) {
     GameConnectionMade(0, mode);
 }
 
-void MainWindow::addCom(int mode) {
+void Dashboard::addCom(int mode) {
     auto *layout = new QVBoxLayout();
     bool set = false;
     switch (mode) {
@@ -1099,29 +1097,29 @@ void MainWindow::addCom(int mode) {
     layout->addWidget(formbuilder.generateComSelector(set, mode, (int) indexList.size()));
 }
 
-void MainWindow::stopInput() {
+void Dashboard::stopInput() {
     inputThread.abortInput = true;
 
     inputThread.quit();
 }
 
-void MainWindow::stopOutput() {
+void Dashboard::stopOutput() {
     outputThread.abort = true;
     outputThread.quit();
 }
 
-void MainWindow::stopDual() {
+void Dashboard::stopDual() {
     dualThread.abortDual = true;
 }
 
-void MainWindow::on_updateButton_clicked() {
+void Dashboard::on_updateButton_clicked() {
     auto *process = new QProcess(this);
     process->startDetached(pathHandler.getMaintenanceToolPath());
     process->waitForFinished();
     exitProgram();
 }
 
-int MainWindow::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
+int Dashboard::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
     int index = -10;
     if (!value.isNull()) {
         for (int i = 0; i < comboBox->count(); i++) {
@@ -1135,7 +1133,7 @@ int MainWindow::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value
     return index;
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
         if (closing) {
             event->accept();
@@ -1150,7 +1148,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 
 
-void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
+void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         if (isVisible()) {
             hide();
@@ -1161,11 +1159,11 @@ void MainWindow::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     }
 }
 
-MainWindow::~MainWindow() {
+Dashboard::~Dashboard() {
     delete ui;
 }
 
-void MainWindow::exitProgram() {
+void Dashboard::exitProgram() {
     serviceworker.setStopServiceWorker(true);
     serviceworker.wait();
     dualThread.abortDual = true;
