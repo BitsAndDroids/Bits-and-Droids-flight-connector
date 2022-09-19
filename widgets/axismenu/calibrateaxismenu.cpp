@@ -103,7 +103,7 @@ QGridLayout *CalibrateAxisMenu::GenerateCurveLayouts() {
     qDebug() << "loopie";
     auto *wdg = new QWidget();
 
-    // builder->loadPointsToPlot(curves);
+    // controller->loadPointsToPlot(curves);
 
     curveGrid->addLayout(builder->createAxisRow(curves[i], i), counter / 2,
                          counter % 2);

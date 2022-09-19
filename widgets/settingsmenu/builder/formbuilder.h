@@ -52,9 +52,7 @@ public:
 
     QWidget *generateComControls(int mode);
 
-    QList<Set> *getAvailableSets() { return availableSets; };
 
-    QList<QString> getAvailableComPorts() { return availableComPorts; };
 
     QList<struct coordinates> *getCoordinates(int number);
 
@@ -119,8 +117,7 @@ private:
     QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
     SetHandler setHandler;
     SettingsHandler settingsHandler;
-    QList<Set> *availableSets;
-    QList<QString> availableComPorts;
+
 
     void updateChart(int number);
 

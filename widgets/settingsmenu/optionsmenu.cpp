@@ -82,7 +82,7 @@ optionsMenu::optionsMenu(QWidget *parent)
     uiOptions->vlOptions->addWidget(communityFolderPathLabel);
     uiOptions->vlOptions->setSizeConstraint(QLayout::SetMinimumSize);
     uiOptions->vlOptions->setAlignment(Qt::AlignTop);
-    // uiOptions->vlEngineRange->addLayout(builder->createRudderRow());
+    // uiOptions->vlEngineRange->addLayout(controller->createRudderRow());
     uiOptions->vlEngineRange->addLayout(builder->RangeBuilder());
     auto sensLayout = new QVBoxLayout();
     uiOptions->sensitivityWidget->setLayout(sensLayout);

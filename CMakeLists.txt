@@ -104,7 +104,13 @@ set(PROJECT_SOURCES
         elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h
         outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h
         utils/JSONParser.cpp utils/JSONParser.h
-        utils/EventFileFormatter.cpp utils/EventFileFormatter.h)
+        utils/EventFileFormatter.cpp utils/EventFileFormatter.h
+        dashboard/models/ComPortWidgetModel.cpp dashboard/models/ComPortWidgetModel.h
+        dashboard/elements/ComPortRow.cpp dashboard/elements/ComPortRow.h
+        dashboard/controller/ComPortWidgetController.cpp dashboard/controller/ComPortWidgetController.h
+        elements/Element.cpp elements/Element.h
+        dashboard/elements/ComportWidget.cpp dashboard/elements/ComportWidget.h
+        dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

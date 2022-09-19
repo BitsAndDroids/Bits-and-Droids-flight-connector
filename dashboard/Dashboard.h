@@ -1,6 +1,8 @@
 #ifndef DASHBOARD_H
 #define DASHBOARD_H
 
+
+#include "controller/ComPortWidgetController.h"
 #include "workers/InputWorker.h"
 #include "workers/dualworker.h"
 #include "workers/outputworker.h"
@@ -114,6 +116,7 @@ public slots:
     void BoardConnectionMade(int con, int mode);
 
 private:
+    ComPortWidgetController controller = ComPortWidgetController();
     bool advancedMode = false;
     bool closing = false;
 
@@ -173,7 +176,7 @@ private:
     InputWorker inputThread;
     QList<Set> *availableSets;
     FormBuilder formbuilder;
-    Ui::MainWindow *ui;
+    Ui::Dashboard *ui;
 
     void openSettings();
 

@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_MAINWINDOW_H
-#define UI_MAINWINDOW_H
+#ifndef UI_DASHBOARD_H
+#define UI_DASHBOARD_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -24,7 +24,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_Dashboard
 {
 public:
     QAction *menuItemOptions;
@@ -47,13 +47,13 @@ public:
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *Dashboard)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("dashboard"));
-        MainWindow->resize(1058, 810);
-        MainWindow->setAutoFillBackground(false);
-        MainWindow->setStyleSheet(QString::fromUtf8("QApp{\n"
+        if (Dashboard->objectName().isEmpty())
+            Dashboard->setObjectName(QString::fromUtf8("dashboard"));
+        Dashboard->resize(1058, 810);
+        Dashboard->setAutoFillBackground(false);
+        Dashboard->setStyleSheet(QString::fromUtf8("QApp{\n"
 "	\n"
 "}\n"
 "#connectionPage{\n"
@@ -146,9 +146,9 @@ public:
 "	color: #000;\n"
 "}\n"
 ""));
-        menuItemOptions = new QAction(MainWindow);
+        menuItemOptions = new QAction(Dashboard);
         menuItemOptions->setObjectName(QString::fromUtf8("menuItemOptions"));
-        centralwidget = new QWidget(MainWindow);
+        centralwidget = new QWidget(Dashboard);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         gridLayout = new QGridLayout(centralwidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
@@ -226,18 +226,18 @@ public:
 
         gridLayout->addWidget(connectionsVWidget, 1, 0, 1, 1);
 
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
+        Dashboard->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(Dashboard);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 1058, 22));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
+        Dashboard->setMenuBar(menubar);
+        statusbar = new QStatusBar(Dashboard);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
+        Dashboard->setStatusBar(statusbar);
 
-        retranslateUi(MainWindow);
+        retranslateUi(Dashboard);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(Dashboard);
     } // setupUi
 
     void retranslateUi(QMainWindow *MainWindow)
@@ -253,9 +253,9 @@ public:
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class Dashboard: public Ui_Dashboard {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_MAINWINDOW_H
+#endif // UI_DASHBOARD_H

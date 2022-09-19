@@ -28,7 +28,7 @@ FormBuilder::FormBuilder() {
     rangeHeaders.append("Flaps");
 
     cout << "bye" << endl;
-    availableSets = setHandler.getSets();
+
 }
 
 void FormBuilder::loadPointsToPlot(QStringList axis) {
@@ -418,15 +418,7 @@ QVBoxLayout *FormBuilder::RangeBuilder() {
     return rangeHLayout;
 }
 
-QHBoxLayout *FormBuilder::generateComBlock() {
-    auto *comContainer = new QHBoxLayout();
 
-    for (int i = 0; i < comHeaders.size(); i++) {
-        comContainer->addLayout(generateComColumn(i));
-    }
-
-    return comContainer;
-}
 
 QVBoxLayout *FormBuilder::generateComColumn(int index) {
     auto *comColumn = new QVBoxLayout();
@@ -442,24 +434,6 @@ QVBoxLayout *FormBuilder::generateComColumn(int index) {
     return comColumn;
 }
 
-void FormBuilder::loadComPortData() {
-    availableComPorts.clear();
-
-    foreach(
-    const QSerialPortInfo &serialPortInfo,
-    QSerialPortInfo::availablePorts()) {
-        availableComPorts.append(serialPortInfo.portName() + " | " +
-                                 serialPortInfo.description());
-    }
-}
-
-QHBoxLayout *FormBuilder::generateOutputRow(Output *output) {
-    auto *row = new QHBoxLayout();
-    auto *outputName = new QLabel(output->getCbText());
-    row->addWidget(outputName);
-    return row;
-}
-
 QLabel *FormBuilder::generateHeader(const QString &text) {
     auto *header = new QLabel(text);
     header->setObjectName("header" + text);
@@ -469,42 +443,6 @@ QLabel *FormBuilder::generateHeader(const QString &text) {
     return header;
 }
 
-QWidget *FormBuilder::generateComSelector(bool setsNeeded, int mode,
-                                          int index) {
-    auto *comSelector = new QWidget();
-    auto *comRow = new QHBoxLayout();
-    comSelector->setLayout(comRow);
-    auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
-    for (auto &availableComPort: availableComPorts) {
-        comPortComboBox->addItem(availableComPort);
-    }
-    comRow->addWidget(comPortComboBox);
-    comPortComboBox->setMinimumWidth(150);
-    if (setsNeeded) {
-        auto *setComboBox = new ModeIndexCombobox("setBox",index);
-        setComboBox->addItem("No outputs");
-        for (const auto &availableSet: *availableSets) {
-            setComboBox->addItem(availableSet.getSetName());
-        }
-        setComboBox->setMinimumWidth(150);
-        comRow->addWidget(setComboBox);
-        qDebug() << setComboBox->objectName();
-    }
-
-    auto *removeButton = new QPushButton("-");
-    removeButton->setObjectName("del" + QString::number(mode) + QString::number(index));
-    removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    removeButton->setMinimumSize(20, 20);
-    removeButton->setMaximumSize(20, 20);
-    connect(removeButton, &QAbstractButton::clicked, this,
-            &FormBuilder::removeComWidget);
-    comRow->addWidget(removeButton);
-
-//    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
-//    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
-//    comRow->addWidget(autoRunCB);
-    return comSelector;
-}
 void FormBuilder::autoRunChanged(){
     auto senderCB = qobject_cast<ModeIndexCheckbox *>(sender());
 
@@ -537,212 +475,9 @@ void FormBuilder::autoRunChanged(){
 
 
 }
-QWidget *FormBuilder::generateComControls(int mode) {
-    auto *comControls = new QWidget();
-    auto *comControlRow = new QHBoxLayout();
-    comControls->setLayout(comControlRow);
-    comControlRow->addWidget(generateHeader(mainHeaders[mode]));
-    comControlRow->setAlignment(Qt::AlignLeft);
-    // REFRESH BTN
-    auto *refreshButton = new QPushButton();
 
-    refreshButton->setIcon(QIcon("resources/images/refreshicon.png"));
-    refreshButton->setStyleSheet(
-            "border-image:url(:resources/images/refreshicon.png); background-color:#fff;");
-    refreshButton->setObjectName(QString::number(mode) + "refreshBtn");
 
-    refreshButton->setMinimumSize(15, 15);
-    refreshButton->setMaximumSize(15, 15);
-    connect(refreshButton, &QAbstractButton::clicked, this,
-            &FormBuilder::localRefreshed);
-    comControlRow->addWidget(refreshButton);
 
-    // START BTN
-    auto *startButton = new QPushButton("Start");
-    startButton->setCheckable(true);
-    //#2DE3A3
-    startButton->setStyleSheet(
-
-            "QPushButton { \
-                      color:white;\
-                      background-color:#509402;\
-                  }   \
-                  QPushButton:checked{\
-                      background-color: #0F4C5C;\
-                      border: none; \
-                  }\
-                  QPushButton:hover{  \
-                      background-color: grey; \
-                      border-style: outset;\
-                  }");
-
-    startButton->setMinimumSize(50, 25);
-    startButton->setMaximumSize(50, 25);
-    startButton->setObjectName(QString::number(mode) + "startButton");
-    connect(startButton, &QAbstractButton::clicked, this,
-            &FormBuilder::localStart);
-    comControlRow->addWidget(startButton);
-
-    // STOP BTN
-    auto *stopButton = new QPushButton("Stop");
-    stopButton->setMinimumSize(50, 25);
-    stopButton->setMaximumSize(50, 25);
-    stopButton->setObjectName(QString::number(mode) + "stopBtn");
-    connect(stopButton, &QAbstractButton::clicked, this, &FormBuilder::localStop);
-    comControlRow->addWidget(stopButton);
-
-    // ADD BTN
-    auto *addButton = new QPushButton("+");
-    addButton->setMinimumSize(20, 20);
-    addButton->setMaximumSize(20, 20);
-    addButton->setObjectName(QString::number(mode) + "addBtn");
-    connect(addButton, &QAbstractButton::clicked, this, &FormBuilder::localAdd);
-    comControlRow->addWidget(addButton);
-
-    return comControls;
-}
-
-void FormBuilder::removeComWidget() {
-    QWidget *senderWidget = qobject_cast<QWidget *>(sender()->parent());
-
-    try {
-        int mode = sender()->objectName().mid(3, 1).toInt();
-        QString index = sender()->objectName().right(1);
-        QString group;
-        QString arGroup;
-        if (mode == INPUTMODE) {
-
-            group = "inputComs";
-            arGroup = "inputARIndex";
-
-        } else if (mode == OUTPUTMODE) {
-
-            group = "outputComs";
-            arGroup = "outputARIndex";
-            settingsHandler.removeSetting("outputSets", "Set" + index);
-
-        } else if (mode == DUALMODE) {
-
-            group = "dualComs";
-            arGroup = "dualARIndex";
-            settingsHandler.removeSetting("dualSets", "Set" + index);
-        }
-        settingsHandler.removeSetting(arGroup,index);
-        settingsHandler.removeSetting(group, "com" + index);
-        adjustIndexes(mode, index.toInt());
-    } catch (std::exception &e) {
-        qDebug("%s", e.what());
-    }
-
-    delete senderWidget;
-}
-
-void FormBuilder::adjustIndexes(int mode, int index) {
-
-    QString group;
-    QString setGroup;
-    QString arGroup;
-
-    switch (mode) {
-        case 1: {
-            group = "inputComs";
-            arGroup = "inputARIndex";
-            break;
-        }
-        case 2: {
-            group = "outputComs";
-            setGroup = "outputSets";
-            arGroup = "outputARIndex";
-            break;
-        }
-        case 3: {
-            group = "dualComs";
-            setGroup = "dualSets";
-            arGroup = "dualARIndex";
-            break;
-        }
-        default:
-            break;
-    }
-
-    auto keys = settingsHandler.retrieveKeys(group);
-    auto arKeys = settingsHandler.retrieveKeys(arGroup);
-
-    QString setKey = "Set";
-    QString comKey = "com";
-
-    if (index < keys->size()) {
-        for (const auto & key : *keys) {
-            int comIndex = key.mid(comKey.size()).toInt();
-            if (comIndex > index) {
-                auto value = settingsHandler.retrieveSetting(group, key)->toString();
-                settingsHandler.storeValue(group, comKey + QString::number(comIndex - 1), value);
-
-            }
-        }
-    }
-    settingsHandler.removeSetting(group, comKey + QString::number(keys->size()));
-    if (mode == OUTPUTMODE || mode == DUALMODE) {
-
-        auto setKeys = settingsHandler.retrieveKeys(setGroup);
-        for (const auto & i : *setKeys) {
-            int setIndex = i.mid(setKey.size()).toInt();
-            if (setIndex > index) {
-                auto setValue = settingsHandler.retrieveSetting(setGroup, i)->toString();
-                settingsHandler.storeValue(setGroup, setKey + QString::number(setIndex - 1), setValue);
-            }
-        }
-        settingsHandler.removeSetting(setGroup, setKey + QString::number(setKeys->size()));
-
-    }
-    for(const auto & arKey : *arKeys){
-        int arIndex = arKey.toInt();
-        if(arIndex > index){
-            auto value = settingsHandler.retrieveSetting(arGroup, arKey)->toBool();
-            settingsHandler.storeValue(arGroup,QString::number(arIndex - 1), value);
-        }
-    }
-
-}
-
-void FormBuilder::localStart() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    pressedBtn->setEnabled(false);
-    pressedBtn->setText("Running");
-
-    int mode = pressedBtn->objectName().left(1).toInt();
-    QString stopText = QString::number(mode) + "stopBtn";
-    auto *stopButton = pressedBtn->parent()->findChild<QPushButton *>(stopText);
-    stopButton->setStyleSheet("background-color:#E20303");
-
-    emit startPressed(mode);
-}
-
-void FormBuilder::localRefreshed() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    int mode = pressedBtn->objectName().left(1).toInt();
-    emit refreshPressed(mode);
-}
-
-void FormBuilder::localStop() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    int mode = pressedBtn->objectName().left(1).toInt();
-    QString startBtnText = QString::number(mode) + "startButton";
-
-    auto *startBtn = pressedBtn->parent()->findChild<QPushButton *>(startBtnText);
-    startBtn->setEnabled(true);
-    startBtn->setChecked(false);
-    startBtn->setText("Start");
-    pressedBtn->setStyleSheet("background-color:#0F4C5C");
-    emit stopPressed(mode);
-}
-
-void FormBuilder::localAdd() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-
-    int mode = pressedBtn->objectName().left(1).toInt();
-    emit addPressed(mode);
-}
 
 void FormBuilder::adjustIndexes(int index) {
 

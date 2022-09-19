@@ -1,4 +1,5 @@
-#include "dashboard/Dashboard.h"
+#include "Dashboard.h"
+#include "ui_Dashboard.h"
 
 #include "widgets/eventeditor/eventwindow.h"
 #include "widgets/librarygenerator/librarygeneratorwindow.h"
@@ -13,7 +14,7 @@
 #include <string>
 
 #include "widgets/codegenerator/CodeGeneratorWindow.h"
-#include "ui_Dashboard.h"
+
 #include "utils/InputReader.h"
 #include "workers/ServiceWorker.h"
 #include "logging/MessageCaster.h"
@@ -108,29 +109,6 @@ void Dashboard::loadComPortData() {
             availableComPorts.append(serialPortInfo.portName() + " | " +
                                      serialPortInfo.description());
         }
-}
-
-void Dashboard::toggleAdvanced() {
-    auto inWidget = this->findChild<QWidget *>("inWidgetContainer");
-    auto outWidget = this->findChild<QWidget *>("outWidgetContainer");
-    auto dualWidget = this->findChild<QWidget *>("dualWidgetContainer");
-    auto headerLabel = this->findChild<QWidget *>("headerDUAL");
-    inWidget->setVisible(advancedMode);
-    outWidget->setVisible(advancedMode);
-    headerLabel->setVisible(advancedMode);
-    if (!advancedMode) {
-        dualWidget->resize(150, dualWidget->height());
-        dualWidget->layout()->setSizeConstraint(QLayout::SetMinimumSize);
-        dualWidget->adjustSize();
-
-        ui->centralwidget->resize(250, this->height());
-        ui->centralwidget->setMinimumWidth(250);
-        ui->centralwidget->layout()->setSizeConstraint(QLayout::SetMinimumSize);
-        ui->centralwidget->adjustSize();
-        this->adjustSize();
-    }
-    settingsHandler.storeValue("Settings", "advancedMode", advancedMode);
-    advancedMode = !advancedMode;
 }
 
 void Dashboard::installWasm() {
@@ -242,7 +220,6 @@ Dashboard::Dashboard(QWidget *parent)
     auto *openLogging = new QAction("&Logging", this);
     auto *openSettings = new QAction("&Settings", this);
     auto *generateCode = new QAction("&Code", this);
-    auto *toggleAdvancedAction = new QAction("&Toggle advanced mode", this);
     auto *libraryGenerator = new QAction("&Generate library", this);
     auto *calibrateAxis = new QAction("&Calibrate axis", this);
     auto *openOutputMenu = new QAction("&Outputs", this);
@@ -276,7 +253,6 @@ Dashboard::Dashboard(QWidget *parent)
 
     WasmInstall->addAction(WasmUpdateEventFile);
     WasmInstall->addAction(installWasm);
-    viewMenu->addAction(toggleAdvancedAction);
     OutputSettings->addAction(openOutputMenu);
     WasmInstall->addAction(openEditEventWindow);
     Settings->addAction(openSettings);
@@ -299,8 +275,7 @@ Dashboard::Dashboard(QWidget *parent)
     connect(updateApplication, &QAction::triggered, this,
             &Dashboard::checkForUpdates);
     connect(installWasm, &QAction::triggered, this, &Dashboard::installWasm);
-    connect(toggleAdvancedAction, &QAction::triggered, this,
-            &Dashboard::toggleAdvanced);
+
     connect(&outputThread, &OutputWorker::BoardConnectionMade, this,
             &Dashboard::BoardConnectionMade);
     connect(&outputThread, &OutputWorker::GameConnectionMade, this,
@@ -458,19 +433,9 @@ Dashboard::Dashboard(QWidget *parent)
         widgetContainer->setLayout(connectionRow);
         widget->layout()->addWidget(widgetContainer);
     }
-    if (!settingsHandler.retrieveSetting("Settings", "advancedMode")->toBool()) {
-        toggleAdvanced();
-    }
     checkForUpdates(true);
     loadAutoRunState();
     settingsHandler.checkEventFilePresent();
-//    if(settingsHandler.retrieveSetting("Settings","cbAutorun")->toBool()){
-//        if(advancedMode) {
-//            startInputs(true);
-//            startOutputs(true);
-//        }
-//        startDual(true);
-//    }
 
     this->adjustSize();
 }
@@ -577,77 +542,7 @@ void Dashboard::localUpdateEventFile() {
     }
 }
 
-void Dashboard::GameConnectionMade(int con, int mode) {
-    qDebug() << "ConnectionReceived";
-    auto gameRadioButton = new QRadioButton();
-    switch (mode) {
-        case 1:
-            gameRadioButton = ui->inWidgetContainer->findChild<QRadioButton *>(
-                    "inWidgetContainerGameCon");
-            break;
-        case 2:
-            gameRadioButton = ui->outWidgetContainer->findChild<QRadioButton *>(
-                    "outWidgetContainerGameCon");
-            break;
-        case 3:
-            gameRadioButton = ui->dualWidgetContainer->findChild<QRadioButton *>(
-                    "dualWidgetContainerGameCon");
-            break;
-        default:
-            break;
-    }
-    if (con == 0) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
-    }
-    if (con == 1) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-    if (con == 2) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-}
 
-void Dashboard::BoardConnectionMade(int con, int mode) {
-    qDebug() << "ConnectionReceived";
-    auto boardRadioButton = new QRadioButton();
-    switch (mode) {
-        case 1:
-            boardRadioButton = ui->inWidgetContainer->findChild<QRadioButton *>(
-                    "inWidgetContainerBoardCon");
-            break;
-        case 2:
-            boardRadioButton = ui->outWidgetContainer->findChild<QRadioButton *>(
-                    "outWidgetContainerBoardCon");
-            break;
-        case 3:
-            boardRadioButton = ui->dualWidgetContainer->findChild<QRadioButton *>(
-                    "dualWidgetContainerBoardCon");
-            break;
-        default:
-            break;
-    }
-    if (con == 0) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
-    }
-    if (con == 1) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-    if (con == 2) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-}
 
 // SLOTS
 void Dashboard::onUpdateLastValUI(const QString &lastVal) {
@@ -808,7 +703,6 @@ void Dashboard::startOutputs(bool autoStart) {
 }
 
 void Dashboard::startDual(bool autoStart) {
-    cout<<dualThread.isRunning()<< " IS RUNNING" << endl;
     auto widget = ui->dualWidgetContainer;
     auto *startButton =
             ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
@@ -1002,115 +896,9 @@ QLabel *Dashboard::returnWarningString(int warningType) {
     return warningLabel;
 }
 
-void Dashboard::refreshComs(int mode) {
-    auto *widget = new QWidget();
-    QString comGroupName;
-    QString setGroupName;
-    bool setsNeeded = true;
 
-    switch (mode) {
-        case 1:
-            widget = ui->inWidgetContainer;
-            comGroupName = "inputComs";
-            setsNeeded = false;
-            break;
-        case 2:
-            widget = ui->outWidgetContainer;
-            setGroupName = "outputSets";
-            comGroupName = "outputComs";
-            break;
-        case 3:
-            widget = ui->dualWidgetContainer;
-            setGroupName = "dualSets";
-            comGroupName = "dualComs";
-            break;
-        default:
-            break;
-    }
 
-    QRegularExpression search("comBox");
-    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
-    formbuilder.loadComPortData();
 
-    QList<QString> coms = formbuilder.getAvailableComPorts();
-
-    for (auto &i: comList) {
-        i->clear();
-        for (auto &com: coms) {
-            i->addItem(com);
-        }
-    }
-    QRegularExpression searchSets("setBox");
-    restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
-    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
-    QList<Set>* sets = setHandler->loadSets();
-
-    for (auto &i: setList) {
-        i->clear();
-        for (auto &key: *sets) {
-            i->addItem(key.getSetName());
-        }
-    }
-
-    restoreStoredValuesComboBoxes(widget, comGroupName, setGroupName, setsNeeded);
-
-}
-
-void Dashboard::stopMode(int mode) {
-    switch (mode) {
-        case 1:
-            stopInput();
-            break;
-        case 2:
-            stopOutput();
-            break;
-        case 3:
-            stopDual();
-
-            break;
-        default:
-            break;
-    }
-    BoardConnectionMade(0, mode);
-    GameConnectionMade(0, mode);
-}
-
-void Dashboard::addCom(int mode) {
-    auto *layout = new QVBoxLayout();
-    bool set = false;
-    switch (mode) {
-        case 1:
-            layout = ui->inLayoutContainer;
-            break;
-        case 2:
-            layout = ui->outLayoutContainer;
-            set = true;
-            break;
-        case 3:
-            layout = ui->dualLayoutContainer;
-            set = true;
-            break;
-        default:
-            break;
-    }
-    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
-    layout->addWidget(formbuilder.generateComSelector(set, mode, (int) indexList.size()));
-}
-
-void Dashboard::stopInput() {
-    inputThread.abortInput = true;
-
-    inputThread.quit();
-}
-
-void Dashboard::stopOutput() {
-    outputThread.abort = true;
-    outputThread.quit();
-}
-
-void Dashboard::stopDual() {
-    dualThread.abortDual = true;
-}
 
 void Dashboard::on_updateButton_clicked() {
     auto *process = new QProcess(this);
@@ -1119,19 +907,7 @@ void Dashboard::on_updateButton_clicked() {
     exitProgram();
 }
 
-int Dashboard::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
-    int index = -10;
-    if (!value.isNull()) {
-        for (int i = 0; i < comboBox->count(); i++) {
-            QString text = comboBox->itemText(i);
-            if (text.contains(value)) {
-                index = i;
-            }
-        }
-    }
-    qDebug() << "INDEX " << index;
-    return index;
-}
+
 
 void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {

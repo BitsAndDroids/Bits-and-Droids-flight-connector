@@ -1,0 +1,27 @@
+//
+// Created by DaveRiedel on 19-9-2022.
+//
+
+#ifndef BITSANDDROIDSCONNECTOR_COMPORTWIDGETMODEL_H
+#define BITSANDDROIDSCONNECTOR_COMPORTWIDGETMODEL_H
+
+
+#include "models/commands/Set.h"
+#include "outputmenu/handlers/sethandler.h"
+
+class ComPortWidgetModel {
+public:
+    ComPortWidgetModel();
+    QList<Set> *getAvailableSets() { return availableSets; };
+    QList<QString> getAvailableComPorts() { return availableComPorts; };
+    void addComPort(QString comPort);
+    void clearComPortData();
+
+private:
+    QList<Set> *availableSets;
+    QList<QString> availableComPorts;
+    SetHandler setHandler = SetHandler();
+};
+
+
+#endif //BITSANDDROIDSCONNECTOR_COMPORTWIDGETMODEL_H
