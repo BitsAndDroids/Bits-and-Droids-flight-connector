@@ -31,8 +31,8 @@ void ComPortWidgetController::loadComPortData() {
         }
 }
 
-ComPortWidgetController::ComPortWidgetController(Modes mode) {
-    this->mode = mode;
+ComPortWidgetController::ComPortWidgetController(QWidget *parent) {
+    this->parent = parent;
 }
 
 void ComPortWidgetController::start() {
@@ -89,7 +89,7 @@ int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const Q
     return index;
 }
 
-void ComPortWidgetController::refreshComs(int mode) {
+void ComPortWidgetController::refreshComs() {
     auto *widget = new QWidget();
     QString comGroupName;
     QString setGroupName;
@@ -128,48 +128,117 @@ void ComPortWidgetController::refreshComs(int mode) {
 
 }
 
-void ComPortWidgetController::GameConnectionMade(int con) {
-    qDebug() << "ConnectionReceived";
-    auto gameRadioButton = new QRadioButton();
-    gameRadioButton = ui->dualWidgetContainer->findChild<QRadioButton *>(
-            "dualWidgetContainerGameCon");
 
-    if (con == 0) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
+
+void ComPortWidgetController::startDual(bool autoStart) {
+    setHandler->updateSets();
+    auto *startButton =
+            parent->findChild<QPushButton *>("startButton");
+    auto *stopButton =
+            parent->findChild<QPushButton *>("stopBtn");
+
+    settingsHandler.clearKeys("runningDualComs");
+    settingsHandler.clearKeys("runningDualSets");
+
+    QRegularExpression search("comBox");
+    QList<ModeIndexCombobox *> comList = parent->findChildren<ModeIndexCombobox *>(search);
+
+    QRegularExpression searchSets("setBox");
+    QList<ModeIndexCombobox *> setList = parent->findChildren<ModeIndexCombobox *>(searchSets);
+
+    bool emptyDualSet = checkIfComboIsEmpty(setList);
+    bool emptyDualCom = checkIfComboIsEmpty(comList);
+    if (!emptyDualSet && !emptyDualCom) {
+        QString key;
+        QString setKey;
+        QList<Output *> outputsToMap;
+        startButton->setChecked(true);
+        startButton->setText("Start");
+        startButton->setEnabled(false);
+        qDebug() << "sets available" << comList.size();
+        dualThread.clearBundles();
+
+        for (int i = 0; i < comList.size(); i++) {
+            if (!(comList[i]->currentText().contains("Not connected"))) {
+                key = "com" + QString::number(i);
+                setKey = "Set" + QString::number(i);
+
+                QString keyValue = comList[i]->currentText();
+                QString setKeyValue = setList[i]->currentText();
+                qDebug() << setKeyValue;
+
+                settingsHandler.storeValue("runningDualComs", key,
+                                           convertComPort(keyValue).c_str());
+                settingsHandler.storeValue("dualComs", key,
+                                           convertComPort(keyValue).c_str());
+
+                qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
+                if (!(setKeyValue == "No outputs")) {
+                    int index = setList[i]->currentIndex() - 1;
+
+                    int id = availableSets->at(index).getID();
+
+                    auto *bundle = new outputBundle();
+
+                    Set active = setHandler->getSetById(QString::number(id));
+                    bundle->setSet(active);
+
+                    auto *outputs = new QMap<int, Output *>();
+                    *outputs = active.getOutputs();
+                    QMap<int, Output *>::iterator j;
+                    for (j = outputs->begin(); j != outputs->end(); j++) {
+                        outputsToMap.append(j.value());
+                    }
+                    dualThread.setOutputsToMap(outputsToMap);
+                    bundle->setOutputsInSet(*outputs);
+                    dualThread.addBundle(bundle);
+                    settingsHandler.storeValue("runningDualSets", setKey, id);
+                    settingsHandler.storeValue("dualSets", setKey, id);
+                } else {
+                    settingsHandler.storeValue("dualSets", setKey, "na");
+                }
+            }
+        }
+        stopButton->setChecked(false);
+        stopButton->setStyleSheet("background-color:#E20303");
+
+        //    ui->stopButton->setVisible(true);
+        //    QString comText = ui->outputComboBoxBase->currentText();
+        // std::string comNr
+        //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+
+        dualThread.abortDual = false;
+        dualThread.start();
+    } else {
+
+        startButton->setChecked(false);
+        startButton->setText("Start");
+        startButton->setEnabled(true);
+
+
+        stopButton->setChecked(true);
+        stopButton->setStyleSheet("background-color:#0F4C5C");
+
+        auto dualWarningBox =
+                ui->dualWidgetContainer->findChild<QLayout *>("dualWarningBox");
+        clearChildrenFromLayout(dualWarningBox);
+        if (emptyDualCom) {
+            dualWarningBox->addWidget(returnWarningString(NOCOMPORT));
+        }
+        if (emptyDualSet) {
+            dualWarningBox->addWidget(returnWarningString(NOSET));
+        }
     }
-    if (con == 1) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-    if (con == 2) {
-        gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
-    }
+    saveAutoRunStates(DUALMODE);
+
 }
 
-void ComPortWidgetController::BoardConnectionMade(int con) {
-    auto boardRadioButton = new QRadioButton();
-
-    boardRadioButton = ui->dualWidgetContainer->findChild<QRadioButton *>(
-            "dualWidgetContainerBoardCon");
-
-    if (con == 0) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
+bool ComPortWidgetController::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) {
+    for (auto &i: toCheck) {
+        if (i->currentIndex() == -1) {
+            return true;
+        } else
+            return false;
     }
-    if (con == 1) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
-    }
-    if (con == 2) {
-        boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
-    }
+    return true;
 }

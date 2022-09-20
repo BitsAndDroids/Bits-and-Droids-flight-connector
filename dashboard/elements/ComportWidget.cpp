@@ -2,4 +2,9 @@
 // Created by DaveRiedel on 19-9-2022.
 //
 
-#include "ComportWidget.h"
+#include "ComPortWidget.h"
+
+ComPortWidget::ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller) {
+    this->controller = controller;
+    this->parent = parent;
+}

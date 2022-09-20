@@ -1,5 +1,4 @@
 #include "Dashboard.h"
-#include "ui_Dashboard.h"
 
 #include "widgets/eventeditor/eventwindow.h"
 #include "widgets/librarygenerator/librarygeneratorwindow.h"
@@ -22,6 +21,9 @@
 #include "elements/ModeIndexCheckbox.h"
 #include "elements/ModeIndexCombobox.h"
 #include "logging/LogWindow.h"
+#include "dashboard/Elements/MenuBar.h"
+#include "dashboard/Elements/ComPortWidget.h"
+#include "dashboard/controller/DashboardController.h"
 
 void Dashboard::untick() {}
 
@@ -186,12 +188,33 @@ void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinati
         copyFolder(sourceName, destinationName);
     }
 }
+Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
+    //UI ELEMENTS
+    auto menuBar = MenuBar(this);
+    menuBar.populateMenuBar(this);
+    auto mainVLayout = new QVBoxLayout;
+    this->setLayout(mainVLayout);
+    auto comPortWidget = ComPortWidget(this);
+    mainVLayout->addWidget(&comPortWidget);
+
+    //TRAY ICON
+    auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
+    connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
+    auto *quit_action = new QAction("Exit", icon);
+    connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
+    auto *tray_icon_menu = new QMenu;
+    tray_icon_menu->addAction(quit_action);
+    icon->setContextMenu(tray_icon_menu);
+    icon->show();
+
+    //CONTROLLER
+    auto dashboardController = new DashboardController(this);
+    connect(this, &Dashboard::gameConnectionMade, comPortWidgetController, &ComPortWidgetController::gameConnectionMade);
+    connect(this, &Dashboard::boardConnectionMade, comPortWidgetController, &ComPortWidgetController::boardConnectionMade);
+}
 
 Dashboard::Dashboard(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::Dashboard) {
-    ui->setupUi(this);
-
-
+        : QMainWindow(parent){
     InputReader inputReader = InputReader();
     inputReader.readInputs();
     dualThread.setInputs(inputReader.getInputs());
@@ -216,89 +239,20 @@ Dashboard::Dashboard(QWidget *parent)
     //-----------------------
     ui->messagesWidgetLayout->setAlignment(Qt::AlignBottom);
 
-    // TOOLBAR MENU
-    auto *openLogging = new QAction("&Logging", this);
-    auto *openSettings = new QAction("&Settings", this);
-    auto *generateCode = new QAction("&Code", this);
-    auto *libraryGenerator = new QAction("&Generate library", this);
-    auto *calibrateAxis = new QAction("&Calibrate axis", this);
-    auto *openOutputMenu = new QAction("&Outputs", this);
-    auto *openEditEventWindow = new QAction("&Edit events", this);
-    auto *installWasm = new QAction("&Install WASM", this);
-    auto *WasmUpdateEventFile = new QAction("&Update event file", this);
-    auto *updateApplication = new QAction("Check for updates", this);
-    //QMenu *codeMenu = menuBar()->addMenu("&Code");
-    QMenu *Settings = menuBar()->addMenu("&Settings");
-    QMenu *libraryMenu = menuBar()->addMenu("&Library");
-    QMenu *viewMenu = menuBar()->addMenu("&View");
-    QMenu *OutputSettings = menuBar()->addMenu("&Outputs");
-    QMenu *WasmInstall = menuBar()->addMenu("&WASM");
 
-    auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
 
-    connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
 
-    auto *quit_action = new QAction("Exit", icon);
-    connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
 
-    auto *hide_action = new QAction("Show/Hide", icon);
 
-    auto *tray_icon_menu = new QMenu;
-    // tray_icon_menu->addAction(hide_action);
-    tray_icon_menu->addAction(quit_action);
-
-    icon->setContextMenu(tray_icon_menu);
-
-    icon->show();
-
-    WasmInstall->addAction(WasmUpdateEventFile);
-    WasmInstall->addAction(installWasm);
-    OutputSettings->addAction(openOutputMenu);
-    WasmInstall->addAction(openEditEventWindow);
-    Settings->addAction(openSettings);
-    Settings->addAction(updateApplication);
-    Settings->addAction(openLogging);
-    //codeMenu->addAction(generateCode);
-    Settings->addAction(calibrateAxis);
-
-    Settings->addAction("Version " + QString(constants::VERSION));
-    // libraryMenu->addAction(libraryGenerator);
 
     // SIGNALS + SLOTS
-    connect(WasmUpdateEventFile, &QAction::triggered, this,
-            &Dashboard::localUpdateEventFile);
-
-    connect(calibrateAxis, &QAction::triggered, this,
-            &Dashboard::openCalibrateAxis);
-    connect(openOutputMenu, &QAction::triggered, this,
-            &Dashboard::openOutputMenu);
-    connect(updateApplication, &QAction::triggered, this,
-            &Dashboard::checkForUpdates);
-    connect(installWasm, &QAction::triggered, this, &Dashboard::installWasm);
-
-    connect(&outputThread, &OutputWorker::BoardConnectionMade, this,
-            &Dashboard::BoardConnectionMade);
-    connect(&outputThread, &OutputWorker::GameConnectionMade, this,
-            &Dashboard::GameConnectionMade);
-    connect(libraryGenerator, &QAction::triggered, this,
-            &Dashboard::openGenerateLibraryMenu);
-
-    connect(generateCode, &QAction::triggered, this,
-            &Dashboard::openGenerateCodeMenu);
 
 
     serviceworker.start();
-    QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
-    QObject::connect(&dualThread, &DualWorker::logMessage, &serviceworker, &ServiceWorker::logMessage);
-    connect(&inputThread, &InputWorker::BoardConnectionMade, this,
-            &Dashboard::BoardConnectionMade);
-    connect(&inputThread, &InputWorker::GameConnectionMade, this,
-            &Dashboard::GameConnectionMade);
 
-    connect(&dualThread, &DualWorker::BoardConnectionMade, this,
-            &Dashboard::BoardConnectionMade);
-    connect(&dualThread, &DualWorker::GameConnectionMade, this,
-            &Dashboard::GameConnectionMade);
+
+
+
     connect(openEditEventWindow, &QAction::triggered, this,
             &Dashboard::openEditEventMenu);
     connect(openSettings, &QAction::triggered, this, &Dashboard::openSettings);
@@ -308,8 +262,7 @@ Dashboard::Dashboard(QWidget *parent)
             &Dashboard::startMode);
     connect(&formbuilder, &FormBuilder::refreshPressed, this,
             &Dashboard::refreshComs);
-    connect(&outputThread, SIGNAL(updateLastStatusUI(QString)),
-            SLOT(onUpdateLastStatusUI(QString)));
+
 
     // IMPORTANT IMPROV SECTION
 
@@ -496,341 +449,14 @@ void Dashboard::restoreStoredValuesComboBoxes(QWidget *widget,
     }
 }
 
-void Dashboard::checkForUpdates(bool silentCheck) {
-    auto *process = new QProcess(this);
-    process->start(pathHandler.getMaintenanceToolPath() + " ch");
-    process->waitForFinished();
-    QByteArray data = process->readAll();
-    qDebug() << data;
-    auto mb = new QMessageBox();
-    ui->updateButton->setVisible(false);
-    if (data.contains("no updates available") && !silentCheck) {
-        mb->setText("No updates available");
-        mb->exec();
-    } else if (data.contains("Wait until it finishes")) {
-        auto mb = new QMessageBox();
-        mb->setText(
-                "Another instance of the maintenance tool is already running\n Please "
-                "close it before trying again.");
-        mb->exec();
-    } else if (data.contains("update name")) {
-        ui->updateButton->setText("Update available");
-        ui->updateButton->setVisible(true);
-    }
-}
 
-void Dashboard::localUpdateEventFile() {
-    try {
-        QFile::remove(pathHandler.getCommunityFolderPath() +
-                      "/BitsAndDroidsModule/modules/events.txt");
-        QFile::copy(applicationEventsPath,
-                    pathHandler.getCommunityFolderPath() +
-                    "/BitsAndDroidsModule/modules/events.txt");
-        connect(this, &Dashboard::sendWASMCommand, &serviceworker,
-                &ServiceWorker::sendWASMData);
-
-        emit sendWASMCommand("9999");
-        MessageCaster::showCompleteMessage("Successfully updated the event file");
-    }
-        //This catches the specific error thrown when no output is running
-        //Since we send a command over SimConnect to the WASM module we need to have a connection that is alive
-    catch (const std::invalid_argument &i) {
-        MessageCaster::showWarningMessage("Please start the connector before updating the remote event file");
-    }
-    catch (const std::exception &e) {
-        MessageCaster::showWarningMessage("Something went wrong updating the event file");
-    }
-}
-
-
-
-// SLOTS
-void Dashboard::onUpdateLastValUI(const QString &lastVal) {
-    ui->labelLastVal_2->setText(lastVal);
-}
-
-void Dashboard::onUpdateLastStatusUI(const QString &lastVal) {
-    ui->labelLastStatus->setText(lastVal);
-}
-
-void Dashboard::startMode(int mode) {
-    //Init inputs before rest of application launches
-
-    switch (mode) {
-        case 1:
-            startInputs(false);
-            break;
-        case 2:
-            setHandler->updateSets();
-            startOutputs(false);
-            break;
-        case 3:
-            setHandler->updateSets();
-            startDual(false);
-            break;
-        default:
-            break;
-    }
-}
-
-void Dashboard::startInputs(bool autoStart) {
-    auto widget = ui->inWidgetContainer;
-    inputThread.abortInput = false;
-    settingsHandler.clearKeys("runningInputComs");
-    QRegularExpression search("comBox");
-    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
-    bool emptyInputCom = checkIfComboIsEmpty(comList);
-    if (!emptyInputCom) {
-        QString comboBoxName;
-        QString key;
-
-        for (int i = 0; i < comList.size(); i++) {
-            key = "com" + QString::number(i);
-            comboBoxName = "comboBoxRow" + QString::number(i);
-
-            QString keyValue = comList[i]->currentText();
-            settingsHandler.storeValue("runningInputComs", key,
-                                       convertComPort(keyValue).c_str());
-            settingsHandler.storeValue("inputComs", key,
-                                       convertComPort(keyValue).c_str());
-        }
-        inputThread.start();
-    } else {
-        auto *startButton =
-                ui->inWidgetContainer->findChild<QPushButton *>("2startButton");
-        startButton->setChecked(false);
-        startButton->setText("Start");
-        startButton->setEnabled(true);
-
-        auto *stopButton =
-                ui->inWidgetContainer->findChild<QPushButton *>("2stopBtn");
-        stopButton->setChecked(true);
-        stopButton->setStyleSheet("background-color:#0F4C5C");
-
-        auto outWarningBox =
-                ui->inWidgetContainer->findChild<QLayout *>("outputWarningBox");
-        clearChildrenFromLayout(outWarningBox);
-
-        // always true, check is in here for if I ever add more error messages
-
-        outWarningBox->addWidget(returnWarningString(NOCOMPORT));
-
-    }
-    saveAutoRunStates(INPUTMODE);
-}
-
-void Dashboard::startOutputs(bool autoStart) {
-    auto widget = ui->outWidgetContainer;
-    auto *startButton =
-            ui->outWidgetContainer->findChild<QPushButton *>("2startButton");
-
-    settingsHandler.clearKeys("runningOutputComs");
-    settingsHandler.clearKeys("runningOutputSets");
-
-    QRegularExpression search("comBox");
-    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
-
-    QRegularExpression searchSets("setBox");
-    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
-    bool emptyDualSet = checkIfComboIsEmpty(setList);
-    bool emptyDualCom = checkIfComboIsEmpty(comList);
-    if (!emptyDualSet && !emptyDualCom) {
-        startButton->setChecked(true);
-        startButton->setText("Start");
-        startButton->setEnabled(false);
-        QString key;
-        QString setKey;
-        QList<Output *> outputsToMap = QList<Output *>();
-        outputThread.clearBundles();
-        for (int i = 0; i < comList.size(); i++) {
-            key = "com" + QString::number(i);
-            setKey = "Set" + QString::number(i);
-
-            QString keyValue = comList[i]->currentText();
-            QString setKeyValue = setList[i]->currentText();
-
-            settingsHandler.storeValue("runningOutputComs", key,
-                                       convertComPort(keyValue).c_str());
-            settingsHandler.storeValue("outputComs", key,
-                                       convertComPort(keyValue).c_str());
-
-            int index = setList[i]->currentIndex();
-
-            int id = availableSets->at(index).getID();
-
-            auto *bundle = new outputBundle();
-
-            Set active = setHandler->getSetById(QString::number(id));
-            bundle->setSet(active);
-
-            auto *outputs = new QMap<int, Output *>();
-            *outputs = active.getOutputs();
-            QMap<int, Output *>::iterator j;
-            for (j = outputs->begin(); j != outputs->end(); j++) {
-                outputsToMap.append(j.value());
-            }
-            outputThread.setOutputsToMap(outputsToMap);
-
-            bundle->setOutputsInSet(*outputs);
-            outputThread.addBundle(bundle);
-            settingsHandler.storeValue("runningOutputSets", setKey, id);
-            settingsHandler.storeValue("outputSets", setKey, id);
-        }
-        outputThread.abort = false;
-        outputThread.start();
-    } else {
-
-        startButton->setChecked(false);
-        startButton->setText("Start");
-        startButton->setEnabled(true);
-
-        auto *stopButton =
-                ui->outWidgetContainer->findChild<QPushButton *>("2stopBtn");
-        stopButton->setChecked(true);
-        stopButton->setStyleSheet("background-color:#0F4C5C");
-
-        auto outWarningBox =
-                ui->outWidgetContainer->findChild<QLayout *>("outputWarningBox");
-        clearChildrenFromLayout(outWarningBox);
-        if (emptyDualCom) {
-            outWarningBox->addWidget(returnWarningString(NOCOMPORT));
-        }
-        if (emptyDualSet) {
-            outWarningBox->addWidget(returnWarningString(NOSET));
-        }
-    }
-    saveAutoRunStates(OUTPUTMODE);
-}
-
-void Dashboard::startDual(bool autoStart) {
-    auto widget = ui->dualWidgetContainer;
-    auto *startButton =
-            ui->dualWidgetContainer->findChild<QPushButton *>("3startButton");
-    auto *stopButton =
-            ui->dualWidgetContainer->findChild<QPushButton *>("3stopBtn");
-
-    settingsHandler.clearKeys("runningDualComs");
-    settingsHandler.clearKeys("runningDualSets");
-
-    QRegularExpression search("comBox");
-    QList<ModeIndexCombobox *> comList = widget->findChildren<ModeIndexCombobox *>(search);
-
-    QRegularExpression searchSets("setBox");
-    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
-
-    bool emptyDualSet = checkIfComboIsEmpty(setList);
-    bool emptyDualCom = checkIfComboIsEmpty(comList);
-    if (!emptyDualSet && !emptyDualCom) {
-        QString key;
-        QString setKey;
-        QList<Output *> outputsToMap;
-        startButton->setChecked(true);
-        startButton->setText("Start");
-        startButton->setEnabled(false);
-        qDebug() << "sets available" << comList.size();
-        dualThread.clearBundles();
-
-        for (int i = 0; i < comList.size(); i++) {
-            if (!(comList[i]->currentText().contains("Not connected"))) {
-                key = "com" + QString::number(i);
-                setKey = "Set" + QString::number(i);
-
-                QString keyValue = comList[i]->currentText();
-                QString setKeyValue = setList[i]->currentText();
-                qDebug() << setKeyValue;
-
-                settingsHandler.storeValue("runningDualComs", key,
-                                           convertComPort(keyValue).c_str());
-                settingsHandler.storeValue("dualComs", key,
-                                           convertComPort(keyValue).c_str());
-
-                qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
-                if (!(setKeyValue == "No outputs")) {
-                    int index = setList[i]->currentIndex() - 1;
-
-                    int id = availableSets->at(index).getID();
-
-                    auto *bundle = new outputBundle();
-
-                    Set active = setHandler->getSetById(QString::number(id));
-                    bundle->setSet(active);
-
-                    auto *outputs = new QMap<int, Output *>();
-                    *outputs = active.getOutputs();
-                    QMap<int, Output *>::iterator j;
-                    for (j = outputs->begin(); j != outputs->end(); j++) {
-                        outputsToMap.append(j.value());
-                    }
-                    dualThread.setOutputsToMap(outputsToMap);
-                    bundle->setOutputsInSet(*outputs);
-                    dualThread.addBundle(bundle);
-                    settingsHandler.storeValue("runningDualSets", setKey, id);
-                    settingsHandler.storeValue("dualSets", setKey, id);
-                } else {
-                    settingsHandler.storeValue("dualSets", setKey, "na");
-                }
-            }
-        }
-        stopButton->setChecked(false);
-        stopButton->setStyleSheet("background-color:#E20303");
-
-        //    ui->stopButton->setVisible(true);
-        //    QString comText = ui->outputComboBoxBase->currentText();
-        // std::string comNr
-        //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
-
-        dualThread.abortDual = false;
-        dualThread.start();
-    } else {
-
-        startButton->setChecked(false);
-        startButton->setText("Start");
-        startButton->setEnabled(true);
-
-
-        stopButton->setChecked(true);
-        stopButton->setStyleSheet("background-color:#0F4C5C");
-
-        auto dualWarningBox =
-                ui->dualWidgetContainer->findChild<QLayout *>("dualWarningBox");
-        clearChildrenFromLayout(dualWarningBox);
-        if (emptyDualCom) {
-            dualWarningBox->addWidget(returnWarningString(NOCOMPORT));
-        }
-        if (emptyDualSet) {
-            dualWarningBox->addWidget(returnWarningString(NOSET));
-        }
-    }
-    saveAutoRunStates(DUALMODE);
-
-}
-
-QList<ModeIndexCheckbox *> Dashboard::getCheckboxesByPattern(const QRegularExpression &pattern) {
-    return this->findChildren<ModeIndexCheckbox *>(pattern);
-}
 
 void Dashboard::saveAutoRunStates(int mode) {
     auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
     QString group;
-    switch (mode) {
-        case INPUTMODE: {
-            group = "inputARIndex";
-            break;
-        }
-        case OUTPUTMODE: {
-            group = "outputARIndex";
-            break;
-        }
-        case DUALMODE: {
-            group = "dualARIndex";
-            break;
-        }
-        default:
-            break;
-    }
     for (auto &cb: autoList) {
         QString index = QString::number(cb->getIndex());
-        settingsHandler.storeValue(group, index, cb->isChecked());
+        settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
     }
 }
 
@@ -841,33 +467,8 @@ void Dashboard::loadAutoRunState() {
     for (auto &cb: autoList) {
         int mode = cb->getMode();
         QString index = QString::number(cb->getIndex());
-        switch (mode) {
-            case INPUTMODE:
-                group = "inputARIndex";
-                break;
-            case OUTPUTMODE:
-                group = "outputARIndex";
-                break;
-            case DUALMODE :
-                group = "dualARIndex";
-                break;
-            default:
-                break;
-        }
-        cb->setChecked(settingsHandler.retrieveSetting(group, index)->toBool());
-
+        cb->setChecked(settingsHandler.retrieveSetting("dualARIndex", index)->toBool());
     }
-}
-
-
-bool Dashboard::checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck) {
-    for (auto &i: toCheck) {
-        if (i->currentIndex() == -1) {
-            return true;
-        } else
-            return false;
-    }
-    return true;
 }
 
 void Dashboard::clearChildrenFromLayout(QLayout *toClear) {
@@ -935,8 +536,55 @@ void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     }
 }
 
+
+
+void Dashboard::GameConnectionMade(int con) {
+    auto gameRadioButton = new QRadioButton();
+    gameRadioButton = this->findChild<QRadioButton *>(
+            "dualWidgetContainerGameCon");
+
+    if (con == 0) {
+        gameRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "red; border-radius: 7px; height: 12px; width: 12px;}");
+    }
+    if (con == 1) {
+        gameRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+    if (con == 2) {
+        gameRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "green; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+}
+
+void Dashboard::BoardConnectionMade(int con) {
+    auto boardRadioButton = new QRadioButton();
+
+    boardRadioButton = this->findChild<QRadioButton *>(
+            "dualWidgetContainerBoardCon");
+
+    if (con == 0) {
+        boardRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "red; border-radius: 7px; height: 12px; width: 12px;}");
+    }
+    if (con == 1) {
+        boardRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+    if (con == 2) {
+        boardRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "green; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+}
+
 Dashboard::~Dashboard() {
-    delete ui;
+    delete this;
 }
 
 void Dashboard::exitProgram() {

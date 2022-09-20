@@ -22,13 +22,9 @@
 #include "serial/SerialPort.hpp"
 #include "constants.h"
 #include "workers/ServiceWorker.h"
+#include "dashboard/controller/DashboardController.h"
 
 const std::string version = constants::VERSION;
-QT_BEGIN_NAMESPACE
-namespace Ui {
-    class Dashboard;
-}
-QT_END_NAMESPACE
 
 class Dashboard : public QMainWindow {
 Q_OBJECT
@@ -44,10 +40,6 @@ public:
     static int getComboxIndex(ModeIndexCombobox *comboBox, const QString &value);
 
 public slots:
-
-    void onUpdateLastValUI(const QString &lastVal);
-
-    void onUpdateLastStatusUI(const QString &lastStatus);
 
     void startMode(int mode);
 
@@ -111,12 +103,13 @@ private slots:
 
 public slots:
 
-    void GameConnectionMade(int con, int mode);
+    void GameConnectionMade(int con);
 
-    void BoardConnectionMade(int con, int mode);
+    void BoardConnectionMade(int con);
 
 private:
-    ComPortWidgetController controller = ComPortWidgetController();
+    DashboardController controller = DashboardController(this);
+    ComPortWidgetController comPortWidgetController = ComPortWidgetController();
     bool advancedMode = false;
     bool closing = false;
 
@@ -176,7 +169,6 @@ private:
     InputWorker inputThread;
     QList<Set> *availableSets;
     FormBuilder formbuilder;
-    Ui::Dashboard *ui;
 
     void openSettings();
 
@@ -193,11 +185,6 @@ private:
     void on_btnSwitchComm1_clicked();
 
     void startDual(bool autoStart);
-
-    void startInputs(bool autoStart);
-
-    void startOutputs(bool autoStart);
-
 
     static bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &);
 

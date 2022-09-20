@@ -79,7 +79,7 @@ set(PROJECT_SOURCES
         widgets/settingsmenu/builder/formbuilder.cpp widgets/settingsmenu/builder/formbuilder.h
         widgets/settingsmenu/optionsmenu.cpp widgets/settingsmenu/optionsmenu.h widgets/settingsmenu/optionsmenu.ui
         outputmenu/outputmenu.cpp outputmenu/outputmenu.h
-        dashboard/Dashboard.cpp dashboard/Dashboard.ui
+        dashboard/Dashboard.cpp
 
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h
@@ -109,8 +109,9 @@ set(PROJECT_SOURCES
         dashboard/elements/ComPortRow.cpp dashboard/elements/ComPortRow.h
         dashboard/controller/ComPortWidgetController.cpp dashboard/controller/ComPortWidgetController.h
         elements/Element.cpp elements/Element.h
-        dashboard/elements/ComportWidget.cpp dashboard/elements/ComportWidget.h
-        dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h)
+        dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
+        dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

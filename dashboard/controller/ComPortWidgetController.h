@@ -14,10 +14,11 @@
 class ComPortWidgetController : public QObject {
 Q_OBJECT
 public:
-    explicit ComPortWidgetController();
+    explicit ComPortWidgetController(QWidget *parent);
 
 signals:
-
+    void boardConnectionMade(int state);
+    void gameConnectionMade(int state);
 public slots:
 
     void start();
@@ -42,14 +43,16 @@ private:
 
     int getComboxIndex(ModeIndexCombobox *comboBox, const QString &value);
 
-    void refreshComs(int mode);
+    void refreshComs();
 
+    void startDual(bool autoStart);
     ComPortWidgetModel *comPortModel;
     DualWorker dualWorker = DualWorker();
-
+    QWidget *parent;
     SettingsHandler settingsHandler = SettingsHandler();
 
 
+    bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck);
 };
 
 

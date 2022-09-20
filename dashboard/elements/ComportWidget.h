@@ -7,15 +7,17 @@
 
 
 #include <QWidget>
+#include <QMainWindow>
 #include "elements/Element.h"
 
-class ComportWidget: public QWidget, public Element {
+class ComPortWidget: public QWidget, public Element {
     Q_OBJECT
 public:
     QWidget* generateElement() override;
-    ComportWidget();
+    ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller);
 private:
-
+    QMainWindow *parent;
+    ComPortWidgetController *controller;
 };
 
 
