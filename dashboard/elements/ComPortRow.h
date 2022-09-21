@@ -14,7 +14,7 @@ class ComPortRow : public QWidget, public Element {
     Q_OBJECT
 public:
     QWidget* generateElement() override;
-    ComPortRow(ComPortWidgetController *controller, int index,int mode, bool setsNeeded = true);
+    ComPortRow(ComPortWidgetController *controller, int index);
 private:
     bool setsNeeded = true;
     int index;

@@ -25,11 +25,16 @@ signals:
     void gameConnectionMade(int state);
 
     void boardConnectionMade(int state);
+public slots:
+    void updateButtonClicked();
+
 private:
     PathHandler pathHandler = PathHandler();
     MessageCaster messageCaster = MessageCaster();
     QMainWindow *parent;
+    QString applicationEventsPath = pathHandler.getWritableEventPath();
     ServiceWorker serviceWorker = ServiceWorker();
+    void installWasm();
     bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck);
 private slots:
     void updateEventFile();
@@ -37,6 +42,8 @@ private slots:
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
 
     void checkForUpdates(bool silentCheck);
+
+
 };
 
 

@@ -10,9 +10,9 @@
 
 using namespace std;
 
-void optionsMenu::closeEvent(QCloseEvent *event) { delete this; }
+void OptionsMenu::closeEvent(QCloseEvent *event) { delete this; }
 
-void optionsMenu::selectFile() {
+void OptionsMenu::selectFile() {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::Directory);
     QString communityFolderPath = dialog.getExistingDirectory();
@@ -25,7 +25,7 @@ void optionsMenu::selectFile() {
     }
 }
 
-optionsMenu::optionsMenu(QWidget *parent)
+OptionsMenu::OptionsMenu(QWidget *parent)
         : QWidget(parent), uiOptions(new Ui::optionsMenu) {
     uiOptions->setupUi(this);
     QStringList keys = *settingsHandler.retrieveKeys("Settings");
@@ -70,7 +70,7 @@ optionsMenu::optionsMenu(QWidget *parent)
     auto communityFolderPathLabel = new QLabel();
     auto communityFolderFileBtn = new QPushButton("Select community folder");
     connect(communityFolderFileBtn, &QPushButton::clicked, this,
-            &optionsMenu::selectFile);
+            &OptionsMenu::selectFile);
     communityFolderFileBtn->setMaximumWidth(150);
     communityFolderPathLabel->setMaximumWidth(250);
 
@@ -115,12 +115,12 @@ optionsMenu::optionsMenu(QWidget *parent)
     }
 }
 
-optionsMenu::~optionsMenu() {
+OptionsMenu::~OptionsMenu() {
     emit closedOptionsMenu();
     delete uiOptions;
 }
 
-void optionsMenu::on_saveSettingsBtn_clicked() {
+void OptionsMenu::on_saveSettingsBtn_clicked() {
     auto *communityFolderPath =
             this->findChild<QLabel *>("communityFolderPathLabel");
     settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
@@ -206,7 +206,7 @@ void optionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Ranges", "maxReverseId", id);
 }
 
-void optionsMenu::on_checkBox_stateChanged(int checked) {
+void OptionsMenu::on_checkBox_stateChanged(int checked) {
     QList<QLineEdit *> allLabels =
             uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
     if (uiOptions->checkBox->isChecked()) {
@@ -223,4 +223,4 @@ void optionsMenu::on_checkBox_stateChanged(int checked) {
     }
 }
 
-void optionsMenu::on_baudComboBox_currentTextChanged(const QString &arg1) {}
+void OptionsMenu::on_baudComboBox_currentTextChanged(const QString &arg1) {}

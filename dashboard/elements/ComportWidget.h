@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QMainWindow>
 #include "elements/Element.h"
+#include "dashboard/controller/ComPortWidgetController.h"
 
 class ComPortWidget: public QWidget, public Element {
     Q_OBJECT

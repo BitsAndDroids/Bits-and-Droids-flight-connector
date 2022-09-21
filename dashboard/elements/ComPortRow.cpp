@@ -14,6 +14,10 @@ QWidget *ComPortRow::generateElement() {
     auto *comRow = new QHBoxLayout();
     comSelector->setLayout(comRow);
     auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
+    ComPortWidgetModel model = ComPortWidgetModel();
+    auto availableComPorts = model.loadAvailableComPorts();
+    auto availableSets = model.getAvailableSets();
+
     for (auto &availableComPort: availableComPorts) {
         comPortComboBox->addItem(availableComPort);
     }
@@ -45,9 +49,7 @@ QWidget *ComPortRow::generateElement() {
     return comSelector;
 }
 
-ComPortRow::ComPortRow(ComPortWidgetController *controller, int index, int mode, bool setsNeeded) {
-    this->setsNeeded = setsNeeded;
+ComPortRow::ComPortRow(ComPortWidgetController *controller, int index) {
     this->index = index;
-    this->mode = mode;
     this->controller = controller;
 }

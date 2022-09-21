@@ -53,7 +53,7 @@ public:
     void setupUi(QWidget *optionsMenu)
     {
         if (optionsMenu->objectName().isEmpty())
-            optionsMenu->setObjectName(QString::fromUtf8("optionsMenu"));
+            optionsMenu->setObjectName(QString::fromUtf8("OptionsMenu"));
         optionsMenu->resize(1094, 857);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
@@ -196,23 +196,23 @@ public:
 
     void retranslateUi(QWidget *optionsMenu)
     {
-        optionsMenu->setWindowTitle(QCoreApplication::translate("optionsMenu", "Settings", nullptr));
-        waitXMsBeforeSendingLabel->setText(QCoreApplication::translate("optionsMenu", "Wait X ms before sending", nullptr));
-        waitXMsBeforeSendingLineEdit->setText(QCoreApplication::translate("optionsMenu", "5", nullptr));
-        updateEveryXFramesLabel->setText(QCoreApplication::translate("optionsMenu", "Update every X frames", nullptr));
-        updateEveryXFramesLineEdit->setText(QCoreApplication::translate("optionsMenu", "3", nullptr));
-        label->setText(QCoreApplication::translate("optionsMenu", "Baudrate:", nullptr));
-        baudComboBox->setItemText(0, QCoreApplication::translate("optionsMenu", "115200", nullptr));
-        baudComboBox->setItemText(1, QCoreApplication::translate("optionsMenu", "9600", nullptr));
-        baudComboBox->setItemText(2, QCoreApplication::translate("optionsMenu", "256000", nullptr));
+        optionsMenu->setWindowTitle(QCoreApplication::translate("OptionsMenu", "Settings", nullptr));
+        waitXMsBeforeSendingLabel->setText(QCoreApplication::translate("OptionsMenu", "Wait X ms before sending", nullptr));
+        waitXMsBeforeSendingLineEdit->setText(QCoreApplication::translate("OptionsMenu", "5", nullptr));
+        updateEveryXFramesLabel->setText(QCoreApplication::translate("OptionsMenu", "Update every X frames", nullptr));
+        updateEveryXFramesLineEdit->setText(QCoreApplication::translate("OptionsMenu", "3", nullptr));
+        label->setText(QCoreApplication::translate("OptionsMenu", "Baudrate:", nullptr));
+        baudComboBox->setItemText(0, QCoreApplication::translate("OptionsMenu", "115200", nullptr));
+        baudComboBox->setItemText(1, QCoreApplication::translate("OptionsMenu", "9600", nullptr));
+        baudComboBox->setItemText(2, QCoreApplication::translate("OptionsMenu", "256000", nullptr));
 
-        checkBox->setText(QCoreApplication::translate("optionsMenu", "Advanced options (can impact performance)", nullptr));
-        label_2->setText(QCoreApplication::translate("optionsMenu", "Select the max reverse throttle range", nullptr));
-        rb15->setText(QCoreApplication::translate("optionsMenu", "15% (TBM, Beechcraft)", nullptr));
-        rb20->setText(QCoreApplication::translate("optionsMenu", "20% (787, A320, Caravan)", nullptr));
-        rb25->setText(QCoreApplication::translate("optionsMenu", "25% (747)", nullptr));
-        saveSettingsBtn->setText(QCoreApplication::translate("optionsMenu", "Save", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("optionsMenu", "Revert to default", nullptr));
+        checkBox->setText(QCoreApplication::translate("OptionsMenu", "Advanced options (can impact performance)", nullptr));
+        label_2->setText(QCoreApplication::translate("OptionsMenu", "Select the max reverse throttle range", nullptr));
+        rb15->setText(QCoreApplication::translate("OptionsMenu", "15% (TBM, Beechcraft)", nullptr));
+        rb20->setText(QCoreApplication::translate("OptionsMenu", "20% (787, A320, Caravan)", nullptr));
+        rb25->setText(QCoreApplication::translate("OptionsMenu", "25% (747)", nullptr));
+        saveSettingsBtn->setText(QCoreApplication::translate("OptionsMenu", "Save", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("OptionsMenu", "Revert to default", nullptr));
     } // retranslateUi
 
 };

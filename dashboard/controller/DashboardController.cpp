@@ -3,6 +3,7 @@
 //
 
 #include <QFile>
+#include <QApplication>
 #include <QMessageBox>
 #include <ntgdi.h>
 #include <QProcess>
@@ -33,17 +34,15 @@ void DashboardController::updateEventFile() {
         MessageCaster::showWarningMessage("Something went wrong updating the event file");
     }
 }
+
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
     serviceWorker.start();
     QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
-    connect(&dualWorker, &DualWorker::updateEventFile, this, &DashboardController::updateEventFile);
 }
 
 
-QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern) {
-    return this->findChildren<ModeIndexCheckbox *>(pattern);
-}
+
 
 void DashboardController::checkForUpdates(bool silentCheck) {
     auto *process = new QProcess(this);
@@ -66,4 +65,10 @@ void DashboardController::checkForUpdates(bool silentCheck) {
         updateButton->setText("Update available");
         updateButton->setVisible(true);
     }
+}
+void DashboardController::updateButtonClicked() {
+    auto *process = new QProcess(this);
+    process->startDetached(pathHandler.getMaintenanceToolPath());
+    process->waitForFinished();
+    exitProgram();
 }

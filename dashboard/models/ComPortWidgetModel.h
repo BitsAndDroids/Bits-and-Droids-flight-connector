@@ -14,6 +14,8 @@ public:
     ComPortWidgetModel();
     QList<Set> *getAvailableSets() { return availableSets; };
     QList<QString> getAvailableComPorts() { return availableComPorts; };
+    QList<QString> loadAvailableComPorts();
+    void refresh();
     void addComPort(QString comPort);
     void clearComPortData();
 

@@ -12,13 +12,13 @@ namespace Ui {
 class optionsMenu;
 }
 
-class optionsMenu : public QWidget {
+class OptionsMenu : public QWidget {
   Q_OBJECT
 
  public:
-  explicit optionsMenu(QWidget *parent = nullptr);
+  explicit OptionsMenu(QWidget *parent = nullptr);
 
-  ~optionsMenu() override;
+  ~OptionsMenu() override;
  signals:
 
   void closedOptionsMenu();

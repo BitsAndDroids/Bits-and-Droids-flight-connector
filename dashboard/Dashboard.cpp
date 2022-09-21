@@ -1,18 +1,15 @@
 #include "Dashboard.h"
 
-#include "widgets/eventeditor/eventwindow.h"
-#include "widgets/librarygenerator/librarygeneratorwindow.h"
+
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
-#include "widgets/axismenu/calibrateaxismenu.h"
-#include "widgets/settingsmenu/optionsmenu.h"
-#include "outputmenu/outputmenu.h"
+
 
 #include <QDir>
 #include <iostream>
 #include <string>
 
-#include "widgets/codegenerator/CodeGeneratorWindow.h"
+
 
 #include "utils/InputReader.h"
 #include "workers/ServiceWorker.h"
@@ -20,81 +17,15 @@
 #include "enums/ModeEnum.h"
 #include "elements/ModeIndexCheckbox.h"
 #include "elements/ModeIndexCombobox.h"
-#include "logging/LogWindow.h"
+
 #include "dashboard/Elements/MenuBar.h"
 #include "dashboard/Elements/ComPortWidget.h"
 #include "dashboard/controller/DashboardController.h"
 
 void Dashboard::untick() {}
 
-void Dashboard::outputMenuClosed() { outputMenuOpen = false; }
 
-void Dashboard::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
 
-void Dashboard::eventWindowClosed() { eventwindowOpen = false; }
-
-void Dashboard::optionMenuClosed() { optionMenuOpen = false; }
-
-void Dashboard::openSettings() {
-    if (!optionMenuOpen) {
-        optionMenuOpen = true;
-        QWidget * wdg = new optionsMenu;
-        connect(wdg, SIGNAL(closedOptionsMenu()), this,
-                SIGNAL(closedOptionsMenu()));
-        wdg->show();
-    }
-}
-
-void Dashboard::openLoggingWindow() {
-    auto *wdg = new LogWindow();
-    wdg->openWindow();
-}
-
-void Dashboard::openOutputMenu() {
-    if (!outputMenuOpen) {
-        outputMenuOpen = true;
-        QWidget * wdg = new OutputMenu;
-        connect(wdg, SIGNAL(closedOutputMenu()), this, SIGNAL(closedOutputMenu()));
-        wdg->show();
-    }
-}
-
-void Dashboard::openCalibrateAxis() {
-    if (!calibrateAxisMenuOpen) {
-        calibrateAxisMenuOpen = true;
-        QWidget * wdg = new CalibrateAxisMenu;
-        connect(wdg, SIGNAL(closedCalibrateAxisMenu()), this,
-                SIGNAL(closedCalibrateAxisMenu()));
-        wdg->show();
-    }
-}
-
-void Dashboard::openEditEventMenu() {
-    if (!eventwindowOpen) {
-        eventwindowOpen = true;
-        QWidget * wdg = new EventWindow;
-        connect(wdg, SIGNAL(closedEventWindow()), this,
-                SIGNAL(closedEventWindow()));
-        wdg->show();
-    }
-}
-
-void Dashboard::openGenerateLibraryMenu() {
-    if (generateLibraryMenuOpen) {
-        generateLibraryMenuOpen = true;
-        QWidget * wdg = new LibraryGeneratowWindow;
-        wdg->show();
-    }
-}
-
-void Dashboard::openGenerateCodeMenu() {
-    std::cout << "hit" << std::endl;
-    if (!generateCodeMenuOpen) {
-        generateCodeMenuOpen = true;
-        QWidget * wdg = new CodeGeneratorWindow;
-        wdg->show();
-    }
-}
 
 
 std::string Dashboard::convertComPort(QString comText) {
@@ -113,47 +44,7 @@ void Dashboard::loadComPortData() {
         }
 }
 
-void Dashboard::installWasm() {
-    try {
-        bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
-        QString pathfound = "";
-        QString sourceString =
-                QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-        cout << sourceString.toStdString() << endl;
-        if (customPathFound) {
-            pathfound = pathHandler.getCommunityFolderPath();
-        } else {
-            auto notFoundMessage = new QMessageBox();
-            notFoundMessage->setInformativeText(
-                    "Could not find the community folder");
-            notFoundMessage->setStandardButtons(QMessageBox::Save |
-                                                QMessageBox::Cancel);
-            int ret = notFoundMessage->exec();
 
-            if (ret == QMessageBox::Save) {
-                QFileDialog dialog(this);
-                dialog.setFileMode(QFileDialog::Directory);
-
-                QString communityFolderPath = dialog.getExistingDirectory();
-                settingsHandler.storeValue("Settings", "communityFolderPathLabel",
-                                           communityFolderPath);
-                pathfound = communityFolderPath;
-            } else{
-                if(pathfound == ""){
-                    throw std::logic_error("No path saved");
-                }
-            }
-        }
-
-        QString destinationString = pathfound + "/BitsAndDroidsModule";
-        copyFolder(sourceString, destinationString);
-        MessageCaster::showCompleteMessage("WASM was sucesfully installed");
-    }
-    catch (...) {
-        cout << "error" << endl;
-        MessageCaster::showWarningMessage("Could not install WASM module");
-    }
-}
 
 void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
     qDebug() << "Dest path = " << destinationFolder;
@@ -191,11 +82,9 @@ void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinati
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     //UI ELEMENTS
     auto menuBar = MenuBar(this);
-    menuBar.populateMenuBar(this);
     auto mainVLayout = new QVBoxLayout;
     this->setLayout(mainVLayout);
-    auto comPortWidget = ComPortWidget(this);
-    mainVLayout->addWidget(&comPortWidget);
+
 
     //TRAY ICON
     auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
@@ -209,8 +98,16 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //CONTROLLER
     auto dashboardController = new DashboardController(this);
-    connect(this, &Dashboard::gameConnectionMade, comPortWidgetController, &ComPortWidgetController::gameConnectionMade);
-    connect(this, &Dashboard::boardConnectionMade, comPortWidgetController, &ComPortWidgetController::boardConnectionMade);
+    connect(&comPortWidgetController, &ComPortWidgetController::gameConnectionMade,this, &Dashboard::gameConnectionMade);
+    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
+
+    auto updateButton = new QPushButton("Update");
+    mainVLayout->addWidget(updateButton);
+    connect(updateButton, &QPushButton::clicked, dashboardController, &DashboardController::updateButtonClicked);
+
+    //ComPortWidget
+    auto comPortWidget = ComPortWidget(this);
+    mainVLayout->addWidget(&comPortWidget);
 }
 
 Dashboard::Dashboard(QWidget *parent)
@@ -253,9 +150,8 @@ Dashboard::Dashboard(QWidget *parent)
 
 
 
-    connect(openEditEventWindow, &QAction::triggered, this,
-            &Dashboard::openEditEventMenu);
-    connect(openSettings, &QAction::triggered, this, &Dashboard::openSettings);
+
+
     connect(&formbuilder, &FormBuilder::addPressed, this, &Dashboard::addCom);
     connect(&formbuilder, &FormBuilder::stopPressed, this, &Dashboard::stopMode);
     connect(&formbuilder, &FormBuilder::startPressed, this,
@@ -268,23 +164,9 @@ Dashboard::Dashboard(QWidget *parent)
 
     formbuilder.loadComPortData();
 
-    // INPUTS
-    QVBoxLayout *inContainer = ui->inLayoutContainer;
 
-    auto *shadow = new QGraphicsDropShadowEffect();
-    QWidget * inWidget = ui->inWidgetContainer;
-    shadow->setBlurRadius(20);
-    shadow->setOffset(2, 2);
-    inWidget->setGraphicsEffect(shadow);
-    inContainer->setAlignment(Qt::AlignTop);
 
-    inContainer->addWidget(formbuilder.generateComControls(1));
-    inContainer->parentWidget()->setSizePolicy(QSizePolicy::Expanding,
-                                               QSizePolicy::Expanding);
 
-    auto inputWarningBox = new QVBoxLayout();
-    inputWarningBox->setObjectName("inputWarningBox");
-    inContainer->addLayout(inputWarningBox);
 
     // OUTPUTS
     QVBoxLayout *outContainer = ui->outLayoutContainer;
@@ -450,16 +332,6 @@ void Dashboard::restoreStoredValuesComboBoxes(QWidget *widget,
 }
 
 
-
-void Dashboard::saveAutoRunStates(int mode) {
-    auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
-    QString group;
-    for (auto &cb: autoList) {
-        QString index = QString::number(cb->getIndex());
-        settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
-    }
-}
-
 void Dashboard::loadAutoRunState() {
     QRegularExpression searchAuto("auto");
     auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
@@ -470,45 +342,6 @@ void Dashboard::loadAutoRunState() {
         cb->setChecked(settingsHandler.retrieveSetting("dualARIndex", index)->toBool());
     }
 }
-
-void Dashboard::clearChildrenFromLayout(QLayout *toClear) {
-    if (toClear != nullptr) {
-        QLayoutItem *item;
-        while ((item = toClear->takeAt(0)) != nullptr) {
-            delete item->widget();
-            delete item;
-        }
-    }
-}
-
-QLabel *Dashboard::returnWarningString(int warningType) {
-    auto warningLabel = new QLabel();
-    warningLabel->setStyleSheet("color:#B33A3A");
-    switch (warningType) {
-        case NOCOMPORT:
-            warningLabel->setText("Please select a com port before pressing start");
-            break;
-        case NOSET:
-            warningLabel->setText(
-                    "Please create or select a Set before pressing start");
-        default:
-            break;
-    }
-    return warningLabel;
-}
-
-
-
-
-
-void Dashboard::on_updateButton_clicked() {
-    auto *process = new QProcess(this);
-    process->startDetached(pathHandler.getMaintenanceToolPath());
-    process->waitForFinished();
-    exitProgram();
-}
-
-
 
 void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
@@ -523,8 +356,6 @@ void Dashboard::closeEvent(QCloseEvent *event) {
     }
 }
 
-
-
 void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         if (isVisible()) {
@@ -536,9 +367,7 @@ void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     }
 }
 
-
-
-void Dashboard::GameConnectionMade(int con) {
+void Dashboard::gameConnectionMade(int con) {
     auto gameRadioButton = new QRadioButton();
     gameRadioButton = this->findChild<QRadioButton *>(
             "dualWidgetContainerGameCon");
@@ -560,7 +389,7 @@ void Dashboard::GameConnectionMade(int con) {
     }
 }
 
-void Dashboard::BoardConnectionMade(int con) {
+void Dashboard::boardConnectionMade(int con) {
     auto boardRadioButton = new QRadioButton();
 
     boardRadioButton = this->findChild<QRadioButton *>(
