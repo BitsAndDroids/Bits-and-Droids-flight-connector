@@ -136,6 +136,9 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
             &MenuBar::openGenerateLibraryMenu);
     connect(generateCode, &QAction::triggered, this,
             &MenuBar::openGenerateCodeMenu);
+
+
+    loadComPortData();
     //TODO add serviceWorker to class via constructor
     QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
 }

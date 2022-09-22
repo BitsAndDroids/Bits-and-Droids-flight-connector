@@ -5,6 +5,7 @@
 #include "ComPortWidgetController.h"
 #include <QRadioButton>
 #include "workers/ServiceWorker.h"
+#include "utils/InputReader.h"
 #include <QVBoxLayout>
 #include <QSerialPort>
 #include <QSerialPortInfo>
@@ -38,6 +39,11 @@ ComPortWidgetController::ComPortWidgetController(QWidget *parent) {
     this->parent = parent;
     //TODO connect loggers
     QObject::connect(&dualWorker, &DualWorker::logMessage, &parent->getServiceWorker(), &ServiceWorker::logMessage);
+
+    InputReader inputReader = InputReader();
+    inputReader.readInputs();
+    dualWorker.setInputs(inputReader.getInputs());
+
 }
 
 void ComPortWidgetController::start() {
@@ -342,6 +348,17 @@ void ComPortWidgetController::saveAutoRunStates() {
     for (auto &cb: autoList) {
         QString index = QString::number(cb->getIndex());
         settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
+    }
+}
+
+void ComPortWidgetController::loadAutoRunState() {
+    QRegularExpression searchAuto("auto");
+    auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
+    QString group;
+    for (auto &cb: autoList) {
+        int mode = cb->getMode();
+        QString index = QString::number(cb->getIndex());
+        cb->setChecked(settingsHandler.retrieveSetting("dualARIndex", index)->toBool());
     }
 }
 

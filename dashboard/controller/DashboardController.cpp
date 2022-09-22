@@ -11,6 +11,7 @@
 #include "DashboardController.h"
 #include "elements/ModeIndexCombobox.h"
 #include "elements/ModeIndexCheckbox.h"
+#include "utils/InputReader.h"
 
 void DashboardController::updateEventFile() {
     try {
@@ -39,9 +40,9 @@ DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
     serviceWorker.start();
     QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
+    SettingsHandler settingsHandler = SettingsHandler();
+    settingsHandler.checkEventFilePresent();
 }
-
-
 
 
 void DashboardController::checkForUpdates(bool silentCheck) {
@@ -66,6 +67,7 @@ void DashboardController::checkForUpdates(bool silentCheck) {
         updateButton->setVisible(true);
     }
 }
+
 void DashboardController::updateButtonClicked() {
     auto *process = new QProcess(this);
     process->startDetached(pathHandler.getMaintenanceToolPath());

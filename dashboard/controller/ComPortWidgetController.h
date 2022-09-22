@@ -58,7 +58,7 @@ private:
     void addComRow();
 
     void startDual(bool autoStart);
-
+    void loadAutoRunState();
     std::string convertComPort(QString comText);
 
     ComPortWidgetModel *comPortModel;
