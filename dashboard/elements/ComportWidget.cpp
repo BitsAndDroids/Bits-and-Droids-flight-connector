@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include "ComPortButtonRow.h"
 #include "ComPortWidget.h"
+#include "ComPortRow.h"
 #include "dashboard/controller/ComPortWidgetController.h"
 
 ComPortWidget::ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller) {
@@ -40,11 +41,14 @@ QWidget* ComPortWidget::generateElement() {
     auto warningBox = new QVBoxLayout();
     warningBox->setObjectName("warningBox");
     layout->addLayout(warningBox);
+
     auto settingsHandler = new SettingsHandler();
     auto foundComports = settingsHandler->retrieveKeys("comPorts");
     for (int i = 0; i < foundComports->size(); ++i) {
-        //TODO ADD WIDGETS TO LAYOUT
+        auto comPortRow = new ComPortRow(controller, i);
+        comRowLayout->addWidget(comPortRow->generateElement());
     }
 
+    widget->adjustSize();
     return widget;
 }

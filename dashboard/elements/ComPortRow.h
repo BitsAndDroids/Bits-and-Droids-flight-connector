@@ -18,7 +18,6 @@ public:
 private:
     bool setsNeeded = true;
     int index;
-    int mode;
     ComPortWidgetController *controller;
 };
 

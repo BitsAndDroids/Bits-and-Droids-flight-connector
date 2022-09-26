@@ -73,7 +73,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
-    mainVLayout->addWidget(&comPortWidget);
+    mainVLayout->addWidget(comPortWidget.generateElement());
 
     //CONNECTION ICONS
     auto connectionRow = new QHBoxLayout();
@@ -97,6 +97,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(gameLabel);
     mainVLayout->addLayout(connectionRow);
 
+    this->adjustSize();
     this->adjustSize();
 }
 
