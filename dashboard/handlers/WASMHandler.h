@@ -12,9 +12,6 @@ public:
     void sendWASMCommand(const char *data);
     void installWasm();
 };
-private:
-
-};
 
 
 #endif //BITSANDDROIDSCONNECTOR_WASMHANDLER_H

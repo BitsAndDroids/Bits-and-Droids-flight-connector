@@ -13,8 +13,11 @@
 #include "widgets/librarygenerator/librarygeneratorwindow.h"
 #include "widgets/codegenerator/CodeGeneratorWindow.h"
 #include "logging/LogWindow.h"
-MenuBar::MenuBar(QMainWindow *parent) {
+#include "workers/ServiceWorker.h"
+
+MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker) {
     populateMenuBar(parent);
+    this->serviceWorker = serviceworker;
 }
 
 void MenuBar::openSettings() {
@@ -22,7 +25,7 @@ void MenuBar::openSettings() {
         optionMenuOpen = true;
         QWidget * wdg = new OptionsMenu;
         QObject::connect(wdg, SIGNAL(closedOptionsMenu), this,
-                SLOT(optionMenuClosed));
+                         SLOT(optionMenuClosed));
         wdg->show();
     }
 }
@@ -131,14 +134,24 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     connect(updateApplication, &QAction::triggered, this,
             &MenuBar::checkForUpdates);
     connect(openSettings, &QAction::triggered, this, &MenuBar::openSettings);
-    connect(installWasm, &QAction::triggered, this, &MenuBar::installWasm);
+    connect(installWasm, &QAction::triggered, this, &MenuBar::installWASM);
     connect(libraryGenerator, &QAction::triggered, this,
             &MenuBar::openGenerateLibraryMenu);
     connect(generateCode, &QAction::triggered, this,
             &MenuBar::openGenerateCodeMenu);
 
+    //TODO add serviceWorker to class via constructor\
+    QObject::connect(openLogging, &QAction::triggered, serviceWorker, &ServiceWorker::openLogWindow);
+}
 
-    loadComPortData();
-    //TODO add serviceWorker to class via constructor
-    QObject::connect(openLogging, &QAction::triggered, &serviceworker, &ServiceWorker::openLogWindow);
+void MenuBar::installWASM() {
+    std::cout << "Installing WASM" << std::endl;
+}
+
+void MenuBar::checkForUpdates() {
+    std::cout << "Checking for updates" << std::endl;
+}
+
+void MenuBar::localUpdateEventFile() {
+    std::cout << "Updating event file" << std::endl;
 }

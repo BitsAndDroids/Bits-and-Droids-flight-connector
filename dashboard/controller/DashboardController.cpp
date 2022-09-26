@@ -5,13 +5,9 @@
 #include <QFile>
 #include <QApplication>
 #include <QMessageBox>
-#include <ntgdi.h>
 #include <QProcess>
 #include <QPushButton>
 #include "DashboardController.h"
-#include "elements/ModeIndexCombobox.h"
-#include "elements/ModeIndexCheckbox.h"
-#include "utils/InputReader.h"
 
 void DashboardController::updateEventFile() {
     try {
@@ -39,7 +35,8 @@ void DashboardController::updateEventFile() {
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
     serviceWorker.start();
-    QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
+    //TODO connect logger
+    //QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.checkEventFilePresent();
 }
@@ -72,5 +69,9 @@ void DashboardController::updateButtonClicked() {
     auto *process = new QProcess(this);
     process->startDetached(pathHandler.getMaintenanceToolPath());
     process->waitForFinished();
-    exitProgram();
+    emit exitProgram();
 }
+
+QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){
+
+};

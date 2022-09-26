@@ -6,7 +6,7 @@
 #include <QWidget>
 
 #include "widgets/settingsmenu/builder/formbuilder.h"
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 
 namespace Ui {
 class optionsMenu;

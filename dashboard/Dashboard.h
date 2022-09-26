@@ -41,16 +41,6 @@ public:
 
 public slots:
 
-    void startMode(int mode);
-
-    void refreshComs(int mode);
-
-    void stopMode(int mode);
-
-    void addCom(int mode);
-
-public slots:
-
     void gameConnectionMade(int con);
 
     void boardConnectionMade(int con);

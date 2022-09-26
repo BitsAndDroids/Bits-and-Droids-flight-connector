@@ -43,8 +43,9 @@ void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinati
     }
 }
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
+    auto serviceWorker = new ServiceWorker();
     //UI ELEMENTS
-    auto menuBar = MenuBar(this);
+    auto menuBar = MenuBar(this, serviceWorker);
     auto mainVLayout = new QVBoxLayout;
     this->setLayout(mainVLayout);
 
@@ -62,6 +63,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //CONTROLLER
     auto dashboardController = new DashboardController(this);
+    connect(dashboardController, &DashboardController::exitProgram, this, &Dashboard::exitProgram);
     connect(&comPortWidgetController, &ComPortWidgetController::gameConnectionMade,this, &Dashboard::gameConnectionMade);
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
 

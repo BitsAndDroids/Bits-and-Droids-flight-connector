@@ -44,6 +44,7 @@ public:
     QWaitCondition condition;
     bool stopServiceWorker = false;
 
+
 public slots:
 
     void logMessage(std::string message, LogLevel level);

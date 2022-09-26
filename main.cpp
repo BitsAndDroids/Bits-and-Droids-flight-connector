@@ -1,6 +1,6 @@
 #include <QApplication>
-
 #include "dashboard/Dashboard.h"
+#include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
 #include "workers/ServiceWorker.h"
 
@@ -17,8 +17,13 @@ int main(int argc, char *argv[]) {
     QApplication::setOrganizationName("Bits and Droids");
     QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
+    SettingsHandler settingsHandler = SettingsHandler();
+    settingsHandler.migrate();
+
     Dashboard w;
     w.show();
+
+
 
     return QApplication::exec();
 }

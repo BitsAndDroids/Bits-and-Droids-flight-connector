@@ -7,13 +7,14 @@
 
 
 #include <QMainWindow>
+#include "workers/ServiceWorker.h"
 
 class MenuBar: public QObject{
     Q_OBJECT
 public:
-    MenuBar(QMainWindow *parent);
+    MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);
 
-    populateMenuBar(QMainWindow *parent);
+    void populateMenuBar(QMainWindow *parent);
 private:
     QMainWindow *parent;
 
@@ -48,6 +49,14 @@ private:
     bool optionMenuOpen = false;
     bool generateLibraryMenuOpen = false;
     bool generateCodeMenuOpen = false;
+    ServiceWorker *serviceWorker;
+
+private slots:
+    void installWASM();
+
+    void checkForUpdates();
+
+    void localUpdateEventFile();
 
 };
 

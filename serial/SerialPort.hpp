@@ -9,7 +9,7 @@
 
 #define MAX_DATA_LENGTH 25
 
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include <windows.h>
 
 #include <iostream>

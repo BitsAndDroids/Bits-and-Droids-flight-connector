@@ -25,6 +25,8 @@ signals:
     void gameConnectionMade(int state);
 
     void boardConnectionMade(int state);
+
+    void exitProgram();
 public slots:
     void updateButtonClicked();
 

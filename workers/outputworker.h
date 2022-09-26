@@ -4,7 +4,7 @@
 #include <qmutex.h>
 #include <qsettings.h>
 #include <qstandardpaths.h>
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include <tchar.h>
 #include <windows.h>
 

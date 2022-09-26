@@ -83,7 +83,7 @@ set(PROJECT_SOURCES
 
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h
-        handlers/settingshandler.cpp handlers/settingshandler.h
+        settings/settingshandler.cpp settings/settingshandler.h
 
         serial/SerialPort.hpp serial/SerialPort.cpp
 
@@ -111,7 +111,7 @@ set(PROJECT_SOURCES
         elements/Element.cpp elements/Element.h
         dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
         dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
-        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h)
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -208,7 +208,7 @@ add_executable(UnitTests
         models/commands/Set.cpp
         utils/OutputConverters.cpp
         utils/tests/UtilTests.cpp
-        handlers/settingshandler.cpp
+        settings/settingshandler.cpp
         handlers/outputhandler.cpp
         handlers/pathhandler.cpp
         models/commands/output.cpp

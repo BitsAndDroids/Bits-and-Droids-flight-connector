@@ -10,7 +10,8 @@
 
 HANDLE serviceSimconnect;
 
-ServiceWorker::ServiceWorker() = default;
+ServiceWorker::ServiceWorker(){
+}
 
 SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
 enum DATA_DEFINE_ID {
@@ -68,6 +69,7 @@ void ServiceWorker::startServices() {
 
 
 void ServiceWorker::openLogWindow() {
+
     connect(&logger, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
     logWindow->openWindow();
 }

@@ -9,7 +9,7 @@
 #include <QWidget>
 
 #include "widgets/settingsmenu/builder/formbuilder.h"
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include "outputmenu/builder/OutputDetailsBuilder.h"
 #include "outputmenu/builder/OutputTabBuilder.h"
 #include "outputmenu/builder/SetrowBuilder.h"

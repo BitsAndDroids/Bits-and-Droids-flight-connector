@@ -18,7 +18,7 @@ void ComPortWidgetController::removeComPortRow() {
         settingsHandler.removeSetting("dualSets", "Set" + index);
         settingsHandler.removeSetting("dualARIndex", index);
         settingsHandler.removeSetting("dualComs", "com" + index);
-        adjustIndexes(index.toInt());
+       // adjustIndexes(index.toInt());
     } catch (std::exception &e) {
         qDebug("%s", e.what());
     }
@@ -31,14 +31,14 @@ void ComPortWidgetController::loadComPortData() {
             const QSerialPortInfo &serialPortInfo,
             QSerialPortInfo::availablePorts()) {
             comPortModel->addComPort(serialPortInfo.portName() + " | " +
-                                    serialPortInfo.description())
+                                     serialPortInfo.description());
         }
 }
 
 ComPortWidgetController::ComPortWidgetController(QWidget *parent) {
     this->parent = parent;
     //TODO connect loggers
-    QObject::connect(&dualWorker, &DualWorker::logMessage, &parent->getServiceWorker(), &ServiceWorker::logMessage);
+    //QObject::connect(&dualWorker, &DualWorker::logMessage, &parent->getServiceWorker(), &ServiceWorker::logMessage);
 
     InputReader inputReader = InputReader();
     inputReader.readInputs();
@@ -73,7 +73,7 @@ void ComPortWidgetController::stop() {
     emit gameConnectionMade(0);
 }
 
-void ComPortWidgetController::addComRow(){
+void ComPortWidgetController::addComRow() {
 
 }
 
@@ -82,9 +82,9 @@ void ComPortWidgetController::add() {
     int mode = pressedBtn->objectName().at(0).digitValue();
     auto *layout = new QVBoxLayout();
     //TODO generalize this line
-    layout = ui->dualLayoutContainer;
+    //layout = ui->dualLayoutContainer;
     auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
-    layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
+    //layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
 }
 
 void ComPortWidgetController::stopDual() {

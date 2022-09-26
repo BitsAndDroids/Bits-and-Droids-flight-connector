@@ -40,10 +40,10 @@ QWidget* ComPortWidget::generateElement() {
     auto warningBox = new QVBoxLayout();
     warningBox->setObjectName("warningBox");
     layout->addLayout(warningBox);
-
-
-    for (int i = 0; i < ; ++i) {
-
+    auto settingsHandler = new SettingsHandler();
+    auto foundComports = settingsHandler->retrieveKeys("comPorts");
+    for (int i = 0; i < foundComports->size(); ++i) {
+        //TODO ADD WIDGETS TO LAYOUT
     }
 
     return widget;

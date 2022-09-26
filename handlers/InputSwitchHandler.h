@@ -10,7 +10,7 @@
 #include <qstandardpaths.h>
 #include <qwaitcondition.h>
 #include "models/settings/coordinates.h"
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include "enums/CurveTypeEnum.h"
 #include "models/aircraft/CurveAxis.h"
 #include "models/commands/Input.h"

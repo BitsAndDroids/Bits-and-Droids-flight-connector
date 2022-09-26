@@ -7,7 +7,7 @@
 #include <QList>
 #include <QSettings>
 #include <QStandardPaths>
-#include <handlers/settingshandler.h>
+#include "settings/settingshandler.h"
 #include <handlers/outputhandler.h>
 #include <models/commands/Set.h>
 
