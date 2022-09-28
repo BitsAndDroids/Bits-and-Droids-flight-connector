@@ -4,6 +4,7 @@
 
 #include "ComPortRow.h"
 #include "elements/ModeIndexCombobox.h"
+#include "elements/MPushButton.h"
 #include <QWidget>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -13,14 +14,50 @@ QWidget *ComPortRow::generateElement() {
     auto *comSelector = new QWidget();
     comSelector->setObjectName("comRowWidget");
     //TODO move stylesheets to seperate files
-    comSelector->setStyleSheet("QWidget#comRowWidget {"
-                               "background-color: #fff;"
-                               "border-radius: 5px;"
-                               "margin: 5px;"
+    comSelector->setStyleSheet("QComboBox{"
+                               "border-radius: 4px;"
+                               "height: 30px;"
+                               "margin-right:4px;"
+                               "padding-left:4px;"
+                               "}"
+                               "QComboBox:editable {\n"
+                               "    background: white;\n"
+                               "}"
+                               "\n"
+
+                               "QComboBox:on { /* shift the text when the popup opens */\n"
+                               "    padding-top: 3px;\n"
+                               "    padding-left: 4px;\n"
+                               "}\n"
+                               "\n"
+                               "QComboBox::drop-down {\n"
+                               "    subcontrol-origin: padding;\n"
+                               "    subcontrol-position: top right;\n"
+                               "    width: 15px;\n"
+                               "\n"
+                               "    border-left-width: 1px;\n"
+                               "    border-left-color: darkgray;\n"
+                               "    border-left-style: solid; /* just a single line */\n"
+                               "    border-top-right-radius: 3px; /* same radius as the QComboBox */\n"
+                               "    border-bottom-right-radius: 3px;\n"
+                               "}\n"
+                               "\n"
+                               "QComboBox::down-arrow {\n"
+                               "    image: url(/usr/share/icons/crystalsvg/16x16/actions/1downarrow.png);\n"
+                               "}\n"
+                               "\n"
+                               "QComboBox::down-arrow:on { /* shift the arrow when popup is open */\n"
+                               "    top: 1px;\n"
+                               "    left: 1px;\n"
                                "}");
     auto *comRow = new QHBoxLayout();
+    auto *dropdownContainer = new QWidget();
+    auto *dropdownLayout = new QHBoxLayout(dropdownContainer);
+    dropdownContainer->setObjectName("dropdownContainer");
+
     comSelector->setLayout(comRow);
     auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
+
     ComPortWidgetModel model = ComPortWidgetModel();
     auto availableComPorts = model.loadAvailableComPorts();
     auto availableSets = model.getAvailableSets();
@@ -28,7 +65,7 @@ QWidget *ComPortRow::generateElement() {
     for (auto &availableComPort: availableComPorts) {
         comPortComboBox->addItem(availableComPort);
     }
-    comRow->addWidget(comPortComboBox);
+    dropdownLayout->addWidget(comPortComboBox);
     comPortComboBox->setMinimumWidth(150);
     if (setsNeeded) {
         auto *setComboBox = new ModeIndexCombobox("setBox",index);
@@ -37,15 +74,17 @@ QWidget *ComPortRow::generateElement() {
             setComboBox->addItem(availableSet.getSetName());
         }
         setComboBox->setMinimumWidth(150);
-        comRow->addWidget(setComboBox);
+        dropdownLayout->addWidget(setComboBox);
         qDebug() << setComboBox->objectName();
     }
 
-    auto *removeButton = new QPushButton("-");
+    comRow->addWidget(dropdownContainer);
+
+    auto *removeButton = new MPushButton(comRow);
+    removeButton->setIconWithPath(":/resources/images/trashcan.svg");
+
     removeButton->setObjectName("del" + QString::number(index));
-    removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    removeButton->setMinimumSize(20, 20);
-    removeButton->setMaximumSize(20, 20);
+
     QObject::connect(removeButton, &QAbstractButton::clicked, controller,
             &ComPortWidgetController::removeComPortRow);
     comRow->addWidget(removeButton);
@@ -53,8 +92,11 @@ QWidget *ComPortRow::generateElement() {
 //    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
 //    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
 //    comRow->addWidget(autoRunCB);
-    comSelector->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    comSelector->setMinimumSize(400, 50);
+    comSelector->setMinimumWidth(400);
+    comSelector->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
+    comRow->setSpacing(0);
+    dropdownLayout->setContentsMargins(0,0,0,0);
+    dropdownLayout->setSpacing(0);
     return comSelector;
 }
 

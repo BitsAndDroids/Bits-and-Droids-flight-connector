@@ -42,19 +42,27 @@ void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinati
         copyFolder(sourceName, destinationName);
     }
 }
+
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
+    auto centralWidget = new QWidget(this);
+    this->setCentralWidget(centralWidget);
+
+    centralWidget->setObjectName("centralWidget");
     auto serviceWorker = new ServiceWorker();
+
     //UI ELEMENTS
     auto menuBar = MenuBar(this, serviceWorker);
-    auto mainVLayout = new QVBoxLayout;
+    auto mainVLayout = new QVBoxLayout();
+    mainVLayout->setAlignment(Qt::AlignTop);
 
-    this->setLayout(mainVLayout);
+    centralWidget->setLayout(mainVLayout);
 
     qRegisterMetaType<QList<QString>>("QList<QString>");
 
-    this->setStyleSheet("QMainWindow {background-color: #487f94;}");
+    centralWidget->setStyleSheet("QWidget#centralWidget {background-color: #487f94;}");
 
     //TRAY ICON
+    //TODO IMPLEMENT CHECK IF ICON ALREADY EXISTS
     auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
     connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
     auto *quit_action = new QAction("Exit", icon);
@@ -73,18 +81,17 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     auto updateButton = new QPushButton("Update");
     mainVLayout->addWidget(updateButton);
     connect(updateButton, &QPushButton::clicked, dashboardController, &DashboardController::updateButtonClicked);
-
-
-
+    updateButton->setVisible(false);
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
-    mainVLayout->addWidget(comPortWidget.generateElement());
+    mainVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
 
 
     //CONNECTION ICONS
     auto connectionRow = new QHBoxLayout();
     connectionRow->setAlignment(Qt::AlignLeft);
+
     auto radioConBoard = new QRadioButton();
     radioConBoard->setObjectName("BoardCon");
     radioConBoard->setChecked(true);
@@ -104,14 +111,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(gameLabel);
     mainVLayout->addLayout(connectionRow);
 
-    //WINDOW SIZING
-    this->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    this->setMinimumWidth(375);
-    mainVLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    this->updateGeometry();
+    this->layout()->setAlignment(Qt::AlignTop);
 }
-
-
 
 void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {

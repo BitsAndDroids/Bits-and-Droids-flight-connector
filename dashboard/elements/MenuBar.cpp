@@ -93,20 +93,19 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     auto menuBar = new QMenuBar(parent);
     this->parent = parent;
     // TOOLBAR MENU
-    auto *openLogging = new QAction("&Logging", parent);
-    auto *openSettings = new QAction("&Settings", parent);
-    auto *generateCode = new QAction("&Code", parent);
-    auto *libraryGenerator = new QAction("&Generate library", parent);
-    auto *calibrateAxis = new QAction("&Calibrate axis", parent);
-    auto *openOutputMenu = new QAction("&Outputs", parent);
-    auto *openEditEventWindow = new QAction("&Edit events", parent);
-    auto *installWasm = new QAction("&Install WASM", parent);
-    auto *WasmUpdateEventFile = new QAction("&Update event file", parent);
-    auto *updateApplication = new QAction("Check for updates", parent);
+    auto *openLogging = new QAction("&Logging");
+    auto *openSettings = new QAction("&Settings");
+    auto *generateCode = new QAction("&Code");
+    auto *libraryGenerator = new QAction("&Generate library");
+    auto *calibrateAxis = new QAction("&Calibrate axis");
+    auto *openOutputMenu = new QAction("&Outputs");
+    auto *openEditEventWindow = new QAction("&Edit events");
+    auto *installWasm = new QAction("&Install WASM");
+    auto *WasmUpdateEventFile = new QAction("&Update event file");
+    auto *updateApplication = new QAction("Check for updates");
     //QMenu *codeMenu = menuBar()->addMenu("&Code");
     QMenu *Settings = parent->menuBar()->addMenu("&Settings");
     QMenu *libraryMenu = parent->menuBar()->addMenu("&Library");
-    QMenu *viewMenu = parent->menuBar()->addMenu("&View");
     QMenu *OutputSettings = parent->menuBar()->addMenu("&Outputs");
     QMenu *WasmInstall = parent->menuBar()->addMenu("&WASM");
 

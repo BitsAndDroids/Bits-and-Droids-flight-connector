@@ -18,8 +18,6 @@ public:
 private:
     QMainWindow *parent;
 
-
-
     void openSettings();
 
     void openOutputMenu();

@@ -17,7 +17,11 @@ ComPortWidget::ComPortWidget(QMainWindow *parent, ComPortWidgetController *contr
 
 QWidget* ComPortWidget::generateElement() {
     auto *widget = new QWidget(parent);
+    widget->setObjectName("comPortWidget");
+    widget->setStyleSheet("QWidget#comPortWidget{background-color:#364449; border-radius:4px;}");
     auto layout = new QVBoxLayout(widget);
+
+
 
     auto *shadow = new QGraphicsDropShadowEffect();
     shadow->setBlurRadius(20);
@@ -44,17 +48,13 @@ QWidget* ComPortWidget::generateElement() {
 
     auto settingsHandler = new SettingsHandler();
     auto foundComports = settingsHandler->retrieveKeys("comPorts");
-    for (int i = 0; i < foundComports->size(); ++i) {
+    for (int i = 0; i < 5; ++i) {
         auto comPortRow = new ComPortRow(controller, i);
-        comRowLayout->addWidget(comPortRow->generateElement());
-        widget->adjustSize();
+        comRowLayout->addWidget(comPortRow->generateElement(),Qt::AlignTop);
     }
-
-
-
-    //widget sizing
-    widget->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    layout->insertStretch( -1, 1 );
+    comRowLayout->setAlignment(Qt::AlignTop);
+    comRowLayout->setSpacing(0);
     widget->adjustSize();
-    widget->updateGeometry();
     return widget;
 }

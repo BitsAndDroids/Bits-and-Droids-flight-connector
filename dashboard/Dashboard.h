@@ -46,6 +46,7 @@ public slots:
     void boardConnectionMade(int con);
 
 private:
+
     DashboardController controller = DashboardController(this);
     ComPortWidgetController comPortWidgetController = ComPortWidgetController(this);
     bool closing = false;
