@@ -47,8 +47,14 @@ QWidget* ComPortWidget::generateElement() {
     for (int i = 0; i < foundComports->size(); ++i) {
         auto comPortRow = new ComPortRow(controller, i);
         comRowLayout->addWidget(comPortRow->generateElement());
+        widget->adjustSize();
     }
 
+
+
+    //widget sizing
+    widget->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     widget->adjustSize();
+    widget->updateGeometry();
     return widget;
 }

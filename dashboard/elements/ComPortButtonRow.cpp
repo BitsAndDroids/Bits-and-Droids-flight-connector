@@ -10,6 +10,8 @@
 
 QWidget *ComPortButtonRow::generateElement() {
         auto *comControls = new QWidget();
+        comControls->setObjectName("comControls");
+
         auto *comControlRow = new QHBoxLayout();
         comControls->setLayout(comControlRow);
         auto *header = new MStyleLabels(headerText, HEADER);
@@ -72,7 +74,8 @@ QWidget *ComPortButtonRow::generateElement() {
         addButton->setObjectName(QString::number(mode) + "addBtn");
         QObject::connect(addButton, &QAbstractButton::clicked, controller, &ComPortWidgetController::add);
         comControlRow->addWidget(addButton);
-
+        comControls->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        comControls->adjustSize();
         return comControls;
 }
 

@@ -47,9 +47,12 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     //UI ELEMENTS
     auto menuBar = MenuBar(this, serviceWorker);
     auto mainVLayout = new QVBoxLayout;
+
     this->setLayout(mainVLayout);
 
     qRegisterMetaType<QList<QString>>("QList<QString>");
+
+    this->setStyleSheet("QMainWindow {background-color: #487f94;}");
 
     //TRAY ICON
     auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
@@ -71,9 +74,13 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     mainVLayout->addWidget(updateButton);
     connect(updateButton, &QPushButton::clicked, dashboardController, &DashboardController::updateButtonClicked);
 
+
+
+
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
     mainVLayout->addWidget(comPortWidget.generateElement());
+
 
     //CONNECTION ICONS
     auto connectionRow = new QHBoxLayout();
@@ -97,8 +104,11 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(gameLabel);
     mainVLayout->addLayout(connectionRow);
 
-    this->adjustSize();
-    this->adjustSize();
+    //WINDOW SIZING
+    this->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    this->setMinimumWidth(375);
+    mainVLayout->setSizeConstraint(QLayout::SetMinimumSize);
+    this->updateGeometry();
 }
 
 

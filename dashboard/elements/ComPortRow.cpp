@@ -11,6 +11,13 @@
 
 QWidget *ComPortRow::generateElement() {
     auto *comSelector = new QWidget();
+    comSelector->setObjectName("comRowWidget");
+    //TODO move stylesheets to seperate files
+    comSelector->setStyleSheet("QWidget#comRowWidget {"
+                               "background-color: #fff;"
+                               "border-radius: 5px;"
+                               "margin: 5px;"
+                               "}");
     auto *comRow = new QHBoxLayout();
     comSelector->setLayout(comRow);
     auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
@@ -35,7 +42,7 @@ QWidget *ComPortRow::generateElement() {
     }
 
     auto *removeButton = new QPushButton("-");
-    removeButton->setObjectName("del" + QString::number(mode) + QString::number(index));
+    removeButton->setObjectName("del" + QString::number(index));
     removeButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     removeButton->setMinimumSize(20, 20);
     removeButton->setMaximumSize(20, 20);
@@ -46,6 +53,8 @@ QWidget *ComPortRow::generateElement() {
 //    auto autoRunCB = new ModeIndexCheckbox("auto",mode,index);
 //    connect(autoRunCB, &QCheckBox::stateChanged, this, &FormBuilder::autoRunChanged);
 //    comRow->addWidget(autoRunCB);
+    comSelector->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+    comSelector->setMinimumSize(400, 50);
     return comSelector;
 }
 

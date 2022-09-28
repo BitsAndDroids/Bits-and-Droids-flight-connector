@@ -106,4 +106,4 @@ private:
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
 };
 
-#endif DASHBOARD_H
+#endif
