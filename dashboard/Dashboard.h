@@ -6,6 +6,7 @@
 #include "workers/InputWorker.h"
 #include "workers/dualworker.h"
 #include "workers/outputworker.h"
+
 #include "outputmenu/handlers/sethandler.h"
 #include <qcombobox.h>
 #include <qpushbutton.h>
@@ -23,6 +24,7 @@
 #include "constants.h"
 #include "workers/ServiceWorker.h"
 #include "dashboard/controller/DashboardController.h"
+#include "dashboard/Elements/MenuBar.h"
 
 const std::string version = constants::VERSION;
 
@@ -84,6 +86,8 @@ private:
     OutputWorker outputThread;
     InputWorker inputThread;
     FormBuilder formbuilder;
+
+    MenuBar* menuBar;
 
     void loadComPortData();
 

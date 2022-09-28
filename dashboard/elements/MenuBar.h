@@ -7,9 +7,10 @@
 
 
 #include <QMainWindow>
+#include <QMenuBar>
 #include "workers/ServiceWorker.h"
 
-class MenuBar: public QObject{
+class MenuBar: public QMenuBar {
     Q_OBJECT
 public:
     MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);

@@ -51,7 +51,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     auto serviceWorker = new ServiceWorker();
 
     //UI ELEMENTS
-    auto menuBar = MenuBar(this, serviceWorker);
+    menuBar = new MenuBar(this, serviceWorker);
+    this->setMenuBar(menuBar);
     auto mainVLayout = new QVBoxLayout();
     mainVLayout->setAlignment(Qt::AlignTop);
 
