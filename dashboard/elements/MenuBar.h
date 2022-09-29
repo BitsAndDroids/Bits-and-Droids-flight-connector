@@ -16,6 +16,10 @@ public:
     MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);
 
     void populateMenuBar(QMainWindow *parent);
+
+signals:
+    void openLogWindow();
+
 private:
     QMainWindow *parent;
 
@@ -27,7 +31,7 @@ private:
 
     void openGenerateCodeMenu();
 
-    void openLoggingWindow();
+
 
     void openCalibrateAxis();
 

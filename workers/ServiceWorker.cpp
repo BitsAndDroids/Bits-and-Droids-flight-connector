@@ -69,7 +69,6 @@ void ServiceWorker::startServices() {
 
 
 void ServiceWorker::openLogWindow() {
-
     connect(&logger, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
     logWindow->openWindow();
 }

@@ -27,6 +27,8 @@ signals:
     void boardConnectionMade(int state);
 
     void exitProgram();
+
+    void openLogWindow();
 public slots:
     void updateButtonClicked();
 

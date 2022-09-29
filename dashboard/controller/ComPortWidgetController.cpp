@@ -179,7 +179,7 @@ int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const Q
 
 void ComPortWidgetController::refreshComs() {
     auto *widget = new QWidget();
-    restoreStoredValuesComboBoxes();
+
     QRegularExpression search("comBox");
     QList<ModeIndexCombobox *> comList = parent->findChildren<ModeIndexCombobox *>(search);
 
@@ -202,6 +202,8 @@ void ComPortWidgetController::refreshComs() {
             i->addItem(key.getSetName());
         }
     }
+
+    restoreStoredValuesComboBoxes();
 }
 
 void ComPortWidgetController::clearChildrenFromLayout(QLayout *toClear) {

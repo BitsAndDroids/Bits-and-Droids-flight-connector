@@ -30,11 +30,6 @@ void MenuBar::openSettings() {
     }
 }
 
-void MenuBar::openLoggingWindow() {
-    auto *wdg = new LogWindow();
-    wdg->openWindow();
-}
-
 void MenuBar::openOutputMenu() {
     if (!outputMenuOpen) {
         outputMenuOpen = true;
@@ -141,8 +136,7 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     connect(generateCode, &QAction::triggered, this,
             &MenuBar::openGenerateCodeMenu);
 
-    //TODO add serviceWorker to class via constructor\
-    QObject::connect(openLogging, &QAction::triggered, serviceWorker, &ServiceWorker::openLogWindow);
+    QObject::connect(openLogging, &QAction::triggered, this, &MenuBar::openLogWindow);
 }
 
 void MenuBar::installWASM() {
