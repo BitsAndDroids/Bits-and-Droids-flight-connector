@@ -37,11 +37,7 @@ public slots:
 private:
     void loadComPortData();
 
-    void stopInput();
-
     void stopDual();
-
-    void stopOutput();
 
     static void clearChildrenFromLayout(QLayout *toClear);
 
@@ -57,11 +53,9 @@ private:
 
     void addComRow();
 
-    void startDual(bool autoStart);
-    void loadAutoRunState();
     std::string convertComPort(QString comText);
 
-    ComPortWidgetModel *comPortModel;
+    ComPortWidgetModel *comPortModel = new ComPortWidgetModel();
     DualWorker dualWorker = DualWorker();
     QWidget *parent;
     SetHandler setHandler = SetHandler();

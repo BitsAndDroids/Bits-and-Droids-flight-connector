@@ -101,7 +101,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     radioConGame->setObjectName("GameCon");
     radioConGame->setEnabled(false);
     radioConGame->setChecked(true);
-    QString labelStyle = "QLabel{color: #5c5c5c; font-size: 10px;}";
+    QString labelStyle = "QLabel{color: #fff; font-size: 10px;}";
     auto boardLabel = new QLabel("Boards");
     boardLabel->setStyleSheet(labelStyle);
     auto gameLabel = new QLabel("MFS2020");

@@ -6,7 +6,8 @@
 #include <QPushButton>
 #include "ComPortButtonRow.h"
 #include "widgets/settingsmenu/builder/formbuilder.h"
-#include "elements/MStyleLabels.h"
+#include "elements/MPushButton.h"
+
 
 QWidget *ComPortButtonRow::generateElement() {
     auto *comControls = new QWidget();
@@ -15,67 +16,89 @@ QWidget *ComPortButtonRow::generateElement() {
     auto *comControlRow = new QHBoxLayout();
     comControls->setLayout(comControlRow);
     comControlRow->setAlignment(Qt::AlignLeft);
-    // REFRESH BTN
-    auto *refreshButton = new QPushButton();
 
-    refreshButton->setIcon(QIcon("resources/images/refreshicon.png"));
-    refreshButton->setStyleSheet(
-            "border-image:url(:resources/images/refreshicon.png); background-color:#fff;");
-    refreshButton->setObjectName(QString::number(mode) + "refreshBtn");
-
-    refreshButton->setMinimumSize(15, 15);
-    refreshButton->setMaximumSize(15, 15);
-
-    QObject::connect(refreshButton, &QAbstractButton::clicked, controller,
-                     &ComPortWidgetController::refresh);
-
-    comControlRow->addWidget(refreshButton);
+    QFont font;
+    font.setPixelSize(13);
+    font.setBold(true);
 
     // START BTN
     auto *startButton = new QPushButton("Start");
+    startButton->setObjectName("startButton");
     startButton->setCheckable(true);
-    //#2DE3A3
     startButton->setStyleSheet(
-            "QPushButton { \
+            "QPushButton#startButton { \
                       color:white;\
                       background-color:#509402;\
                     border-radius:4px;\
-                    margin-left:4px;\
-                    margin-right:4px;\
                   }   \
-                  QPushButton:checked{\
+                  QPushButton#startButton:checked{\
                       background-color: #0F4C5C;\
                       border: none; \
                   }\
-                  QPushButton:hover{  \
+                  QPushButton#startButton:hover{  \
                       background-color: grey; \
                       border-style: outset;\
                   }");
 
-    startButton->setMinimumSize(50, 25);
-    startButton->setMaximumSize(50, 25);
-    startButton->setObjectName("startButton");
+    startButton->setMinimumSize(60, 35);
+    startButton->setMaximumSize(60, 35);
+
+    startButton->setFont(font);
     QObject::connect(startButton, &QAbstractButton::clicked, controller,
                      &ComPortWidgetController::start);
     comControlRow->addWidget(startButton);
 
     // STOP BTN
     auto *stopButton = new QPushButton("Stop");
-    stopButton->setMinimumSize(50, 25);
-    stopButton->setMaximumSize(50, 25);
-    stopButton->setObjectName("stopBtn");
+    stopButton->setObjectName("stopButton");
+    stopButton->setStyleSheet(
+            "QPushButton#stopBtn { \
+                      color:white;\
+                      background-color:#0F4C5C;\
+                    border-radius:4px;\
+                  }   \
+                  QPushButton#stopBtn:checked{\
+                      background-color: #E20303;\
+                      border: none; \
+                    border-radius:4px;\
+                  }\
+                  QPushButton#stopBtn:hover{  \
+                      background-color: grey; \
+                      border-style: outset;\
+                  }");
+    stopButton->setMinimumSize(60, 35);
+    stopButton->setMaximumSize(60, 35);
+
+    stopButton->setFont(font);
+    stopButton->setEnabled(false);
     QObject::connect(stopButton, &QAbstractButton::clicked, controller, &ComPortWidgetController::stop);
     comControlRow->addWidget(stopButton);
 
     // ADD BTN
-    auto *addButton = new QPushButton("+");
+    auto *addButton = new MPushButton(comControlRow);
+    addButton->setIconWithPath(":/resources/images/add.svg");
+    addButton->setObjectName("addBtn");
+    addButton->setToolTip("Add new row");
     addButton->setMinimumSize(20, 20);
     addButton->setMaximumSize(20, 20);
-    addButton->setObjectName("addBtn");
     QObject::connect(addButton, &QAbstractButton::clicked, controller, &ComPortWidgetController::add);
     comControlRow->addWidget(addButton);
 
-    comControlRow->setSpacing(1);
+    // REFRESH BTN
+    auto *refreshButton = new MPushButton(comControlRow);
+
+    refreshButton->setIconWithPath(":/resources/images/reload.svg");
+    refreshButton->setToolTip("Refresh com ports/sets");
+    refreshButton->setObjectName("refreshBtn");
+    refreshButton->setMinimumSize(20, 20);
+    refreshButton->setMaximumSize(20, 20);
+
+    QObject::connect(refreshButton, &QAbstractButton::clicked, controller,
+                     &ComPortWidgetController::refresh);
+
+    comControlRow->addWidget(refreshButton);
+
+    comControlRow->setSpacing(8);
     comControlRow->setContentsMargins(0, 0, 10, 0);
     return comControls;
 }

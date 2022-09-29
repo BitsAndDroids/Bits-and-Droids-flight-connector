@@ -7,30 +7,32 @@
 
 ComPortWidgetModel::ComPortWidgetModel() {
     availableSets = new QList<Set>();
-    availableComPorts = QList<QString>();
+    availableComPorts = new QList<QString>();
     availableSets = setHandler.getSets();
 }
 
 void ComPortWidgetModel::refresh() {
     availableSets->clear();
-    availableComPorts.clear();
+    availableComPorts->clear();
     availableSets = setHandler.getSets();
     availableComPorts = loadAvailableComPorts();
 
 }
 
 void ComPortWidgetModel::addComPort(QString comPort) {
-    availableComPorts.append(comPort);
+    availableComPorts->append(comPort);
 }
 
 void ComPortWidgetModel::clearComPortData() {
-    availableComPorts.clear();
+    if(!availableComPorts->empty()){
+        availableComPorts->clear();
+    }
 }
 
-QList<QString> ComPortWidgetModel::loadAvailableComPorts() {
-    QList<QString> comPorts;
+QList<QString> *ComPortWidgetModel::loadAvailableComPorts() {
+    auto *comPorts = new QList<QString>();
     for (const QSerialPortInfo &serialPortInfo : QSerialPortInfo::availablePorts()) {
-        comPorts.append(serialPortInfo.portName());
+        comPorts->append(serialPortInfo.portName());
     }
     return comPorts;
 }

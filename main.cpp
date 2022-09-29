@@ -2,8 +2,6 @@
 #include "dashboard/Dashboard.h"
 #include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
-#include "workers/ServiceWorker.h"
-
 
 int main(int argc, char *argv[]) {
 
@@ -22,8 +20,6 @@ int main(int argc, char *argv[]) {
 
     Dashboard w;
     w.show();
-
-
 
     return QApplication::exec();
 }

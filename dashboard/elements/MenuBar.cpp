@@ -103,9 +103,11 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     auto *installWasm = new QAction("&Install WASM");
     auto *WasmUpdateEventFile = new QAction("&Update event file");
     auto *updateApplication = new QAction("Check for updates");
+    //TODO ADD CODE GENERATION MENU
     //QMenu *codeMenu = menuBar()->addMenu("&Code");
     QMenu *Settings = this->addMenu("&Settings");
-    QMenu *libraryMenu = this->addMenu("&Library");
+    //TODO ADD LIBRARY GENERATOR
+    //QMenu *libraryMenu = this->addMenu("&Library");
     QMenu *OutputSettings = this->addMenu("&Outputs");
     QMenu *WasmInstall = this->addMenu("&WASM");
 

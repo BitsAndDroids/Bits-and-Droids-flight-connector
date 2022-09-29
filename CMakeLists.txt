@@ -127,11 +127,13 @@ set(Resources_resource_files
         "resources/fonts/Roboto-Black.ttf"
         "resources/fonts/Roboto-Bold.ttf"
         "resources/fonts/Roboto-Regular.ttf"
-        "resources/images/refreshicon.png"
         "resources/images/edit.svg"
         "resources/images/trashcan.svg"
         "resources/images/export.svg"
         "resources/images/save.svg"
+        "resources/images/reload.svg"
+        "resources/images/arrow.png"
+        "resources/images/add.svg"
         )
 
 qt_add_executable(

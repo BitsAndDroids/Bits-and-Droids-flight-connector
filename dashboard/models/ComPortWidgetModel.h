@@ -13,15 +13,15 @@ class ComPortWidgetModel {
 public:
     ComPortWidgetModel();
     QList<Set> *getAvailableSets() { return availableSets; };
-    QList<QString> getAvailableComPorts() { return availableComPorts; };
-    QList<QString> loadAvailableComPorts();
+    QList<QString> *getAvailableComPorts() { return availableComPorts; };
+    QList<QString> *loadAvailableComPorts();
     void refresh();
     void addComPort(QString comPort);
     void clearComPortData();
 
 private:
     QList<Set> *availableSets;
-    QList<QString> availableComPorts;
+    QList<QString> *availableComPorts;
     SetHandler setHandler = SetHandler();
 };
 

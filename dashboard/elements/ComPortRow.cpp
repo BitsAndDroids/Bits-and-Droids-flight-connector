@@ -43,7 +43,7 @@ QWidget *ComPortRow::generateElement() {
                                "}\n"
                                "\n"
                                "QComboBox::down-arrow {\n"
-                               "    image: url(/usr/share/icons/crystalsvg/16x16/actions/1downarrow.png);\n"
+                               "    image: url(:/resources/images/arrow.png);\n"
                                "}\n"
                                "\n"
                                "QComboBox::down-arrow:on { /* shift the arrow when popup is open */\n"
@@ -62,7 +62,7 @@ QWidget *ComPortRow::generateElement() {
     auto availableComPorts = model.loadAvailableComPorts();
     auto availableSets = model.getAvailableSets();
 
-    for (auto &availableComPort: availableComPorts) {
+    for (auto &availableComPort: *availableComPorts) {
         comPortComboBox->addItem(availableComPort);
     }
     dropdownLayout->addWidget(comPortComboBox);
@@ -75,7 +75,6 @@ QWidget *ComPortRow::generateElement() {
         }
         setComboBox->setMinimumWidth(150);
         dropdownLayout->addWidget(setComboBox);
-        qDebug() << setComboBox->objectName();
     }
 
     comRow->addWidget(dropdownContainer);

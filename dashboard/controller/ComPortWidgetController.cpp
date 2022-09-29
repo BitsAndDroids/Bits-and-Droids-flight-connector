@@ -3,7 +3,6 @@
 //
 
 #include "ComPortWidgetController.h"
-#include <QRadioButton>
 #include "workers/ServiceWorker.h"
 #include "utils/InputReader.h"
 #include <QVBoxLayout>
@@ -39,116 +38,17 @@ ComPortWidgetController::ComPortWidgetController(QWidget *parent) {
     this->parent = parent;
     //TODO connect loggers
     //QObject::connect(&dualWorker, &DualWorker::logMessage, &parent->getServiceWorker(), &ServiceWorker::logMessage);
-
     InputReader inputReader = InputReader();
     inputReader.readInputs();
     dualWorker.setInputs(inputReader.getInputs());
-
 }
 
 void ComPortWidgetController::start() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    pressedBtn->setEnabled(false);
-    pressedBtn->setText("Running");
-    auto *stopButton = pressedBtn->parent()->findChild<QPushButton *>("stopBtn");
-    stopButton->setStyleSheet("background-color:#E20303");
-    dualWorker.start();
-}
-
-void ComPortWidgetController::refresh() {
-    comPortModel->refresh();
-    refreshComs();
-}
-
-void ComPortWidgetController::stop() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    int mode = pressedBtn->objectName().at(0).digitValue();
-    auto *startBtn = pressedBtn->parent()->findChild<QPushButton *>("startButton");
-    startBtn->setEnabled(true);
-    startBtn->setChecked(false);
-    startBtn->setText("Start");
-    pressedBtn->setStyleSheet("background-color:#0F4C5C");
-    stopDual();
-    emit boardConnectionMade(0);
-    emit gameConnectionMade(0);
-}
-
-void ComPortWidgetController::addComRow() {
-
-}
-
-void ComPortWidgetController::add() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    int mode = pressedBtn->objectName().at(0).digitValue();
-    auto *layout = new QVBoxLayout();
-    //TODO generalize this line
-    //layout = ui->dualLayoutContainer;
-    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
-    //layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
-}
-
-void ComPortWidgetController::stopDual() {
-    dualWorker.abortDual = true;
-}
-
-int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
-    int index = -10;
-    if (!value.isNull()) {
-        for (int i = 0; i < comboBox->count(); i++) {
-            QString text = comboBox->itemText(i);
-            if (text.contains(value)) {
-                index = i;
-            }
-        }
-    }
-    return index;
-}
-
-void ComPortWidgetController::refreshComs() {
-    auto *widget = new QWidget();
-    QString comGroupName;
-    QString setGroupName;
-    bool setsNeeded = true;
-
-
-    setGroupName = "dualSets";
-    comGroupName = "dualComs";
-
-
-    QRegularExpression search("comBox");
-    QList<ModeIndexCombobox *> comList = parent->findChildren<ModeIndexCombobox *>(search);
-
-    QList<QString> coms = comPortModel->getAvailableComPorts();
-
-    for (auto &i: comList) {
-        i->clear();
-        for (auto &com: coms) {
-            i->addItem(com);
-        }
-    }
-    QRegularExpression searchSets("setBox");
-    restoreStoredValuesComboBoxes();
-    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
-    QList<Set> *sets = comPortModel->getAvailableSets();
-
-    for (auto &i: setList) {
-        i->clear();
-        for (auto &key: *sets) {
-            i->addItem(key.getSetName());
-        }
-    }
-
-    restoreStoredValuesComboBoxes();
-
-}
-
-
-void ComPortWidgetController::startDual(bool autoStart) {
     setHandler.updateSets();
     auto *startButton =
             parent->findChild<QPushButton *>("startButton");
     auto *stopButton =
-            parent->findChild<QPushButton *>("stopBtn");
+            parent->findChild<QPushButton *>("stopButton");
 
     settingsHandler.clearKeys("runningDualComs");
     settingsHandler.clearKeys("runningDualSets");
@@ -206,21 +106,15 @@ void ComPortWidgetController::startDual(bool autoStart) {
                     dualWorker.setOutputsToMap(outputsToMap);
                     bundle->setOutputsInSet(*outputs);
                     dualWorker.addBundle(bundle);
-                    settingsHandler.storeValue("runningDualSets", setKey, id);
-                    settingsHandler.storeValue("dualSets", setKey, id);
+                    //TODO REMEMBER THIS CHANGED IN WORKER AS WELL
+                    settingsHandler.storeValue("runningSets", setKey, id);
+                    settingsHandler.storeValue("sets", setKey, id);
                 } else {
-                    settingsHandler.storeValue("dualSets", setKey, "na");
+                    settingsHandler.storeValue("sets", setKey, "na");
                 }
             }
         }
         stopButton->setChecked(false);
-        stopButton->setStyleSheet("background-color:#E20303");
-
-        //    ui->stopButton->setVisible(true);
-        //    QString comText = ui->outputComboBoxBase->currentText();
-        // std::string comNr
-        //    R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
-
         dualWorker.abortDual = false;
         dualWorker.start();
     } else {
@@ -229,22 +123,85 @@ void ComPortWidgetController::startDual(bool autoStart) {
         startButton->setText("Start");
         startButton->setEnabled(true);
 
-
         stopButton->setChecked(true);
-        stopButton->setStyleSheet("background-color:#0F4C5C");
-
-        auto dualWarningBox =
-                parent->findChild<QLayout *>("dualWarningBox");
-        clearChildrenFromLayout(dualWarningBox);
-        if (emptyDualCom) {
-            dualWarningBox->addWidget(returnWarningString(NOCOMPORT));
-        }
-        if (emptyDualSet) {
-            dualWarningBox->addWidget(returnWarningString(NOSET));
-        }
     }
     saveAutoRunStates();
 
+}
+
+void ComPortWidgetController::refresh() {
+    comPortModel->refresh();
+    refreshComs();
+}
+
+void ComPortWidgetController::stop() {
+    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
+    auto *startBtn = pressedBtn->parent()->findChild<QPushButton *>("startButton");
+    startBtn->setEnabled(true);
+    startBtn->setChecked(false);
+    startBtn->setText("Start");
+    pressedBtn->setStyleSheet("background-color:#0F4C5C");
+    stopDual();
+    emit boardConnectionMade(0);
+    emit gameConnectionMade(0);
+}
+
+void ComPortWidgetController::addComRow() {
+
+}
+
+void ComPortWidgetController::add() {
+    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
+    int mode = pressedBtn->objectName().at(0).digitValue();
+    auto *layout = new QVBoxLayout();
+    //TODO generalize this line
+    //layout = ui->dualLayoutContainer;
+    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
+    //layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
+}
+
+void ComPortWidgetController::stopDual() {
+    dualWorker.abortDual = true;
+}
+
+int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
+    int index = -10;
+    if (!value.isNull()) {
+        for (int i = 0; i < comboBox->count(); i++) {
+            QString text = comboBox->itemText(i);
+            if (text.contains(value)) {
+                index = i;
+            }
+        }
+    }
+    return index;
+}
+
+void ComPortWidgetController::refreshComs() {
+    auto *widget = new QWidget();
+    restoreStoredValuesComboBoxes();
+    QRegularExpression search("comBox");
+    QList<ModeIndexCombobox *> comList = parent->findChildren<ModeIndexCombobox *>(search);
+
+    QList<QString> *coms = comPortModel->getAvailableComPorts();
+
+    for (auto &i: comList) {
+        i->clear();
+        for (auto &com: *coms) {
+            i->addItem(com);
+        }
+    }
+    QRegularExpression searchSets("setBox");
+
+    QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
+    QList<Set> *sets = comPortModel->getAvailableSets();
+
+    for (auto &i: setList) {
+        i->clear();
+        for (auto &key: *sets) {
+            i->addItem(key.getSetName());
+        }
+    }
 }
 
 void ComPortWidgetController::clearChildrenFromLayout(QLayout *toClear) {
@@ -268,8 +225,6 @@ bool ComPortWidgetController::checkIfComboIsEmpty(const QList<ModeIndexCombobox 
 }
 
 void ComPortWidgetController::restoreStoredValuesComboBoxes() {
-    QString comGroupName = "dualComs";
-    QString setGroupName = "dualSets";
     auto comboBoxes = parent->findChildren<ModeIndexCombobox *>();
     int itterations = (int) comboBoxes.size();
     if (itterations > 1) {
@@ -282,31 +237,30 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
         if (comComboBox != nullptr) {
             auto lastComSaved =
                     settingsHandler
-                            .retrieveSetting(comGroupName, "com" + QString::number(i))
+                            .retrieveSetting("coms", QString::number(i))
                             ->toString()
                             .mid(4);
             if (getComboxIndex(comComboBox, lastComSaved) != -10) {
                 comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
             } else {
+                std::cout<<"HITJE"<<std::endl;
                 comComboBox->addItem("Not connected");
                 comComboBox->setCurrentIndex(
                         getComboxIndex(comComboBox, "Not connected"));
             }
 
-            qDebug() << "LAST COM SAVED " << lastComSaved;
-
             auto comboBox =
                     parent->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
             if (!settingsHandler
-                    .retrieveSetting(setGroupName, "Set" + QString::number(i))
+                    .retrieveSetting("sets", QString::number(i))
                     ->isNull()) {
                 //If the saved setting is not Set to "no" which indicates No Set saved for inputs only in 'dual' mode
                 if (settingsHandler
-                            .retrieveSetting(setGroupName, "Set" + QString::number(i))
+                            .retrieveSetting("sets", QString::number(i))
                             ->toString() != "na") {
                     auto lastSetId =
                             settingsHandler
-                                    .retrieveSetting(setGroupName, "Set" + QString::number(i))
+                                    .retrieveSetting("sets", QString::number(i))
                                     ->toString();
                     auto setFound = setHandler.getSetById(lastSetId);
                     auto setName = setFound.getSetName();
@@ -350,17 +304,17 @@ void ComPortWidgetController::saveAutoRunStates() {
         settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
     }
 }
-
-void ComPortWidgetController::loadAutoRunState() {
-    QRegularExpression searchAuto("auto");
-    auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
-    QString group;
-    for (auto &cb: autoList) {
-        int mode = cb->getMode();
-        QString index = QString::number(cb->getIndex());
-        cb->setChecked(settingsHandler.retrieveSetting("dualARIndex", index)->toBool());
-    }
-}
+//TODO CHECK IF THIS NEEDS TO BE MOVED
+//void ComPortWidgetController::loadAutoRunState() {
+//    QRegularExpression searchAuto("auto");
+//    auto autoList = this->findChildren<ModeIndexCheckbox *>(searchAuto);
+//    QString group;
+//    for (auto &cb: autoList) {
+//        int mode = cb->getMode();
+//        QString index = QString::number(cb->getIndex());
+//        cb->setChecked(settingsHandler.retrieveSetting("dualARIndex", index)->toBool());
+//    }
+//}
 
 QList<ModeIndexCheckbox *> ComPortWidgetController::getCheckboxesByPattern(const QRegularExpression &pattern) {
     return this->findChildren<ModeIndexCheckbox *>(pattern);
