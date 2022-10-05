@@ -25,14 +25,15 @@ QWidget *ComPortButtonRow::generateElement() {
     auto *startButton = new QPushButton("Start");
     startButton->setObjectName("startButton");
     startButton->setCheckable(true);
+    startButton->setChecked(true);
     startButton->setStyleSheet(
             "QPushButton#startButton { \
                       color:white;\
-                      background-color:#509402;\
+                      background-color:#0F4C5C;\
                     border-radius:4px;\
                   }   \
                   QPushButton#startButton:checked{\
-                      background-color: #0F4C5C;\
+                      background-color: #509402;\
                       border: none; \
                   }\
                   QPushButton#startButton:hover{  \
@@ -52,23 +53,23 @@ QWidget *ComPortButtonRow::generateElement() {
     auto *stopButton = new QPushButton("Stop");
     stopButton->setObjectName("stopButton");
     stopButton->setStyleSheet(
-            "QPushButton#stopBtn { \
+            "QPushButton#stopButton { \
                       color:white;\
                       background-color:#0F4C5C;\
                     border-radius:4px;\
                   }   \
-                  QPushButton#stopBtn:checked{\
-                      background-color: #E20303;\
+                  QPushButton#stopButton:checked{\
+                      background-color:#E20303;\
                       border: none; \
                     border-radius:4px;\
                   }\
-                  QPushButton#stopBtn:hover{  \
+                  QPushButton#stopButton:hover{  \
                       background-color: grey; \
                       border-style: outset;\
                   }");
     stopButton->setMinimumSize(60, 35);
     stopButton->setMaximumSize(60, 35);
-
+    stopButton->setCheckable(true);
     stopButton->setFont(font);
     stopButton->setEnabled(false);
     QObject::connect(stopButton, &QAbstractButton::clicked, controller, &ComPortWidgetController::stop);

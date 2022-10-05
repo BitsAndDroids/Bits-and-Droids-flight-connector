@@ -241,25 +241,22 @@ void DualWorker::eventLoop() {
 
         if (dualPorts[i]->isConnected()) {
             cout << "CONNECTED" << endl;
-            emit BoardConnectionMade(1, 3);
+            emit boardConnectionMade(1);
             successfullyConnected++;
         } else {
             cout << "NOT CONNECTED" << endl;
         }
     }
     if (successfullyConnected == keySize) {
-        emit BoardConnectionMade(2, 3);
+        emit boardConnectionMade(2);
     }
 
     while (!connected && !abortDual) {
-        emit GameConnectionMade(1, 3);
         emit logMessage("Attempt connecting to SimConnect", LogLevel::DEBUGLOG);
         if (SUCCEEDED(SimConnect_Open(&dualSimConnect, "dualConnect", nullptr, 0,
                                       nullptr, 0))) {
 
             emit logMessage("Connected to SimConnect", LogLevel::DEBUGLOG);
-            emit GameConnectionMade(2, 3);
-
             connected = true;
 
             SimConnect_MapClientDataNameToID(dualSimConnect, "shared", ClientDataID);
@@ -328,7 +325,7 @@ void DualWorker::eventLoop() {
         //
         if (!abortDual) {
             uint8_t counter = 0;
-            while(counter < 10 && !abortDual) {
+            while (counter < 10 && !abortDual) {
                 std::this_thread::sleep_for(std::chrono::seconds(1));
                 counter++;
             }
@@ -341,7 +338,8 @@ void DualWorker::eventLoop() {
             dualPorts[i]->closeSerial();
         }
     }
-
+    //We want to update the dashboard indicator when we've closed the connection
+    emit boardConnectionMade(0);
     QThread::currentThread()->quit();
 }
 

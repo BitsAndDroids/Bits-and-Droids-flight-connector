@@ -22,9 +22,10 @@
 
 #include "serial/SerialPort.hpp"
 #include "constants.h"
-#include "workers/ServiceWorker.h"
+#include "workers/serviceWorker.h"
 #include "dashboard/controller/DashboardController.h"
 #include "dashboard/Elements/MenuBar.h"
+#include "dashboard/controller/ComPortWidgetController.h"
 
 const std::string version = constants::VERSION;
 
@@ -50,7 +51,9 @@ public slots:
 private:
 
     DashboardController controller = DashboardController(this);
-    ComPortWidgetController comPortWidgetController = ComPortWidgetController(this);
+    ServiceWorker serviceWorker = ServiceWorker();
+    ComPortWidgetController comPortWidgetController = ComPortWidgetController(this, &serviceWorker);
+
     bool closing = false;
 
     void exitProgram();
@@ -81,7 +84,7 @@ private:
 
     void loadSettings();
 
-    ServiceWorker serviceworker;
+
     DualWorker dualThread;
     OutputWorker outputThread;
     InputWorker inputThread;

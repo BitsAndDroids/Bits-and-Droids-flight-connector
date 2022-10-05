@@ -7,6 +7,7 @@
 #include "logging/MessageCaster.h"
 #include "dashboard/Elements/MenuBar.h"
 #include "dashboard/Elements/ComPortWidget.h"
+
 #include "dashboard/controller/DashboardController.h"
 
 void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
@@ -48,10 +49,9 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     this->setCentralWidget(centralWidget);
 
     centralWidget->setObjectName("centralWidget");
-    auto serviceWorker = new ServiceWorker();
 
     //UI ELEMENTS
-    menuBar = new MenuBar(this, serviceWorker);
+    menuBar = new MenuBar(this, &serviceWorker);
     connect(menuBar, &MenuBar::openLogWindow, &controller, &DashboardController::openLogWindow);
     this->setMenuBar(menuBar);
     auto mainVLayout = new QVBoxLayout();
@@ -79,6 +79,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connect(dashboardController, &DashboardController::exitProgram, this, &Dashboard::exitProgram);
     connect(&comPortWidgetController, &ComPortWidgetController::gameConnectionMade,this, &Dashboard::gameConnectionMade);
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
+    connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
 
     auto updateButton = new QPushButton("Update");
     mainVLayout->addWidget(updateButton);
@@ -87,6 +88,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
+    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
     mainVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
 
 
@@ -95,11 +97,11 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->setAlignment(Qt::AlignLeft);
 
     auto radioConBoard = new QRadioButton();
-    radioConBoard->setObjectName("BoardCon");
+    radioConBoard->setObjectName("boardCon");
     radioConBoard->setChecked(true);
     radioConBoard->setEnabled(false);
     auto radioConGame = new QRadioButton();
-    radioConGame->setObjectName("GameCon");
+    radioConGame->setObjectName("gameCon");
     radioConGame->setEnabled(false);
     radioConGame->setChecked(true);
     QString labelStyle = "QLabel{color: #fff; font-size: 10px;}";
@@ -112,6 +114,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(radioConGame);
     connectionRow->addWidget(gameLabel);
     mainVLayout->addLayout(connectionRow);
+
+
 
     this->layout()->setAlignment(Qt::AlignTop);
 }
@@ -141,9 +145,8 @@ void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
 }
 
 void Dashboard::gameConnectionMade(int con) {
-    auto gameRadioButton = new QRadioButton();
-    gameRadioButton = this->findChild<QRadioButton *>(
-            "dualWidgetContainerGameCon");
+    auto gameRadioButton = this->findChild<QRadioButton *>(
+            "gameCon");
 
     if (con == 0) {
         gameRadioButton->setStyleSheet(
@@ -163,10 +166,8 @@ void Dashboard::gameConnectionMade(int con) {
 }
 
 void Dashboard::boardConnectionMade(int con) {
-    auto boardRadioButton = new QRadioButton();
-
-    boardRadioButton = this->findChild<QRadioButton *>(
-            "dualWidgetContainerBoardCon");
+    auto boardRadioButton = this->findChild<QRadioButton *>(
+            "boardCon");
 
     if (con == 0) {
         boardRadioButton->setStyleSheet(
@@ -190,8 +191,8 @@ Dashboard::~Dashboard() {
 }
 
 void Dashboard::exitProgram() {
-    serviceworker.setStopServiceWorker(true);
-    serviceworker.wait();
+    serviceWorker.setStopServiceWorker(true);
+    serviceWorker.wait();
     dualThread.abortDual = true;
     dualThread.wait();
     delete this;

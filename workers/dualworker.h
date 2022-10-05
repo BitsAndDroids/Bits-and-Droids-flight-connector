@@ -37,9 +37,7 @@ signals:
 
     void updateActiveCom1(QList<QString> lastActiveCom);
 
-    void GameConnectionMade(int con, int mode);
-
-    void BoardConnectionMade(int con, int mode);
+    void boardConnectionMade(int con);
 
     void logMessage(std::string message, LogLevel level);
 

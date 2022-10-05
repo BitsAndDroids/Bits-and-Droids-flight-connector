@@ -16,7 +16,7 @@ void DashboardController::updateEventFile() {
         QFile::copy(applicationEventsPath,
                     pathHandler.getCommunityFolderPath() +
                     "/BitsAndDroidsModule/modules/events.txt");
-        connect(this, &DashboardController::sendWASMCommand, &serviceWorker,
+        connect(this, &DashboardController::sendWASMCommand, serviceWorker,
                 &ServiceWorker::sendWASMData);
 
         emit sendWASMCommand("9999");
@@ -34,9 +34,9 @@ void DashboardController::updateEventFile() {
 
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
-
-    connect(this, &DashboardController::openLogWindow, &serviceWorker, &ServiceWorker::openLogWindow);
-    serviceWorker.start();
+    connect(this, &DashboardController::openLogWindow, serviceWorker, &ServiceWorker::openLogWindow);
+    connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
+    serviceWorker->start();
     //TODO connect logger
     //QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
     SettingsHandler settingsHandler = SettingsHandler();
@@ -76,4 +76,4 @@ void DashboardController::updateButtonClicked() {
 
 QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){
 
-};
+}

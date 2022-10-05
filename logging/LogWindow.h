@@ -17,8 +17,7 @@
 class LogWindow: public QWidget {
     Q_OBJECT
 private:
-    std::vector<Log> logList;
-    LoggerService *loggerService = new LoggerService();
+    std::vector<Log> *logList = new std::vector<Log>();
     QTableWidget *logTable = new QTableWidget();
     void loadLogs();
 public:
@@ -27,11 +26,6 @@ public:
     void openWindow();
 public slots:
     void addLogRow(const Log& log);
-
-    signals:
-    void logReceived(const Log& log);
-
-
 
 };
 

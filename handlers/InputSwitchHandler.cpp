@@ -301,10 +301,8 @@ void InputSwitchHandler::setAxisValue(Axis *axis) {
 void InputSwitchHandler::setEngineValues(int index) {
     // Throttle control
     std::vector<int> engineBuffer = cutInputs(constants::supportedEngines, index);
-    cout << "BUFFERSIZE: " << engineBuffer.size() << std::endl;
     if (engineBuffer.size() == constants::supportedEngines) {
         for (int i = 0; i < constants::supportedEngines; i++) {
-            cout << "ENGINE " << i << " " << engineBuffer[i] << endl;
             enginelist[i]->setCurrentValue(engineBuffer.at(i));
             setAxisValue(enginelist[i]);
             sendBasicCommandValue(enginelist[i]->getEvent(), enginelist[i]->getMappedValue());
@@ -449,7 +447,8 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     string sizeTest = receivedString[index];
     cout << "size: " << sizeTest.length() << endl;
     if (sizeTest.size() == 6 || sizeTest.size() == 5) {
-        cout << "SENDING COMMAND" << inputs[eventID].getEvent() << endl;
+        cout << "SENDING COMMAND " << inputs[(int)eventID].getEvent() << endl;
+        emit logMessage(inputs[(int)eventID].getEvent(), LogLevel::DEBUGLOG);
         hr = SimConnect_TransmitClientEvent(
                 connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);

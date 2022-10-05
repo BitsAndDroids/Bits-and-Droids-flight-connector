@@ -37,7 +37,7 @@ private:
     MessageCaster messageCaster = MessageCaster();
     QMainWindow *parent;
     QString applicationEventsPath = pathHandler.getWritableEventPath();
-    ServiceWorker serviceWorker = ServiceWorker();
+    ServiceWorker *serviceWorker = new ServiceWorker();
     void installWasm();
     bool checkIfComboIsEmpty(const QList<ModeIndexCombobox *> &toCheck);
 private slots:

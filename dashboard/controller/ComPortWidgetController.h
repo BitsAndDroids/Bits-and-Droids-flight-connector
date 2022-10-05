@@ -11,12 +11,13 @@
 #include "enums/ModeEnum.h"
 #include "workers/dualworker.h"
 #include "elements/ModeIndexCheckbox.h"
+#include "workers/serviceWorker.h"
 #include <QLabel>
 
 class ComPortWidgetController : public QObject {
 Q_OBJECT
 public:
-    explicit ComPortWidgetController(QWidget *parent);
+    explicit ComPortWidgetController(QWidget *parent, ServiceWorker *serviceworker);
 
 signals:
     void boardConnectionMade(int state);
@@ -37,7 +38,9 @@ public slots:
 private:
     void loadComPortData();
 
-    void stopDual();
+    bool running = false;
+
+    void toggleStartStopButtonState();
 
     static void clearChildrenFromLayout(QLayout *toClear);
 
@@ -54,7 +57,7 @@ private:
     void addComRow();
 
     std::string convertComPort(QString comText);
-
+    ServiceWorker *serviceWorker;
     ComPortWidgetModel *comPortModel = new ComPortWidgetModel();
     DualWorker dualWorker = DualWorker();
     QWidget *parent;

@@ -3,12 +3,23 @@
 //
 
 #include "ComPortWidgetController.h"
-#include "workers/ServiceWorker.h"
 #include "utils/InputReader.h"
 #include <QVBoxLayout>
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QPushButton>
+
+ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker) {
+    this->parent = parent;
+    //TODO connect loggers
+    this->serviceWorker = serviceWorker;
+    connect(&dualWorker, &DualWorker::logMessage, serviceWorker, &ServiceWorker::logMessage);
+    connect(&dualWorker, &DualWorker::boardConnectionMade, this, &ComPortWidgetController::boardConnectionMade);
+
+    InputReader inputReader = InputReader();
+    inputReader.readInputs();
+    dualWorker.setInputs(inputReader.getInputs());
+}
 
 void ComPortWidgetController::removeComPortRow() {
     QWidget * senderWidget = qobject_cast<QWidget *>(sender()->parent());
@@ -34,21 +45,10 @@ void ComPortWidgetController::loadComPortData() {
         }
 }
 
-ComPortWidgetController::ComPortWidgetController(QWidget *parent) {
-    this->parent = parent;
-    //TODO connect loggers
-    //QObject::connect(&dualWorker, &DualWorker::logMessage, &parent->getServiceWorker(), &ServiceWorker::logMessage);
-    InputReader inputReader = InputReader();
-    inputReader.readInputs();
-    dualWorker.setInputs(inputReader.getInputs());
-}
+
 
 void ComPortWidgetController::start() {
     setHandler.updateSets();
-    auto *startButton =
-            parent->findChild<QPushButton *>("startButton");
-    auto *stopButton =
-            parent->findChild<QPushButton *>("stopButton");
 
     settingsHandler.clearKeys("runningDualComs");
     settingsHandler.clearKeys("runningDualSets");
@@ -65,11 +65,11 @@ void ComPortWidgetController::start() {
         QString key;
         QString setKey;
         QList<Output *> outputsToMap;
-        startButton->setChecked(true);
-        startButton->setText("Start");
-        startButton->setEnabled(false);
-        qDebug() << "sets available" << comList.size();
+
+        toggleStartStopButtonState();
+
         dualWorker.clearBundles();
+
 
         for (int i = 0; i < comList.size(); i++) {
             if (!(comList[i]->currentText().contains("Not connected"))) {
@@ -78,14 +78,11 @@ void ComPortWidgetController::start() {
 
                 QString keyValue = comList[i]->currentText();
                 QString setKeyValue = setList[i]->currentText();
-                qDebug() << setKeyValue;
 
                 settingsHandler.storeValue("runningDualComs", key,
                                            convertComPort(keyValue).c_str());
                 settingsHandler.storeValue("dualComs", key,
                                            convertComPort(keyValue).c_str());
-
-                qDebug() << " SET INDEX " << setList.at(i)->currentIndex();
                 auto availableSets = comPortModel->getAvailableSets();
                 if (!(setKeyValue == "No outputs")) {
                     int index = setList[i]->currentIndex() - 1;
@@ -114,16 +111,9 @@ void ComPortWidgetController::start() {
                 }
             }
         }
-        stopButton->setChecked(false);
+
         dualWorker.abortDual = false;
         dualWorker.start();
-    } else {
-
-        startButton->setChecked(false);
-        startButton->setText("Start");
-        startButton->setEnabled(true);
-
-        stopButton->setChecked(true);
     }
     saveAutoRunStates();
 
@@ -135,15 +125,20 @@ void ComPortWidgetController::refresh() {
 }
 
 void ComPortWidgetController::stop() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    auto *startBtn = pressedBtn->parent()->findChild<QPushButton *>("startButton");
-    startBtn->setEnabled(true);
-    startBtn->setChecked(false);
+    toggleStartStopButtonState();
+    dualWorker.abortDual = true;
+}
+
+void ComPortWidgetController::toggleStartStopButtonState(){
+    running = !running;
+    auto *startBtn = parent->findChild<QPushButton *>("startButton");
+    startBtn->setEnabled(!running);
+    startBtn->setChecked(!running);
     startBtn->setText("Start");
-    pressedBtn->setStyleSheet("background-color:#0F4C5C");
-    stopDual();
-    emit boardConnectionMade(0);
-    emit gameConnectionMade(0);
+    auto *stopButton =
+            parent->findChild<QPushButton *>("stopButton");
+    stopButton->setChecked(running);
+    stopButton->setEnabled(running);
 }
 
 void ComPortWidgetController::addComRow() {
@@ -158,10 +153,6 @@ void ComPortWidgetController::add() {
     //layout = ui->dualLayoutContainer;
     auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
     //layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
-}
-
-void ComPortWidgetController::stopDual() {
-    dualWorker.abortDual = true;
 }
 
 int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
