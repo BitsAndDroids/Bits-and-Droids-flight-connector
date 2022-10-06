@@ -30,7 +30,7 @@ Tests are added to the Test folder. CMake will generate a seperate .exe for the 
 # Structure
 ## Dashboard
 The dashboard is the mainscreen of the application. It consists of several independent units(widgets). The controlling logic has been delegated to seperate controller classes. See the image below for a visual representation of the structure.
-![image](https://user-images.githubusercontent.com/77780263/194304804-b9bb4e38-f937-453b-a94c-580cb2ee4ad0.png)
+![image](https://user-images.githubusercontent.com/77780263/194305249-a81d2d6e-61d3-48c5-9c45-b503e07b11fe.png)
 
 
 
