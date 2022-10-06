@@ -6,15 +6,14 @@
 #include "ComPortWidgetModel.h"
 
 ComPortWidgetModel::ComPortWidgetModel() {
-    availableSets = new QList<Set>();
-    availableComPorts = new QList<QString>();
-    availableSets = setHandler.getSets();
+    availableComPorts = loadAvailableComPorts();
+    availableSets = setHandler->getSets();
 }
 
 void ComPortWidgetModel::refresh() {
     availableSets->clear();
     availableComPorts->clear();
-    availableSets = setHandler.getSets();
+    availableSets = setHandler->getSets();
     availableComPorts = loadAvailableComPorts();
 
 }

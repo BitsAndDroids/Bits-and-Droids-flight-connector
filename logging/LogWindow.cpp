@@ -10,17 +10,17 @@
 #include <QTimer>
 LogWindow::LogWindow() {
 
-    loadLogs();
+
     QFont Triforce("Roboto Black", 11, 900);
     logTable->horizontalHeader()->setFont(Triforce);
 
     logTable->setColumnCount(3);
     logTable->setHorizontalHeaderLabels(QStringList() << "Level" << "Message" << "Time");
 
-    logTable->setColumnWidth(0, 100);
-    logTable->setColumnWidth(1, 300);
-    logTable->setColumnWidth(2, 200);
-    logTable->setSortingEnabled(true);
+    this->logTable->setColumnWidth(0, 100);
+    this->logTable->setColumnWidth(1, 300);
+    this->logTable->setColumnWidth(2, 200);
+    this->logTable->setSortingEnabled(true);
 
     auto widgetLayout = new QVBoxLayout();
     this->setLayout(widgetLayout);
@@ -29,6 +29,7 @@ LogWindow::LogWindow() {
     auto logVBoxLayout = new QVBoxLayout();
     logRowWidget->setLayout(logVBoxLayout);
     widgetLayout->addWidget(logTable);
+    loadLogs();
 
     this->setWindowTitle("Logs");
 }
@@ -36,10 +37,11 @@ LogWindow::LogWindow() {
 void LogWindow::addLogRow(const Log& log) {
     std::cout<<"MESSAGE ARRIVED"<<std::endl;
     this->logList->push_back(log);
-    logTable->setRowCount((int)logList->size());
-    logTable->setItem((int)logList->size() - 1, 0, new QTableWidgetItem(QString::fromStdString(log.getLevelString())));
-    logTable->setItem((int)logList->size()-1, 1, new QTableWidgetItem(QString::fromStdString(log.getMessage())));
-    logTable->setItem((int)logList->size()-1, 2, new QTableWidgetItem(QString::fromStdString(log.getTimeString())));
+    this->logTable->setRowCount((int)logList->size());
+    this->logTable->setItem((int)logList->size() - 1, 0, new QTableWidgetItem(QString::fromStdString(log.getLevelString())));
+    this->logTable->setItem((int)logList->size()-1, 1, new QTableWidgetItem(QString::fromStdString(log.getMessage())));
+    this->logTable->setItem((int)logList->size()-1, 2, new QTableWidgetItem(QString::fromStdString(log.getTimeString())));
+    this->logTable->scrollToBottom();
 }
 
 LogWindow::~LogWindow() {

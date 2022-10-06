@@ -20,9 +20,9 @@ public:
     void clearComPortData();
 
 private:
-    QList<Set> *availableSets;
-    QList<QString> *availableComPorts;
-    SetHandler setHandler = SetHandler();
+    QList<Set> *availableSets = new QList<Set>();
+    QList<QString> *availableComPorts = new QList<QString>();
+    SetHandler *setHandler = new SetHandler();
 };
 
 

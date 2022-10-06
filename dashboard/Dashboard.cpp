@@ -52,7 +52,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //UI ELEMENTS
     menuBar = new MenuBar(this, &serviceWorker);
-    connect(menuBar, &MenuBar::openLogWindow, &controller, &DashboardController::openLogWindow);
+
     this->setMenuBar(menuBar);
     auto mainVLayout = new QVBoxLayout();
     mainVLayout->setAlignment(Qt::AlignTop);
@@ -90,7 +90,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
     mainVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
-
+    comPortWidgetController.initComRows();
 
     //CONNECTION ICONS
     auto connectionRow = new QHBoxLayout();

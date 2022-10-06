@@ -8,7 +8,7 @@
 HANDLE serviceSimconnect;
 
 ServiceWorker::ServiceWorker(){
-    connect(logger, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
+
 }
 
 SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
@@ -65,14 +65,6 @@ void ServiceWorker::startServices() {
     QThread::currentThread()->quit();
 }
 
-
-void ServiceWorker::openLogWindow() {
-    if(logWindow->isHidden()) {
-        logWindow->show();
-    } else {
-        logWindow->hide();
-    }
-}
 
 void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void *pContext) {
     auto *serviceWorker = static_cast<ServiceWorker *>(pContext);
@@ -136,5 +128,9 @@ void ServiceWorker::logMessage(const std::string& message, LogLevel level) {
             logger->logError(message);
             break;
     }
+}
+
+LoggerService *ServiceWorker::getLoggerService() {
+    return this->logger;
 }
 

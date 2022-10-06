@@ -10,15 +10,13 @@
 #include <QMenuBar>
 #include "workers/ServiceWorker.h"
 
+
 class MenuBar: public QMenuBar {
     Q_OBJECT
 public:
     MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);
 
     void populateMenuBar(QMainWindow *parent);
-
-signals:
-    void openLogWindow();
 
 private:
     QMainWindow *parent;
@@ -31,6 +29,7 @@ private:
 
     void openGenerateCodeMenu();
 
+    void openLogWindow();
 
 
     void openCalibrateAxis();
@@ -52,6 +51,9 @@ private:
     bool optionMenuOpen = false;
     bool generateLibraryMenuOpen = false;
     bool generateCodeMenuOpen = false;
+
+    LogWindow *logWindow = new LogWindow();
+
     ServiceWorker *serviceWorker;
 
 private slots:

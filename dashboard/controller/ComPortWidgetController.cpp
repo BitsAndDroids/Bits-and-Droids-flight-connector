@@ -8,10 +8,10 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QPushButton>
+#include "dashboard/elements/ComPortRow.h"
 
 ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker) {
     this->parent = parent;
-    //TODO connect loggers
     this->serviceWorker = serviceWorker;
     connect(&dualWorker, &DualWorker::logMessage, serviceWorker, &ServiceWorker::logMessage);
     connect(&dualWorker, &DualWorker::boardConnectionMade, this, &ComPortWidgetController::boardConnectionMade);
@@ -21,14 +21,22 @@ ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker 
     dualWorker.setInputs(inputReader.getInputs());
 }
 
+void ComPortWidgetController::initComRows(){
+    auto foundComports = settingsHandler.retrieveKeys("comPorts");
+    for (int i = 0; i < foundComports->size(); ++i) {
+        add();
+    }
+    restoreStoredValuesComboBoxes();
+}
+
 void ComPortWidgetController::removeComPortRow() {
     QWidget * senderWidget = qobject_cast<QWidget *>(sender()->parent());
-    QString index = sender()->objectName().right(1);
+    QString index = sender()->objectName();
     try {
-        settingsHandler.removeSetting("dualSets", "Set" + index);
-        settingsHandler.removeSetting("dualARIndex", index);
-        settingsHandler.removeSetting("dualComs", "com" + index);
-       // adjustIndexes(index.toInt());
+        settingsHandler.removeSetting("comSets", index);
+        settingsHandler.removeSetting("autoRunIndex", index);
+        settingsHandler.removeSetting("comPorts", index);
+        // adjustIndexes(index.toInt());
     } catch (std::exception &e) {
         qDebug("%s", e.what());
     }
@@ -46,12 +54,9 @@ void ComPortWidgetController::loadComPortData() {
 }
 
 
-
 void ComPortWidgetController::start() {
-    setHandler.updateSets();
-
-    settingsHandler.clearKeys("runningDualComs");
-    settingsHandler.clearKeys("runningDualSets");
+    settingsHandler.clearKeys("runningComPorts");
+    settingsHandler.clearKeys("runningComSets");
 
     QRegularExpression search("comBox");
     QList<ModeIndexCombobox *> comList = parent->findChildren<ModeIndexCombobox *>(search);
@@ -59,62 +64,57 @@ void ComPortWidgetController::start() {
     QRegularExpression searchSets("setBox");
     QList<ModeIndexCombobox *> setList = parent->findChildren<ModeIndexCombobox *>(searchSets);
 
-    bool emptyDualSet = checkIfComboIsEmpty(setList);
-    bool emptyDualCom = checkIfComboIsEmpty(comList);
-    if (!emptyDualSet && !emptyDualCom) {
-        QString key;
-        QString setKey;
-        QList<Output *> outputsToMap;
+    QList<Output *> outputsToMap;
 
-        toggleStartStopButtonState();
+    toggleStartStopButtonState();
 
-        dualWorker.clearBundles();
+    dualWorker.clearBundles();
+    for (int i = 0; i < comList.size(); i++) {
+        if (!(comList[i]->currentText().contains("Not connected"))) {
+            QString key = QString::number(i);
 
+            QString keyValue = comList[i]->currentText();
+            QString setKeyValue = setList[i]->currentText();
 
-        for (int i = 0; i < comList.size(); i++) {
-            if (!(comList[i]->currentText().contains("Not connected"))) {
-                key = "com" + QString::number(i);
-                setKey = "Set" + QString::number(i);
+            settingsHandler.storeValue("runningComPorts", key,
+                                       convertComPort(keyValue).c_str());
+            settingsHandler.storeValue("comPorts", key,
+                                       convertComPort(keyValue).c_str());
+            //TODO move this action to the comModel
+            auto availableSets = setHandler.loadSets();
+            std::cout<<"available sets size: "<<availableSets->size()<<std::endl;
+            if (!(setKeyValue == "No outputs")) {
+                //The 0 index is the "no outputs" entry that is why we have to deduct 1
+                int index = setList[i]->currentIndex() - 1;
 
-                QString keyValue = comList[i]->currentText();
-                QString setKeyValue = setList[i]->currentText();
+                int id = availableSets->at(index).getID();
 
-                settingsHandler.storeValue("runningDualComs", key,
-                                           convertComPort(keyValue).c_str());
-                settingsHandler.storeValue("dualComs", key,
-                                           convertComPort(keyValue).c_str());
-                auto availableSets = comPortModel->getAvailableSets();
-                if (!(setKeyValue == "No outputs")) {
-                    int index = setList[i]->currentIndex() - 1;
+                auto *bundle = new outputBundle();
 
-                    int id = availableSets->at(index).getID();
+                Set active = setHandler.getSetById(QString::number(id));
+                bundle->setSet(active);
 
-                    auto *bundle = new outputBundle();
-
-                    Set active = setHandler.getSetById(QString::number(id));
-                    bundle->setSet(active);
-
-                    auto *outputs = new QMap<int, Output *>();
-                    *outputs = active.getOutputs();
-                    QMap<int, Output *>::iterator j;
-                    for (j = outputs->begin(); j != outputs->end(); j++) {
-                        outputsToMap.append(j.value());
-                    }
-                    dualWorker.setOutputsToMap(outputsToMap);
-                    bundle->setOutputsInSet(*outputs);
-                    dualWorker.addBundle(bundle);
-                    //TODO REMEMBER THIS CHANGED IN WORKER AS WELL
-                    settingsHandler.storeValue("runningSets", setKey, id);
-                    settingsHandler.storeValue("sets", setKey, id);
-                } else {
-                    settingsHandler.storeValue("sets", setKey, "na");
+                auto *outputs = new QMap<int, Output *>();
+                *outputs = active.getOutputs();
+                QMap<int, Output *>::iterator j;
+                for (j = outputs->begin(); j != outputs->end(); j++) {
+                    outputsToMap.append(j.value());
                 }
+                dualWorker.setOutputsToMap(outputsToMap);
+                bundle->setOutputsInSet(*outputs);
+                dualWorker.addBundle(bundle);
+                //TODO REMEMBER THIS CHANGED IN WORKER AS WELL
+                settingsHandler.storeValue("runningComSets", key, id);
+                settingsHandler.storeValue("comSets", key, id);
+            } else {
+                settingsHandler.storeValue("comSets", key, "na");
             }
         }
-
-        dualWorker.abortDual = false;
-        dualWorker.start();
     }
+
+    dualWorker.abortDual = false;
+    dualWorker.start();
+
     saveAutoRunStates();
 
 }
@@ -129,7 +129,7 @@ void ComPortWidgetController::stop() {
     dualWorker.abortDual = true;
 }
 
-void ComPortWidgetController::toggleStartStopButtonState(){
+void ComPortWidgetController::toggleStartStopButtonState() {
     running = !running;
     auto *startBtn = parent->findChild<QPushButton *>("startButton");
     startBtn->setEnabled(!running);
@@ -146,13 +146,10 @@ void ComPortWidgetController::addComRow() {
 }
 
 void ComPortWidgetController::add() {
-    auto *pressedBtn = qobject_cast<QPushButton *>(sender());
-    int mode = pressedBtn->objectName().at(0).digitValue();
-    auto *layout = new QVBoxLayout();
-    //TODO generalize this line
-    //layout = ui->dualLayoutContainer;
-    auto indexList = getCheckboxesByPattern(QRegularExpression("auto" + QString::number(mode)));
-    //layout->addWidget(formbuilder.generateComSelector(true, mode, (int) indexList.size()));
+    auto layout = parent->findChild<QVBoxLayout *>("comRowsContainer");
+    auto comportRow = new ComPortRow(this,rows);
+    layout->addWidget(comportRow->generateElement());
+    rows++;
 }
 
 int ComPortWidgetController::getComboxIndex(ModeIndexCombobox *comboBox, const QString &value) {
@@ -230,13 +227,12 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
         if (comComboBox != nullptr) {
             auto lastComSaved =
                     settingsHandler
-                            .retrieveSetting("coms", QString::number(i))
+                            .retrieveSetting("comPorts", QString::number(i))
                             ->toString()
                             .mid(4);
             if (getComboxIndex(comComboBox, lastComSaved) != -10) {
                 comComboBox->setCurrentIndex(getComboxIndex(comComboBox, lastComSaved));
             } else {
-                std::cout<<"HITJE"<<std::endl;
                 comComboBox->addItem("Not connected");
                 comComboBox->setCurrentIndex(
                         getComboxIndex(comComboBox, "Not connected"));
@@ -245,15 +241,15 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
             auto comboBox =
                     parent->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
             if (!settingsHandler
-                    .retrieveSetting("sets", QString::number(i))
+                    .retrieveSetting("comSets", QString::number(i))
                     ->isNull()) {
                 //If the saved setting is not Set to "no" which indicates No Set saved for inputs only in 'dual' mode
                 if (settingsHandler
-                            .retrieveSetting("sets", QString::number(i))
+                            .retrieveSetting("comSets", QString::number(i))
                             ->toString() != "na") {
                     auto lastSetId =
                             settingsHandler
-                                    .retrieveSetting("sets", QString::number(i))
+                                    .retrieveSetting("comSets", QString::number(i))
                                     ->toString();
                     auto setFound = setHandler.getSetById(lastSetId);
                     auto setName = setFound.getSetName();

@@ -34,7 +34,6 @@ void DashboardController::updateEventFile() {
 
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
-    connect(this, &DashboardController::openLogWindow, serviceWorker, &ServiceWorker::openLogWindow);
     connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
     serviceWorker->start();
     //TODO connect logger

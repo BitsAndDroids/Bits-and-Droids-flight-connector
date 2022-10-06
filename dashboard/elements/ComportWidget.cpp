@@ -6,7 +6,6 @@
 #include <QVBoxLayout>
 #include "ComPortButtonRow.h"
 #include "ComPortWidget.h"
-#include "ComPortRow.h"
 #include "dashboard/controller/ComPortWidgetController.h"
 
 ComPortWidget::ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller) {
@@ -18,7 +17,10 @@ QWidget* ComPortWidget::generateElement() {
     auto *widget = new QWidget(parent);
     widget->setObjectName("comPortWidget");
     widget->setStyleSheet("QWidget#comPortWidget{ border-radius:4px;}");
-    auto layout = new QVBoxLayout(widget);
+    auto containerLayout = new QVBoxLayout(widget);
+    auto layout = new QVBoxLayout();
+    containerLayout->addLayout(layout);
+    containerLayout->insertStretch( -1, 1 );
 
     auto *shadow = new QGraphicsDropShadowEffect();
     shadow->setBlurRadius(20);
@@ -36,21 +38,17 @@ QWidget* ComPortWidget::generateElement() {
     comRowLayout->setAlignment(Qt::AlignTop);
     layout->addLayout(comRowLayout);
     layout->setObjectName("comRowsContainer");
+    layout->setAlignment(Qt::AlignTop);
 
     //This box lets us display error messages to the user
     //i.e. no ports selected, no ports found, etc.
     auto warningBox = new QVBoxLayout();
     warningBox->setObjectName("warningBox");
-    layout->addLayout(warningBox);
 
-    auto settingsHandler = new SettingsHandler();
-    auto foundComports = settingsHandler->retrieveKeys("comPorts");
-    for (int i = 0; i < foundComports->size(); ++i) {
-        auto comPortRow = new ComPortRow(controller, i);
-        comRowLayout->addWidget(comPortRow->generateElement(),Qt::AlignTop);
-    }
+    containerLayout->addLayout(warningBox);
+
     controller->refresh();
-    layout->insertStretch( -1, 1 );
+
     comRowLayout->setAlignment(Qt::AlignTop);
     comRowLayout->setSpacing(0);
     widget->adjustSize();

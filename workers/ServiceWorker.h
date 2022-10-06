@@ -29,15 +29,18 @@ private:
         EVENT_1_SECOND
     };
     LoggerService* logger = new LoggerService();
-    LogWindow *logWindow = new LogWindow();
+
 
 public:
     ServiceWorker();
 
     ~ServiceWorker() override;
 
+    LoggerService *getLoggerService();
+
     void setConnectionClosed(bool);
     void setStopServiceWorker(bool state);
+
     QMutex mutex;
     QWaitCondition condition;
     bool stopServiceWorker = false;
@@ -48,8 +51,6 @@ signals:
 public slots:
 
     void logMessage(const std::string& message, LogLevel level);
-
-    void openLogWindow();
 
     void sendWASMData(const char *data);
 };

@@ -19,6 +19,8 @@ Q_OBJECT
 public:
     explicit ComPortWidgetController(QWidget *parent, ServiceWorker *serviceworker);
 
+    void initComRows();
+
 signals:
     void boardConnectionMade(int state);
     void gameConnectionMade(int state);
@@ -55,7 +57,7 @@ private:
     void refreshComs();
 
     void addComRow();
-
+    uint8_t rows = 0;
     std::string convertComPort(QString comText);
     ServiceWorker *serviceWorker;
     ComPortWidgetModel *comPortModel = new ComPortWidgetModel();

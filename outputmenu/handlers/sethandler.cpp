@@ -39,7 +39,6 @@ QList<Set> *SetHandler::loadSets() {
   auto *setListFound = new QList<Set>();
 
   QStringList *keys = settingsHandler.retrieveKeys("sets");
-  std::cout << keys->size() << "keys" << std::endl;
   for (const auto &key : *keys) {
     QVariant *varFound = settingsHandler.retrieveSetting("sets", key);
     QJsonDocument foundDoc = varFound->toJsonDocument();
@@ -48,8 +47,6 @@ QList<Set> *SetHandler::loadSets() {
     setListFound->append(savedSet);
 
     documentList.append(foundDoc);
-    qDebug() << varFound << "VARFOUND";
-    qDebug() << foundDoc;
   }
 
   return setListFound;

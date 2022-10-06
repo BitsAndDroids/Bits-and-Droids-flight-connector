@@ -18,6 +18,8 @@
 MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(parent) {
     populateMenuBar(parent);
     this->serviceWorker = serviceworker;
+    auto loggerService = serviceWorker->getLoggerService();
+    connect(loggerService, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
 }
 
 void MenuBar::openSettings() {
@@ -64,6 +66,12 @@ void MenuBar::openGenerateLibraryMenu() {
         generateLibraryMenuOpen = true;
         QWidget * wdg = new LibraryGeneratowWindow;
         wdg->show();
+    }
+}
+
+void MenuBar::openLogWindow() {
+    if(!logWindow->isVisible()){
+        logWindow->show();
     }
 }
 
