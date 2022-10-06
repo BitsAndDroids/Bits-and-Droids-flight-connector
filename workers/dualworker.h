@@ -9,7 +9,7 @@
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <qthread.h>
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include <tchar.h>
 #include <windows.h>
 
@@ -37,9 +37,7 @@ signals:
 
     void updateActiveCom1(QList<QString> lastActiveCom);
 
-    void GameConnectionMade(int con, int mode);
-
-    void BoardConnectionMade(int con, int mode);
+    void boardConnectionMade(int con);
 
     void logMessage(std::string message, LogLevel level);
 

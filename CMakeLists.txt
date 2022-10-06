@@ -71,7 +71,7 @@ set(PROJECT_SOURCES
         widgets/codegenerator/boards/Board.cpp widgets/codegenerator/boards/Board.h
         widgets/codegenerator/components/Part.cpp widgets/codegenerator/components/Part.h
         widgets/codegenerator/components/Pushbutton.cpp widgets/codegenerator/components/Pushbutton.h
-        widgets/mainwindow/mainwindow.h
+        dashboard/Dashboard.h
         widgets/librarygenerator/librarygenerator.cpp widgets/librarygenerator/librarygenerator.h
         widgets/librarygenerator/librarygeneratorwindow.cpp widgets/librarygenerator/librarygeneratorwindow.h widgets/librarygenerator/librarygeneratorwindow.ui
         outputmenu/outputmapper.cpp outputmenu/outputmapper.h
@@ -79,11 +79,11 @@ set(PROJECT_SOURCES
         widgets/settingsmenu/builder/formbuilder.cpp widgets/settingsmenu/builder/formbuilder.h
         widgets/settingsmenu/optionsmenu.cpp widgets/settingsmenu/optionsmenu.h widgets/settingsmenu/optionsmenu.ui
         outputmenu/outputmenu.cpp outputmenu/outputmenu.h
-        widgets/mainwindow/mainwindow.cpp widgets/mainwindow/mainwindow.ui
+        dashboard/Dashboard.cpp
 
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h
-        handlers/settingshandler.cpp handlers/settingshandler.h
+        settings/settingshandler.cpp settings/settingshandler.h
 
         serial/SerialPort.hpp serial/SerialPort.cpp
 
@@ -104,7 +104,14 @@ set(PROJECT_SOURCES
         elements/MStyleLabels.cpp elements/MStyleLabels.h enums/StyleEnum.h
         outputmenu/builder/OutputDetailsBuilder.cpp outputmenu/builder/OutputDetailsBuilder.h
         utils/JSONParser.cpp utils/JSONParser.h
-        utils/EventFileFormatter.cpp utils/EventFileFormatter.h)
+        utils/EventFileFormatter.cpp utils/EventFileFormatter.h
+        dashboard/models/ComPortWidgetModel.cpp dashboard/models/ComPortWidgetModel.h
+        dashboard/elements/ComPortRow.cpp dashboard/elements/ComPortRow.h
+        dashboard/controller/ComPortWidgetController.cpp dashboard/controller/ComPortWidgetController.h
+        elements/Element.cpp elements/Element.h
+        dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
+        dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -120,11 +127,13 @@ set(Resources_resource_files
         "resources/fonts/Roboto-Black.ttf"
         "resources/fonts/Roboto-Bold.ttf"
         "resources/fonts/Roboto-Regular.ttf"
-        "resources/images/refreshicon.png"
         "resources/images/edit.svg"
         "resources/images/trashcan.svg"
         "resources/images/export.svg"
         "resources/images/save.svg"
+        "resources/images/reload.svg"
+        "resources/images/arrow.png"
+        "resources/images/add.svg"
         )
 
 qt_add_executable(
@@ -201,7 +210,7 @@ add_executable(UnitTests
         models/commands/Set.cpp
         utils/OutputConverters.cpp
         utils/tests/UtilTests.cpp
-        handlers/settingshandler.cpp
+        settings/settingshandler.cpp
         handlers/outputhandler.cpp
         handlers/pathhandler.cpp
         models/commands/output.cpp

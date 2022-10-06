@@ -7,7 +7,7 @@
 #include <QList>
 #include <QSettings>
 #include <QStandardPaths>
-#include <handlers/settingshandler.h>
+#include "settings/settingshandler.h"
 #include <handlers/outputhandler.h>
 #include <models/commands/Set.h>
 
@@ -38,7 +38,7 @@ class SetHandler {
   SettingsHandler settingsHandler;
   outputHandler *outputHandler = new class outputHandler();
   // QList<Set*> *savedSets = new QList<Set*>();
-  QList<Set> *setList;
+  QList<Set> *setList = new QList<Set>();
 
   void removeOutputFromSet(int setId, int outputId);
 

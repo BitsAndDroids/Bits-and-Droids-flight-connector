@@ -2,15 +2,14 @@
 // Created by dave- on 13-7-2022.
 //
 
-#include <ntstatus.h>
-
-#include <utility>
 #include "ServiceWorker.h"
 #include "logging/LogWindow.h"
 
 HANDLE serviceSimconnect;
 
-ServiceWorker::ServiceWorker() = default;
+ServiceWorker::ServiceWorker(){
+
+}
 
 SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
 enum DATA_DEFINE_ID {
@@ -26,13 +25,13 @@ void ServiceWorker::startServices() {
 
     while (!stopServiceWorker) {
         emit logMessage("Service worker trying to connect to Simconnect", LogLevel::DEBUGLOG);
+        emit gameConnectionMade(1);
         if (SUCCEEDED(SimConnect_Open(&serviceSimconnect, "serviceSimconnect", nullptr, 0,
                                       nullptr, 0))) {
 
             connected = true;
             emit logMessage("Service worker connected to Simconnect", LogLevel::DEBUGLOG);
-
-
+            emit gameConnectionMade(2);
 
             SimConnect_MapClientDataNameToID(serviceSimconnect, "wasm.servicelayer", serviceLayerDataID);
 
@@ -66,11 +65,6 @@ void ServiceWorker::startServices() {
     QThread::currentThread()->quit();
 }
 
-
-void ServiceWorker::openLogWindow() {
-    connect(&logger, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
-    logWindow->openWindow();
-}
 
 void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void *pContext) {
     auto *serviceWorker = static_cast<ServiceWorker *>(pContext);
@@ -115,25 +109,28 @@ void ServiceWorker::sendWASMData(const char *data) {
                              SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
                              &toSend);
     emit logMessage("Sending " + std::string(data) + " to WASM module", LogLevel::DEBUGLOG);
-
 }
 
 void ServiceWorker::setConnectionClosed(bool toSet) {
     connectionClosed = toSet;
 }
 
-void ServiceWorker::logMessage(std::string message, LogLevel level) {
-
+void ServiceWorker::logMessage(const std::string& message, LogLevel level) {
+    std::cout<<"LOG RECEIVED"<<std::endl;
     switch (level) {
         case LogLevel::WARNINGLOG:
-            logger.logWarning(message);
+            logger->logWarning(message);
             break;
         case LogLevel::DEBUGLOG:
-            logger.logDebug(message);
+            logger->logDebug(message);
             break;
         case LogLevel::ERRORLOG:
-            logger.logError(message);
+            logger->logError(message);
             break;
     }
+}
+
+LoggerService *ServiceWorker::getLoggerService() {
+    return this->logger;
 }
 

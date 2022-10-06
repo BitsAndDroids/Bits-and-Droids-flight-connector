@@ -19,7 +19,7 @@ OutputMenu::OutputMenu(QWidget *parent)
     //outputMenuVLayout->addItem(new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum));
     outputMenuVLayout->addLayout(outputMenuLayout);
     outputMenuLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
-    //We pass this OutputMenu to the builder so it can connect showSetDetails when a setrow is clicked
+    //We pass this OutputMenu to the controller so it can connect showSetDetails when a setrow is clicked
     outputMenuLayout->addWidget(setrowBuilder.buildSetrowContainer());
 
     if (!setHandler.getSets()->empty()) {

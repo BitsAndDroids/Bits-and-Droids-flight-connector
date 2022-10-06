@@ -7,7 +7,7 @@
 #include <qstandardpaths.h>
 #include <qthread.h>
 #include <qwaitcondition.h>
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 #include <tchar.h>
 #include <windows.h>
 

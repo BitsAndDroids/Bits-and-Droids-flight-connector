@@ -12,7 +12,7 @@
 #include <QtCharts>
 
 #include "models/settings/coordinates.h"
-#include "handlers/settingshandler.h"
+#include "settings/settingshandler.h"
 
 class FormBuilder : public QObject {
 Q_OBJECT
@@ -52,9 +52,7 @@ public:
 
     QWidget *generateComControls(int mode);
 
-    QList<Set> *getAvailableSets() { return availableSets; };
 
-    QList<QString> getAvailableComPorts() { return availableComPorts; };
 
     QList<struct coordinates> *getCoordinates(int number);
 
@@ -64,17 +62,10 @@ public:
 
 private slots:
 
-    void localStart();
 
-    void localRefreshed();
-
-    void localStop();
-
-    void localAdd();
 
     void autoRunChanged();
 
-    void removeComWidget();
 
     void rudderTextChanged();
 
@@ -96,17 +87,6 @@ signals:
 
     void addSet();
 
-    void setEdited(QString id);
-
-    void removeSet(QString id);
-
-    void startPressed(int mode);
-
-    void refreshPressed(int mode);
-
-    void stopPressed(int mode);
-
-    void addPressed(int mode);
 
 private:
     QStringList curves;
@@ -119,8 +99,7 @@ private:
     QStringList mainHeaders = {"", "INPUT", "OUTPUT", "DUAL"};
     SetHandler setHandler;
     SettingsHandler settingsHandler;
-    QList<Set> *availableSets;
-    QList<QString> availableComPorts;
+
 
     void updateChart(int number);
 
