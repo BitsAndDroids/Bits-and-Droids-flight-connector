@@ -27,6 +27,12 @@ Tests are added to the Test folder. CMake will generate a seperate .exe for the 
 
 > There are a boatload of inputs/outputs that are still missing Unit tests. All help on this front is welcome <3
 
+# Structure
+## Dashboard
+The dashboard is the mainscreen of the application. It consists of several independent units(widgets). The controlling logic has been delegated to seperate controller classes. See the image below for a visual representation of the structure.
+![image](https://user-images.githubusercontent.com/77780263/194304804-b9bb4e38-f937-453b-a94c-580cb2ee4ad0.png)
+
+
 
 # Arduino / ESP32 library
 The libraries are a way to simplify the communication between your microcontroller and the connector. They have their own repository which can be found at:
