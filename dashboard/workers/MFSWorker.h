@@ -89,6 +89,7 @@ public:
     void clearBundles();
 
 
+    void sendToArduino(float received, const string &prefix, int index, int mode);
 };
 
 #endif  // DUALWORKER_H

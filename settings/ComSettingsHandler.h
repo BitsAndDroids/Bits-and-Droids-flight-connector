@@ -4,7 +4,7 @@
 #ifndef BITSANDDROIDSCONNECTOR_COMSETTINGSHANDLER_H
 #define BITSANDDROIDSCONNECTOR_COMSETTINGSHANDLER_H
 
-#include <gtest/gtest.h>
+#include "_deps/googletest-src/googletest/include/gtest/gtest.h"
 #include "settings/settingshandler.h"
 
     class ComSettingsHandler : public SettingsHandler {

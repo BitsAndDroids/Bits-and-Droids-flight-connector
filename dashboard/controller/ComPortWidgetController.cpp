@@ -8,7 +8,7 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QPushButton>
-#include "dashboard/utils/ComSettingsHandler.h"
+#include "settings/ComSettingsHandler.h"
 #include "dashboard/elements/ComPortRow.h"
 
 ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker) {

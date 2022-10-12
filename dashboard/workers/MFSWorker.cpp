@@ -1,9 +1,9 @@
 #include "MFSWorker.h"
 
 #include "outputmenu/handlers/sethandler.h"
-#include "dashboard/utils/ComSettingsHandler.h"
+#include "settings/ComSettingsHandler.h"
 
-#include <strsafe.h>
+#include "enums/ModeEnum.h"
 #include <windows.h>
 
 #include <string>
@@ -13,9 +13,6 @@
 #define MAX_RETURNED_ITEMS 255
 
 using namespace std;
-SerialPort *dualPorts[10];
-
-// Attempt at WASM
 
 HANDLE dualSimConnect = nullptr;
 
@@ -23,16 +20,9 @@ struct StructOneDatum {
     int id;
     float value;
 };
-char receivedString[DATA_LENGTH];
-
 
 float dualDataRecv = 1.2f;
-enum GROUP_ID {
-    GROUP0 = 2, GROUP_A = 1
-};
-enum INPUT_ID {
-    INPUT0,
-};
+
 enum EVENT_ID {
     EVENT_SIM_START,
     EVENT_WASM = 2,
@@ -66,57 +56,85 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
+/*!
+  \class MFSWorker
+  \brief MFSWorker is a class that handles the connection to Microsoft Flight Simulator
+  This class handles the connection to Microsoft Flight Simulator and the data that is sent to and from the simulator.
+  This class inherits from QThread and is run in a separate thread from the main thread.
+ */
 MFSWorker::MFSWorker() {
 }
 
-void sendToArduino(float received, const std::string &prefix, int index,
-                   int mode) {
+/*!
+  \brief MFSWorker::sendToArduino is responsible for sending data to the Arduino
+  \a received is the data received from the simulator
+  \a prefix prefix to tag the data
+  \a index index of the comport
+  \a mode defines the data type
+  ...
+ */
+void MFSWorker::sendToArduino(float received, const std::string &prefix, int index,
+                              int mode) {
     int intVal;
     std::string prefixString = prefix;
-    if (stoi(prefix) < 1000) {
+    //Ensure the prefix is 4 characters long
+    for (int i = 0; i < 4; i++) {
         prefixString += " ";
     }
+
     std::string input_string;
 
-    if (mode != 99) {
-        intVal = static_cast<int>(received);
-    } else {
-        if (received == 0) {
-            intVal = 0;
-        } else {
-            intVal = 1;
+    switch (mode) {
+        case ModeEnum::BOOLMODE: {
+            intVal = (received == 0) ? 0 : 1;
+            input_string = prefixString + std::to_string(intVal);
+            break;
         }
-        input_string = prefixString + std::to_string(intVal);
-    }
-
-    if (mode == 3 || mode == 97) {
-        input_string = prefixString + std::to_string(received);
-
-    } else {
-        const auto value = intVal;
-        input_string = prefixString + std::to_string(value);
+        case ModeEnum::INTEGERMODE: {
+            intVal = (int) received;
+            input_string = prefixString + std::to_string(intVal);
+            break;
+        }
+        case ModeEnum::FLOATMODE: {
+            input_string = prefixString + std::to_string(received);
+            break;
+        }
+        default:
+            input_string = prefixString + std::to_string(intVal);
+            break;
     }
 
     auto *const c_string = new char[input_string.size() + 1];
     std::copy(input_string.begin(), input_string.end(), c_string);
     c_string[input_string.size()] = '\n';
-    cout << strlen(c_string) << endl;
 
-    if (mode == 1) {
+    if (mode == ModeEnum::PERCENTAGEMODE) {
         if (received < 0) {
-            dualPorts[index]->writeSerialPort(c_string, 7);
+            comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, 7);
         } else {
-            dualPorts[index]->writeSerialPort(c_string, 6);
+            comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, 6);
         }
     } else {
-        dualPorts[index]->writeSerialPort(c_string, input_string.size() + 1);
+        comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, input_string.size() + 1);
     }
 
     input_string.clear();
-
     delete[] c_string;
 }
 
+/*!
+  \brief MFSWorker::MyDispatchProcInput handles the data received from the simulator
+
+  This function monitors the SimConnect data. The function handles SimConnect events provided by the simulator.
+  If new data is available, the function will send the data to the Microcontroller.
+  It also handles the data received from the WASM module.
+
+  \sa MFSWorker::sendToArduino
+  \a *pData
+  \a cbData
+  \a *pContext
+  \a mode
+ */
 void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext) {
     HRESULT hr;
@@ -153,18 +171,17 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
         }
         case SIMCONNECT_RECV_ID_CLIENT_DATA: {
             auto pObjData = (SIMCONNECT_RECV_CLIENT_DATA *) pData;
-            int bundle = 0;
 
             Output *output =
-                    dualCast->outputHandler.findOutputById(pObjData->dwRequestID);
+                    dualCast->outputHandler.findOutputById((int) pObjData->dwRequestID);
             for (int i = 0; i < dualCast->comBundles->size(); i++) {
                 if (dualCast->comBundles->at(i)->isOutputInBundle(output->getId())) {
 
                     auto *data = (dataStr *) &pObjData->dwData;
                     if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                        sendToArduino(
+                        dualCast->sendToArduino(
                                 data->val, std::to_string(pObjData->dwRequestID), i,
-                                dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
+                                dualCast->outputHandler.findOutputById((int) pObjData->dwRequestID)
                                         ->getType());
                     }
                 }
@@ -186,15 +203,17 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
                         int mode = output->getType();
                         string prefix = std::to_string(output->getPrefix());
-                        cout << prefix << endl;
+
                         float value = dualCast->converter.converOutgoingFloatValue(pS->datum[count].value, mode);
                         for (int i = 0; i < dualCast->comBundles->size(); i++) {
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
-                                sendToArduino(value, prefix, i, mode);
-                                emit dualCast->logMessage(
+                                dualCast->sendToArduino(value, prefix, i, mode);
+                                emit
+                                dualCast->logMessage(
                                         "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
-                                                dualCast->comBundles->at(i)->getSerialPort()->getPortName(), LogLevel::DEBUGLOG);
+                                        dualCast->comBundles->at(i)->getSerialPort()->getPortName(),
+                                        LogLevel::DEBUGLOG);
                             }
                         }
 
@@ -212,8 +231,10 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
         }
     }
 }
-
-void MFSWorker::loadRunningPortsAndSets(){
+/*!
+ * \brief MFSWorker::loadRunningPortsAndSets handles the data received from the Microcontroller
+ */
+void MFSWorker::loadRunningPortsAndSets() {
     comBundles->clear();
     auto comSettingsHandler = ComSettingsHandler();
     QList<QPair<QString, int>> comSettings = comSettingsHandler.loadComs();
@@ -221,14 +242,14 @@ void MFSWorker::loadRunningPortsAndSets(){
 
     int successfullyConnected = 0;
 
-    for (const auto & comSetting : comSettings) {
+    for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
         bundle->setOutputs(setHandler.getSetById(QString::number(comSetting.second)).getOutputs());
-        if(bundle->getSerialPort()->isConnected()){
+        if (bundle->getSerialPort()->isConnected()) {
             emit boardConnectionMade(1);
             emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
             successfullyConnected++;
-        } else{
+        } else {
             emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
         }
         comBundles->append(bundle);
@@ -329,6 +350,8 @@ void MFSWorker::eventLoop() {
 
     for (int i = 0; i < keys->size(); i++) {
         if (comBundles->at(i)->getSerialPort()->isConnected()) {
+            emit logMessage("Closing connection to " + comBundles->at(i)->getSerialPort()->getPortName(),
+                            LogLevel::DEBUGLOG);
             comBundles->at(i)->getSerialPort()->closeSerial();
         }
     }
@@ -348,9 +371,11 @@ void MFSWorker::setConnected(bool connectedToSim) {
 MFSWorker::~MFSWorker() {
     abortDual = true;
     for (int i = 0; i < keys->size(); i++) {
-        if (dualPorts[i]->isConnected()) {
-            cout << dualPorts[i]->getPortName() + " CLOSED" << endl;
-            dualPorts[i]->closeSerial();
+        auto serialPort = comBundles->at(i)->getSerialPort();
+        if (comBundles->at(i)->getSerialPort()->isConnected()) {
+            emit logMessage("Closing connection to " + comBundles->at(i)->getSerialPort()->getPortName(),
+                            LogLevel::DEBUGLOG);
+            comBundles->at(i)->getSerialPort()->closeSerial();
         }
     }
     mutex.lock();

@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <dashboard/utils/ComSettingsHandler.h>
+#include "settings/ComSettingsHandler.h"
 #include <gtest/gtest.h>
 
 TEST(ComSettingsHandlerTests, test_serialize_qpair_to_json) {

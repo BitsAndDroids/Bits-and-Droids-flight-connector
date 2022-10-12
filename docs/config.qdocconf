@@ -1,9 +1,11 @@
 project = Bits and Droids connector
 description = Control Microsoft Flight Simulator with your own hardware
 sourcedirs =  ../elements \
-              ../handlers
+              ../handlers \
+              ../dashboard/
 headerdirs = ../elements \
-            ../handlers
+            ../handlers \
+            ../dashboard/
 
 sources.fileextensions = "*.cpp *.qdoc *.mm *.qml"
 headers.fileextensions = "*.h *.ch *.h++ *.hh *.hpp *.hxx"
