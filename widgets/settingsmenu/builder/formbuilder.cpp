@@ -475,10 +475,3 @@ void FormBuilder::autoRunChanged(){
 
 
 }
-
-
-
-
-void FormBuilder::adjustIndexes(int index) {
-
-}

@@ -82,7 +82,7 @@ QWidget *ComPortRow::generateElement() {
     auto *removeButton = new MPushButton(comRow);
     removeButton->setIconWithPath(":/resources/images/trashcan.svg");
 
-    removeButton->setObjectName("del" + QString::number(index));
+    removeButton->setObjectName(QString::number(index));
 
     QObject::connect(removeButton, &QAbstractButton::clicked, controller,
             &ComPortWidgetController::removeComPortRow);

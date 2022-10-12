@@ -1,5 +1,7 @@
-#include "dualworker.h"
-#include "utils/OutputConverters.h"
+#include "MFSWorker.h"
+
+#include "outputmenu/handlers/sethandler.h"
+#include "dashboard/utils/ComSettingsHandler.h"
 
 #include <strsafe.h>
 #include <windows.h>
@@ -64,11 +66,11 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
-DualWorker::DualWorker() {
+MFSWorker::MFSWorker() {
 }
 
-void sendDualToArduino(float received, const std::string &prefix, int index,
-                       int mode) {
+void sendToArduino(float received, const std::string &prefix, int index,
+                   int mode) {
     int intVal;
     std::string prefixString = prefix;
     if (stoi(prefix) < 1000) {
@@ -115,10 +117,10 @@ void sendDualToArduino(float received, const std::string &prefix, int index,
     delete[] c_string;
 }
 
-void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
-                                     void *pContext) {
+void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
+                                    void *pContext) {
     HRESULT hr;
-    auto *dualCast = static_cast<DualWorker *>(pContext);
+    auto *dualCast = static_cast<MFSWorker *>(pContext);
 
     switch (pData->dwID) {
         case SIMCONNECT_RECV_ID_EVENT: {
@@ -142,7 +144,6 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                     break;
                 }
                 case EVENT_WASMINC: {
-                    cout << "hit" << endl;
                     break;
                 }
                 default:
@@ -156,60 +157,49 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
             Output *output =
                     dualCast->outputHandler.findOutputById(pObjData->dwRequestID);
-            for (int i = 0; i < dualCast->outputBundles->size(); i++) {
-                if (dualCast->outputBundles->at(i)->isOutputInBundle(output->getId())) {
-                    qDebug() << "FOUND IN SET";
-                    bundle = i;
+            for (int i = 0; i < dualCast->comBundles->size(); i++) {
+                if (dualCast->comBundles->at(i)->isOutputInBundle(output->getId())) {
+
+                    auto *data = (dataStr *) &pObjData->dwData;
+                    if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
+                        sendToArduino(
+                                data->val, std::to_string(pObjData->dwRequestID), i,
+                                dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
+                                        ->getType());
+                    }
                 }
             }
-            auto *data = (dataStr *) &pObjData->dwData;
-            qDebug() << "DATA: " << pObjData->dwData << "ID: " << pObjData->dwID
-                     << pObjData->dwRequestID << pObjData->dwDefineID
-                     << pObjData->dwObjectID;
 
-            if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                sendDualToArduino(
-                        data->val, std::to_string(pObjData->dwRequestID), bundle,
-                        dualCast->outputHandler.findOutputById(pObjData->dwRequestID)
-                                ->getType());
-            }
         }
             break;
         case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
-            cout << "hiyi" << endl;
             auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *) pData;
 
             switch (pObjData->dwRequestID) {
                 case REQUEST_PDR_RADIO: {
-
-                    cout << "RADIO" << endl;
                     int count = 0;
                     auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
-                    cout << pObjData->dwDefineCount << " COUNT" << endl;
                     while (count < (int) pObjData->dwDefineCount) {
                         string valString = std::to_string(pS->datum[count].value);
                         int id = pS->datum[count].id;
-                        Output *output = dualCast->outputHandler.findOutputById(id);
-                        int bundle = 0;
-
-                        for (int i = 0; i < dualCast->outputBundles->size(); i++) {
-                            if (dualCast->outputBundles->at(i)->isOutputInBundle(
-                                    output->getId())) {
-                                bundle = i;
-                            }
-                        }
+                        Output *output = dualCast->outputHandler.findOutputById(id);;
 
                         int mode = output->getType();
                         string prefix = std::to_string(output->getPrefix());
                         cout << prefix << endl;
                         float value = dualCast->converter.converOutgoingFloatValue(pS->datum[count].value, mode);
-                        sendDualToArduino(value, prefix, bundle, mode);
+                        for (int i = 0; i < dualCast->comBundles->size(); i++) {
+                            if (dualCast->comBundles->at(i)->isOutputInBundle(
+                                    output->getId())) {
+                                sendToArduino(value, prefix, i, mode);
+                                emit dualCast->logMessage(
+                                        "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
+                                                dualCast->comBundles->at(i)->getSerialPort()->getPortName(), LogLevel::DEBUGLOG);
+                            }
+                        }
+
                         std::this_thread::sleep_for(std::chrono::milliseconds(output->getDelay()));
                         count++;
-
-                        emit dualCast->logMessage(
-                                "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
-                                dualPorts[bundle]->getPortName(), LogLevel::DEBUGLOG);
                     }
                     break;
                 }
@@ -223,33 +213,36 @@ void DualWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
 }
 
-void DualWorker::addBundle(outputBundle *bundle) {
-    outputBundles->append(bundle);
-}
+void MFSWorker::loadRunningPortsAndSets(){
+    comBundles->clear();
+    auto comSettingsHandler = ComSettingsHandler();
+    QList<QPair<QString, int>> comSettings = comSettingsHandler.loadComs();
+    auto setHandler = SetHandler();
 
-void DualWorker::eventLoop() {
-    HRESULT hr;
-    keys = settingsHandler.retrieveKeys("runningDualComs");
-    int keySize = (int) keys->size();
     int successfullyConnected = 0;
-    for (int i = 0; i < keySize; i++) {
-        dualPorts[i] = new SerialPort(
-                settingsHandler.retrieveSetting("runningDualComs", keys->at(i))
-                        ->toString()
-                        .toStdString()
-                        .c_str());
 
-        if (dualPorts[i]->isConnected()) {
-            cout << "CONNECTED" << endl;
+    for (const auto & comSetting : comSettings) {
+        auto *bundle = new ComBundle(comSetting.first);
+        bundle->setOutputs(setHandler.getSetById(QString::number(comSetting.second)).getOutputs());
+        if(bundle->getSerialPort()->isConnected()){
             emit boardConnectionMade(1);
+            emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
             successfullyConnected++;
-        } else {
-            cout << "NOT CONNECTED" << endl;
+        } else{
+            emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
         }
+        comBundles->append(bundle);
     }
-    if (successfullyConnected == keySize) {
+
+    if (successfullyConnected == comBundles->size()) {
         emit boardConnectionMade(2);
     }
+}
+
+void MFSWorker::eventLoop() {
+    HRESULT hr;
+
+    loadRunningPortsAndSets();
 
     while (!connected && !abortDual) {
         emit logMessage("Attempt connecting to SimConnect", LogLevel::DEBUGLOG);
@@ -271,8 +264,9 @@ void DualWorker::eventLoop() {
 
             SimConnect_AddToClientDataDefinition(
                     dualSimConnect, 12, SIMCONNECT_CLIENTDATAOFFSET_AUTO, 256, 0);
+
             dualInputHandler = new InputSwitchHandler(inputs, dualSimConnect);
-            connect(dualInputHandler, &InputSwitchHandler::logMessage, this, &DualWorker::logMessage);
+            connect(dualInputHandler, &InputSwitchHandler::logMessage, this, &MFSWorker::logMessage);
             dualInputHandler->setRanges();
             dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
 
@@ -343,9 +337,15 @@ void DualWorker::eventLoop() {
     QThread::currentThread()->quit();
 }
 
-void DualWorker::clearBundles() { this->outputBundles->clear(); }
+void MFSWorker::setInputs(std::map<int, Input> inputsToSet) {
+    this->inputs = std::move(inputsToSet);
+}
 
-DualWorker::~DualWorker() {
+void MFSWorker::setConnected(bool connectedToSim) {
+    this->connected = connectedToSim;
+}
+
+MFSWorker::~MFSWorker() {
     abortDual = true;
     for (int i = 0; i < keys->size(); i++) {
         if (dualPorts[i]->isConnected()) {
@@ -357,12 +357,4 @@ DualWorker::~DualWorker() {
     condition.wakeOne();
     mutex.unlock();
 
-}
-
-void DualWorker::setInputs(std::map<int, Input> inputsToSet) {
-    this->inputs = std::move(inputsToSet);
-}
-
-void DualWorker::setConnected(bool connectedToSim) {
-    this->connected = connectedToSim;
 }

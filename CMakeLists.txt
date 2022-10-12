@@ -24,10 +24,8 @@ set(PROJECT_SOURCES
         handlers/InputSwitchHandler.h
         outputmenu/handlers/sethandler.cpp outputmenu/handlers/sethandler.h
 
-        workers/dualworker.cpp workers/dualworker.h
-        workers/InputWorker.cpp workers/InputWorker.h
+        dashboard/workers/MFSWorker.cpp dashboard/workers/MFSWorker.h
         workers/InputMapper.h workers/inputmapper.cpp
-        workers/outputworker.cpp workers/outputworker.h
         workers/serviceworker.cpp workers/serviceworker.h
 
         services/LoggerService.cpp services/LoggerService.h
@@ -111,12 +109,12 @@ set(PROJECT_SOURCES
         elements/Element.cpp elements/Element.h
         dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
         dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
-        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h)
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h dashboard/utils/ComSettingsHandler.cpp dashboard/utils/ComSettingsHandler.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" )
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp)
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
@@ -216,7 +214,8 @@ add_executable(UnitTests
         models/commands/output.cpp
         logging/messagecaster.cpp
         outputmenu/handlers/SetHandler.cpp
-        utils/EventFileFormatter.cpp)
+        dashboard/utils/ComSettingsHandler.cpp
+        utils/EventFileFormatter.cpp dashboard/tests/ComSettingsHandlerTests.cpp)
 
 add_dependencies(UnitTests gtest)
 

@@ -1,11 +1,10 @@
 #ifndef DUALWORKER_H
 #define DUALWORKER_H
 
-#include "InputMapper.h"
+#include "workers/InputMapper.h"
 #include "handlers/InputSwitchHandler.h"
-#include "models/commands/outputbundle.h"
 #include "handlers/outputhandler.h"
-#include "OutputMenu/outputmapper.h"
+#include "outputmenu/outputmapper.h"
 #include <qsettings.h>
 #include <qstandardpaths.h>
 #include <qthread.h>
@@ -25,10 +24,11 @@
 #include "strsafe.h"
 #include "enums/LogLevelEnum.h"
 #include "utils/OutputConverters.h"
+#include "dashboard/models/ComBundle.h"
 
 typedef QList<QString> ComsList;
 
-class DualWorker : public QThread {
+class MFSWorker : public QThread {
 Q_OBJECT
 
     void run() override { eventLoop(); }
@@ -49,13 +49,15 @@ private:
     SettingsHandler settingsHandler;
     SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
     outputHandler outputHandler;
-    QList<outputBundle *> *outputBundles = new QList<outputBundle *>();
+    QList<ComBundle *> *comBundles = new QList<ComBundle *>();
     InputSwitchHandler *dualInputHandler;
     InputMapper dualInputMapper = InputMapper();
     outputMapper *dualOutputMapper = new outputMapper();
 
     static void MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext);
+
+    void loadRunningPortsAndSets();
 
     double dataF = 1.2;
 
@@ -73,13 +75,11 @@ public:
 
     void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
 
-    void addBundle(outputBundle *bundle);
-
     bool abortDual;
 
-    DualWorker();
+    MFSWorker();
 
-    ~DualWorker();
+    ~MFSWorker();
 
     QMutex mutex;
     QWaitCondition condition;

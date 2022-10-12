@@ -3,9 +3,7 @@
 
 
 #include "controller/ComPortWidgetController.h"
-#include "workers/InputWorker.h"
-#include "workers/dualworker.h"
-#include "workers/outputworker.h"
+#include "dashboard/workers/MFSWorker.h"
 
 #include "outputmenu/handlers/sethandler.h"
 #include <qcombobox.h>
@@ -85,9 +83,7 @@ private:
     void loadSettings();
 
 
-    DualWorker dualThread;
-    OutputWorker outputThread;
-    InputWorker inputThread;
+    MFSWorker dualThread;
     FormBuilder formbuilder;
 
     MenuBar* menuBar;
