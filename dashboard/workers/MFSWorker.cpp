@@ -298,8 +298,8 @@ void MFSWorker::eventLoop() {
             while (!abortDual && connected) {
                 SimConnect_CallDispatch(dualSimConnect, MyDispatchProcInput, this);
 
-                for (int i = 0; i < keys->size(); i++) {
-                    const auto hasRead = dualPorts[i]->readSerialPort(
+                for (int i = 0; i < comBundles->size(); i++) {
+                    const auto hasRead = comBundles->at(i)->getSerialPort()->readSerialPort(
                             dualInputHandler->receivedString[i], DATA_LENGTH);
 
                     if (hasRead) {
@@ -328,8 +328,8 @@ void MFSWorker::eventLoop() {
     }
 
     for (int i = 0; i < keys->size(); i++) {
-        if (dualPorts[i]->isConnected()) {
-            dualPorts[i]->closeSerial();
+        if (comBundles->at(i)->getSerialPort()->isConnected()) {
+            comBundles->at(i)->getSerialPort()->closeSerial();
         }
     }
     //We want to update the dashboard indicator when we've closed the connection
