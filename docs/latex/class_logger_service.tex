@@ -1,0 +1,103 @@
+\hypertarget{class_logger_service}{}\doxysection{Logger\+Service Class Reference}
+\label{class_logger_service}\index{LoggerService@{LoggerService}}
+
+
+{\ttfamily \#include $<$Logger\+Service.\+h$>$}
+
+Inheritance diagram for Logger\+Service\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_logger_service}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_logger_service_a25d7fefddf20d162d6a7820d1b1bc77a}{log\+Received}} (const \mbox{\hyperlink{class_log}{Log}} \&log)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_logger_service_ae110e952b0eb7c1f319cfa129a03ab7e}{Logger\+Service}} ()
+\item 
+\mbox{\hyperlink{class_logger_service_a0a82b719070eb12c0a61acbd8e1080be}{$\sim$\+Logger\+Service}} ()
+\item 
+void \mbox{\hyperlink{class_logger_service_a7ca13554321d4816ad15c6cfbe2e5ccb}{log\+Error}} (std\+::string message)
+\item 
+void \mbox{\hyperlink{class_logger_service_a384b128abc6f4f73226f52e57b81285b}{log\+Debug}} (std\+::string message)
+\item 
+void \mbox{\hyperlink{class_logger_service_abba169f8be443d7507426971ff390315}{log\+Warning}} (std\+::string message)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_logger_service_afd418c281ae2c28be2a21b35988be08f}{write\+To\+Log\+File}} (const \mbox{\hyperlink{class_log}{Log}} \&log)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_logger_store}{Logger\+Store}} \mbox{\hyperlink{class_logger_service_a418679597c0aed31f18a5d85e54fffe1}{logger\+Store}} = \mbox{\hyperlink{class_logger_store}{Logger\+Store}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_logger_service_ae110e952b0eb7c1f319cfa129a03ab7e}\label{class_logger_service_ae110e952b0eb7c1f319cfa129a03ab7e}} 
+\index{LoggerService@{LoggerService}!LoggerService@{LoggerService}}
+\index{LoggerService@{LoggerService}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{LoggerService()}{LoggerService()}}
+{\footnotesize\ttfamily Logger\+Service\+::\+Logger\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_logger_service_a0a82b719070eb12c0a61acbd8e1080be}\label{class_logger_service_a0a82b719070eb12c0a61acbd8e1080be}} 
+\index{LoggerService@{LoggerService}!````~LoggerService@{$\sim$LoggerService}}
+\index{````~LoggerService@{$\sim$LoggerService}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{$\sim$LoggerService()}{~LoggerService()}}
+{\footnotesize\ttfamily Logger\+Service\+::$\sim$\+Logger\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_logger_service_a384b128abc6f4f73226f52e57b81285b}\label{class_logger_service_a384b128abc6f4f73226f52e57b81285b}} 
+\index{LoggerService@{LoggerService}!logDebug@{logDebug}}
+\index{logDebug@{logDebug}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{logDebug()}{logDebug()}}
+{\footnotesize\ttfamily void Logger\+Service\+::log\+Debug (\begin{DoxyParamCaption}\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_logger_service_a7ca13554321d4816ad15c6cfbe2e5ccb}\label{class_logger_service_a7ca13554321d4816ad15c6cfbe2e5ccb}} 
+\index{LoggerService@{LoggerService}!logError@{logError}}
+\index{logError@{logError}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{logError()}{logError()}}
+{\footnotesize\ttfamily void Logger\+Service\+::log\+Error (\begin{DoxyParamCaption}\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_logger_service_a25d7fefddf20d162d6a7820d1b1bc77a}\label{class_logger_service_a25d7fefddf20d162d6a7820d1b1bc77a}} 
+\index{LoggerService@{LoggerService}!logReceived@{logReceived}}
+\index{logReceived@{logReceived}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{logReceived}{logReceived}}
+{\footnotesize\ttfamily void Logger\+Service\+::log\+Received (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_log}{Log}} \&}]{log }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_logger_service_abba169f8be443d7507426971ff390315}\label{class_logger_service_abba169f8be443d7507426971ff390315}} 
+\index{LoggerService@{LoggerService}!logWarning@{logWarning}}
+\index{logWarning@{logWarning}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{logWarning()}{logWarning()}}
+{\footnotesize\ttfamily void Logger\+Service\+::log\+Warning (\begin{DoxyParamCaption}\item[{std\+::string}]{message }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_logger_service_afd418c281ae2c28be2a21b35988be08f}\label{class_logger_service_afd418c281ae2c28be2a21b35988be08f}} 
+\index{LoggerService@{LoggerService}!writeToLogFile@{writeToLogFile}}
+\index{writeToLogFile@{writeToLogFile}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{writeToLogFile()}{writeToLogFile()}}
+{\footnotesize\ttfamily void Logger\+Service\+::write\+To\+Log\+File (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_log}{Log}} \&}]{log }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_logger_service_a418679597c0aed31f18a5d85e54fffe1}\label{class_logger_service_a418679597c0aed31f18a5d85e54fffe1}} 
+\index{LoggerService@{LoggerService}!loggerStore@{loggerStore}}
+\index{loggerStore@{loggerStore}!LoggerService@{LoggerService}}
+\doxysubsubsection{\texorpdfstring{loggerStore}{loggerStore}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_logger_store}{Logger\+Store}} Logger\+Service\+::logger\+Store = \mbox{\hyperlink{class_logger_store}{Logger\+Store}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+services/\mbox{\hyperlink{_logger_service_8h}{Logger\+Service.\+h}}\item 
+services/\mbox{\hyperlink{_logger_service_8cpp}{Logger\+Service.\+cpp}}\end{DoxyCompactItemize}

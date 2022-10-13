@@ -1,0 +1,35 @@
+\hypertarget{_com_port_widget_model_8h_source}{}\doxysection{Com\+Port\+Widget\+Model.\+h}
+\label{_com_port_widget_model_8h_source}\index{dashboard/models/ComPortWidgetModel.h@{dashboard/models/ComPortWidgetModel.h}}
+\mbox{\hyperlink{_com_port_widget_model_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 19-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_COMPORTWIDGETMODEL\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_COMPORTWIDGETMODEL\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{commands_2_set_8h}{models/commands/Set.h}}"{}}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sethandler_8h}{outputmenu/handlers/sethandler.h}}"{}}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_com_port_widget_model}{ComPortWidgetModel}} \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_com_port_widget_model_a20ff2ffa479daca86ea6aba1aaec5f4e}{ComPortWidgetModel}}();}
+\DoxyCodeLine{15     QList<Set> *\mbox{\hyperlink{class_com_port_widget_model_af53957ec1d71b7a4f3c8c70d05424508}{getAvailableSets}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_com_port_widget_model_aafef4fa66a3346e44a72ff033221c019}{availableSets}}; \};}
+\DoxyCodeLine{16     QList<QString> *\mbox{\hyperlink{class_com_port_widget_model_a6cad7a72d674a3fec1ebcbec3ae9cfe4}{getAvailableComPorts}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_com_port_widget_model_ac1e75e73ebf44e16ffef27b50bdd1ac7}{availableComPorts}}; \};}
+\DoxyCodeLine{17     QList<QString> *\mbox{\hyperlink{class_com_port_widget_model_a7b20f057c65695a185915870a0f45474}{loadAvailableComPorts}}();}
+\DoxyCodeLine{18     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_model_ab633d7b188e95987a4c16bebd09d4e46}{refresh}}();}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_model_a01b7e5adad9fb3843b34cac8f3caa2f8}{addComPort}}(QString comPort);}
+\DoxyCodeLine{20     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_model_aab2e95cec84f98209fd3b9d9db880d02}{clearComPortData}}();}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{private}:}
+\DoxyCodeLine{23     QList<Set> *\mbox{\hyperlink{class_com_port_widget_model_aafef4fa66a3346e44a72ff033221c019}{availableSets}} = \textcolor{keyword}{new} QList<Set>();}
+\DoxyCodeLine{24     QList<QString> *\mbox{\hyperlink{class_com_port_widget_model_ac1e75e73ebf44e16ffef27b50bdd1ac7}{availableComPorts}} = \textcolor{keyword}{new} QList<QString>();}
+\DoxyCodeLine{25     \mbox{\hyperlink{class_set_handler}{SetHandler}} *\mbox{\hyperlink{class_com_port_widget_model_a4023e1e1b4050c85ba9fb8339f3bfdbe}{setHandler}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_set_handler}{SetHandler}}();}
+\DoxyCodeLine{26 \};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_COMPORTWIDGETMODEL\_H}}
+
+\end{DoxyCode}

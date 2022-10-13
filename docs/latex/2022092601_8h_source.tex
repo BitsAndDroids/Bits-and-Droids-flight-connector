@@ -1,0 +1,33 @@
+\hypertarget{2022092601_8h_source}{}\doxysection{2022092601.h}
+\label{2022092601_8h_source}\index{settings/migrations/2022092601.h@{settings/migrations/2022092601.h}}
+\mbox{\hyperlink{2022092601_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 26-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_2022092601\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_2022092601\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_migration_8h}{Migration.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_migration2022092601}{Migration2022092601}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_migration}{Migration}} \{}
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \textcolor{comment}{/*}}
+\DoxyCodeLine{14 \textcolor{comment}{     * This migration moves the triple mode(dual-\/, input-\/, output-\/) comports to the comports group}}
+\DoxyCodeLine{15 \textcolor{comment}{     * This is implemented to merge  three separate comPort groups to a single group}}
+\DoxyCodeLine{16 \textcolor{comment}{     */}}
+\DoxyCodeLine{17     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_migration2022092601_a21581434a4b5dee3336ea6b0ab03edee}{Migration2022092601}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}}) : \mbox{\hyperlink{class_migration}{Migration}}(\mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}}) \{\}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_migration2022092601_a4bba406c434ea52126cd573ce695fdb5}{migrate}}()\textcolor{keyword}{ override }\{}
+\DoxyCodeLine{20         \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{Migration::moveGroup}}(\textcolor{stringliteral}{"{}dualComs"{}}, \textcolor{stringliteral}{"{}comPorts"{}});}
+\DoxyCodeLine{21         \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{Migration::moveGroup}}(\textcolor{stringliteral}{"{}dualSets"{}}, \textcolor{stringliteral}{"{}comSets"{}});}
+\DoxyCodeLine{22         \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{Migration::moveGroup}}(\textcolor{stringliteral}{"{}outputComs"{}}, \textcolor{stringliteral}{"{}comPorts"{}});}
+\DoxyCodeLine{23         \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{Migration::moveGroup}}(\textcolor{stringliteral}{"{}outputSets"{}}, \textcolor{stringliteral}{"{}comSets"{}});}
+\DoxyCodeLine{24         \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{Migration::moveGroup}}(\textcolor{stringliteral}{"{}inputComs"{}}, \textcolor{stringliteral}{"{}comPorts"{}});}
+\DoxyCodeLine{25     \}}
+\DoxyCodeLine{26 \};}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_2022092601\_H}}
+
+\end{DoxyCode}

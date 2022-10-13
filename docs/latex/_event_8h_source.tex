@@ -1,0 +1,50 @@
+\hypertarget{_event_8h_source}{}\doxysection{Event.\+h}
+\label{_event_8h_source}\index{models/events/Event.h@{models/events/Event.h}}
+\mbox{\hyperlink{_event_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 3/30/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_event_datatype_8h}{EventDatatype.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_event_type_8h}{EventType.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSGUI\_EVENT\_H}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#define BITSANDDROIDSGUI\_EVENT\_H}}
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_event}{Event}} \{}
+\DoxyCodeLine{9  \textcolor{keyword}{private}:}
+\DoxyCodeLine{10   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_a957cef7679150082e18e8ee8fdd6442f}{prefix}};}
+\DoxyCodeLine{11   std::string \mbox{\hyperlink{class_event_a591ba4e5c1d74b2e62b7f95ee5098ae3}{event}};}
+\DoxyCodeLine{12   \mbox{\hyperlink{class_event_type}{EventType}} \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}};}
+\DoxyCodeLine{13   \mbox{\hyperlink{class_event_datatype}{EventDatatype}} \mbox{\hyperlink{class_event_a26a347a2002b1a3660f5cda1406fe19e}{datatype}};}
+\DoxyCodeLine{14   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_event_a183c3df8169e699e1ac512fa91b6cfaa}{updateEvery}};}
+\DoxyCodeLine{15   std::string \mbox{\hyperlink{class_event_a1fd5de17e3a7147b38f54b80d5d635d9}{comment}};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{public}:}
+\DoxyCodeLine{18   \mbox{\hyperlink{class_event_a5a40dd4708297f7031e29b39e039ae10}{Event}}()\{\};}
+\DoxyCodeLine{19   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_a169ddda19305081465427661f906c910}{getPrefix}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_a957cef7679150082e18e8ee8fdd6442f}{prefix}}; \}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_a8c814f6a67fbb8f312ca26a75b9dbb86}{setPrefix}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_a957cef7679150082e18e8ee8fdd6442f}{prefix}}) \{ \mbox{\hyperlink{class_event_a957cef7679150082e18e8ee8fdd6442f}{Event::prefix}} = \mbox{\hyperlink{class_event_a957cef7679150082e18e8ee8fdd6442f}{prefix}}; \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23   \textcolor{keyword}{const} std::string \mbox{\hyperlink{class_event_aea4f6723569fd744259b31d7e541578a}{getEvent}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_a591ba4e5c1d74b2e62b7f95ee5098ae3}{event}}; \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_a96182d5b0bd950cc296eb4b0d5d41392}{setEvent}}(\textcolor{keyword}{const} std::string \&\mbox{\hyperlink{class_event_a591ba4e5c1d74b2e62b7f95ee5098ae3}{event}}) \{ \mbox{\hyperlink{class_event_a591ba4e5c1d74b2e62b7f95ee5098ae3}{Event::event}} = \mbox{\hyperlink{class_event_a591ba4e5c1d74b2e62b7f95ee5098ae3}{event}}; \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27   \mbox{\hyperlink{class_event_type}{EventType}} \mbox{\hyperlink{class_event_a2eeb7d9ca98c5cbe4d23a73c7f0da244}{getType}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}}; \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_a8843a8b8048e1fca23cdd30ed778dd56}{setType}}(\mbox{\hyperlink{class_event_type}{EventType}} \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}}) \{ \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{Event::type}} = \mbox{\hyperlink{class_event_ac721e4f34b3b9a1ae302165412221724}{type}}; \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \mbox{\hyperlink{class_event_datatype}{EventDatatype}} \mbox{\hyperlink{class_event_afd0953601b9289bb7abcaedbd09b8e7d}{getDatatype}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_a26a347a2002b1a3660f5cda1406fe19e}{datatype}}; \}}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_a7916a78fd5e6c4e79967af7d8c91ff4d}{setDatatype}}(\mbox{\hyperlink{class_event_datatype}{EventDatatype}} \mbox{\hyperlink{class_event_a26a347a2002b1a3660f5cda1406fe19e}{datatype}}) \{ \mbox{\hyperlink{class_event_a26a347a2002b1a3660f5cda1406fe19e}{Event::datatype}} = \mbox{\hyperlink{class_event_a26a347a2002b1a3660f5cda1406fe19e}{datatype}}; \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35   \textcolor{keywordtype}{float} \mbox{\hyperlink{class_event_af31bedf3ce9441b90f94f13d70546ccb}{getUpdateEvery}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_a183c3df8169e699e1ac512fa91b6cfaa}{updateEvery}}; \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_af75aadd89445eef771bbfe4dfe4ac49a}{setUpdateEvery}}(\textcolor{keywordtype}{float} \mbox{\hyperlink{class_event_a183c3df8169e699e1ac512fa91b6cfaa}{updateEvery}}) \{ this-\/>updateEvery = \mbox{\hyperlink{class_event_a183c3df8169e699e1ac512fa91b6cfaa}{updateEvery}}; \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39   \textcolor{keyword}{const} std::string \mbox{\hyperlink{class_event_a006c8e460a9a36ddfefeecf9a93b23be}{getComment}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_a1fd5de17e3a7147b38f54b80d5d635d9}{comment}}; \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_ac5e95a86603ee4452244ecab72edf5f5}{setComment}}(\textcolor{keyword}{const} std::string \&\mbox{\hyperlink{class_event_a1fd5de17e3a7147b38f54b80d5d635d9}{comment}}) \{ \mbox{\hyperlink{class_event_a1fd5de17e3a7147b38f54b80d5d635d9}{Event::comment}} = \mbox{\hyperlink{class_event_a1fd5de17e3a7147b38f54b80d5d635d9}{comment}}; \}}
+\DoxyCodeLine{42 \};}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// BITSANDDROIDSGUI\_EVENT\_H}}
+
+\end{DoxyCode}

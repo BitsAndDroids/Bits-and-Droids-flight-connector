@@ -1,0 +1,44 @@
+\hypertarget{_com_settings_handler_8h_source}{}\doxysection{Com\+Settings\+Handler.\+h}
+\label{_com_settings_handler_8h_source}\index{settings/ComSettingsHandler.h@{settings/ComSettingsHandler.h}}
+\mbox{\hyperlink{_com_settings_handler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 11-\/10-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_COMSETTINGSHANDLER\_H}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_COMSETTINGSHANDLER\_H}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\_deps/googletest-\/src/googletest/include/gtest/gtest.h"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10     \textcolor{keyword}{class }\mbox{\hyperlink{class_com_settings_handler}{ComSettingsHandler}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \{}
+\DoxyCodeLine{11     \textcolor{keyword}{public}:}
+\DoxyCodeLine{12         \mbox{\hyperlink{class_com_settings_handler_a863c4192690080c65bbf09fd61bb47be}{ComSettingsHandler}}();}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14         QList<QPair<QString, int>> \mbox{\hyperlink{class_com_settings_handler_ad1c402581417bb5cf0a0586642509c61}{loadComs}}();}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_settings_handler_a5cc1774bca56df49d21c6f6c2fc2a8b9}{saveComs}}(QList<QPair<QString, int>> coms);}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_settings_handler_a1e36cc8f996e0ffe0092064d9e668bbd}{adjustIndexes}}();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_settings_handler_a43ed3872bc63ee4e6813372eba5ae897}{removeComRowSettings}}(QString index);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keyword}{private}:}
+\DoxyCodeLine{23         \mbox{\hyperlink{class_com_settings_handler_add6700c7738e2b2ae2a0300ddbddecfb}{FRIEND\_TEST}}(ComSettingsHandlerTests, test\_serialize\_qlist\_to\_json);}
+\DoxyCodeLine{24         \mbox{\hyperlink{class_com_settings_handler_af655f4e8b00d09515b4c855c3fa0c724}{FRIEND\_TEST}}(ComSettingsHandlerTests, test\_serialize\_qpair\_to\_json);}
+\DoxyCodeLine{25         \mbox{\hyperlink{class_com_settings_handler_a5a79151995b4e25ca9dc0806c8a8637f}{FRIEND\_TEST}}(ComSettingsHandlerTests, test\_serialize\_json\_to\_qlist);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         QJsonObject \mbox{\hyperlink{class_com_settings_handler_a6f50e1856629822c62fa2efbe1f425d1}{comPairToJson}}(\textcolor{keyword}{const} QPair<QString, int> \&pair);}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29         QPair<QString, int> \mbox{\hyperlink{class_com_settings_handler_a215e36576d210da6bec01d1d11eaad56}{comPairFromJson}}(\textcolor{keyword}{const} QJsonObject \&\textcolor{keywordtype}{object});}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         QJsonObject \mbox{\hyperlink{class_com_settings_handler_a3d8a53be218c7cae2ef8790e8a7cd0d4}{comListToJsonObject}}(QList<QPair<QString, int>> coms);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         QList<QPair<QString, int>> \mbox{\hyperlink{class_com_settings_handler_ab0235e6b6f8a8fd313f4e3a94382c632}{jsonObjectToComList}}(QJsonObject obj);}
+\DoxyCodeLine{35     \};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_COMSETTINGSHANDLER\_H}}
+
+\end{DoxyCode}

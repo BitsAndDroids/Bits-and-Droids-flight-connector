@@ -1,0 +1,31 @@
+\hypertarget{_com_port_row_8h_source}{}\doxysection{Com\+Port\+Row.\+h}
+\label{_com_port_row_8h_source}\index{dashboard/elements/ComPortRow.h@{dashboard/elements/ComPortRow.h}}
+\mbox{\hyperlink{_com_port_row_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 19-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_COMPORTROW\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_COMPORTROW\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_element_8h}{elements/Element.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_com_port_widget_controller_8h}{dashboard/controller/ComPortWidgetController.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_com_port_row}{ComPortRow}} : \textcolor{keyword}{public} QWidget, \textcolor{keyword}{public} \mbox{\hyperlink{class_element}{Element}} \{}
+\DoxyCodeLine{14     Q\_OBJECT}
+\DoxyCodeLine{15 \textcolor{keyword}{public}:}
+\DoxyCodeLine{16     QWidget* \mbox{\hyperlink{class_com_port_row_ad1838f144e77ee02bd25eb632310978e}{generateElement}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_com_port_row}{ComPortRow}}(\mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}} *\mbox{\hyperlink{class_com_port_row_aa988dda0332f58476df7260236e0d20e}{controller}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{class_com_port_row_ae9fc70925a09bb64533ffd9ee9682679}{index}});}
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_com_port_row_ae0e4c1c65924bcf11eee54eb6c24c773}{setsNeeded}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{20     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_com_port_row_ae9fc70925a09bb64533ffd9ee9682679}{index}};}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}} *\mbox{\hyperlink{class_com_port_row_aa988dda0332f58476df7260236e0d20e}{controller}};}
+\DoxyCodeLine{22 \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_COMPORTROW\_H}}
+
+\end{DoxyCode}

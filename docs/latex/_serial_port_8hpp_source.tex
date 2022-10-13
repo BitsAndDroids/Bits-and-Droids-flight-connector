@@ -1,0 +1,42 @@
+\hypertarget{_serial_port_8hpp_source}{}\doxysection{Serial\+Port.\+hpp}
+\label{_serial_port_8hpp_source}\index{serial/SerialPort.hpp@{serial/SerialPort.hpp}}
+\mbox{\hyperlink{_serial_port_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ * Author: Manash Kumar Mandal}}
+\DoxyCodeLine{3 \textcolor{comment}{ * Modified Library introduced in Arduino Playground which does not work}}
+\DoxyCodeLine{4 \textcolor{comment}{ * This works perfectly}}
+\DoxyCodeLine{5 \textcolor{comment}{ * LICENSE: MIT}}
+\DoxyCodeLine{6 \textcolor{comment}{ */}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#define MAX\_DATA\_LENGTH 25}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <windows.h>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_serial_port}{SerialPort}} \{}
+\DoxyCodeLine{18  \textcolor{keyword}{private}:}
+\DoxyCodeLine{19   HANDLE \mbox{\hyperlink{class_serial_port_aefc61186943ed809b4e3ef56029dd448}{handler}};}
+\DoxyCodeLine{20   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_serial_port_a93a3839f2ed13ec4fa2bb32b5c292ec9}{connected}};}
+\DoxyCodeLine{21   COMSTAT \mbox{\hyperlink{class_serial_port_a72d12e9f28437b04fa855c074b18d629}{status}};}
+\DoxyCodeLine{22   DWORD \mbox{\hyperlink{class_serial_port_a255fe9d48696a3d3d9c2c7dbb9969f1d}{errors}};}
+\DoxyCodeLine{23   \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_serial_port_a5acc8f208001976f06b1d60cc3f5e188}{settingsHandler}};}
+\DoxyCodeLine{24   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_serial_port_a9c4eb417b119cd97373261d2c35e8d7c}{arduinoWaitTime}} = 15;}
+\DoxyCodeLine{25   std::string \mbox{\hyperlink{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}{portName}};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27  \textcolor{keyword}{public}:}
+\DoxyCodeLine{28   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_serial_port}{SerialPort}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}{portName}});}
+\DoxyCodeLine{29   \mbox{\hyperlink{class_serial_port_a8e09f366ed9b26b0456b66ae7bd8c702}{\string~SerialPort}}();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_serial_port_a6d14fa4e371c25e957a92c0adf3ac011}{readSerialPort}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *buffer, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} buf\_size);}
+\DoxyCodeLine{32   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_serial_port_a3ca49feff23bdfccfcd738ff8bd56bf0}{writeSerialPort}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *buffer, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} buf\_size);}
+\DoxyCodeLine{33   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_serial_port_a73883aa801c1302297bf0e123bf90bc7}{isConnected}}();}
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_serial_port_af053dd018c1797eb884cf9230cd11420}{closeSerial}}();}
+\DoxyCodeLine{35   std::string \mbox{\hyperlink{class_serial_port_abce445f71fea742efa84532737b21394}{getPortName}}();}
+\DoxyCodeLine{36 \};}
+
+\end{DoxyCode}

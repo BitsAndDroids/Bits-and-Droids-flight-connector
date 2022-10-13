@@ -1,0 +1,80 @@
+\hypertarget{class_output_converters}{}\doxysection{Output\+Converters Class Reference}
+\label{class_output_converters}\index{OutputConverters@{OutputConverters}}
+
+
+{\ttfamily \#include $<$Output\+Converters.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_output_converters_ade75588f6373fac7add8cd9d2c9e347a}{Output\+Converters}} ()
+\item 
+std\+::pair$<$ int, std\+::string $>$ \mbox{\hyperlink{class_output_converters_a2910b5e39f7d3545b0dd0e5146964451}{parse\+Output\+String}} (float received, const std\+::string \&prefix, int mode)
+\item 
+float \mbox{\hyperlink{class_output_converters_a6e91b7bc0ab950e023c35cb405bcccca}{conver\+Outgoing\+Float\+Value}} (float to\+Convert, int mode)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_output_converters_a56bfd088fa8f770b7f15c3a6c1676ecb}{radian\+To\+Degree}} (double rec)
+\item 
+float \mbox{\hyperlink{class_output_converters_aaa1577f7d75336373131c651c9063315}{radian\+To\+Degree\+Float}} (double rec)
+\item 
+float \mbox{\hyperlink{class_output_converters_a8a52f3c4b486b6acdce4dcc0096a0ca9}{radian\+To\+Degree\+Float}} (float rec)
+\item 
+int \mbox{\hyperlink{class_output_converters_ac1b16420d967e934e0594edc9899bf3a}{radian\+To\+Degree}} (float rec)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_output_converters_ade75588f6373fac7add8cd9d2c9e347a}\label{class_output_converters_ade75588f6373fac7add8cd9d2c9e347a}} 
+\index{OutputConverters@{OutputConverters}!OutputConverters@{OutputConverters}}
+\index{OutputConverters@{OutputConverters}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{OutputConverters()}{OutputConverters()}}
+{\footnotesize\ttfamily Output\+Converters\+::\+Output\+Converters (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_output_converters_a6e91b7bc0ab950e023c35cb405bcccca}\label{class_output_converters_a6e91b7bc0ab950e023c35cb405bcccca}} 
+\index{OutputConverters@{OutputConverters}!converOutgoingFloatValue@{converOutgoingFloatValue}}
+\index{converOutgoingFloatValue@{converOutgoingFloatValue}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{converOutgoingFloatValue()}{converOutgoingFloatValue()}}
+{\footnotesize\ttfamily float Output\+Converters\+::conver\+Outgoing\+Float\+Value (\begin{DoxyParamCaption}\item[{float}]{to\+Convert,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_output_converters_a2910b5e39f7d3545b0dd0e5146964451}\label{class_output_converters_a2910b5e39f7d3545b0dd0e5146964451}} 
+\index{OutputConverters@{OutputConverters}!parseOutputString@{parseOutputString}}
+\index{parseOutputString@{parseOutputString}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{parseOutputString()}{parseOutputString()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, std\+::string $>$ Output\+Converters\+::parse\+Output\+String (\begin{DoxyParamCaption}\item[{float}]{received,  }\item[{const std\+::string \&}]{prefix,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_output_converters_a56bfd088fa8f770b7f15c3a6c1676ecb}\label{class_output_converters_a56bfd088fa8f770b7f15c3a6c1676ecb}} 
+\index{OutputConverters@{OutputConverters}!radianToDegree@{radianToDegree}}
+\index{radianToDegree@{radianToDegree}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{radianToDegree()}{radianToDegree()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int Output\+Converters\+::radian\+To\+Degree (\begin{DoxyParamCaption}\item[{double}]{rec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_converters_ac1b16420d967e934e0594edc9899bf3a}\label{class_output_converters_ac1b16420d967e934e0594edc9899bf3a}} 
+\index{OutputConverters@{OutputConverters}!radianToDegree@{radianToDegree}}
+\index{radianToDegree@{radianToDegree}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{radianToDegree()}{radianToDegree()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Output\+Converters\+::radian\+To\+Degree (\begin{DoxyParamCaption}\item[{float}]{rec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_converters_aaa1577f7d75336373131c651c9063315}\label{class_output_converters_aaa1577f7d75336373131c651c9063315}} 
+\index{OutputConverters@{OutputConverters}!radianToDegreeFloat@{radianToDegreeFloat}}
+\index{radianToDegreeFloat@{radianToDegreeFloat}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{radianToDegreeFloat()}{radianToDegreeFloat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Output\+Converters\+::radian\+To\+Degree\+Float (\begin{DoxyParamCaption}\item[{double}]{rec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_converters_a8a52f3c4b486b6acdce4dcc0096a0ca9}\label{class_output_converters_a8a52f3c4b486b6acdce4dcc0096a0ca9}} 
+\index{OutputConverters@{OutputConverters}!radianToDegreeFloat@{radianToDegreeFloat}}
+\index{radianToDegreeFloat@{radianToDegreeFloat}!OutputConverters@{OutputConverters}}
+\doxysubsubsection{\texorpdfstring{radianToDegreeFloat()}{radianToDegreeFloat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily float Output\+Converters\+::radian\+To\+Degree\+Float (\begin{DoxyParamCaption}\item[{float}]{rec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+utils/\mbox{\hyperlink{_output_converters_8h}{Output\+Converters.\+h}}\item 
+utils/\mbox{\hyperlink{_output_converters_8cpp}{Output\+Converters.\+cpp}}\end{DoxyCompactItemize}

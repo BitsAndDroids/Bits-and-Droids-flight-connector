@@ -1,0 +1,69 @@
+\hypertarget{_service_worker_8cpp}{}\doxysection{workers/\+Service\+Worker.cpp File Reference}
+\label{_service_worker_8cpp}\index{workers/ServiceWorker.cpp@{workers/ServiceWorker.cpp}}
+{\ttfamily \#include \char`\"{}Service\+Worker.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}logging/\+Log\+Window.\+h\char`\"{}}\newline
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}{DATA\+\_\+\+DEFINE\+\_\+\+ID}} \{ \newline
+\mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}{DEFINITION\+\_\+\+PDR\+\_\+\+RADIO}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}{DEFINITION\+\_\+\+STRING}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}{DEFINITION\+\_\+\+ELEVATOR\+\_\+\+TRIM\+\_\+\+PCT}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}{DEFINITION\+\_\+1}} = 12
+, \newline
+\mbox{\hyperlink{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}{DEFINITION\+\_\+\+SERVICE\+\_\+\+DATA}} = 14
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \mbox{\hyperlink{_service_worker_8cpp_ab2d4769f74a84d5412b5affaf2b3545d}{service\+Simconnect}}
+\item 
+\mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\+\_\+\+CLIENT\+\_\+\+DATA\+\_\+\+ID}} \mbox{\hyperlink{_service_worker_8cpp_ac4797f23d644c599222141312d2e591e}{service\+Layer\+Data\+ID}} = 3
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}} 
+\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DATA\_DEFINE\_ID@{DATA\_DEFINE\_ID}}
+\index{DATA\_DEFINE\_ID@{DATA\_DEFINE\_ID}!ServiceWorker.cpp@{ServiceWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{DATA\_DEFINE\_ID}{DATA\_DEFINE\_ID}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}{DATA\+\_\+\+DEFINE\+\_\+\+ID}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_PDR\_RADIO@{DEFINITION\_PDR\_RADIO}!ServiceWorker.cpp@{ServiceWorker.cpp}}\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DEFINITION\_PDR\_RADIO@{DEFINITION\_PDR\_RADIO}}}\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}} 
+DEFINITION\+\_\+\+PDR\+\_\+\+RADIO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_STRING@{DEFINITION\_STRING}!ServiceWorker.cpp@{ServiceWorker.cpp}}\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DEFINITION\_STRING@{DEFINITION\_STRING}}}\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}} 
+DEFINITION\+\_\+\+STRING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_ELEVATOR\_TRIM\_PCT@{DEFINITION\_ELEVATOR\_TRIM\_PCT}!ServiceWorker.cpp@{ServiceWorker.cpp}}\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DEFINITION\_ELEVATOR\_TRIM\_PCT@{DEFINITION\_ELEVATOR\_TRIM\_PCT}}}\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}} 
+DEFINITION\+\_\+\+ELEVATOR\+\_\+\+TRIM\+\_\+\+PCT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_1@{DEFINITION\_1}!ServiceWorker.cpp@{ServiceWorker.cpp}}\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DEFINITION\_1@{DEFINITION\_1}}}\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}} 
+DEFINITION\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_SERVICE\_DATA@{DEFINITION\_SERVICE\_DATA}!ServiceWorker.cpp@{ServiceWorker.cpp}}\index{ServiceWorker.cpp@{ServiceWorker.cpp}!DEFINITION\_SERVICE\_DATA@{DEFINITION\_SERVICE\_DATA}}}\mbox{\Hypertarget{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}\label{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}} 
+DEFINITION\+\_\+\+SERVICE\+\_\+\+DATA&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{_service_worker_8cpp_ac4797f23d644c599222141312d2e591e}\label{_service_worker_8cpp_ac4797f23d644c599222141312d2e591e}} 
+\index{ServiceWorker.cpp@{ServiceWorker.cpp}!serviceLayerDataID@{serviceLayerDataID}}
+\index{serviceLayerDataID@{serviceLayerDataID}!ServiceWorker.cpp@{ServiceWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{serviceLayerDataID}{serviceLayerDataID}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\+\_\+\+CLIENT\+\_\+\+DATA\+\_\+\+ID}} service\+Layer\+Data\+ID = 3}
+
+\mbox{\Hypertarget{_service_worker_8cpp_ab2d4769f74a84d5412b5affaf2b3545d}\label{_service_worker_8cpp_ab2d4769f74a84d5412b5affaf2b3545d}} 
+\index{ServiceWorker.cpp@{ServiceWorker.cpp}!serviceSimconnect@{serviceSimconnect}}
+\index{serviceSimconnect@{serviceSimconnect}!ServiceWorker.cpp@{ServiceWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{serviceSimconnect}{serviceSimconnect}}
+{\footnotesize\ttfamily HANDLE service\+Simconnect}
+

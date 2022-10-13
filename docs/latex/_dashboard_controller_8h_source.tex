@@ -1,0 +1,60 @@
+\hypertarget{_dashboard_controller_8h_source}{}\doxysection{Dashboard\+Controller.\+h}
+\label{_dashboard_controller_8h_source}\index{dashboard/controller/DashboardController.h@{dashboard/controller/DashboardController.h}}
+\mbox{\hyperlink{_dashboard_controller_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 19-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_DASHBOARDCONTROLLER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_DASHBOARDCONTROLLER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QMainWindow>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{pathhandler_8h}{handlers/pathhandler.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_message_caster_8h}{logging/MessageCaster.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_m_f_s_worker_8h}{dashboard/workers/MFSWorker.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_service_worker_8h}{workers/ServiceWorker.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_combobox_8h}{elements/ModeIndexCombobox.h}}"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_checkbox_8h}{elements/ModeIndexCheckbox.h}}"{}}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_dashboard_controller}{DashboardController}} : \textcolor{keyword}{public} QObject \{}
+\DoxyCodeLine{19 Q\_OBJECT}
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_dashboard_controller}{DashboardController}}(QMainWindow *\mbox{\hyperlink{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}{parent}});}
+\DoxyCodeLine{22 signals:}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a148694bfaa86e84be60ef7f10a2cd22e}{sendWASMCommand}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *data);}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a9df3feb8772215ae0e11d020c5e66f39}{gameConnectionMade}}(\textcolor{keywordtype}{int} state);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a9fc4c588deddd36678011c510d2ec941}{boardConnectionMade}}(\textcolor{keywordtype}{int} state);}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_ab3d8913b3193c2e9289c744332b0e8b7}{exitProgram}}();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a6cc1e9c553cd24f3b6cf83f0dcec2989}{openLogWindow}}();}
+\DoxyCodeLine{32 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_ac700c444bd0f8743b7e824eafbb63eb1}{updateButtonClicked}}();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{private}:}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_path_handler}{PathHandler}} \mbox{\hyperlink{class_dashboard_controller_a2f9db62ece1e7594ad8e74755d5f90f9}{pathHandler}} = \mbox{\hyperlink{class_path_handler}{PathHandler}}();}
+\DoxyCodeLine{37     \mbox{\hyperlink{class_message_caster}{MessageCaster}} \mbox{\hyperlink{class_dashboard_controller_afe5b862dabb2cabc644f506c25f69848}{messageCaster}} = \mbox{\hyperlink{class_message_caster}{MessageCaster}}();}
+\DoxyCodeLine{38     QMainWindow *\mbox{\hyperlink{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}{parent}};}
+\DoxyCodeLine{39     QString \mbox{\hyperlink{class_dashboard_controller_a15f318e5eca93d587bfaf344463116f4}{applicationEventsPath}} = \mbox{\hyperlink{class_dashboard_controller_a2f9db62ece1e7594ad8e74755d5f90f9}{pathHandler}}.\mbox{\hyperlink{class_path_handler_a1cb031023909495191ffdef8c3e0d55a}{getWritableEventPath}}();}
+\DoxyCodeLine{40     \mbox{\hyperlink{class_service_worker}{ServiceWorker}} *\mbox{\hyperlink{class_dashboard_controller_a0c7f8e56cae2949990998999d7a168ee}{serviceWorker}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_service_worker}{ServiceWorker}}();}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a9694d603ba0d6374f3f83566ab3fc1fd}{installWasm}}();}
+\DoxyCodeLine{42     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_dashboard_controller_aa8b3941f0d3afee0cfec376554dc15b5}{checkIfComboIsEmpty}}(\textcolor{keyword}{const} QList<ModeIndexCombobox *> \&toCheck);}
+\DoxyCodeLine{43 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{44     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a484a8c3d5f67c6016d0a97aaf380caa8}{updateEventFile}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     QList<ModeIndexCheckbox *> \mbox{\hyperlink{class_dashboard_controller_a3a426c3d102c297e36dd8d3fa3d2fd67}{getCheckboxesByPattern}}(\textcolor{keyword}{const} QRegularExpression \&pattern);}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_controller_a643dc91d5b8c277293914693d6b1e3f6}{checkForUpdates}}(\textcolor{keywordtype}{bool} silentCheck);}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_DASHBOARDCONTROLLER\_H}}
+
+\end{DoxyCode}

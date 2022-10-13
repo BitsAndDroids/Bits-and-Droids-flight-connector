@@ -1,0 +1,119 @@
+\hypertarget{class_calibrate_axis_menu}{}\doxysection{Calibrate\+Axis\+Menu Class Reference}
+\label{class_calibrate_axis_menu}\index{CalibrateAxisMenu@{CalibrateAxisMenu}}
+
+
+{\ttfamily \#include $<$calibrateaxismenu.\+h$>$}
+
+Inheritance diagram for Calibrate\+Axis\+Menu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_calibrate_axis_menu}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_calibrate_axis_menu_abcf8fcd6cbb43d4b31b644c43f2220a3}{closed\+Calibrate\+Axis\+Menu}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_calibrate_axis_menu_ae431d87b5246b78f824160a9607cc995}{Calibrate\+Axis\+Menu}} (QWidget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_calibrate_axis_menu_a90c5a5720f588bcd46e5759ed591dc13}{$\sim$\+Calibrate\+Axis\+Menu}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QGrid\+Layout $\ast$ \mbox{\hyperlink{class_calibrate_axis_menu_a1f1f163d3439fdab7c48a11b196dd0a9}{Generate\+Curve\+Layouts}} ()
+\item 
+void \mbox{\hyperlink{class_calibrate_axis_menu_ad66b35a8de278d6eb2d3c1333639d3fa}{save\+Settings}} ()
+\item 
+void \mbox{\hyperlink{class_calibrate_axis_menu_a06d4334c8b85406e178f3f8ea9f9fbee}{close\+Event}} (QClose\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ui_1_1_calibrate_axis_menu}{Ui\+::\+Calibrate\+Axis\+Menu}} $\ast$ \mbox{\hyperlink{class_calibrate_axis_menu_a8ce8e4afc54ea22a6b3f005ce31b96f5}{ui}}
+\item 
+QString\+List \mbox{\hyperlink{class_calibrate_axis_menu_a49dc671b864abe942ff63f80e837c2cb}{curves}} = \{\char`\"{}Rudder\char`\"{}, \char`\"{}Toe brakes\char`\"{}, \char`\"{}Aileron\char`\"{}, \char`\"{}Elevator\char`\"{}\}
+\item 
+\mbox{\hyperlink{class_form_builder}{Form\+Builder}} $\ast$ \mbox{\hyperlink{class_calibrate_axis_menu_a787f8b0d61f49270458e9896474d0cf8}{builder}} = new \mbox{\hyperlink{class_form_builder}{Form\+Builder}}()
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_calibrate_axis_menu_a7bb7c9ba0e602aaae367a89a7c59afd2}{settings\+Handler}} = \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_calibrate_axis_menu_ae431d87b5246b78f824160a9607cc995}\label{class_calibrate_axis_menu_ae431d87b5246b78f824160a9607cc995}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{CalibrateAxisMenu()}{CalibrateAxisMenu()}}
+{\footnotesize\ttfamily Calibrate\+Axis\+Menu\+::\+Calibrate\+Axis\+Menu (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a90c5a5720f588bcd46e5759ed591dc13}\label{class_calibrate_axis_menu_a90c5a5720f588bcd46e5759ed591dc13}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!````~CalibrateAxisMenu@{$\sim$CalibrateAxisMenu}}
+\index{````~CalibrateAxisMenu@{$\sim$CalibrateAxisMenu}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{$\sim$CalibrateAxisMenu()}{~CalibrateAxisMenu()}}
+{\footnotesize\ttfamily Calibrate\+Axis\+Menu\+::$\sim$\+Calibrate\+Axis\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_calibrate_axis_menu_abcf8fcd6cbb43d4b31b644c43f2220a3}\label{class_calibrate_axis_menu_abcf8fcd6cbb43d4b31b644c43f2220a3}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!closedCalibrateAxisMenu@{closedCalibrateAxisMenu}}
+\index{closedCalibrateAxisMenu@{closedCalibrateAxisMenu}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{closedCalibrateAxisMenu}{closedCalibrateAxisMenu}}
+{\footnotesize\ttfamily void Calibrate\+Axis\+Menu\+::closed\+Calibrate\+Axis\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a06d4334c8b85406e178f3f8ea9f9fbee}\label{class_calibrate_axis_menu_a06d4334c8b85406e178f3f8ea9f9fbee}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Calibrate\+Axis\+Menu\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a1f1f163d3439fdab7c48a11b196dd0a9}\label{class_calibrate_axis_menu_a1f1f163d3439fdab7c48a11b196dd0a9}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!GenerateCurveLayouts@{GenerateCurveLayouts}}
+\index{GenerateCurveLayouts@{GenerateCurveLayouts}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{GenerateCurveLayouts()}{GenerateCurveLayouts()}}
+{\footnotesize\ttfamily QGrid\+Layout $\ast$ Calibrate\+Axis\+Menu\+::\+Generate\+Curve\+Layouts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_ad66b35a8de278d6eb2d3c1333639d3fa}\label{class_calibrate_axis_menu_ad66b35a8de278d6eb2d3c1333639d3fa}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!saveSettings@{saveSettings}}
+\index{saveSettings@{saveSettings}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{saveSettings()}{saveSettings()}}
+{\footnotesize\ttfamily void Calibrate\+Axis\+Menu\+::save\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_calibrate_axis_menu_a787f8b0d61f49270458e9896474d0cf8}\label{class_calibrate_axis_menu_a787f8b0d61f49270458e9896474d0cf8}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!builder@{builder}}
+\index{builder@{builder}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{builder}{builder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_form_builder}{Form\+Builder}}$\ast$ Calibrate\+Axis\+Menu\+::builder = new \mbox{\hyperlink{class_form_builder}{Form\+Builder}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a49dc671b864abe942ff63f80e837c2cb}\label{class_calibrate_axis_menu_a49dc671b864abe942ff63f80e837c2cb}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!curves@{curves}}
+\index{curves@{curves}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{curves}{curves}}
+{\footnotesize\ttfamily QString\+List Calibrate\+Axis\+Menu\+::curves = \{\char`\"{}Rudder\char`\"{}, \char`\"{}Toe brakes\char`\"{}, \char`\"{}Aileron\char`\"{}, \char`\"{}Elevator\char`\"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a7bb7c9ba0e602aaae367a89a7c59afd2}\label{class_calibrate_axis_menu_a7bb7c9ba0e602aaae367a89a7c59afd2}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Calibrate\+Axis\+Menu\+::settings\+Handler = \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_calibrate_axis_menu_a8ce8e4afc54ea22a6b3f005ce31b96f5}\label{class_calibrate_axis_menu_a8ce8e4afc54ea22a6b3f005ce31b96f5}} 
+\index{CalibrateAxisMenu@{CalibrateAxisMenu}!ui@{ui}}
+\index{ui@{ui}!CalibrateAxisMenu@{CalibrateAxisMenu}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_ui_1_1_calibrate_axis_menu}{Ui\+::\+Calibrate\+Axis\+Menu}}$\ast$ Calibrate\+Axis\+Menu\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+widgets/axismenu/\mbox{\hyperlink{calibrateaxismenu_8h}{calibrateaxismenu.\+h}}\item 
+widgets/axismenu/\mbox{\hyperlink{calibrateaxismenu_8cpp}{calibrateaxismenu.\+cpp}}\end{DoxyCompactItemize}

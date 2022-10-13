@@ -450,20 +450,20 @@ void FormBuilder::autoRunChanged(){
     QString index = QString::number(senderCB->getIndex());
     QString group;
     switch(mode){
-        case INPUTMODE:  {
-            group = "inputARIndex";
-            break;
-        }
-
-        case OUTPUTMODE: {
-            group = "outputARIndex";
-            break;
-        }
-
-        case DUALMODE:   {
-            group = "dualARIndex";
-            break;
-        }
+//        case INPUTMODE:  {
+//            group = "inputARIndex";
+//            break;
+//        }
+//
+//        case OUTPUTMODE: {
+//            group = "outputARIndex";
+//            break;
+//        }
+//
+//        case DUALMODE:   {
+//            group = "dualARIndex";
+//            break;
+//        }
         default: break;
     }
     if(!settingsHandler.retrieveSetting(group,index)->isNull()) {
@@ -473,12 +473,5 @@ void FormBuilder::autoRunChanged(){
 
 
 
-
-}
-
-
-
-
-void FormBuilder::adjustIndexes(int index) {
 
 }

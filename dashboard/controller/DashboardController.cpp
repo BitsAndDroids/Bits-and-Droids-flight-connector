@@ -37,7 +37,7 @@ DashboardController::DashboardController(QMainWindow *parent) {
     connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
     serviceWorker->start();
     //TODO connect logger
-    //QObject::connect(&dualWorker, &DualWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
+    //QObject::connect(&dualWorker, &MFSWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.checkEventFilePresent();
 }

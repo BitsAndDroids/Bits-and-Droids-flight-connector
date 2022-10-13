@@ -1,0 +1,123 @@
+\hypertarget{classoutput_bundle}{}\doxysection{output\+Bundle Class Reference}
+\label{classoutput_bundle}\index{outputBundle@{outputBundle}}
+
+
+{\ttfamily \#include $<$outputbundle.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classoutput_bundle_ac9d44d65c31b444cd28e2ccce4020879}{output\+Bundle}} ()
+\item 
+void \mbox{\hyperlink{classoutput_bundle_abe5e055a0b8c234fc34344385308aca4}{set\+Set}} (\mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}{set}})
+\item 
+void \mbox{\hyperlink{classoutput_bundle_ae4da518cea9ee305b56be3d295604864}{set\+Serial\+Port}} (\mbox{\hyperlink{class_serial_port}{Serial\+Port}} serial\+Port)
+\item 
+void \mbox{\hyperlink{classoutput_bundle_a94d8cb7f2a4c2824972d5b786a909e1f}{set\+Outputs\+In\+Set}} (QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ outputs)
+\item 
+void \mbox{\hyperlink{classoutput_bundle_aff6c7bf3dc8aff82603f6c8eea11b0bc}{set\+Serial\+Port\+String}} (const char $\ast$\mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{port\+String}})
+\item 
+const char $\ast$ \mbox{\hyperlink{classoutput_bundle_ae42df39cc29c4284351f3b9755cc0a35}{get\+Serial\+Port\+String}} ()
+\item 
+\mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ \mbox{\hyperlink{classoutput_bundle_abbdcbad938c99553e28508fe22c3a0b7}{get\+Serial\+Port}} ()
+\item 
+bool \mbox{\hyperlink{classoutput_bundle_a50fea7f7cfce7c9348f1d8942581d623}{is\+Output\+In\+Bundle}} (int id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}{set}}
+\item 
+\mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ \mbox{\hyperlink{classoutput_bundle_a4417963753d2def2c9025624837e0795}{arduino}}
+\item 
+const char $\ast$ \mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{port\+String}}
+\item 
+QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{classoutput_bundle_a9b6fe9363e07239d5193be996c515ec2}{outputs\+In\+Set}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classoutput_bundle_ac9d44d65c31b444cd28e2ccce4020879}\label{classoutput_bundle_ac9d44d65c31b444cd28e2ccce4020879}} 
+\index{outputBundle@{outputBundle}!outputBundle@{outputBundle}}
+\index{outputBundle@{outputBundle}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{outputBundle()}{outputBundle()}}
+{\footnotesize\ttfamily output\+Bundle\+::output\+Bundle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classoutput_bundle_abbdcbad938c99553e28508fe22c3a0b7}\label{classoutput_bundle_abbdcbad938c99553e28508fe22c3a0b7}} 
+\index{outputBundle@{outputBundle}!getSerialPort@{getSerialPort}}
+\index{getSerialPort@{getSerialPort}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{getSerialPort()}{getSerialPort()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ output\+Bundle\+::get\+Serial\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_bundle_ae42df39cc29c4284351f3b9755cc0a35}\label{classoutput_bundle_ae42df39cc29c4284351f3b9755cc0a35}} 
+\index{outputBundle@{outputBundle}!getSerialPortString@{getSerialPortString}}
+\index{getSerialPortString@{getSerialPortString}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{getSerialPortString()}{getSerialPortString()}}
+{\footnotesize\ttfamily const char $\ast$ output\+Bundle\+::get\+Serial\+Port\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_bundle_a50fea7f7cfce7c9348f1d8942581d623}\label{classoutput_bundle_a50fea7f7cfce7c9348f1d8942581d623}} 
+\index{outputBundle@{outputBundle}!isOutputInBundle@{isOutputInBundle}}
+\index{isOutputInBundle@{isOutputInBundle}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{isOutputInBundle()}{isOutputInBundle()}}
+{\footnotesize\ttfamily bool output\+Bundle\+::is\+Output\+In\+Bundle (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classoutput_bundle_a94d8cb7f2a4c2824972d5b786a909e1f}\label{classoutput_bundle_a94d8cb7f2a4c2824972d5b786a909e1f}} 
+\index{outputBundle@{outputBundle}!setOutputsInSet@{setOutputsInSet}}
+\index{setOutputsInSet@{setOutputsInSet}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{setOutputsInSet()}{setOutputsInSet()}}
+{\footnotesize\ttfamily void output\+Bundle\+::set\+Outputs\+In\+Set (\begin{DoxyParamCaption}\item[{QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$}]{outputs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_bundle_ae4da518cea9ee305b56be3d295604864}\label{classoutput_bundle_ae4da518cea9ee305b56be3d295604864}} 
+\index{outputBundle@{outputBundle}!setSerialPort@{setSerialPort}}
+\index{setSerialPort@{setSerialPort}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{setSerialPort()}{setSerialPort()}}
+{\footnotesize\ttfamily void output\+Bundle\+::set\+Serial\+Port (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_serial_port}{Serial\+Port}}}]{serial\+Port }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_bundle_aff6c7bf3dc8aff82603f6c8eea11b0bc}\label{classoutput_bundle_aff6c7bf3dc8aff82603f6c8eea11b0bc}} 
+\index{outputBundle@{outputBundle}!setSerialPortString@{setSerialPortString}}
+\index{setSerialPortString@{setSerialPortString}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{setSerialPortString()}{setSerialPortString()}}
+{\footnotesize\ttfamily void output\+Bundle\+::set\+Serial\+Port\+String (\begin{DoxyParamCaption}\item[{const char $\ast$}]{port\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_bundle_abe5e055a0b8c234fc34344385308aca4}\label{classoutput_bundle_abe5e055a0b8c234fc34344385308aca4}} 
+\index{outputBundle@{outputBundle}!setSet@{setSet}}
+\index{setSet@{setSet}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{setSet()}{setSet()}}
+{\footnotesize\ttfamily void output\+Bundle\+::set\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_set}{Set}}}]{set }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classoutput_bundle_a4417963753d2def2c9025624837e0795}\label{classoutput_bundle_a4417963753d2def2c9025624837e0795}} 
+\index{outputBundle@{outputBundle}!arduino@{arduino}}
+\index{arduino@{arduino}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{arduino}{arduino}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial_port}{Serial\+Port}}$\ast$ output\+Bundle\+::arduino\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_bundle_a9b6fe9363e07239d5193be996c515ec2}\label{classoutput_bundle_a9b6fe9363e07239d5193be996c515ec2}} 
+\index{outputBundle@{outputBundle}!outputsInSet@{outputsInSet}}
+\index{outputsInSet@{outputsInSet}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{outputsInSet}{outputsInSet}}
+{\footnotesize\ttfamily QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$ output\+Bundle\+::outputs\+In\+Set\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}\label{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}} 
+\index{outputBundle@{outputBundle}!portString@{portString}}
+\index{portString@{portString}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{portString}{portString}}
+{\footnotesize\ttfamily const char$\ast$ output\+Bundle\+::port\+String\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}\label{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}} 
+\index{outputBundle@{outputBundle}!set@{set}}
+\index{set@{set}!outputBundle@{outputBundle}}
+\doxysubsubsection{\texorpdfstring{set}{set}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set}{Set}} output\+Bundle\+::set\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+models/commands/\mbox{\hyperlink{outputbundle_8h}{outputbundle.\+h}}\item 
+models/commands/\mbox{\hyperlink{outputbundle_8cpp}{outputbundle.\+cpp}}\end{DoxyCompactItemize}

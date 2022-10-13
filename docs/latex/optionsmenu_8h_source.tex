@@ -1,0 +1,57 @@
+\hypertarget{optionsmenu_8h_source}{}\doxysection{optionsmenu.\+h}
+\label{optionsmenu_8h_source}\index{widgets/settingsmenu/optionsmenu.h@{widgets/settingsmenu/optionsmenu.h}}
+\mbox{\hyperlink{optionsmenu_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OPTIONSMENU\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OPTIONSMENU\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_engine_8h}{models/aircraft/Engine.h}}"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{formbuilder_8h}{widgets/settingsmenu/builder/formbuilder.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_ui}{Ui}} \{}
+\DoxyCodeLine{12 \textcolor{keyword}{class }optionsMenu;}
+\DoxyCodeLine{13 \}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{class }\mbox{\hyperlink{class_options_menu}{OptionsMenu}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{16   Q\_OBJECT}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18  \textcolor{keyword}{public}:}
+\DoxyCodeLine{19   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_options_menu}{OptionsMenu}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21   \mbox{\hyperlink{class_options_menu_ac8114f4053b060190deafe4e49d53be4}{\string~OptionsMenu}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{22  signals:}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_af9f9bad4b207a5016527bb57e0b784fc}{closedOptionsMenu}}();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26  \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_ac40ae6b48840dbc2699dc4241c8979c3}{on\_checkBox\_stateChanged}}(\textcolor{keywordtype}{int} arg1);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_a681ad9d8d29222b8e18da3af5715c132}{on\_saveSettingsBtn\_clicked}}();}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_aa1814e96bb4cf978b41540511ce4bc25}{on\_baudComboBox\_currentTextChanged}}(\textcolor{keyword}{const} QString \&arg1);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_a31aab2d012d88611964559cf43d4d298}{selectFile}}();}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36  \textcolor{keyword}{private}:}
+\DoxyCodeLine{37   \mbox{\hyperlink{class_form_builder}{FormBuilder}} *\mbox{\hyperlink{class_options_menu_ace6714452c89469042036dc01e9a45f5}{builder}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_form_builder}{FormBuilder}}();}
+\DoxyCodeLine{38   \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_options_menu_a574782c50f45f5936358ab10cc1c9b90}{settingsHandler}};}
+\DoxyCodeLine{39   \mbox{\hyperlink{class_ui_1_1options_menu}{Ui::optionsMenu}} *\mbox{\hyperlink{class_options_menu_aa2bf95f8152bdf0589adcb8171516308}{uiOptions}};}
+\DoxyCodeLine{40   \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_options_menu_adab336c4d6c88fceb790eff374598ee7}{defaultArduinoFrameUpdate}} = 15;}
+\DoxyCodeLine{41   \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_options_menu_a7effdf9039f5b8a760f8d73bb2dffc5b}{defaultArduinoWaitMs}} = 100;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_options_menu_a5216a7912372d02d051913b5d610cae7}{arduinoFrameUpdate}} = 15;}
+\DoxyCodeLine{44   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_options_menu_a522d04a7630ba0198ee8b2e3d603879e}{arduinoWaitMs}} = 100;}
+\DoxyCodeLine{45   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_options_menu_ab58d56e4c77834a63def7ee9d202bfb9}{supportedAmntEngines}} = 4;}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47   \textcolor{comment}{// Engine engines[4];}}
+\DoxyCodeLine{48   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_options_menu_ad7255cfe1e959d87a9bc178b39e9a335}{closeEvent}}(QCloseEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{49 \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// OPTIONSMENU\_H}}
+
+\end{DoxyCode}

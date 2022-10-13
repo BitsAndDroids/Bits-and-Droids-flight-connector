@@ -32,9 +32,8 @@ public:
 
     InputSwitchHandler(std::map<int, Input> inputs, HANDLE connect);
 
-    void switchHandling(int index);
+    void switchHandling(const char* stringToParse);
 
-    char receivedString[10][255];
     HANDLE connect;
     SIMCONNECT_OBJECT_ID object;
     std::array<Axis *, constants::supportedEngines> enginelist;
@@ -66,58 +65,44 @@ private:
     CurveAxis aileronAxis = CurveAxis(InputEnum::DEFINITION_AXIS_AILERONS_SET);
     CurveAxis elevatorAxis = CurveAxis(InputEnum::DEFINITION_AXIS_ELEVATOR_SET);
 
-    void setEngineValues(int index);
+    void setEngineValues(std::string stringToSet);
 
-    void setMixtureValues(int index);
+    void setMixtureValues(std::string stringToSet);
 
-    void set_prop_values(int index);
+    void set_prop_values(std::string stringToSet);
 
-    int setComs(int index, int comNo);
+    int setComs(const std::string& stringToSet, int comNo) const;
 
-    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    void sendBasicCommandOn(SIMCONNECT_CLIENT_EVENT_ID eventID) const;
 
-    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID);
+    void sendBasicCommandOff(SIMCONNECT_CLIENT_EVENT_ID eventID) const;
 
-    int calibratedRange(int value, QList<coordinates> curve);
 
-    void setElevatorTrim(int index);
+    void setElevatorTrim(std::string stringToSet);
 
-    void setFlaps(int index);
+    void setFlaps(std::string stringToSet);
 
-    void setRudder(int index);
+    void setRudder(std::string stringToSet);
 
-    void setBrakeAxis(int index);
+    void setBrakeAxis(std::string stringToSet);
 
-    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
+    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value) const;
 
-    void controlYoke(int index);
+    void controlYoke(std::string stringToSet);
 
-    void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
+    void sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, const std::string& stringToSet);
 
-    int mapCoordinates(coordinates toMap);
+    static int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
 
-    int mapCoordinates(coordinates toMapMin, coordinates toMapMax);
-
-    int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
-
-    void sendWASMCommand(SIMCONNECT_CLIENT_EVENT_ID eventID, int index);
-
-    void sendWASMCommand(int index, int value);
-
-    int calibratedRange(int value, QList<coordinates> *curve);
-
-    int calibratedRange(int value, int index);
+    void sendWASMCommand(int prefix, int value) const;
 
     void setAxisValue(Axis *axis);
 
     void mapEngineValueToAxis(Engine *engine) const;
 
-    vector<int> cutInputs(int amountOfPartsNeeded, int index);
+    static vector<int> cutInputs(int amountOfPartsNeeded, std::string stringToSet);
 
-
-    void calibratedRange(CurveAxis *curveAxis);
-
-    std::map<int, Input> readInputs();
+    static void calibratedRange(CurveAxis *curveAxis);
 
     void mapInputs();
 };

@@ -1,0 +1,65 @@
+\hypertarget{_service_worker_8h_source}{}\doxysection{Service\+Worker.\+h}
+\label{_service_worker_8h_source}\index{workers/ServiceWorker.h@{workers/ServiceWorker.h}}
+\mbox{\hyperlink{_service_worker_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 13-\/7-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_SERVICEWORKER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_SERVICEWORKER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QThread>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QMutex>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QWaitCondition>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sim_connect_8h}{models/SimConnect.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_logger_8h}{logging/Logger.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_logger_service_8h}{services/LoggerService.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_window_8h}{logging/LogWindow.h}}"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_service_worker}{ServiceWorker}} : \textcolor{keyword}{public} QThread \{}
+\DoxyCodeLine{17 Q\_OBJECT}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_a212364f4053082fac54e1f43a23e51ef}{run}}()\textcolor{keyword}{ override }\{ \mbox{\hyperlink{class_service_worker_a58258e9d4b92affaa6ec6ca7b946ec92}{startServices}}(); \}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{private}:}
+\DoxyCodeLine{22     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_ab4644a8a606430478c06287a87c5ca6c}{MyDispatchProcRD}}(\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}} *pData, DWORD cbData,}
+\DoxyCodeLine{23                                  \textcolor{keywordtype}{void} *pContext);}
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_a58258e9d4b92affaa6ec6ca7b946ec92}{startServices}}();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_service_worker_a1f4d6840c718055dc63654f3253d4b55}{connectionClosed}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{27     \textcolor{keyword}{enum} \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4e}{EVENT\_ID}} \{}
+\DoxyCodeLine{28         \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eaf87288c9dc23e77e8fe9e2e575058a1b}{EVENT\_SIM\_START}},}
+\DoxyCodeLine{29         \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eae0a6c3a84110fc35b1034ef4aad80d85}{EVENT\_1\_SECOND}}}
+\DoxyCodeLine{30     \};}
+\DoxyCodeLine{31     \mbox{\hyperlink{class_logger_service}{LoggerService}}* \mbox{\hyperlink{class_service_worker_aaa95b2f3a553eb77329ad0951c1609f0}{logger}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_logger_service}{LoggerService}}();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{public}:}
+\DoxyCodeLine{35     \mbox{\hyperlink{class_service_worker_ab26f58241e9e78ee5acee1d43bb13578}{ServiceWorker}}();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \mbox{\hyperlink{class_service_worker_a35d0dd1a9ca9d3e931795780c74ea2b6}{\string~ServiceWorker}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \mbox{\hyperlink{class_logger_service}{LoggerService}} *\mbox{\hyperlink{class_service_worker_aa919d66ef015f413608cc70f6e3179c0}{getLoggerService}}();}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_ab3d517ffcaeeeb464a3bd39c4385102b}{setConnectionClosed}}(\textcolor{keywordtype}{bool});}
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_a1c493897cbe21af1db52f950a8a7bfb0}{setStopServiceWorker}}(\textcolor{keywordtype}{bool} state);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     QMutex \mbox{\hyperlink{class_service_worker_aac74d7edf7f255b5de8634d5bb95335d}{mutex}};}
+\DoxyCodeLine{45     QWaitCondition \mbox{\hyperlink{class_service_worker_af3b8c59916728b51836f48eae95ab33c}{condition}};}
+\DoxyCodeLine{46     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_service_worker_a9d56a46ec6e571ae43b092c7e7cc0713}{stopServiceWorker}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 signals:}
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_aeb9a07ba9f7d49977edad3ff1e6ef2c1}{gameConnectionMade}}(\textcolor{keywordtype}{int} state);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_abf0b86e80c3168f16efe463f28e2d9c2}{logMessage}}(\textcolor{keyword}{const} std::string\& message, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} level);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_service_worker_a6880bb39064640a1c553e3e4d663b361}{sendWASMData}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *data);}
+\DoxyCodeLine{56 \};}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_SERVICEWORKER\_H}}
+
+\end{DoxyCode}

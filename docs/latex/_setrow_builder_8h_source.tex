@@ -1,0 +1,43 @@
+\hypertarget{_setrow_builder_8h_source}{}\doxysection{Setrow\+Builder.\+h}
+\label{_setrow_builder_8h_source}\index{outputmenu/builder/SetrowBuilder.h@{outputmenu/builder/SetrowBuilder.h}}
+\mbox{\hyperlink{_setrow_builder_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 17-\/8-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_SETROWBUILDER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_SETROWBUILDER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QList>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <QVBoxLayout>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_set_row_8h}{outputmenu/elements/SetRow.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{commands_2_set_8h}{models/commands/Set.h}}>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_setrow_builder}{SetrowBuilder}}: \textcolor{keyword}{public} QWidget\{}
+\DoxyCodeLine{17     Q\_OBJECT}
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a41bab8e92251c05a670ea4900e246e36}{buildSetrow}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_set}{Set}}\& set);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     QList<SetRow *> \mbox{\hyperlink{class_setrow_builder_ac6c171be011e48f6b9c2848e79c12024}{setRows}} = QList<SetRow *>();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{keyword}{public}:}
+\DoxyCodeLine{24     \mbox{\hyperlink{class_setrow_builder}{SetrowBuilder}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     QWidget *\mbox{\hyperlink{class_setrow_builder_ad1a7e065d49868ff8df3a310f11245f4}{buildSetrowContainer}}();}
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a34395edd45fb9ff6b22139eddc978085}{createSet}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{28 signals:}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a3d0703caf3e28589f3c7f58e374c1272}{showSetDetailsSignal}}(QString);}
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a8227b24a6b79c8a395aa847d7d4aafcd}{editSetSignal}}(QString);}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a1ad8d3d319f670a28cc5a903e10da2ab}{deleteSetSignal}}(QString);}
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_setrow_builder_a301f2cb1d54c6efff303446594827f65}{createSetSignal}}();}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_SETROWBUILDER\_H}}
+
+\end{DoxyCode}

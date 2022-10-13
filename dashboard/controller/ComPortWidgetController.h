@@ -9,7 +9,7 @@
 #include "dashboard/models/ComPortWidgetModel.h"
 #include "elements/ModeIndexCombobox.h"
 #include "enums/ModeEnum.h"
-#include "workers/dualworker.h"
+#include "dashboard/workers/MFSWorker.h"
 #include "elements/ModeIndexCheckbox.h"
 #include "workers/serviceWorker.h"
 #include <QLabel>
@@ -58,10 +58,10 @@ private:
 
     void addComRow();
     uint8_t rows = 0;
-    std::string convertComPort(QString comText);
+    QString convertComPort(const QString& comText);
     ServiceWorker *serviceWorker;
     ComPortWidgetModel *comPortModel = new ComPortWidgetModel();
-    DualWorker dualWorker = DualWorker();
+    MFSWorker dualWorker = MFSWorker();
     QWidget *parent;
     SetHandler setHandler = SetHandler();
     SettingsHandler settingsHandler = SettingsHandler();

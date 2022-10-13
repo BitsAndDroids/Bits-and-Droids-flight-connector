@@ -8,20 +8,22 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QPushButton>
+#include "settings/ComSettingsHandler.h"
 #include "dashboard/elements/ComPortRow.h"
 
 ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker) {
+
     this->parent = parent;
     this->serviceWorker = serviceWorker;
-    connect(&dualWorker, &DualWorker::logMessage, serviceWorker, &ServiceWorker::logMessage);
-    connect(&dualWorker, &DualWorker::boardConnectionMade, this, &ComPortWidgetController::boardConnectionMade);
 
-    InputReader inputReader = InputReader();
-    inputReader.readInputs();
-    dualWorker.setInputs(inputReader.getInputs());
+    ComSettingsHandler comSettingsHandler;
+    comSettingsHandler.adjustIndexes();
+
+    connect(&dualWorker, &MFSWorker::logMessage, serviceWorker, &ServiceWorker::logMessage);
+    connect(&dualWorker, &MFSWorker::boardConnectionMade, this, &ComPortWidgetController::boardConnectionMade);
 }
 
-void ComPortWidgetController::initComRows(){
+void ComPortWidgetController::initComRows() {
     auto foundComports = settingsHandler.retrieveKeys("comPorts");
     for (int i = 0; i < foundComports->size(); ++i) {
         add();
@@ -32,11 +34,9 @@ void ComPortWidgetController::initComRows(){
 void ComPortWidgetController::removeComPortRow() {
     QWidget * senderWidget = qobject_cast<QWidget *>(sender()->parent());
     QString index = sender()->objectName();
+    ComSettingsHandler comSettingsHandler;
     try {
-        settingsHandler.removeSetting("comSets", index);
-        settingsHandler.removeSetting("autoRunIndex", index);
-        settingsHandler.removeSetting("comPorts", index);
-        // adjustIndexes(index.toInt());
+        comSettingsHandler.removeComRowSettings(index);
     } catch (std::exception &e) {
         qDebug("%s", e.what());
     }
@@ -64,53 +64,19 @@ void ComPortWidgetController::start() {
     QRegularExpression searchSets("setBox");
     QList<ModeIndexCombobox *> setList = parent->findChildren<ModeIndexCombobox *>(searchSets);
 
-    QList<Output *> outputsToMap;
-
     toggleStartStopButtonState();
-
-    dualWorker.clearBundles();
+    //TODO move storage to model
+    QList<Set> *sets = setHandler.getSets();
+    QList<QPair<QString, int>> coms = QList<QPair<QString, int>>();
     for (int i = 0; i < comList.size(); i++) {
-        if (!(comList[i]->currentText().contains("Not connected"))) {
-            QString key = QString::number(i);
-
-            QString keyValue = comList[i]->currentText();
-            QString setKeyValue = setList[i]->currentText();
-
-            settingsHandler.storeValue("runningComPorts", key,
-                                       convertComPort(keyValue).c_str());
-            settingsHandler.storeValue("comPorts", key,
-                                       convertComPort(keyValue).c_str());
-            //TODO move this action to the comModel
-            auto availableSets = setHandler.loadSets();
-            std::cout<<"available sets size: "<<availableSets->size()<<std::endl;
-            if (!(setKeyValue == "No outputs")) {
-                //The 0 index is the "no outputs" entry that is why we have to deduct 1
-                int index = setList[i]->currentIndex() - 1;
-
-                int id = availableSets->at(index).getID();
-
-                auto *bundle = new outputBundle();
-
-                Set active = setHandler.getSetById(QString::number(id));
-                bundle->setSet(active);
-
-                auto *outputs = new QMap<int, Output *>();
-                *outputs = active.getOutputs();
-                QMap<int, Output *>::iterator j;
-                for (j = outputs->begin(); j != outputs->end(); j++) {
-                    outputsToMap.append(j.value());
-                }
-                dualWorker.setOutputsToMap(outputsToMap);
-                bundle->setOutputsInSet(*outputs);
-                dualWorker.addBundle(bundle);
-                //TODO REMEMBER THIS CHANGED IN WORKER AS WELL
-                settingsHandler.storeValue("runningComSets", key, id);
-                settingsHandler.storeValue("comSets", key, id);
-            } else {
-                settingsHandler.storeValue("comSets", key, "na");
-            }
-        }
+        QPair<QString, int> settingsPair = QPair<QString, int>(convertComPort(comList.at(i)->currentText()),
+                                                              sets->at(setList.at(i)->currentIndex() - 1).getID());
+        coms.append(settingsPair);
     }
+
+
+    ComSettingsHandler comSettingsHandler = ComSettingsHandler();
+    comSettingsHandler.saveComs(coms);
 
     dualWorker.abortDual = false;
     dualWorker.start();
@@ -147,7 +113,7 @@ void ComPortWidgetController::addComRow() {
 
 void ComPortWidgetController::add() {
     auto layout = parent->findChild<QVBoxLayout *>("comRowsContainer");
-    auto comportRow = new ComPortRow(this,rows);
+    auto comportRow = new ComPortRow(this, rows);
     layout->addWidget(comportRow->generateElement());
     rows++;
 }
@@ -182,7 +148,8 @@ void ComPortWidgetController::refreshComs() {
     QRegularExpression searchSets("setBox");
 
     QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
-    QList<Set> *sets = comPortModel->getAvailableSets();
+    //TODO move storage to model
+    QList<Set> *sets = setHandler.getSets();
 
     for (auto &i: setList) {
         i->clear();
@@ -279,20 +246,20 @@ QLabel *ComPortWidgetController::returnWarningString(int warningType) {
     return warningLabel;
 }
 
-std::string ComPortWidgetController::convertComPort(QString comText) {
-    std::string val =
-            R"(\\.\COM)" + comText.toStdString().std::string::substr(3, 2);
+QString ComPortWidgetController::convertComPort(const QString& comText) {
+    QString val =
+            R"(\\.\COM)" + comText.mid(3);
     return val;
 }
 
 void ComPortWidgetController::saveAutoRunStates() {
     auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
-    QString group;
     for (auto &cb: autoList) {
         QString index = QString::number(cb->getIndex());
         settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
     }
 }
+
 //TODO CHECK IF THIS NEEDS TO BE MOVED
 //void ComPortWidgetController::loadAutoRunState() {
 //    QRegularExpression searchAuto("auto");

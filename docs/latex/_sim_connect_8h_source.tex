@@ -1,0 +1,1014 @@
+\hypertarget{_sim_connect_8h_source}{}\doxysection{Sim\+Connect.\+h}
+\label{_sim_connect_8h_source}\index{models/SimConnect.h@{models/SimConnect.h}}
+\mbox{\hyperlink{_sim_connect_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{2 \textcolor{comment}{//}}
+\DoxyCodeLine{3 \textcolor{comment}{// Copyright (c) Microsoft Corporation. All Rights Reserved.}}
+\DoxyCodeLine{4 \textcolor{comment}{//}}
+\DoxyCodeLine{5 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#ifndef \_SIMCONNECT\_H\_}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#define \_SIMCONNECT\_H\_}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#ifdef \_MSFS\_WASM}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#ifndef SIMCONNECT\_WASM\_MODULE}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#define SIMCONNECT\_WASM\_MODULE "{}env"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#ifndef DWORD\_MAX}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#define DWORD\_MAX 0xFFFFFFFF}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <float.h>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <tchar.h>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <windows.h>}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{typedef} DWORD \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{28 \textcolor{comment}{//        Constants}}
+\DoxyCodeLine{29 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ad9e9d9ffecd4f6ec8c3f4acc70ecdc6a}{SIMCONNECT\_UNUSED}} =}
+\DoxyCodeLine{32     \mbox{\hyperlink{_sim_connect_8h_a5abb0f6238f0a835195ab874c15ec947}{DWORD\_MAX}};  \textcolor{comment}{// special value to indicate unused event, ID}}
+\DoxyCodeLine{33 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a0e69a68b983db0bff8bcd23bedf188fb}{SIMCONNECT\_OBJECT\_ID\_USER}} =}
+\DoxyCodeLine{34     0;  \textcolor{comment}{// proxy value for User vehicle ObjectID}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_adc6265e305c1a1c3ad7f9bf5e574e4cc}{SIMCONNECT\_CAMERA\_IGNORE\_FIELD}} =}
+\DoxyCodeLine{37     FLT\_MAX;  \textcolor{comment}{// Used to tell the Camera API to NOT modify the value in this}}
+\DoxyCodeLine{38               \textcolor{comment}{// part of the argument.}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a285a9aa46bbea140ea4fe5fab7ffcd0c}{SIMCONNECT\_CLIENTDATA\_MAX\_SIZE}} =}
+\DoxyCodeLine{41     8192;  \textcolor{comment}{// maximum value for SimConnect\_CreateClientData dwSize parameter}}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{comment}{// Notification Group priority values}}
+\DoxyCodeLine{44 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_af2ccd9f92f43144d28deb3ddcb872e6a}{SIMCONNECT\_GROUP\_PRIORITY\_HIGHEST}} = 1;  \textcolor{comment}{// highest priority}}
+\DoxyCodeLine{45 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a8b0fac86ee4584d1e1ba988897881b25}{SIMCONNECT\_GROUP\_PRIORITY\_HIGHEST\_MASKABLE}} =}
+\DoxyCodeLine{46     10000000;  \textcolor{comment}{// highest priority that allows events to be masked}}
+\DoxyCodeLine{47 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a926a83d37e509026664d0c3678798341}{SIMCONNECT\_GROUP\_PRIORITY\_STANDARD}} =}
+\DoxyCodeLine{48     1900000000;  \textcolor{comment}{// standard priority}}
+\DoxyCodeLine{49 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a5752787a2c9a1e5bcb0eb7ef222b382c}{SIMCONNECT\_GROUP\_PRIORITY\_DEFAULT}} =}
+\DoxyCodeLine{50     2000000000;  \textcolor{comment}{// default priority}}
+\DoxyCodeLine{51 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a1d7cb69354d960f9e94554c44865a45f}{SIMCONNECT\_GROUP\_PRIORITY\_LOWEST}} =}
+\DoxyCodeLine{52     4000000000;  \textcolor{comment}{// priorities lower than this will be ignored}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{comment}{// Weather observations Metar strings}}
+\DoxyCodeLine{55 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a4af063cc8ea2578ccb269e9a56576e3f}{MAX\_METAR\_LENGTH}} = 2000;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{comment}{// Maximum thermal size is 100 km.}}
+\DoxyCodeLine{58 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a099096cbc036c37759cde2aec44bf695}{MAX\_THERMAL\_SIZE}} = 100000;}
+\DoxyCodeLine{59 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a888b4a9aba0b6b4675f8878f0b242993}{MAX\_THERMAL\_RATE}} = 1000;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{comment}{// SIMCONNECT\_DATA\_INITPOSITION.Airspeed}}
+\DoxyCodeLine{62 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_af0d51a03401cad4ca0cd905219289d09}{INITPOSITION\_AIRSPEED\_CRUISE}} =}
+\DoxyCodeLine{63     -\/1;  \textcolor{comment}{// aircraft's cruise airspeed}}
+\DoxyCodeLine{64 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ac5207ec341852812a6f64e9a836ab9f5}{INITPOSITION\_AIRSPEED\_KEEP}} = -\/2;  \textcolor{comment}{// keep current airspeed}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \textcolor{comment}{// AddToClientDataDefinition dwSizeOrType parameter type values}}
+\DoxyCodeLine{67 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a1ff4d0d4a768f419ab994d734547e703}{SIMCONNECT\_CLIENTDATATYPE\_INT8}} =}
+\DoxyCodeLine{68     -\/1;  \textcolor{comment}{//  8-\/bit integer number}}
+\DoxyCodeLine{69 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a1552e3b855c99401f4f7696aa8c4e968}{SIMCONNECT\_CLIENTDATATYPE\_INT16}} =}
+\DoxyCodeLine{70     -\/2;  \textcolor{comment}{// 16-\/bit integer number}}
+\DoxyCodeLine{71 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a6a2874d04696a56f75ecbad3365916b4}{SIMCONNECT\_CLIENTDATATYPE\_INT32}} =}
+\DoxyCodeLine{72     -\/3;  \textcolor{comment}{// 32-\/bit integer number}}
+\DoxyCodeLine{73 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a14621b602ea0b73e8d334777195ee471}{SIMCONNECT\_CLIENTDATATYPE\_INT64}} =}
+\DoxyCodeLine{74     -\/4;  \textcolor{comment}{// 64-\/bit integer number}}
+\DoxyCodeLine{75 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a3ce109a165145917154e0cf9e8a50fc1}{SIMCONNECT\_CLIENTDATATYPE\_FLOAT32}} =}
+\DoxyCodeLine{76     -\/5;  \textcolor{comment}{// 32-\/bit floating-\/point number (float)}}
+\DoxyCodeLine{77 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a5500f05ec0de9162d67136fcee124e47}{SIMCONNECT\_CLIENTDATATYPE\_FLOAT64}} =}
+\DoxyCodeLine{78     -\/6;  \textcolor{comment}{// 64-\/bit floating-\/point number (double)}}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 \textcolor{comment}{// AddToClientDataDefinition dwOffset parameter special values}}
+\DoxyCodeLine{81 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a3afb6c41741fa9228b5038905474c386}{SIMCONNECT\_CLIENTDATAOFFSET\_AUTO}} =}
+\DoxyCodeLine{82     -\/1;  \textcolor{comment}{// automatically compute offset of the ClientData variable}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84 \textcolor{comment}{// Open ConfigIndex parameter special value}}
+\DoxyCodeLine{85 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ad70e626fd4c08364d68d0197b3595e31}{SIMCONNECT\_OPEN\_CONFIGINDEX\_LOCAL}} =}
+\DoxyCodeLine{86     -\/1;  \textcolor{comment}{// ignore SimConnect.cfg settings, and force local connection}}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{89 \textcolor{comment}{//        Enum definitions}}
+\DoxyCodeLine{90 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92 \textcolor{comment}{// these came from substituteMacros}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#define SIMCONNECT\_REFSTRUCT struct}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#define SIMCONNECT\_STRUCT struct}}
+\DoxyCodeLine{95 \textcolor{preprocessor}{\#define SIMCONNECT\_STRING(name, size) char name[size]}}
+\DoxyCodeLine{96 \textcolor{preprocessor}{\#define SIMCONNECT\_GUID GUID}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#define SIMCONNECT\_STRINGV(name) char name[1]}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#define SIMCONNECT\_DATAV(name, id, count) DWORD name}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#define SIMCONNECT\_FIXEDTYPE\_DATAV(type, name, count, cliMarshalAs, cliType) \(\backslash\)}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{  type name[1]}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#define SIMCONNECT\_GUID GUID}}
+\DoxyCodeLine{102 \textcolor{preprocessor}{\#define SIMCONNECT\_ENUM enum}}
+\DoxyCodeLine{103 \textcolor{preprocessor}{\#define SIMCONNECT\_ENUM\_FLAGS typedef DWORD}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#define SIMCONNECT\_USER\_ENUM typedef DWORD}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106 \textcolor{comment}{// Receive data types}}
+\DoxyCodeLine{107 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a314fa46a01d4bf33772c30c58737dbca}{SIMCONNECT\_RECV\_ID}}\{}
+\DoxyCodeLine{108     SIMCONNECT\_RECV\_ID\_NULL,}
+\DoxyCodeLine{109     SIMCONNECT\_RECV\_ID\_EXCEPTION,}
+\DoxyCodeLine{110     SIMCONNECT\_RECV\_ID\_OPEN,}
+\DoxyCodeLine{111     SIMCONNECT\_RECV\_ID\_QUIT,}
+\DoxyCodeLine{112     SIMCONNECT\_RECV\_ID\_EVENT,}
+\DoxyCodeLine{113     SIMCONNECT\_RECV\_ID\_EVENT\_OBJECT\_ADDREMOVE,}
+\DoxyCodeLine{114     SIMCONNECT\_RECV\_ID\_EVENT\_FILENAME,}
+\DoxyCodeLine{115     SIMCONNECT\_RECV\_ID\_EVENT\_FRAME,}
+\DoxyCodeLine{116     SIMCONNECT\_RECV\_ID\_SIMOBJECT\_DATA,}
+\DoxyCodeLine{117     SIMCONNECT\_RECV\_ID\_SIMOBJECT\_DATA\_BYTYPE,}
+\DoxyCodeLine{118     SIMCONNECT\_RECV\_ID\_WEATHER\_OBSERVATION,}
+\DoxyCodeLine{119     SIMCONNECT\_RECV\_ID\_CLOUD\_STATE,}
+\DoxyCodeLine{120     SIMCONNECT\_RECV\_ID\_ASSIGNED\_OBJECT\_ID,}
+\DoxyCodeLine{121     SIMCONNECT\_RECV\_ID\_RESERVED\_KEY,}
+\DoxyCodeLine{122     SIMCONNECT\_RECV\_ID\_CUSTOM\_ACTION,}
+\DoxyCodeLine{123     SIMCONNECT\_RECV\_ID\_SYSTEM\_STATE,}
+\DoxyCodeLine{124     SIMCONNECT\_RECV\_ID\_CLIENT\_DATA,}
+\DoxyCodeLine{125     SIMCONNECT\_RECV\_ID\_EVENT\_WEATHER\_MODE,}
+\DoxyCodeLine{126     SIMCONNECT\_RECV\_ID\_AIRPORT\_LIST,}
+\DoxyCodeLine{127     SIMCONNECT\_RECV\_ID\_VOR\_LIST,}
+\DoxyCodeLine{128     SIMCONNECT\_RECV\_ID\_NDB\_LIST,}
+\DoxyCodeLine{129     SIMCONNECT\_RECV\_ID\_WAYPOINT\_LIST,}
+\DoxyCodeLine{130     SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_SERVER\_STARTED,}
+\DoxyCodeLine{131     SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_CLIENT\_STARTED,}
+\DoxyCodeLine{132     SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_SESSION\_ENDED,}
+\DoxyCodeLine{133     SIMCONNECT\_RECV\_ID\_EVENT\_RACE\_END,}
+\DoxyCodeLine{134     SIMCONNECT\_RECV\_ID\_EVENT\_RACE\_LAP,}
+\DoxyCodeLine{135 \textcolor{preprocessor}{\#ifdef ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{136     SIMCONNECT\_RECV\_ID\_PICK,}
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{138 \};}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{140 \textcolor{comment}{// Data data types}}
+\DoxyCodeLine{141 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_ab6b3969227e16011ca63cf5605c18e58}{SIMCONNECT\_DATATYPE}}\{}
+\DoxyCodeLine{142     SIMCONNECT\_DATATYPE\_INVALID,    \textcolor{comment}{// invalid data type}}
+\DoxyCodeLine{143     SIMCONNECT\_DATATYPE\_INT32,      \textcolor{comment}{// 32-\/bit integer number}}
+\DoxyCodeLine{144     SIMCONNECT\_DATATYPE\_INT64,      \textcolor{comment}{// 64-\/bit integer number}}
+\DoxyCodeLine{145     SIMCONNECT\_DATATYPE\_FLOAT32,    \textcolor{comment}{// 32-\/bit floating-\/point number (float)}}
+\DoxyCodeLine{146     SIMCONNECT\_DATATYPE\_FLOAT64,    \textcolor{comment}{// 64-\/bit floating-\/point number (double)}}
+\DoxyCodeLine{147     SIMCONNECT\_DATATYPE\_STRING8,    \textcolor{comment}{// 8-\/byte string}}
+\DoxyCodeLine{148     SIMCONNECT\_DATATYPE\_STRING32,   \textcolor{comment}{// 32-\/byte string}}
+\DoxyCodeLine{149     SIMCONNECT\_DATATYPE\_STRING64,   \textcolor{comment}{// 64-\/byte string}}
+\DoxyCodeLine{150     SIMCONNECT\_DATATYPE\_STRING128,  \textcolor{comment}{// 128-\/byte string}}
+\DoxyCodeLine{151     SIMCONNECT\_DATATYPE\_STRING256,  \textcolor{comment}{// 256-\/byte string}}
+\DoxyCodeLine{152     SIMCONNECT\_DATATYPE\_STRING260,  \textcolor{comment}{// 260-\/byte string}}
+\DoxyCodeLine{153     SIMCONNECT\_DATATYPE\_STRINGV,    \textcolor{comment}{// variable-\/length string}}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     SIMCONNECT\_DATATYPE\_INITPOSITION,  \textcolor{comment}{// see SIMCONNECT\_DATA\_INITPOSITION}}
+\DoxyCodeLine{156     SIMCONNECT\_DATATYPE\_MARKERSTATE,   \textcolor{comment}{// see SIMCONNECT\_DATA\_MARKERSTATE}}
+\DoxyCodeLine{157     SIMCONNECT\_DATATYPE\_WAYPOINT,      \textcolor{comment}{// see SIMCONNECT\_DATA\_WAYPOINT}}
+\DoxyCodeLine{158     SIMCONNECT\_DATATYPE\_LATLONALT,     \textcolor{comment}{// see SIMCONNECT\_DATA\_LATLONALT}}
+\DoxyCodeLine{159     SIMCONNECT\_DATATYPE\_XYZ,           \textcolor{comment}{// see SIMCONNECT\_DATA\_XYZ}}
+\DoxyCodeLine{160 }
+\DoxyCodeLine{161     SIMCONNECT\_DATATYPE\_MAX  \textcolor{comment}{// enum limit}}
+\DoxyCodeLine{162 \};}
+\DoxyCodeLine{163 }
+\DoxyCodeLine{164 \textcolor{comment}{// Exception error types}}
+\DoxyCodeLine{165 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_aa999660b70923f1a081f6abfdf8e26f9}{SIMCONNECT\_EXCEPTION}}\{}
+\DoxyCodeLine{166     SIMCONNECT\_EXCEPTION\_NONE,}
+\DoxyCodeLine{167 }
+\DoxyCodeLine{168     SIMCONNECT\_EXCEPTION\_ERROR,}
+\DoxyCodeLine{169     SIMCONNECT\_EXCEPTION\_SIZE\_MISMATCH,}
+\DoxyCodeLine{170     SIMCONNECT\_EXCEPTION\_UNRECOGNIZED\_ID,}
+\DoxyCodeLine{171     SIMCONNECT\_EXCEPTION\_UNOPENED,}
+\DoxyCodeLine{172     SIMCONNECT\_EXCEPTION\_VERSION\_MISMATCH,}
+\DoxyCodeLine{173     SIMCONNECT\_EXCEPTION\_TOO\_MANY\_GROUPS,}
+\DoxyCodeLine{174     SIMCONNECT\_EXCEPTION\_NAME\_UNRECOGNIZED,}
+\DoxyCodeLine{175     SIMCONNECT\_EXCEPTION\_TOO\_MANY\_EVENT\_NAMES,}
+\DoxyCodeLine{176     SIMCONNECT\_EXCEPTION\_EVENT\_ID\_DUPLICATE,}
+\DoxyCodeLine{177     SIMCONNECT\_EXCEPTION\_TOO\_MANY\_MAPS,}
+\DoxyCodeLine{178     SIMCONNECT\_EXCEPTION\_TOO\_MANY\_OBJECTS,}
+\DoxyCodeLine{179     SIMCONNECT\_EXCEPTION\_TOO\_MANY\_REQUESTS,}
+\DoxyCodeLine{180     SIMCONNECT\_EXCEPTION\_WEATHER\_INVALID\_PORT,}
+\DoxyCodeLine{181     SIMCONNECT\_EXCEPTION\_WEATHER\_INVALID\_METAR,}
+\DoxyCodeLine{182     SIMCONNECT\_EXCEPTION\_WEATHER\_UNABLE\_TO\_GET\_OBSERVATION,}
+\DoxyCodeLine{183     SIMCONNECT\_EXCEPTION\_WEATHER\_UNABLE\_TO\_CREATE\_STATION,}
+\DoxyCodeLine{184     SIMCONNECT\_EXCEPTION\_WEATHER\_UNABLE\_TO\_REMOVE\_STATION,}
+\DoxyCodeLine{185     SIMCONNECT\_EXCEPTION\_INVALID\_DATA\_TYPE,}
+\DoxyCodeLine{186     SIMCONNECT\_EXCEPTION\_INVALID\_DATA\_SIZE,}
+\DoxyCodeLine{187     SIMCONNECT\_EXCEPTION\_DATA\_ERROR,}
+\DoxyCodeLine{188     SIMCONNECT\_EXCEPTION\_INVALID\_ARRAY,}
+\DoxyCodeLine{189     SIMCONNECT\_EXCEPTION\_CREATE\_OBJECT\_FAILED,}
+\DoxyCodeLine{190     SIMCONNECT\_EXCEPTION\_LOAD\_FLIGHTPLAN\_FAILED,}
+\DoxyCodeLine{191     SIMCONNECT\_EXCEPTION\_OPERATION\_INVALID\_FOR\_OBJECT\_TYPE,}
+\DoxyCodeLine{192     SIMCONNECT\_EXCEPTION\_ILLEGAL\_OPERATION,}
+\DoxyCodeLine{193     SIMCONNECT\_EXCEPTION\_ALREADY\_SUBSCRIBED,}
+\DoxyCodeLine{194     SIMCONNECT\_EXCEPTION\_INVALID\_ENUM,}
+\DoxyCodeLine{195     SIMCONNECT\_EXCEPTION\_DEFINITION\_ERROR,}
+\DoxyCodeLine{196     SIMCONNECT\_EXCEPTION\_DUPLICATE\_ID,}
+\DoxyCodeLine{197     SIMCONNECT\_EXCEPTION\_DATUM\_ID,}
+\DoxyCodeLine{198     SIMCONNECT\_EXCEPTION\_OUT\_OF\_BOUNDS,}
+\DoxyCodeLine{199     SIMCONNECT\_EXCEPTION\_ALREADY\_CREATED,}
+\DoxyCodeLine{200     SIMCONNECT\_EXCEPTION\_OBJECT\_OUTSIDE\_REALITY\_BUBBLE,}
+\DoxyCodeLine{201     SIMCONNECT\_EXCEPTION\_OBJECT\_CONTAINER,}
+\DoxyCodeLine{202     SIMCONNECT\_EXCEPTION\_OBJECT\_AI,}
+\DoxyCodeLine{203     SIMCONNECT\_EXCEPTION\_OBJECT\_ATC,}
+\DoxyCodeLine{204     SIMCONNECT\_EXCEPTION\_OBJECT\_SCHEDULE,}
+\DoxyCodeLine{205 \};}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 \textcolor{comment}{// Object types}}
+\DoxyCodeLine{208 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a654cbc6e64d3336f153806411496379f}{SIMCONNECT\_SIMOBJECT\_TYPE}}\{}
+\DoxyCodeLine{209     SIMCONNECT\_SIMOBJECT\_TYPE\_USER,     SIMCONNECT\_SIMOBJECT\_TYPE\_ALL,}
+\DoxyCodeLine{210     SIMCONNECT\_SIMOBJECT\_TYPE\_AIRCRAFT, SIMCONNECT\_SIMOBJECT\_TYPE\_HELICOPTER,}
+\DoxyCodeLine{211     SIMCONNECT\_SIMOBJECT\_TYPE\_BOAT,     SIMCONNECT\_SIMOBJECT\_TYPE\_GROUND,}
+\DoxyCodeLine{212 \};}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214 \textcolor{comment}{// EventState values}}
+\DoxyCodeLine{215 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_adac2d2107f6bd82b5b486a49379b967f}{SIMCONNECT\_STATE}}\{}
+\DoxyCodeLine{216     SIMCONNECT\_STATE\_OFF,}
+\DoxyCodeLine{217     SIMCONNECT\_STATE\_ON,}
+\DoxyCodeLine{218 \};}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220 \textcolor{comment}{// Object Data Request Period values}}
+\DoxyCodeLine{221 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_aeceaf841b0c424de00bb0b9526b4ee83}{SIMCONNECT\_PERIOD}}\{}
+\DoxyCodeLine{222     SIMCONNECT\_PERIOD\_NEVER,        SIMCONNECT\_PERIOD\_ONCE,}
+\DoxyCodeLine{223     SIMCONNECT\_PERIOD\_VISUAL\_FRAME, SIMCONNECT\_PERIOD\_SIM\_FRAME,}
+\DoxyCodeLine{224     SIMCONNECT\_PERIOD\_SECOND,}
+\DoxyCodeLine{225 \};}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a854c98810cc5cb209a9b7a1bc5b89ce1}{SIMCONNECT\_MISSION\_END}}\{SIMCONNECT\_MISSION\_FAILED,}
+\DoxyCodeLine{228                                        SIMCONNECT\_MISSION\_CRASHED,}
+\DoxyCodeLine{229                                        SIMCONNECT\_MISSION\_SUCCEEDED\};}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231 \textcolor{comment}{// ClientData Request Period values}}
+\DoxyCodeLine{232 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a553e2f453aab2819bd32d254eae4795e}{SIMCONNECT\_CLIENT\_DATA\_PERIOD}}\{}
+\DoxyCodeLine{233     SIMCONNECT\_CLIENT\_DATA\_PERIOD\_NEVER,}
+\DoxyCodeLine{234     SIMCONNECT\_CLIENT\_DATA\_PERIOD\_ONCE,}
+\DoxyCodeLine{235     SIMCONNECT\_CLIENT\_DATA\_PERIOD\_VISUAL\_FRAME,}
+\DoxyCodeLine{236     SIMCONNECT\_CLIENT\_DATA\_PERIOD\_ON\_SET,}
+\DoxyCodeLine{237     SIMCONNECT\_CLIENT\_DATA\_PERIOD\_SECOND,}
+\DoxyCodeLine{238 \};}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{240 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_aaadb5a7139facbec94cb62897ff2c5f0}{SIMCONNECT\_TEXT\_TYPE}}\{}
+\DoxyCodeLine{241     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_BLACK,}
+\DoxyCodeLine{242     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_WHITE,}
+\DoxyCodeLine{243     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_RED,}
+\DoxyCodeLine{244     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_GREEN,}
+\DoxyCodeLine{245     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_BLUE,}
+\DoxyCodeLine{246     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_YELLOW,}
+\DoxyCodeLine{247     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_MAGENTA,}
+\DoxyCodeLine{248     SIMCONNECT\_TEXT\_TYPE\_SCROLL\_CYAN,}
+\DoxyCodeLine{249     SIMCONNECT\_TEXT\_TYPE\_PRINT\_BLACK = 0x0100,}
+\DoxyCodeLine{250     SIMCONNECT\_TEXT\_TYPE\_PRINT\_WHITE,}
+\DoxyCodeLine{251     SIMCONNECT\_TEXT\_TYPE\_PRINT\_RED,}
+\DoxyCodeLine{252     SIMCONNECT\_TEXT\_TYPE\_PRINT\_GREEN,}
+\DoxyCodeLine{253     SIMCONNECT\_TEXT\_TYPE\_PRINT\_BLUE,}
+\DoxyCodeLine{254     SIMCONNECT\_TEXT\_TYPE\_PRINT\_YELLOW,}
+\DoxyCodeLine{255     SIMCONNECT\_TEXT\_TYPE\_PRINT\_MAGENTA,}
+\DoxyCodeLine{256     SIMCONNECT\_TEXT\_TYPE\_PRINT\_CYAN,}
+\DoxyCodeLine{257     SIMCONNECT\_TEXT\_TYPE\_MENU = 0x0200,}
+\DoxyCodeLine{258 \};}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a89b514c7b6972ca7e390516104c52f2a}{SIMCONNECT\_TEXT\_RESULT}}\{}
+\DoxyCodeLine{261     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_1,}
+\DoxyCodeLine{262     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_2,}
+\DoxyCodeLine{263     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_3,}
+\DoxyCodeLine{264     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_4,}
+\DoxyCodeLine{265     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_5,}
+\DoxyCodeLine{266     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_6,}
+\DoxyCodeLine{267     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_7,}
+\DoxyCodeLine{268     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_8,}
+\DoxyCodeLine{269     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_9,}
+\DoxyCodeLine{270     SIMCONNECT\_TEXT\_RESULT\_MENU\_SELECT\_10,}
+\DoxyCodeLine{271     SIMCONNECT\_TEXT\_RESULT\_DISPLAYED = 0x00010000,}
+\DoxyCodeLine{272     SIMCONNECT\_TEXT\_RESULT\_QUEUED,}
+\DoxyCodeLine{273     SIMCONNECT\_TEXT\_RESULT\_REMOVED,}
+\DoxyCodeLine{274     SIMCONNECT\_TEXT\_RESULT\_REPLACED,}
+\DoxyCodeLine{275     SIMCONNECT\_TEXT\_RESULT\_TIMEOUT,}
+\DoxyCodeLine{276 \};}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a3e0237f7338044d3786a6556a5f12c68}{SIMCONNECT\_WEATHER\_MODE}}\{}
+\DoxyCodeLine{279     SIMCONNECT\_WEATHER\_MODE\_THEME,}
+\DoxyCodeLine{280     SIMCONNECT\_WEATHER\_MODE\_RWW,}
+\DoxyCodeLine{281     SIMCONNECT\_WEATHER\_MODE\_CUSTOM,}
+\DoxyCodeLine{282     SIMCONNECT\_WEATHER\_MODE\_GLOBAL,}
+\DoxyCodeLine{283 \};}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285 \mbox{\hyperlink{_sim_connect_8h_a785adfd7b41e737b33e9c78607b5c476}{SIMCONNECT\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a50bc26bdc1b5fd4dce3f56d5de413efe}{SIMCONNECT\_FACILITY\_LIST\_TYPE}}\{}
+\DoxyCodeLine{286     SIMCONNECT\_FACILITY\_LIST\_TYPE\_AIRPORT,}
+\DoxyCodeLine{287     SIMCONNECT\_FACILITY\_LIST\_TYPE\_WAYPOINT, SIMCONNECT\_FACILITY\_LIST\_TYPE\_NDB,}
+\DoxyCodeLine{288     SIMCONNECT\_FACILITY\_LIST\_TYPE\_VOR,}
+\DoxyCodeLine{289     SIMCONNECT\_FACILITY\_LIST\_TYPE\_COUNT  \textcolor{comment}{// invalid}}
+\DoxyCodeLine{290 \};}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}}}
+\DoxyCodeLine{293     \mbox{\hyperlink{_sim_connect_8h_ad6b4ad3329f300576d36007ca8f787c8}{SIMCONNECT\_VOR\_FLAGS}};  \textcolor{comment}{// flags for SIMCONNECT\_RECV\_ID\_VOR\_LIST}}
+\DoxyCodeLine{294 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a08a23d6a272f8b5beef8e0a355bff851}{SIMCONNECT\_RECV\_ID\_VOR\_LIST\_HAS\_NAV\_SIGNAL}} =}
+\DoxyCodeLine{295     0x00000001;  \textcolor{comment}{// Has Nav signal}}
+\DoxyCodeLine{296 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a6e17eb86218785b0948adb339e66ba28}{SIMCONNECT\_RECV\_ID\_VOR\_LIST\_HAS\_LOCALIZER}} =}
+\DoxyCodeLine{297     0x00000002;  \textcolor{comment}{// Has localizer}}
+\DoxyCodeLine{298 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ab5d1ec439b22556750c1282006b03bef}{SIMCONNECT\_RECV\_ID\_VOR\_LIST\_HAS\_GLIDE\_SLOPE}} =}
+\DoxyCodeLine{299     0x00000004;  \textcolor{comment}{// Has Nav signal}}
+\DoxyCodeLine{300 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ad568b865ea71ddc95b1d65886fa37edd}{SIMCONNECT\_RECV\_ID\_VOR\_LIST\_HAS\_DME}} =}
+\DoxyCodeLine{301     0x00000008;  \textcolor{comment}{// Station has DME}}
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303 \textcolor{comment}{// bits for the Waypoint Flags field: may be combined}}
+\DoxyCodeLine{304 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_a73195c8b7526bf3037aef1740b37de35}{SIMCONNECT\_WAYPOINT\_FLAGS}};}
+\DoxyCodeLine{305 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a20b8d447cb37611f1285b738f2294a64}{SIMCONNECT\_WAYPOINT\_NONE}} = 0x00;}
+\DoxyCodeLine{306 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_aac3d9d555ae683875a65eb0f4cd68cac}{SIMCONNECT\_WAYPOINT\_SPEED\_REQUESTED}} =}
+\DoxyCodeLine{307     0x04;  \textcolor{comment}{// requested speed at waypoint is valid}}
+\DoxyCodeLine{308 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a991980aa21075374ed39ad44cebcac02}{SIMCONNECT\_WAYPOINT\_THROTTLE\_REQUESTED}} =}
+\DoxyCodeLine{309     0x08;  \textcolor{comment}{// request a specific throttle percentage}}
+\DoxyCodeLine{310 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_adfc1d55037ff8eab497472d7acb10f3f}{SIMCONNECT\_WAYPOINT\_COMPUTE\_VERTICAL\_SPEED}} =}
+\DoxyCodeLine{311     0x10;  \textcolor{comment}{// compute vertical to speed to reach waypoint altitude when crossing}}
+\DoxyCodeLine{312            \textcolor{comment}{// the waypoint}}
+\DoxyCodeLine{313 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a34a50dce64e6103471415719f68b96fd}{SIMCONNECT\_WAYPOINT\_ALTITUDE\_IS\_AGL}} = 0x20;  \textcolor{comment}{// AltitudeIsAGL}}
+\DoxyCodeLine{314 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a1a38fa842fe115319f1a07ad6f1ade27}{SIMCONNECT\_WAYPOINT\_ON\_GROUND}} =}
+\DoxyCodeLine{315     0x00100000;  \textcolor{comment}{// place this waypoint on the ground}}
+\DoxyCodeLine{316 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a2a981c0a4f47fecad3728b40b680ef4a}{SIMCONNECT\_WAYPOINT\_REVERSE}} =}
+\DoxyCodeLine{317     0x00200000;  \textcolor{comment}{// Back up to this waypoint. Only valid on first waypoint}}
+\DoxyCodeLine{318 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a540f83ea942bde025fcf2f7032c077c3}{SIMCONNECT\_WAYPOINT\_WRAP\_TO\_FIRST}} =}
+\DoxyCodeLine{319     0x00400000;  \textcolor{comment}{// Wrap around back to first waypoint. Only valid on last}}
+\DoxyCodeLine{320                  \textcolor{comment}{// waypoint.}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_a8cebaf7fc205a01c7125f3596151e7f2}{SIMCONNECT\_EVENT\_FLAG}};}
+\DoxyCodeLine{323 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ac4efdb4c468b904fbb6b5104eb705619}{SIMCONNECT\_EVENT\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{324 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ac1860e0b997fd74ca6f64977f6ee0817}{SIMCONNECT\_EVENT\_FLAG\_FAST\_REPEAT\_TIMER}} =}
+\DoxyCodeLine{325     0x00000001;  \textcolor{comment}{// Set event repeat timer to simulate fast repeat}}
+\DoxyCodeLine{326 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a84a47cabe0bfd073e09db89225622585}{SIMCONNECT\_EVENT\_FLAG\_SLOW\_REPEAT\_TIMER}} =}
+\DoxyCodeLine{327     0x00000002;  \textcolor{comment}{// Set event repeat timer to simulate slow repeat}}
+\DoxyCodeLine{328 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a5dabe47d04ad523865044e254c7a91c9}{SIMCONNECT\_EVENT\_FLAG\_GROUPID\_IS\_PRIORITY}} =}
+\DoxyCodeLine{329     0x00000010;  \textcolor{comment}{// interpret GroupID parameter as priority value}}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_a9a2f369f01b115a2f3bc57a0e0c5c952}{SIMCONNECT\_DATA\_REQUEST\_FLAG}};}
+\DoxyCodeLine{332 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a5a31ee6140fe02e065d80e5efbca7970}{SIMCONNECT\_DATA\_REQUEST\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{333 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a0b277e7bf3c4a3c9b48d22209aca34fb}{SIMCONNECT\_DATA\_REQUEST\_FLAG\_CHANGED}} =}
+\DoxyCodeLine{334     0x00000001;  \textcolor{comment}{// send requested data when value(s) change}}
+\DoxyCodeLine{335 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a8bb4df1eccffee7c2a25e53eea041e54}{SIMCONNECT\_DATA\_REQUEST\_FLAG\_TAGGED}} =}
+\DoxyCodeLine{336     0x00000002;  \textcolor{comment}{// send requested data in tagged format}}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_a39470c09248c06083d8b93018f8dd401}{SIMCONNECT\_DATA\_SET\_FLAG}};}
+\DoxyCodeLine{339 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a192071e3729446fd5f06c3a4c96559e9}{SIMCONNECT\_DATA\_SET\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{340 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_acb23671f7c3e497c02ee5445b2a60ed1}{SIMCONNECT\_DATA\_SET\_FLAG\_TAGGED}} =}
+\DoxyCodeLine{341     0x00000001;  \textcolor{comment}{// data is in tagged format}}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_a55042e29e886a4de54e09dfbdd0796ee}{SIMCONNECT\_CREATE\_CLIENT\_DATA\_FLAG}};}
+\DoxyCodeLine{344 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a0e6ebd27f2bafcbe4d9ddf48cb2614b1}{SIMCONNECT\_CREATE\_CLIENT\_DATA\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{345 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a347278110b785eeec02efe9136424940}{SIMCONNECT\_CREATE\_CLIENT\_DATA\_FLAG\_READ\_ONLY}} =}
+\DoxyCodeLine{346     0x00000001;  \textcolor{comment}{// permit only ClientData creator to write into ClientData}}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_af0c9f1068347d5a3cf91e004ff52001e}{SIMCONNECT\_CLIENT\_DATA\_REQUEST\_FLAG}};}
+\DoxyCodeLine{349 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a4ca9e7daa70370f6176e9aeaac1222b2}{SIMCONNECT\_CLIENT\_DATA\_REQUEST\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{350 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a19cc1c568c9f2238432c2cead849fa80}{SIMCONNECT\_CLIENT\_DATA\_REQUEST\_FLAG\_CHANGED}} =}
+\DoxyCodeLine{351     0x00000001;  \textcolor{comment}{// send requested ClientData when value(s) change}}
+\DoxyCodeLine{352 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a31c3cc75d5fbb7756a02dd1954f6024d}{SIMCONNECT\_CLIENT\_DATA\_REQUEST\_FLAG\_TAGGED}} =}
+\DoxyCodeLine{353     0x00000002;  \textcolor{comment}{// send requested ClientData in tagged format}}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} \mbox{\hyperlink{_sim_connect_8h_ae4845602258aa53cf5fb9ad932cbb0dc}{SIMCONNECT\_CLIENT\_DATA\_SET\_FLAG}};}
+\DoxyCodeLine{356 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a8bab3596d00a68c5f66fb74b0a51c0fe}{SIMCONNECT\_CLIENT\_DATA\_SET\_FLAG\_DEFAULT}} = 0x00000000;}
+\DoxyCodeLine{357 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a3bcdb185dd4a5c02202f091e3eb95fb4}{SIMCONNECT\_CLIENT\_DATA\_SET\_FLAG\_TAGGED}} =}
+\DoxyCodeLine{358     0x00000001;  \textcolor{comment}{// data is in tagged format}}
+\DoxyCodeLine{359 }
+\DoxyCodeLine{360 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}}}
+\DoxyCodeLine{361     \mbox{\hyperlink{_sim_connect_8h_a0203575daebef42f7743093e0049dc01}{SIMCONNECT\_VIEW\_SYSTEM\_EVENT\_DATA}};  \textcolor{comment}{// dwData contains these flags for the}}
+\DoxyCodeLine{362                                         \textcolor{comment}{// "{}View"{} System Event}}
+\DoxyCodeLine{363 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a6774900f67f107fa286e9774628d6d0d}{SIMCONNECT\_VIEW\_SYSTEM\_EVENT\_DATA\_COCKPIT\_2D}} =}
+\DoxyCodeLine{364     0x00000001;  \textcolor{comment}{// 2D Panels in cockpit view}}
+\DoxyCodeLine{365 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_ad5a287a6506d4f10c70fa867ddab84ca}{SIMCONNECT\_VIEW\_SYSTEM\_EVENT\_DATA\_COCKPIT\_VIRTUAL}} =}
+\DoxyCodeLine{366     0x00000002;  \textcolor{comment}{// Virtual (3D) panels in cockpit view}}
+\DoxyCodeLine{367 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a715287995c09f5136cde928079da5739}{SIMCONNECT\_VIEW\_SYSTEM\_EVENT\_DATA\_ORTHOGONAL}} =}
+\DoxyCodeLine{368     0x00000004;  \textcolor{comment}{// Orthogonal (Map) view}}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}}}
+\DoxyCodeLine{371     \mbox{\hyperlink{_sim_connect_8h_a5fe159064ab3f875107023d440292fe2}{SIMCONNECT\_SOUND\_SYSTEM\_EVENT\_DATA}};  \textcolor{comment}{// dwData contains these flags for the}}
+\DoxyCodeLine{372                                          \textcolor{comment}{// "{}Sound"{} System Event}}
+\DoxyCodeLine{373 \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_aa08ab22a8bcca7508e36d4fa919c7516}{SIMCONNECT\_SOUND\_SYSTEM\_EVENT\_DATA\_MASTER}} =}
+\DoxyCodeLine{374     0x00000001;  \textcolor{comment}{// Sound Master}}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376 \textcolor{preprocessor}{\#ifdef ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{377 }
+\DoxyCodeLine{378 \mbox{\hyperlink{_sim_connect_8h_aaf23aae0913cf9b681e9f363c7c90064}{SIMCONNECT\_ENUM\_FLAGS}} SIMCONNECT\_PICK\_FLAGS\{}
+\DoxyCodeLine{379     SIMCONNECT\_PICK\_GROUND =}
+\DoxyCodeLine{380         0x01,  \textcolor{comment}{// pick ground/ pick result item is ground location}}
+\DoxyCodeLine{381     SIMCONNECT\_PICK\_AI =}
+\DoxyCodeLine{382         0x02,  \textcolor{comment}{// pick AI    / pick result item is AI, (dwSimObjectID is valid)}}
+\DoxyCodeLine{383     SIMCONNECT\_PICK\_SCENERY = 0x04,  \textcolor{comment}{// pick scenery/ pick result item is}}
+\DoxyCodeLine{384                                      \textcolor{comment}{// scenery object (hSceneryObject is valid)}}
+\DoxyCodeLine{385     SIMCONNECT\_PICK\_ALL =}
+\DoxyCodeLine{386         SIMCONNECT\_PICK\_SCENERY | SIMCONNECT\_PICK\_AI |}
+\DoxyCodeLine{387         SIMCONNECT\_PICK\_GROUND,  \textcolor{comment}{// pick all / (not valid on pick result item)}}
+\DoxyCodeLine{388     SIMCONNECT\_PICK\_COORDSASPIXELS = 0x08,}
+\DoxyCodeLine{389 \};}
+\DoxyCodeLine{390 }
+\DoxyCodeLine{391 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{394 \textcolor{comment}{//        User-\/defined enums}}
+\DoxyCodeLine{395 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{396 }
+\DoxyCodeLine{397 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}}}
+\DoxyCodeLine{398     \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}};  \textcolor{comment}{// client-\/defined notification group ID}}
+\DoxyCodeLine{399 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}};  \textcolor{comment}{// client-\/defined input group}}
+\DoxyCodeLine{400                                                  \textcolor{comment}{// ID}}
+\DoxyCodeLine{401 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}}}
+\DoxyCodeLine{402     \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}};  \textcolor{comment}{// client-\/defined data definition ID}}
+\DoxyCodeLine{403 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}}}
+\DoxyCodeLine{404     \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}};  \textcolor{comment}{// client-\/defined request data ID}}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{406 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}}}
+\DoxyCodeLine{407     \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}};  \textcolor{comment}{// client-\/defined client event ID}}
+\DoxyCodeLine{408 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}} \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}};  \textcolor{comment}{// client-\/defined client data}}
+\DoxyCodeLine{409                                                  \textcolor{comment}{// ID}}
+\DoxyCodeLine{410 \mbox{\hyperlink{_sim_connect_8h_a30c19469a7fcb6c3290026b032e8701e}{SIMCONNECT\_USER\_ENUM}}}
+\DoxyCodeLine{411     \mbox{\hyperlink{_sim_connect_8h_a7e3ce6348ce6438eabf8712e54fbf423}{SIMCONNECT\_CLIENT\_DATA\_DEFINITION\_ID}};  \textcolor{comment}{// client-\/defined client data}}
+\DoxyCodeLine{412                                            \textcolor{comment}{// definition ID}}
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{415 \textcolor{comment}{//        Struct definitions}}
+\DoxyCodeLine{416 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{417 }
+\DoxyCodeLine{418 \textcolor{preprocessor}{\#pragma pack(push, 1)}}
+\DoxyCodeLine{419 }
+\DoxyCodeLine{420 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}} \{}
+\DoxyCodeLine{421   DWORD dwSize;     \textcolor{comment}{// record size}}
+\DoxyCodeLine{422   DWORD \mbox{\hyperlink{_sim_connect_8h_ac5ef173abf9ef976872acfd2422718d1}{dwVersion}};  \textcolor{comment}{// interface version}}
+\DoxyCodeLine{423   DWORD \mbox{\hyperlink{_sim_connect_8h_af9eedbe8c21f3c89d17368136ea5fa2d}{dwID}};       \textcolor{comment}{// see SIMCONNECT\_RECV\_ID}}
+\DoxyCodeLine{424 \};}
+\DoxyCodeLine{425 }
+\DoxyCodeLine{426 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a59be85012c680154c0b4ee9f18162f67}{SIMCONNECT\_RECV\_EXCEPTION}}}
+\DoxyCodeLine{427     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_EXCEPTION}}
+\DoxyCodeLine{428 \{}
+\DoxyCodeLine{429   DWORD dwException;  \textcolor{comment}{// see SIMCONNECT\_EXCEPTION}}
+\DoxyCodeLine{430   \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a052240796cbbd47c2fe4f6ec34210260}{UNKNOWN\_SENDID}} = 0;}
+\DoxyCodeLine{431   DWORD \mbox{\hyperlink{_sim_connect_8h_ad9f15d98f59a72b735bf493cb5de68ae}{dwSendID}};  \textcolor{comment}{// see SimConnect\_GetLastSentPacketID}}
+\DoxyCodeLine{432   \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD \mbox{\hyperlink{_sim_connect_8h_a6352edafa1637b4f1fb1c4484bea5999}{UNKNOWN\_INDEX}} = \mbox{\hyperlink{_sim_connect_8h_a5abb0f6238f0a835195ab874c15ec947}{DWORD\_MAX}};}
+\DoxyCodeLine{433   DWORD \mbox{\hyperlink{_sim_connect_8h_ad479f637fcfd6eaaa3a02e5c7b304d31}{dwIndex}};  \textcolor{comment}{// index of parameter that was source of error}}
+\DoxyCodeLine{434 \};}
+\DoxyCodeLine{435 }
+\DoxyCodeLine{436 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a0428570cc6e78696fda31d549b2f2139}{SIMCONNECT\_RECV\_OPEN}}}
+\DoxyCodeLine{437     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_OPEN}}
+\DoxyCodeLine{438 \{}
+\DoxyCodeLine{439   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szApplicationName, 256);}
+\DoxyCodeLine{440   DWORD \mbox{\hyperlink{_sim_connect_8h_a151f242fff9f913f8987b2318ad92913}{dwApplicationVersionMajor}};}
+\DoxyCodeLine{441   DWORD \mbox{\hyperlink{_sim_connect_8h_a8b305bc62234a75d53d0b0fd30bf0bb0}{dwApplicationVersionMinor}};}
+\DoxyCodeLine{442   DWORD \mbox{\hyperlink{_sim_connect_8h_a129e311bf48ee5cda84b9d0ba905c415}{dwApplicationBuildMajor}};}
+\DoxyCodeLine{443   DWORD \mbox{\hyperlink{_sim_connect_8h_a3f900b0f283738391787a41d3a32421c}{dwApplicationBuildMinor}};}
+\DoxyCodeLine{444   DWORD \mbox{\hyperlink{_sim_connect_8h_a13960814b7f3a3b06f0e25688acc795a}{dwSimConnectVersionMajor}};}
+\DoxyCodeLine{445   DWORD \mbox{\hyperlink{_sim_connect_8h_a64eafa3f422a7c14358993648ba2cae1}{dwSimConnectVersionMinor}};}
+\DoxyCodeLine{446   DWORD \mbox{\hyperlink{_sim_connect_8h_ac27a4952975dde44f83b6554485f0afe}{dwSimConnectBuildMajor}};}
+\DoxyCodeLine{447   DWORD \mbox{\hyperlink{_sim_connect_8h_a4132f84432e9d7fdb03db8fa092f39ef}{dwSimConnectBuildMinor}};}
+\DoxyCodeLine{448   DWORD \mbox{\hyperlink{_sim_connect_8h_a7b0e599795b4582c753f54c01f2bcff2}{dwReserved1}};}
+\DoxyCodeLine{449   DWORD \mbox{\hyperlink{_sim_connect_8h_adc86ab9daba30c3adc56680014cf0d80}{dwReserved2}};}
+\DoxyCodeLine{450 \};}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a00f7896f21c8a994127541fc3a503faf}{SIMCONNECT\_RECV\_QUIT}}}
+\DoxyCodeLine{453     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_QUIT}}
+\DoxyCodeLine{454       \{\};}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}}
+\DoxyCodeLine{457     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_EVENT}}
+\DoxyCodeLine{458 \{}
+\DoxyCodeLine{459   \textcolor{keyword}{static} \textcolor{keyword}{const} DWORD UNKNOWN\_GROUP = \mbox{\hyperlink{_sim_connect_8h_a5abb0f6238f0a835195ab874c15ec947}{DWORD\_MAX}};}
+\DoxyCodeLine{460   DWORD \mbox{\hyperlink{_sim_connect_8h_a6f1b735bf2151d5feebd457c1939deed}{uGroupID}};}
+\DoxyCodeLine{461   DWORD \mbox{\hyperlink{_sim_connect_8h_ac6f441edbca75d8b955ed0d5ebc7f6c6}{uEventID}};}
+\DoxyCodeLine{462   DWORD \mbox{\hyperlink{_sim_connect_8h_ad38b92af7d164a277eb2d30b5e65a489}{dwData}};  \textcolor{comment}{// uEventID-\/dependent context}}
+\DoxyCodeLine{463 \};}
+\DoxyCodeLine{464 }
+\DoxyCodeLine{465 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_abf5e483b2098a1bf2a8844c2de4cc277}{SIMCONNECT\_RECV\_EVENT\_FILENAME}}}
+\DoxyCodeLine{466     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{467                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_FILENAME}}
+\DoxyCodeLine{468 \{}
+\DoxyCodeLine{469   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szFileName, \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});  \textcolor{comment}{// uEventID-\/dependent context}}
+\DoxyCodeLine{470   DWORD \mbox{\hyperlink{_sim_connect_8h_a4d2f405b1141000eb2af256e0fc8b98b}{dwFlags}};}
+\DoxyCodeLine{471 \};}
+\DoxyCodeLine{472 }
+\DoxyCodeLine{473 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a2a3636066a50e625aab22e7318476c0b}{SIMCONNECT\_RECV\_EVENT\_OBJECT\_ADDREMOVE}}}
+\DoxyCodeLine{474     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{475                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_FILENAME}}
+\DoxyCodeLine{476 \{}
+\DoxyCodeLine{477   \mbox{\hyperlink{_sim_connect_8h_a654cbc6e64d3336f153806411496379f}{SIMCONNECT\_SIMOBJECT\_TYPE}} eObjType;}
+\DoxyCodeLine{478 \};}
+\DoxyCodeLine{479 }
+\DoxyCodeLine{480 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a3a63f38dfe421fd02d794b338db60f6f}{SIMCONNECT\_RECV\_EVENT\_FRAME}}}
+\DoxyCodeLine{481     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{482                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_FRAME}}
+\DoxyCodeLine{483 \{}
+\DoxyCodeLine{484   \textcolor{keywordtype}{float} fFrameRate;}
+\DoxyCodeLine{485   \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a22ca139aec51070b7e8ea2772fb0991d}{fSimSpeed}};}
+\DoxyCodeLine{486 \};}
+\DoxyCodeLine{487 }
+\DoxyCodeLine{488 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a61b9b994cabc3173eb32cbf059049c40}{SIMCONNECT\_RECV\_EVENT\_MULTIPLAYER\_SERVER\_STARTED}}}
+\DoxyCodeLine{489     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{490                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_SERVER\_STARTED}}
+\DoxyCodeLine{491       \{}
+\DoxyCodeLine{492           \textcolor{comment}{// No event specific data, for now}}
+\DoxyCodeLine{493       \};}
+\DoxyCodeLine{494 }
+\DoxyCodeLine{495 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_aef1fa1a6cf01cf46892f7106a5e0aa0f}{SIMCONNECT\_RECV\_EVENT\_MULTIPLAYER\_CLIENT\_STARTED}}}
+\DoxyCodeLine{496     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{497                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_CLIENT\_STARTED}}
+\DoxyCodeLine{498       \{}
+\DoxyCodeLine{499           \textcolor{comment}{// No event specific data, for now}}
+\DoxyCodeLine{500       \};}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a6194afbe536889c9f0c2f3fb5671c19f}{SIMCONNECT\_RECV\_EVENT\_MULTIPLAYER\_SESSION\_ENDED}}}
+\DoxyCodeLine{503     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{504                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_MULTIPLAYER\_SESSION\_ENDED}}
+\DoxyCodeLine{505       \{}
+\DoxyCodeLine{506           \textcolor{comment}{// No event specific data, for now}}
+\DoxyCodeLine{507       \};}
+\DoxyCodeLine{508 }
+\DoxyCodeLine{509 \textcolor{comment}{// SIMCONNECT\_DATA\_RACE\_RESULT}}
+\DoxyCodeLine{510 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_a778fb0e1a91f6b7cf6e0e5140499c5f5}{SIMCONNECT\_DATA\_RACE\_RESULT}} \{}
+\DoxyCodeLine{511   DWORD dwNumberOfRacers;  \textcolor{comment}{// The total number of racers}}
+\DoxyCodeLine{512   \mbox{\hyperlink{_sim_connect_8h_a080e2b55e839bd868f34c473649c492c}{SIMCONNECT\_GUID}}}
+\DoxyCodeLine{513       \mbox{\hyperlink{_sim_connect_8h_ae8575c015726e9ed8a8d2288700f0ae0}{MissionGUID}};  \textcolor{comment}{// The name of the mission to execute, NULL if no mission}}
+\DoxyCodeLine{514   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szPlayerName, \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});  \textcolor{comment}{// The name of the player}}
+\DoxyCodeLine{515   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(}
+\DoxyCodeLine{516       szSessionType,}
+\DoxyCodeLine{517       \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});  \textcolor{comment}{// The type of the multiplayer session: "{}LAN"{}, "{}GAMESPY"{})}}
+\DoxyCodeLine{518   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szAircraft, \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});    \textcolor{comment}{// The aircraft type}}
+\DoxyCodeLine{519   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szPlayerRole, \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});  \textcolor{comment}{// The player role in the mission}}
+\DoxyCodeLine{520   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a41304220a22123794b609d92d691308b}{fTotalTime}};       \textcolor{comment}{// Total time in seconds, 0 means DNF}}
+\DoxyCodeLine{521   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a39183a3460390a0ca3cd96c8c0740139}{fPenaltyTime}};     \textcolor{comment}{// Total penalty time in seconds}}
+\DoxyCodeLine{522   DWORD \mbox{\hyperlink{_sim_connect_8h_aa09732b0fcd1f64805aaa690d0a3a425}{dwIsDisqualified}};  \textcolor{comment}{// non 0 -\/ disqualified, 0 -\/ not disqualified}}
+\DoxyCodeLine{523 \};}
+\DoxyCodeLine{524 }
+\DoxyCodeLine{525 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_ab6fd6e7fc3a923d1aa26e25a421bffd7}{SIMCONNECT\_RECV\_EVENT\_RACE\_END}}}
+\DoxyCodeLine{526     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{527                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_RACE\_END}}
+\DoxyCodeLine{528 \{}
+\DoxyCodeLine{529   DWORD dwRacerNumber;  \textcolor{comment}{// The index of the racer the results are for}}
+\DoxyCodeLine{530   \mbox{\hyperlink{_sim_connect_8h_a778fb0e1a91f6b7cf6e0e5140499c5f5}{SIMCONNECT\_DATA\_RACE\_RESULT}} \mbox{\hyperlink{_sim_connect_8h_a5654ffbca1e14ac627e9aad81bdead8e}{RacerData}};}
+\DoxyCodeLine{531 \};}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a87770653f44ddc54d04eaf2ee9e05fb0}{SIMCONNECT\_RECV\_EVENT\_RACE\_LAP}}}
+\DoxyCodeLine{534     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{535                                     \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_EVENT\_RACE\_LAP}}
+\DoxyCodeLine{536 \{}
+\DoxyCodeLine{537   DWORD dwLapIndex;  \textcolor{comment}{// The index of the lap the results are for}}
+\DoxyCodeLine{538   \mbox{\hyperlink{_sim_connect_8h_a778fb0e1a91f6b7cf6e0e5140499c5f5}{SIMCONNECT\_DATA\_RACE\_RESULT}} \mbox{\hyperlink{_sim_connect_8h_a5654ffbca1e14ac627e9aad81bdead8e}{RacerData}};}
+\DoxyCodeLine{539 \};}
+\DoxyCodeLine{540 }
+\DoxyCodeLine{541 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_af6be70ee79f028372d5ac631c98f782d}{SIMCONNECT\_RECV\_SIMOBJECT\_DATA}}}
+\DoxyCodeLine{542     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_SIMOBJECT\_DATA}}
+\DoxyCodeLine{543 \{}
+\DoxyCodeLine{544   DWORD dwRequestID;}
+\DoxyCodeLine{545   DWORD \mbox{\hyperlink{_sim_connect_8h_a2b4644b2fa88f2e7085c15ac4f32a63a}{dwObjectID}};}
+\DoxyCodeLine{546   DWORD \mbox{\hyperlink{_sim_connect_8h_ad990bc5da6e6bb7792ed8d6c15e4cab3}{dwDefineID}};}
+\DoxyCodeLine{547   DWORD \mbox{\hyperlink{_sim_connect_8h_a4d2f405b1141000eb2af256e0fc8b98b}{dwFlags}};        \textcolor{comment}{// SIMCONNECT\_DATA\_REQUEST\_FLAG}}
+\DoxyCodeLine{548   DWORD \mbox{\hyperlink{_sim_connect_8h_ae736f1484ba30722fe4cf0465fda7a43}{dwentrynumber}};  \textcolor{comment}{// if multiple objects returned, this is number}}
+\DoxyCodeLine{549                         \textcolor{comment}{// <entrynumber> out of <outof>.}}
+\DoxyCodeLine{550   DWORD \mbox{\hyperlink{_sim_connect_8h_a644382e305ffbe4901fdaf90c928862f}{dwoutof}};        \textcolor{comment}{// note: starts with 1, not 0.}}
+\DoxyCodeLine{551   DWORD \mbox{\hyperlink{_sim_connect_8h_a34958c608b8dd2eb8109dae87813c431}{dwDefineCount}};  \textcolor{comment}{// data count (number of datums, *not* byte count)}}
+\DoxyCodeLine{552   \mbox{\hyperlink{_sim_connect_8h_aee7a016f026cbd05c16d02ab2e5d807f}{SIMCONNECT\_DATAV}}(\mbox{\hyperlink{_sim_connect_8h_ad38b92af7d164a277eb2d30b5e65a489}{dwData}},}
+\DoxyCodeLine{553                    \mbox{\hyperlink{_sim_connect_8h_ad990bc5da6e6bb7792ed8d6c15e4cab3}{dwDefineID}}, );  \textcolor{comment}{// data begins here, dwDefineCount data items}}
+\DoxyCodeLine{554 \};}
+\DoxyCodeLine{555 }
+\DoxyCodeLine{556 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_af58dfda055cbdbae9191cddd3ad34981}{SIMCONNECT\_RECV\_SIMOBJECT\_DATA\_BYTYPE}}}
+\DoxyCodeLine{557     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_af6be70ee79f028372d5ac631c98f782d}{SIMCONNECT\_RECV\_SIMOBJECT\_DATA}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{558                                              \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_SIMOBJECT\_DATA\_BYTYPE}}
+\DoxyCodeLine{559       \{\};}
+\DoxyCodeLine{560 }
+\DoxyCodeLine{561 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a73ac3153a829b9d51c2d6abb11a73b39}{SIMCONNECT\_RECV\_CLIENT\_DATA}}}
+\DoxyCodeLine{562     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_af6be70ee79f028372d5ac631c98f782d}{SIMCONNECT\_RECV\_SIMOBJECT\_DATA}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{563                                              \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_CLIENT\_DATA}}
+\DoxyCodeLine{564       \{\};}
+\DoxyCodeLine{565 }
+\DoxyCodeLine{566 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a981c0f3ce9957615c9f30e0e1c801a6c}{SIMCONNECT\_RECV\_WEATHER\_OBSERVATION}}}
+\DoxyCodeLine{567     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{568                               \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_WEATHER\_OBSERVATION}}
+\DoxyCodeLine{569 \{}
+\DoxyCodeLine{570   DWORD dwRequestID;}
+\DoxyCodeLine{571   \mbox{\hyperlink{_sim_connect_8h_ac37837c3e833bf12b99fdb088d35906a}{SIMCONNECT\_STRINGV}}(szMetar);  \textcolor{comment}{// Variable length string whose maximum size is}}
+\DoxyCodeLine{572                                 \textcolor{comment}{// MAX\_METAR\_LENGTH}}
+\DoxyCodeLine{573 \};}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{_sim_connect_8h_a723af26d96be52854d000be8e2b540bf}{SIMCONNECT\_CLOUD\_STATE\_ARRAY\_WIDTH}} = 64;}
+\DoxyCodeLine{576 \textcolor{keyword}{static} \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{_sim_connect_8h_af0e5a5ab396de30f50a1909424d99b84}{SIMCONNECT\_CLOUD\_STATE\_ARRAY\_SIZE}} =}
+\DoxyCodeLine{577     \mbox{\hyperlink{_sim_connect_8h_a723af26d96be52854d000be8e2b540bf}{SIMCONNECT\_CLOUD\_STATE\_ARRAY\_WIDTH}} * \mbox{\hyperlink{_sim_connect_8h_a723af26d96be52854d000be8e2b540bf}{SIMCONNECT\_CLOUD\_STATE\_ARRAY\_WIDTH}};}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a06518d1231cfab774b2cca8ff29207c9}{SIMCONNECT\_RECV\_CLOUD\_STATE}}}
+\DoxyCodeLine{580     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_CLOUD\_STATE}}
+\DoxyCodeLine{581 \{}
+\DoxyCodeLine{582   DWORD dwRequestID;}
+\DoxyCodeLine{583   DWORD \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}};}
+\DoxyCodeLine{584   \mbox{\hyperlink{_sim_connect_8h_aebaa6a743228ccda88ca2df518884cc9}{SIMCONNECT\_FIXEDTYPE\_DATAV}}(BYTE, rgbData, \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}},}
+\DoxyCodeLine{585                              \mbox{\hyperlink{_sim_connect_8h_a8458e8f8b1f13719aa34ce7ca4b94630}{U1}} \textcolor{comment}{/*member of UnmanagedType enum*/},}
+\DoxyCodeLine{586                              System::Byte \textcolor{comment}{/*cli type*/});}
+\DoxyCodeLine{587 \};}
+\DoxyCodeLine{588 }
+\DoxyCodeLine{589 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a7fe8f6e72f5d43ff6e9918b83bf84d3a}{SIMCONNECT\_RECV\_ASSIGNED\_OBJECT\_ID}}}
+\DoxyCodeLine{590     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID ==}}
+\DoxyCodeLine{591                               \textcolor{comment}{// SIMCONNECT\_RECV\_ID\_ASSIGNED\_OBJECT\_ID}}
+\DoxyCodeLine{592 \{}
+\DoxyCodeLine{593   DWORD dwRequestID;}
+\DoxyCodeLine{594   DWORD \mbox{\hyperlink{_sim_connect_8h_a2b4644b2fa88f2e7085c15ac4f32a63a}{dwObjectID}};}
+\DoxyCodeLine{595 \};}
+\DoxyCodeLine{596 }
+\DoxyCodeLine{597 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a62cdb090a500a1329c8d83bb0ce0d525}{SIMCONNECT\_RECV\_RESERVED\_KEY}}}
+\DoxyCodeLine{598     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_RESERVED\_KEY}}
+\DoxyCodeLine{599 \{}
+\DoxyCodeLine{600   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szChoiceReserved, 30);}
+\DoxyCodeLine{601   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szReservedKey, 50);}
+\DoxyCodeLine{602 \};}
+\DoxyCodeLine{603 }
+\DoxyCodeLine{604 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a733ca1f5de8a739c8a5358dbaaf8db13}{SIMCONNECT\_RECV\_SYSTEM\_STATE}}}
+\DoxyCodeLine{605     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_SYSTEM\_STATE}}
+\DoxyCodeLine{606 \{}
+\DoxyCodeLine{607   DWORD dwRequestID;}
+\DoxyCodeLine{608   DWORD \mbox{\hyperlink{_sim_connect_8h_a9012e44aaac4c158429442c76bf4fcf1}{dwInteger}};}
+\DoxyCodeLine{609   \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a57e6daa2f5a1be25a021c4dfc0320e9c}{fFloat}};}
+\DoxyCodeLine{610   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szString, \mbox{\hyperlink{_sim_connect_8h_a2a9b11da4c7518400aec4792a48853d3}{MAX\_PATH}});}
+\DoxyCodeLine{611 \};}
+\DoxyCodeLine{612 }
+\DoxyCodeLine{613 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a09899b92821393d19b073191ce15f220}{SIMCONNECT\_RECV\_CUSTOM\_ACTION}}}
+\DoxyCodeLine{614     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}} \{}
+\DoxyCodeLine{615   \mbox{\hyperlink{_sim_connect_8h_a080e2b55e839bd868f34c473649c492c}{SIMCONNECT\_GUID}} guidInstanceId;  \textcolor{comment}{// Instance id of the action that executed}}
+\DoxyCodeLine{616   DWORD \mbox{\hyperlink{_sim_connect_8h_afdf7a2f70940a78b5bcc7fb471d89b8d}{dwWaitForCompletion}};       \textcolor{comment}{// Wait for completion flag on the action}}
+\DoxyCodeLine{617   \mbox{\hyperlink{_sim_connect_8h_ac37837c3e833bf12b99fdb088d35906a}{SIMCONNECT\_STRINGV}}(szPayLoad);   \textcolor{comment}{// Variable length string payload associated}}
+\DoxyCodeLine{618                                    \textcolor{comment}{// with the mission action.}}
+\DoxyCodeLine{619 \};}
+\DoxyCodeLine{620 }
+\DoxyCodeLine{621 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a40e54d83fac214f0010d13e1342f8dad}{SIMCONNECT\_RECV\_EVENT\_WEATHER\_MODE}}}
+\DoxyCodeLine{622     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_aaaf1c90062906aa85760f95722ed08e2}{SIMCONNECT\_RECV\_EVENT}}\{}
+\DoxyCodeLine{623           \textcolor{comment}{// No event specific data -\/ the new weather mode is in the base}}
+\DoxyCodeLine{624           \textcolor{comment}{// structure dwData member.}}
+\DoxyCodeLine{625       \};}
+\DoxyCodeLine{626 }
+\DoxyCodeLine{627 \textcolor{comment}{// SIMCONNECT\_RECV\_FACILITIES\_LIST}}
+\DoxyCodeLine{628 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a773d58110840f736a92a3f0078ac8033}{SIMCONNECT\_RECV\_FACILITIES\_LIST}} : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}} \{}
+\DoxyCodeLine{629   DWORD dwRequestID;}
+\DoxyCodeLine{630   DWORD \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}};}
+\DoxyCodeLine{631   DWORD \mbox{\hyperlink{_sim_connect_8h_ad46284e520ac062cf6efec00b552ac9c}{dwEntryNumber}};  \textcolor{comment}{// when the array of items is too big for one send,}}
+\DoxyCodeLine{632                         \textcolor{comment}{// which send this is (0..dwOutOf-\/1)}}
+\DoxyCodeLine{633   DWORD \mbox{\hyperlink{_sim_connect_8h_a15fb7657b7b853ee0d35ab29c75d033a}{dwOutOf}};  \textcolor{comment}{// total number of transmissions the list is chopped into}}
+\DoxyCodeLine{634 \};}
+\DoxyCodeLine{635 }
+\DoxyCodeLine{636 \textcolor{comment}{// SIMCONNECT\_DATA\_FACILITY\_AIRPORT}}
+\DoxyCodeLine{637 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a373c4895e61cfe542f18c7df54df6e2a}{SIMCONNECT\_DATA\_FACILITY\_AIRPORT}} \{}
+\DoxyCodeLine{638   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(Icao, 9);  \textcolor{comment}{// ICAO of the object}}
+\DoxyCodeLine{639   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a42b9566d33982d49ae8bf66725561070}{Latitude}};             \textcolor{comment}{// degrees}}
+\DoxyCodeLine{640   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a8fb70e79d7589ce0c27ec73f88375773}{Longitude}};            \textcolor{comment}{// degrees}}
+\DoxyCodeLine{641   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a028e55398fb7819911e2d203707a0639}{Altitude}};             \textcolor{comment}{// meters}}
+\DoxyCodeLine{642 \};}
+\DoxyCodeLine{643 }
+\DoxyCodeLine{644 \textcolor{comment}{// SIMCONNECT\_RECV\_AIRPORT\_LIST}}
+\DoxyCodeLine{645 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a3748653d20b6c953eaf0ef73277e6200}{SIMCONNECT\_RECV\_AIRPORT\_LIST}}}
+\DoxyCodeLine{646     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a773d58110840f736a92a3f0078ac8033}{SIMCONNECT\_RECV\_FACILITIES\_LIST}} \{}
+\DoxyCodeLine{647   \mbox{\hyperlink{_sim_connect_8h_aebaa6a743228ccda88ca2df518884cc9}{SIMCONNECT\_FIXEDTYPE\_DATAV}}(\mbox{\hyperlink{_sim_connect_8h_a373c4895e61cfe542f18c7df54df6e2a}{SIMCONNECT\_DATA\_FACILITY\_AIRPORT}}, \mbox{\hyperlink{_sim_connect_8h_a624c64973d36a9182c5363b553bca5fa}{rgData}},}
+\DoxyCodeLine{648                              \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}}, \mbox{\hyperlink{_sim_connect_8h_a8458e8f8b1f13719aa34ce7ca4b94630}{U1}} \textcolor{comment}{/*member of UnmanagedType enum*/},}
+\DoxyCodeLine{649                              \mbox{\hyperlink{_sim_connect_8h_a373c4895e61cfe542f18c7df54df6e2a}{SIMCONNECT\_DATA\_FACILITY\_AIRPORT}} \textcolor{comment}{/*cli type*/});}
+\DoxyCodeLine{650 \};}
+\DoxyCodeLine{651 }
+\DoxyCodeLine{652 \textcolor{comment}{// SIMCONNECT\_DATA\_FACILITY\_WAYPOINT}}
+\DoxyCodeLine{653 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a393de8e1ea422156c5f7b48a4941e7d4}{SIMCONNECT\_DATA\_FACILITY\_WAYPOINT}}}
+\DoxyCodeLine{654     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a373c4895e61cfe542f18c7df54df6e2a}{SIMCONNECT\_DATA\_FACILITY\_AIRPORT}} \{}
+\DoxyCodeLine{655   \textcolor{keywordtype}{float} fMagVar;  \textcolor{comment}{// Magvar in degrees}}
+\DoxyCodeLine{656 \};}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658 \textcolor{comment}{// SIMCONNECT\_RECV\_WAYPOINT\_LIST}}
+\DoxyCodeLine{659 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a48b199439931b82e5e17f8b3159e1cb2}{SIMCONNECT\_RECV\_WAYPOINT\_LIST}}}
+\DoxyCodeLine{660     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a773d58110840f736a92a3f0078ac8033}{SIMCONNECT\_RECV\_FACILITIES\_LIST}} \{}
+\DoxyCodeLine{661   \mbox{\hyperlink{_sim_connect_8h_aebaa6a743228ccda88ca2df518884cc9}{SIMCONNECT\_FIXEDTYPE\_DATAV}}(\mbox{\hyperlink{_sim_connect_8h_a393de8e1ea422156c5f7b48a4941e7d4}{SIMCONNECT\_DATA\_FACILITY\_WAYPOINT}}, \mbox{\hyperlink{_sim_connect_8h_a624c64973d36a9182c5363b553bca5fa}{rgData}},}
+\DoxyCodeLine{662                              \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}}, \mbox{\hyperlink{_sim_connect_8h_a8458e8f8b1f13719aa34ce7ca4b94630}{U1}} \textcolor{comment}{/*member of UnmanagedType enum*/},}
+\DoxyCodeLine{663                              \mbox{\hyperlink{_sim_connect_8h_a393de8e1ea422156c5f7b48a4941e7d4}{SIMCONNECT\_DATA\_FACILITY\_WAYPOINT}} \textcolor{comment}{/*cli type*/});}
+\DoxyCodeLine{664 \};}
+\DoxyCodeLine{665 }
+\DoxyCodeLine{666 \textcolor{comment}{// SIMCONNECT\_DATA\_FACILITY\_NDB}}
+\DoxyCodeLine{667 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a95097d8c07943f78a01b8f4c9ffbf62b}{SIMCONNECT\_DATA\_FACILITY\_NDB}}}
+\DoxyCodeLine{668     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a393de8e1ea422156c5f7b48a4941e7d4}{SIMCONNECT\_DATA\_FACILITY\_WAYPOINT}} \{}
+\DoxyCodeLine{669   DWORD fFrequency;  \textcolor{comment}{// frequency in Hz}}
+\DoxyCodeLine{670 \};}
+\DoxyCodeLine{671 }
+\DoxyCodeLine{672 \textcolor{comment}{// SIMCONNECT\_RECV\_NDB\_LIST}}
+\DoxyCodeLine{673 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_aad674ca1db3b1ecf6140f396197a1a0f}{SIMCONNECT\_RECV\_NDB\_LIST}}}
+\DoxyCodeLine{674     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a773d58110840f736a92a3f0078ac8033}{SIMCONNECT\_RECV\_FACILITIES\_LIST}} \{}
+\DoxyCodeLine{675   \mbox{\hyperlink{_sim_connect_8h_aebaa6a743228ccda88ca2df518884cc9}{SIMCONNECT\_FIXEDTYPE\_DATAV}}(\mbox{\hyperlink{_sim_connect_8h_a95097d8c07943f78a01b8f4c9ffbf62b}{SIMCONNECT\_DATA\_FACILITY\_NDB}}, \mbox{\hyperlink{_sim_connect_8h_a624c64973d36a9182c5363b553bca5fa}{rgData}}, \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}},}
+\DoxyCodeLine{676                              \mbox{\hyperlink{_sim_connect_8h_a8458e8f8b1f13719aa34ce7ca4b94630}{U1}} \textcolor{comment}{/*member of UnmanagedType enum*/},}
+\DoxyCodeLine{677                              \mbox{\hyperlink{_sim_connect_8h_a95097d8c07943f78a01b8f4c9ffbf62b}{SIMCONNECT\_DATA\_FACILITY\_NDB}} \textcolor{comment}{/*cli type*/});}
+\DoxyCodeLine{678 \};}
+\DoxyCodeLine{679 }
+\DoxyCodeLine{680 \textcolor{comment}{// SIMCONNECT\_DATA\_FACILITY\_VOR}}
+\DoxyCodeLine{681 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a7b828c65808a48c7071a28e988f17796}{SIMCONNECT\_DATA\_FACILITY\_VOR}}}
+\DoxyCodeLine{682     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a95097d8c07943f78a01b8f4c9ffbf62b}{SIMCONNECT\_DATA\_FACILITY\_NDB}} \{}
+\DoxyCodeLine{683   DWORD \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}};       \textcolor{comment}{// SIMCONNECT\_VOR\_FLAGS}}
+\DoxyCodeLine{684   \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a33b8011c208cff71dd29892b08f874f1}{fLocalizer}};  \textcolor{comment}{// Localizer in degrees}}
+\DoxyCodeLine{685   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_aaa51a21dff52a57e52b28e8d37568ddf}{GlideLat}};   \textcolor{comment}{// Glide Slope Location (deg, deg, meters)}}
+\DoxyCodeLine{686   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a1fb28dee498b1e716e363ce46409b8fd}{GlideLon}};}
+\DoxyCodeLine{687   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a17f5b669ee879fa0aff2cd9332da1d7a}{GlideAlt}};}
+\DoxyCodeLine{688   \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_addf486b6b00f1797c285b922ebf75f68}{fGlideSlopeAngle}};  \textcolor{comment}{// Glide Slope in degrees}}
+\DoxyCodeLine{689 \};}
+\DoxyCodeLine{690 }
+\DoxyCodeLine{691 \textcolor{comment}{// SIMCONNECT\_RECV\_VOR\_LIST}}
+\DoxyCodeLine{692 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} \mbox{\hyperlink{_sim_connect_8h_a9d9cace135af7ceb087a2c2ef4cf4820}{SIMCONNECT\_RECV\_VOR\_LIST}}}
+\DoxyCodeLine{693     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_a773d58110840f736a92a3f0078ac8033}{SIMCONNECT\_RECV\_FACILITIES\_LIST}} \{}
+\DoxyCodeLine{694   \mbox{\hyperlink{_sim_connect_8h_aebaa6a743228ccda88ca2df518884cc9}{SIMCONNECT\_FIXEDTYPE\_DATAV}}(\mbox{\hyperlink{_sim_connect_8h_a7b828c65808a48c7071a28e988f17796}{SIMCONNECT\_DATA\_FACILITY\_VOR}}, \mbox{\hyperlink{_sim_connect_8h_a624c64973d36a9182c5363b553bca5fa}{rgData}}, \mbox{\hyperlink{_sim_connect_8h_a5ed208605f674a74e13bc66d9d8b4428}{dwArraySize}},}
+\DoxyCodeLine{695                              \mbox{\hyperlink{_sim_connect_8h_a8458e8f8b1f13719aa34ce7ca4b94630}{U1}} \textcolor{comment}{/*member of UnmanagedType enum*/},}
+\DoxyCodeLine{696                              \mbox{\hyperlink{_sim_connect_8h_a7b828c65808a48c7071a28e988f17796}{SIMCONNECT\_DATA\_FACILITY\_VOR}} \textcolor{comment}{/*cli type*/});}
+\DoxyCodeLine{697 \};}
+\DoxyCodeLine{698 }
+\DoxyCodeLine{699 \textcolor{preprocessor}{\#ifdef ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{700 }
+\DoxyCodeLine{701 \mbox{\hyperlink{_sim_connect_8h_a30efe6374318bd87409de7a819c4ae26}{SIMCONNECT\_REFSTRUCT}} SIMCONNECT\_RECV\_PICK}
+\DoxyCodeLine{702     : \textcolor{keyword}{public} \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}  \textcolor{comment}{// when dwID == SIMCONNECT\_RECV\_ID\_RESERVED\_KEY}}
+\DoxyCodeLine{703 \{}
+\DoxyCodeLine{704   HANDLE hContext;}
+\DoxyCodeLine{705   DWORD \mbox{\hyperlink{_sim_connect_8h_a4d2f405b1141000eb2af256e0fc8b98b}{dwFlags}};     \textcolor{comment}{//}}
+\DoxyCodeLine{706   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a42b9566d33982d49ae8bf66725561070}{Latitude}};   \textcolor{comment}{// degrees}}
+\DoxyCodeLine{707   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a8fb70e79d7589ce0c27ec73f88375773}{Longitude}};  \textcolor{comment}{// degrees}}
+\DoxyCodeLine{708   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a028e55398fb7819911e2d203707a0639}{Altitude}};   \textcolor{comment}{// feet}}
+\DoxyCodeLine{709   \textcolor{keywordtype}{int} xPos;          \textcolor{comment}{// reserved}}
+\DoxyCodeLine{710   \textcolor{keywordtype}{int} yPos;          \textcolor{comment}{// reserved;}}
+\DoxyCodeLine{711   DWORD dwSimObjectID;}
+\DoxyCodeLine{712   HANDLE hSceneryObject;}
+\DoxyCodeLine{713   DWORD \mbox{\hyperlink{_sim_connect_8h_ae736f1484ba30722fe4cf0465fda7a43}{dwentrynumber}};  \textcolor{comment}{// if multiple objects returned, this is number}}
+\DoxyCodeLine{714                         \textcolor{comment}{// <entrynumber> out of <outof>.}}
+\DoxyCodeLine{715   DWORD \mbox{\hyperlink{_sim_connect_8h_a644382e305ffbe4901fdaf90c928862f}{dwoutof}};        \textcolor{comment}{// note: starts with 1, not 0.}}
+\DoxyCodeLine{716 \};}
+\DoxyCodeLine{717 }
+\DoxyCodeLine{718 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// ENABLE\_SIMCONNECT\_EXPERIMENTAL}}
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720 \textcolor{comment}{// SIMCONNECT\_DATATYPE\_INITPOSITION}}
+\DoxyCodeLine{721 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_a9b1bd547d636bc1bb59c98c5fc3ae2b1}{SIMCONNECT\_DATA\_INITPOSITION}} \{}
+\DoxyCodeLine{722   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a42b9566d33982d49ae8bf66725561070}{Latitude}};   \textcolor{comment}{// degrees}}
+\DoxyCodeLine{723   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a8fb70e79d7589ce0c27ec73f88375773}{Longitude}};  \textcolor{comment}{// degrees}}
+\DoxyCodeLine{724   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a028e55398fb7819911e2d203707a0639}{Altitude}};   \textcolor{comment}{// feet}}
+\DoxyCodeLine{725   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a84f7fb82b7081d3e94c66c2768d222ff}{Pitch}};      \textcolor{comment}{// degrees}}
+\DoxyCodeLine{726   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_aa238f6b8dac70ca9bab7a8a8f721d888}{Bank}};       \textcolor{comment}{// degrees}}
+\DoxyCodeLine{727   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_aead54b53566a26be4a6643d4df50b8f4}{Heading}};    \textcolor{comment}{// degrees}}
+\DoxyCodeLine{728   DWORD \mbox{\hyperlink{_sim_connect_8h_ab0d92b3170baf2d203d8e37f2f7570ed}{OnGround}};    \textcolor{comment}{// 1=force to be on the ground}}
+\DoxyCodeLine{729   DWORD \mbox{\hyperlink{_sim_connect_8h_af9c465f51f112d1c9a7553e01547bb1f}{Airspeed}};    \textcolor{comment}{// knots}}
+\DoxyCodeLine{730 \};}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732 \textcolor{comment}{// SIMCONNECT\_DATATYPE\_MARKERSTATE}}
+\DoxyCodeLine{733 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_a9507a47f0cc1f6263b3c9a3a3480bad1}{SIMCONNECT\_DATA\_MARKERSTATE}} \{}
+\DoxyCodeLine{734   \mbox{\hyperlink{_sim_connect_8h_acab5a7e2bfdbd25ffae6b641263ef975}{SIMCONNECT\_STRING}}(szMarkerName, 64);}
+\DoxyCodeLine{735   DWORD \mbox{\hyperlink{_sim_connect_8h_a77b3f661b95f52d6068901baacdf1e8b}{dwMarkerState}};}
+\DoxyCodeLine{736 \};}
+\DoxyCodeLine{737 }
+\DoxyCodeLine{738 \textcolor{comment}{// SIMCONNECT\_DATATYPE\_WAYPOINT}}
+\DoxyCodeLine{739 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_a9ba5163e63c4912916fc4e0b4dda5b8c}{SIMCONNECT\_DATA\_WAYPOINT}} \{}
+\DoxyCodeLine{740   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a42b9566d33982d49ae8bf66725561070}{Latitude}};   \textcolor{comment}{// degrees}}
+\DoxyCodeLine{741   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a8fb70e79d7589ce0c27ec73f88375773}{Longitude}};  \textcolor{comment}{// degrees}}
+\DoxyCodeLine{742   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a028e55398fb7819911e2d203707a0639}{Altitude}};   \textcolor{comment}{// feet}}
+\DoxyCodeLine{743   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}};}
+\DoxyCodeLine{744   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a18bbed5e68eb856ad6e2ff8e7335a1f7}{ktsSpeed}};  \textcolor{comment}{// knots}}
+\DoxyCodeLine{745   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_aa867b540c4e54cf5b0ffd62bfb1581f2}{percentThrottle}};}
+\DoxyCodeLine{746 \};}
+\DoxyCodeLine{747 }
+\DoxyCodeLine{748 \textcolor{comment}{// SIMCONNECT\_DATA\_LATLONALT}}
+\DoxyCodeLine{749 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_ac14c223da9cebea2393c1602c0e3c11b}{SIMCONNECT\_DATA\_LATLONALT}} \{}
+\DoxyCodeLine{750   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a42b9566d33982d49ae8bf66725561070}{Latitude}};}
+\DoxyCodeLine{751   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a8fb70e79d7589ce0c27ec73f88375773}{Longitude}};}
+\DoxyCodeLine{752   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_a028e55398fb7819911e2d203707a0639}{Altitude}};}
+\DoxyCodeLine{753 \};}
+\DoxyCodeLine{754 }
+\DoxyCodeLine{755 \textcolor{comment}{// SIMCONNECT\_DATA\_XYZ}}
+\DoxyCodeLine{756 \mbox{\hyperlink{_sim_connect_8h_afb4b0cad24e32924f352f81155a7e7e9}{SIMCONNECT\_STRUCT}} \mbox{\hyperlink{_sim_connect_8h_a3f9d85ec1d09042d4d28af52cf126a78}{SIMCONNECT\_DATA\_XYZ}} \{}
+\DoxyCodeLine{757   \textcolor{keywordtype}{double} x;}
+\DoxyCodeLine{758   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_ab927965981178aa1fba979a37168db2a}{y}};}
+\DoxyCodeLine{759   \textcolor{keywordtype}{double} \mbox{\hyperlink{_sim_connect_8h_ab3e6ed577a7c669c19de1f9c1b46c872}{z}};}
+\DoxyCodeLine{760 \};}
+\DoxyCodeLine{761 }
+\DoxyCodeLine{762 \textcolor{preprocessor}{\#pragma pack(pop)}}
+\DoxyCodeLine{763 }
+\DoxyCodeLine{764 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{765 \textcolor{comment}{//        End of Struct definitions}}
+\DoxyCodeLine{766 \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{767 }
+\DoxyCodeLine{768 \textcolor{keyword}{typedef} void(CALLBACK* \mbox{\hyperlink{_sim_connect_8h_a956d24be045b41acf3083b4bd6ef2158}{DispatchProc}})(\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}* pData, DWORD cbData,}
+\DoxyCodeLine{769                                      \textcolor{keywordtype}{void}* pContext);}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771 \textcolor{preprocessor}{\#if !defined(SIMCONNECTAPI)}}
+\DoxyCodeLine{772 \textcolor{preprocessor}{\#ifdef \_MSFS\_WASM}}
+\DoxyCodeLine{773 \textcolor{preprocessor}{\#ifdef \_\_INTELLISENSE\_\_}}
+\DoxyCodeLine{774 \textcolor{preprocessor}{\#define MODULE\_EXPORT}}
+\DoxyCodeLine{775 \textcolor{preprocessor}{\#define SIMCONNECTAPI extern "{}C"{}} HRESULT}
+\DoxyCodeLine{776 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{777 \textcolor{preprocessor}{\#define MODULE\_EXPORT \_\_attribute\_\_((visibility("{}default"{}})))}
+\DoxyCodeLine{778 \textcolor{preprocessor}{\#define SIMCONNECTAPI \(\backslash\)}}
+\DoxyCodeLine{779 \textcolor{preprocessor}{  extern "{}C"{}} \_\_attribute\_\_((import\_module(SIMCONNECT\_WASM\_MODULE))) HRESULT}
+\DoxyCodeLine{780 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{781 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{782 \textcolor{preprocessor}{\#define MODULE\_EXPORT}}
+\DoxyCodeLine{783 \textcolor{preprocessor}{\#define SIMCONNECTAPI extern "{}C"{}} HRESULT \_\_stdcall}
+\DoxyCodeLine{784 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{785 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{786 }
+\DoxyCodeLine{787 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a80fc358256c8fccea8c8ae687b0e27e1}{SimConnect\_MapClientEventToSimEvent}}(}
+\DoxyCodeLine{788     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID,}
+\DoxyCodeLine{789     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* EventName = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{790 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a239562b4e9e95063c58dedd1cb8791ea}{SimConnect\_TransmitClientEvent}}(}
+\DoxyCodeLine{791     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID,}
+\DoxyCodeLine{792     \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID, DWORD \mbox{\hyperlink{_sim_connect_8h_ad38b92af7d164a277eb2d30b5e65a489}{dwData}},}
+\DoxyCodeLine{793     \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID, \mbox{\hyperlink{_sim_connect_8h_a8cebaf7fc205a01c7125f3596151e7f2}{SIMCONNECT\_EVENT\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}});}
+\DoxyCodeLine{794 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a766d7e61219701ec4878a69884ff33c0}{SimConnect\_SetSystemEventState}}(HANDLE hSimConnect,}
+\DoxyCodeLine{795                                              \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID,}
+\DoxyCodeLine{796                                              \mbox{\hyperlink{_sim_connect_8h_adac2d2107f6bd82b5b486a49379b967f}{SIMCONNECT\_STATE}} dwState);}
+\DoxyCodeLine{797 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a0dd82190725085ecb370919e876a8cfd}{SimConnect\_AddClientEventToNotificationGroup}}(}
+\DoxyCodeLine{798     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{799     \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID, BOOL bMaskable = FALSE);}
+\DoxyCodeLine{800 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_afddbe6a55dbee94c9d6c6c4d51b03063}{SimConnect\_RemoveClientEvent}}(}
+\DoxyCodeLine{801     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{802     \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID);}
+\DoxyCodeLine{803 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a8f0a17b34ca379141812491bbb0fcb02}{SimConnect\_SetNotificationGroupPriority}}(}
+\DoxyCodeLine{804     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{805     DWORD uPriority);}
+\DoxyCodeLine{806 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ac8e07ced791c10e425c5b76d525c1337}{SimConnect\_ClearNotificationGroup}}(}
+\DoxyCodeLine{807     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID);}
+\DoxyCodeLine{808 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a2e66236b1b0333700ea016816531a65d}{SimConnect\_RequestNotificationGroup}}(}
+\DoxyCodeLine{809     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a60030e254cab16019a2f41dc8afba1a8}{SIMCONNECT\_NOTIFICATION\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{810     DWORD dwReserved = 0, DWORD \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}} = 0);}
+\DoxyCodeLine{811 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a2dceb52226912fe345b113f1bb98f849}{SimConnect\_AddToDataDefinition}}(}
+\DoxyCodeLine{812     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}} DefineID,}
+\DoxyCodeLine{813     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* DatumName, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* UnitsName,}
+\DoxyCodeLine{814     \mbox{\hyperlink{_sim_connect_8h_ab6b3969227e16011ca63cf5605c18e58}{SIMCONNECT\_DATATYPE}} DatumType = SIMCONNECT\_DATATYPE\_FLOAT64,}
+\DoxyCodeLine{815     \textcolor{keywordtype}{float} fEpsilon = 0, DWORD DatumID = \mbox{\hyperlink{_sim_connect_8h_ad9e9d9ffecd4f6ec8c3f4acc70ecdc6a}{SIMCONNECT\_UNUSED}});}
+\DoxyCodeLine{816 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a25fee12e2375ea611c13c94b3875e77e}{SimConnect\_ClearDataDefinition}}(}
+\DoxyCodeLine{817     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}} DefineID);}
+\DoxyCodeLine{818 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aec44e264ac14f25f5aba7865f5cb6a86}{SimConnect\_RequestDataOnSimObject}}(}
+\DoxyCodeLine{819     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{820     \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}} DefineID, \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID,}
+\DoxyCodeLine{821     \mbox{\hyperlink{_sim_connect_8h_aeceaf841b0c424de00bb0b9526b4ee83}{SIMCONNECT\_PERIOD}} Period, \mbox{\hyperlink{_sim_connect_8h_a9a2f369f01b115a2f3bc57a0e0c5c952}{SIMCONNECT\_DATA\_REQUEST\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}} = 0,}
+\DoxyCodeLine{822     DWORD origin = 0, DWORD interval = 0, DWORD limit = 0);}
+\DoxyCodeLine{823 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ab0205026e5503ad78fbf58b8cdda7229}{SimConnect\_RequestDataOnSimObjectType}}(}
+\DoxyCodeLine{824     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{825     \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}} DefineID, DWORD dwRadiusMeters,}
+\DoxyCodeLine{826     \mbox{\hyperlink{_sim_connect_8h_a654cbc6e64d3336f153806411496379f}{SIMCONNECT\_SIMOBJECT\_TYPE}} type);}
+\DoxyCodeLine{827 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a50b8c391aa903eb7b4f3ff55ccea6398}{SimConnect\_SetDataOnSimObject}}(}
+\DoxyCodeLine{828     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a56df6e200d5d8a3ebf2f3f4719331810}{SIMCONNECT\_DATA\_DEFINITION\_ID}} DefineID,}
+\DoxyCodeLine{829     \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID, \mbox{\hyperlink{_sim_connect_8h_a39470c09248c06083d8b93018f8dd401}{SIMCONNECT\_DATA\_SET\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}},}
+\DoxyCodeLine{830     DWORD ArrayCount, DWORD cbUnitSize, \textcolor{keywordtype}{void}* pDataSet);}
+\DoxyCodeLine{831 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_af49bdda0d1aefa47ee7434bdc0a4b73b}{SimConnect\_MapInputEventToClientEvent}}(}
+\DoxyCodeLine{832     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{833     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szInputDefinition, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} DownEventID,}
+\DoxyCodeLine{834     DWORD DownValue = 0,}
+\DoxyCodeLine{835     \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} UpEventID = (\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}})}
+\DoxyCodeLine{836         \mbox{\hyperlink{_sim_connect_8h_ad9e9d9ffecd4f6ec8c3f4acc70ecdc6a}{SIMCONNECT\_UNUSED}},}
+\DoxyCodeLine{837     DWORD UpValue = 0, BOOL bMaskable = FALSE);}
+\DoxyCodeLine{838 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a9a34aee00153f7d0e19e4bb36bddb3ec}{SimConnect\_SetInputGroupPriority}}(}
+\DoxyCodeLine{839     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}} GroupID, DWORD uPriority);}
+\DoxyCodeLine{840 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a82c32b130cdcf80404fe1cb5aaf3dfd3}{SimConnect\_RemoveInputEvent}}(HANDLE hSimConnect,}
+\DoxyCodeLine{841                                           \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{842                                           \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szInputDefinition);}
+\DoxyCodeLine{843 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a4862c6ac4adff4e28cc7264c14134248}{SimConnect\_ClearInputGroup}}(HANDLE hSimConnect,}
+\DoxyCodeLine{844                                          \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}} GroupID);}
+\DoxyCodeLine{845 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ab241e211cc39518fa16f779f420e61d9}{SimConnect\_SetInputGroupState}}(HANDLE hSimConnect,}
+\DoxyCodeLine{846                                             \mbox{\hyperlink{_sim_connect_8h_ab274acb55fb671edfc2d49fee0e724a9}{SIMCONNECT\_INPUT\_GROUP\_ID}} GroupID,}
+\DoxyCodeLine{847                                             DWORD dwState);}
+\DoxyCodeLine{848 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ad74508f28763162f862d21ee7fab1fdc}{SimConnect\_RequestReservedKey}}(HANDLE hSimConnect,}
+\DoxyCodeLine{849                                             \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID,}
+\DoxyCodeLine{850                                             \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szKeyChoice1 = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{851                                             \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szKeyChoice2 = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{852                                             \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szKeyChoice3 = \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{853 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ae5219c6839706150e7eba5216a2328ca}{SimConnect\_SubscribeToSystemEvent}}(}
+\DoxyCodeLine{854     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID,}
+\DoxyCodeLine{855     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* SystemEventName);}
+\DoxyCodeLine{856 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a16adaf5c3def949491027ce82e15841e}{SimConnect\_UnsubscribeFromSystemEvent}}(}
+\DoxyCodeLine{857     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID);}
+\DoxyCodeLine{858 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a8e37e11de44114842add45da7f26b8dc}{SimConnect\_WeatherRequestInterpolatedObservation}}(}
+\DoxyCodeLine{859     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID, \textcolor{keywordtype}{float} lat,}
+\DoxyCodeLine{860     \textcolor{keywordtype}{float} lon, \textcolor{keywordtype}{float} alt);}
+\DoxyCodeLine{861 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a44b984aefaa3a8c308bf6141f74328c2}{SimConnect\_WeatherRequestObservationAtStation}}(}
+\DoxyCodeLine{862     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{863     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szICAO);}
+\DoxyCodeLine{864 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aa1e150b958dfecd541d79ad1433d0255}{SimConnect\_WeatherRequestObservationAtNearestStation}}(}
+\DoxyCodeLine{865     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID, \textcolor{keywordtype}{float} lat,}
+\DoxyCodeLine{866     \textcolor{keywordtype}{float} lon);}
+\DoxyCodeLine{867 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_add8dcdd02addce4298a06f856f04ed78}{SimConnect\_WeatherCreateStation}}(}
+\DoxyCodeLine{868     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{869     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szICAO, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szName, \textcolor{keywordtype}{float} lat, \textcolor{keywordtype}{float} lon, \textcolor{keywordtype}{float} alt);}
+\DoxyCodeLine{870 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_af0217ad5d2683e127447a86d866299f1}{SimConnect\_WeatherRemoveStation}}(}
+\DoxyCodeLine{871     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{872     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szICAO);}
+\DoxyCodeLine{873 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a3dace776965ac53140f6b33adc7eb2a8}{SimConnect\_WeatherSetObservation}}(HANDLE hSimConnect,}
+\DoxyCodeLine{874                                                DWORD Seconds,}
+\DoxyCodeLine{875                                                \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szMETAR);}
+\DoxyCodeLine{876 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a47a40670b43c6261d633ed4d85e1b9c3}{SimConnect\_WeatherSetModeServer}}(HANDLE hSimConnect, DWORD dwPort,}
+\DoxyCodeLine{877                                               DWORD dwSeconds);}
+\DoxyCodeLine{878 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ad2e3cc554d0f3a5e2361e507449ba48d}{SimConnect\_WeatherSetModeTheme}}(HANDLE hSimConnect,}
+\DoxyCodeLine{879                                              \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szThemeName);}
+\DoxyCodeLine{880 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a96bb74532c797c57244e039ddd241af5}{SimConnect\_WeatherSetModeGlobal}}(HANDLE hSimConnect);}
+\DoxyCodeLine{881 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aabb5f33d15afeb71b8c9388eff0aa8ba}{SimConnect\_WeatherSetModeCustom}}(HANDLE hSimConnect);}
+\DoxyCodeLine{882 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a64c3b8f840ff729cc2a68f5676216ab8}{SimConnect\_WeatherSetDynamicUpdateRate}}(HANDLE hSimConnect,}
+\DoxyCodeLine{883                                                      DWORD dwRate);}
+\DoxyCodeLine{884 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aa11ebce979e7b732344666176a3721a5}{SimConnect\_WeatherRequestCloudState}}(}
+\DoxyCodeLine{885     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID, \textcolor{keywordtype}{float} minLat,}
+\DoxyCodeLine{886     \textcolor{keywordtype}{float} minLon, \textcolor{keywordtype}{float} minAlt, \textcolor{keywordtype}{float} maxLat, \textcolor{keywordtype}{float} maxLon, \textcolor{keywordtype}{float} maxAlt,}
+\DoxyCodeLine{887     DWORD \mbox{\hyperlink{_sim_connect_8h_a4d2f405b1141000eb2af256e0fc8b98b}{dwFlags}} = 0);}
+\DoxyCodeLine{888 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_abcae7dc5f5ff5be02ad34b0670abbaae}{SimConnect\_WeatherCreateThermal}}(}
+\DoxyCodeLine{889     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID, \textcolor{keywordtype}{float} lat,}
+\DoxyCodeLine{890     \textcolor{keywordtype}{float} lon, \textcolor{keywordtype}{float} alt, \textcolor{keywordtype}{float} radius, \textcolor{keywordtype}{float} height, \textcolor{keywordtype}{float} coreRate = 3.0f,}
+\DoxyCodeLine{891     \textcolor{keywordtype}{float} coreTurbulence = 0.05f, \textcolor{keywordtype}{float} sinkRate = 3.0f,}
+\DoxyCodeLine{892     \textcolor{keywordtype}{float} sinkTurbulence = 0.2f, \textcolor{keywordtype}{float} coreSize = 0.4f,}
+\DoxyCodeLine{893     \textcolor{keywordtype}{float} coreTransitionSize = 0.1f, \textcolor{keywordtype}{float} sinkLayerSize = 0.4f,}
+\DoxyCodeLine{894     \textcolor{keywordtype}{float} sinkTransitionSize = 0.1f);}
+\DoxyCodeLine{895 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aab0172cc3df9b9440446bd938ac6e90f}{SimConnect\_WeatherRemoveThermal}}(HANDLE hSimConnect,}
+\DoxyCodeLine{896                                               \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID);}
+\DoxyCodeLine{897 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a51c1e31633a6e75998fd914b18d26cef}{SimConnect\_AICreateParkedATCAircraft}}(}
+\DoxyCodeLine{898     HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szContainerTitle, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szTailNumber,}
+\DoxyCodeLine{899     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szAirportID, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{900 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a84e3c66d949708f81f0ef73581a5db8e}{SimConnect\_AICreateEnrouteATCAircraft}}(}
+\DoxyCodeLine{901     HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szContainerTitle, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szTailNumber,}
+\DoxyCodeLine{902     \textcolor{keywordtype}{int} iFlightNumber, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szFlightPlanPath, \textcolor{keywordtype}{double} dFlightPlanPosition,}
+\DoxyCodeLine{903     BOOL bTouchAndGo, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{904 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ac470843f1926bb1aa24d25ced0761677}{SimConnect\_AICreateNonATCAircraft}}(}
+\DoxyCodeLine{905     HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szContainerTitle, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szTailNumber,}
+\DoxyCodeLine{906     \mbox{\hyperlink{_sim_connect_8h_a9b1bd547d636bc1bb59c98c5fc3ae2b1}{SIMCONNECT\_DATA\_INITPOSITION}} InitPos, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{907 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a3ddbb152f6e57e5930c6ce323277c29e}{SimConnect\_AICreateSimulatedObject}}(}
+\DoxyCodeLine{908     HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szContainerTitle,}
+\DoxyCodeLine{909     \mbox{\hyperlink{_sim_connect_8h_a9b1bd547d636bc1bb59c98c5fc3ae2b1}{SIMCONNECT\_DATA\_INITPOSITION}} InitPos, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{910 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a9646d9bffdcfeda0ef22fead33fbeb7d}{SimConnect\_AIReleaseControl}}(HANDLE hSimConnect,}
+\DoxyCodeLine{911                                           \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID,}
+\DoxyCodeLine{912                                           \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{913 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a16ee36ed5a64867533467a05f98a1d44}{SimConnect\_AIRemoveObject}}(HANDLE hSimConnect,}
+\DoxyCodeLine{914                                         \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID,}
+\DoxyCodeLine{915                                         \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{916 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ada5b19d0fdc37ffc169bedf112a0ce94}{SimConnect\_AISetAircraftFlightPlan}}(}
+\DoxyCodeLine{917     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} ObjectID,}
+\DoxyCodeLine{918     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szFlightPlanPath, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{919 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_af0fe3252d1f78e2293579327446ded89}{SimConnect\_ExecuteMissionAction}}(HANDLE hSimConnect,}
+\DoxyCodeLine{920                                               \textcolor{keyword}{const} GUID guidInstanceId);}
+\DoxyCodeLine{921 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ac21f3f17658956ecf7156f10edef4ffe}{SimConnect\_CompleteCustomMissionAction}}(HANDLE hSimConnect,}
+\DoxyCodeLine{922                                                      \textcolor{keyword}{const} GUID guidInstanceId);}
+\DoxyCodeLine{923 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a991bbcfd7a9d148b4b42127b34969dcb}{SimConnect\_Close}}(HANDLE hSimConnect);}
+\DoxyCodeLine{924 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a63f4ea3f2ffe42c02c52291936585d29}{SimConnect\_RetrieveString}}(\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}* pData, DWORD cbData,}
+\DoxyCodeLine{925                                         \textcolor{keywordtype}{void}* pStringV, \textcolor{keywordtype}{char}** pszString,}
+\DoxyCodeLine{926                                         DWORD* pcbString);}
+\DoxyCodeLine{927 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_acc0248e3b6f865327911312346394227}{SimConnect\_GetLastSentPacketID}}(HANDLE hSimConnect,}
+\DoxyCodeLine{928                                              DWORD* pdwError);}
+\DoxyCodeLine{929 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a6ffd99497cdf2f372367c072a47208f4}{SimConnect\_Open}}(HANDLE* phSimConnect, LPCSTR szName, HWND hWnd,}
+\DoxyCodeLine{930                               DWORD UserEventWin32, HANDLE hEventHandle,}
+\DoxyCodeLine{931                               DWORD ConfigIndex);}
+\DoxyCodeLine{932 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a71456293a1537cae6bd4f6d8da71f79c}{SimConnect\_CallDispatch}}(HANDLE hSimConnect,}
+\DoxyCodeLine{933                                       \mbox{\hyperlink{_sim_connect_8h_a956d24be045b41acf3083b4bd6ef2158}{DispatchProc}} pfcnDispatch,}
+\DoxyCodeLine{934                                       \textcolor{keywordtype}{void}* pContext);}
+\DoxyCodeLine{935 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a02e3b4b5ca70e1292f6a4a8e0226f311}{SimConnect\_GetNextDispatch}}(HANDLE hSimConnect,}
+\DoxyCodeLine{936                                          \mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}}** ppData,}
+\DoxyCodeLine{937                                          DWORD* pcbData);}
+\DoxyCodeLine{938 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a3733f1ff33b60995efb81655228efef3}{SimConnect\_RequestResponseTimes}}(HANDLE hSimConnect, DWORD nCount,}
+\DoxyCodeLine{939                                               \textcolor{keywordtype}{float}* fElapsedSeconds);}
+\DoxyCodeLine{940 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a008e3933694f66972c32d919e35d4d31}{SimConnect\_InsertString}}(\textcolor{keywordtype}{char}* pDest, DWORD cbDest, \textcolor{keywordtype}{void}** ppEnd,}
+\DoxyCodeLine{941                                       DWORD* pcbStringV, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* pSource);}
+\DoxyCodeLine{942 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a3702e63fff22fb0d99aa208958b816a1}{SimConnect\_CameraSetRelative6DOF}}(HANDLE hSimConnect,}
+\DoxyCodeLine{943                                                \textcolor{keywordtype}{float} fDeltaX, \textcolor{keywordtype}{float} fDeltaY,}
+\DoxyCodeLine{944                                                \textcolor{keywordtype}{float} fDeltaZ, \textcolor{keywordtype}{float} fPitchDeg,}
+\DoxyCodeLine{945                                                \textcolor{keywordtype}{float} fBankDeg,}
+\DoxyCodeLine{946                                                \textcolor{keywordtype}{float} fHeadingDeg);}
+\DoxyCodeLine{947 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ace166e2398a478e95534c3ff9fed9f6b}{SimConnect\_MenuAddItem}}(HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szMenuItem,}
+\DoxyCodeLine{948                                      \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} MenuEventID,}
+\DoxyCodeLine{949                                      DWORD \mbox{\hyperlink{_sim_connect_8h_ad38b92af7d164a277eb2d30b5e65a489}{dwData}});}
+\DoxyCodeLine{950 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a0b982531c5f493f2f02d4dff07876e93}{SimConnect\_MenuDeleteItem}}(HANDLE hSimConnect,}
+\DoxyCodeLine{951                                         \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} MenuEventID);}
+\DoxyCodeLine{952 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a3b1975cac0e3c24816c5aeedfec7b530}{SimConnect\_MenuAddSubItem}}(}
+\DoxyCodeLine{953     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} MenuEventID,}
+\DoxyCodeLine{954     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szMenuItem, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} SubMenuEventID,}
+\DoxyCodeLine{955     DWORD \mbox{\hyperlink{_sim_connect_8h_ad38b92af7d164a277eb2d30b5e65a489}{dwData}});}
+\DoxyCodeLine{956 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_aa18890ec6d900befabf13e02b3d21304}{SimConnect\_MenuDeleteSubItem}}(}
+\DoxyCodeLine{957     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} MenuEventID,}
+\DoxyCodeLine{958     \textcolor{keyword}{const} \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} SubMenuEventID);}
+\DoxyCodeLine{959 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a930d3f8e8684b7c41a1cf11d6b2bd55d}{SimConnect\_RequestSystemState}}(}
+\DoxyCodeLine{960     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{961     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szState);}
+\DoxyCodeLine{962 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a7c4dc5db29e27dc3b0790ecbfcf220f3}{SimConnect\_SetSystemState}}(HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szState,}
+\DoxyCodeLine{963                                         DWORD \mbox{\hyperlink{_sim_connect_8h_a9012e44aaac4c158429442c76bf4fcf1}{dwInteger}}, \textcolor{keywordtype}{float} \mbox{\hyperlink{_sim_connect_8h_a57e6daa2f5a1be25a021c4dfc0320e9c}{fFloat}},}
+\DoxyCodeLine{964                                         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szString);}
+\DoxyCodeLine{965 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a17326d5c3d49cc54c22ede0978950195}{SimConnect\_MapClientDataNameToID}}(}
+\DoxyCodeLine{966     HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szClientDataName,}
+\DoxyCodeLine{967     \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}} ClientDataID);}
+\DoxyCodeLine{968 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a7844dd6265a000a189a66684b14badd7}{SimConnect\_CreateClientData}}(}
+\DoxyCodeLine{969     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}} ClientDataID, DWORD dwSize,}
+\DoxyCodeLine{970     \mbox{\hyperlink{_sim_connect_8h_a55042e29e886a4de54e09dfbdd0796ee}{SIMCONNECT\_CREATE\_CLIENT\_DATA\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}});}
+\DoxyCodeLine{971 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a455455fdc3a30aff08aec4b782e93405}{SimConnect\_AddToClientDataDefinition}}(}
+\DoxyCodeLine{972     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a7e3ce6348ce6438eabf8712e54fbf423}{SIMCONNECT\_CLIENT\_DATA\_DEFINITION\_ID}} DefineID,}
+\DoxyCodeLine{973     DWORD dwOffset, DWORD dwSizeOrType, \textcolor{keywordtype}{float} fEpsilon = 0,}
+\DoxyCodeLine{974     DWORD DatumID = \mbox{\hyperlink{_sim_connect_8h_ad9e9d9ffecd4f6ec8c3f4acc70ecdc6a}{SIMCONNECT\_UNUSED}});}
+\DoxyCodeLine{975 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a584675a2b5245c794a822aaa658d8dd3}{SimConnect\_ClearClientDataDefinition}}(}
+\DoxyCodeLine{976     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a7e3ce6348ce6438eabf8712e54fbf423}{SIMCONNECT\_CLIENT\_DATA\_DEFINITION\_ID}} DefineID);}
+\DoxyCodeLine{977 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_accc74b8446bf2e793de97efc0e25f29e}{SimConnect\_RequestClientData}}(}
+\DoxyCodeLine{978     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}} ClientDataID,}
+\DoxyCodeLine{979     \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID,}
+\DoxyCodeLine{980     \mbox{\hyperlink{_sim_connect_8h_a7e3ce6348ce6438eabf8712e54fbf423}{SIMCONNECT\_CLIENT\_DATA\_DEFINITION\_ID}} DefineID,}
+\DoxyCodeLine{981     \mbox{\hyperlink{_sim_connect_8h_a553e2f453aab2819bd32d254eae4795e}{SIMCONNECT\_CLIENT\_DATA\_PERIOD}} Period = SIMCONNECT\_CLIENT\_DATA\_PERIOD\_ONCE,}
+\DoxyCodeLine{982     \mbox{\hyperlink{_sim_connect_8h_af0c9f1068347d5a3cf91e004ff52001e}{SIMCONNECT\_CLIENT\_DATA\_REQUEST\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}} = 0, DWORD origin = 0,}
+\DoxyCodeLine{983     DWORD interval = 0, DWORD limit = 0);}
+\DoxyCodeLine{984 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a877ca58ecc262bd959edd05af9c64497}{SimConnect\_SetClientData}}(}
+\DoxyCodeLine{985     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}} ClientDataID,}
+\DoxyCodeLine{986     \mbox{\hyperlink{_sim_connect_8h_a7e3ce6348ce6438eabf8712e54fbf423}{SIMCONNECT\_CLIENT\_DATA\_DEFINITION\_ID}} DefineID,}
+\DoxyCodeLine{987     \mbox{\hyperlink{_sim_connect_8h_ae4845602258aa53cf5fb9ad932cbb0dc}{SIMCONNECT\_CLIENT\_DATA\_SET\_FLAG}} \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}}, DWORD dwReserved, DWORD cbUnitSize,}
+\DoxyCodeLine{988     \textcolor{keywordtype}{void}* pDataSet);}
+\DoxyCodeLine{989 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a1098d8d01a5d5442b9134b7fe7fdf569}{SimConnect\_FlightLoad}}(HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szFileName);}
+\DoxyCodeLine{990 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a8d8890d9bffdaeb41b529f3f4cbe97d6}{SimConnect\_FlightSave}}(HANDLE hSimConnect, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szFileName,}
+\DoxyCodeLine{991                                     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szTitle,}
+\DoxyCodeLine{992                                     \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szDescription, DWORD \mbox{\hyperlink{_sim_connect_8h_a15eb852dd5568416ca012c6dcbff021b}{Flags}});}
+\DoxyCodeLine{993 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_abacdba0928a956f28c184bf618779cad}{SimConnect\_FlightPlanLoad}}(HANDLE hSimConnect,}
+\DoxyCodeLine{994                                         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* szFileName);}
+\DoxyCodeLine{995 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_ac438dd62eed50ed264493a7c5555ebf1}{SimConnect\_Text}}(HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_aaadb5a7139facbec94cb62897ff2c5f0}{SIMCONNECT\_TEXT\_TYPE}} type,}
+\DoxyCodeLine{996                               \textcolor{keywordtype}{float} fTimeSeconds,}
+\DoxyCodeLine{997                               \mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} EventID,}
+\DoxyCodeLine{998                               DWORD cbUnitSize, \textcolor{keywordtype}{void}* pDataSet);}
+\DoxyCodeLine{999 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a6be177b09194dadfb0fb78486bbd69e3}{SimConnect\_SubscribeToFacilities}}(}
+\DoxyCodeLine{1000     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a50bc26bdc1b5fd4dce3f56d5de413efe}{SIMCONNECT\_FACILITY\_LIST\_TYPE}} type,}
+\DoxyCodeLine{1001     \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{1002 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a5ee4d64dba4a802188b0e5012088440e}{SimConnect\_UnsubscribeToFacilities}}(}
+\DoxyCodeLine{1003     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a50bc26bdc1b5fd4dce3f56d5de413efe}{SIMCONNECT\_FACILITY\_LIST\_TYPE}} type);}
+\DoxyCodeLine{1004 \mbox{\hyperlink{_sim_connect_8h_ae995f5773b0db3715d9bbc108211ccca}{SIMCONNECTAPI}} \mbox{\hyperlink{_sim_connect_8h_a95a061dae1fca4051d624d9d6456acfc}{SimConnect\_RequestFacilitiesList}}(}
+\DoxyCodeLine{1005     HANDLE hSimConnect, \mbox{\hyperlink{_sim_connect_8h_a50bc26bdc1b5fd4dce3f56d5de413efe}{SIMCONNECT\_FACILITY\_LIST\_TYPE}} type,}
+\DoxyCodeLine{1006     \mbox{\hyperlink{_sim_connect_8h_a4355b9ce7e4d4dc92284910efb950f39}{SIMCONNECT\_DATA\_REQUEST\_ID}} RequestID);}
+\DoxyCodeLine{1007 }
+\DoxyCodeLine{1008 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// \_SIMCONNECT\_H\_}}
+
+\end{DoxyCode}

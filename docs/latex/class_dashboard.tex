@@ -1,0 +1,354 @@
+\hypertarget{class_dashboard}{}\doxysection{Dashboard Class Reference}
+\label{class_dashboard}\index{Dashboard@{Dashboard}}
+
+
+{\ttfamily \#include $<$Dashboard.\+h$>$}
+
+Inheritance diagram for Dashboard\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dashboard}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_a901d46160309e569cffb0971428a5650}{game\+Connection\+Made}} (int con)
+\item 
+void \mbox{\hyperlink{class_dashboard_ad4244b769622388349c0bd108c70f395}{board\+Connection\+Made}} (int con)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dashboard_a937d0e0c1b405a283f67a95eadea3e04}{Dashboard}} (QWidget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_dashboard_a43a9becd0adb8641b81174de35842690}{$\sim$\+Dashboard}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_a4ca4ff09defe78eb27b695aed971edda}{on\+\_\+btn\+Switch\+Nav1\+\_\+clicked}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \mbox{\hyperlink{class_dashboard_acdf6ece0a566c59bdcdee981f3a413b9}{get\+Combox\+Index}} (\mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$combo\+Box, const QString \&value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_a4e1ee2ea8355162098018658a37a6bc2}{exit\+Program}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_a2abaecf08eaa9a45ef3cd82758b1809a}{toggle\+Open}} (QSystem\+Tray\+Icon\+::\+Activation\+Reason reason)
+\item 
+void \mbox{\hyperlink{class_dashboard_a97ffcbad9c849ca51ff351d943a8eb8e}{close\+Event}} (QClose\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_dashboard_a24a2eb7f9a6225f7aa9cec358afb7bab}{load\+Settings}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_ad6dc4de07a6c72ebf871b7c95d489891}{load\+Com\+Port\+Data}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_a521d5f1f5bf0ee7565bdb481588084da}{copy\+Folder}} (const QString \&source\+Folder, const QString \&destination\+Folder)
+\item 
+bool \mbox{\hyperlink{class_dashboard_ab1a67bb61a7f27fb31b361708fa6ca1a}{update\+Application}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_a4eb8229e9822ca8dd01477745556730e}{unzip}} (QString zipfilename, QString filename)
+\item 
+void \mbox{\hyperlink{class_dashboard_ab71a0dbc2765290795bfd4110b428457}{check\+For\+Updates}} (bool silent\+Check)
+\item 
+void \mbox{\hyperlink{class_dashboard_a6c2cc5171c4566429c4cecbf680ca1f0}{restore\+Stored\+Values\+Combo\+Boxes}} (QWidget $\ast$widget, const QString \&com\+Group\+Name, const QString \&set\+Group\+Name, bool sets\+Needed)
+\item 
+void \mbox{\hyperlink{class_dashboard_a3e1c1fdbf9273a37f5207e9ecca107b5}{save\+Auto\+Run\+States}} (int mode)
+\item 
+void \mbox{\hyperlink{class_dashboard_a523139946fba28e1f72c4bb818fe44e4}{load\+Auto\+Run\+State}} ()
+\item 
+QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ \mbox{\hyperlink{class_dashboard_aef009410bfa3875f61f2ca72efaafd92}{get\+Checkboxes\+By\+Pattern}} (const QRegular\+Expression \&pattern)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dashboard_controller}{Dashboard\+Controller}} \mbox{\hyperlink{class_dashboard_a261d4026157e9f16f8e3670d76fac5d3}{controller}} = \mbox{\hyperlink{class_dashboard_controller}{Dashboard\+Controller}}(this)
+\item 
+\mbox{\hyperlink{class_service_worker}{Service\+Worker}} \mbox{\hyperlink{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}{service\+Worker}} = \mbox{\hyperlink{class_service_worker}{Service\+Worker}}()
+\item 
+\mbox{\hyperlink{class_com_port_widget_controller}{Com\+Port\+Widget\+Controller}} \mbox{\hyperlink{class_dashboard_a4f2a75fc9728c5e6f722a2296129b8d3}{com\+Port\+Widget\+Controller}} = \mbox{\hyperlink{class_com_port_widget_controller}{Com\+Port\+Widget\+Controller}}(this, \&\mbox{\hyperlink{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}{service\+Worker}})
+\item 
+bool \mbox{\hyperlink{class_dashboard_adfd9e8c8f2aef7ca2f752ac0a4b5449f}{closing}} = false
+\item 
+\mbox{\hyperlink{class_path_handler}{Path\+Handler}} \mbox{\hyperlink{class_dashboard_a07beecb3df22f7a2f7a0c79cb1b24f40}{path\+Handler}}
+\item 
+\mbox{\hyperlink{class_set_handler}{Set\+Handler}} $\ast$ \mbox{\hyperlink{class_dashboard_ae5e76e3eff68df8a03992a83e156b918}{set\+Handler}} = new \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_dashboard_aef9ab18ee9729e6ceb658e6dd726d79d}{settings\+Handler}}
+\item 
+QString \mbox{\hyperlink{class_dashboard_a4fd5a10e9fe06e8ae9a5554c237d9c32}{prev\+Input\+Com\+Int}}
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_dashboard_aaf804f3cc01e98248d163887725aa205}{chop\+Str\+Input}}
+\item 
+QString \mbox{\hyperlink{class_dashboard_a41287192299cf953b65d7ca52d5d3b6a}{prev\+Row\+Com\+Int}}
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_dashboard_aac7318fdbd92e2cb38b8ae06baed6856}{chop\+Str\+Row}}
+\item 
+QString \mbox{\hyperlink{class_dashboard_af36c887122f38dfa5c472f1ea7cf5735}{prev\+Output\+Com\+Int}}
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_dashboard_a5610302c9787260fa2efa26018ec2a85}{chop\+Str\+Output}}
+\item 
+QList$<$ QString $>$ \mbox{\hyperlink{class_dashboard_a5a2a0196e06ea95227b47dc24e370631}{available\+Com\+Ports}}
+\item 
+QString \mbox{\hyperlink{class_dashboard_af67b887db0c0721ff08778757b902236}{m\+\_\+s\+Settings\+File}}
+\item 
+std\+::string \mbox{\hyperlink{class_dashboard_a34def98406307595f95f656c338847a1}{url}} = \char`\"{}https\+://www.\+bitsanddroids.\+com/downloads\char`\"{}
+\item 
+std\+::string \mbox{\hyperlink{class_dashboard_aa8fa5d2dc445df99c332c53d78e61e36}{last\+Value\+Rec}} = \char`\"{}\char`\"{}
+\item 
+\mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} \mbox{\hyperlink{class_dashboard_adb8c802d845e69eb2253bbff8837f791}{dual\+Thread}}
+\item 
+\mbox{\hyperlink{class_form_builder}{Form\+Builder}} \mbox{\hyperlink{class_dashboard_a0018c7e8fdd2c316f3589be035d5fac4}{formbuilder}}
+\item 
+\mbox{\hyperlink{class_menu_bar}{Menu\+Bar}} $\ast$ \mbox{\hyperlink{class_dashboard_aeb53cb61c15d85d56a0883950dfa6b58}{menu\+Bar}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dashboard_a937d0e0c1b405a283f67a95eadea3e04}\label{class_dashboard_a937d0e0c1b405a283f67a95eadea3e04}} 
+\index{Dashboard@{Dashboard}!Dashboard@{Dashboard}}
+\index{Dashboard@{Dashboard}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{Dashboard()}{Dashboard()}}
+{\footnotesize\ttfamily Dashboard\+::\+Dashboard (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_dashboard_a43a9becd0adb8641b81174de35842690}\label{class_dashboard_a43a9becd0adb8641b81174de35842690}} 
+\index{Dashboard@{Dashboard}!````~Dashboard@{$\sim$Dashboard}}
+\index{````~Dashboard@{$\sim$Dashboard}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{$\sim$Dashboard()}{~Dashboard()}}
+{\footnotesize\ttfamily Dashboard\+::$\sim$\+Dashboard (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dashboard_ad4244b769622388349c0bd108c70f395}\label{class_dashboard_ad4244b769622388349c0bd108c70f395}} 
+\index{Dashboard@{Dashboard}!boardConnectionMade@{boardConnectionMade}}
+\index{boardConnectionMade@{boardConnectionMade}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{boardConnectionMade}{boardConnectionMade}}
+{\footnotesize\ttfamily void Dashboard\+::board\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{con }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_dashboard_ab71a0dbc2765290795bfd4110b428457}\label{class_dashboard_ab71a0dbc2765290795bfd4110b428457}} 
+\index{Dashboard@{Dashboard}!checkForUpdates@{checkForUpdates}}
+\index{checkForUpdates@{checkForUpdates}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{checkForUpdates()}{checkForUpdates()}}
+{\footnotesize\ttfamily void Dashboard\+::check\+For\+Updates (\begin{DoxyParamCaption}\item[{bool}]{silent\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a97ffcbad9c849ca51ff351d943a8eb8e}\label{class_dashboard_a97ffcbad9c849ca51ff351d943a8eb8e}} 
+\index{Dashboard@{Dashboard}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Dashboard\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a521d5f1f5bf0ee7565bdb481588084da}\label{class_dashboard_a521d5f1f5bf0ee7565bdb481588084da}} 
+\index{Dashboard@{Dashboard}!copyFolder@{copyFolder}}
+\index{copyFolder@{copyFolder}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{copyFolder()}{copyFolder()}}
+{\footnotesize\ttfamily void Dashboard\+::copy\+Folder (\begin{DoxyParamCaption}\item[{const QString \&}]{source\+Folder,  }\item[{const QString \&}]{destination\+Folder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a4e1ee2ea8355162098018658a37a6bc2}\label{class_dashboard_a4e1ee2ea8355162098018658a37a6bc2}} 
+\index{Dashboard@{Dashboard}!exitProgram@{exitProgram}}
+\index{exitProgram@{exitProgram}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{exitProgram()}{exitProgram()}}
+{\footnotesize\ttfamily void Dashboard\+::exit\+Program (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a901d46160309e569cffb0971428a5650}\label{class_dashboard_a901d46160309e569cffb0971428a5650}} 
+\index{Dashboard@{Dashboard}!gameConnectionMade@{gameConnectionMade}}
+\index{gameConnectionMade@{gameConnectionMade}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{gameConnectionMade}{gameConnectionMade}}
+{\footnotesize\ttfamily void Dashboard\+::game\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{con }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_dashboard_aef009410bfa3875f61f2ca72efaafd92}\label{class_dashboard_aef009410bfa3875f61f2ca72efaafd92}} 
+\index{Dashboard@{Dashboard}!getCheckboxesByPattern@{getCheckboxesByPattern}}
+\index{getCheckboxesByPattern@{getCheckboxesByPattern}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{getCheckboxesByPattern()}{getCheckboxesByPattern()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ Dashboard\+::get\+Checkboxes\+By\+Pattern (\begin{DoxyParamCaption}\item[{const QRegular\+Expression \&}]{pattern }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_acdf6ece0a566c59bdcdee981f3a413b9}\label{class_dashboard_acdf6ece0a566c59bdcdee981f3a413b9}} 
+\index{Dashboard@{Dashboard}!getComboxIndex@{getComboxIndex}}
+\index{getComboxIndex@{getComboxIndex}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{getComboxIndex()}{getComboxIndex()}}
+{\footnotesize\ttfamily static int Dashboard\+::get\+Combox\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$}]{combo\+Box,  }\item[{const QString \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_dashboard_a523139946fba28e1f72c4bb818fe44e4}\label{class_dashboard_a523139946fba28e1f72c4bb818fe44e4}} 
+\index{Dashboard@{Dashboard}!loadAutoRunState@{loadAutoRunState}}
+\index{loadAutoRunState@{loadAutoRunState}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{loadAutoRunState()}{loadAutoRunState()}}
+{\footnotesize\ttfamily void Dashboard\+::load\+Auto\+Run\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_ad6dc4de07a6c72ebf871b7c95d489891}\label{class_dashboard_ad6dc4de07a6c72ebf871b7c95d489891}} 
+\index{Dashboard@{Dashboard}!loadComPortData@{loadComPortData}}
+\index{loadComPortData@{loadComPortData}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{loadComPortData()}{loadComPortData()}}
+{\footnotesize\ttfamily void Dashboard\+::load\+Com\+Port\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a24a2eb7f9a6225f7aa9cec358afb7bab}\label{class_dashboard_a24a2eb7f9a6225f7aa9cec358afb7bab}} 
+\index{Dashboard@{Dashboard}!loadSettings@{loadSettings}}
+\index{loadSettings@{loadSettings}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{loadSettings()}{loadSettings()}}
+{\footnotesize\ttfamily void Dashboard\+::load\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a4ca4ff09defe78eb27b695aed971edda}\label{class_dashboard_a4ca4ff09defe78eb27b695aed971edda}} 
+\index{Dashboard@{Dashboard}!on\_btnSwitchNav1\_clicked@{on\_btnSwitchNav1\_clicked}}
+\index{on\_btnSwitchNav1\_clicked@{on\_btnSwitchNav1\_clicked}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{on\_btnSwitchNav1\_clicked()}{on\_btnSwitchNav1\_clicked()}}
+{\footnotesize\ttfamily void Dashboard\+::on\+\_\+btn\+Switch\+Nav1\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_dashboard_a6c2cc5171c4566429c4cecbf680ca1f0}\label{class_dashboard_a6c2cc5171c4566429c4cecbf680ca1f0}} 
+\index{Dashboard@{Dashboard}!restoreStoredValuesComboBoxes@{restoreStoredValuesComboBoxes}}
+\index{restoreStoredValuesComboBoxes@{restoreStoredValuesComboBoxes}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{restoreStoredValuesComboBoxes()}{restoreStoredValuesComboBoxes()}}
+{\footnotesize\ttfamily void Dashboard\+::restore\+Stored\+Values\+Combo\+Boxes (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{widget,  }\item[{const QString \&}]{com\+Group\+Name,  }\item[{const QString \&}]{set\+Group\+Name,  }\item[{bool}]{sets\+Needed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a3e1c1fdbf9273a37f5207e9ecca107b5}\label{class_dashboard_a3e1c1fdbf9273a37f5207e9ecca107b5}} 
+\index{Dashboard@{Dashboard}!saveAutoRunStates@{saveAutoRunStates}}
+\index{saveAutoRunStates@{saveAutoRunStates}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{saveAutoRunStates()}{saveAutoRunStates()}}
+{\footnotesize\ttfamily void Dashboard\+::save\+Auto\+Run\+States (\begin{DoxyParamCaption}\item[{int}]{mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a2abaecf08eaa9a45ef3cd82758b1809a}\label{class_dashboard_a2abaecf08eaa9a45ef3cd82758b1809a}} 
+\index{Dashboard@{Dashboard}!toggleOpen@{toggleOpen}}
+\index{toggleOpen@{toggleOpen}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{toggleOpen()}{toggleOpen()}}
+{\footnotesize\ttfamily void Dashboard\+::toggle\+Open (\begin{DoxyParamCaption}\item[{QSystem\+Tray\+Icon\+::\+Activation\+Reason}]{reason }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a4eb8229e9822ca8dd01477745556730e}\label{class_dashboard_a4eb8229e9822ca8dd01477745556730e}} 
+\index{Dashboard@{Dashboard}!unzip@{unzip}}
+\index{unzip@{unzip}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{unzip()}{unzip()}}
+{\footnotesize\ttfamily void Dashboard\+::unzip (\begin{DoxyParamCaption}\item[{QString}]{zipfilename,  }\item[{QString}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_ab1a67bb61a7f27fb31b361708fa6ca1a}\label{class_dashboard_ab1a67bb61a7f27fb31b361708fa6ca1a}} 
+\index{Dashboard@{Dashboard}!updateApplication@{updateApplication}}
+\index{updateApplication@{updateApplication}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{updateApplication()}{updateApplication()}}
+{\footnotesize\ttfamily bool Dashboard\+::update\+Application (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_dashboard_a5a2a0196e06ea95227b47dc24e370631}\label{class_dashboard_a5a2a0196e06ea95227b47dc24e370631}} 
+\index{Dashboard@{Dashboard}!availableComPorts@{availableComPorts}}
+\index{availableComPorts@{availableComPorts}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{availableComPorts}{availableComPorts}}
+{\footnotesize\ttfamily QList$<$QString$>$ Dashboard\+::available\+Com\+Ports\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_aaf804f3cc01e98248d163887725aa205}\label{class_dashboard_aaf804f3cc01e98248d163887725aa205}} 
+\index{Dashboard@{Dashboard}!chopStrInput@{chopStrInput}}
+\index{chopStrInput@{chopStrInput}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{chopStrInput}{chopStrInput}}
+{\footnotesize\ttfamily QList$<$QString$>$ Dashboard\+::chop\+Str\+Input\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a5610302c9787260fa2efa26018ec2a85}\label{class_dashboard_a5610302c9787260fa2efa26018ec2a85}} 
+\index{Dashboard@{Dashboard}!chopStrOutput@{chopStrOutput}}
+\index{chopStrOutput@{chopStrOutput}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{chopStrOutput}{chopStrOutput}}
+{\footnotesize\ttfamily QList$<$QString$>$ Dashboard\+::chop\+Str\+Output\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_aac7318fdbd92e2cb38b8ae06baed6856}\label{class_dashboard_aac7318fdbd92e2cb38b8ae06baed6856}} 
+\index{Dashboard@{Dashboard}!chopStrRow@{chopStrRow}}
+\index{chopStrRow@{chopStrRow}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{chopStrRow}{chopStrRow}}
+{\footnotesize\ttfamily QList$<$QString$>$ Dashboard\+::chop\+Str\+Row\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_adfd9e8c8f2aef7ca2f752ac0a4b5449f}\label{class_dashboard_adfd9e8c8f2aef7ca2f752ac0a4b5449f}} 
+\index{Dashboard@{Dashboard}!closing@{closing}}
+\index{closing@{closing}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{closing}{closing}}
+{\footnotesize\ttfamily bool Dashboard\+::closing = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a4f2a75fc9728c5e6f722a2296129b8d3}\label{class_dashboard_a4f2a75fc9728c5e6f722a2296129b8d3}} 
+\index{Dashboard@{Dashboard}!comPortWidgetController@{comPortWidgetController}}
+\index{comPortWidgetController@{comPortWidgetController}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{comPortWidgetController}{comPortWidgetController}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_com_port_widget_controller}{Com\+Port\+Widget\+Controller}} Dashboard\+::com\+Port\+Widget\+Controller = \mbox{\hyperlink{class_com_port_widget_controller}{Com\+Port\+Widget\+Controller}}(this, \&\mbox{\hyperlink{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}{service\+Worker}})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a261d4026157e9f16f8e3670d76fac5d3}\label{class_dashboard_a261d4026157e9f16f8e3670d76fac5d3}} 
+\index{Dashboard@{Dashboard}!controller@{controller}}
+\index{controller@{controller}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{controller}{controller}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_dashboard_controller}{Dashboard\+Controller}} Dashboard\+::controller = \mbox{\hyperlink{class_dashboard_controller}{Dashboard\+Controller}}(this)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_adb8c802d845e69eb2253bbff8837f791}\label{class_dashboard_adb8c802d845e69eb2253bbff8837f791}} 
+\index{Dashboard@{Dashboard}!dualThread@{dualThread}}
+\index{dualThread@{dualThread}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{dualThread}{dualThread}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} Dashboard\+::dual\+Thread\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a0018c7e8fdd2c316f3589be035d5fac4}\label{class_dashboard_a0018c7e8fdd2c316f3589be035d5fac4}} 
+\index{Dashboard@{Dashboard}!formbuilder@{formbuilder}}
+\index{formbuilder@{formbuilder}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{formbuilder}{formbuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_form_builder}{Form\+Builder}} Dashboard\+::formbuilder\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_aa8fa5d2dc445df99c332c53d78e61e36}\label{class_dashboard_aa8fa5d2dc445df99c332c53d78e61e36}} 
+\index{Dashboard@{Dashboard}!lastValueRec@{lastValueRec}}
+\index{lastValueRec@{lastValueRec}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{lastValueRec}{lastValueRec}}
+{\footnotesize\ttfamily std\+::string Dashboard\+::last\+Value\+Rec = \char`\"{}\char`\"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_af67b887db0c0721ff08778757b902236}\label{class_dashboard_af67b887db0c0721ff08778757b902236}} 
+\index{Dashboard@{Dashboard}!m\_sSettingsFile@{m\_sSettingsFile}}
+\index{m\_sSettingsFile@{m\_sSettingsFile}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{m\_sSettingsFile}{m\_sSettingsFile}}
+{\footnotesize\ttfamily QString Dashboard\+::m\+\_\+s\+Settings\+File\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_aeb53cb61c15d85d56a0883950dfa6b58}\label{class_dashboard_aeb53cb61c15d85d56a0883950dfa6b58}} 
+\index{Dashboard@{Dashboard}!menuBar@{menuBar}}
+\index{menuBar@{menuBar}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{menuBar}{menuBar}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_menu_bar}{Menu\+Bar}}$\ast$ Dashboard\+::menu\+Bar\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a07beecb3df22f7a2f7a0c79cb1b24f40}\label{class_dashboard_a07beecb3df22f7a2f7a0c79cb1b24f40}} 
+\index{Dashboard@{Dashboard}!pathHandler@{pathHandler}}
+\index{pathHandler@{pathHandler}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{pathHandler}{pathHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_path_handler}{Path\+Handler}} Dashboard\+::path\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a4fd5a10e9fe06e8ae9a5554c237d9c32}\label{class_dashboard_a4fd5a10e9fe06e8ae9a5554c237d9c32}} 
+\index{Dashboard@{Dashboard}!prevInputComInt@{prevInputComInt}}
+\index{prevInputComInt@{prevInputComInt}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{prevInputComInt}{prevInputComInt}}
+{\footnotesize\ttfamily QString Dashboard\+::prev\+Input\+Com\+Int\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_af36c887122f38dfa5c472f1ea7cf5735}\label{class_dashboard_af36c887122f38dfa5c472f1ea7cf5735}} 
+\index{Dashboard@{Dashboard}!prevOutputComInt@{prevOutputComInt}}
+\index{prevOutputComInt@{prevOutputComInt}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{prevOutputComInt}{prevOutputComInt}}
+{\footnotesize\ttfamily QString Dashboard\+::prev\+Output\+Com\+Int\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a41287192299cf953b65d7ca52d5d3b6a}\label{class_dashboard_a41287192299cf953b65d7ca52d5d3b6a}} 
+\index{Dashboard@{Dashboard}!prevRowComInt@{prevRowComInt}}
+\index{prevRowComInt@{prevRowComInt}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{prevRowComInt}{prevRowComInt}}
+{\footnotesize\ttfamily QString Dashboard\+::prev\+Row\+Com\+Int\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}\label{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}} 
+\index{Dashboard@{Dashboard}!serviceWorker@{serviceWorker}}
+\index{serviceWorker@{serviceWorker}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{serviceWorker}{serviceWorker}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_service_worker}{Service\+Worker}} Dashboard\+::service\+Worker = \mbox{\hyperlink{class_service_worker}{Service\+Worker}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_ae5e76e3eff68df8a03992a83e156b918}\label{class_dashboard_ae5e76e3eff68df8a03992a83e156b918}} 
+\index{Dashboard@{Dashboard}!setHandler@{setHandler}}
+\index{setHandler@{setHandler}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{setHandler}{setHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set_handler}{Set\+Handler}}$\ast$ Dashboard\+::set\+Handler = new \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_aef9ab18ee9729e6ceb658e6dd726d79d}\label{class_dashboard_aef9ab18ee9729e6ceb658e6dd726d79d}} 
+\index{Dashboard@{Dashboard}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Dashboard\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_a34def98406307595f95f656c338847a1}\label{class_dashboard_a34def98406307595f95f656c338847a1}} 
+\index{Dashboard@{Dashboard}!url@{url}}
+\index{url@{url}!Dashboard@{Dashboard}}
+\doxysubsubsection{\texorpdfstring{url}{url}}
+{\footnotesize\ttfamily std\+::string Dashboard\+::url = \char`\"{}https\+://www.\+bitsanddroids.\+com/downloads\char`\"{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/\mbox{\hyperlink{_dashboard_8h}{Dashboard.\+h}}\item 
+dashboard/\mbox{\hyperlink{_dashboard_8cpp}{Dashboard.\+cpp}}\end{DoxyCompactItemize}

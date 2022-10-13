@@ -1,0 +1,45 @@
+\hypertarget{_set_row_8h_source}{}\doxysection{Set\+Row.\+h}
+\label{_set_row_8h_source}\index{outputmenu/elements/SetRow.h@{outputmenu/elements/SetRow.h}}
+\mbox{\hyperlink{_set_row_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 17-\/8-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_SETROW\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_SETROW\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{commands_2_set_8h}{models/commands/Set.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sethandler_8h}{outputmenu/handlers/sethandler.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_set_row}{SetRow}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{14 Q\_OBJECT}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_set_handler}{SetHandler}} \mbox{\hyperlink{class_set_row_ab9c075c5109da8c1304a2cb55e72343e}{setHandler}} = \mbox{\hyperlink{class_set_handler}{SetHandler}}();}
+\DoxyCodeLine{17 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_a9cdb287ef3f3e6d209ff475780562c39}{deleteSet}}();}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_a57c8c20fafd9e60989043b86d3fde34b}{exportSet}}();}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_ae84e6e07acfabb18d0ae5b3133bab12e}{editSet}}();}
+\DoxyCodeLine{24 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_a75428630eb310fc82aad503b2c2eca0a}{mousePressEvent}}(QMouseEvent*);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{public}:}
+\DoxyCodeLine{28     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_set_row}{SetRow}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_set}{Set}} \&setForRow, QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 signals:}
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_a328f040ddd9063ec61a43a84311ac78c}{editSetSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_a68699a28b91c8ae29c8ca9eba8e9f018}{clickedSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_row_aa99a465091fe824cafaaf8d6474dea0b}{deleteSetSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{36 \};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_SETROW\_H}}
+
+\end{DoxyCode}

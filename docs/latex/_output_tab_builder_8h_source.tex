@@ -1,0 +1,37 @@
+\hypertarget{_output_tab_builder_8h_source}{}\doxysection{Output\+Tab\+Builder.\+h}
+\label{_output_tab_builder_8h_source}\index{outputmenu/builder/OutputTabBuilder.h@{outputmenu/builder/OutputTabBuilder.h}}
+\mbox{\hyperlink{_output_tab_builder_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 18-\/8-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_OUTPUTTABBUILDER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_OUTPUTTABBUILDER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_output_tab_builder}{OutputTabBuilder}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{12 Q\_OBJECT}
+\DoxyCodeLine{13 \textcolor{keyword}{private}:}
+\DoxyCodeLine{14     QString \mbox{\hyperlink{class_output_tab_builder_a500bd3b5b2003a4822bed3a292201ca1}{activeSetId}};}
+\DoxyCodeLine{15 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_tab_builder_ad0b75afa6acc52b07fc6e395ebaec8ef}{saveEditedSet}}();}
+\DoxyCodeLine{17 \textcolor{keyword}{public}:}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_output_tab_builder}{OutputTabBuilder}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     QWidget *\mbox{\hyperlink{class_output_tab_builder_a5b73e87db552a530e2ed17e7c7a6a473}{buildOutputTabContainer}}();}
+\DoxyCodeLine{21     signals:}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_tab_builder_a1c613886cbcaf74673661cbe1f6f838c}{setEdited}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_tab_builder_a208a22cf9b85009d27fe1b618c89b5d5}{setCheckboxes}}(\textcolor{keyword}{const} QString\& \textcolor{keywordtype}{id});}
+\DoxyCodeLine{28 \};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_OUTPUTTABBUILDER\_H}}
+
+\end{DoxyCode}

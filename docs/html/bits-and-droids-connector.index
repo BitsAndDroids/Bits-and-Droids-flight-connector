@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE QDOCINDEX>
-<INDEX url="" title="Control Microsoft Flight Simulator with your own hardware" version="" project="Bits and Droids connector">
-    <namespace name="" status="active" access="public" module="bits and droids connector">
-        <class name="InputSwitchHandler" href="inputswitchhandler.html" status="active" access="public" location="InputSwitchHandler.h" filepath="C:/BitsAndDroids/Bitsanddroidsgui/handlers/InputSwitchHandler.h" lineno="24" since="4.6" documented="true" module="Bits and Droids connector" brief="QVector3D class represents a vector or vertex in 3D space"/>
-        <module name="Bits and Droids connector" href="bits-and-droids-connector-module.html" status="internal" seen="false" title=""/>
-    </namespace>
-</INDEX>

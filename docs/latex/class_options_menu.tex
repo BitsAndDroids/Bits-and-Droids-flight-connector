@@ -1,0 +1,170 @@
+\hypertarget{class_options_menu}{}\doxysection{Options\+Menu Class Reference}
+\label{class_options_menu}\index{OptionsMenu@{OptionsMenu}}
+
+
+{\ttfamily \#include $<$optionsmenu.\+h$>$}
+
+Inheritance diagram for Options\+Menu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_options_menu}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_options_menu_af9f9bad4b207a5016527bb57e0b784fc}{closed\+Options\+Menu}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_options_menu_a6bbb00cacea47fa22a133ba4f9c01d17}{Options\+Menu}} (QWidget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_options_menu_ac8114f4053b060190deafe4e49d53be4}{$\sim$\+Options\+Menu}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_options_menu_ac40ae6b48840dbc2699dc4241c8979c3}{on\+\_\+check\+Box\+\_\+state\+Changed}} (int arg1)
+\item 
+void \mbox{\hyperlink{class_options_menu_a681ad9d8d29222b8e18da3af5715c132}{on\+\_\+save\+Settings\+Btn\+\_\+clicked}} ()
+\item 
+void \mbox{\hyperlink{class_options_menu_aa1814e96bb4cf978b41540511ce4bc25}{on\+\_\+baud\+Combo\+Box\+\_\+current\+Text\+Changed}} (const QString \&arg1)
+\item 
+void \mbox{\hyperlink{class_options_menu_a31aab2d012d88611964559cf43d4d298}{select\+File}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_options_menu_ad7255cfe1e959d87a9bc178b39e9a335}{close\+Event}} (QClose\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_form_builder}{Form\+Builder}} $\ast$ \mbox{\hyperlink{class_options_menu_ace6714452c89469042036dc01e9a45f5}{builder}} = new \mbox{\hyperlink{class_form_builder}{Form\+Builder}}()
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_options_menu_a574782c50f45f5936358ab10cc1c9b90}{settings\+Handler}}
+\item 
+\mbox{\hyperlink{class_ui_1_1options_menu}{Ui\+::options\+Menu}} $\ast$ \mbox{\hyperlink{class_options_menu_aa2bf95f8152bdf0589adcb8171516308}{ui\+Options}}
+\item 
+const int \mbox{\hyperlink{class_options_menu_adab336c4d6c88fceb790eff374598ee7}{default\+Arduino\+Frame\+Update}} = 15
+\item 
+const int \mbox{\hyperlink{class_options_menu_a7effdf9039f5b8a760f8d73bb2dffc5b}{default\+Arduino\+Wait\+Ms}} = 100
+\item 
+int \mbox{\hyperlink{class_options_menu_a5216a7912372d02d051913b5d610cae7}{arduino\+Frame\+Update}} = 15
+\item 
+int \mbox{\hyperlink{class_options_menu_a522d04a7630ba0198ee8b2e3d603879e}{arduino\+Wait\+Ms}} = 100
+\item 
+int \mbox{\hyperlink{class_options_menu_ab58d56e4c77834a63def7ee9d202bfb9}{supported\+Amnt\+Engines}} = 4
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_options_menu_a6bbb00cacea47fa22a133ba4f9c01d17}\label{class_options_menu_a6bbb00cacea47fa22a133ba4f9c01d17}} 
+\index{OptionsMenu@{OptionsMenu}!OptionsMenu@{OptionsMenu}}
+\index{OptionsMenu@{OptionsMenu}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{OptionsMenu()}{OptionsMenu()}}
+{\footnotesize\ttfamily Options\+Menu\+::\+Options\+Menu (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_options_menu_ac8114f4053b060190deafe4e49d53be4}\label{class_options_menu_ac8114f4053b060190deafe4e49d53be4}} 
+\index{OptionsMenu@{OptionsMenu}!````~OptionsMenu@{$\sim$OptionsMenu}}
+\index{````~OptionsMenu@{$\sim$OptionsMenu}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{$\sim$OptionsMenu()}{~OptionsMenu()}}
+{\footnotesize\ttfamily Options\+Menu\+::$\sim$\+Options\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_options_menu_af9f9bad4b207a5016527bb57e0b784fc}\label{class_options_menu_af9f9bad4b207a5016527bb57e0b784fc}} 
+\index{OptionsMenu@{OptionsMenu}!closedOptionsMenu@{closedOptionsMenu}}
+\index{closedOptionsMenu@{closedOptionsMenu}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{closedOptionsMenu}{closedOptionsMenu}}
+{\footnotesize\ttfamily void Options\+Menu\+::closed\+Options\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_options_menu_ad7255cfe1e959d87a9bc178b39e9a335}\label{class_options_menu_ad7255cfe1e959d87a9bc178b39e9a335}} 
+\index{OptionsMenu@{OptionsMenu}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Options\+Menu\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_aa1814e96bb4cf978b41540511ce4bc25}\label{class_options_menu_aa1814e96bb4cf978b41540511ce4bc25}} 
+\index{OptionsMenu@{OptionsMenu}!on\_baudComboBox\_currentTextChanged@{on\_baudComboBox\_currentTextChanged}}
+\index{on\_baudComboBox\_currentTextChanged@{on\_baudComboBox\_currentTextChanged}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{on\_baudComboBox\_currentTextChanged}{on\_baudComboBox\_currentTextChanged}}
+{\footnotesize\ttfamily void Options\+Menu\+::on\+\_\+baud\+Combo\+Box\+\_\+current\+Text\+Changed (\begin{DoxyParamCaption}\item[{const QString \&}]{arg1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_options_menu_ac40ae6b48840dbc2699dc4241c8979c3}\label{class_options_menu_ac40ae6b48840dbc2699dc4241c8979c3}} 
+\index{OptionsMenu@{OptionsMenu}!on\_checkBox\_stateChanged@{on\_checkBox\_stateChanged}}
+\index{on\_checkBox\_stateChanged@{on\_checkBox\_stateChanged}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{on\_checkBox\_stateChanged}{on\_checkBox\_stateChanged}}
+{\footnotesize\ttfamily void Options\+Menu\+::on\+\_\+check\+Box\+\_\+state\+Changed (\begin{DoxyParamCaption}\item[{int}]{arg1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_options_menu_a681ad9d8d29222b8e18da3af5715c132}\label{class_options_menu_a681ad9d8d29222b8e18da3af5715c132}} 
+\index{OptionsMenu@{OptionsMenu}!on\_saveSettingsBtn\_clicked@{on\_saveSettingsBtn\_clicked}}
+\index{on\_saveSettingsBtn\_clicked@{on\_saveSettingsBtn\_clicked}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{on\_saveSettingsBtn\_clicked}{on\_saveSettingsBtn\_clicked}}
+{\footnotesize\ttfamily void Options\+Menu\+::on\+\_\+save\+Settings\+Btn\+\_\+clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_options_menu_a31aab2d012d88611964559cf43d4d298}\label{class_options_menu_a31aab2d012d88611964559cf43d4d298}} 
+\index{OptionsMenu@{OptionsMenu}!selectFile@{selectFile}}
+\index{selectFile@{selectFile}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{selectFile}{selectFile}}
+{\footnotesize\ttfamily void Options\+Menu\+::select\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_options_menu_a5216a7912372d02d051913b5d610cae7}\label{class_options_menu_a5216a7912372d02d051913b5d610cae7}} 
+\index{OptionsMenu@{OptionsMenu}!arduinoFrameUpdate@{arduinoFrameUpdate}}
+\index{arduinoFrameUpdate@{arduinoFrameUpdate}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{arduinoFrameUpdate}{arduinoFrameUpdate}}
+{\footnotesize\ttfamily int Options\+Menu\+::arduino\+Frame\+Update = 15\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_a522d04a7630ba0198ee8b2e3d603879e}\label{class_options_menu_a522d04a7630ba0198ee8b2e3d603879e}} 
+\index{OptionsMenu@{OptionsMenu}!arduinoWaitMs@{arduinoWaitMs}}
+\index{arduinoWaitMs@{arduinoWaitMs}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{arduinoWaitMs}{arduinoWaitMs}}
+{\footnotesize\ttfamily int Options\+Menu\+::arduino\+Wait\+Ms = 100\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_ace6714452c89469042036dc01e9a45f5}\label{class_options_menu_ace6714452c89469042036dc01e9a45f5}} 
+\index{OptionsMenu@{OptionsMenu}!builder@{builder}}
+\index{builder@{builder}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{builder}{builder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_form_builder}{Form\+Builder}}$\ast$ Options\+Menu\+::builder = new \mbox{\hyperlink{class_form_builder}{Form\+Builder}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_adab336c4d6c88fceb790eff374598ee7}\label{class_options_menu_adab336c4d6c88fceb790eff374598ee7}} 
+\index{OptionsMenu@{OptionsMenu}!defaultArduinoFrameUpdate@{defaultArduinoFrameUpdate}}
+\index{defaultArduinoFrameUpdate@{defaultArduinoFrameUpdate}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{defaultArduinoFrameUpdate}{defaultArduinoFrameUpdate}}
+{\footnotesize\ttfamily const int Options\+Menu\+::default\+Arduino\+Frame\+Update = 15\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_a7effdf9039f5b8a760f8d73bb2dffc5b}\label{class_options_menu_a7effdf9039f5b8a760f8d73bb2dffc5b}} 
+\index{OptionsMenu@{OptionsMenu}!defaultArduinoWaitMs@{defaultArduinoWaitMs}}
+\index{defaultArduinoWaitMs@{defaultArduinoWaitMs}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{defaultArduinoWaitMs}{defaultArduinoWaitMs}}
+{\footnotesize\ttfamily const int Options\+Menu\+::default\+Arduino\+Wait\+Ms = 100\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_a574782c50f45f5936358ab10cc1c9b90}\label{class_options_menu_a574782c50f45f5936358ab10cc1c9b90}} 
+\index{OptionsMenu@{OptionsMenu}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Options\+Menu\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_ab58d56e4c77834a63def7ee9d202bfb9}\label{class_options_menu_ab58d56e4c77834a63def7ee9d202bfb9}} 
+\index{OptionsMenu@{OptionsMenu}!supportedAmntEngines@{supportedAmntEngines}}
+\index{supportedAmntEngines@{supportedAmntEngines}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{supportedAmntEngines}{supportedAmntEngines}}
+{\footnotesize\ttfamily int Options\+Menu\+::supported\+Amnt\+Engines = 4\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_options_menu_aa2bf95f8152bdf0589adcb8171516308}\label{class_options_menu_aa2bf95f8152bdf0589adcb8171516308}} 
+\index{OptionsMenu@{OptionsMenu}!uiOptions@{uiOptions}}
+\index{uiOptions@{uiOptions}!OptionsMenu@{OptionsMenu}}
+\doxysubsubsection{\texorpdfstring{uiOptions}{uiOptions}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_ui_1_1options_menu}{Ui\+::options\+Menu}}$\ast$ Options\+Menu\+::ui\+Options\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+widgets/settingsmenu/\mbox{\hyperlink{optionsmenu_8h}{optionsmenu.\+h}}\item 
+widgets/settingsmenu/\mbox{\hyperlink{optionsmenu_8cpp}{optionsmenu.\+cpp}}\end{DoxyCompactItemize}

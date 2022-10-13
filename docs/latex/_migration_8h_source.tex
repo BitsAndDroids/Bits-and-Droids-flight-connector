@@ -1,0 +1,55 @@
+\hypertarget{_migration_8h_source}{}\doxysection{Migration.\+h}
+\label{_migration_8h_source}\index{settings/migrations/Migration.h@{settings/migrations/Migration.h}}
+\mbox{\hyperlink{_migration_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 26-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_MIGRATION\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_MIGRATION\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QString>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_migration}{Migration}} \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_migration_a8ca7577b5a1c4b084c14d0d642503f2a}{Migration}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}})\{}
+\DoxyCodeLine{15         this-\/>migrationId = \mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}};}
+\DoxyCodeLine{16     \}}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_migration_a693c178d6c8d42a0764915de1784b378}{migrate}}() = 0;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{comment}{//TODO add a rollback function when the migration fails}}
+\DoxyCodeLine{21     \textcolor{comment}{//virtual void revert() = 0;}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_migration_a44d10d76f4957ed3f993ea31618230e7}{moveGroup}}(\textcolor{keyword}{const} QString\& group, \textcolor{keyword}{const} QString\& targetGroup)\{}
+\DoxyCodeLine{24         \textcolor{keyword}{auto} settingsHandler = \mbox{\hyperlink{class_settings_handler}{SettingsHandler}}();}
+\DoxyCodeLine{25         \textcolor{keyword}{auto} keys = settingsHandler.retrieveKeys(group);}
+\DoxyCodeLine{26         \textcolor{keyword}{auto} targetKeys = settingsHandler.retrieveKeys(targetGroup);}
+\DoxyCodeLine{27         \textcolor{keywordtype}{int} targetIndexCounter = (targetKeys-\/>empty()) ? 0 : targetKeys-\/>at(targetKeys-\/>size()-\/1).toInt() + 1;}
+\DoxyCodeLine{28         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} \&key : *keys) \{}
+\DoxyCodeLine{29             \textcolor{keyword}{auto} value = settingsHandler.retrieveSetting(group, key);}
+\DoxyCodeLine{30             settingsHandler.removeSetting(group,key);}
+\DoxyCodeLine{31             settingsHandler.storeValue(targetGroup, QString::number(targetIndexCounter), *value);}
+\DoxyCodeLine{32             targetIndexCounter++;}
+\DoxyCodeLine{33         \}}
+\DoxyCodeLine{34     \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_migration_adbdcf9c159d97f88f094d8b5b8712851}{getMigrationId}}()\{}
+\DoxyCodeLine{37         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}};}
+\DoxyCodeLine{38     \};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{private}:}
+\DoxyCodeLine{44     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_migration_a6c2ce09ec966a46e74a1d43c226047a3}{migrationId}};}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_MIGRATION\_H}}
+
+\end{DoxyCode}

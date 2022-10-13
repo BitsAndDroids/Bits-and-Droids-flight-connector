@@ -1,0 +1,91 @@
+\hypertarget{class_com_bundle}{}\doxysection{Com\+Bundle Class Reference}
+\label{class_com_bundle}\index{ComBundle@{ComBundle}}
+
+
+{\ttfamily \#include $<$Com\+Bundle.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_com_bundle_acd6552a16860b5eb64701830f718870d}{Com\+Bundle}} (QString \mbox{\hyperlink{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}{port}})
+\item 
+void \mbox{\hyperlink{class_com_bundle_aa88f36e8e6fad174edb5865c83db4235}{set\+Outputs}} (QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$)
+\item 
+bool \mbox{\hyperlink{class_com_bundle_a9b9bb13979ae1d51ea6b70591d2ac959}{is\+Output\+In\+Bundle}} (int id)
+\item 
+\mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ \mbox{\hyperlink{class_com_bundle_a0aabeb2faf88344177ea548e6faab23d}{get\+Serial\+Port}} ()
+\item 
+char \& \mbox{\hyperlink{class_com_bundle_a3fc7db55b6dc91ea983e5dc1a89b837e}{get\+Received\+String\+Address}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ \mbox{\hyperlink{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}{port}}
+\item 
+char \mbox{\hyperlink{class_com_bundle_a63a0875521ddcf6eefa20c30fbf9a234}{received\+String}} \mbox{[}255\mbox{]}
+\item 
+QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}{outputs}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_com_bundle_acd6552a16860b5eb64701830f718870d}\label{class_com_bundle_acd6552a16860b5eb64701830f718870d}} 
+\index{ComBundle@{ComBundle}!ComBundle@{ComBundle}}
+\index{ComBundle@{ComBundle}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{ComBundle()}{ComBundle()}}
+{\footnotesize\ttfamily Com\+Bundle\+::\+Com\+Bundle (\begin{DoxyParamCaption}\item[{QString}]{port }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_com_bundle_a3fc7db55b6dc91ea983e5dc1a89b837e}\label{class_com_bundle_a3fc7db55b6dc91ea983e5dc1a89b837e}} 
+\index{ComBundle@{ComBundle}!getReceivedStringAddress@{getReceivedStringAddress}}
+\index{getReceivedStringAddress@{getReceivedStringAddress}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{getReceivedStringAddress()}{getReceivedStringAddress()}}
+{\footnotesize\ttfamily char \& Com\+Bundle\+::get\+Received\+String\+Address (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_com_bundle_a0aabeb2faf88344177ea548e6faab23d}\label{class_com_bundle_a0aabeb2faf88344177ea548e6faab23d}} 
+\index{ComBundle@{ComBundle}!getSerialPort@{getSerialPort}}
+\index{getSerialPort@{getSerialPort}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{getSerialPort()}{getSerialPort()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial_port}{Serial\+Port}} $\ast$ Com\+Bundle\+::get\+Serial\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_com_bundle_a9b9bb13979ae1d51ea6b70591d2ac959}\label{class_com_bundle_a9b9bb13979ae1d51ea6b70591d2ac959}} 
+\index{ComBundle@{ComBundle}!isOutputInBundle@{isOutputInBundle}}
+\index{isOutputInBundle@{isOutputInBundle}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{isOutputInBundle()}{isOutputInBundle()}}
+{\footnotesize\ttfamily bool Com\+Bundle\+::is\+Output\+In\+Bundle (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_bundle_aa88f36e8e6fad174edb5865c83db4235}\label{class_com_bundle_aa88f36e8e6fad174edb5865c83db4235}} 
+\index{ComBundle@{ComBundle}!setOutputs@{setOutputs}}
+\index{setOutputs@{setOutputs}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{setOutputs()}{setOutputs()}}
+{\footnotesize\ttfamily void Com\+Bundle\+::set\+Outputs (\begin{DoxyParamCaption}\item[{QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}\label{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}} 
+\index{ComBundle@{ComBundle}!outputs@{outputs}}
+\index{outputs@{outputs}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{outputs}{outputs}}
+{\footnotesize\ttfamily QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$ Com\+Bundle\+::outputs\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}\label{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}} 
+\index{ComBundle@{ComBundle}!port@{port}}
+\index{port@{port}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_serial_port}{Serial\+Port}}$\ast$ Com\+Bundle\+::port\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_bundle_a63a0875521ddcf6eefa20c30fbf9a234}\label{class_com_bundle_a63a0875521ddcf6eefa20c30fbf9a234}} 
+\index{ComBundle@{ComBundle}!receivedString@{receivedString}}
+\index{receivedString@{receivedString}!ComBundle@{ComBundle}}
+\doxysubsubsection{\texorpdfstring{receivedString}{receivedString}}
+{\footnotesize\ttfamily char Com\+Bundle\+::received\+String\mbox{[}255\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/models/\mbox{\hyperlink{_com_bundle_8h}{Com\+Bundle.\+h}}\item 
+dashboard/models/\mbox{\hyperlink{_com_bundle_8cpp}{Com\+Bundle.\+cpp}}\end{DoxyCompactItemize}
