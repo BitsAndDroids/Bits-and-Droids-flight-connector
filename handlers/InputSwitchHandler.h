@@ -48,6 +48,8 @@ signals:
     void logMessage(std::string message, LogLevel level);
 
 private:
+    float closedAxis = -16383.0;
+    float openAxis = 16383.0;
     std::map<int, Input> inputs;
     std::string prefix;
     SettingsHandler settingsHandler;
@@ -105,6 +107,8 @@ private:
     static void calibratedRange(CurveAxis *curveAxis);
 
     void mapInputs();
+
+    void mapValueToAxis(Axis *axis);
 };
 
 #endif  // INPUTSWITCHHANDLER_H

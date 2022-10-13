@@ -1,5 +1,10 @@
 /*!
+ * \defgroup MFS2020Interaction
+ */
+
+/*!
     \class InputSwitchHandler
+    \ingroup MFS2020Interaction
     \brief The InputSwitchHandler class is responsible for handling the input commands.
     The input commands are sent from the MFSWorker class.
     It uses the received prefix from a microncontroller over serial port to determine which input command to handle.
@@ -25,15 +30,6 @@
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
 
 using namespace std;
-
-char *token, *next_token;
-bool inputs[5];
-
-int counter = 0;
-
-
-float closedAxis = -16383.0;
-float openAxis = 16383.0;
 
 InputEnum inputDefinitions = InputEnum();
 
@@ -204,7 +200,7 @@ void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
     engine->setMappedValue(valueThrottle);
 }
 
-void mapValueToAxis(Axis *axis) {
+void InputSwitchHandler::mapValueToAxis(Axis *axis) {
     axis->setMappedValue((int)
                                  (closedAxis + (openAxis - closedAxis) *
                                                (((float) axis->getCurrentValue() - axis->getMin()) /
@@ -215,7 +211,7 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::str
     std::vector<int> parts;
     std::string delimiter = " ";
     try {
-        counter = 0;
+        int counter = 0;
         size_t pos = 0;
         std::string tokenFound;
         while ((pos = string.find(delimiter)) != std::string::npos) {

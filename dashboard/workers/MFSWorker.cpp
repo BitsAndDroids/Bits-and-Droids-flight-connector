@@ -58,6 +58,7 @@ void sendCommand(SIMCONNECT_CLIENT_EVENT_ID eventID) {
 
 /*!
   \class MFSWorker
+  \ingroup MFS2020Interaction
   \brief MFSWorker is a class that handles the connection to Microsoft Flight Simulator
   This class handles the connection to Microsoft Flight Simulator and the data that is sent to and from the simulator.
   This class inherits from QThread and is run in a separate thread from the main thread.
