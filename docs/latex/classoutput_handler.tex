@@ -1,0 +1,142 @@
+\hypertarget{classoutput_handler}{}\doxysection{output\+Handler Class Reference}
+\label{classoutput_handler}\index{outputHandler@{outputHandler}}
+
+
+{\ttfamily \#include $<$outputhandler.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classoutput_handler_a36515bbcf86efa178da7dd4d7fa65ad3}{output\+Handler}} ()
+\item 
+QString\+List \mbox{\hyperlink{classoutput_handler_af21143004302e27a0f023e352721c2eb}{get\+Category\+Strings}} ()
+\item 
+void \mbox{\hyperlink{classoutput_handler_a22a4da6b63f1a5e5b7d27d889329b3e5}{add\+Category\+String}} (const QString \&category)
+\item 
+QList$<$ QList$<$ \mbox{\hyperlink{class_output}{Output}} $>$ $>$ \mbox{\hyperlink{classoutput_handler_a8574aae732c3c69ddf98e57cc223735c}{get\+Outputs\+Categorized}} ()
+\item 
+QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{classoutput_handler_a4cc1bf6dfac82e5c3d119b9bb1bf6315}{get\+Available\+Outputs}} ()
+\item 
+\mbox{\hyperlink{class_output}{Output}} $\ast$ \mbox{\hyperlink{classoutput_handler_ab1b22f4460dda834d7e1df0449544cf2}{find\+Output\+By\+Id}} (int id)
+\item 
+void \mbox{\hyperlink{classoutput_handler_ace28df069e490b0293ebc1215671dff4}{read\+Outputs}} ()
+\item 
+void \mbox{\hyperlink{classoutput_handler_a148396e11dbdff78811974e88ae20e27}{add\+To\+Event\+File\+Dialog}} (\mbox{\hyperlink{class_output}{Output}} output)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path_handler}{Path\+Handler}} \mbox{\hyperlink{classoutput_handler_aea7dd212481fad97dd76d75d9ec0b834}{path\+Handler}}
+\item 
+QString \mbox{\hyperlink{classoutput_handler_adacc688f6398628d31eb534c17a36d6f}{application\+Events\+Path}} = path\+Handler.\+get\+Writable\+Event\+Path()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{classoutput_handler_acab22c5d821a5bbb4075c776a0fc0195}{update\+Outputs\+Required}} = true
+\item 
+static QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{classoutput_handler_ae6275033531320ab135cc5558bbc49bf}{available\+Outputs}} = QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$()
+\item 
+static QList$<$ QList$<$ \mbox{\hyperlink{class_output}{Output}} $>$ $>$ \mbox{\hyperlink{classoutput_handler_a8174646a79c22b6de5cbe42121c1badf}{outputs\+Categorized}} = QList$<$QList$<$\mbox{\hyperlink{class_output}{Output}}$>$$>$()
+\item 
+static QString\+List \mbox{\hyperlink{classoutput_handler_a1a3059eab84e3085dc88859b409d6046}{category\+Strings}} = QString\+List()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classoutput_handler_a36515bbcf86efa178da7dd4d7fa65ad3}\label{classoutput_handler_a36515bbcf86efa178da7dd4d7fa65ad3}} 
+\index{outputHandler@{outputHandler}!outputHandler@{outputHandler}}
+\index{outputHandler@{outputHandler}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{outputHandler()}{outputHandler()}}
+{\footnotesize\ttfamily output\+Handler\+::output\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classoutput_handler_a22a4da6b63f1a5e5b7d27d889329b3e5}\label{classoutput_handler_a22a4da6b63f1a5e5b7d27d889329b3e5}} 
+\index{outputHandler@{outputHandler}!addCategoryString@{addCategoryString}}
+\index{addCategoryString@{addCategoryString}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{addCategoryString()}{addCategoryString()}}
+{\footnotesize\ttfamily void output\+Handler\+::add\+Category\+String (\begin{DoxyParamCaption}\item[{const QString \&}]{category }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classoutput_handler_a148396e11dbdff78811974e88ae20e27}\label{classoutput_handler_a148396e11dbdff78811974e88ae20e27}} 
+\index{outputHandler@{outputHandler}!addToEventFileDialog@{addToEventFileDialog}}
+\index{addToEventFileDialog@{addToEventFileDialog}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{addToEventFileDialog()}{addToEventFileDialog()}}
+{\footnotesize\ttfamily void output\+Handler\+::add\+To\+Event\+File\+Dialog (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_output}{Output}}}]{output }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classoutput_handler_ab1b22f4460dda834d7e1df0449544cf2}\label{classoutput_handler_ab1b22f4460dda834d7e1df0449544cf2}} 
+\index{outputHandler@{outputHandler}!findOutputById@{findOutputById}}
+\index{findOutputById@{findOutputById}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{findOutputById()}{findOutputById()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_output}{Output}} $\ast$ output\+Handler\+::find\+Output\+By\+Id (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classoutput_handler_a4cc1bf6dfac82e5c3d119b9bb1bf6315}\label{classoutput_handler_a4cc1bf6dfac82e5c3d119b9bb1bf6315}} 
+\index{outputHandler@{outputHandler}!getAvailableOutputs@{getAvailableOutputs}}
+\index{getAvailableOutputs@{getAvailableOutputs}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{getAvailableOutputs()}{getAvailableOutputs()}}
+{\footnotesize\ttfamily QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ output\+Handler\+::get\+Available\+Outputs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_handler_af21143004302e27a0f023e352721c2eb}\label{classoutput_handler_af21143004302e27a0f023e352721c2eb}} 
+\index{outputHandler@{outputHandler}!getCategoryStrings@{getCategoryStrings}}
+\index{getCategoryStrings@{getCategoryStrings}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{getCategoryStrings()}{getCategoryStrings()}}
+{\footnotesize\ttfamily QString\+List output\+Handler\+::get\+Category\+Strings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_handler_a8574aae732c3c69ddf98e57cc223735c}\label{classoutput_handler_a8574aae732c3c69ddf98e57cc223735c}} 
+\index{outputHandler@{outputHandler}!getOutputsCategorized@{getOutputsCategorized}}
+\index{getOutputsCategorized@{getOutputsCategorized}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{getOutputsCategorized()}{getOutputsCategorized()}}
+{\footnotesize\ttfamily QList$<$ QList$<$ \mbox{\hyperlink{class_output}{Output}} $>$ $>$ output\+Handler\+::get\+Outputs\+Categorized (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classoutput_handler_ace28df069e490b0293ebc1215671dff4}\label{classoutput_handler_ace28df069e490b0293ebc1215671dff4}} 
+\index{outputHandler@{outputHandler}!readOutputs@{readOutputs}}
+\index{readOutputs@{readOutputs}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{readOutputs()}{readOutputs()}}
+{\footnotesize\ttfamily void output\+Handler\+::read\+Outputs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classoutput_handler_adacc688f6398628d31eb534c17a36d6f}\label{classoutput_handler_adacc688f6398628d31eb534c17a36d6f}} 
+\index{outputHandler@{outputHandler}!applicationEventsPath@{applicationEventsPath}}
+\index{applicationEventsPath@{applicationEventsPath}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{applicationEventsPath}{applicationEventsPath}}
+{\footnotesize\ttfamily QString output\+Handler\+::application\+Events\+Path = path\+Handler.\+get\+Writable\+Event\+Path()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_handler_ae6275033531320ab135cc5558bbc49bf}\label{classoutput_handler_ae6275033531320ab135cc5558bbc49bf}} 
+\index{outputHandler@{outputHandler}!availableOutputs@{availableOutputs}}
+\index{availableOutputs@{availableOutputs}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{availableOutputs}{availableOutputs}}
+{\footnotesize\ttfamily QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ output\+Handler\+::available\+Outputs = QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_handler_a1a3059eab84e3085dc88859b409d6046}\label{classoutput_handler_a1a3059eab84e3085dc88859b409d6046}} 
+\index{outputHandler@{outputHandler}!categoryStrings@{categoryStrings}}
+\index{categoryStrings@{categoryStrings}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{categoryStrings}{categoryStrings}}
+{\footnotesize\ttfamily QString\+List output\+Handler\+::category\+Strings = QString\+List()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_handler_a8174646a79c22b6de5cbe42121c1badf}\label{classoutput_handler_a8174646a79c22b6de5cbe42121c1badf}} 
+\index{outputHandler@{outputHandler}!outputsCategorized@{outputsCategorized}}
+\index{outputsCategorized@{outputsCategorized}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{outputsCategorized}{outputsCategorized}}
+{\footnotesize\ttfamily QList$<$ QList$<$ \mbox{\hyperlink{class_output}{Output}} $>$ $>$ output\+Handler\+::outputs\+Categorized = QList$<$QList$<$\mbox{\hyperlink{class_output}{Output}}$>$$>$()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_handler_aea7dd212481fad97dd76d75d9ec0b834}\label{classoutput_handler_aea7dd212481fad97dd76d75d9ec0b834}} 
+\index{outputHandler@{outputHandler}!pathHandler@{pathHandler}}
+\index{pathHandler@{pathHandler}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{pathHandler}{pathHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_path_handler}{Path\+Handler}} output\+Handler\+::path\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{classoutput_handler_acab22c5d821a5bbb4075c776a0fc0195}\label{classoutput_handler_acab22c5d821a5bbb4075c776a0fc0195}} 
+\index{outputHandler@{outputHandler}!updateOutputsRequired@{updateOutputsRequired}}
+\index{updateOutputsRequired@{updateOutputsRequired}!outputHandler@{outputHandler}}
+\doxysubsubsection{\texorpdfstring{updateOutputsRequired}{updateOutputsRequired}}
+{\footnotesize\ttfamily bool output\+Handler\+::update\+Outputs\+Required = true\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+handlers/\mbox{\hyperlink{outputhandler_8h}{outputhandler.\+h}}\item 
+handlers/\mbox{\hyperlink{outputhandler_8cpp}{outputhandler.\+cpp}}\end{DoxyCompactItemize}

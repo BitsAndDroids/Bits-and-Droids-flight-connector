@@ -1,0 +1,51 @@
+\hypertarget{eventwindow_8h_source}{}\doxysection{eventwindow.\+h}
+\label{eventwindow_8h_source}\index{widgets/eventeditor/eventwindow.h@{widgets/eventeditor/eventwindow.h}}
+\mbox{\hyperlink{eventwindow_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef EVENTWINDOW\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define EVENTWINDOW\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{pathhandler_8h}{handlers/pathhandler.h}}"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QApplication>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QTableWidgetItem>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_ui}{Ui}} \{}
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_event_window}{EventWindow}};}
+\DoxyCodeLine{12 \}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_event_window}{EventWindow}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{15   Q\_OBJECT}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{public}:}
+\DoxyCodeLine{18   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_event_window}{EventWindow}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{19   \mbox{\hyperlink{class_event_window_a27ce10ac845ca81cd7198b84a6b91f30}{\string~EventWindow}}();}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21  \textcolor{keyword}{private}:}
+\DoxyCodeLine{22   \mbox{\hyperlink{class_path_handler}{PathHandler}} \mbox{\hyperlink{class_event_window_a4fd53a0188b06b868f6bc9ce1c43eb23}{pathHandler}};}
+\DoxyCodeLine{23   QString \mbox{\hyperlink{class_event_window_a5faed3336df3788462ea3f2d3cbc24e7}{applicationEventsPath}} = \mbox{\hyperlink{class_event_window_a4fd53a0188b06b868f6bc9ce1c43eb23}{pathHandler}}.\mbox{\hyperlink{class_path_handler_a1cb031023909495191ffdef8c3e0d55a}{getWritableEventPath}}();}
+\DoxyCodeLine{24   \mbox{\hyperlink{class_ui_1_1_event_window}{Ui::EventWindow}} *\mbox{\hyperlink{class_event_window_a021feda6d7840540ee793bba38018347}{ui}};}
+\DoxyCodeLine{25   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a02a004352a56d6b912fff0d82bce4e6d}{readFile}}();}
+\DoxyCodeLine{26   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_event_window_a087243381638303ac483e9d99eedc9bf}{eventFilter}}(QObject *obj, QEvent *e);}
+\DoxyCodeLine{27   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_event_window_a69027e9e16a021cff293558543e1b545}{checkIfRowChanged}}(\textcolor{keywordtype}{int} index);}
+\DoxyCodeLine{28   QTableWidget *\mbox{\hyperlink{class_event_window_a941702883df20021203c202783272529}{eventTable}} = \textcolor{keyword}{new} QTableWidget();}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a7c6f0900e8abb9c036d9d1a21e833606}{writeFile}}();}
+\DoxyCodeLine{31   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a52153894674c62da7149a45f3b367d0b}{fillRow}}(\textcolor{keywordtype}{int} index);}
+\DoxyCodeLine{32   \textcolor{keyword}{static} QString \mbox{\hyperlink{class_event_window_a26f10b05668d97bb5e6b2fb93142c2f1}{checkSpaces}}(std::string stringToCheck);}
+\DoxyCodeLine{33   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_aae6996103fbb0fad9a7d1ceed4f2d71a}{closeEvent}}(QCloseEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{34  \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{35   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a17777a2a80fbbbb44cc73bd95987c457}{cellTextChanged}}(QTableWidgetItem *);}
+\DoxyCodeLine{36   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a7b06952aa09d6395b8fbb78814063dce}{comboBoxChanged}}();}
+\DoxyCodeLine{37   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a36e44c58cd10ddfaf8ef41879f0c8e4d}{saveBtnPressed}}();}
+\DoxyCodeLine{38   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a3afb8b0fd36f44ecb9c92c7e7ff06d34}{addEventBtnPressed}}();}
+\DoxyCodeLine{39   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_ac0d2ac3842cf41bcf91cc4641fc02f37}{delChanged}}();}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41  signals:}
+\DoxyCodeLine{42   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_window_a39d2d74158c634eefe3bd8992e1e5cb8}{closedEventWindow}}();}
+\DoxyCodeLine{43 \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// EVENTWINDOW\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,39 @@
+\hypertarget{_log_window_8h_source}{}\doxysection{Log\+Window.\+h}
+\label{_log_window_8h_source}\index{logging/LogWindow.h@{logging/LogWindow.h}}
+\mbox{\hyperlink{_log_window_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 30-\/6-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_LOGWINDOW\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_LOGWINDOW\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QStringList>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <QTableWidget>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <QTableWidgetItem>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_8h}{models/Log.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_logger_service_8h}{services/LoggerService.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_level_enum_8h}{enums/LogLevelEnum.h}}"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_log_window}{LogWindow}}: \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{18     Q\_OBJECT}
+\DoxyCodeLine{19 \textcolor{keyword}{private}:}
+\DoxyCodeLine{20     std::vector<Log> *\mbox{\hyperlink{class_log_window_a0f53305377d62e4fdfeefb6bfe7c538f}{logList}} = \textcolor{keyword}{new} std::vector<Log>();}
+\DoxyCodeLine{21     QTableWidget *\mbox{\hyperlink{class_log_window_a672b198e702e98736b1228961efc54f8}{logTable}} = \textcolor{keyword}{new} QTableWidget();}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_log_window_a971f88edd44d0b5e493e168ff1670e2b}{loadLogs}}();}
+\DoxyCodeLine{23 \textcolor{keyword}{public}:}
+\DoxyCodeLine{24     \mbox{\hyperlink{class_log_window_abe3125313a2379b945088ec617c83d5b}{LogWindow}}();}
+\DoxyCodeLine{25     \mbox{\hyperlink{class_log_window_a8c96adb435e3e88f42396876f6213527}{\string~LogWindow}}();}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_log_window_a6159c1b9791956088bf711dc5f6945dc}{openWindow}}();}
+\DoxyCodeLine{27 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_log_window_a4a8a27e676bd42e1e761cf6820577237}{addLogRow}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_log}{Log}}\& log);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_LOGWINDOW\_H}}
+
+\end{DoxyCode}

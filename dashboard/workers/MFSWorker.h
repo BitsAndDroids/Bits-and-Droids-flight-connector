@@ -35,15 +35,12 @@ Q_OBJECT
 
 signals:
 
-    void updateActiveCom1(QList<QString> lastActiveCom);
-
     void boardConnectionMade(int con);
 
     void logMessage(std::string message, LogLevel level);
 
 
 private:
-    // ...
     bool connected = false;
     void setConnected(bool connectedToSim);
     SettingsHandler settingsHandler;
@@ -67,13 +64,10 @@ private:
     QList<Output *> outputsToMap;
     QStringList *keys = new QStringList();
 
-    void lastReceived(QString value);
     OutputConverters converter = OutputConverters();
     std::map<int, Input>inputs = std::map<int, Input>();
 public:
     void setInputs(std::map<int, Input>inputsToSet);
-
-    void setOutputsToMap(QList<Output *> list) { this->outputsToMap = list; };
 
     bool abortDual;
 
@@ -85,9 +79,6 @@ public:
     QWaitCondition condition;
 
     void eventLoop();
-
-    void clearBundles();
-
 
     void sendToArduino(float received, const string &prefix, int index, int mode);
 };

@@ -1,0 +1,270 @@
+\hypertarget{class_output_menu}{}\doxysection{Output\+Menu Class Reference}
+\label{class_output_menu}\index{OutputMenu@{OutputMenu}}
+
+
+{\ttfamily \#include $<$outputmenu.\+h$>$}
+
+Inheritance diagram for Output\+Menu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_output_menu}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_output_menu_a242a47850858d1bf56775ed1af1c193b}{closed\+Output\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_output_menu_a15a5723b8a0a71abf925e1415d988162}{display\+Set\+Details}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_a17e27fc6ce794785d5b110b18bde760e}{edit\+Set\+Signal}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_aa18698a45def2935a4220f32a9e7f51f}{delete\+Set\+Signal}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_aeb65d03e5ef2f2efe4631c70f8aa0f8e}{show\+Set\+Details\+Signal}} (QString id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_output_menu_a290e09f868ccf2b4d1e7c8c6115d6f0e}{Output\+Menu}} (QWidget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_output_menu_a5afd08771879649545a0a7b142108d2b}{$\sim$\+Output\+Menu}} ()
+\item 
+bool \mbox{\hyperlink{class_output_menu_a361d3c4abd576703e7995f50b388510f}{is\+Open}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_output_menu_ae3fd8883a8021b4554dab2a4ce8e0636}{delete\+Set}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_ab5c64c9089cd595dbff9fa1f5ded4eb4}{show\+Set\+Details}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_ac17e1722848630a10009dea27b6057d2}{edit\+Set}} (QString id)
+\item 
+void \mbox{\hyperlink{class_output_menu_a14a08a7d69284c1b21ec0ccdd6af36e3}{import\+Set}} ()
+\item 
+void \mbox{\hyperlink{class_output_menu_a656d8a9d140d61aecfe6be4fa233428c}{create\+Set}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_output_menu_a13b0299720db692519c64c3b6a8bf01f}{close\+Event}} (QClose\+Event $\ast$event) override
+\item 
+void \mbox{\hyperlink{class_output_menu_a2275e4a7df62d7133d9a650c14f58a8a}{add\+Menu\+Bar}} ()
+\item 
+void \mbox{\hyperlink{class_output_menu_a2e2d5907406781f3d6a1f601a9462593}{edit\+Event}} (QString id)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_output_menu_a7c6772c2d6c89c225ff64ec2ebe5c1dc}{open}} = false
+\item 
+int \mbox{\hyperlink{class_output_menu_a40e203ca2b93eee74d1b1ec4aad11195}{active\+Set}}
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_output_menu_a1f7995c1402113c4f238a95337269d07}{settings\+Handler}}
+\item 
+\mbox{\hyperlink{class_set_handler}{Set\+Handler}} \mbox{\hyperlink{class_output_menu_a111d4846551cd881873d50c3c48af3cc}{set\+Handler}}
+\item 
+\mbox{\hyperlink{class_form_builder}{Form\+Builder}} \mbox{\hyperlink{class_output_menu_a094cf670b365f1a2635362eea519bde8}{form\+Builder}}
+\item 
+\mbox{\hyperlink{class_output_details_builder}{Output\+Details\+Builder}} \mbox{\hyperlink{class_output_menu_ac155f0b1edfe7c9a189984425426fc04}{set\+Detais\+Builder}} = \mbox{\hyperlink{class_output_details_builder}{Output\+Details\+Builder}}(this)
+\item 
+\mbox{\hyperlink{class_output_tab_builder}{Output\+Tab\+Builder}} \mbox{\hyperlink{class_output_menu_a1b845c12b865559ebc1528181d68eead}{output\+Tab\+Builder}} = \mbox{\hyperlink{class_output_tab_builder}{Output\+Tab\+Builder}}(this)
+\item 
+\mbox{\hyperlink{class_setrow_builder}{Setrow\+Builder}} \mbox{\hyperlink{class_output_menu_aa2b25a79c515f611f22af36694067363}{setrow\+Builder}} = \mbox{\hyperlink{class_setrow_builder}{Setrow\+Builder}}(this)
+\item 
+\mbox{\hyperlink{classoutput_handler}{output\+Handler}} $\ast$ \mbox{\hyperlink{class_output_menu_a14acbd48670117959ddff54aea8283ac}{output\+Handler}} = new class \mbox{\hyperlink{classoutput_handler}{output\+Handler}}()
+\item 
+QString \mbox{\hyperlink{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}{path}}
+\item 
+QSettings $\ast$ \mbox{\hyperlink{class_output_menu_a4dbbe2a3f72b8e56cba5df9457eca502}{settings}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_output_menu_a290e09f868ccf2b4d1e7c8c6115d6f0e}\label{class_output_menu_a290e09f868ccf2b4d1e7c8c6115d6f0e}} 
+\index{OutputMenu@{OutputMenu}!OutputMenu@{OutputMenu}}
+\index{OutputMenu@{OutputMenu}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{OutputMenu()}{OutputMenu()}}
+{\footnotesize\ttfamily Output\+Menu\+::\+Output\+Menu (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_output_menu_a5afd08771879649545a0a7b142108d2b}\label{class_output_menu_a5afd08771879649545a0a7b142108d2b}} 
+\index{OutputMenu@{OutputMenu}!````~OutputMenu@{$\sim$OutputMenu}}
+\index{````~OutputMenu@{$\sim$OutputMenu}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{$\sim$OutputMenu()}{~OutputMenu()}}
+{\footnotesize\ttfamily Output\+Menu\+::$\sim$\+Output\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_output_menu_a2275e4a7df62d7133d9a650c14f58a8a}\label{class_output_menu_a2275e4a7df62d7133d9a650c14f58a8a}} 
+\index{OutputMenu@{OutputMenu}!addMenuBar@{addMenuBar}}
+\index{addMenuBar@{addMenuBar}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{addMenuBar()}{addMenuBar()}}
+{\footnotesize\ttfamily void Output\+Menu\+::add\+Menu\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a242a47850858d1bf56775ed1af1c193b}\label{class_output_menu_a242a47850858d1bf56775ed1af1c193b}} 
+\index{OutputMenu@{OutputMenu}!closedOutputMenu@{closedOutputMenu}}
+\index{closedOutputMenu@{closedOutputMenu}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{closedOutputMenu}{closedOutputMenu}}
+{\footnotesize\ttfamily void Output\+Menu\+::closed\+Output\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_output_menu_a13b0299720db692519c64c3b6a8bf01f}\label{class_output_menu_a13b0299720db692519c64c3b6a8bf01f}} 
+\index{OutputMenu@{OutputMenu}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Output\+Menu\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a656d8a9d140d61aecfe6be4fa233428c}\label{class_output_menu_a656d8a9d140d61aecfe6be4fa233428c}} 
+\index{OutputMenu@{OutputMenu}!createSet@{createSet}}
+\index{createSet@{createSet}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{createSet}{createSet}}
+{\footnotesize\ttfamily void Output\+Menu\+::create\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_output_menu_ae3fd8883a8021b4554dab2a4ce8e0636}\label{class_output_menu_ae3fd8883a8021b4554dab2a4ce8e0636}} 
+\index{OutputMenu@{OutputMenu}!deleteSet@{deleteSet}}
+\index{deleteSet@{deleteSet}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{deleteSet}{deleteSet}}
+{\footnotesize\ttfamily void Output\+Menu\+::delete\+Set (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_output_menu_aa18698a45def2935a4220f32a9e7f51f}\label{class_output_menu_aa18698a45def2935a4220f32a9e7f51f}} 
+\index{OutputMenu@{OutputMenu}!deleteSetSignal@{deleteSetSignal}}
+\index{deleteSetSignal@{deleteSetSignal}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{deleteSetSignal}{deleteSetSignal}}
+{\footnotesize\ttfamily void Output\+Menu\+::delete\+Set\+Signal (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_output_menu_a15a5723b8a0a71abf925e1415d988162}\label{class_output_menu_a15a5723b8a0a71abf925e1415d988162}} 
+\index{OutputMenu@{OutputMenu}!displaySetDetails@{displaySetDetails}}
+\index{displaySetDetails@{displaySetDetails}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{displaySetDetails}{displaySetDetails}}
+{\footnotesize\ttfamily void Output\+Menu\+::display\+Set\+Details (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_output_menu_a2e2d5907406781f3d6a1f601a9462593}\label{class_output_menu_a2e2d5907406781f3d6a1f601a9462593}} 
+\index{OutputMenu@{OutputMenu}!editEvent@{editEvent}}
+\index{editEvent@{editEvent}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{editEvent()}{editEvent()}}
+{\footnotesize\ttfamily void Output\+Menu\+::edit\+Event (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_ac17e1722848630a10009dea27b6057d2}\label{class_output_menu_ac17e1722848630a10009dea27b6057d2}} 
+\index{OutputMenu@{OutputMenu}!editSet@{editSet}}
+\index{editSet@{editSet}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{editSet}{editSet}}
+{\footnotesize\ttfamily void Output\+Menu\+::edit\+Set (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_output_menu_a17e27fc6ce794785d5b110b18bde760e}\label{class_output_menu_a17e27fc6ce794785d5b110b18bde760e}} 
+\index{OutputMenu@{OutputMenu}!editSetSignal@{editSetSignal}}
+\index{editSetSignal@{editSetSignal}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{editSetSignal}{editSetSignal}}
+{\footnotesize\ttfamily void Output\+Menu\+::edit\+Set\+Signal (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_output_menu_a14a08a7d69284c1b21ec0ccdd6af36e3}\label{class_output_menu_a14a08a7d69284c1b21ec0ccdd6af36e3}} 
+\index{OutputMenu@{OutputMenu}!importSet@{importSet}}
+\index{importSet@{importSet}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{importSet}{importSet}}
+{\footnotesize\ttfamily void Output\+Menu\+::import\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_output_menu_a361d3c4abd576703e7995f50b388510f}\label{class_output_menu_a361d3c4abd576703e7995f50b388510f}} 
+\index{OutputMenu@{OutputMenu}!isOpen@{isOpen}}
+\index{isOpen@{isOpen}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{isOpen()}{isOpen()}}
+{\footnotesize\ttfamily bool Output\+Menu\+::is\+Open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_output_menu_ab5c64c9089cd595dbff9fa1f5ded4eb4}\label{class_output_menu_ab5c64c9089cd595dbff9fa1f5ded4eb4}} 
+\index{OutputMenu@{OutputMenu}!showSetDetails@{showSetDetails}}
+\index{showSetDetails@{showSetDetails}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{showSetDetails}{showSetDetails}}
+{\footnotesize\ttfamily void Output\+Menu\+::show\+Set\+Details (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_output_menu_aeb65d03e5ef2f2efe4631c70f8aa0f8e}\label{class_output_menu_aeb65d03e5ef2f2efe4631c70f8aa0f8e}} 
+\index{OutputMenu@{OutputMenu}!showSetDetailsSignal@{showSetDetailsSignal}}
+\index{showSetDetailsSignal@{showSetDetailsSignal}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{showSetDetailsSignal}{showSetDetailsSignal}}
+{\footnotesize\ttfamily void Output\+Menu\+::show\+Set\+Details\+Signal (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_output_menu_a40e203ca2b93eee74d1b1ec4aad11195}\label{class_output_menu_a40e203ca2b93eee74d1b1ec4aad11195}} 
+\index{OutputMenu@{OutputMenu}!activeSet@{activeSet}}
+\index{activeSet@{activeSet}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{activeSet}{activeSet}}
+{\footnotesize\ttfamily int Output\+Menu\+::active\+Set\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a094cf670b365f1a2635362eea519bde8}\label{class_output_menu_a094cf670b365f1a2635362eea519bde8}} 
+\index{OutputMenu@{OutputMenu}!formBuilder@{formBuilder}}
+\index{formBuilder@{formBuilder}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{formBuilder}{formBuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_form_builder}{Form\+Builder}} Output\+Menu\+::form\+Builder\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a7c6772c2d6c89c225ff64ec2ebe5c1dc}\label{class_output_menu_a7c6772c2d6c89c225ff64ec2ebe5c1dc}} 
+\index{OutputMenu@{OutputMenu}!open@{open}}
+\index{open@{open}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{open}{open}}
+{\footnotesize\ttfamily bool Output\+Menu\+::open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a14acbd48670117959ddff54aea8283ac}\label{class_output_menu_a14acbd48670117959ddff54aea8283ac}} 
+\index{OutputMenu@{OutputMenu}!outputHandler@{outputHandler}}
+\index{outputHandler@{outputHandler}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{outputHandler}{outputHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classoutput_handler}{output\+Handler}}$\ast$ Output\+Menu\+::output\+Handler = new class \mbox{\hyperlink{classoutput_handler}{output\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a1b845c12b865559ebc1528181d68eead}\label{class_output_menu_a1b845c12b865559ebc1528181d68eead}} 
+\index{OutputMenu@{OutputMenu}!outputTabBuilder@{outputTabBuilder}}
+\index{outputTabBuilder@{outputTabBuilder}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{outputTabBuilder}{outputTabBuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_output_tab_builder}{Output\+Tab\+Builder}} Output\+Menu\+::output\+Tab\+Builder = \mbox{\hyperlink{class_output_tab_builder}{Output\+Tab\+Builder}}(this)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}\label{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}} 
+\index{OutputMenu@{OutputMenu}!path@{path}}
+\index{path@{path}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily QString Output\+Menu\+::path\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_output_menu_ac155f0b1edfe7c9a189984425426fc04}\label{class_output_menu_ac155f0b1edfe7c9a189984425426fc04}} 
+\index{OutputMenu@{OutputMenu}!setDetaisBuilder@{setDetaisBuilder}}
+\index{setDetaisBuilder@{setDetaisBuilder}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{setDetaisBuilder}{setDetaisBuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_output_details_builder}{Output\+Details\+Builder}} Output\+Menu\+::set\+Detais\+Builder = \mbox{\hyperlink{class_output_details_builder}{Output\+Details\+Builder}}(this)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a111d4846551cd881873d50c3c48af3cc}\label{class_output_menu_a111d4846551cd881873d50c3c48af3cc}} 
+\index{OutputMenu@{OutputMenu}!setHandler@{setHandler}}
+\index{setHandler@{setHandler}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{setHandler}{setHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set_handler}{Set\+Handler}} Output\+Menu\+::set\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_aa2b25a79c515f611f22af36694067363}\label{class_output_menu_aa2b25a79c515f611f22af36694067363}} 
+\index{OutputMenu@{OutputMenu}!setrowBuilder@{setrowBuilder}}
+\index{setrowBuilder@{setrowBuilder}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{setrowBuilder}{setrowBuilder}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_setrow_builder}{Setrow\+Builder}} Output\+Menu\+::setrow\+Builder = \mbox{\hyperlink{class_setrow_builder}{Setrow\+Builder}}(this)\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_output_menu_a4dbbe2a3f72b8e56cba5df9457eca502}\label{class_output_menu_a4dbbe2a3f72b8e56cba5df9457eca502}} 
+\index{OutputMenu@{OutputMenu}!settings@{settings}}
+\index{settings@{settings}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{settings}{settings}}
+{\footnotesize\ttfamily QSettings$\ast$ Output\+Menu\+::settings\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \textcolor{keyword}{new} QSettings(\mbox{\hyperlink{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}{path}} + \textcolor{stringliteral}{"{}/Bits and Droids/settings.ini"{}},}
+\DoxyCodeLine{                                        QSettings::IniFormat)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_output_menu_a1f7995c1402113c4f238a95337269d07}\label{class_output_menu_a1f7995c1402113c4f238a95337269d07}} 
+\index{OutputMenu@{OutputMenu}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!OutputMenu@{OutputMenu}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Output\+Menu\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+outputmenu/\mbox{\hyperlink{outputmenu_8h}{outputmenu.\+h}}\item 
+outputmenu/\mbox{\hyperlink{outputmenu_8cpp}{outputmenu.\+cpp}}\end{DoxyCompactItemize}

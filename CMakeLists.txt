@@ -114,7 +114,7 @@ set(PROJECT_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp dashboard/docs/mfsWorkerDocs.cpp)
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp)
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"

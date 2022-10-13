@@ -1,0 +1,30 @@
+\hypertarget{_logger_store_8h_source}{}\doxysection{Logger\+Store.\+h}
+\label{_logger_store_8h_source}\index{stores/LoggerStore.h@{stores/LoggerStore.h}}
+\mbox{\hyperlink{_logger_store_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 13-\/7-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_LOGGERSTORE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_LOGGERSTORE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_8h}{models/Log.h}}"{}}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_logger_store}{LoggerStore}} \{}
+\DoxyCodeLine{13 \textcolor{keyword}{public}:}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_logger_store_a48a8867b4dabc4aaeee67592283d227e}{LoggerStore}}();}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_store_a120a645dfc0cd285de9a93488545035f}{storeLog}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_log}{Log}}\& log);}
+\DoxyCodeLine{16     std::vector<Log>* \mbox{\hyperlink{class_logger_store_a0d9af8cc6356c5ceed7b414fba6002cc}{getLogs}}();}
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_store_a63050efddbad6d2dd06cf5826814b50c}{clearLogs}}();}
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \textcolor{keyword}{static} std::vector<Log> *\mbox{\hyperlink{class_logger_store_aabfd9585edefabfeb1dd5af22b9f7e71}{logs}};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_LOGGERSTORE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,116 @@
+\hypertarget{_input_switch_handler_8h_source}{}\doxysection{Input\+Switch\+Handler.\+h}
+\label{_input_switch_handler_8h_source}\index{handlers/InputSwitchHandler.h@{handlers/InputSwitchHandler.h}}
+\mbox{\hyperlink{_input_switch_handler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef INPUTSWITCHHANDLER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define INPUTSWITCHHANDLER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_engine_8h}{models/aircraft/Engine.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sim_connect_8h}{models/SimConnect.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{constants_8h}{constants.h}}"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{range_8h}{models/settings/range.h}}"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <qmutex.h>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <qsettings.h>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <qwaitcondition.h>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{coordinates_8h}{models/settings/coordinates.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_curve_type_enum_8h}{enums/CurveTypeEnum.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_curve_axis_8h}{models/aircraft/CurveAxis.h}}"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_input_8h}{models/commands/Input.h}}"{}}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_level_enum_8h}{enums/LogLevelEnum.h}}"{}}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <tchar.h>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <windows.h>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <QThread>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <cstdio>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{class }\mbox{\hyperlink{class_input_switch_handler}{InputSwitchHandler}}: \textcolor{keyword}{public} QObject \{}
+\DoxyCodeLine{29     Q\_OBJECT}
+\DoxyCodeLine{30 \textcolor{keyword}{public}:}
+\DoxyCodeLine{31     \mbox{\hyperlink{class_input_switch_handler_a11f04f31a181f5c42cbbde1164114c9e}{InputSwitchHandler}}();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \mbox{\hyperlink{class_input_switch_handler_a11f04f31a181f5c42cbbde1164114c9e}{InputSwitchHandler}}(std::map<int, Input> \mbox{\hyperlink{class_input_switch_handler_ad221535853a456e753e34c44bb4349fa}{inputs}}, HANDLE \mbox{\hyperlink{class_input_switch_handler_a2df5869884427a0adec6491247f897ea}{connect}});}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a5fcf2595652a54bae6ce124681003352}{switchHandling}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* stringToParse);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     HANDLE \mbox{\hyperlink{class_input_switch_handler_a2df5869884427a0adec6491247f897ea}{connect}};}
+\DoxyCodeLine{38     \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} \mbox{\hyperlink{class_input_switch_handler_a3694033739bd3202da8e305f51f1ebab}{object}};}
+\DoxyCodeLine{39     std::array<Axis *, constants::supportedEngines> \mbox{\hyperlink{class_input_switch_handler_acc5b8f2eb277044a15ba701309568c50}{enginelist}};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_input_switch_handler_af4a995875d50e6d5e80131d9093f92c7}{reverseAxis}} = -\/23000.0;}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aef3e8106384641d704bfa3189a1bdc79}{setRanges}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a5d9699796e24f161d7c8a6ad569154fd}{setCurve}}(QList<coordinates> curve, \mbox{\hyperlink{_curve_type_enum_8h_a181048eaefaa8868cea9acd64f582c7b}{CurveTypeEnum}} curveType);}
+\DoxyCodeLine{47 signals:}
+\DoxyCodeLine{48     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a978787f572b7cd4c5b66759a9f1426ef}{logMessage}}(std::string message, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} level);}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50 \textcolor{keyword}{private}:}
+\DoxyCodeLine{51     std::map<int, Input> \mbox{\hyperlink{class_input_switch_handler_ad221535853a456e753e34c44bb4349fa}{inputs}};}
+\DoxyCodeLine{52     std::string \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}};}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_input_switch_handler_a12cb80ed9bcdeb2214aff1eb710bec73}{settingsHandler}};}
+\DoxyCodeLine{54     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_abd340f17da0d05c7572262def78a05c3}{elevatorTrimAxis}} = \mbox{\hyperlink{class_axis}{Axis}}(0, 1023, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a4355b89f503010c94909265086ee31a7}{InputEnum::DEFINITION\_ELEVATOR\_TRIM\_SET}});}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_ac5ae0c5853e2bb7b464518dc0ca52152}{mixtureRanges}}[\mbox{\hyperlink{namespaceconstants_afb74188e429e32f439d3ab867756e818}{constants::supportedMixtureLevers}}];}
+\DoxyCodeLine{56     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a47f336de43564251377099f0b93b3f14}{propellerRanges}}[\mbox{\hyperlink{namespaceconstants_addca3123aed51fb5e66863225a040720}{constants::supportedPropellerLevers}}];}
+\DoxyCodeLine{57     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a49b0cad419bc7512d72cfe2cb48ac567}{flapsRange}};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     QStringList \mbox{\hyperlink{class_input_switch_handler_af8d161c95fc05e04af3f8c74a523c04f}{curveStrings}} = \{\textcolor{stringliteral}{"{}Rudder"{}}, \textcolor{stringliteral}{"{}Toe brakes"{}}, \textcolor{stringliteral}{"{}Aileron"{}}, \textcolor{stringliteral}{"{}Elevator"{}}\};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a0db154aec181f76ac9aab30a622aca0a}{rudderAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a37d3a2c91a95bfe5b8c514c35fb5d667}{InputEnum::DEFINITION\_AXIS\_RUDDER\_SET}});}
+\DoxyCodeLine{62     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140ad5d02c8aaaa15a1e3d2aab2a4b04698c}{InputEnum::DEFINITION\_AXIS\_LEFT\_BRAKE\_SET}});}
+\DoxyCodeLine{63     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a36df420123bb0858b6324048cdb692bd}{InputEnum::DEFINITION\_AXIS\_RIGHT\_BRAKE\_SET}});}
+\DoxyCodeLine{64     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afb66de4e8ad2ff993d1d89fae8a8b4ec}{brakeAxis}}[2] = \{\mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}}, \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}}\};}
+\DoxyCodeLine{65     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a3e720d2d8de875b35288717678e47468}{aileronAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a0bf6b3830a3d73037ba4d5a2b210129a}{InputEnum::DEFINITION\_AXIS\_AILERONS\_SET}});}
+\DoxyCodeLine{66     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a4a5a557c4a20dec6c9d158be1509c9e2}{elevatorAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140acbb2ce65dd91530c6c046daa20eba109}{InputEnum::DEFINITION\_AXIS\_ELEVATOR\_SET}});}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a1cb2ab056a4e69f722ab4182e6b482e9}{setEngineValues}}(std::string stringToSet);}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_abf80871157061dfe6e90b036e1b8a9cc}{setMixtureValues}}(std::string stringToSet);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa8f95788e422e0100312a75e98c53e81}{set\_prop\_values}}(std::string stringToSet);}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a0615455a016f4d7d891840199151e22d}{setComs}}(\textcolor{keyword}{const} std::string\& stringToSet, \textcolor{keywordtype}{int} comNo) \textcolor{keyword}{const};}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa84392794229823bcfcb6cec9a1ff01f}{sendBasicCommandOn}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aee875aca0cd9f15f2741e3c3b1b4ef8a}{sendBasicCommandOff}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_afec5bd5bd56e907c57dd4f5f84d94384}{setElevatorTrim}}(std::string stringToSet);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a76a3ae74f26962cd9e73edf4ae4d5716}{setFlaps}}(std::string stringToSet);}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a368288541abf393be8bb7c62596b0612}{setRudder}}(std::string stringToSet);}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a0915b331e75ed982e06cda979e124933}{setBrakeAxis}}(std::string stringToSet);}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a2689eb9036c234df56abff868d993ae0}{sendBasicCommandValue}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keywordtype}{int} value) \textcolor{keyword}{const};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a92bb6af7d5abd7857ddd369f1e303946}{controlYoke}}(std::string stringToSet);}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a8e8fbbfdf1b2e51d7dc781628f744979}{sendBasicCommand}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keyword}{const} std::string\& stringToSet);}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a06692af1b667386a5444b72b687911df}{mapCoordinates}}(\textcolor{keywordtype}{int} value, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMin, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMax);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a4dea7669be4a1fb87150ed56741d11a0}{sendWASMCommand}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}}, \textcolor{keywordtype}{int} value) \textcolor{keyword}{const};}
+\DoxyCodeLine{98 }
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa695d7664a419d19f68490109e351aff}{setAxisValue}}(\mbox{\hyperlink{class_axis}{Axis}} *axis);}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a6fe15444ab9b49a79af01a9d06796330}{mapEngineValueToAxis}}(\mbox{\hyperlink{class_engine}{Engine}} *engine) \textcolor{keyword}{const};}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keyword}{static} vector<int> \mbox{\hyperlink{class_input_switch_handler_aefd3938294fb594a9904545508ade6f8}{cutInputs}}(\textcolor{keywordtype}{int} amountOfPartsNeeded, std::string stringToSet);}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a46377ce2b782a631fb6fe73d83d61d8e}{calibratedRange}}(\mbox{\hyperlink{class_curve_axis}{CurveAxis}} *curveAxis);}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{107     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_ab2367bdea785b4c961d55b4c28538888}{mapInputs}}();}
+\DoxyCodeLine{108 \};}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// INPUTSWITCHHANDLER\_H}}
+
+\end{DoxyCode}

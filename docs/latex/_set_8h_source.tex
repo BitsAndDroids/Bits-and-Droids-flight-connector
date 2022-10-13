@@ -1,0 +1,41 @@
+\hypertarget{_set_8h_source}{}\doxysection{set.\+h}
+\label{_set_8h_source}\index{models/set.h@{models/set.h}}
+\mbox{\hyperlink{_set_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef SET\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define SET\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qstring.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QSettings>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QStandardPaths>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_set}{Set}} \{}
+\DoxyCodeLine{10  \textcolor{keyword}{public}:}
+\DoxyCodeLine{11   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}};}
+\DoxyCodeLine{12   \mbox{\hyperlink{class_set_a98eeb01d2bea0b8f597ed894e1235088}{Set}}(\textcolor{keywordtype}{int} index, \textcolor{keywordtype}{bool} newSetReceived, QString nameReceived) \{}
+\DoxyCodeLine{13     \textcolor{keywordtype}{id} = index;}
+\DoxyCodeLine{14     \mbox{\hyperlink{class_set_a5ffec6b71b7888712c58d19cf10528e4}{newSet}} = newSetReceived;}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}} = nameReceived;}
+\DoxyCodeLine{16   \};}
+\DoxyCodeLine{17   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a4f34104c445b6238bd632f5716cf239d}{setAmntSets}}(\textcolor{keywordtype}{int} newAmntSets) \{ \mbox{\hyperlink{class_set_a5e96cb8dc1918b2d6e64cdb48ef5fc69}{amntSets}} = newAmntSets; \};}
+\DoxyCodeLine{18   QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}};}
+\DoxyCodeLine{19   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_ad106e6cf2eb0124cdb41dfca2ac2cd19}{createSet}}();}
+\DoxyCodeLine{20   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_ac60e62f65be4be9da7328ccf38b7f9fa}{updateSet}}();}
+\DoxyCodeLine{21   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_add95eb4cd77d7e1bae77589f07df2e74}{addCheckBox}}(QString cb);}
+\DoxyCodeLine{22  \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24  \textcolor{keyword}{private}:}
+\DoxyCodeLine{25   QString \mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}};}
+\DoxyCodeLine{26   QStringList \mbox{\hyperlink{class_set_ad83e6058d2eab1d3121a001a2490fb3d}{checkboxes}};}
+\DoxyCodeLine{27   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_set_a5ffec6b71b7888712c58d19cf10528e4}{newSet}};}
+\DoxyCodeLine{28   QString \mbox{\hyperlink{class_set_ada18d8a49763a183d6274fbe1d03748b}{path}} =}
+\DoxyCodeLine{29       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);}
+\DoxyCodeLine{30   QSettings *\mbox{\hyperlink{class_set_a659aa13aa9f9d676708ee80aace5e6b0}{settings}} =}
+\DoxyCodeLine{31       \textcolor{keyword}{new} QSettings(\mbox{\hyperlink{class_set_ada18d8a49763a183d6274fbe1d03748b}{path}} + \textcolor{stringliteral}{"{}/"{}} + \textcolor{stringliteral}{"{}settings.ini"{}}, QSettings::IniFormat);}
+\DoxyCodeLine{32   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_set_a5e96cb8dc1918b2d6e64cdb48ef5fc69}{amntSets}};}
+\DoxyCodeLine{33 \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// SET\_H}}
+
+\end{DoxyCode}

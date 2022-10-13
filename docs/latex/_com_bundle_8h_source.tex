@@ -1,0 +1,33 @@
+\hypertarget{_com_bundle_8h_source}{}\doxysection{Com\+Bundle.\+h}
+\label{_com_bundle_8h_source}\index{dashboard/models/ComBundle.h@{dashboard/models/ComBundle.h}}
+\mbox{\hyperlink{_com_bundle_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 12-\/10-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_COMBUNDLE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_COMBUNDLE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{output_8h}{models/commands/output.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_serial_port_8hpp}{serial/SerialPort.hpp}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_com_bundle}{ComBundle}}\{}
+\DoxyCodeLine{14 \textcolor{keyword}{public}:}
+\DoxyCodeLine{15     \mbox{\hyperlink{class_com_bundle}{ComBundle}}(QString \mbox{\hyperlink{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}{port}});}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_bundle_aa88f36e8e6fad174edb5865c83db4235}{setOutputs}}(QMap<int, Output *>) \{ this-\/>\mbox{\hyperlink{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}{outputs}} = std::move(\mbox{\hyperlink{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}{outputs}}); \};}
+\DoxyCodeLine{17     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_com_bundle_a9b9bb13979ae1d51ea6b70591d2ac959}{isOutputInBundle}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_serial_port}{SerialPort}} *\mbox{\hyperlink{class_com_bundle_a0aabeb2faf88344177ea548e6faab23d}{getSerialPort}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}{port}}; \};}
+\DoxyCodeLine{19     \textcolor{keywordtype}{char}\& \mbox{\hyperlink{class_com_bundle_a3fc7db55b6dc91ea983e5dc1a89b837e}{getReceivedStringAddress}}()\{ \textcolor{keywordflow}{return} *\mbox{\hyperlink{class_com_bundle_a63a0875521ddcf6eefa20c30fbf9a234}{receivedString}};\}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{private}:}
+\DoxyCodeLine{22     \mbox{\hyperlink{class_serial_port}{SerialPort}} *\mbox{\hyperlink{class_com_bundle_ae160b76ef927d71383ea8d7032e87f76}{port}};}
+\DoxyCodeLine{23     \textcolor{keywordtype}{char} \mbox{\hyperlink{class_com_bundle_a63a0875521ddcf6eefa20c30fbf9a234}{receivedString}}[255];}
+\DoxyCodeLine{24     QMap<int, Output *> \mbox{\hyperlink{class_com_bundle_afec4bab0a05c874850adf59fce9e0366}{outputs}};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \};}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_COMBUNDLE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,40 @@
+\hypertarget{_logger_service_8h_source}{}\doxysection{Logger\+Service.\+h}
+\label{_logger_service_8h_source}\index{services/LoggerService.h@{services/LoggerService.h}}
+\mbox{\hyperlink{_logger_service_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 13-\/7-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_LOGGERSERVICE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_LOGGERSERVICE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QString>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_8h}{models/Log.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_logger_store_8h}{stores/LoggerStore.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_logger_service}{LoggerService}}: \textcolor{keyword}{public} QObject \{}
+\DoxyCodeLine{14 Q\_OBJECT}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_service_afd418c281ae2c28be2a21b35988be08f}{writeToLogFile}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_log}{Log}}\& log);}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_logger_store}{LoggerStore}} \mbox{\hyperlink{class_logger_service_a418679597c0aed31f18a5d85e54fffe1}{loggerStore}} = \mbox{\hyperlink{class_logger_store}{LoggerStore}}();}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_logger_service_ae110e952b0eb7c1f319cfa129a03ab7e}{LoggerService}}();}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \mbox{\hyperlink{class_logger_service_a0a82b719070eb12c0a61acbd8e1080be}{\string~LoggerService}}();}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_service_a7ca13554321d4816ad15c6cfbe2e5ccb}{logError}}(std::string message);}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_service_a384b128abc6f4f73226f52e57b81285b}{logDebug}}(std::string message);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_service_abba169f8be443d7507426971ff390315}{logWarning}}(std::string message);}
+\DoxyCodeLine{29     signals:}
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_logger_service_a25d7fefddf20d162d6a7820d1b1bc77a}{logReceived}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_log}{Log}}\& log);}
+\DoxyCodeLine{31 \};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_LOGGERSERVICE\_H}}
+
+\end{DoxyCode}

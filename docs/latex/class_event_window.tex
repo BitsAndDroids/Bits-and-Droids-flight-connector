@@ -1,0 +1,197 @@
+\hypertarget{class_event_window}{}\doxysection{Event\+Window Class Reference}
+\label{class_event_window}\index{EventWindow@{EventWindow}}
+
+
+{\ttfamily \#include $<$eventwindow.\+h$>$}
+
+Inheritance diagram for Event\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_event_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_window_a39d2d74158c634eefe3bd8992e1e5cb8}{closed\+Event\+Window}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_event_window_a26d19c952e7e688df73f95acb02d203b}{Event\+Window}} (QWidget $\ast$parent=nullptr)
+\item 
+\mbox{\hyperlink{class_event_window_a27ce10ac845ca81cd7198b84a6b91f30}{$\sim$\+Event\+Window}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_window_a17777a2a80fbbbb44cc73bd95987c457}{cell\+Text\+Changed}} (QTable\+Widget\+Item $\ast$)
+\item 
+void \mbox{\hyperlink{class_event_window_a7b06952aa09d6395b8fbb78814063dce}{combo\+Box\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_event_window_a36e44c58cd10ddfaf8ef41879f0c8e4d}{save\+Btn\+Pressed}} ()
+\item 
+void \mbox{\hyperlink{class_event_window_a3afb8b0fd36f44ecb9c92c7e7ff06d34}{add\+Event\+Btn\+Pressed}} ()
+\item 
+void \mbox{\hyperlink{class_event_window_ac0d2ac3842cf41bcf91cc4641fc02f37}{del\+Changed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_event_window_a02a004352a56d6b912fff0d82bce4e6d}{read\+File}} ()
+\item 
+bool \mbox{\hyperlink{class_event_window_a087243381638303ac483e9d99eedc9bf}{event\+Filter}} (QObject $\ast$obj, QEvent $\ast$e)
+\item 
+bool \mbox{\hyperlink{class_event_window_a69027e9e16a021cff293558543e1b545}{check\+If\+Row\+Changed}} (int index)
+\item 
+void \mbox{\hyperlink{class_event_window_a7c6f0900e8abb9c036d9d1a21e833606}{write\+File}} ()
+\item 
+void \mbox{\hyperlink{class_event_window_a52153894674c62da7149a45f3b367d0b}{fill\+Row}} (int index)
+\item 
+void \mbox{\hyperlink{class_event_window_aae6996103fbb0fad9a7d1ceed4f2d71a}{close\+Event}} (QClose\+Event $\ast$event) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static QString \mbox{\hyperlink{class_event_window_a26f10b05668d97bb5e6b2fb93142c2f1}{check\+Spaces}} (std\+::string string\+To\+Check)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path_handler}{Path\+Handler}} \mbox{\hyperlink{class_event_window_a4fd53a0188b06b868f6bc9ce1c43eb23}{path\+Handler}}
+\item 
+QString \mbox{\hyperlink{class_event_window_a5faed3336df3788462ea3f2d3cbc24e7}{application\+Events\+Path}} = path\+Handler.\+get\+Writable\+Event\+Path()
+\item 
+\mbox{\hyperlink{class_ui_1_1_event_window}{Ui\+::\+Event\+Window}} $\ast$ \mbox{\hyperlink{class_event_window_a021feda6d7840540ee793bba38018347}{ui}}
+\item 
+QTable\+Widget $\ast$ \mbox{\hyperlink{class_event_window_a941702883df20021203c202783272529}{event\+Table}} = new QTable\+Widget()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_event_window_a26d19c952e7e688df73f95acb02d203b}\label{class_event_window_a26d19c952e7e688df73f95acb02d203b}} 
+\index{EventWindow@{EventWindow}!EventWindow@{EventWindow}}
+\index{EventWindow@{EventWindow}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{EventWindow()}{EventWindow()}}
+{\footnotesize\ttfamily Event\+Window\+::\+Event\+Window (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_event_window_a27ce10ac845ca81cd7198b84a6b91f30}\label{class_event_window_a27ce10ac845ca81cd7198b84a6b91f30}} 
+\index{EventWindow@{EventWindow}!````~EventWindow@{$\sim$EventWindow}}
+\index{````~EventWindow@{$\sim$EventWindow}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{$\sim$EventWindow()}{~EventWindow()}}
+{\footnotesize\ttfamily Event\+Window\+::$\sim$\+Event\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_event_window_a3afb8b0fd36f44ecb9c92c7e7ff06d34}\label{class_event_window_a3afb8b0fd36f44ecb9c92c7e7ff06d34}} 
+\index{EventWindow@{EventWindow}!addEventBtnPressed@{addEventBtnPressed}}
+\index{addEventBtnPressed@{addEventBtnPressed}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{addEventBtnPressed}{addEventBtnPressed}}
+{\footnotesize\ttfamily void Event\+Window\+::add\+Event\+Btn\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_event_window_a17777a2a80fbbbb44cc73bd95987c457}\label{class_event_window_a17777a2a80fbbbb44cc73bd95987c457}} 
+\index{EventWindow@{EventWindow}!cellTextChanged@{cellTextChanged}}
+\index{cellTextChanged@{cellTextChanged}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{cellTextChanged}{cellTextChanged}}
+{\footnotesize\ttfamily void Event\+Window\+::cell\+Text\+Changed (\begin{DoxyParamCaption}\item[{QTable\+Widget\+Item $\ast$}]{changed\+Item }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_event_window_a69027e9e16a021cff293558543e1b545}\label{class_event_window_a69027e9e16a021cff293558543e1b545}} 
+\index{EventWindow@{EventWindow}!checkIfRowChanged@{checkIfRowChanged}}
+\index{checkIfRowChanged@{checkIfRowChanged}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{checkIfRowChanged()}{checkIfRowChanged()}}
+{\footnotesize\ttfamily bool Event\+Window\+::check\+If\+Row\+Changed (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a26f10b05668d97bb5e6b2fb93142c2f1}\label{class_event_window_a26f10b05668d97bb5e6b2fb93142c2f1}} 
+\index{EventWindow@{EventWindow}!checkSpaces@{checkSpaces}}
+\index{checkSpaces@{checkSpaces}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{checkSpaces()}{checkSpaces()}}
+{\footnotesize\ttfamily QString Event\+Window\+::check\+Spaces (\begin{DoxyParamCaption}\item[{std\+::string}]{string\+To\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a39d2d74158c634eefe3bd8992e1e5cb8}\label{class_event_window_a39d2d74158c634eefe3bd8992e1e5cb8}} 
+\index{EventWindow@{EventWindow}!closedEventWindow@{closedEventWindow}}
+\index{closedEventWindow@{closedEventWindow}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{closedEventWindow}{closedEventWindow}}
+{\footnotesize\ttfamily void Event\+Window\+::closed\+Event\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_event_window_aae6996103fbb0fad9a7d1ceed4f2d71a}\label{class_event_window_aae6996103fbb0fad9a7d1ceed4f2d71a}} 
+\index{EventWindow@{EventWindow}!closeEvent@{closeEvent}}
+\index{closeEvent@{closeEvent}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{closeEvent()}{closeEvent()}}
+{\footnotesize\ttfamily void Event\+Window\+::close\+Event (\begin{DoxyParamCaption}\item[{QClose\+Event $\ast$}]{event }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a7b06952aa09d6395b8fbb78814063dce}\label{class_event_window_a7b06952aa09d6395b8fbb78814063dce}} 
+\index{EventWindow@{EventWindow}!comboBoxChanged@{comboBoxChanged}}
+\index{comboBoxChanged@{comboBoxChanged}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{comboBoxChanged}{comboBoxChanged}}
+{\footnotesize\ttfamily void Event\+Window\+::combo\+Box\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_event_window_ac0d2ac3842cf41bcf91cc4641fc02f37}\label{class_event_window_ac0d2ac3842cf41bcf91cc4641fc02f37}} 
+\index{EventWindow@{EventWindow}!delChanged@{delChanged}}
+\index{delChanged@{delChanged}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{delChanged}{delChanged}}
+{\footnotesize\ttfamily void Event\+Window\+::del\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_event_window_a087243381638303ac483e9d99eedc9bf}\label{class_event_window_a087243381638303ac483e9d99eedc9bf}} 
+\index{EventWindow@{EventWindow}!eventFilter@{eventFilter}}
+\index{eventFilter@{eventFilter}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{eventFilter()}{eventFilter()}}
+{\footnotesize\ttfamily bool Event\+Window\+::event\+Filter (\begin{DoxyParamCaption}\item[{QObject $\ast$}]{obj,  }\item[{QEvent $\ast$}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a52153894674c62da7149a45f3b367d0b}\label{class_event_window_a52153894674c62da7149a45f3b367d0b}} 
+\index{EventWindow@{EventWindow}!fillRow@{fillRow}}
+\index{fillRow@{fillRow}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{fillRow()}{fillRow()}}
+{\footnotesize\ttfamily void Event\+Window\+::fill\+Row (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a02a004352a56d6b912fff0d82bce4e6d}\label{class_event_window_a02a004352a56d6b912fff0d82bce4e6d}} 
+\index{EventWindow@{EventWindow}!readFile@{readFile}}
+\index{readFile@{readFile}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{readFile()}{readFile()}}
+{\footnotesize\ttfamily void Event\+Window\+::read\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a36e44c58cd10ddfaf8ef41879f0c8e4d}\label{class_event_window_a36e44c58cd10ddfaf8ef41879f0c8e4d}} 
+\index{EventWindow@{EventWindow}!saveBtnPressed@{saveBtnPressed}}
+\index{saveBtnPressed@{saveBtnPressed}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{saveBtnPressed}{saveBtnPressed}}
+{\footnotesize\ttfamily void Event\+Window\+::save\+Btn\+Pressed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_event_window_a7c6f0900e8abb9c036d9d1a21e833606}\label{class_event_window_a7c6f0900e8abb9c036d9d1a21e833606}} 
+\index{EventWindow@{EventWindow}!writeFile@{writeFile}}
+\index{writeFile@{writeFile}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{writeFile()}{writeFile()}}
+{\footnotesize\ttfamily void Event\+Window\+::write\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_event_window_a5faed3336df3788462ea3f2d3cbc24e7}\label{class_event_window_a5faed3336df3788462ea3f2d3cbc24e7}} 
+\index{EventWindow@{EventWindow}!applicationEventsPath@{applicationEventsPath}}
+\index{applicationEventsPath@{applicationEventsPath}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{applicationEventsPath}{applicationEventsPath}}
+{\footnotesize\ttfamily QString Event\+Window\+::application\+Events\+Path = path\+Handler.\+get\+Writable\+Event\+Path()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a941702883df20021203c202783272529}\label{class_event_window_a941702883df20021203c202783272529}} 
+\index{EventWindow@{EventWindow}!eventTable@{eventTable}}
+\index{eventTable@{eventTable}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{eventTable}{eventTable}}
+{\footnotesize\ttfamily QTable\+Widget$\ast$ Event\+Window\+::event\+Table = new QTable\+Widget()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a4fd53a0188b06b868f6bc9ce1c43eb23}\label{class_event_window_a4fd53a0188b06b868f6bc9ce1c43eb23}} 
+\index{EventWindow@{EventWindow}!pathHandler@{pathHandler}}
+\index{pathHandler@{pathHandler}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{pathHandler}{pathHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_path_handler}{Path\+Handler}} Event\+Window\+::path\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_event_window_a021feda6d7840540ee793bba38018347}\label{class_event_window_a021feda6d7840540ee793bba38018347}} 
+\index{EventWindow@{EventWindow}!ui@{ui}}
+\index{ui@{ui}!EventWindow@{EventWindow}}
+\doxysubsubsection{\texorpdfstring{ui}{ui}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_ui_1_1_event_window}{Ui\+::\+Event\+Window}}$\ast$ Event\+Window\+::ui\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+widgets/eventeditor/\mbox{\hyperlink{eventwindow_8h}{eventwindow.\+h}}\item 
+widgets/eventeditor/\mbox{\hyperlink{eventwindow_8cpp}{eventwindow.\+cpp}}\end{DoxyCompactItemize}

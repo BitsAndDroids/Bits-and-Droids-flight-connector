@@ -2,7 +2,7 @@
 
 #include "outputmenu/handlers/sethandler.h"
 #include "settings/ComSettingsHandler.h"
-
+#include "utils/InputReader.h"
 #include "enums/ModeEnum.h"
 #include <windows.h>
 
@@ -67,11 +67,14 @@ MFSWorker::MFSWorker() {
 
 /*!
   \brief MFSWorker::sendToArduino is responsible for sending data to the Arduino
-  \a received is the data received from the simulator
-  \a prefix prefix to tag the data
-  \a index index of the comport
-  \a mode defines the data type
-  ...
+  The modes are defined in the ModeEnum class.
+
+  @param received is the data received from the simulator
+  @param prefix prefix to tag the data
+  @param index index of the comport
+  @param mode defines the data type
+
+  \sa ModeEnum
  */
 void MFSWorker::sendToArduino(float received, const std::string &prefix, int index,
                               int mode) {
@@ -126,14 +129,14 @@ void MFSWorker::sendToArduino(float received, const std::string &prefix, int ind
   \brief MFSWorker::MyDispatchProcInput handles the data received from the simulator
 
   This function monitors the SimConnect data. The function handles SimConnect events provided by the simulator.
-  If new data is available, the function will send the data to the Microcontroller.
+  If new data is available, the function will send the data to the Microcontroller using the sendToArduino function.
   It also handles the data received from the WASM module.
 
+  @param *pData
+  @param cbData
+  @param *pContext Pointer to the calling MFSWorker object. This can be used to reference the MFSWorker object.
+
   \sa MFSWorker::sendToArduino
-  \a *pData
-  \a cbData
-  \a *pContext
-  \a mode
  */
 void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                                     void *pContext) {
@@ -186,7 +189,6 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                     }
                 }
             }
-
         }
             break;
         case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
@@ -232,7 +234,11 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
     }
 }
 /*!
- * \brief MFSWorker::loadRunningPortsAndSets handles the data received from the Microcontroller
+ * \fn void MFSWorker::loadRunningPortsAndSets
+ * \brief MFSWorker::loadRunningPortsAndSets initiates the ports and sets that are saved in the settings file
+ * It loads in the coms and bundles them into a single ComBundle object.
+ * After this the app loads in all the inputs from the dist/Inputs.json file
+ * \sa ComBundle
  */
 void MFSWorker::loadRunningPortsAndSets() {
     comBundles->clear();
@@ -258,6 +264,10 @@ void MFSWorker::loadRunningPortsAndSets() {
     if (successfullyConnected == comBundles->size()) {
         emit boardConnectionMade(2);
     }
+    InputReader inputReader = InputReader();
+    inputReader.readInputs();
+    this->inputs = inputReader.getInputs();
+
 }
 
 void MFSWorker::eventLoop() {
@@ -321,11 +331,11 @@ void MFSWorker::eventLoop() {
 
                 for (int i = 0; i < comBundles->size(); i++) {
                     const auto hasRead = comBundles->at(i)->getSerialPort()->readSerialPort(
-                            dualInputHandler->receivedString[i], DATA_LENGTH);
+                            &comBundles->at(i)->getReceivedStringAddress(), DATA_LENGTH);
 
                     if (hasRead) {
                         if (connected) {
-                            dualInputHandler->switchHandling(i);
+                            dualInputHandler->switchHandling(&comBundles->at(i)->getReceivedStringAddress());
                         }
                     }
                 }
@@ -345,7 +355,6 @@ void MFSWorker::eventLoop() {
                 counter++;
             }
         }
-
     }
 
     for (int i = 0; i < keys->size(); i++) {

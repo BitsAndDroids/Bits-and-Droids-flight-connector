@@ -21,10 +21,6 @@ ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker 
 
     connect(&dualWorker, &MFSWorker::logMessage, serviceWorker, &ServiceWorker::logMessage);
     connect(&dualWorker, &MFSWorker::boardConnectionMade, this, &ComPortWidgetController::boardConnectionMade);
-
-    InputReader inputReader = InputReader();
-    inputReader.readInputs();
-    dualWorker.setInputs(inputReader.getInputs());
 }
 
 void ComPortWidgetController::initComRows() {

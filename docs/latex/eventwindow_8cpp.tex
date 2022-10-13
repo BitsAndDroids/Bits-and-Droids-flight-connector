@@ -1,0 +1,60 @@
+\hypertarget{eventwindow_8cpp}{}\doxysection{widgets/eventeditor/eventwindow.cpp File Reference}
+\label{eventwindow_8cpp}\index{widgets/eventeditor/eventwindow.cpp@{widgets/eventeditor/eventwindow.cpp}}
+{\ttfamily \#include \char`\"{}eventwindow.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/events/\+Event.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/events/\+Event\+Datatype.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/events/\+Event\+Type.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$qcheckbox.\+h$>$}\newline
+{\ttfamily \#include $<$qcombobox.\+h$>$}\newline
+{\ttfamily \#include $<$qfile.\+h$>$}\newline
+{\ttfamily \#include $<$qstring.\+h$>$}\newline
+{\ttfamily \#include $<$QFont\+Database$>$}\newline
+{\ttfamily \#include $<$QGrid\+Layout$>$}\newline
+{\ttfamily \#include $<$QHeader\+View$>$}\newline
+{\ttfamily \#include $<$QLabel$>$}\newline
+{\ttfamily \#include $<$QMessage\+Box$>$}\newline
+{\ttfamily \#include $<$QPush\+Button$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include \char`\"{}logging/\+Message\+Caster.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}ui\+\_\+eventwindow.\+h\char`\"{}}\newline
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_utils}{Utils}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{namespace_utils_a4d5771d55eaf62e412904c19866c3786}{Utils\+::pad\+Left}} (std\+::string source, std\+::size\+\_\+t total\+Width, char padding\+Char=\textquotesingle{} \textquotesingle{})
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+QList$<$ \mbox{\hyperlink{class_event}{Event}} $>$ \mbox{\hyperlink{eventwindow_8cpp_a2f6e1a881b5e1c897c3d2f2eaf538439}{table\+Rows}} = QList$<$\mbox{\hyperlink{class_event}{Event}}$>$()
+\item 
+QList$<$ int $>$ \mbox{\hyperlink{eventwindow_8cpp_ad12ba0913b2b31c7d15a0b67b23f32ca}{table\+Rows\+To\+Delete}} = QList$<$int$>$()
+\item 
+QList$<$ int $>$ \mbox{\hyperlink{eventwindow_8cpp_a2ee7a9ae5ba93c3d1f99c8313a931139}{rows\+Changed}} = QList$<$int$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{eventwindow_8cpp_a2ee7a9ae5ba93c3d1f99c8313a931139}\label{eventwindow_8cpp_a2ee7a9ae5ba93c3d1f99c8313a931139}} 
+\index{eventwindow.cpp@{eventwindow.cpp}!rowsChanged@{rowsChanged}}
+\index{rowsChanged@{rowsChanged}!eventwindow.cpp@{eventwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{rowsChanged}{rowsChanged}}
+{\footnotesize\ttfamily QList$<$int$>$ rows\+Changed = QList$<$int$>$()}
+
+\mbox{\Hypertarget{eventwindow_8cpp_a2f6e1a881b5e1c897c3d2f2eaf538439}\label{eventwindow_8cpp_a2f6e1a881b5e1c897c3d2f2eaf538439}} 
+\index{eventwindow.cpp@{eventwindow.cpp}!tableRows@{tableRows}}
+\index{tableRows@{tableRows}!eventwindow.cpp@{eventwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{tableRows}{tableRows}}
+{\footnotesize\ttfamily QList$<$\mbox{\hyperlink{class_event}{Event}}$>$ table\+Rows = QList$<$\mbox{\hyperlink{class_event}{Event}}$>$()}
+
+\mbox{\Hypertarget{eventwindow_8cpp_ad12ba0913b2b31c7d15a0b67b23f32ca}\label{eventwindow_8cpp_ad12ba0913b2b31c7d15a0b67b23f32ca}} 
+\index{eventwindow.cpp@{eventwindow.cpp}!tableRowsToDelete@{tableRowsToDelete}}
+\index{tableRowsToDelete@{tableRowsToDelete}!eventwindow.cpp@{eventwindow.cpp}}
+\doxysubsubsection{\texorpdfstring{tableRowsToDelete}{tableRowsToDelete}}
+{\footnotesize\ttfamily QList$<$int$>$ table\+Rows\+To\+Delete = QList$<$int$>$()}
+

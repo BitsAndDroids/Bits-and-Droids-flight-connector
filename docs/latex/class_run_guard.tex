@@ -1,0 +1,107 @@
+\hypertarget{class_run_guard}{}\doxysection{Run\+Guard Class Reference}
+\label{class_run_guard}\index{RunGuard@{RunGuard}}
+
+
+{\ttfamily \#include $<$Run\+Guard.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_run_guard_a7c66a0606abb1d39194a2fda74534193}{Run\+Guard}} (const QString \&\mbox{\hyperlink{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}{key}})
+\item 
+\mbox{\hyperlink{class_run_guard_a09da3dd86d203906fd9e0021b3175476}{$\sim$\+Run\+Guard}} ()
+\item 
+bool \mbox{\hyperlink{class_run_guard_ad8f3447b8b430177f3f8cdbc9952cc81}{is\+Another\+Running}} ()
+\item 
+bool \mbox{\hyperlink{class_run_guard_a6eaac5e7b6657f7bd9a0d7966c6d0498}{try\+To\+Run}} ()
+\item 
+void \mbox{\hyperlink{class_run_guard_a1d887d643b700cd64127e5e07de5b97b}{release}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const QString \mbox{\hyperlink{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}{key}}
+\item 
+const QString \mbox{\hyperlink{class_run_guard_a5f1d701a6e008382bf64ca46cf5bf61e}{mem\+Lock\+Key}}
+\item 
+const QString \mbox{\hyperlink{class_run_guard_a9221885f256d04e96b17f70044ae784c}{sharedmem\+Key}}
+\item 
+QShared\+Memory \mbox{\hyperlink{class_run_guard_a23e3c4c19f31070f9697954213a4ac68}{shared\+Mem}}
+\item 
+QSystem\+Semaphore \mbox{\hyperlink{class_run_guard_aebaeac549c5889200b117b784c2ed4e7}{mem\+Lock}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_run_guard_a7c66a0606abb1d39194a2fda74534193}\label{class_run_guard_a7c66a0606abb1d39194a2fda74534193}} 
+\index{RunGuard@{RunGuard}!RunGuard@{RunGuard}}
+\index{RunGuard@{RunGuard}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{RunGuard()}{RunGuard()}}
+{\footnotesize\ttfamily Run\+Guard\+::\+Run\+Guard (\begin{DoxyParamCaption}\item[{const QString \&}]{key }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_run_guard_a09da3dd86d203906fd9e0021b3175476}\label{class_run_guard_a09da3dd86d203906fd9e0021b3175476}} 
+\index{RunGuard@{RunGuard}!````~RunGuard@{$\sim$RunGuard}}
+\index{````~RunGuard@{$\sim$RunGuard}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{$\sim$RunGuard()}{~RunGuard()}}
+{\footnotesize\ttfamily Run\+Guard\+::$\sim$\+Run\+Guard (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_run_guard_ad8f3447b8b430177f3f8cdbc9952cc81}\label{class_run_guard_ad8f3447b8b430177f3f8cdbc9952cc81}} 
+\index{RunGuard@{RunGuard}!isAnotherRunning@{isAnotherRunning}}
+\index{isAnotherRunning@{isAnotherRunning}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{isAnotherRunning()}{isAnotherRunning()}}
+{\footnotesize\ttfamily bool Run\+Guard\+::is\+Another\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_run_guard_a1d887d643b700cd64127e5e07de5b97b}\label{class_run_guard_a1d887d643b700cd64127e5e07de5b97b}} 
+\index{RunGuard@{RunGuard}!release@{release}}
+\index{release@{release}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily void Run\+Guard\+::release (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_run_guard_a6eaac5e7b6657f7bd9a0d7966c6d0498}\label{class_run_guard_a6eaac5e7b6657f7bd9a0d7966c6d0498}} 
+\index{RunGuard@{RunGuard}!tryToRun@{tryToRun}}
+\index{tryToRun@{tryToRun}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{tryToRun()}{tryToRun()}}
+{\footnotesize\ttfamily bool Run\+Guard\+::try\+To\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}\label{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}} 
+\index{RunGuard@{RunGuard}!key@{key}}
+\index{key@{key}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{key}{key}}
+{\footnotesize\ttfamily const QString Run\+Guard\+::key\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_run_guard_aebaeac549c5889200b117b784c2ed4e7}\label{class_run_guard_aebaeac549c5889200b117b784c2ed4e7}} 
+\index{RunGuard@{RunGuard}!memLock@{memLock}}
+\index{memLock@{memLock}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{memLock}{memLock}}
+{\footnotesize\ttfamily QSystem\+Semaphore Run\+Guard\+::mem\+Lock\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_run_guard_a5f1d701a6e008382bf64ca46cf5bf61e}\label{class_run_guard_a5f1d701a6e008382bf64ca46cf5bf61e}} 
+\index{RunGuard@{RunGuard}!memLockKey@{memLockKey}}
+\index{memLockKey@{memLockKey}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{memLockKey}{memLockKey}}
+{\footnotesize\ttfamily const QString Run\+Guard\+::mem\+Lock\+Key\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_run_guard_a23e3c4c19f31070f9697954213a4ac68}\label{class_run_guard_a23e3c4c19f31070f9697954213a4ac68}} 
+\index{RunGuard@{RunGuard}!sharedMem@{sharedMem}}
+\index{sharedMem@{sharedMem}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{sharedMem}{sharedMem}}
+{\footnotesize\ttfamily QShared\+Memory Run\+Guard\+::shared\+Mem\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_run_guard_a9221885f256d04e96b17f70044ae784c}\label{class_run_guard_a9221885f256d04e96b17f70044ae784c}} 
+\index{RunGuard@{RunGuard}!sharedmemKey@{sharedmemKey}}
+\index{sharedmemKey@{sharedmemKey}!RunGuard@{RunGuard}}
+\doxysubsubsection{\texorpdfstring{sharedmemKey}{sharedmemKey}}
+{\footnotesize\ttfamily const QString Run\+Guard\+::sharedmem\+Key\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+rungaurd/\mbox{\hyperlink{_run_guard_8h}{Run\+Guard.\+h}}\item 
+rungaurd/\mbox{\hyperlink{_run_guard_8cpp}{Run\+Guard.\+cpp}}\end{DoxyCompactItemize}

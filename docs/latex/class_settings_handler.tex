@@ -1,0 +1,162 @@
+\hypertarget{class_settings_handler}{}\doxysection{Settings\+Handler Class Reference}
+\label{class_settings_handler}\index{SettingsHandler@{SettingsHandler}}
+
+
+{\ttfamily \#include $<$settingshandler.\+h$>$}
+
+Inheritance diagram for Settings\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_settings_handler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_settings_handler_a7bbf310835b25d9c1f8a2aef30790537}{Settings\+Handler}} ()
+\item 
+virtual void \mbox{\hyperlink{class_settings_handler_ad0f419df1aa55c2d9ef86e5bfb344611}{store\+Value}} (QString group, QString key, QVariant value)
+\item 
+virtual QVariant $\ast$ \mbox{\hyperlink{class_settings_handler_a937357da35615c84f8280fdd141938b7}{retrieve\+Setting}} (const QString \&group, const QString \&key)
+\item 
+QString\+List $\ast$ \mbox{\hyperlink{class_settings_handler_a5dfc9aae8f47c493fa729522a45acf3b}{retrieve\+Keys}} (QString group)
+\item 
+void \mbox{\hyperlink{class_settings_handler_a224d751440d13e41f7680285e22723ca}{clear\+Keys}} (QString group)
+\item 
+void \mbox{\hyperlink{class_settings_handler_a1ad6c87a150769bbdbcf168c4d05f576}{remove\+Setting}} (QString group, QString key)
+\item 
+QString \mbox{\hyperlink{class_settings_handler_aa4633e58ad90d1044fd0e9eef7102681}{get\+Path}} ()
+\item 
+void \mbox{\hyperlink{class_settings_handler_a131c363983b46e47daf1d75d8ac00f12}{store\+Sub\+Group}} (QString group, QString sub\+Group, QString key, QVariant value)
+\item 
+QString\+List $\ast$ \mbox{\hyperlink{class_settings_handler_a8ac8f898959718e868ec72bde0f843da}{retrieve\+Sub\+Keys}} (QString group, QString sub\+Group)
+\item 
+QVariant $\ast$ \mbox{\hyperlink{class_settings_handler_a1518b5fcf151e30029ec4a63d8d7283e}{retrieve\+Sub\+Setting}} (QString group, QString sub\+Group, QString key)
+\item 
+void \mbox{\hyperlink{class_settings_handler_a5c8f34c9b10f326e1c14cc64fc401772}{check\+Event\+File\+Present}} ()
+\item 
+void \mbox{\hyperlink{class_settings_handler_a350485d704695738ba7a5ef7f0caf14d}{migrate}} ()
+\begin{DoxyCompactList}\small\item\em Migrates the settings to the latest version When we make changes to the connector there is a chance that the settings have to be altered as well. In order to reduce the risk of breaking the settings we migrate the settings to the latest version. This function will migrate the settings to the latest version. It will do this by checking the version of the settings and then running the migrations that are required to get to the latest version. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_settings_handler_a076d098164e63d2b4e0106e0c01525f5}{path}}
+\item 
+QSettings $\ast$ \mbox{\hyperlink{class_settings_handler_a503a2b268f77cb69184c9c774bc6a3eb}{settings}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_settings_handler_a7bbf310835b25d9c1f8a2aef30790537}\label{class_settings_handler_a7bbf310835b25d9c1f8a2aef30790537}} 
+\index{SettingsHandler@{SettingsHandler}!SettingsHandler@{SettingsHandler}}
+\index{SettingsHandler@{SettingsHandler}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{SettingsHandler()}{SettingsHandler()}}
+{\footnotesize\ttfamily Settings\+Handler\+::\+Settings\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_settings_handler_a5c8f34c9b10f326e1c14cc64fc401772}\label{class_settings_handler_a5c8f34c9b10f326e1c14cc64fc401772}} 
+\index{SettingsHandler@{SettingsHandler}!checkEventFilePresent@{checkEventFilePresent}}
+\index{checkEventFilePresent@{checkEventFilePresent}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{checkEventFilePresent()}{checkEventFilePresent()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::check\+Event\+File\+Present (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_a224d751440d13e41f7680285e22723ca}\label{class_settings_handler_a224d751440d13e41f7680285e22723ca}} 
+\index{SettingsHandler@{SettingsHandler}!clearKeys@{clearKeys}}
+\index{clearKeys@{clearKeys}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{clearKeys()}{clearKeys()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::clear\+Keys (\begin{DoxyParamCaption}\item[{QString}]{group }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_aa4633e58ad90d1044fd0e9eef7102681}\label{class_settings_handler_aa4633e58ad90d1044fd0e9eef7102681}} 
+\index{SettingsHandler@{SettingsHandler}!getPath@{getPath}}
+\index{getPath@{getPath}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{getPath()}{getPath()}}
+{\footnotesize\ttfamily QString Settings\+Handler\+::get\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_settings_handler_a350485d704695738ba7a5ef7f0caf14d}\label{class_settings_handler_a350485d704695738ba7a5ef7f0caf14d}} 
+\index{SettingsHandler@{SettingsHandler}!migrate@{migrate}}
+\index{migrate@{migrate}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{migrate()}{migrate()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::migrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Migrates the settings to the latest version When we make changes to the connector there is a chance that the settings have to be altered as well. In order to reduce the risk of breaking the settings we migrate the settings to the latest version. This function will migrate the settings to the latest version. It will do this by checking the version of the settings and then running the migrations that are required to get to the latest version. 
+
+The ID of the migration is the creation date of the migration( in the format YYYYMMDDVV where YYYY is the year, MM is the month, DD is the day and VV is the version \mbox{\Hypertarget{class_settings_handler_a1ad6c87a150769bbdbcf168c4d05f576}\label{class_settings_handler_a1ad6c87a150769bbdbcf168c4d05f576}} 
+\index{SettingsHandler@{SettingsHandler}!removeSetting@{removeSetting}}
+\index{removeSetting@{removeSetting}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{removeSetting()}{removeSetting()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::remove\+Setting (\begin{DoxyParamCaption}\item[{QString}]{group,  }\item[{QString}]{key }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_a5dfc9aae8f47c493fa729522a45acf3b}\label{class_settings_handler_a5dfc9aae8f47c493fa729522a45acf3b}} 
+\index{SettingsHandler@{SettingsHandler}!retrieveKeys@{retrieveKeys}}
+\index{retrieveKeys@{retrieveKeys}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{retrieveKeys()}{retrieveKeys()}}
+{\footnotesize\ttfamily QString\+List $\ast$ Settings\+Handler\+::retrieve\+Keys (\begin{DoxyParamCaption}\item[{QString}]{group }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_a937357da35615c84f8280fdd141938b7}\label{class_settings_handler_a937357da35615c84f8280fdd141938b7}} 
+\index{SettingsHandler@{SettingsHandler}!retrieveSetting@{retrieveSetting}}
+\index{retrieveSetting@{retrieveSetting}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{retrieveSetting()}{retrieveSetting()}}
+{\footnotesize\ttfamily QVariant $\ast$ Settings\+Handler\+::retrieve\+Setting (\begin{DoxyParamCaption}\item[{const QString \&}]{group,  }\item[{const QString \&}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+\mbox{\Hypertarget{class_settings_handler_a8ac8f898959718e868ec72bde0f843da}\label{class_settings_handler_a8ac8f898959718e868ec72bde0f843da}} 
+\index{SettingsHandler@{SettingsHandler}!retrieveSubKeys@{retrieveSubKeys}}
+\index{retrieveSubKeys@{retrieveSubKeys}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{retrieveSubKeys()}{retrieveSubKeys()}}
+{\footnotesize\ttfamily QString\+List $\ast$ Settings\+Handler\+::retrieve\+Sub\+Keys (\begin{DoxyParamCaption}\item[{QString}]{group,  }\item[{QString}]{sub\+Group }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_a1518b5fcf151e30029ec4a63d8d7283e}\label{class_settings_handler_a1518b5fcf151e30029ec4a63d8d7283e}} 
+\index{SettingsHandler@{SettingsHandler}!retrieveSubSetting@{retrieveSubSetting}}
+\index{retrieveSubSetting@{retrieveSubSetting}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{retrieveSubSetting()}{retrieveSubSetting()}}
+{\footnotesize\ttfamily QVariant $\ast$ Settings\+Handler\+::retrieve\+Sub\+Setting (\begin{DoxyParamCaption}\item[{QString}]{group,  }\item[{QString}]{sub\+Group,  }\item[{QString}]{key }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_a131c363983b46e47daf1d75d8ac00f12}\label{class_settings_handler_a131c363983b46e47daf1d75d8ac00f12}} 
+\index{SettingsHandler@{SettingsHandler}!storeSubGroup@{storeSubGroup}}
+\index{storeSubGroup@{storeSubGroup}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{storeSubGroup()}{storeSubGroup()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::store\+Sub\+Group (\begin{DoxyParamCaption}\item[{QString}]{group,  }\item[{QString}]{sub\+Group,  }\item[{QString}]{key,  }\item[{QVariant}]{value }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_settings_handler_ad0f419df1aa55c2d9ef86e5bfb344611}\label{class_settings_handler_ad0f419df1aa55c2d9ef86e5bfb344611}} 
+\index{SettingsHandler@{SettingsHandler}!storeValue@{storeValue}}
+\index{storeValue@{storeValue}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{storeValue()}{storeValue()}}
+{\footnotesize\ttfamily void Settings\+Handler\+::store\+Value (\begin{DoxyParamCaption}\item[{QString}]{group,  }\item[{QString}]{key,  }\item[{QVariant}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_settings_handler_a076d098164e63d2b4e0106e0c01525f5}\label{class_settings_handler_a076d098164e63d2b4e0106e0c01525f5}} 
+\index{SettingsHandler@{SettingsHandler}!path@{path}}
+\index{path@{path}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily QString Settings\+Handler\+::path\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_settings_handler_a503a2b268f77cb69184c9c774bc6a3eb}\label{class_settings_handler_a503a2b268f77cb69184c9c774bc6a3eb}} 
+\index{SettingsHandler@{SettingsHandler}!settings@{settings}}
+\index{settings@{settings}!SettingsHandler@{SettingsHandler}}
+\doxysubsubsection{\texorpdfstring{settings}{settings}}
+{\footnotesize\ttfamily QSettings$\ast$ Settings\+Handler\+::settings\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            \textcolor{keyword}{new} QSettings(QSettings::IniFormat, QSettings::UserScope,}
+\DoxyCodeLine{                          \textcolor{stringliteral}{"{}Bits and Droids"{}}, \textcolor{stringliteral}{"{}settings"{}})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+settings/\mbox{\hyperlink{settingshandler_8h}{settingshandler.\+h}}\item 
+settings/\mbox{\hyperlink{settingshandler_8cpp}{settingshandler.\+cpp}}\end{DoxyCompactItemize}

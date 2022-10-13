@@ -1,0 +1,31 @@
+\hypertarget{_engine_8h_source}{}\doxysection{Engine.\+h}
+\label{_engine_8h_source}\index{models/aircraft/Engine.h@{models/aircraft/Engine.h}}
+\mbox{\hyperlink{_engine_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef ENGINE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define ENGINE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_axis_8h}{Axis.h}}"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_engine}{Engine}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_axis}{Axis}}\{}
+\DoxyCodeLine{7  \textcolor{keyword}{public}:}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10   \mbox{\hyperlink{class_engine_a8c98683b0a3aa28d8ab72a8bcd0d52f2}{Engine}}();}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12     \mbox{\hyperlink{class_engine_a8c98683b0a3aa28d8ab72a8bcd0d52f2}{Engine}}(\textcolor{keywordtype}{float} minRange, \textcolor{keywordtype}{float} \mbox{\hyperlink{class_engine_ac79705bbe5b3a4703c3e1cd38af4c5e2}{idleIndex}}, \textcolor{keywordtype}{float} maxRange, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}});}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \mbox{\hyperlink{class_engine_a8c98683b0a3aa28d8ab72a8bcd0d52f2}{Engine}}(\textcolor{keywordtype}{float} minRange, \textcolor{keywordtype}{float} \mbox{\hyperlink{class_engine_ac79705bbe5b3a4703c3e1cd38af4c5e2}{idleIndex}}, \textcolor{keywordtype}{float} maxRange, \mbox{\hyperlink{_input_type_enum_8h_a4f6b2847d205da9a2f7eb0f58f9db037}{InputTypeEnum}} \mbox{\hyperlink{class_axis_a48087fb89cc85cdd805377874b731db5}{type}}, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}});}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_engine_a816ec0614557fd28c1d03c112fea9f88}{getIdleIndex}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_engine_ac79705bbe5b3a4703c3e1cd38af4c5e2}{idleIndex}}; \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19  \textcolor{keyword}{private}:}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_engine_ac79705bbe5b3a4703c3e1cd38af4c5e2}{idleIndex}};}
+\DoxyCodeLine{22   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_engine_a572ae5300a61181313e929b65a23f9cc}{engNmbr}};}
+\DoxyCodeLine{23 \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// ENGINE\_H}}
+
+\end{DoxyCode}

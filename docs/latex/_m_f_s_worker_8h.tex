@@ -1,0 +1,43 @@
+\hypertarget{_m_f_s_worker_8h}{}\doxysection{dashboard/workers/\+MFSWorker.h File Reference}
+\label{_m_f_s_worker_8h}\index{dashboard/workers/MFSWorker.h@{dashboard/workers/MFSWorker.h}}
+{\ttfamily \#include \char`\"{}workers/\+Input\+Mapper.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}handlers/\+Input\+Switch\+Handler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}handlers/outputhandler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}outputmenu/outputmapper.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$qsettings.\+h$>$}\newline
+{\ttfamily \#include $<$qstandardpaths.\+h$>$}\newline
+{\ttfamily \#include $<$qthread.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}settings/settingshandler.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$tchar.\+h$>$}\newline
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$QMutex$>$}\newline
+{\ttfamily \#include $<$QObject$>$}\newline
+{\ttfamily \#include $<$QWait\+Condition$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$future$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include \char`\"{}models/\+Sim\+Connect.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}strsafe.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}enums/\+Log\+Level\+Enum.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/\+Output\+Converters.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}dashboard/models/\+Com\+Bundle.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} is a class that handles the connection to Microsoft Flight Simulator This class handles the connection to Microsoft Flight Simulator and the data that is sent to and from the simulator. This class inherits from QThread and is run in a separate thread from the main thread. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef QList$<$ QString $>$ \mbox{\hyperlink{_m_f_s_worker_8h_a4b92e06d18ab76e70951a28260a7cd54}{Coms\+List}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{_m_f_s_worker_8h_a4b92e06d18ab76e70951a28260a7cd54}\label{_m_f_s_worker_8h_a4b92e06d18ab76e70951a28260a7cd54}} 
+\index{MFSWorker.h@{MFSWorker.h}!ComsList@{ComsList}}
+\index{ComsList@{ComsList}!MFSWorker.h@{MFSWorker.h}}
+\doxysubsubsection{\texorpdfstring{ComsList}{ComsList}}
+{\footnotesize\ttfamily typedef QList$<$QString$>$ \mbox{\hyperlink{_m_f_s_worker_8h_a4b92e06d18ab76e70951a28260a7cd54}{Coms\+List}}}
+

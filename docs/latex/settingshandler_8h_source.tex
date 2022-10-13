@@ -1,0 +1,51 @@
+\hypertarget{settingshandler_8h_source}{}\doxysection{settingshandler.\+h}
+\label{settingshandler_8h_source}\index{settings/settingshandler.h@{settings/settingshandler.h}}
+\mbox{\hyperlink{settingshandler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef SETTINGSHANDLER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define SETTINGSHANDLER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QSettings>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \{}
+\DoxyCodeLine{10 \textcolor{keyword}{public}:}
+\DoxyCodeLine{11     \mbox{\hyperlink{class_settings_handler_a7bbf310835b25d9c1f8a2aef30790537}{SettingsHandler}}();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_ad0f419df1aa55c2d9ef86e5bfb344611}{storeValue}}(QString group, QString key, QVariant value);}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{virtual} QVariant *\mbox{\hyperlink{class_settings_handler_a937357da35615c84f8280fdd141938b7}{retrieveSetting}}(\textcolor{keyword}{const} QString\& group, \textcolor{keyword}{const} QString\& key);}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     QStringList *\mbox{\hyperlink{class_settings_handler_a5dfc9aae8f47c493fa729522a45acf3b}{retrieveKeys}}(QString group);}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_a224d751440d13e41f7680285e22723ca}{clearKeys}}(QString group);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_a1ad6c87a150769bbdbcf168c4d05f576}{removeSetting}}(QString group, QString key);}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     QString \mbox{\hyperlink{class_settings_handler_aa4633e58ad90d1044fd0e9eef7102681}{getPath}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_settings_handler_a076d098164e63d2b4e0106e0c01525f5}{path}}; \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_a131c363983b46e47daf1d75d8ac00f12}{storeSubGroup}}(QString group, QString subGroup, QString key, QVariant value);}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     QStringList *\mbox{\hyperlink{class_settings_handler_a8ac8f898959718e868ec72bde0f843da}{retrieveSubKeys}}(QString group, QString subGroup);}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     QVariant *\mbox{\hyperlink{class_settings_handler_a1518b5fcf151e30029ec4a63d8d7283e}{retrieveSubSetting}}(QString group, QString subGroup, QString key);}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_a5c8f34c9b10f326e1c14cc64fc401772}{checkEventFilePresent}}();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_settings_handler_a350485d704695738ba7a5ef7f0caf14d}{migrate}}();}
+\DoxyCodeLine{34 \textcolor{keyword}{private}:}
+\DoxyCodeLine{35     QString \mbox{\hyperlink{class_settings_handler_a076d098164e63d2b4e0106e0c01525f5}{path}} =}
+\DoxyCodeLine{36             QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);}
+\DoxyCodeLine{37     QSettings *\mbox{\hyperlink{class_settings_handler_a503a2b268f77cb69184c9c774bc6a3eb}{settings}} =}
+\DoxyCodeLine{38             \textcolor{keyword}{new} QSettings(QSettings::IniFormat, QSettings::UserScope,}
+\DoxyCodeLine{39                           \textcolor{stringliteral}{"{}Bits and Droids"{}}, \textcolor{stringliteral}{"{}settings"{}});}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// SETTINGSHANDLER\_H}}
+
+\end{DoxyCode}

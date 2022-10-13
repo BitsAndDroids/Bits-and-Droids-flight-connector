@@ -1,0 +1,68 @@
+\hypertarget{_axis_8h_source}{}\doxysection{Axis.\+h}
+\label{_axis_8h_source}\index{models/aircraft/Axis.h@{models/aircraft/Axis.h}}
+\mbox{\hyperlink{_axis_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 07-\/Jun-\/22.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_AXIS\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_AXIS\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{inputenum_8h}{enums/inputenum.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_input_type_enum_8h}{enums/InputTypeEnum.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_axis}{Axis}} \{}
+\DoxyCodeLine{14 \textcolor{keyword}{private}:}
+\DoxyCodeLine{15     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_aec0c3f68204e0ad512aa705a28994d6d}{currentValue}} = 0;}
+\DoxyCodeLine{16     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a96d3ca74ba48b6dfdf9ea070bc39e51e}{oldValue}} = 0;}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}};}
+\DoxyCodeLine{18     \mbox{\hyperlink{_input_type_enum_8h_a4f6b2847d205da9a2f7eb0f58f9db037}{InputTypeEnum}} \mbox{\hyperlink{class_axis_a48087fb89cc85cdd805377874b731db5}{type}} = \mbox{\hyperlink{_axis_type_enum_8h_a2ab70345acb78f2e91cb32d45ed8b603a1ad785f7d0b0b3a5a52cdd4385785a6b}{AXIS}};}
+\DoxyCodeLine{19     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a5df4e71b2321e0f46952114aa62d49e4}{mappedValue}} = 0;}
+\DoxyCodeLine{20     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a3d46c7710362def5fcab7e30aa954685}{oldMappedValue}} = 0;}
+\DoxyCodeLine{21     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a0c0bf9353edc4ec89ce20404c5c00d73}{min}} = 0;}
+\DoxyCodeLine{22     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a65e79184d8d981017be66dd73d33d86a}{max}} = 0;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{public}:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a126727a2f64f405c092759d0237f9b49}{getMappedValue}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a41ea344f9f8fd53274a059c7885b1bd3}{setMappedValue}}(\textcolor{keywordtype}{int} mappedValueToSet);}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a4967a1487bac4371e0d9428497bf331b}{getOldMappedValue}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a6bec47c7449a3d018131771f937f1b65}{setOldMappedValue}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a3d46c7710362def5fcab7e30aa954685}{oldMappedValue}});}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \mbox{\hyperlink{class_axis_a6c75518dd377795286113256c19e1ebd}{Axis}}();}
+\DoxyCodeLine{34     \mbox{\hyperlink{class_axis_a6c75518dd377795286113256c19e1ebd}{Axis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}});}
+\DoxyCodeLine{35     \mbox{\hyperlink{class_axis_a6c75518dd377795286113256c19e1ebd}{Axis}}(\textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a0c0bf9353edc4ec89ce20404c5c00d73}{min}}, \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a65e79184d8d981017be66dd73d33d86a}{max}}, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}});}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_axis_a6c75518dd377795286113256c19e1ebd}{Axis}}(\textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a0c0bf9353edc4ec89ce20404c5c00d73}{min}}, \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a65e79184d8d981017be66dd73d33d86a}{max}}, \mbox{\hyperlink{_input_type_enum_8h_a4f6b2847d205da9a2f7eb0f58f9db037}{InputTypeEnum}} \mbox{\hyperlink{class_axis_a48087fb89cc85cdd805377874b731db5}{type}}, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_ada9aeb4cf7c06119c42931e933abf6b3}{event}});}
+\DoxyCodeLine{37     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a065ab5ca94a55b6ee7a0ce1a8a7cc270}{getCurrentValue}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a8bca2b489464e2696be773312060d2b1}{setCurrentValue}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_aec0c3f68204e0ad512aa705a28994d6d}{currentValue}});}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a9b1e971154ce02817cf4de82ff6ff68e}{getOldValue}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a5a987e6b59fd0dd4439a6a7ad170c13a}{setOldValue}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_axis_a96d3ca74ba48b6dfdf9ea070bc39e51e}{oldValue}});}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a9801f40c4cd46e213089c2454aa52f79}{getMin}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a021eac0d8f4dc48facb639cc97ab1f75}{setMin}}(\textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a0c0bf9353edc4ec89ce20404c5c00d73}{min}});}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a8def47d63a1d59c3a30862c6c2b80503}{setMax}}(\textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a65e79184d8d981017be66dd73d33d86a}{max}});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_axis_a052e949576d75adbd9042cb2de0e69b6}{setEvent}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}});}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_axis_a259d10199823e01e870e739c0d11203e}{getMax}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{_input_type_enum_8h_a4f6b2847d205da9a2f7eb0f58f9db037}{InputTypeEnum}} \mbox{\hyperlink{class_axis_a8eb8e473f27152c36e49845f196fc024}{getType}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140}{InputEnum::DATA\_DEFINE\_ID\_INPUT}} \mbox{\hyperlink{class_axis_a4424388e737a0aec86b9c45833f60fcd}{getEvent}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_AXIS\_H}}
+
+\end{DoxyCode}

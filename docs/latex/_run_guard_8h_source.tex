@@ -1,0 +1,42 @@
+\hypertarget{_run_guard_8h_source}{}\doxysection{Run\+Guard.\+h}
+\label{_run_guard_8h_source}\index{rungaurd/RunGuard.h@{rungaurd/RunGuard.h}}
+\mbox{\hyperlink{_run_guard_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Dave Riedel on 07-\/May-\/22.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSGUI\_RUNGUARD\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSGUI\_RUNGUARD\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QSharedMemory>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QSystemSemaphore>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_run_guard}{RunGuard}}}
+\DoxyCodeLine{14 \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_run_guard}{RunGuard}}( \textcolor{keyword}{const} QString\& \mbox{\hyperlink{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}{key}} );}
+\DoxyCodeLine{18     \mbox{\hyperlink{class_run_guard_a09da3dd86d203906fd9e0021b3175476}{\string~RunGuard}}();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_run_guard_ad8f3447b8b430177f3f8cdbc9952cc81}{isAnotherRunning}}();}
+\DoxyCodeLine{21     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_run_guard_a6eaac5e7b6657f7bd9a0d7966c6d0498}{tryToRun}}();}
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_run_guard_a1d887d643b700cd64127e5e07de5b97b}{release}}();}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{private}:}
+\DoxyCodeLine{25     \textcolor{keyword}{const} QString \mbox{\hyperlink{class_run_guard_a9ab63cbe5803c1cced62f92573ff2fca}{key}};}
+\DoxyCodeLine{26     \textcolor{keyword}{const} QString \mbox{\hyperlink{class_run_guard_a5f1d701a6e008382bf64ca46cf5bf61e}{memLockKey}};}
+\DoxyCodeLine{27     \textcolor{keyword}{const} QString \mbox{\hyperlink{class_run_guard_a9221885f256d04e96b17f70044ae784c}{sharedmemKey}};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     QSharedMemory \mbox{\hyperlink{class_run_guard_a23e3c4c19f31070f9697954213a4ac68}{sharedMem}};}
+\DoxyCodeLine{30     QSystemSemaphore \mbox{\hyperlink{class_run_guard_aebaeac549c5889200b117b784c2ed4e7}{memLock}};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     Q\_DISABLE\_COPY( \mbox{\hyperlink{class_run_guard}{RunGuard}} )}
+\DoxyCodeLine{33 \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSGUI\_RUNGUARD\_H}}
+
+\end{DoxyCode}

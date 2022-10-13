@@ -1,0 +1,303 @@
+\hypertarget{class_com_port_widget_controller}{}\doxysection{Com\+Port\+Widget\+Controller Class Reference}
+\label{class_com_port_widget_controller}\index{ComPortWidgetController@{ComPortWidgetController}}
+
+
+{\ttfamily \#include $<$Com\+Port\+Widget\+Controller.\+h$>$}
+
+Inheritance diagram for Com\+Port\+Widget\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_com_port_widget_controller}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a4f441f3671bc0578124400f8ae2f67e2}{start}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a8a2423ae395397c722c1f6ba00a1f953}{stop}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_ad34ad42263737fdbd8350628c3df496a}{add}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a7071c2c37d7df91dd928ae18fdc6307f}{refresh}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a19d4009cbb222afd9251b585777c55f8}{remove\+Com\+Port\+Row}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_ad9988dffbb0e571dd992d764699dc492}{board\+Connection\+Made}} (int state)
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_ab2252ca75ae62fcac365557eb21cac46}{game\+Connection\+Made}} (int state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_com_port_widget_controller_aa1c0088b2294034cd390e24f3d7702c4}{Com\+Port\+Widget\+Controller}} (QWidget $\ast$\mbox{\hyperlink{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}{parent}}, \mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$serviceworker)
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a11122fdb896433b7d22fa19ffcae8d10}{init\+Com\+Rows}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876}{warnings}} \{ \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a7277cfea6960c5ff08155786f1ddbcff}{NOSET}}
+, \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a46ad16ff28d46f5a6efb06564d7ea08a}{NOCOMPORT}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a3a1698630236291e005e782279871af1}{load\+Com\+Port\+Data}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a0ce358aa8c78de90664f742ec95250ca}{toggle\+Start\+Stop\+Button\+State}} ()
+\item 
+QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ \mbox{\hyperlink{class_com_port_widget_controller_abcedd230833c0904027d6910ba58a72b}{get\+Checkboxes\+By\+Pattern}} (const QRegular\+Expression \&pattern)
+\item 
+QLabel $\ast$ \mbox{\hyperlink{class_com_port_widget_controller_ada1b87a27e7e635fdadb6890feef1be5}{return\+Warning\+String}} (int warning\+Type)
+\item 
+int \mbox{\hyperlink{class_com_port_widget_controller_acd9166dcc344cd00cdecaeb81b226754}{get\+Combox\+Index}} (\mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$combo\+Box, const QString \&value)
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a77c70ed9c00e71f5ad2a91d9c7f2bf92}{restore\+Stored\+Values\+Combo\+Boxes}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a7e41010a4d7335a00864560da211572c}{refresh\+Coms}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_a9905634faaa3d99482d1124d304640f1}{add\+Com\+Row}} ()
+\item 
+QString \mbox{\hyperlink{class_com_port_widget_controller_a203049f3044db3445ae7597fa1f6f6a8}{convert\+Com\+Port}} (const QString \&com\+Text)
+\item 
+void \mbox{\hyperlink{class_com_port_widget_controller_af7ea6cd735df57c727297f90f9101bf7}{save\+Auto\+Run\+States}} ()
+\item 
+bool \mbox{\hyperlink{class_com_port_widget_controller_ac65a240f50cccaabfca3abda456a0bf0}{check\+If\+Combo\+Is\+Empty}} (const QList$<$ \mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$ $>$ \&to\+Check)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_com_port_widget_controller_aab05b5bed3d9ec83d7b95954b2326ed8}{clear\+Children\+From\+Layout}} (QLayout $\ast$to\+Clear)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_com_port_widget_controller_a5009313a05faea956efd8516fe72df4c}{running}} = false
+\item 
+uint8\+\_\+t \mbox{\hyperlink{class_com_port_widget_controller_a292a1e06cd99299b0274e9de79e1fdee}{rows}} = 0
+\item 
+\mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$ \mbox{\hyperlink{class_com_port_widget_controller_a2e0ae2890b5184f17bb38309eed1f51b}{service\+Worker}}
+\item 
+\mbox{\hyperlink{class_com_port_widget_model}{Com\+Port\+Widget\+Model}} $\ast$ \mbox{\hyperlink{class_com_port_widget_controller_a534c08c430b8b0a5497fc959c5277346}{com\+Port\+Model}} = new \mbox{\hyperlink{class_com_port_widget_model}{Com\+Port\+Widget\+Model}}()
+\item 
+\mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} \mbox{\hyperlink{class_com_port_widget_controller_a71c8ada6a88187d547b23cb9934dd94d}{dual\+Worker}} = \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}}()
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}{parent}}
+\item 
+\mbox{\hyperlink{class_set_handler}{Set\+Handler}} \mbox{\hyperlink{class_com_port_widget_controller_acb859e7996262f6bdb31a2697e0f4c2b}{set\+Handler}} = \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_com_port_widget_controller_aa83dafbb0777f36c9e736134419a4494}{settings\+Handler}} = \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876}\label{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!warnings@{warnings}}
+\index{warnings@{warnings}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{warnings}{warnings}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876}{Com\+Port\+Widget\+Controller\+::warnings}}\hspace{0.3cm}{\ttfamily [private]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOSET@{NOSET}!ComPortWidgetController@{ComPortWidgetController}}\index{ComPortWidgetController@{ComPortWidgetController}!NOSET@{NOSET}}}\mbox{\Hypertarget{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a7277cfea6960c5ff08155786f1ddbcff}\label{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a7277cfea6960c5ff08155786f1ddbcff}} 
+NOSET&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NOCOMPORT@{NOCOMPORT}!ComPortWidgetController@{ComPortWidgetController}}\index{ComPortWidgetController@{ComPortWidgetController}!NOCOMPORT@{NOCOMPORT}}}\mbox{\Hypertarget{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a46ad16ff28d46f5a6efb06564d7ea08a}\label{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a46ad16ff28d46f5a6efb06564d7ea08a}} 
+NOCOMPORT&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_com_port_widget_controller_aa1c0088b2294034cd390e24f3d7702c4}\label{class_com_port_widget_controller_aa1c0088b2294034cd390e24f3d7702c4}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!ComPortWidgetController@{ComPortWidgetController}}
+\index{ComPortWidgetController@{ComPortWidgetController}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{ComPortWidgetController()}{ComPortWidgetController()}}
+{\footnotesize\ttfamily Com\+Port\+Widget\+Controller\+::\+Com\+Port\+Widget\+Controller (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$}]{serviceworker }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_com_port_widget_controller_ad34ad42263737fdbd8350628c3df496a}\label{class_com_port_widget_controller_ad34ad42263737fdbd8350628c3df496a}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!add@{add}}
+\index{add@{add}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{add}{add}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::add (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a9905634faaa3d99482d1124d304640f1}\label{class_com_port_widget_controller_a9905634faaa3d99482d1124d304640f1}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!addComRow@{addComRow}}
+\index{addComRow@{addComRow}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{addComRow()}{addComRow()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::add\+Com\+Row (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_ad9988dffbb0e571dd992d764699dc492}\label{class_com_port_widget_controller_ad9988dffbb0e571dd992d764699dc492}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!boardConnectionMade@{boardConnectionMade}}
+\index{boardConnectionMade@{boardConnectionMade}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{boardConnectionMade}{boardConnectionMade}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::board\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_ac65a240f50cccaabfca3abda456a0bf0}\label{class_com_port_widget_controller_ac65a240f50cccaabfca3abda456a0bf0}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!checkIfComboIsEmpty@{checkIfComboIsEmpty}}
+\index{checkIfComboIsEmpty@{checkIfComboIsEmpty}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{checkIfComboIsEmpty()}{checkIfComboIsEmpty()}}
+{\footnotesize\ttfamily bool Com\+Port\+Widget\+Controller\+::check\+If\+Combo\+Is\+Empty (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$ $>$ \&}]{to\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_aab05b5bed3d9ec83d7b95954b2326ed8}\label{class_com_port_widget_controller_aab05b5bed3d9ec83d7b95954b2326ed8}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!clearChildrenFromLayout@{clearChildrenFromLayout}}
+\index{clearChildrenFromLayout@{clearChildrenFromLayout}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{clearChildrenFromLayout()}{clearChildrenFromLayout()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::clear\+Children\+From\+Layout (\begin{DoxyParamCaption}\item[{QLayout $\ast$}]{to\+Clear }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a203049f3044db3445ae7597fa1f6f6a8}\label{class_com_port_widget_controller_a203049f3044db3445ae7597fa1f6f6a8}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!convertComPort@{convertComPort}}
+\index{convertComPort@{convertComPort}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{convertComPort()}{convertComPort()}}
+{\footnotesize\ttfamily QString Com\+Port\+Widget\+Controller\+::convert\+Com\+Port (\begin{DoxyParamCaption}\item[{const QString \&}]{com\+Text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_ab2252ca75ae62fcac365557eb21cac46}\label{class_com_port_widget_controller_ab2252ca75ae62fcac365557eb21cac46}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!gameConnectionMade@{gameConnectionMade}}
+\index{gameConnectionMade@{gameConnectionMade}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{gameConnectionMade}{gameConnectionMade}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::game\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_abcedd230833c0904027d6910ba58a72b}\label{class_com_port_widget_controller_abcedd230833c0904027d6910ba58a72b}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!getCheckboxesByPattern@{getCheckboxesByPattern}}
+\index{getCheckboxesByPattern@{getCheckboxesByPattern}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{getCheckboxesByPattern()}{getCheckboxesByPattern()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ Com\+Port\+Widget\+Controller\+::get\+Checkboxes\+By\+Pattern (\begin{DoxyParamCaption}\item[{const QRegular\+Expression \&}]{pattern }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_acd9166dcc344cd00cdecaeb81b226754}\label{class_com_port_widget_controller_acd9166dcc344cd00cdecaeb81b226754}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!getComboxIndex@{getComboxIndex}}
+\index{getComboxIndex@{getComboxIndex}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{getComboxIndex()}{getComboxIndex()}}
+{\footnotesize\ttfamily int Com\+Port\+Widget\+Controller\+::get\+Combox\+Index (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$}]{combo\+Box,  }\item[{const QString \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a11122fdb896433b7d22fa19ffcae8d10}\label{class_com_port_widget_controller_a11122fdb896433b7d22fa19ffcae8d10}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!initComRows@{initComRows}}
+\index{initComRows@{initComRows}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{initComRows()}{initComRows()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::init\+Com\+Rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a3a1698630236291e005e782279871af1}\label{class_com_port_widget_controller_a3a1698630236291e005e782279871af1}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!loadComPortData@{loadComPortData}}
+\index{loadComPortData@{loadComPortData}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{loadComPortData()}{loadComPortData()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::load\+Com\+Port\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a7071c2c37d7df91dd928ae18fdc6307f}\label{class_com_port_widget_controller_a7071c2c37d7df91dd928ae18fdc6307f}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!refresh@{refresh}}
+\index{refresh@{refresh}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{refresh}{refresh}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a7e41010a4d7335a00864560da211572c}\label{class_com_port_widget_controller_a7e41010a4d7335a00864560da211572c}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!refreshComs@{refreshComs}}
+\index{refreshComs@{refreshComs}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{refreshComs()}{refreshComs()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::refresh\+Coms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a19d4009cbb222afd9251b585777c55f8}\label{class_com_port_widget_controller_a19d4009cbb222afd9251b585777c55f8}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!removeComPortRow@{removeComPortRow}}
+\index{removeComPortRow@{removeComPortRow}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{removeComPortRow}{removeComPortRow}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::remove\+Com\+Port\+Row (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a77c70ed9c00e71f5ad2a91d9c7f2bf92}\label{class_com_port_widget_controller_a77c70ed9c00e71f5ad2a91d9c7f2bf92}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!restoreStoredValuesComboBoxes@{restoreStoredValuesComboBoxes}}
+\index{restoreStoredValuesComboBoxes@{restoreStoredValuesComboBoxes}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{restoreStoredValuesComboBoxes()}{restoreStoredValuesComboBoxes()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::restore\+Stored\+Values\+Combo\+Boxes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_ada1b87a27e7e635fdadb6890feef1be5}\label{class_com_port_widget_controller_ada1b87a27e7e635fdadb6890feef1be5}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!returnWarningString@{returnWarningString}}
+\index{returnWarningString@{returnWarningString}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{returnWarningString()}{returnWarningString()}}
+{\footnotesize\ttfamily QLabel $\ast$ Com\+Port\+Widget\+Controller\+::return\+Warning\+String (\begin{DoxyParamCaption}\item[{int}]{warning\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_af7ea6cd735df57c727297f90f9101bf7}\label{class_com_port_widget_controller_af7ea6cd735df57c727297f90f9101bf7}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!saveAutoRunStates@{saveAutoRunStates}}
+\index{saveAutoRunStates@{saveAutoRunStates}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{saveAutoRunStates()}{saveAutoRunStates()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::save\+Auto\+Run\+States (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a4f441f3671bc0578124400f8ae2f67e2}\label{class_com_port_widget_controller_a4f441f3671bc0578124400f8ae2f67e2}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!start@{start}}
+\index{start@{start}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{start}{start}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a8a2423ae395397c722c1f6ba00a1f953}\label{class_com_port_widget_controller_a8a2423ae395397c722c1f6ba00a1f953}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!stop@{stop}}
+\index{stop@{stop}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{stop}{stop}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a0ce358aa8c78de90664f742ec95250ca}\label{class_com_port_widget_controller_a0ce358aa8c78de90664f742ec95250ca}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!toggleStartStopButtonState@{toggleStartStopButtonState}}
+\index{toggleStartStopButtonState@{toggleStartStopButtonState}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{toggleStartStopButtonState()}{toggleStartStopButtonState()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Controller\+::toggle\+Start\+Stop\+Button\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_com_port_widget_controller_a534c08c430b8b0a5497fc959c5277346}\label{class_com_port_widget_controller_a534c08c430b8b0a5497fc959c5277346}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!comPortModel@{comPortModel}}
+\index{comPortModel@{comPortModel}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{comPortModel}{comPortModel}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_com_port_widget_model}{Com\+Port\+Widget\+Model}}$\ast$ Com\+Port\+Widget\+Controller\+::com\+Port\+Model = new \mbox{\hyperlink{class_com_port_widget_model}{Com\+Port\+Widget\+Model}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a71c8ada6a88187d547b23cb9934dd94d}\label{class_com_port_widget_controller_a71c8ada6a88187d547b23cb9934dd94d}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!dualWorker@{dualWorker}}
+\index{dualWorker@{dualWorker}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{dualWorker}{dualWorker}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} Com\+Port\+Widget\+Controller\+::dual\+Worker = \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}\label{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!parent@{parent}}
+\index{parent@{parent}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily QWidget$\ast$ Com\+Port\+Widget\+Controller\+::parent\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a292a1e06cd99299b0274e9de79e1fdee}\label{class_com_port_widget_controller_a292a1e06cd99299b0274e9de79e1fdee}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!rows@{rows}}
+\index{rows@{rows}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{rows}{rows}}
+{\footnotesize\ttfamily uint8\+\_\+t Com\+Port\+Widget\+Controller\+::rows = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a5009313a05faea956efd8516fe72df4c}\label{class_com_port_widget_controller_a5009313a05faea956efd8516fe72df4c}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!running@{running}}
+\index{running@{running}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{running}{running}}
+{\footnotesize\ttfamily bool Com\+Port\+Widget\+Controller\+::running = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_a2e0ae2890b5184f17bb38309eed1f51b}\label{class_com_port_widget_controller_a2e0ae2890b5184f17bb38309eed1f51b}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!serviceWorker@{serviceWorker}}
+\index{serviceWorker@{serviceWorker}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{serviceWorker}{serviceWorker}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_service_worker}{Service\+Worker}}$\ast$ Com\+Port\+Widget\+Controller\+::service\+Worker\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_acb859e7996262f6bdb31a2697e0f4c2b}\label{class_com_port_widget_controller_acb859e7996262f6bdb31a2697e0f4c2b}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!setHandler@{setHandler}}
+\index{setHandler@{setHandler}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{setHandler}{setHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set_handler}{Set\+Handler}} Com\+Port\+Widget\+Controller\+::set\+Handler = \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_controller_aa83dafbb0777f36c9e736134419a4494}\label{class_com_port_widget_controller_aa83dafbb0777f36c9e736134419a4494}} 
+\index{ComPortWidgetController@{ComPortWidgetController}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!ComPortWidgetController@{ComPortWidgetController}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Com\+Port\+Widget\+Controller\+::settings\+Handler = \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/controller/\mbox{\hyperlink{_com_port_widget_controller_8h}{Com\+Port\+Widget\+Controller.\+h}}\item 
+dashboard/controller/\mbox{\hyperlink{_com_port_widget_controller_8cpp}{Com\+Port\+Widget\+Controller.\+cpp}}\end{DoxyCompactItemize}

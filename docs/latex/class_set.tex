@@ -1,0 +1,294 @@
+\hypertarget{class_set}{}\doxysection{Set Class Reference}
+\label{class_set}\index{Set@{Set}}
+
+
+{\ttfamily \#include $<$Set.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}{Set}} ()
+\item 
+\mbox{\hyperlink{class_set_a10615d6bd90d547ad1bd87d935ba6ff8}{Set}} (QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{set\+Name}})
+\item 
+QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{class_set_a9e1e8b1b291775d6b159daba76e4b3bb}{get\+Outputs}} ()
+\item 
+int \mbox{\hyperlink{class_set_a9f4cd74d3e077959c38046aa471bb2da}{get\+ID}} () const
+\item 
+QString \mbox{\hyperlink{class_set_a7834de990fdb4542c36c9b5660328e41}{get\+Set\+Name}} () const
+\item 
+void \mbox{\hyperlink{class_set_abaf138866336696bb5e9d646bb0f6d91}{set\+Outputs}} (QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ new\+Outputs)
+\item 
+void \mbox{\hyperlink{class_set_a3fefecaae364e771d4ca47d1935b82a2}{set\+Set\+Name}} (QString \mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}})
+\item 
+void \mbox{\hyperlink{class_set_aa5b275066db8471c449c0f71a103941e}{set\+Set\+Id}} (int \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}})
+\item 
+void \mbox{\hyperlink{class_set_a6f301c91a4deb2d9a1b805df7d569e67}{delete\+Set}} ()
+\item 
+void \mbox{\hyperlink{class_set_a0b6ca4dcbbfa9029bae9a34661e79706}{save\+Set}} ()
+\item 
+\mbox{\hyperlink{class_set_a286781db5adbc7ec36c6484dd74358a8}{Set}} (QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{set\+Name}}, int \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}})
+\item 
+\mbox{\hyperlink{class_set_a465e4b20c24bc6a48169bd15dc2560fd}{Set}} (QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{set\+Name}}, int \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}}, QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$)
+\item 
+void \mbox{\hyperlink{class_set_a6b3a28ec28da8906b375ed5cb2ae78e8}{add\+Output}} (\mbox{\hyperlink{class_output}{Output}} $\ast$output\+To\+Add)
+\item 
+void \mbox{\hyperlink{class_set_abe26e9f63fc0a3a1451a50dc377c67e7}{clear\+Outputs}} ()
+\item 
+void \mbox{\hyperlink{class_set_a9ab6cd1b5b351073617291a6a4da3d8e}{remove\+Output}} (int \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}})
+\item 
+\mbox{\hyperlink{class_set_a98eeb01d2bea0b8f597ed894e1235088}{Set}} (int index, bool new\+Set\+Received, QString name\+Received)
+\item 
+void \mbox{\hyperlink{class_set_a4f34104c445b6238bd632f5716cf239d}{set\+Amnt\+Sets}} (int new\+Amnt\+Sets)
+\item 
+void \mbox{\hyperlink{class_set_ad106e6cf2eb0124cdb41dfca2ac2cd19}{create\+Set}} ()
+\item 
+void \mbox{\hyperlink{class_set_ac60e62f65be4be9da7328ccf38b7f9fa}{update\+Set}} ()
+\item 
+void \mbox{\hyperlink{class_set_add95eb4cd77d7e1bae77589f07df2e74}{add\+Check\+Box}} (QString cb)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_a31dead428535cd12aac6c0e2f9173498}{from\+Json}} (QJson\+Document $\ast$doc\+To\+Convert)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{set\+Name}}
+\item 
+int \mbox{\hyperlink{class_set_a9c658a98f26aff7c0b1463da1af0ba45}{set\+Id}} = 0
+\item 
+QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ \mbox{\hyperlink{class_set_a4f29e51916be752429b38eb7666ee4b7}{outputs}} = QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$()
+\item 
+QString \mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}}
+\item 
+QString\+List \mbox{\hyperlink{class_set_ad83e6058d2eab1d3121a001a2490fb3d}{checkboxes}}
+\item 
+bool \mbox{\hyperlink{class_set_a5ffec6b71b7888712c58d19cf10528e4}{new\+Set}}
+\item 
+QString \mbox{\hyperlink{class_set_ada18d8a49763a183d6274fbe1d03748b}{path}}
+\item 
+QSettings $\ast$ \mbox{\hyperlink{class_set_a659aa13aa9f9d676708ee80aace5e6b0}{settings}}
+\item 
+int \mbox{\hyperlink{class_set_a5e96cb8dc1918b2d6e64cdb48ef5fc69}{amnt\+Sets}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}\label{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}} 
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Set\+::\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a10615d6bd90d547ad1bd87d935ba6ff8}\label{class_set_a10615d6bd90d547ad1bd87d935ba6ff8}} 
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Set\+::\+Set (\begin{DoxyParamCaption}\item[{QString}]{set\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_set_a286781db5adbc7ec36c6484dd74358a8}\label{class_set_a286781db5adbc7ec36c6484dd74358a8}} 
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Set\+::\+Set (\begin{DoxyParamCaption}\item[{QString}]{set\+Name,  }\item[{int}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a465e4b20c24bc6a48169bd15dc2560fd}\label{class_set_a465e4b20c24bc6a48169bd15dc2560fd}} 
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Set\+::\+Set (\begin{DoxyParamCaption}\item[{QString}]{set\+Name,  }\item[{int}]{id,  }\item[{QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$}]{outputs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a98eeb01d2bea0b8f597ed894e1235088}\label{class_set_a98eeb01d2bea0b8f597ed894e1235088}} 
+\index{Set@{Set}!Set@{Set}}
+\index{Set@{Set}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{Set()}{Set()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Set\+::\+Set (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{bool}]{new\+Set\+Received,  }\item[{QString}]{name\+Received }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_add95eb4cd77d7e1bae77589f07df2e74}\label{class_set_add95eb4cd77d7e1bae77589f07df2e74}} 
+\index{Set@{Set}!addCheckBox@{addCheckBox}}
+\index{addCheckBox@{addCheckBox}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{addCheckBox()}{addCheckBox()}}
+{\footnotesize\ttfamily void Set\+::add\+Check\+Box (\begin{DoxyParamCaption}\item[{QString}]{cb }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a6b3a28ec28da8906b375ed5cb2ae78e8}\label{class_set_a6b3a28ec28da8906b375ed5cb2ae78e8}} 
+\index{Set@{Set}!addOutput@{addOutput}}
+\index{addOutput@{addOutput}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{addOutput()}{addOutput()}}
+{\footnotesize\ttfamily void Set\+::add\+Output (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_output}{Output}} $\ast$}]{output\+To\+Add }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_abe26e9f63fc0a3a1451a50dc377c67e7}\label{class_set_abe26e9f63fc0a3a1451a50dc377c67e7}} 
+\index{Set@{Set}!clearOutputs@{clearOutputs}}
+\index{clearOutputs@{clearOutputs}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{clearOutputs()}{clearOutputs()}}
+{\footnotesize\ttfamily void Set\+::clear\+Outputs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_ad106e6cf2eb0124cdb41dfca2ac2cd19}\label{class_set_ad106e6cf2eb0124cdb41dfca2ac2cd19}} 
+\index{Set@{Set}!createSet@{createSet}}
+\index{createSet@{createSet}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{createSet()}{createSet()}}
+{\footnotesize\ttfamily void Set\+::create\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a6f301c91a4deb2d9a1b805df7d569e67}\label{class_set_a6f301c91a4deb2d9a1b805df7d569e67}} 
+\index{Set@{Set}!deleteSet@{deleteSet}}
+\index{deleteSet@{deleteSet}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{deleteSet()}{deleteSet()}}
+{\footnotesize\ttfamily void Set\+::delete\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a31dead428535cd12aac6c0e2f9173498}\label{class_set_a31dead428535cd12aac6c0e2f9173498}} 
+\index{Set@{Set}!fromJson@{fromJson}}
+\index{fromJson@{fromJson}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{fromJson()}{fromJson()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_set}{Set}} Set\+::from\+Json (\begin{DoxyParamCaption}\item[{QJson\+Document $\ast$}]{doc\+To\+Convert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_set_a9f4cd74d3e077959c38046aa471bb2da}\label{class_set_a9f4cd74d3e077959c38046aa471bb2da}} 
+\index{Set@{Set}!getID@{getID}}
+\index{getID@{getID}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{getID()}{getID()}}
+{\footnotesize\ttfamily int Set\+::get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_a9e1e8b1b291775d6b159daba76e4b3bb}\label{class_set_a9e1e8b1b291775d6b159daba76e4b3bb}} 
+\index{Set@{Set}!getOutputs@{getOutputs}}
+\index{getOutputs@{getOutputs}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{getOutputs()}{getOutputs()}}
+{\footnotesize\ttfamily QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$ Set\+::get\+Outputs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_a7834de990fdb4542c36c9b5660328e41}\label{class_set_a7834de990fdb4542c36c9b5660328e41}} 
+\index{Set@{Set}!getSetName@{getSetName}}
+\index{getSetName@{getSetName}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{getSetName()}{getSetName()}}
+{\footnotesize\ttfamily QString Set\+::get\+Set\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_a9ab6cd1b5b351073617291a6a4da3d8e}\label{class_set_a9ab6cd1b5b351073617291a6a4da3d8e}} 
+\index{Set@{Set}!removeOutput@{removeOutput}}
+\index{removeOutput@{removeOutput}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{removeOutput()}{removeOutput()}}
+{\footnotesize\ttfamily void Set\+::remove\+Output (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a0b6ca4dcbbfa9029bae9a34661e79706}\label{class_set_a0b6ca4dcbbfa9029bae9a34661e79706}} 
+\index{Set@{Set}!saveSet@{saveSet}}
+\index{saveSet@{saveSet}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{saveSet()}{saveSet()}}
+{\footnotesize\ttfamily void Set\+::save\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_a4f34104c445b6238bd632f5716cf239d}\label{class_set_a4f34104c445b6238bd632f5716cf239d}} 
+\index{Set@{Set}!setAmntSets@{setAmntSets}}
+\index{setAmntSets@{setAmntSets}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setAmntSets()}{setAmntSets()}}
+{\footnotesize\ttfamily void Set\+::set\+Amnt\+Sets (\begin{DoxyParamCaption}\item[{int}]{new\+Amnt\+Sets }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_abaf138866336696bb5e9d646bb0f6d91}\label{class_set_abaf138866336696bb5e9d646bb0f6d91}} 
+\index{Set@{Set}!setOutputs@{setOutputs}}
+\index{setOutputs@{setOutputs}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setOutputs()}{setOutputs()}}
+{\footnotesize\ttfamily void Set\+::set\+Outputs (\begin{DoxyParamCaption}\item[{QMap$<$ int, \mbox{\hyperlink{class_output}{Output}} $\ast$ $>$}]{new\+Outputs }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_aa5b275066db8471c449c0f71a103941e}\label{class_set_aa5b275066db8471c449c0f71a103941e}} 
+\index{Set@{Set}!setSetId@{setSetId}}
+\index{setSetId@{setSetId}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setSetId()}{setSetId()}}
+{\footnotesize\ttfamily void Set\+::set\+Set\+Id (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_a3fefecaae364e771d4ca47d1935b82a2}\label{class_set_a3fefecaae364e771d4ca47d1935b82a2}} 
+\index{Set@{Set}!setSetName@{setSetName}}
+\index{setSetName@{setSetName}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setSetName()}{setSetName()}}
+{\footnotesize\ttfamily void Set\+::set\+Set\+Name (\begin{DoxyParamCaption}\item[{QString}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_ac60e62f65be4be9da7328ccf38b7f9fa}\label{class_set_ac60e62f65be4be9da7328ccf38b7f9fa}} 
+\index{Set@{Set}!updateSet@{updateSet}}
+\index{updateSet@{updateSet}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{updateSet()}{updateSet()}}
+{\footnotesize\ttfamily void Set\+::update\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_set_a5e96cb8dc1918b2d6e64cdb48ef5fc69}\label{class_set_a5e96cb8dc1918b2d6e64cdb48ef5fc69}} 
+\index{Set@{Set}!amntSets@{amntSets}}
+\index{amntSets@{amntSets}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{amntSets}{amntSets}}
+{\footnotesize\ttfamily int Set\+::amnt\+Sets\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_ad83e6058d2eab1d3121a001a2490fb3d}\label{class_set_ad83e6058d2eab1d3121a001a2490fb3d}} 
+\index{Set@{Set}!checkboxes@{checkboxes}}
+\index{checkboxes@{checkboxes}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{checkboxes}{checkboxes}}
+{\footnotesize\ttfamily QString\+List Set\+::checkboxes\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}\label{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}} 
+\index{Set@{Set}!id@{id}}
+\index{id@{id}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily int Set\+::id}
+
+\mbox{\Hypertarget{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}\label{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}} 
+\index{Set@{Set}!name@{name}}
+\index{name@{name}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily QString Set\+::name\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_a5ffec6b71b7888712c58d19cf10528e4}\label{class_set_a5ffec6b71b7888712c58d19cf10528e4}} 
+\index{Set@{Set}!newSet@{newSet}}
+\index{newSet@{newSet}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{newSet}{newSet}}
+{\footnotesize\ttfamily bool Set\+::new\+Set\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_a4f29e51916be752429b38eb7666ee4b7}\label{class_set_a4f29e51916be752429b38eb7666ee4b7}} 
+\index{Set@{Set}!outputs@{outputs}}
+\index{outputs@{outputs}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{outputs}{outputs}}
+{\footnotesize\ttfamily QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$ Set\+::outputs = QMap$<$int, \mbox{\hyperlink{class_output}{Output}} $\ast$$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_ada18d8a49763a183d6274fbe1d03748b}\label{class_set_ada18d8a49763a183d6274fbe1d03748b}} 
+\index{Set@{Set}!path@{path}}
+\index{path@{path}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily QString Set\+::path\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{      QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_set_a9c658a98f26aff7c0b1463da1af0ba45}\label{class_set_a9c658a98f26aff7c0b1463da1af0ba45}} 
+\index{Set@{Set}!setId@{setId}}
+\index{setId@{setId}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setId}{setId}}
+{\footnotesize\ttfamily int Set\+::set\+Id = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_ac74225fbdb252b272ee97db661aad266}\label{class_set_ac74225fbdb252b272ee97db661aad266}} 
+\index{Set@{Set}!setName@{setName}}
+\index{setName@{setName}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{setName}{setName}}
+{\footnotesize\ttfamily QString Set\+::set\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_a659aa13aa9f9d676708ee80aace5e6b0}\label{class_set_a659aa13aa9f9d676708ee80aace5e6b0}} 
+\index{Set@{Set}!settings@{settings}}
+\index{settings@{settings}!Set@{Set}}
+\doxysubsubsection{\texorpdfstring{settings}{settings}}
+{\footnotesize\ttfamily QSettings$\ast$ Set\+::settings\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{      \textcolor{keyword}{new} QSettings(\mbox{\hyperlink{class_set_ada18d8a49763a183d6274fbe1d03748b}{path}} + \textcolor{stringliteral}{"{}/"{}} + \textcolor{stringliteral}{"{}settings.ini"{}}, QSettings::IniFormat)}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+models/commands/\mbox{\hyperlink{commands_2_set_8h}{Set.\+h}}\item 
+models/\mbox{\hyperlink{_set_8h}{set.\+h}}\item 
+models/commands/\mbox{\hyperlink{_set_8cpp}{Set.\+cpp}}\end{DoxyCompactItemize}
