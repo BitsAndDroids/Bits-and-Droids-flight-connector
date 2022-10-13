@@ -1,19 +1,8 @@
 /*!
     \class InputSwitchHandler
-    \brief The QVector3D class represents a vector or vertex in 3D space.
-    \since 4.6
-
-    Vectors are one of the main building blocks of 3D representation and
-    drawing.  They consist of three coordinates, traditionally called
-    x, y, and z.
-
-    The QVector3D class can also be used to represent vertices in 3D space.
-    We therefore do not need to provide a separate vertex class.
-
-    \note By design values in the QVector3D instance are stored as \c float.
-    This means that on platforms where the \c qreal arguments to QVector3D
-    functions are represented by \c double values, it is possible to
-    lose precision
+    \brief The InputSwitchHandler class is responsible for handling the input commands.
+    The input commands are sent from the MFSWorker class.
+    It uses the received prefix from a microncontroller over serial port to determine which input command to handle.
 */
 
 #include "InputSwitchHandler.h"
@@ -222,22 +211,21 @@ void mapValueToAxis(Axis *axis) {
                                                 (axis->getMax() - axis->getMin()))));
 }
 
-std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, int index) {
+std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::string string) {
     std::vector<int> parts;
-
+    std::string delimiter = " ";
     try {
-        token = strtok_s(receivedString[index], " ", &next_token);
-        cout << receivedString[index] << endl;
         counter = 0;
-        while (token != nullptr && counter < amountOfPartsNeeded + 1) {
-            if (token != nullptr) {
-                const auto incVal = strtod(token, nullptr);
-                if (counter != 0) {
-                    parts.push_back((int) incVal);
-                }
-                token = strtok_s(nullptr, " ", &next_token);
-                counter++;
+        size_t pos = 0;
+        std::string tokenFound;
+        while ((pos = string.find(delimiter)) != std::string::npos) {
+            tokenFound = string.substr(0, pos);
+            std::cout << tokenFound << std::endl;
+            if(counter != 0){
+                parts.push_back(std::stoi(tokenFound));
             }
+            string.erase(0, pos + delimiter.length());
+            counter++;
         }
     }
     catch (const std::exception &e) {
@@ -298,9 +286,9 @@ void InputSwitchHandler::setAxisValue(Axis *axis) {
 
 }
 
-void InputSwitchHandler::setEngineValues(int index) {
+void InputSwitchHandler::setEngineValues(std::string stringToSet) {
     // Throttle control
-    std::vector<int> engineBuffer = cutInputs(constants::supportedEngines, index);
+    std::vector<int> engineBuffer = cutInputs(constants::supportedEngines, std::move(stringToSet));
     if (engineBuffer.size() == constants::supportedEngines) {
         for (int i = 0; i < constants::supportedEngines; i++) {
             enginelist[i]->setCurrentValue(engineBuffer.at(i));
@@ -310,8 +298,8 @@ void InputSwitchHandler::setEngineValues(int index) {
     }
 }
 
-void InputSwitchHandler::setFlaps(int index) {
-    std::vector<int> flapsBuffer = cutInputs(1, index);
+void InputSwitchHandler::setFlaps(std::string stringToSet) {
+    std::vector<int> flapsBuffer = cutInputs(1, std::move(stringToSet));
 
     if (flapsBuffer.size() == 1) {
         flapsRange.setCurrentValue(flapsBuffer[0]);
@@ -321,8 +309,8 @@ void InputSwitchHandler::setFlaps(int index) {
 }
 
 
-void InputSwitchHandler::controlYoke(int index) {
-    std::vector<int> yokeBuffer = cutInputs(2, index);
+void InputSwitchHandler::controlYoke(std::string stringToSet) {
+    std::vector<int> yokeBuffer = cutInputs(2, std::move(stringToSet));
     if (yokeBuffer.size() == 2) {
         elevatorAxis.setCurrentValue(yokeBuffer[0]);
         aileronAxis.setCurrentValue(yokeBuffer[1]);
@@ -336,9 +324,9 @@ void InputSwitchHandler::controlYoke(int index) {
 }
 
 
-void InputSwitchHandler::setMixtureValues(int index) {
+void InputSwitchHandler::setMixtureValues(std::string stringToSet) {
     //TODO support 4 mixture handles
-    std::vector<int> mixtureBuffer = cutInputs(2, index);
+    std::vector<int> mixtureBuffer = cutInputs(2, std::move(stringToSet));
     if (mixtureBuffer.size() == 2) {
         for (int i = 0; i < 2; i++) {
             mixtureRanges[i].setCurrentValue(mixtureBuffer.at(i));
@@ -350,9 +338,9 @@ void InputSwitchHandler::setMixtureValues(int index) {
 }
 
 
-void InputSwitchHandler::set_prop_values(int index) {
+void InputSwitchHandler::set_prop_values(std::string stringToSet) {
     //TODO support 4 prop handles
-    std::vector<int> propBuffer = cutInputs(2, index);
+    std::vector<int> propBuffer = cutInputs(2, std::move(stringToSet));
     if (propBuffer.size() == 2) {
         for (int i = 0; i < 2; i++) {
             propellerRanges[i].setCurrentValue(propBuffer.at(i));
@@ -363,8 +351,8 @@ void InputSwitchHandler::set_prop_values(int index) {
     }
 }
 
-void InputSwitchHandler::setElevatorTrim(int index) {
-    std::vector<int> elevatorTrimBuffer = cutInputs(1, index);
+void InputSwitchHandler::setElevatorTrim(std::string stringToSet) {
+    std::vector<int> elevatorTrimBuffer = cutInputs(1, std::move(stringToSet));
     if (elevatorTrimBuffer.size() == 1) {
         elevatorTrimAxis.setCurrentValue(elevatorTrimBuffer.at(0));
         int diff = std::abs(elevatorTrimAxis.getMappedValue() - elevatorTrimAxis.getOldMappedValue());
@@ -376,8 +364,8 @@ void InputSwitchHandler::setElevatorTrim(int index) {
 }
 
 
-void InputSwitchHandler::setRudder(int index) {
-    std::vector<int> rudderBuffer = cutInputs(1, index);
+void InputSwitchHandler::setRudder(std::string stringToSet) {
+    std::vector<int> rudderBuffer = cutInputs(1, std::move(stringToSet));
     if (rudderBuffer.size() == 1) {
 
         rudderAxis.setCurrentValue(rudderBuffer.at(0));
@@ -398,8 +386,8 @@ int InputSwitchHandler::mapCoordinates(int value, coordinates toMapMin,
            ((value - toMapMin.getX()) / (toMapMax.getX() - toMapMin.getX()));
 }
 
-void InputSwitchHandler::setBrakeAxis(int index) {
-    std::vector<int> brakeBuffer = cutInputs(2, index);
+void InputSwitchHandler::setBrakeAxis(std::string stringToSet) {
+    std::vector<int> brakeBuffer = cutInputs(2, std::move(stringToSet));
     if (brakeBuffer.size() == 2) {
         for (auto &brakeAxi: brakeAxis) {
             //TODO support seperate axis calibration
@@ -415,9 +403,9 @@ void InputSwitchHandler::setBrakeAxis(int index) {
     }
 }
 
-int InputSwitchHandler::setComs(int index, int comNo) {
+int InputSwitchHandler::setComs(const std::string& stringToSet, int comNo) const {
     int value =
-            stoi(std::string(&receivedString[index][4], &receivedString[index][10]));
+            stoi(stringToSet.substr(4,10));
     if (value % (value / 10) == 5 || value % (value / 10) == 85) {
         switch (comNo) {
             case 1: {
@@ -442,13 +430,12 @@ int InputSwitchHandler::setComs(int index, int comNo) {
 }
 
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
-                                          int index) {
+                                          const std::string& stringToSet) {
     HRESULT hr;
-    string sizeTest = receivedString[index];
-    cout << "size: " << sizeTest.length() << endl;
-    if (sizeTest.size() == 6 || sizeTest.size() == 5) {
-        cout << "SENDING COMMAND " << inputs[(int)eventID].getEvent() << endl;
-        emit logMessage(inputs[(int)eventID].getEvent(), LogLevel::DEBUGLOG);
+
+    if (stringToSet.size() == 6 || stringToSet.size() == 5) {
+        cout << "SENDING COMMAND " << inputs[(int) eventID].getEvent() << endl;
+        emit logMessage(inputs[(int) eventID].getEvent(), LogLevel::DEBUGLOG);
         hr = SimConnect_TransmitClientEvent(
                 connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
@@ -456,8 +443,8 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     cout << "HR " << hr << endl;
 }
 
-void InputSwitchHandler::sendWASMCommand(int index, int value) {
-    std::string testString = std::to_string(index) + " " + std::to_string(value);
+void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) const {
+    std::string testString = std::to_string(prefixValue) + " " + std::to_string(value);
 
     char arrayTest[256];
     strcpy(arrayTest, testString.c_str());
@@ -470,157 +457,152 @@ void InputSwitchHandler::sendWASMCommand(int index, int value) {
 }
 
 void InputSwitchHandler::sendBasicCommandOn(
-        SIMCONNECT_CLIENT_EVENT_ID eventID) {
+        SIMCONNECT_CLIENT_EVENT_ID eventID) const {
     SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
 void InputSwitchHandler::sendBasicCommandOff(
-        SIMCONNECT_CLIENT_EVENT_ID eventID) {
+        SIMCONNECT_CLIENT_EVENT_ID eventID) const {
     SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
 void InputSwitchHandler::sendBasicCommandValue(
-        SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
+        SIMCONNECT_CLIENT_EVENT_ID eventID, int value) const {
     SimConnect_TransmitClientEvent(connect, 0, eventID, value,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
-void InputSwitchHandler::switchHandling(int index) {
+void InputSwitchHandler::switchHandling(const char* stringToParse) {
     Sleep(2);
     //
+    std::string stringStd = stringToParse;
 
-    if (strlen(receivedString[index]) > 2) {
+    if (strlen(stringToParse) > 2) {
         try {
-
-            int prefixValue = stoi(std::string(&receivedString[index][0], &receivedString[index][4]));
-
-
+            int prefixValue = stoi(stringStd.substr(0,4));
             if (inputs.count(prefixValue) > 0) {
                 Input input = inputs[prefixValue];
                 emit logMessage(
-                        "Received data: " + std::string(receivedString[index]) +" command: " + input.getEvent(),
+                        "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),
                         LogLevel::DEBUGLOG);
                 if (input.getType() == 4) {
                     sendBasicCommandOff(input.getPrefix());
                 } else if (input.getType() == 5) {
                     sendBasicCommandOn(input.getPrefix());
                 }
-                sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), index);
+                sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), stringToParse);
 
             } else {
-                    switch (prefixValue) {
-                        case 198: {
-                            set_prop_values(index);
-                            break;
-                        }
-
-                        case 199: {
-                            setEngineValues(index);
-                            break;
-                        }
-
-                        case 115: {
-                            setMixtureValues(index);
-                            break;
-                        }
-
-                        case 103: {
-                            controlYoke(index);
-                            break;
-                        }
-
-                        case 100: {
-                            SimConnect_TransmitClientEvent(
-                                    connect, SIMCONNECT_OBJECT_ID_USER,
-                                    100, setComs(index, 1),
-                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-
-                            break;
-                        }
-                        case 102: {
-                            int value = stoi(std::string(&receivedString[index][4],
-                                                         &receivedString[index][10]));
-                            SimConnect_TransmitClientEvent(
-                                    connect, SIMCONNECT_OBJECT_ID_USER,
-                                    102, Dec2Bcd(value / 10),
-                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                            if (value % (value / 10) == 5 || value % (value / 10) == 85) {
-                                SimConnect_TransmitClientEvent(
-                                        connect, SIMCONNECT_OBJECT_ID_USER,
-                                        121, 0,
-                                        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                            }
-                            break;
-                        }
-
-
-                        case 202: {
-                            std::string value =
-                                    std::string(&receivedString[index][4], &receivedString[index][8]);
-                            SimConnect_TransmitClientEvent(
-                                    connect, 0, 202,
-                                    Dec2Bcd(stoi(value)), SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                            break;
-                        }
-
-                            // TO DO FUNCTION ON OFF Battery
-                        case 405: {
-                            SimConnect_TransmitClientEvent(
-                                    connect, 0, 405, 1,
-                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                            break;
-                        }
-                        case 406: {
-                            SimConnect_TransmitClientEvent(
-                                    connect, 0, 406, 2,
-                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                            break;
-                        }
-
-                        case 900: {
-                            setElevatorTrim(index);
-                            break;
-                        }
-                        case 901: {
-                            cout << "901" << endl;
-                            setRudder(index);
-                            break;
-                        }
-                        case 902: {
-                            setBrakeAxis(index);
-                            break;
-                        }
-                        default: {
-                            int value = 0;
-                            bool valFound = std::strlen(receivedString[index]) > 6;
-                            if (valFound) {
-                                value = stoi(std::string(reinterpret_cast<const char *>(
-                                                                 &receivedString[index]))
-                                                     .substr(4));
-                            }
-
-                            sendWASMCommand(prefixValue, value);
-                            cout << value << "val" << endl;
-                            break;
-                        }
-
+                switch (prefixValue) {
+                    case 198: {
+                        set_prop_values(stringToParse);
+                        break;
                     }
+
+                    case 199: {
+                        setEngineValues(stringToParse);
+                        break;
+                    }
+
+                    case 115: {
+                        setMixtureValues(stringToParse);
+                        break;
+                    }
+
+                    case 103: {
+                        controlYoke(stringToParse);
+                        break;
+                    }
+
+                    case 100: {
+                        SimConnect_TransmitClientEvent(
+                                connect, SIMCONNECT_OBJECT_ID_USER,
+                                100, setComs(stringToParse, 1),
+                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+
+                        break;
+                    }
+                    case 102: {
+                        int value = stoi(stringStd.substr(4, 10));
+                        SimConnect_TransmitClientEvent(
+                                connect, SIMCONNECT_OBJECT_ID_USER,
+                                102, Dec2Bcd(value / 10),
+                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                        if (value % (value / 10) == 5 || value % (value / 10) == 85) {
+                            SimConnect_TransmitClientEvent(
+                                    connect, SIMCONNECT_OBJECT_ID_USER,
+                                    121, 0,
+                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                        }
+                        break;
+                    }
+
+
+                    case 202: {
+                        std::string value =
+                                std::string(stringStd.substr(4, 8));
+                        SimConnect_TransmitClientEvent(
+                                connect, 0, 202,
+                                Dec2Bcd(stoi(value)), SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                        break;
+                    }
+
+                        // TO DO FUNCTION ON OFF Battery
+                    case 405: {
+                        SimConnect_TransmitClientEvent(
+                                connect, 0, 405, 1,
+                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                        break;
+                    }
+                    case 406: {
+                        SimConnect_TransmitClientEvent(
+                                connect, 0, 406, 2,
+                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                        break;
+                    }
+
+                    case 900: {
+                        setElevatorTrim(stringToParse);
+                        break;
+                    }
+                    case 901: {
+                        cout << "901" << endl;
+                        setRudder(stringToParse);
+                        break;
+                    }
+                    case 902: {
+                        setBrakeAxis(stringToParse);
+                        break;
+                    }
+                    default: {
+                        int value = 0;
+                        bool valFound = stringStd.size() > 6;
+                        if (valFound) {
+                            value = stoi(stringStd.substr(4));
+                        }
+
+                        sendWASMCommand(prefixValue, value);
+                        cout << value << "val" << endl;
+                        break;
+                    }
+
                 }
+            }
         }
         catch (std::exception &e) {
             emit logMessage(
-                    "Received data: " + std::string(receivedString[index]) + " " + e.what(),
+                    "Received data: " + std::string(stringStd) + " " + e.what(),
                     LogLevel::ERRORLOG);
         }
     }

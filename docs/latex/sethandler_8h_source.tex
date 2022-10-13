@@ -1,0 +1,54 @@
+\hypertarget{sethandler_8h_source}{}\doxysection{sethandler.\+h}
+\label{sethandler_8h_source}\index{outputmenu/handlers/sethandler.h@{outputmenu/handlers/sethandler.h}}
+\mbox{\hyperlink{sethandler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef SETHANDLER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define SETHANDLER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QJsonArray>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QList>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QSettings>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QStandardPaths>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{outputhandler_8h}{handlers/outputhandler.h}}>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{commands_2_set_8h}{models/commands/Set.h}}>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_set_handler}{SetHandler}} \{}
+\DoxyCodeLine{15  \textcolor{keyword}{public}:}
+\DoxyCodeLine{16   \mbox{\hyperlink{class_set_handler_a7216a5d7de55b81ea19adb38032d1dd9}{SetHandler}}();}
+\DoxyCodeLine{17   \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_set_handler_aad50464ea22432d3b08eff81a9603394}{outputsInitialized}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{18   QList<Set> *\mbox{\hyperlink{class_set_handler_a4f3faeec1fe519e2731d506b87c41885}{loadSets}}();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   \mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_handler_af3578bedd8c6ed901dbaee35cc22d176}{fromJson}}(QJsonDocument *docToConvert);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_handler_a2e2fa5aa7f11e9f21dcd5a59c82a63c7}{removeSet}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   QList<Set> *\mbox{\hyperlink{class_set_handler_a9614f7dee07ad29de9e8fb8527c6acc5}{getSets}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_set_handler_a0f8c652bdb8913b122d47f19608299a7}{setList}}; \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26   \mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_handler_a70c78c65f6e91e7b97fed9f3e274bced}{getSetById}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   \mbox{\hyperlink{class_set}{Set}} *\mbox{\hyperlink{class_set_handler_a59ac2934792f71b6f57b7cc94769f2cd}{saveSet}}(\mbox{\hyperlink{class_set}{Set}} *setToSave);}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_handler_ad4059a67a9137d65e683211cfa5e1556}{updateSets}}();}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_handler_ae9c367a371ace538f227dab3a39a26ab}{exportSet}}(\textcolor{keyword}{const} QString\& \textcolor{keywordtype}{id}, \textcolor{keyword}{const} QString\& fileName);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_set_handler_af67c881bc904e84c1b6eafd77a867c9f}{importSet}}(\textcolor{keyword}{const} QString\& filePath, \textcolor{keyword}{const} QString\& name);}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36  \textcolor{keyword}{private}:}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_set_handler_a87d63c80b5c60816cf583774fbd8ece0}{settingsHandler}};}
+\DoxyCodeLine{39   \mbox{\hyperlink{classoutput_handler}{outputHandler}} *\mbox{\hyperlink{classoutput_handler}{outputHandler}} = \textcolor{keyword}{new} \textcolor{keyword}{class }\mbox{\hyperlink{classoutput_handler}{outputHandler}}();}
+\DoxyCodeLine{40   \textcolor{comment}{// QList<Set*> *savedSets = new QList<Set*>();}}
+\DoxyCodeLine{41   QList<Set> *\mbox{\hyperlink{class_set_handler_a0f8c652bdb8913b122d47f19608299a7}{setList}} = \textcolor{keyword}{new} QList<Set>();}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_handler_ab9d2c50fffed8391b950ff42703b7ab4}{removeOutputFromSet}}(\textcolor{keywordtype}{int} setId, \textcolor{keywordtype}{int} outputId);}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     QJsonDocument* \mbox{\hyperlink{class_set_handler_a58b156d11453c0493048f0dd9cd54d45}{setToJSON}}(\mbox{\hyperlink{class_set}{Set}} *setToConvert);}
+\DoxyCodeLine{46 \};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// SETHANDLER\_H}}
+
+\end{DoxyCode}

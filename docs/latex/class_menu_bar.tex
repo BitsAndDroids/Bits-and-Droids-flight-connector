@@ -1,0 +1,239 @@
+\hypertarget{class_menu_bar}{}\doxysection{Menu\+Bar Class Reference}
+\label{class_menu_bar}\index{MenuBar@{MenuBar}}
+
+
+{\ttfamily \#include $<$Menu\+Bar.\+h$>$}
+
+Inheritance diagram for Menu\+Bar\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_menu_bar}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_menu_bar_a9f5ce4657572127ec2682ec8368244ec}{Menu\+Bar}} (QMain\+Window $\ast$\mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}}, \mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$\mbox{\hyperlink{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}{service\+Worker}})
+\item 
+void \mbox{\hyperlink{class_menu_bar_a351e5caef0ce5db492fdb8ed3cdaaad7}{populate\+Menu\+Bar}} (QMain\+Window $\ast$\mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_menu_bar_a4b373bd44b0aae46caabc2220bd54b2e}{install\+WASM}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a4b10e9c706059a7ef169f7fd34bed0ec}{check\+For\+Updates}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a6fc925a3b749fcb16628049d6e2fc9fb}{local\+Update\+Event\+File}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_menu_bar_a5487540b62a83beafb635230db47b77e}{open\+Settings}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_addcc72158c34d825b79515a1c64ed034}{open\+Output\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a34eb6c25825171461d7251c1be8ff6de}{open\+Edit\+Event\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_acd5c467202c195b5c4f5999299bfe847}{open\+Generate\+Code\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a1e254aa331c074ab4600e22efd472caa}{open\+Log\+Window}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a1b892f4ecf0f6bcbb9d617cd5717eef7}{open\+Calibrate\+Axis}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_ac1c0ed1848ca52fc991f179945965ade}{open\+Generate\+Library\+Menu}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a51c6943ae96569c2c2cb127382cd97dd}{output\+Menu\+Closed}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_a78a88c5970fc8da5ec12a921f4645922}{calibrate\+Axis\+Menu\+Closed}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_adac0b27963e1b2678f20db65163731ec}{option\+Menu\+Closed}} ()
+\item 
+void \mbox{\hyperlink{class_menu_bar_afeef615afb097ea82a2d7b2f080423b8}{event\+Window\+Closed}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QMain\+Window $\ast$ \mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}}
+\item 
+bool \mbox{\hyperlink{class_menu_bar_a3c14481dcf45df3ba33d5445cb9e89ed}{output\+Menu\+Open}} = false
+\item 
+bool \mbox{\hyperlink{class_menu_bar_acf51ce929c0ab3268594679a3a18636f}{eventwindow\+Open}} = false
+\item 
+bool \mbox{\hyperlink{class_menu_bar_a9fbcbf1f43c7ccae9c333d53de87c562}{calibrate\+Axis\+Menu\+Open}} = false
+\item 
+bool \mbox{\hyperlink{class_menu_bar_a07b9839329bcab006496f20fea59d514}{option\+Menu\+Open}} = false
+\item 
+bool \mbox{\hyperlink{class_menu_bar_a38a922c22b95c6d32d7769d75615c023}{generate\+Library\+Menu\+Open}} = false
+\item 
+bool \mbox{\hyperlink{class_menu_bar_ab054febf02d49dc1624c7e1fb6f800e3}{generate\+Code\+Menu\+Open}} = false
+\item 
+\mbox{\hyperlink{class_log_window}{Log\+Window}} $\ast$ \mbox{\hyperlink{class_menu_bar_a8023ebd9ae32b67045f96cbedb5a1f12}{log\+Window}} = new \mbox{\hyperlink{class_log_window}{Log\+Window}}()
+\item 
+\mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$ \mbox{\hyperlink{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}{service\+Worker}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_menu_bar_a9f5ce4657572127ec2682ec8368244ec}\label{class_menu_bar_a9f5ce4657572127ec2682ec8368244ec}} 
+\index{MenuBar@{MenuBar}!MenuBar@{MenuBar}}
+\index{MenuBar@{MenuBar}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{MenuBar()}{MenuBar()}}
+{\footnotesize\ttfamily Menu\+Bar\+::\+Menu\+Bar (\begin{DoxyParamCaption}\item[{QMain\+Window $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$}]{service\+Worker }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_menu_bar_a78a88c5970fc8da5ec12a921f4645922}\label{class_menu_bar_a78a88c5970fc8da5ec12a921f4645922}} 
+\index{MenuBar@{MenuBar}!calibrateAxisMenuClosed@{calibrateAxisMenuClosed}}
+\index{calibrateAxisMenuClosed@{calibrateAxisMenuClosed}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{calibrateAxisMenuClosed()}{calibrateAxisMenuClosed()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::calibrate\+Axis\+Menu\+Closed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a4b10e9c706059a7ef169f7fd34bed0ec}\label{class_menu_bar_a4b10e9c706059a7ef169f7fd34bed0ec}} 
+\index{MenuBar@{MenuBar}!checkForUpdates@{checkForUpdates}}
+\index{checkForUpdates@{checkForUpdates}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{checkForUpdates}{checkForUpdates}}
+{\footnotesize\ttfamily void Menu\+Bar\+::check\+For\+Updates (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_menu_bar_afeef615afb097ea82a2d7b2f080423b8}\label{class_menu_bar_afeef615afb097ea82a2d7b2f080423b8}} 
+\index{MenuBar@{MenuBar}!eventWindowClosed@{eventWindowClosed}}
+\index{eventWindowClosed@{eventWindowClosed}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{eventWindowClosed()}{eventWindowClosed()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::event\+Window\+Closed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a4b373bd44b0aae46caabc2220bd54b2e}\label{class_menu_bar_a4b373bd44b0aae46caabc2220bd54b2e}} 
+\index{MenuBar@{MenuBar}!installWASM@{installWASM}}
+\index{installWASM@{installWASM}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{installWASM}{installWASM}}
+{\footnotesize\ttfamily void Menu\+Bar\+::install\+WASM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_menu_bar_a6fc925a3b749fcb16628049d6e2fc9fb}\label{class_menu_bar_a6fc925a3b749fcb16628049d6e2fc9fb}} 
+\index{MenuBar@{MenuBar}!localUpdateEventFile@{localUpdateEventFile}}
+\index{localUpdateEventFile@{localUpdateEventFile}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{localUpdateEventFile}{localUpdateEventFile}}
+{\footnotesize\ttfamily void Menu\+Bar\+::local\+Update\+Event\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_menu_bar_a1b892f4ecf0f6bcbb9d617cd5717eef7}\label{class_menu_bar_a1b892f4ecf0f6bcbb9d617cd5717eef7}} 
+\index{MenuBar@{MenuBar}!openCalibrateAxis@{openCalibrateAxis}}
+\index{openCalibrateAxis@{openCalibrateAxis}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openCalibrateAxis()}{openCalibrateAxis()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Calibrate\+Axis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a34eb6c25825171461d7251c1be8ff6de}\label{class_menu_bar_a34eb6c25825171461d7251c1be8ff6de}} 
+\index{MenuBar@{MenuBar}!openEditEventMenu@{openEditEventMenu}}
+\index{openEditEventMenu@{openEditEventMenu}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openEditEventMenu()}{openEditEventMenu()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Edit\+Event\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_acd5c467202c195b5c4f5999299bfe847}\label{class_menu_bar_acd5c467202c195b5c4f5999299bfe847}} 
+\index{MenuBar@{MenuBar}!openGenerateCodeMenu@{openGenerateCodeMenu}}
+\index{openGenerateCodeMenu@{openGenerateCodeMenu}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openGenerateCodeMenu()}{openGenerateCodeMenu()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Generate\+Code\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_ac1c0ed1848ca52fc991f179945965ade}\label{class_menu_bar_ac1c0ed1848ca52fc991f179945965ade}} 
+\index{MenuBar@{MenuBar}!openGenerateLibraryMenu@{openGenerateLibraryMenu}}
+\index{openGenerateLibraryMenu@{openGenerateLibraryMenu}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openGenerateLibraryMenu()}{openGenerateLibraryMenu()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Generate\+Library\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a1e254aa331c074ab4600e22efd472caa}\label{class_menu_bar_a1e254aa331c074ab4600e22efd472caa}} 
+\index{MenuBar@{MenuBar}!openLogWindow@{openLogWindow}}
+\index{openLogWindow@{openLogWindow}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openLogWindow()}{openLogWindow()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Log\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_addcc72158c34d825b79515a1c64ed034}\label{class_menu_bar_addcc72158c34d825b79515a1c64ed034}} 
+\index{MenuBar@{MenuBar}!openOutputMenu@{openOutputMenu}}
+\index{openOutputMenu@{openOutputMenu}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openOutputMenu()}{openOutputMenu()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Output\+Menu (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a5487540b62a83beafb635230db47b77e}\label{class_menu_bar_a5487540b62a83beafb635230db47b77e}} 
+\index{MenuBar@{MenuBar}!openSettings@{openSettings}}
+\index{openSettings@{openSettings}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{openSettings()}{openSettings()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::open\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_adac0b27963e1b2678f20db65163731ec}\label{class_menu_bar_adac0b27963e1b2678f20db65163731ec}} 
+\index{MenuBar@{MenuBar}!optionMenuClosed@{optionMenuClosed}}
+\index{optionMenuClosed@{optionMenuClosed}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{optionMenuClosed()}{optionMenuClosed()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::option\+Menu\+Closed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a51c6943ae96569c2c2cb127382cd97dd}\label{class_menu_bar_a51c6943ae96569c2c2cb127382cd97dd}} 
+\index{MenuBar@{MenuBar}!outputMenuClosed@{outputMenuClosed}}
+\index{outputMenuClosed@{outputMenuClosed}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{outputMenuClosed()}{outputMenuClosed()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::output\+Menu\+Closed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a351e5caef0ce5db492fdb8ed3cdaaad7}\label{class_menu_bar_a351e5caef0ce5db492fdb8ed3cdaaad7}} 
+\index{MenuBar@{MenuBar}!populateMenuBar@{populateMenuBar}}
+\index{populateMenuBar@{populateMenuBar}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{populateMenuBar()}{populateMenuBar()}}
+{\footnotesize\ttfamily void Menu\+Bar\+::populate\+Menu\+Bar (\begin{DoxyParamCaption}\item[{QMain\+Window $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_menu_bar_a9fbcbf1f43c7ccae9c333d53de87c562}\label{class_menu_bar_a9fbcbf1f43c7ccae9c333d53de87c562}} 
+\index{MenuBar@{MenuBar}!calibrateAxisMenuOpen@{calibrateAxisMenuOpen}}
+\index{calibrateAxisMenuOpen@{calibrateAxisMenuOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{calibrateAxisMenuOpen}{calibrateAxisMenuOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::calibrate\+Axis\+Menu\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_acf51ce929c0ab3268594679a3a18636f}\label{class_menu_bar_acf51ce929c0ab3268594679a3a18636f}} 
+\index{MenuBar@{MenuBar}!eventwindowOpen@{eventwindowOpen}}
+\index{eventwindowOpen@{eventwindowOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{eventwindowOpen}{eventwindowOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::eventwindow\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_ab054febf02d49dc1624c7e1fb6f800e3}\label{class_menu_bar_ab054febf02d49dc1624c7e1fb6f800e3}} 
+\index{MenuBar@{MenuBar}!generateCodeMenuOpen@{generateCodeMenuOpen}}
+\index{generateCodeMenuOpen@{generateCodeMenuOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{generateCodeMenuOpen}{generateCodeMenuOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::generate\+Code\+Menu\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a38a922c22b95c6d32d7769d75615c023}\label{class_menu_bar_a38a922c22b95c6d32d7769d75615c023}} 
+\index{MenuBar@{MenuBar}!generateLibraryMenuOpen@{generateLibraryMenuOpen}}
+\index{generateLibraryMenuOpen@{generateLibraryMenuOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{generateLibraryMenuOpen}{generateLibraryMenuOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::generate\+Library\+Menu\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a8023ebd9ae32b67045f96cbedb5a1f12}\label{class_menu_bar_a8023ebd9ae32b67045f96cbedb5a1f12}} 
+\index{MenuBar@{MenuBar}!logWindow@{logWindow}}
+\index{logWindow@{logWindow}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{logWindow}{logWindow}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_log_window}{Log\+Window}}$\ast$ Menu\+Bar\+::log\+Window = new \mbox{\hyperlink{class_log_window}{Log\+Window}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a07b9839329bcab006496f20fea59d514}\label{class_menu_bar_a07b9839329bcab006496f20fea59d514}} 
+\index{MenuBar@{MenuBar}!optionMenuOpen@{optionMenuOpen}}
+\index{optionMenuOpen@{optionMenuOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{optionMenuOpen}{optionMenuOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::option\+Menu\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a3c14481dcf45df3ba33d5445cb9e89ed}\label{class_menu_bar_a3c14481dcf45df3ba33d5445cb9e89ed}} 
+\index{MenuBar@{MenuBar}!outputMenuOpen@{outputMenuOpen}}
+\index{outputMenuOpen@{outputMenuOpen}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{outputMenuOpen}{outputMenuOpen}}
+{\footnotesize\ttfamily bool Menu\+Bar\+::output\+Menu\+Open = false\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}\label{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}} 
+\index{MenuBar@{MenuBar}!parent@{parent}}
+\index{parent@{parent}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily QMain\+Window$\ast$ Menu\+Bar\+::parent\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}\label{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}} 
+\index{MenuBar@{MenuBar}!serviceWorker@{serviceWorker}}
+\index{serviceWorker@{serviceWorker}!MenuBar@{MenuBar}}
+\doxysubsubsection{\texorpdfstring{serviceWorker}{serviceWorker}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_service_worker}{Service\+Worker}}$\ast$ Menu\+Bar\+::service\+Worker\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/elements/\mbox{\hyperlink{_menu_bar_8h}{Menu\+Bar.\+h}}\item 
+dashboard/elements/\mbox{\hyperlink{_menu_bar_8cpp}{Menu\+Bar.\+cpp}}\end{DoxyCompactItemize}

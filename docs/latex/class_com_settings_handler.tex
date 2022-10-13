@@ -1,0 +1,126 @@
+\hypertarget{class_com_settings_handler}{}\doxysection{Com\+Settings\+Handler Class Reference}
+\label{class_com_settings_handler}\index{ComSettingsHandler@{ComSettingsHandler}}
+
+
+{\ttfamily \#include $<$Com\+Settings\+Handler.\+h$>$}
+
+Inheritance diagram for Com\+Settings\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_com_settings_handler}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_com_settings_handler_a863c4192690080c65bbf09fd61bb47be}{Com\+Settings\+Handler}} ()
+\item 
+QList$<$ QPair$<$ QString, int $>$ $>$ \mbox{\hyperlink{class_com_settings_handler_ad1c402581417bb5cf0a0586642509c61}{load\+Coms}} ()
+\item 
+void \mbox{\hyperlink{class_com_settings_handler_a5cc1774bca56df49d21c6f6c2fc2a8b9}{save\+Coms}} (QList$<$ QPair$<$ QString, int $>$ $>$ coms)
+\item 
+void \mbox{\hyperlink{class_com_settings_handler_a1e36cc8f996e0ffe0092064d9e668bbd}{adjust\+Indexes}} ()
+\item 
+void \mbox{\hyperlink{class_com_settings_handler_a43ed3872bc63ee4e6813372eba5ae897}{remove\+Com\+Row\+Settings}} (QString index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_com_settings_handler_add6700c7738e2b2ae2a0300ddbddecfb}{FRIEND\+\_\+\+TEST}} (Com\+Settings\+Handler\+Tests, test\+\_\+serialize\+\_\+qlist\+\_\+to\+\_\+json)
+\item 
+\mbox{\hyperlink{class_com_settings_handler_af655f4e8b00d09515b4c855c3fa0c724}{FRIEND\+\_\+\+TEST}} (Com\+Settings\+Handler\+Tests, test\+\_\+serialize\+\_\+qpair\+\_\+to\+\_\+json)
+\item 
+\mbox{\hyperlink{class_com_settings_handler_a5a79151995b4e25ca9dc0806c8a8637f}{FRIEND\+\_\+\+TEST}} (Com\+Settings\+Handler\+Tests, test\+\_\+serialize\+\_\+json\+\_\+to\+\_\+qlist)
+\item 
+QJson\+Object \mbox{\hyperlink{class_com_settings_handler_a6f50e1856629822c62fa2efbe1f425d1}{com\+Pair\+To\+Json}} (const QPair$<$ QString, int $>$ \&pair)
+\item 
+QPair$<$ QString, int $>$ \mbox{\hyperlink{class_com_settings_handler_a215e36576d210da6bec01d1d11eaad56}{com\+Pair\+From\+Json}} (const QJson\+Object \&object)
+\item 
+QJson\+Object \mbox{\hyperlink{class_com_settings_handler_a3d8a53be218c7cae2ef8790e8a7cd0d4}{com\+List\+To\+Json\+Object}} (QList$<$ QPair$<$ QString, int $>$ $>$ coms)
+\item 
+QList$<$ QPair$<$ QString, int $>$ $>$ \mbox{\hyperlink{class_com_settings_handler_ab0235e6b6f8a8fd313f4e3a94382c632}{json\+Object\+To\+Com\+List}} (QJson\+Object obj)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_com_settings_handler_a863c4192690080c65bbf09fd61bb47be}\label{class_com_settings_handler_a863c4192690080c65bbf09fd61bb47be}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!ComSettingsHandler@{ComSettingsHandler}}
+\index{ComSettingsHandler@{ComSettingsHandler}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{ComSettingsHandler()}{ComSettingsHandler()}}
+{\footnotesize\ttfamily Com\+Settings\+Handler\+::\+Com\+Settings\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_com_settings_handler_a1e36cc8f996e0ffe0092064d9e668bbd}\label{class_com_settings_handler_a1e36cc8f996e0ffe0092064d9e668bbd}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!adjustIndexes@{adjustIndexes}}
+\index{adjustIndexes@{adjustIndexes}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{adjustIndexes()}{adjustIndexes()}}
+{\footnotesize\ttfamily void Com\+Settings\+Handler\+::adjust\+Indexes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_settings_handler_a3d8a53be218c7cae2ef8790e8a7cd0d4}\label{class_com_settings_handler_a3d8a53be218c7cae2ef8790e8a7cd0d4}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!comListToJsonObject@{comListToJsonObject}}
+\index{comListToJsonObject@{comListToJsonObject}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{comListToJsonObject()}{comListToJsonObject()}}
+{\footnotesize\ttfamily QJson\+Object Com\+Settings\+Handler\+::com\+List\+To\+Json\+Object (\begin{DoxyParamCaption}\item[{QList$<$ QPair$<$ QString, int $>$ $>$}]{coms }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_a215e36576d210da6bec01d1d11eaad56}\label{class_com_settings_handler_a215e36576d210da6bec01d1d11eaad56}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!comPairFromJson@{comPairFromJson}}
+\index{comPairFromJson@{comPairFromJson}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{comPairFromJson()}{comPairFromJson()}}
+{\footnotesize\ttfamily QPair$<$ QString, int $>$ Com\+Settings\+Handler\+::com\+Pair\+From\+Json (\begin{DoxyParamCaption}\item[{const QJson\+Object \&}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_a6f50e1856629822c62fa2efbe1f425d1}\label{class_com_settings_handler_a6f50e1856629822c62fa2efbe1f425d1}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!comPairToJson@{comPairToJson}}
+\index{comPairToJson@{comPairToJson}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{comPairToJson()}{comPairToJson()}}
+{\footnotesize\ttfamily QJson\+Object Com\+Settings\+Handler\+::com\+Pair\+To\+Json (\begin{DoxyParamCaption}\item[{const QPair$<$ QString, int $>$ \&}]{pair }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_a5a79151995b4e25ca9dc0806c8a8637f}\label{class_com_settings_handler_a5a79151995b4e25ca9dc0806c8a8637f}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!FRIEND\_TEST@{FRIEND\_TEST}}
+\index{FRIEND\_TEST@{FRIEND\_TEST}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{FRIEND\_TEST()}{FRIEND\_TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily Com\+Settings\+Handler\+::\+FRIEND\+\_\+\+TEST (\begin{DoxyParamCaption}\item[{Com\+Settings\+Handler\+Tests}]{,  }\item[{test\+\_\+serialize\+\_\+json\+\_\+to\+\_\+qlist}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_add6700c7738e2b2ae2a0300ddbddecfb}\label{class_com_settings_handler_add6700c7738e2b2ae2a0300ddbddecfb}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!FRIEND\_TEST@{FRIEND\_TEST}}
+\index{FRIEND\_TEST@{FRIEND\_TEST}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{FRIEND\_TEST()}{FRIEND\_TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily Com\+Settings\+Handler\+::\+FRIEND\+\_\+\+TEST (\begin{DoxyParamCaption}\item[{Com\+Settings\+Handler\+Tests}]{,  }\item[{test\+\_\+serialize\+\_\+qlist\+\_\+to\+\_\+json}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_af655f4e8b00d09515b4c855c3fa0c724}\label{class_com_settings_handler_af655f4e8b00d09515b4c855c3fa0c724}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!FRIEND\_TEST@{FRIEND\_TEST}}
+\index{FRIEND\_TEST@{FRIEND\_TEST}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{FRIEND\_TEST()}{FRIEND\_TEST()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily Com\+Settings\+Handler\+::\+FRIEND\+\_\+\+TEST (\begin{DoxyParamCaption}\item[{Com\+Settings\+Handler\+Tests}]{,  }\item[{test\+\_\+serialize\+\_\+qpair\+\_\+to\+\_\+json}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_ab0235e6b6f8a8fd313f4e3a94382c632}\label{class_com_settings_handler_ab0235e6b6f8a8fd313f4e3a94382c632}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!jsonObjectToComList@{jsonObjectToComList}}
+\index{jsonObjectToComList@{jsonObjectToComList}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{jsonObjectToComList()}{jsonObjectToComList()}}
+{\footnotesize\ttfamily QList$<$ QPair$<$ QString, int $>$ $>$ Com\+Settings\+Handler\+::json\+Object\+To\+Com\+List (\begin{DoxyParamCaption}\item[{QJson\+Object}]{obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_settings_handler_ad1c402581417bb5cf0a0586642509c61}\label{class_com_settings_handler_ad1c402581417bb5cf0a0586642509c61}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!loadComs@{loadComs}}
+\index{loadComs@{loadComs}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{loadComs()}{loadComs()}}
+{\footnotesize\ttfamily QList$<$ QPair$<$ QString, int $>$ $>$ Com\+Settings\+Handler\+::load\+Coms (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_settings_handler_a43ed3872bc63ee4e6813372eba5ae897}\label{class_com_settings_handler_a43ed3872bc63ee4e6813372eba5ae897}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!removeComRowSettings@{removeComRowSettings}}
+\index{removeComRowSettings@{removeComRowSettings}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{removeComRowSettings()}{removeComRowSettings()}}
+{\footnotesize\ttfamily void Com\+Settings\+Handler\+::remove\+Com\+Row\+Settings (\begin{DoxyParamCaption}\item[{QString}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_settings_handler_a5cc1774bca56df49d21c6f6c2fc2a8b9}\label{class_com_settings_handler_a5cc1774bca56df49d21c6f6c2fc2a8b9}} 
+\index{ComSettingsHandler@{ComSettingsHandler}!saveComs@{saveComs}}
+\index{saveComs@{saveComs}!ComSettingsHandler@{ComSettingsHandler}}
+\doxysubsubsection{\texorpdfstring{saveComs()}{saveComs()}}
+{\footnotesize\ttfamily void Com\+Settings\+Handler\+::save\+Coms (\begin{DoxyParamCaption}\item[{QList$<$ QPair$<$ QString, int $>$ $>$}]{coms }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+settings/\mbox{\hyperlink{_com_settings_handler_8h}{Com\+Settings\+Handler.\+h}}\item 
+settings/\mbox{\hyperlink{_com_settings_handler_8cpp}{Com\+Settings\+Handler.\+cpp}}\end{DoxyCompactItemize}

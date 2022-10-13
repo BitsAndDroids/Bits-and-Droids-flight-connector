@@ -1,0 +1,60 @@
+\hypertarget{commands_2_set_8h_source}{}\doxysection{Set.\+h}
+\label{commands_2_set_8h_source}\index{models/commands/Set.h@{models/commands/Set.h}}
+\mbox{\hyperlink{commands_2_set_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef SET\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define SET\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qjsonobject.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QList>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QMap>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{output_8h}{output.h}}"{}}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_set}{Set}} \{}
+\DoxyCodeLine{13  \textcolor{keyword}{public}:}
+\DoxyCodeLine{14   \mbox{\hyperlink{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}{Set}}();}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}{Set}}(QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}});}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18   \textcolor{comment}{// void addOutput(Output outputToAdd);}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20   QMap<int, Output *> \mbox{\hyperlink{class_set_a9e1e8b1b291775d6b159daba76e4b3bb}{getOutputs}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_set_a4f29e51916be752429b38eb7666ee4b7}{outputs}}; \};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_set_a9f4cd74d3e077959c38046aa471bb2da}{getID}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_set_a9c658a98f26aff7c0b1463da1af0ba45}{setId}}; \};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   QString \mbox{\hyperlink{class_set_a7834de990fdb4542c36c9b5660328e41}{getSetName}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}}; \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_abaf138866336696bb5e9d646bb0f6d91}{setOutputs}}(QMap<int, Output *> newOutputs);}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a3fefecaae364e771d4ca47d1935b82a2}{setSetName}}(QString \mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}}) \{ this-\/>setName = std::move(\mbox{\hyperlink{class_set_a904f8d1e4eb3e52eea47051d9f9af4f9}{name}}); \};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_aa5b275066db8471c449c0f71a103941e}{setSetId}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}) \{ this-\/>\mbox{\hyperlink{class_set_a9c658a98f26aff7c0b1463da1af0ba45}{setId}} = \mbox{\hyperlink{class_set_a9a157f26fb7a609cebfbe04523e5a5d1}{id}}; \};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a6f301c91a4deb2d9a1b805df7d569e67}{deleteSet}}();}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a0b6ca4dcbbfa9029bae9a34661e79706}{saveSet}}();}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36   \mbox{\hyperlink{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}{Set}}(QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}}, \textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38   \textcolor{keyword}{static} \mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_a31dead428535cd12aac6c0e2f9173498}{fromJson}}(QJsonDocument *docToConvert);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40   \mbox{\hyperlink{class_set_a1c5d4bec6a962eb5805cf9a7321e241d}{Set}}(QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}}, \textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, QMap<int, Output *>);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a6b3a28ec28da8906b375ed5cb2ae78e8}{addOutput}}(\mbox{\hyperlink{class_output}{Output}} *outputToAdd);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_abe26e9f63fc0a3a1451a50dc377c67e7}{clearOutputs}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_set_a9ab6cd1b5b351073617291a6a4da3d8e}{removeOutput}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48  \textcolor{keyword}{private}:}
+\DoxyCodeLine{49   QString \mbox{\hyperlink{class_set_ac74225fbdb252b272ee97db661aad266}{setName}};}
+\DoxyCodeLine{50   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_set_a9c658a98f26aff7c0b1463da1af0ba45}{setId}} = 0;}
+\DoxyCodeLine{51   QMap<int, Output *> \mbox{\hyperlink{class_set_a4f29e51916be752429b38eb7666ee4b7}{outputs}} = QMap<int, Output *>();}
+\DoxyCodeLine{52 \};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// SET\_H}}
+
+\end{DoxyCode}

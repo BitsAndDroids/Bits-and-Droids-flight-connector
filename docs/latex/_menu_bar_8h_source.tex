@@ -1,0 +1,75 @@
+\hypertarget{_menu_bar_8h_source}{}\doxysection{Menu\+Bar.\+h}
+\label{_menu_bar_8h_source}\index{dashboard/elements/MenuBar.h@{dashboard/elements/MenuBar.h}}
+\mbox{\hyperlink{_menu_bar_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 19-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_MENUBAR\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_MENUBAR\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QMainWindow>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QMenuBar>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_service_worker_8h}{workers/ServiceWorker.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_menu_bar}{MenuBar}}: \textcolor{keyword}{public} QMenuBar \{}
+\DoxyCodeLine{15     Q\_OBJECT}
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \mbox{\hyperlink{class_menu_bar}{MenuBar}}(QMainWindow *\mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}}, \mbox{\hyperlink{class_service_worker}{ServiceWorker}} *\mbox{\hyperlink{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}{serviceWorker}});}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a351e5caef0ce5db492fdb8ed3cdaaad7}{populateMenuBar}}(QMainWindow *\mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}});}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{private}:}
+\DoxyCodeLine{22     QMainWindow *\mbox{\hyperlink{class_menu_bar_a2331172db050d958d9f4dc2cf968530a}{parent}};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a5487540b62a83beafb635230db47b77e}{openSettings}}();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_addcc72158c34d825b79515a1c64ed034}{openOutputMenu}}();}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a34eb6c25825171461d7251c1be8ff6de}{openEditEventMenu}}();}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_acd5c467202c195b5c4f5999299bfe847}{openGenerateCodeMenu}}();}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a1e254aa331c074ab4600e22efd472caa}{openLogWindow}}();}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a1b892f4ecf0f6bcbb9d617cd5717eef7}{openCalibrateAxis}}();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_ac1c0ed1848ca52fc991f179945965ade}{openGenerateLibraryMenu}}();}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a51c6943ae96569c2c2cb127382cd97dd}{outputMenuClosed}}();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a78a88c5970fc8da5ec12a921f4645922}{calibrateAxisMenuClosed}}();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_adac0b27963e1b2678f20db65163731ec}{optionMenuClosed}}();}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_afeef615afb097ea82a2d7b2f080423b8}{eventWindowClosed}}();}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_a3c14481dcf45df3ba33d5445cb9e89ed}{outputMenuOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{49     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_acf51ce929c0ab3268594679a3a18636f}{eventwindowOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{50     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_a9fbcbf1f43c7ccae9c333d53de87c562}{calibrateAxisMenuOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{51     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_a07b9839329bcab006496f20fea59d514}{optionMenuOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{52     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_a38a922c22b95c6d32d7769d75615c023}{generateLibraryMenuOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{53     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_menu_bar_ab054febf02d49dc1624c7e1fb6f800e3}{generateCodeMenuOpen}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{class_log_window}{LogWindow}} *\mbox{\hyperlink{class_menu_bar_a8023ebd9ae32b67045f96cbedb5a1f12}{logWindow}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_log_window}{LogWindow}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \mbox{\hyperlink{class_service_worker}{ServiceWorker}} *\mbox{\hyperlink{class_menu_bar_a036a6a4bd5e8b77c2a87e04e9932b9be}{serviceWorker}};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{60     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a4b373bd44b0aae46caabc2220bd54b2e}{installWASM}}();}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a4b10e9c706059a7ef169f7fd34bed0ec}{checkForUpdates}}();}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_menu_bar_a6fc925a3b749fcb16628049d6e2fc9fb}{localUpdateEventFile}}();}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_MENUBAR\_H}}
+
+\end{DoxyCode}

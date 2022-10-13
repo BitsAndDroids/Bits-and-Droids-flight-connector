@@ -10,7 +10,7 @@
 #include <QMainWindow>
 #include "handlers/pathhandler.h"
 #include "logging/MessageCaster.h"
-#include "workers/dualworker.h"
+#include "dashboard/workers/MFSWorker.h"
 #include "workers/ServiceWorker.h"
 #include "elements/ModeIndexCombobox.h"
 #include "elements/ModeIndexCheckbox.h"

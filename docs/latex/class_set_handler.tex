@@ -1,0 +1,161 @@
+\hypertarget{class_set_handler}{}\doxysection{Set\+Handler Class Reference}
+\label{class_set_handler}\index{SetHandler@{SetHandler}}
+
+
+{\ttfamily \#include $<$sethandler.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_set_handler_a7216a5d7de55b81ea19adb38032d1dd9}{Set\+Handler}} ()
+\item 
+QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ \mbox{\hyperlink{class_set_handler_a4f3faeec1fe519e2731d506b87c41885}{load\+Sets}} ()
+\item 
+\mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_handler_af3578bedd8c6ed901dbaee35cc22d176}{from\+Json}} (QJson\+Document $\ast$doc\+To\+Convert)
+\item 
+void \mbox{\hyperlink{class_set_handler_a2e2fa5aa7f11e9f21dcd5a59c82a63c7}{remove\+Set}} (QString id)
+\item 
+QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ \mbox{\hyperlink{class_set_handler_a9614f7dee07ad29de9e8fb8527c6acc5}{get\+Sets}} ()
+\item 
+\mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{class_set_handler_a70c78c65f6e91e7b97fed9f3e274bced}{get\+Set\+By\+Id}} (QString id)
+\item 
+\mbox{\hyperlink{class_set}{Set}} $\ast$ \mbox{\hyperlink{class_set_handler_a59ac2934792f71b6f57b7cc94769f2cd}{save\+Set}} (\mbox{\hyperlink{class_set}{Set}} $\ast$set\+To\+Save)
+\item 
+void \mbox{\hyperlink{class_set_handler_ad4059a67a9137d65e683211cfa5e1556}{update\+Sets}} ()
+\item 
+void \mbox{\hyperlink{class_set_handler_ae9c367a371ace538f227dab3a39a26ab}{export\+Set}} (const QString \&id, const QString \&file\+Name)
+\item 
+int \mbox{\hyperlink{class_set_handler_af67c881bc904e84c1b6eafd77a867c9f}{import\+Set}} (const QString \&file\+Path, const QString \&name)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_set_handler_aad50464ea22432d3b08eff81a9603394}{outputs\+Initialized}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_set_handler_ab9d2c50fffed8391b950ff42703b7ab4}{remove\+Output\+From\+Set}} (int set\+Id, int output\+Id)
+\item 
+QJson\+Document $\ast$ \mbox{\hyperlink{class_set_handler_a58b156d11453c0493048f0dd9cd54d45}{set\+To\+JSON}} (\mbox{\hyperlink{class_set}{Set}} $\ast$set\+To\+Convert)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_set_handler_a87d63c80b5c60816cf583774fbd8ece0}{settings\+Handler}}
+\item 
+\mbox{\hyperlink{classoutput_handler}{output\+Handler}} $\ast$ \mbox{\hyperlink{class_set_handler_a4cfd4e74a0f1d06fd3f1adbe8658e32f}{output\+Handler}} = new class \mbox{\hyperlink{classoutput_handler}{output\+Handler}}()
+\item 
+QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ \mbox{\hyperlink{class_set_handler_a0f8c652bdb8913b122d47f19608299a7}{set\+List}} = new QList$<$\mbox{\hyperlink{class_set}{Set}}$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_set_handler_a7216a5d7de55b81ea19adb38032d1dd9}\label{class_set_handler_a7216a5d7de55b81ea19adb38032d1dd9}} 
+\index{SetHandler@{SetHandler}!SetHandler@{SetHandler}}
+\index{SetHandler@{SetHandler}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{SetHandler()}{SetHandler()}}
+{\footnotesize\ttfamily Set\+Handler\+::\+Set\+Handler (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_set_handler_ae9c367a371ace538f227dab3a39a26ab}\label{class_set_handler_ae9c367a371ace538f227dab3a39a26ab}} 
+\index{SetHandler@{SetHandler}!exportSet@{exportSet}}
+\index{exportSet@{exportSet}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{exportSet()}{exportSet()}}
+{\footnotesize\ttfamily void Set\+Handler\+::export\+Set (\begin{DoxyParamCaption}\item[{const QString \&}]{id,  }\item[{const QString \&}]{file\+Name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_af3578bedd8c6ed901dbaee35cc22d176}\label{class_set_handler_af3578bedd8c6ed901dbaee35cc22d176}} 
+\index{SetHandler@{SetHandler}!fromJson@{fromJson}}
+\index{fromJson@{fromJson}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{fromJson()}{fromJson()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set}{Set}} Set\+Handler\+::from\+Json (\begin{DoxyParamCaption}\item[{QJson\+Document $\ast$}]{doc\+To\+Convert }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_a70c78c65f6e91e7b97fed9f3e274bced}\label{class_set_handler_a70c78c65f6e91e7b97fed9f3e274bced}} 
+\index{SetHandler@{SetHandler}!getSetById@{getSetById}}
+\index{getSetById@{getSetById}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{getSetById()}{getSetById()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set}{Set}} Set\+Handler\+::get\+Set\+By\+Id (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_a9614f7dee07ad29de9e8fb8527c6acc5}\label{class_set_handler_a9614f7dee07ad29de9e8fb8527c6acc5}} 
+\index{SetHandler@{SetHandler}!getSets@{getSets}}
+\index{getSets@{getSets}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{getSets()}{getSets()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ Set\+Handler\+::get\+Sets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_set_handler_af67c881bc904e84c1b6eafd77a867c9f}\label{class_set_handler_af67c881bc904e84c1b6eafd77a867c9f}} 
+\index{SetHandler@{SetHandler}!importSet@{importSet}}
+\index{importSet@{importSet}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{importSet()}{importSet()}}
+{\footnotesize\ttfamily int Set\+Handler\+::import\+Set (\begin{DoxyParamCaption}\item[{const QString \&}]{file\+Path,  }\item[{const QString \&}]{name }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_a4f3faeec1fe519e2731d506b87c41885}\label{class_set_handler_a4f3faeec1fe519e2731d506b87c41885}} 
+\index{SetHandler@{SetHandler}!loadSets@{loadSets}}
+\index{loadSets@{loadSets}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{loadSets()}{loadSets()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ Set\+Handler\+::load\+Sets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_ab9d2c50fffed8391b950ff42703b7ab4}\label{class_set_handler_ab9d2c50fffed8391b950ff42703b7ab4}} 
+\index{SetHandler@{SetHandler}!removeOutputFromSet@{removeOutputFromSet}}
+\index{removeOutputFromSet@{removeOutputFromSet}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{removeOutputFromSet()}{removeOutputFromSet()}}
+{\footnotesize\ttfamily void Set\+Handler\+::remove\+Output\+From\+Set (\begin{DoxyParamCaption}\item[{int}]{set\+Id,  }\item[{int}]{output\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_handler_a2e2fa5aa7f11e9f21dcd5a59c82a63c7}\label{class_set_handler_a2e2fa5aa7f11e9f21dcd5a59c82a63c7}} 
+\index{SetHandler@{SetHandler}!removeSet@{removeSet}}
+\index{removeSet@{removeSet}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{removeSet()}{removeSet()}}
+{\footnotesize\ttfamily void Set\+Handler\+::remove\+Set (\begin{DoxyParamCaption}\item[{QString}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_a59ac2934792f71b6f57b7cc94769f2cd}\label{class_set_handler_a59ac2934792f71b6f57b7cc94769f2cd}} 
+\index{SetHandler@{SetHandler}!saveSet@{saveSet}}
+\index{saveSet@{saveSet}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{saveSet()}{saveSet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set}{Set}} $\ast$ Set\+Handler\+::save\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_set}{Set}} $\ast$}]{set\+To\+Save }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_set_handler_a58b156d11453c0493048f0dd9cd54d45}\label{class_set_handler_a58b156d11453c0493048f0dd9cd54d45}} 
+\index{SetHandler@{SetHandler}!setToJSON@{setToJSON}}
+\index{setToJSON@{setToJSON}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{setToJSON()}{setToJSON()}}
+{\footnotesize\ttfamily QJson\+Document $\ast$ Set\+Handler\+::set\+To\+JSON (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_set}{Set}} $\ast$}]{set\+To\+Convert }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_handler_ad4059a67a9137d65e683211cfa5e1556}\label{class_set_handler_ad4059a67a9137d65e683211cfa5e1556}} 
+\index{SetHandler@{SetHandler}!updateSets@{updateSets}}
+\index{updateSets@{updateSets}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{updateSets()}{updateSets()}}
+{\footnotesize\ttfamily void Set\+Handler\+::update\+Sets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_set_handler_a4cfd4e74a0f1d06fd3f1adbe8658e32f}\label{class_set_handler_a4cfd4e74a0f1d06fd3f1adbe8658e32f}} 
+\index{SetHandler@{SetHandler}!outputHandler@{outputHandler}}
+\index{outputHandler@{outputHandler}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{outputHandler}{outputHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classoutput_handler}{output\+Handler}}$\ast$ Set\+Handler\+::output\+Handler = new class \mbox{\hyperlink{classoutput_handler}{output\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_handler_aad50464ea22432d3b08eff81a9603394}\label{class_set_handler_aad50464ea22432d3b08eff81a9603394}} 
+\index{SetHandler@{SetHandler}!outputsInitialized@{outputsInitialized}}
+\index{outputsInitialized@{outputsInitialized}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{outputsInitialized}{outputsInitialized}}
+{\footnotesize\ttfamily bool Set\+Handler\+::outputs\+Initialized = false}
+
+\mbox{\Hypertarget{class_set_handler_a0f8c652bdb8913b122d47f19608299a7}\label{class_set_handler_a0f8c652bdb8913b122d47f19608299a7}} 
+\index{SetHandler@{SetHandler}!setList@{setList}}
+\index{setList@{setList}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{setList}{setList}}
+{\footnotesize\ttfamily QList$<$\mbox{\hyperlink{class_set}{Set}}$>$$\ast$ Set\+Handler\+::set\+List = new QList$<$\mbox{\hyperlink{class_set}{Set}}$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_set_handler_a87d63c80b5c60816cf583774fbd8ece0}\label{class_set_handler_a87d63c80b5c60816cf583774fbd8ece0}} 
+\index{SetHandler@{SetHandler}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!SetHandler@{SetHandler}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Set\+Handler\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+outputmenu/handlers/\mbox{\hyperlink{sethandler_8h}{sethandler.\+h}}\item 
+outputmenu/handlers/\mbox{\hyperlink{sethandler_8cpp}{sethandler.\+cpp}}\end{DoxyCompactItemize}

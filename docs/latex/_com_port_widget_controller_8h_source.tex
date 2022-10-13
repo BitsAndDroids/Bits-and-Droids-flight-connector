@@ -1,0 +1,84 @@
+\hypertarget{_com_port_widget_controller_8h_source}{}\doxysection{Com\+Port\+Widget\+Controller.\+h}
+\label{_com_port_widget_controller_8h_source}\index{dashboard/controller/ComPortWidgetController.h@{dashboard/controller/ComPortWidgetController.h}}
+\mbox{\hyperlink{_com_port_widget_controller_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by DaveRiedel on 19-\/9-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_COMPORTWIDGETCONTROLLER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_COMPORTWIDGETCONTROLLER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_com_port_widget_model_8h}{dashboard/models/ComPortWidgetModel.h}}"{}}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_combobox_8h}{elements/ModeIndexCombobox.h}}"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_enum_8h}{enums/ModeEnum.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_m_f_s_worker_8h}{dashboard/workers/MFSWorker.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_checkbox_8h}{elements/ModeIndexCheckbox.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_service_worker_8h}{workers/serviceWorker.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <QLabel>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{class }\mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}} : \textcolor{keyword}{public} QObject \{}
+\DoxyCodeLine{18 Q\_OBJECT}
+\DoxyCodeLine{19 \textcolor{keyword}{public}:}
+\DoxyCodeLine{20     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}}(QWidget *\mbox{\hyperlink{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}{parent}}, \mbox{\hyperlink{class_service_worker}{ServiceWorker}} *serviceworker);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a11122fdb896433b7d22fa19ffcae8d10}{initComRows}}();}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 signals:}
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_ad9988dffbb0e571dd992d764699dc492}{boardConnectionMade}}(\textcolor{keywordtype}{int} state);}
+\DoxyCodeLine{26     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_ab2252ca75ae62fcac365557eb21cac46}{gameConnectionMade}}(\textcolor{keywordtype}{int} state);}
+\DoxyCodeLine{27 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a4f441f3671bc0578124400f8ae2f67e2}{start}}();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a8a2423ae395397c722c1f6ba00a1f953}{stop}}();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_ad34ad42263737fdbd8350628c3df496a}{add}}();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a7071c2c37d7df91dd928ae18fdc6307f}{refresh}}();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a19d4009cbb222afd9251b585777c55f8}{removeComPortRow}}();}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40 \textcolor{keyword}{private}:}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a3a1698630236291e005e782279871af1}{loadComPortData}}();}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_com_port_widget_controller_a5009313a05faea956efd8516fe72df4c}{running}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a0ce358aa8c78de90664f742ec95250ca}{toggleStartStopButtonState}}();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_aab05b5bed3d9ec83d7b95954b2326ed8}{clearChildrenFromLayout}}(QLayout *toClear);}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     QList<ModeIndexCheckbox *> \mbox{\hyperlink{class_com_port_widget_controller_abcedd230833c0904027d6910ba58a72b}{getCheckboxesByPattern}}(\textcolor{keyword}{const} QRegularExpression \&pattern);}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     QLabel *\mbox{\hyperlink{class_com_port_widget_controller_ada1b87a27e7e635fdadb6890feef1be5}{returnWarningString}}(\textcolor{keywordtype}{int} warningType);}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_com_port_widget_controller_acd9166dcc344cd00cdecaeb81b226754}{getComboxIndex}}(\mbox{\hyperlink{class_mode_index_combobox}{ModeIndexCombobox}} *comboBox, \textcolor{keyword}{const} QString \&value);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a77c70ed9c00e71f5ad2a91d9c7f2bf92}{restoreStoredValuesComboBoxes}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a7e41010a4d7335a00864560da211572c}{refreshComs}}();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_a9905634faaa3d99482d1124d304640f1}{addComRow}}();}
+\DoxyCodeLine{60     uint8\_t \mbox{\hyperlink{class_com_port_widget_controller_a292a1e06cd99299b0274e9de79e1fdee}{rows}} = 0;}
+\DoxyCodeLine{61     QString \mbox{\hyperlink{class_com_port_widget_controller_a203049f3044db3445ae7597fa1f6f6a8}{convertComPort}}(\textcolor{keyword}{const} QString\& comText);}
+\DoxyCodeLine{62     \mbox{\hyperlink{class_service_worker}{ServiceWorker}} *\mbox{\hyperlink{class_com_port_widget_controller_a2e0ae2890b5184f17bb38309eed1f51b}{serviceWorker}};}
+\DoxyCodeLine{63     \mbox{\hyperlink{class_com_port_widget_model}{ComPortWidgetModel}} *\mbox{\hyperlink{class_com_port_widget_controller_a534c08c430b8b0a5497fc959c5277346}{comPortModel}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_com_port_widget_model}{ComPortWidgetModel}}();}
+\DoxyCodeLine{64     \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} \mbox{\hyperlink{class_com_port_widget_controller_a71c8ada6a88187d547b23cb9934dd94d}{dualWorker}} = \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}}();}
+\DoxyCodeLine{65     QWidget *\mbox{\hyperlink{class_com_port_widget_controller_acae59c758d6141b517a543a9e3d35ccb}{parent}};}
+\DoxyCodeLine{66     \mbox{\hyperlink{class_set_handler}{SetHandler}} \mbox{\hyperlink{class_com_port_widget_controller_acb859e7996262f6bdb31a2697e0f4c2b}{setHandler}} = \mbox{\hyperlink{class_set_handler}{SetHandler}}();}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_com_port_widget_controller_aa83dafbb0777f36c9e736134419a4494}{settingsHandler}} = \mbox{\hyperlink{class_settings_handler}{SettingsHandler}}();}
+\DoxyCodeLine{68     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_com_port_widget_controller_af7ea6cd735df57c727297f90f9101bf7}{saveAutoRunStates}}();}
+\DoxyCodeLine{69     \textcolor{keyword}{enum} \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876}{warnings}} \{}
+\DoxyCodeLine{70         \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a7277cfea6960c5ff08155786f1ddbcff}{NOSET}}, \mbox{\hyperlink{class_com_port_widget_controller_a51562f5a28b060884b788794725dc876a46ad16ff28d46f5a6efb06564d7ea08a}{NOCOMPORT}}}
+\DoxyCodeLine{71     \};}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_com_port_widget_controller_ac65a240f50cccaabfca3abda456a0bf0}{checkIfComboIsEmpty}}(\textcolor{keyword}{const} QList<ModeIndexCombobox *> \&toCheck);}
+\DoxyCodeLine{75 \};}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_COMPORTWIDGETCONTROLLER\_H}}
+
+\end{DoxyCode}

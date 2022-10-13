@@ -1,0 +1,34 @@
+\hypertarget{_log_8h_source}{}\doxysection{Log.\+h}
+\label{_log_8h_source}\index{models/Log.h@{models/Log.h}}
+\mbox{\hyperlink{_log_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by dave-\/ on 13-\/7-\/2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSCONNECTOR\_LOG\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSCONNECTOR\_LOG\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <ctime>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{_log_level_enum_8h}{enums/LogLevelEnum.h}}>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_log}{Log}} \{}
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     std::string \mbox{\hyperlink{class_log_a3a12899615237cdcc0414ded1cc19e9c}{logMessage}};}
+\DoxyCodeLine{17     \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} \mbox{\hyperlink{class_log_ac322c18ab96226d22af311668edf8be6}{logLevel}};}
+\DoxyCodeLine{18     std::time\_t \mbox{\hyperlink{class_log_a776537fa9775312fed16f244d2f18848}{logTime}};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{public}:}
+\DoxyCodeLine{21     \mbox{\hyperlink{class_log}{Log}}(std::string \mbox{\hyperlink{class_log_a3a12899615237cdcc0414ded1cc19e9c}{logMessage}}, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} \mbox{\hyperlink{class_log_ac322c18ab96226d22af311668edf8be6}{logLevel}}, std::time\_t \mbox{\hyperlink{class_log_a776537fa9775312fed16f244d2f18848}{logTime}});}
+\DoxyCodeLine{22     std::string \mbox{\hyperlink{class_log_a9507d1e28c39a75e9305c288cb4604a6}{getMessage}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{23     std::string \mbox{\hyperlink{class_log_ac6566a20f2cacb7ec01c992d5dc829eb}{getLevelString}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{24     std::string \mbox{\hyperlink{class_log_a504d1674a06704e5f5d3857f211e802a}{getTimeString}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{25 \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BITSANDDROIDSCONNECTOR\_LOG\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,37 @@
+\hypertarget{outputbundle_8h_source}{}\doxysection{outputbundle.\+h}
+\label{outputbundle_8h_source}\index{models/commands/outputbundle.h@{models/commands/outputbundle.h}}
+\mbox{\hyperlink{outputbundle_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OUTPUTBUNDLE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OUTPUTBUNDLE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QMap>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_serial_port_8hpp}{serial/SerialPort.hpp}}"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_set_8h}{Set.h}}"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classoutput_bundle}{outputBundle}} \{}
+\DoxyCodeLine{10  \textcolor{keyword}{public}:}
+\DoxyCodeLine{11   \mbox{\hyperlink{classoutput_bundle_ac9d44d65c31b444cd28e2ccce4020879}{outputBundle}}();}
+\DoxyCodeLine{12   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_bundle_abe5e055a0b8c234fc34344385308aca4}{setSet}}(\mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}{set}}) \{ this-\/>set = \mbox{\hyperlink{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}{set}}; \};}
+\DoxyCodeLine{13   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_bundle_ae4da518cea9ee305b56be3d295604864}{setSerialPort}}(\mbox{\hyperlink{class_serial_port}{SerialPort}} serialPort) \{ this-\/>\mbox{\hyperlink{classoutput_bundle_a4417963753d2def2c9025624837e0795}{arduino}} = \&serialPort; \};}
+\DoxyCodeLine{14   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_bundle_a94d8cb7f2a4c2824972d5b786a909e1f}{setOutputsInSet}}(QMap<int, Output *> outputs) \{}
+\DoxyCodeLine{15     this-\/>\mbox{\hyperlink{classoutput_bundle_a9b6fe9363e07239d5193be996c515ec2}{outputsInSet}} = outputs;}
+\DoxyCodeLine{16   \};}
+\DoxyCodeLine{17   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_bundle_aff6c7bf3dc8aff82603f6c8eea11b0bc}{setSerialPortString}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{portString}}) \{}
+\DoxyCodeLine{18     this-\/>portString = \mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{portString}};}
+\DoxyCodeLine{19   \};}
+\DoxyCodeLine{20   \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{classoutput_bundle_ae42df39cc29c4284351f3b9755cc0a35}{getSerialPortString}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{portString}}; \}}
+\DoxyCodeLine{21   \mbox{\hyperlink{class_serial_port}{SerialPort}} *\mbox{\hyperlink{classoutput_bundle_abbdcbad938c99553e28508fe22c3a0b7}{getSerialPort}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{classoutput_bundle_a4417963753d2def2c9025624837e0795}{arduino}}; \};}
+\DoxyCodeLine{22   \textcolor{keywordtype}{bool} \mbox{\hyperlink{classoutput_bundle_a50fea7f7cfce7c9348f1d8942581d623}{isOutputInBundle}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24  \textcolor{keyword}{private}:}
+\DoxyCodeLine{25   \mbox{\hyperlink{class_set}{Set}} \mbox{\hyperlink{classoutput_bundle_ae5cc17c78c52fa985f7039f423bd95b5}{set}};}
+\DoxyCodeLine{26   \mbox{\hyperlink{class_serial_port}{SerialPort}} *\mbox{\hyperlink{classoutput_bundle_a4417963753d2def2c9025624837e0795}{arduino}};}
+\DoxyCodeLine{27   \textcolor{keyword}{const} \textcolor{keywordtype}{char} *\mbox{\hyperlink{classoutput_bundle_ab6dfad6bdc74490448c2cae08958ce6e}{portString}};}
+\DoxyCodeLine{28   QMap<int, Output *> \mbox{\hyperlink{classoutput_bundle_a9b6fe9363e07239d5193be996c515ec2}{outputsInSet}};}
+\DoxyCodeLine{29 \};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// OUTPUTBUNDLE\_H}}
+
+\end{DoxyCode}

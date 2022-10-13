@@ -1,0 +1,76 @@
+\hypertarget{output_8h_source}{}\doxysection{output.\+h}
+\label{output_8h_source}\index{models/commands/output.h@{models/commands/output.h}}
+\mbox{\hyperlink{output_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OUTPUT\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OUTPUT\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qstring.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QJsonObject>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_output}{Output}} \{}
+\DoxyCodeLine{9 \textcolor{keyword}{public}:}
+\DoxyCodeLine{10     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_af0c3e18b17220f8f7b676898b7cc25b9}{test}};}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12     \mbox{\hyperlink{class_output_a428c663520336477a12f1a33504eb067}{Output}}();}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14     \mbox{\hyperlink{class_output_a428c663520336477a12f1a33504eb067}{Output}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id}, std::string \mbox{\hyperlink{class_output_ada632d1eb8c7ff94c14ff6af356b4074}{outputName}}, std::string \mbox{\hyperlink{class_output_a75ff41e88c3925adf2e6d8f00c44fadb}{metric}}, \textcolor{keywordtype}{float} \mbox{\hyperlink{class_output_acab002fd535197d128b07df3cf7739fc}{updateEvery}},}
+\DoxyCodeLine{15            \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_aaf8e33a1951729b98ed42cd5c8e8d861}{dataType}}, QString \mbox{\hyperlink{class_output_abd0632707a994ad21304f3c93a0a727a}{cbText}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_a90ea8948f7f3a515a07e8e6d88b14167}{prefix}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_ad8947f814e88ada4f3486e978d364f62}{type}});}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a32b5ea198147adeb0c7160776fcecfe0}{setPrefix}}(\textcolor{keywordtype}{int} prefixToSet) \{ this-\/>\mbox{\hyperlink{class_output_a90ea8948f7f3a515a07e8e6d88b14167}{prefix}} = prefixToSet; \};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a6bf9f7bd85010db3b92f5d9a0c394cf3}{setId}}(\textcolor{keywordtype}{int} idToSet) \{ this-\/>\textcolor{keywordtype}{id} = idToSet; \};}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_ad959c1e241bd8cc6262923a70e53b6e1}{getOffset}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_output_af659a512489d84388e450f062d6b4f54}{offset}}; \};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a7b8782ab0f78312a58019ecd13da4f9d}{setOffset}}(\textcolor{keywordtype}{int} offsetToSet) \{ \mbox{\hyperlink{class_output_af659a512489d84388e450f062d6b4f54}{offset}} = offsetToSet; \};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a3ad0e4796ef82e9a9a0e0c58f5ab1d83}{setOutputName}}(std::string outputNameToSet) \{}
+\DoxyCodeLine{26         \mbox{\hyperlink{class_output_ada632d1eb8c7ff94c14ff6af356b4074}{outputName}} = outputNameToSet;}
+\DoxyCodeLine{27     \};}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a698219b6a452df1ee394ea93b659278c}{setUpdateEvery}}(\textcolor{keywordtype}{float} updateEveryToSet) \{}
+\DoxyCodeLine{30         \mbox{\hyperlink{class_output_acab002fd535197d128b07df3cf7739fc}{updateEvery}} = updateEveryToSet;}
+\DoxyCodeLine{31     \};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a207d1c40e254b84a3b8cf0a955bdd28e}{setType}}(\textcolor{keywordtype}{int} typeToSet) \{ this-\/>\mbox{\hyperlink{class_output_ad8947f814e88ada4f3486e978d364f62}{type}} = typeToSet; \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a52a6f5f2767d82a79f7a131aed4621c6}{setCbText}}(QString cbTextToSet) \{ this-\/>\mbox{\hyperlink{class_output_abd0632707a994ad21304f3c93a0a727a}{cbText}} = cbTextToSet; \};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     std::string \mbox{\hyperlink{class_output_ae9be92dd82bd487118a46598e2956b3b}{getMetric}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_output_a75ff41e88c3925adf2e6d8f00c44fadb}{metric}}; \};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_output_aaed86bd8a6fd06b0ac85836a629d4875}{getUpdateEvery}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_output_acab002fd535197d128b07df3cf7739fc}{updateEvery}}; \};}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     std::string \mbox{\hyperlink{class_output_ab6105ef646dfe6ba4fee2c95dfb05a21}{getOutputName}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_output_ada632d1eb8c7ff94c14ff6af356b4074}{outputName}}; \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_ae6ed98025095ce9efcb01548157de687}{getId}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_output_a82f6b792393459ce1163022f5a762e30}{id}}; \};}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_a9d3b48612dd8808431306ea50e97455f}{getPrefix}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_output_a90ea8948f7f3a515a07e8e6d88b14167}{prefix}}; \};}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_aad958655d460b519a9d6611f23519b83}{getType}}() \{ \textcolor{keywordflow}{return} this-\/>\mbox{\hyperlink{class_output_ad8947f814e88ada4f3486e978d364f62}{type}}; \};}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     QString \mbox{\hyperlink{class_output_a03e213cf9cbb41743b2bbb8235e58663}{getCbText}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_output_abd0632707a994ad21304f3c93a0a727a}{cbText}}; \};}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     QJsonObject \mbox{\hyperlink{class_output_a77276b99f044821ca45b91d2abd85937}{toJson}}() \textcolor{keyword}{const};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_a7efdf36d27d1a824f2ff51adaf665260}{setDelay}}(uint8\_t delayToSet);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     uint8\_t \mbox{\hyperlink{class_output_aacc798e8a9fdb5b12d2ac0fe744b0d1a}{getDelay}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{keyword}{private}:}
+\DoxyCodeLine{58     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_a82f6b792393459ce1163022f5a762e30}{id}};}
+\DoxyCodeLine{59     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_af659a512489d84388e450f062d6b4f54}{offset}};}
+\DoxyCodeLine{60     std::string \mbox{\hyperlink{class_output_ada632d1eb8c7ff94c14ff6af356b4074}{outputName}};}
+\DoxyCodeLine{61     std::string \mbox{\hyperlink{class_output_a75ff41e88c3925adf2e6d8f00c44fadb}{metric}};}
+\DoxyCodeLine{62     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_output_acab002fd535197d128b07df3cf7739fc}{updateEvery}};}
+\DoxyCodeLine{63     uint8\_t \mbox{\hyperlink{class_output_aaf8e33a1951729b98ed42cd5c8e8d861}{dataType}};}
+\DoxyCodeLine{64     QString \mbox{\hyperlink{class_output_abd0632707a994ad21304f3c93a0a727a}{cbText}};}
+\DoxyCodeLine{65     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_a90ea8948f7f3a515a07e8e6d88b14167}{prefix}};}
+\DoxyCodeLine{66     uint8\_t \mbox{\hyperlink{class_output_ad8947f814e88ada4f3486e978d364f62}{type}};}
+\DoxyCodeLine{67     uint8\_t \mbox{\hyperlink{class_output_ab54c9250d91d88ccf80705a9d7c8ea26}{delay}} = 0;}
+\DoxyCodeLine{68 \};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// OUTPUT\_H}}
+
+\end{DoxyCode}

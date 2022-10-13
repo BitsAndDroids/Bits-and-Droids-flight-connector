@@ -1,0 +1,107 @@
+\hypertarget{class_com_port_widget_model}{}\doxysection{Com\+Port\+Widget\+Model Class Reference}
+\label{class_com_port_widget_model}\index{ComPortWidgetModel@{ComPortWidgetModel}}
+
+
+{\ttfamily \#include $<$Com\+Port\+Widget\+Model.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_com_port_widget_model_a20ff2ffa479daca86ea6aba1aaec5f4e}{Com\+Port\+Widget\+Model}} ()
+\item 
+QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ \mbox{\hyperlink{class_com_port_widget_model_af53957ec1d71b7a4f3c8c70d05424508}{get\+Available\+Sets}} ()
+\item 
+QList$<$ QString $>$ $\ast$ \mbox{\hyperlink{class_com_port_widget_model_a6cad7a72d674a3fec1ebcbec3ae9cfe4}{get\+Available\+Com\+Ports}} ()
+\item 
+QList$<$ QString $>$ $\ast$ \mbox{\hyperlink{class_com_port_widget_model_a7b20f057c65695a185915870a0f45474}{load\+Available\+Com\+Ports}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_model_ab633d7b188e95987a4c16bebd09d4e46}{refresh}} ()
+\item 
+void \mbox{\hyperlink{class_com_port_widget_model_a01b7e5adad9fb3843b34cac8f3caa2f8}{add\+Com\+Port}} (QString com\+Port)
+\item 
+void \mbox{\hyperlink{class_com_port_widget_model_aab2e95cec84f98209fd3b9d9db880d02}{clear\+Com\+Port\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ \mbox{\hyperlink{class_com_port_widget_model_aafef4fa66a3346e44a72ff033221c019}{available\+Sets}} = new QList$<$\mbox{\hyperlink{class_set}{Set}}$>$()
+\item 
+QList$<$ QString $>$ $\ast$ \mbox{\hyperlink{class_com_port_widget_model_ac1e75e73ebf44e16ffef27b50bdd1ac7}{available\+Com\+Ports}} = new QList$<$QString$>$()
+\item 
+\mbox{\hyperlink{class_set_handler}{Set\+Handler}} $\ast$ \mbox{\hyperlink{class_com_port_widget_model_a4023e1e1b4050c85ba9fb8339f3bfdbe}{set\+Handler}} = new \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_com_port_widget_model_a20ff2ffa479daca86ea6aba1aaec5f4e}\label{class_com_port_widget_model_a20ff2ffa479daca86ea6aba1aaec5f4e}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!ComPortWidgetModel@{ComPortWidgetModel}}
+\index{ComPortWidgetModel@{ComPortWidgetModel}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{ComPortWidgetModel()}{ComPortWidgetModel()}}
+{\footnotesize\ttfamily Com\+Port\+Widget\+Model\+::\+Com\+Port\+Widget\+Model (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_com_port_widget_model_a01b7e5adad9fb3843b34cac8f3caa2f8}\label{class_com_port_widget_model_a01b7e5adad9fb3843b34cac8f3caa2f8}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!addComPort@{addComPort}}
+\index{addComPort@{addComPort}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{addComPort()}{addComPort()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Model\+::add\+Com\+Port (\begin{DoxyParamCaption}\item[{QString}]{com\+Port }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_port_widget_model_aab2e95cec84f98209fd3b9d9db880d02}\label{class_com_port_widget_model_aab2e95cec84f98209fd3b9d9db880d02}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!clearComPortData@{clearComPortData}}
+\index{clearComPortData@{clearComPortData}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{clearComPortData()}{clearComPortData()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Model\+::clear\+Com\+Port\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_port_widget_model_a6cad7a72d674a3fec1ebcbec3ae9cfe4}\label{class_com_port_widget_model_a6cad7a72d674a3fec1ebcbec3ae9cfe4}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!getAvailableComPorts@{getAvailableComPorts}}
+\index{getAvailableComPorts@{getAvailableComPorts}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{getAvailableComPorts()}{getAvailableComPorts()}}
+{\footnotesize\ttfamily QList$<$ QString $>$ $\ast$ Com\+Port\+Widget\+Model\+::get\+Available\+Com\+Ports (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_com_port_widget_model_af53957ec1d71b7a4f3c8c70d05424508}\label{class_com_port_widget_model_af53957ec1d71b7a4f3c8c70d05424508}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!getAvailableSets@{getAvailableSets}}
+\index{getAvailableSets@{getAvailableSets}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{getAvailableSets()}{getAvailableSets()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_set}{Set}} $>$ $\ast$ Com\+Port\+Widget\+Model\+::get\+Available\+Sets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_com_port_widget_model_a7b20f057c65695a185915870a0f45474}\label{class_com_port_widget_model_a7b20f057c65695a185915870a0f45474}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!loadAvailableComPorts@{loadAvailableComPorts}}
+\index{loadAvailableComPorts@{loadAvailableComPorts}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{loadAvailableComPorts()}{loadAvailableComPorts()}}
+{\footnotesize\ttfamily QList$<$ QString $>$ $\ast$ Com\+Port\+Widget\+Model\+::load\+Available\+Com\+Ports (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_com_port_widget_model_ab633d7b188e95987a4c16bebd09d4e46}\label{class_com_port_widget_model_ab633d7b188e95987a4c16bebd09d4e46}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!refresh@{refresh}}
+\index{refresh@{refresh}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{refresh()}{refresh()}}
+{\footnotesize\ttfamily void Com\+Port\+Widget\+Model\+::refresh (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_com_port_widget_model_ac1e75e73ebf44e16ffef27b50bdd1ac7}\label{class_com_port_widget_model_ac1e75e73ebf44e16ffef27b50bdd1ac7}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!availableComPorts@{availableComPorts}}
+\index{availableComPorts@{availableComPorts}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{availableComPorts}{availableComPorts}}
+{\footnotesize\ttfamily QList$<$QString$>$$\ast$ Com\+Port\+Widget\+Model\+::available\+Com\+Ports = new QList$<$QString$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_model_aafef4fa66a3346e44a72ff033221c019}\label{class_com_port_widget_model_aafef4fa66a3346e44a72ff033221c019}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!availableSets@{availableSets}}
+\index{availableSets@{availableSets}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{availableSets}{availableSets}}
+{\footnotesize\ttfamily QList$<$\mbox{\hyperlink{class_set}{Set}}$>$$\ast$ Com\+Port\+Widget\+Model\+::available\+Sets = new QList$<$\mbox{\hyperlink{class_set}{Set}}$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_com_port_widget_model_a4023e1e1b4050c85ba9fb8339f3bfdbe}\label{class_com_port_widget_model_a4023e1e1b4050c85ba9fb8339f3bfdbe}} 
+\index{ComPortWidgetModel@{ComPortWidgetModel}!setHandler@{setHandler}}
+\index{setHandler@{setHandler}!ComPortWidgetModel@{ComPortWidgetModel}}
+\doxysubsubsection{\texorpdfstring{setHandler}{setHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set_handler}{Set\+Handler}}$\ast$ Com\+Port\+Widget\+Model\+::set\+Handler = new \mbox{\hyperlink{class_set_handler}{Set\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/models/\mbox{\hyperlink{_com_port_widget_model_8h}{Com\+Port\+Widget\+Model.\+h}}\item 
+dashboard/models/\mbox{\hyperlink{_com_port_widget_model_8cpp}{Com\+Port\+Widget\+Model.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,181 @@
+\hypertarget{class_dashboard_controller}{}\doxysection{Dashboard\+Controller Class Reference}
+\label{class_dashboard_controller}\index{DashboardController@{DashboardController}}
+
+
+{\ttfamily \#include $<$Dashboard\+Controller.\+h$>$}
+
+Inheritance diagram for Dashboard\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_dashboard_controller}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_ac700c444bd0f8743b7e824eafbb63eb1}{update\+Button\+Clicked}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a148694bfaa86e84be60ef7f10a2cd22e}{send\+WASMCommand}} (const char $\ast$data)
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a9df3feb8772215ae0e11d020c5e66f39}{game\+Connection\+Made}} (int state)
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a9fc4c588deddd36678011c510d2ec941}{board\+Connection\+Made}} (int state)
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_ab3d8913b3193c2e9289c744332b0e8b7}{exit\+Program}} ()
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a6cc1e9c553cd24f3b6cf83f0dcec2989}{open\+Log\+Window}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_dashboard_controller_a472a3c0be43f165b78672184a05dbc66}{Dashboard\+Controller}} (QMain\+Window $\ast$\mbox{\hyperlink{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}{parent}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a484a8c3d5f67c6016d0a97aaf380caa8}{update\+Event\+File}} ()
+\item 
+QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ \mbox{\hyperlink{class_dashboard_controller_a3a426c3d102c297e36dd8d3fa3d2fd67}{get\+Checkboxes\+By\+Pattern}} (const QRegular\+Expression \&pattern)
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a643dc91d5b8c277293914693d6b1e3f6}{check\+For\+Updates}} (bool silent\+Check)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_dashboard_controller_a9694d603ba0d6374f3f83566ab3fc1fd}{install\+Wasm}} ()
+\item 
+bool \mbox{\hyperlink{class_dashboard_controller_aa8b3941f0d3afee0cfec376554dc15b5}{check\+If\+Combo\+Is\+Empty}} (const QList$<$ \mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$ $>$ \&to\+Check)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_path_handler}{Path\+Handler}} \mbox{\hyperlink{class_dashboard_controller_a2f9db62ece1e7594ad8e74755d5f90f9}{path\+Handler}} = \mbox{\hyperlink{class_path_handler}{Path\+Handler}}()
+\item 
+\mbox{\hyperlink{class_message_caster}{Message\+Caster}} \mbox{\hyperlink{class_dashboard_controller_afe5b862dabb2cabc644f506c25f69848}{message\+Caster}} = \mbox{\hyperlink{class_message_caster}{Message\+Caster}}()
+\item 
+QMain\+Window $\ast$ \mbox{\hyperlink{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}{parent}}
+\item 
+QString \mbox{\hyperlink{class_dashboard_controller_a15f318e5eca93d587bfaf344463116f4}{application\+Events\+Path}} = path\+Handler.\+get\+Writable\+Event\+Path()
+\item 
+\mbox{\hyperlink{class_service_worker}{Service\+Worker}} $\ast$ \mbox{\hyperlink{class_dashboard_controller_a0c7f8e56cae2949990998999d7a168ee}{service\+Worker}} = new \mbox{\hyperlink{class_service_worker}{Service\+Worker}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_dashboard_controller_a472a3c0be43f165b78672184a05dbc66}\label{class_dashboard_controller_a472a3c0be43f165b78672184a05dbc66}} 
+\index{DashboardController@{DashboardController}!DashboardController@{DashboardController}}
+\index{DashboardController@{DashboardController}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{DashboardController()}{DashboardController()}}
+{\footnotesize\ttfamily Dashboard\+Controller\+::\+Dashboard\+Controller (\begin{DoxyParamCaption}\item[{QMain\+Window $\ast$}]{parent }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_dashboard_controller_a9fc4c588deddd36678011c510d2ec941}\label{class_dashboard_controller_a9fc4c588deddd36678011c510d2ec941}} 
+\index{DashboardController@{DashboardController}!boardConnectionMade@{boardConnectionMade}}
+\index{boardConnectionMade@{boardConnectionMade}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{boardConnectionMade}{boardConnectionMade}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::board\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a643dc91d5b8c277293914693d6b1e3f6}\label{class_dashboard_controller_a643dc91d5b8c277293914693d6b1e3f6}} 
+\index{DashboardController@{DashboardController}!checkForUpdates@{checkForUpdates}}
+\index{checkForUpdates@{checkForUpdates}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{checkForUpdates}{checkForUpdates}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::check\+For\+Updates (\begin{DoxyParamCaption}\item[{bool}]{silent\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_aa8b3941f0d3afee0cfec376554dc15b5}\label{class_dashboard_controller_aa8b3941f0d3afee0cfec376554dc15b5}} 
+\index{DashboardController@{DashboardController}!checkIfComboIsEmpty@{checkIfComboIsEmpty}}
+\index{checkIfComboIsEmpty@{checkIfComboIsEmpty}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{checkIfComboIsEmpty()}{checkIfComboIsEmpty()}}
+{\footnotesize\ttfamily bool Dashboard\+Controller\+::check\+If\+Combo\+Is\+Empty (\begin{DoxyParamCaption}\item[{const QList$<$ \mbox{\hyperlink{class_mode_index_combobox}{Mode\+Index\+Combobox}} $\ast$ $>$ \&}]{to\+Check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_ab3d8913b3193c2e9289c744332b0e8b7}\label{class_dashboard_controller_ab3d8913b3193c2e9289c744332b0e8b7}} 
+\index{DashboardController@{DashboardController}!exitProgram@{exitProgram}}
+\index{exitProgram@{exitProgram}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{exitProgram}{exitProgram}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::exit\+Program (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a9df3feb8772215ae0e11d020c5e66f39}\label{class_dashboard_controller_a9df3feb8772215ae0e11d020c5e66f39}} 
+\index{DashboardController@{DashboardController}!gameConnectionMade@{gameConnectionMade}}
+\index{gameConnectionMade@{gameConnectionMade}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{gameConnectionMade}{gameConnectionMade}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::game\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a3a426c3d102c297e36dd8d3fa3d2fd67}\label{class_dashboard_controller_a3a426c3d102c297e36dd8d3fa3d2fd67}} 
+\index{DashboardController@{DashboardController}!getCheckboxesByPattern@{getCheckboxesByPattern}}
+\index{getCheckboxesByPattern@{getCheckboxesByPattern}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{getCheckboxesByPattern}{getCheckboxesByPattern}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{class_mode_index_checkbox}{Mode\+Index\+Checkbox}} $\ast$ $>$ Dashboard\+Controller\+::get\+Checkboxes\+By\+Pattern (\begin{DoxyParamCaption}\item[{const QRegular\+Expression \&}]{pattern }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a9694d603ba0d6374f3f83566ab3fc1fd}\label{class_dashboard_controller_a9694d603ba0d6374f3f83566ab3fc1fd}} 
+\index{DashboardController@{DashboardController}!installWasm@{installWasm}}
+\index{installWasm@{installWasm}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{installWasm()}{installWasm()}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::install\+Wasm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a6cc1e9c553cd24f3b6cf83f0dcec2989}\label{class_dashboard_controller_a6cc1e9c553cd24f3b6cf83f0dcec2989}} 
+\index{DashboardController@{DashboardController}!openLogWindow@{openLogWindow}}
+\index{openLogWindow@{openLogWindow}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{openLogWindow}{openLogWindow}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::open\+Log\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a148694bfaa86e84be60ef7f10a2cd22e}\label{class_dashboard_controller_a148694bfaa86e84be60ef7f10a2cd22e}} 
+\index{DashboardController@{DashboardController}!sendWASMCommand@{sendWASMCommand}}
+\index{sendWASMCommand@{sendWASMCommand}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{sendWASMCommand}{sendWASMCommand}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::send\+WASMCommand (\begin{DoxyParamCaption}\item[{const char $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_ac700c444bd0f8743b7e824eafbb63eb1}\label{class_dashboard_controller_ac700c444bd0f8743b7e824eafbb63eb1}} 
+\index{DashboardController@{DashboardController}!updateButtonClicked@{updateButtonClicked}}
+\index{updateButtonClicked@{updateButtonClicked}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{updateButtonClicked}{updateButtonClicked}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::update\+Button\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a484a8c3d5f67c6016d0a97aaf380caa8}\label{class_dashboard_controller_a484a8c3d5f67c6016d0a97aaf380caa8}} 
+\index{DashboardController@{DashboardController}!updateEventFile@{updateEventFile}}
+\index{updateEventFile@{updateEventFile}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{updateEventFile}{updateEventFile}}
+{\footnotesize\ttfamily void Dashboard\+Controller\+::update\+Event\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_dashboard_controller_a15f318e5eca93d587bfaf344463116f4}\label{class_dashboard_controller_a15f318e5eca93d587bfaf344463116f4}} 
+\index{DashboardController@{DashboardController}!applicationEventsPath@{applicationEventsPath}}
+\index{applicationEventsPath@{applicationEventsPath}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{applicationEventsPath}{applicationEventsPath}}
+{\footnotesize\ttfamily QString Dashboard\+Controller\+::application\+Events\+Path = path\+Handler.\+get\+Writable\+Event\+Path()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_afe5b862dabb2cabc644f506c25f69848}\label{class_dashboard_controller_afe5b862dabb2cabc644f506c25f69848}} 
+\index{DashboardController@{DashboardController}!messageCaster@{messageCaster}}
+\index{messageCaster@{messageCaster}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{messageCaster}{messageCaster}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_message_caster}{Message\+Caster}} Dashboard\+Controller\+::message\+Caster = \mbox{\hyperlink{class_message_caster}{Message\+Caster}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}\label{class_dashboard_controller_a095fd499222b208454b61ffd6f55142c}} 
+\index{DashboardController@{DashboardController}!parent@{parent}}
+\index{parent@{parent}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily QMain\+Window$\ast$ Dashboard\+Controller\+::parent\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a2f9db62ece1e7594ad8e74755d5f90f9}\label{class_dashboard_controller_a2f9db62ece1e7594ad8e74755d5f90f9}} 
+\index{DashboardController@{DashboardController}!pathHandler@{pathHandler}}
+\index{pathHandler@{pathHandler}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{pathHandler}{pathHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_path_handler}{Path\+Handler}} Dashboard\+Controller\+::path\+Handler = \mbox{\hyperlink{class_path_handler}{Path\+Handler}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_dashboard_controller_a0c7f8e56cae2949990998999d7a168ee}\label{class_dashboard_controller_a0c7f8e56cae2949990998999d7a168ee}} 
+\index{DashboardController@{DashboardController}!serviceWorker@{serviceWorker}}
+\index{serviceWorker@{serviceWorker}!DashboardController@{DashboardController}}
+\doxysubsubsection{\texorpdfstring{serviceWorker}{serviceWorker}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_service_worker}{Service\+Worker}}$\ast$ Dashboard\+Controller\+::service\+Worker = new \mbox{\hyperlink{class_service_worker}{Service\+Worker}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+dashboard/controller/\mbox{\hyperlink{_dashboard_controller_8h}{Dashboard\+Controller.\+h}}\item 
+dashboard/controller/\mbox{\hyperlink{_dashboard_controller_8cpp}{Dashboard\+Controller.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,85 @@
+\hypertarget{outputmenu_8h_source}{}\doxysection{outputmenu.\+h}
+\label{outputmenu_8h_source}\index{outputmenu/outputmenu.h@{outputmenu/outputmenu.h}}
+\mbox{\hyperlink{outputmenu_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OUTPUTMENU\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OUTPUTMENU\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{outputhandler_8h}{handlers/outputhandler.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sethandler_8h}{outputmenu/handlers/sethandler.h}}"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QSettings>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QStandardPaths>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{formbuilder_8h}{widgets/settingsmenu/builder/formbuilder.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_output_details_builder_8h}{outputmenu/builder/OutputDetailsBuilder.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_output_tab_builder_8h}{outputmenu/builder/OutputTabBuilder.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_setrow_builder_8h}{outputmenu/builder/SetrowBuilder.h}}"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_ui}{Ui}} \{}
+\DoxyCodeLine{19     \textcolor{keyword}{class }\mbox{\hyperlink{class_ui_1_1_output_menu}{OutputMenu}};}
+\DoxyCodeLine{20 \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_output_menu}{OutputMenu}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{23 Q\_OBJECT}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25 \textcolor{keyword}{public}:}
+\DoxyCodeLine{26     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_output_menu}{OutputMenu}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \mbox{\hyperlink{class_output_menu_a5afd08771879649545a0a7b142108d2b}{\string~OutputMenu}}();}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_output_menu_a361d3c4abd576703e7995f50b388510f}{isOpen}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_output_menu_a7c6772c2d6c89c225ff64ec2ebe5c1dc}{open}}; \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 signals:}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a242a47850858d1bf56775ed1af1c193b}{closedOutputMenu}}();}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a15a5723b8a0a71abf925e1415d988162}{displaySetDetails}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a17e27fc6ce794785d5b110b18bde760e}{editSetSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_aa18698a45def2935a4220f32a9e7f51f}{deleteSetSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_aeb65d03e5ef2f2efe4631c70f8aa0f8e}{showSetDetailsSignal}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{private}:}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_output_menu_a7c6772c2d6c89c225ff64ec2ebe5c1dc}{open}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{47     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_output_menu_a40e203ca2b93eee74d1b1ec4aad11195}{activeSet}};}
+\DoxyCodeLine{48     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_output_menu_a1f7995c1402113c4f238a95337269d07}{settingsHandler}};}
+\DoxyCodeLine{49     \mbox{\hyperlink{class_set_handler}{SetHandler}} \mbox{\hyperlink{class_output_menu_a111d4846551cd881873d50c3c48af3cc}{setHandler}};}
+\DoxyCodeLine{50     \mbox{\hyperlink{class_form_builder}{FormBuilder}} \mbox{\hyperlink{class_output_menu_a094cf670b365f1a2635362eea519bde8}{formBuilder}};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \mbox{\hyperlink{class_output_details_builder}{OutputDetailsBuilder}} \mbox{\hyperlink{class_output_menu_ac155f0b1edfe7c9a189984425426fc04}{setDetaisBuilder}} = \mbox{\hyperlink{class_output_details_builder}{OutputDetailsBuilder}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_output_tab_builder}{OutputTabBuilder}} \mbox{\hyperlink{class_output_menu_a1b845c12b865559ebc1528181d68eead}{outputTabBuilder}} = \mbox{\hyperlink{class_output_tab_builder}{OutputTabBuilder}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{54     \mbox{\hyperlink{class_setrow_builder}{SetrowBuilder}} \mbox{\hyperlink{class_output_menu_aa2b25a79c515f611f22af36694067363}{setrowBuilder}} = \mbox{\hyperlink{class_setrow_builder}{SetrowBuilder}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{55     \mbox{\hyperlink{classoutput_handler}{outputHandler}} *\mbox{\hyperlink{classoutput_handler}{outputHandler}} = \textcolor{keyword}{new} \textcolor{keyword}{class }\mbox{\hyperlink{classoutput_handler}{outputHandler}}();}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     QString \mbox{\hyperlink{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}{path}} =}
+\DoxyCodeLine{58             QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);}
+\DoxyCodeLine{59     QSettings *\mbox{\hyperlink{class_output_menu_a4dbbe2a3f72b8e56cba5df9457eca502}{settings}} = \textcolor{keyword}{new} QSettings(\mbox{\hyperlink{class_output_menu_a1dc2449e3918a2ac58e42c2cb6ee2fe1}{path}} + \textcolor{stringliteral}{"{}/Bits and Droids/settings.ini"{}},}
+\DoxyCodeLine{60                                         QSettings::IniFormat);}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a13b0299720db692519c64c3b6a8bf01f}{closeEvent}}(QCloseEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a2275e4a7df62d7133d9a650c14f58a8a}{addMenuBar}}();}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a2e2d5907406781f3d6a1f601a9462593}{editEvent}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{69     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_ae3fd8883a8021b4554dab2a4ce8e0636}{deleteSet}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_ab5c64c9089cd595dbff9fa1f5ded4eb4}{showSetDetails}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_ac17e1722848630a10009dea27b6057d2}{editSet}}(QString \textcolor{keywordtype}{id});}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a14a08a7d69284c1b21ec0ccdd6af36e3}{importSet}}();}
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_output_menu_a656d8a9d140d61aecfe6be4fa233428c}{createSet}}();}
+\DoxyCodeLine{77 \};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// OUTPUTMENU\_H}}
+
+\end{DoxyCode}

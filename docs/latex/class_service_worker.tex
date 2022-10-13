@@ -1,0 +1,202 @@
+\hypertarget{class_service_worker}{}\doxysection{Service\+Worker Class Reference}
+\label{class_service_worker}\index{ServiceWorker@{ServiceWorker}}
+
+
+{\ttfamily \#include $<$Service\+Worker.\+h$>$}
+
+Inheritance diagram for Service\+Worker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_service_worker}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_service_worker_abf0b86e80c3168f16efe463f28e2d9c2}{log\+Message}} (const std\+::string \&message, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}} level)
+\item 
+void \mbox{\hyperlink{class_service_worker_a6880bb39064640a1c553e3e4d663b361}{send\+WASMData}} (const char $\ast$data)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_service_worker_aeb9a07ba9f7d49977edad3ff1e6ef2c1}{game\+Connection\+Made}} (int state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_service_worker_ab26f58241e9e78ee5acee1d43bb13578}{Service\+Worker}} ()
+\item 
+\mbox{\hyperlink{class_service_worker_a35d0dd1a9ca9d3e931795780c74ea2b6}{$\sim$\+Service\+Worker}} () override
+\item 
+\mbox{\hyperlink{class_logger_service}{Logger\+Service}} $\ast$ \mbox{\hyperlink{class_service_worker_aa919d66ef015f413608cc70f6e3179c0}{get\+Logger\+Service}} ()
+\item 
+void \mbox{\hyperlink{class_service_worker_ab3d517ffcaeeeb464a3bd39c4385102b}{set\+Connection\+Closed}} (bool)
+\item 
+void \mbox{\hyperlink{class_service_worker_a1c493897cbe21af1db52f950a8a7bfb0}{set\+Stop\+Service\+Worker}} (bool state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QMutex \mbox{\hyperlink{class_service_worker_aac74d7edf7f255b5de8634d5bb95335d}{mutex}}
+\item 
+QWait\+Condition \mbox{\hyperlink{class_service_worker_af3b8c59916728b51836f48eae95ab33c}{condition}}
+\item 
+bool \mbox{\hyperlink{class_service_worker_a9d56a46ec6e571ae43b092c7e7cc0713}{stop\+Service\+Worker}} = false
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4e}{EVENT\+\_\+\+ID}} \{ \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eaf87288c9dc23e77e8fe9e2e575058a1b}{EVENT\+\_\+\+SIM\+\_\+\+START}}
+, \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eae0a6c3a84110fc35b1034ef4aad80d85}{EVENT\+\_\+1\+\_\+\+SECOND}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_service_worker_a212364f4053082fac54e1f43a23e51ef}{run}} () override
+\item 
+void \mbox{\hyperlink{class_service_worker_a58258e9d4b92affaa6ec6ca7b946ec92}{start\+Services}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_service_worker_ab4644a8a606430478c06287a87c5ca6c}{My\+Dispatch\+Proc\+RD}} (\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\+\_\+\+RECV}} $\ast$p\+Data, DWORD cb\+Data, void $\ast$p\+Context)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_service_worker_a1f4d6840c718055dc63654f3253d4b55}{connection\+Closed}} = true
+\item 
+\mbox{\hyperlink{class_logger_service}{Logger\+Service}} $\ast$ \mbox{\hyperlink{class_service_worker_aaa95b2f3a553eb77329ad0951c1609f0}{logger}} = new \mbox{\hyperlink{class_logger_service}{Logger\+Service}}()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4e}\label{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4e}} 
+\index{ServiceWorker@{ServiceWorker}!EVENT\_ID@{EVENT\_ID}}
+\index{EVENT\_ID@{EVENT\_ID}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{EVENT\_ID}{EVENT\_ID}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4e}{Service\+Worker\+::\+EVENT\+\_\+\+ID}}\hspace{0.3cm}{\ttfamily [private]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENT\_SIM\_START@{EVENT\_SIM\_START}!ServiceWorker@{ServiceWorker}}\index{ServiceWorker@{ServiceWorker}!EVENT\_SIM\_START@{EVENT\_SIM\_START}}}\mbox{\Hypertarget{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eaf87288c9dc23e77e8fe9e2e575058a1b}\label{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eaf87288c9dc23e77e8fe9e2e575058a1b}} 
+EVENT\+\_\+\+SIM\+\_\+\+START&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENT\_1\_SECOND@{EVENT\_1\_SECOND}!ServiceWorker@{ServiceWorker}}\index{ServiceWorker@{ServiceWorker}!EVENT\_1\_SECOND@{EVENT\_1\_SECOND}}}\mbox{\Hypertarget{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eae0a6c3a84110fc35b1034ef4aad80d85}\label{class_service_worker_ae7c2bd318ecdb6cd4fe81f8461ab6a4eae0a6c3a84110fc35b1034ef4aad80d85}} 
+EVENT\+\_\+1\+\_\+\+SECOND&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_service_worker_ab26f58241e9e78ee5acee1d43bb13578}\label{class_service_worker_ab26f58241e9e78ee5acee1d43bb13578}} 
+\index{ServiceWorker@{ServiceWorker}!ServiceWorker@{ServiceWorker}}
+\index{ServiceWorker@{ServiceWorker}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{ServiceWorker()}{ServiceWorker()}}
+{\footnotesize\ttfamily Service\+Worker\+::\+Service\+Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_worker_a35d0dd1a9ca9d3e931795780c74ea2b6}\label{class_service_worker_a35d0dd1a9ca9d3e931795780c74ea2b6}} 
+\index{ServiceWorker@{ServiceWorker}!````~ServiceWorker@{$\sim$ServiceWorker}}
+\index{````~ServiceWorker@{$\sim$ServiceWorker}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{$\sim$ServiceWorker()}{~ServiceWorker()}}
+{\footnotesize\ttfamily Service\+Worker\+::$\sim$\+Service\+Worker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_service_worker_aeb9a07ba9f7d49977edad3ff1e6ef2c1}\label{class_service_worker_aeb9a07ba9f7d49977edad3ff1e6ef2c1}} 
+\index{ServiceWorker@{ServiceWorker}!gameConnectionMade@{gameConnectionMade}}
+\index{gameConnectionMade@{gameConnectionMade}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{gameConnectionMade}{gameConnectionMade}}
+{\footnotesize\ttfamily void Service\+Worker\+::game\+Connection\+Made (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_service_worker_aa919d66ef015f413608cc70f6e3179c0}\label{class_service_worker_aa919d66ef015f413608cc70f6e3179c0}} 
+\index{ServiceWorker@{ServiceWorker}!getLoggerService@{getLoggerService}}
+\index{getLoggerService@{getLoggerService}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{getLoggerService()}{getLoggerService()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_logger_service}{Logger\+Service}} $\ast$ Service\+Worker\+::get\+Logger\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_worker_abf0b86e80c3168f16efe463f28e2d9c2}\label{class_service_worker_abf0b86e80c3168f16efe463f28e2d9c2}} 
+\index{ServiceWorker@{ServiceWorker}!logMessage@{logMessage}}
+\index{logMessage@{logMessage}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{logMessage}{logMessage}}
+{\footnotesize\ttfamily void Service\+Worker\+::log\+Message (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{message,  }\item[{\mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{Log\+Level}}}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_service_worker_ab4644a8a606430478c06287a87c5ca6c}\label{class_service_worker_ab4644a8a606430478c06287a87c5ca6c}} 
+\index{ServiceWorker@{ServiceWorker}!MyDispatchProcRD@{MyDispatchProcRD}}
+\index{MyDispatchProcRD@{MyDispatchProcRD}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{MyDispatchProcRD()}{MyDispatchProcRD()}}
+{\footnotesize\ttfamily void Service\+Worker\+::\+My\+Dispatch\+Proc\+RD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\+\_\+\+RECV}} $\ast$}]{p\+Data,  }\item[{DWORD}]{cb\+Data,  }\item[{void $\ast$}]{p\+Context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_service_worker_a212364f4053082fac54e1f43a23e51ef}\label{class_service_worker_a212364f4053082fac54e1f43a23e51ef}} 
+\index{ServiceWorker@{ServiceWorker}!run@{run}}
+\index{run@{run}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily void Service\+Worker\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_service_worker_a6880bb39064640a1c553e3e4d663b361}\label{class_service_worker_a6880bb39064640a1c553e3e4d663b361}} 
+\index{ServiceWorker@{ServiceWorker}!sendWASMData@{sendWASMData}}
+\index{sendWASMData@{sendWASMData}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{sendWASMData}{sendWASMData}}
+{\footnotesize\ttfamily void Service\+Worker\+::send\+WASMData (\begin{DoxyParamCaption}\item[{const char $\ast$}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_service_worker_ab3d517ffcaeeeb464a3bd39c4385102b}\label{class_service_worker_ab3d517ffcaeeeb464a3bd39c4385102b}} 
+\index{ServiceWorker@{ServiceWorker}!setConnectionClosed@{setConnectionClosed}}
+\index{setConnectionClosed@{setConnectionClosed}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{setConnectionClosed()}{setConnectionClosed()}}
+{\footnotesize\ttfamily void Service\+Worker\+::set\+Connection\+Closed (\begin{DoxyParamCaption}\item[{bool}]{to\+Set }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_worker_a1c493897cbe21af1db52f950a8a7bfb0}\label{class_service_worker_a1c493897cbe21af1db52f950a8a7bfb0}} 
+\index{ServiceWorker@{ServiceWorker}!setStopServiceWorker@{setStopServiceWorker}}
+\index{setStopServiceWorker@{setStopServiceWorker}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{setStopServiceWorker()}{setStopServiceWorker()}}
+{\footnotesize\ttfamily void Service\+Worker\+::set\+Stop\+Service\+Worker (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_worker_a58258e9d4b92affaa6ec6ca7b946ec92}\label{class_service_worker_a58258e9d4b92affaa6ec6ca7b946ec92}} 
+\index{ServiceWorker@{ServiceWorker}!startServices@{startServices}}
+\index{startServices@{startServices}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{startServices()}{startServices()}}
+{\footnotesize\ttfamily void Service\+Worker\+::start\+Services (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_service_worker_af3b8c59916728b51836f48eae95ab33c}\label{class_service_worker_af3b8c59916728b51836f48eae95ab33c}} 
+\index{ServiceWorker@{ServiceWorker}!condition@{condition}}
+\index{condition@{condition}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{condition}{condition}}
+{\footnotesize\ttfamily QWait\+Condition Service\+Worker\+::condition}
+
+\mbox{\Hypertarget{class_service_worker_a1f4d6840c718055dc63654f3253d4b55}\label{class_service_worker_a1f4d6840c718055dc63654f3253d4b55}} 
+\index{ServiceWorker@{ServiceWorker}!connectionClosed@{connectionClosed}}
+\index{connectionClosed@{connectionClosed}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{connectionClosed}{connectionClosed}}
+{\footnotesize\ttfamily bool Service\+Worker\+::connection\+Closed = true\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_service_worker_aaa95b2f3a553eb77329ad0951c1609f0}\label{class_service_worker_aaa95b2f3a553eb77329ad0951c1609f0}} 
+\index{ServiceWorker@{ServiceWorker}!logger@{logger}}
+\index{logger@{logger}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{logger}{logger}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_logger_service}{Logger\+Service}}$\ast$ Service\+Worker\+::logger = new \mbox{\hyperlink{class_logger_service}{Logger\+Service}}()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_service_worker_aac74d7edf7f255b5de8634d5bb95335d}\label{class_service_worker_aac74d7edf7f255b5de8634d5bb95335d}} 
+\index{ServiceWorker@{ServiceWorker}!mutex@{mutex}}
+\index{mutex@{mutex}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{mutex}{mutex}}
+{\footnotesize\ttfamily QMutex Service\+Worker\+::mutex}
+
+\mbox{\Hypertarget{class_service_worker_a9d56a46ec6e571ae43b092c7e7cc0713}\label{class_service_worker_a9d56a46ec6e571ae43b092c7e7cc0713}} 
+\index{ServiceWorker@{ServiceWorker}!stopServiceWorker@{stopServiceWorker}}
+\index{stopServiceWorker@{stopServiceWorker}!ServiceWorker@{ServiceWorker}}
+\doxysubsubsection{\texorpdfstring{stopServiceWorker}{stopServiceWorker}}
+{\footnotesize\ttfamily bool Service\+Worker\+::stop\+Service\+Worker = false}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+workers/\mbox{\hyperlink{_service_worker_8h}{Service\+Worker.\+h}}\item 
+workers/\mbox{\hyperlink{_service_worker_8cpp}{Service\+Worker.\+cpp}}\end{DoxyCompactItemize}

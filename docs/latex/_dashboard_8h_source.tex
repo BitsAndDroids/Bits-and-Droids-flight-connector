@@ -1,0 +1,119 @@
+\hypertarget{_dashboard_8h_source}{}\doxysection{Dashboard.\+h}
+\label{_dashboard_8h_source}\index{dashboard/Dashboard.h@{dashboard/Dashboard.h}}
+\mbox{\hyperlink{_dashboard_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef DASHBOARD\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define DASHBOARD\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_com_port_widget_controller_8h}{controller/ComPortWidgetController.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_m_f_s_worker_8h}{dashboard/workers/MFSWorker.h}}"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{sethandler_8h}{outputmenu/handlers/sethandler.h}}"{}}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <qcombobox.h>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <qpushbutton.h>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{formbuilder_8h}{widgets/settingsmenu/builder/formbuilder.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_combobox_8h}{elements/ModeIndexCombobox.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_mode_index_checkbox_8h}{elements/ModeIndexCheckbox.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <QCoreApplication>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <QFile>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <QMainWindow>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <QNetworkReply>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <QSettings>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_serial_port_8hpp}{serial/SerialPort.hpp}}"{}}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{constants_8h}{constants.h}}"{}}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_service_worker_8h}{workers/serviceWorker.h}}"{}}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_dashboard_controller_8h}{dashboard/controller/DashboardController.h}}"{}}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_menu_bar_8h}{dashboard/Elements/MenuBar.h}}"{}}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_com_port_widget_controller_8h}{dashboard/controller/ComPortWidgetController.h}}"{}}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{const} std::string \mbox{\hyperlink{_dashboard_8h_af1d08f0ffe4249dcec4b475b2a0d8b9f}{version}} = \mbox{\hyperlink{namespaceconstants_a8485738ac48e3bf59fcb5d1974ff1476}{constants::VERSION}};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{class }\mbox{\hyperlink{class_dashboard}{Dashboard}} : \textcolor{keyword}{public} QMainWindow \{}
+\DoxyCodeLine{31 Q\_OBJECT}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{public}:}
+\DoxyCodeLine{34     \mbox{\hyperlink{class_dashboard}{Dashboard}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36     \mbox{\hyperlink{class_dashboard_a43a9becd0adb8641b81174de35842690}{\string~Dashboard}}();}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a4ca4ff09defe78eb27b695aed971edda}{on\_btnSwitchNav1\_clicked}}();}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_dashboard_acdf6ece0a566c59bdcdee981f3a413b9}{getComboxIndex}}(\mbox{\hyperlink{class_mode_index_combobox}{ModeIndexCombobox}} *comboBox, \textcolor{keyword}{const} QString \&value);}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a901d46160309e569cffb0971428a5650}{gameConnectionMade}}(\textcolor{keywordtype}{int} con);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_ad4244b769622388349c0bd108c70f395}{boardConnectionMade}}(\textcolor{keywordtype}{int} con);}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{keyword}{private}:}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \mbox{\hyperlink{class_dashboard_controller}{DashboardController}} \mbox{\hyperlink{class_dashboard_a261d4026157e9f16f8e3670d76fac5d3}{controller}} = \mbox{\hyperlink{class_dashboard_controller}{DashboardController}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{52     \mbox{\hyperlink{class_service_worker}{ServiceWorker}} \mbox{\hyperlink{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}{serviceWorker}} = \mbox{\hyperlink{class_service_worker}{ServiceWorker}}();}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}} \mbox{\hyperlink{class_dashboard_a4f2a75fc9728c5e6f722a2296129b8d3}{comPortWidgetController}} = \mbox{\hyperlink{class_com_port_widget_controller}{ComPortWidgetController}}(\textcolor{keyword}{this}, \&\mbox{\hyperlink{class_dashboard_a1eb69f60772a73c32cba7ed4140deb7d}{serviceWorker}});}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_dashboard_adfd9e8c8f2aef7ca2f752ac0a4b5449f}{closing}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a4e1ee2ea8355162098018658a37a6bc2}{exitProgram}}();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a2abaecf08eaa9a45ef3cd82758b1809a}{toggleOpen}}(QSystemTrayIcon::ActivationReason reason);}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a97ffcbad9c849ca51ff351d943a8eb8e}{closeEvent}}(QCloseEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \mbox{\hyperlink{class_path_handler}{PathHandler}} \mbox{\hyperlink{class_dashboard_a07beecb3df22f7a2f7a0c79cb1b24f40}{pathHandler}};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66     \mbox{\hyperlink{class_set_handler}{SetHandler}} *\mbox{\hyperlink{class_dashboard_ae5e76e3eff68df8a03992a83e156b918}{setHandler}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_set_handler}{SetHandler}}();}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_dashboard_aef9ab18ee9729e6ceb658e6dd726d79d}{settingsHandler}};}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69     QString \mbox{\hyperlink{class_dashboard_a4fd5a10e9fe06e8ae9a5554c237d9c32}{prevInputComInt}};}
+\DoxyCodeLine{70     QList<QString> \mbox{\hyperlink{class_dashboard_aaf804f3cc01e98248d163887725aa205}{chopStrInput}};}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     QString \mbox{\hyperlink{class_dashboard_a41287192299cf953b65d7ca52d5d3b6a}{prevRowComInt}};}
+\DoxyCodeLine{73     QList<QString> \mbox{\hyperlink{class_dashboard_aac7318fdbd92e2cb38b8ae06baed6856}{chopStrRow}};}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     QString \mbox{\hyperlink{class_dashboard_af36c887122f38dfa5c472f1ea7cf5735}{prevOutputComInt}};}
+\DoxyCodeLine{76     QList<QString> \mbox{\hyperlink{class_dashboard_a5610302c9787260fa2efa26018ec2a85}{chopStrOutput}};}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     QList<QString> \mbox{\hyperlink{class_dashboard_a5a2a0196e06ea95227b47dc24e370631}{availableComPorts}};}
+\DoxyCodeLine{79     QString \mbox{\hyperlink{class_dashboard_af67b887db0c0721ff08778757b902236}{m\_sSettingsFile}};}
+\DoxyCodeLine{80     std::string \mbox{\hyperlink{class_dashboard_a34def98406307595f95f656c338847a1}{url}} = \textcolor{stringliteral}{"{}https://www.bitsanddroids.com/downloads"{}};}
+\DoxyCodeLine{81     std::string \mbox{\hyperlink{class_dashboard_aa8fa5d2dc445df99c332c53d78e61e36}{lastValueRec}} = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a24a2eb7f9a6225f7aa9cec358afb7bab}{loadSettings}}();}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86     \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} \mbox{\hyperlink{class_dashboard_adb8c802d845e69eb2253bbff8837f791}{dualThread}};}
+\DoxyCodeLine{87     \mbox{\hyperlink{class_form_builder}{FormBuilder}} \mbox{\hyperlink{class_dashboard_a0018c7e8fdd2c316f3589be035d5fac4}{formbuilder}};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{89     \mbox{\hyperlink{class_menu_bar}{MenuBar}}* \mbox{\hyperlink{class_dashboard_aeb53cb61c15d85d56a0883950dfa6b58}{menuBar}};}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_ad6dc4de07a6c72ebf871b7c95d489891}{loadComPortData}}();}
+\DoxyCodeLine{92 }
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a521d5f1f5bf0ee7565bdb481588084da}{copyFolder}}(\textcolor{keyword}{const} QString \&sourceFolder, \textcolor{keyword}{const} QString \&destinationFolder);}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_dashboard_ab1a67bb61a7f27fb31b361708fa6ca1a}{updateApplication}}();}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a4eb8229e9822ca8dd01477745556730e}{unzip}}(QString zipfilename, QString filename);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_ab71a0dbc2765290795bfd4110b428457}{checkForUpdates}}(\textcolor{keywordtype}{bool} silentCheck);}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a6c2cc5171c4566429c4cecbf680ca1f0}{restoreStoredValuesComboBoxes}}(QWidget *widget, \textcolor{keyword}{const} QString \&comGroupName,}
+\DoxyCodeLine{103                                        \textcolor{keyword}{const} QString \&setGroupName, \textcolor{keywordtype}{bool} setsNeeded);}
+\DoxyCodeLine{104 }
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a3e1c1fdbf9273a37f5207e9ecca107b5}{saveAutoRunStates}}(\textcolor{keywordtype}{int} mode);}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_dashboard_a523139946fba28e1f72c4bb818fe44e4}{loadAutoRunState}}();}
+\DoxyCodeLine{109 }
+\DoxyCodeLine{110     QList<ModeIndexCheckbox *> \mbox{\hyperlink{class_dashboard_aef009410bfa3875f61f2ca72efaafd92}{getCheckboxesByPattern}}(\textcolor{keyword}{const} QRegularExpression \&pattern);}
+\DoxyCodeLine{111 \};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

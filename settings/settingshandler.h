@@ -10,9 +10,9 @@ class SettingsHandler {
 public:
     SettingsHandler();
 
-    void storeValue(QString group, QString key, QVariant value);
+    virtual void storeValue(QString group, QString key, QVariant value);
 
-    QVariant *retrieveSetting(const QString& group, const QString& key);
+    virtual QVariant *retrieveSetting(const QString& group, const QString& key);
 
     QStringList *retrieveKeys(QString group);
 

@@ -1,0 +1,41 @@
+\hypertarget{_event_type_8h_source}{}\doxysection{Event\+Type.\+h}
+\label{_event_type_8h_source}\index{models/events/EventType.h@{models/events/EventType.h}}
+\mbox{\hyperlink{_event_type_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Dave Riedel on 31-\/Mar-\/22.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BITSANDDROIDSGUI\_EVENTTYPE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BITSANDDROIDSGUI\_EVENTTYPE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QStringList>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_event_type}{EventType}} \{}
+\DoxyCodeLine{11  \textcolor{keyword}{private}:}
+\DoxyCodeLine{12   \textcolor{keyword}{static} QStringList \mbox{\hyperlink{class_event_type_a7f860bc63a437e80b6dde3ff6c9f3408}{availableTypes}};}
+\DoxyCodeLine{13   \textcolor{keyword}{static} QList<int> \mbox{\hyperlink{class_event_type_ac7df5e9cdec87c1d9a20e5237228d63c}{eventCodes}};}
+\DoxyCodeLine{14   std::string \mbox{\hyperlink{class_event_type_ae46cf96406fafb326650437828655c95}{typeString}};}
+\DoxyCodeLine{15   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_type_a12f0109e24be92c83cf33ec586a8e476}{typeIndex}};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{public}:}
+\DoxyCodeLine{18   \mbox{\hyperlink{class_event_type_af8fe10fb17d422897f386d7905ccd9e6}{EventType}}()\{\};}
+\DoxyCodeLine{19   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_event_type_af8fe10fb17d422897f386d7905ccd9e6}{EventType}}(\textcolor{keywordtype}{int} index);}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21   \textcolor{keyword}{const} std::string \&\mbox{\hyperlink{class_event_type_a1a86c93572d80c9e34c84cf7ae2189c2}{getTypeString}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_type_ae46cf96406fafb326650437828655c95}{typeString}}; \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_type_a0940a8d30c1f74661f003c4e3e62dee5}{setTypeString}}(\textcolor{keyword}{const} std::string \&\mbox{\hyperlink{class_event_type_ae46cf96406fafb326650437828655c95}{typeString}}) \{}
+\DoxyCodeLine{24     \mbox{\hyperlink{class_event_type_ae46cf96406fafb326650437828655c95}{EventType::typeString}} = \mbox{\hyperlink{class_event_type_ae46cf96406fafb326650437828655c95}{typeString}};}
+\DoxyCodeLine{25   \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27   \textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_type_a36adc3f04807243c518412a1d6b30a84}{getTypeIndex}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_type_a12f0109e24be92c83cf33ec586a8e476}{typeIndex}}; \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_event_type_a82aa5a8c3141e77e225afa317443eb7f}{setTypeIndex}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_event_type_a12f0109e24be92c83cf33ec586a8e476}{typeIndex}}) \{ \mbox{\hyperlink{class_event_type_a12f0109e24be92c83cf33ec586a8e476}{EventType::typeIndex}} = \mbox{\hyperlink{class_event_type_a12f0109e24be92c83cf33ec586a8e476}{typeIndex}}; \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31   \textcolor{keyword}{static} QStringList \mbox{\hyperlink{class_event_type_a54c740425312d756862c9c856ed16c4b}{getAvailableTypes}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_type_a7f860bc63a437e80b6dde3ff6c9f3408}{availableTypes}}; \}}
+\DoxyCodeLine{32   \textcolor{keyword}{static} QList<int> \mbox{\hyperlink{class_event_type_af18d0129452c82db12dca78b5888e7be}{getEventCodes}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{class_event_type_ac7df5e9cdec87c1d9a20e5237228d63c}{eventCodes}}; \}}
+\DoxyCodeLine{33 \};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// BITSANDDROIDSGUI\_EVENTTYPE\_H}}
+
+\end{DoxyCode}

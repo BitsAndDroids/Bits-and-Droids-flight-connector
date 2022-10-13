@@ -7,10 +7,13 @@
 
 
 
-static enum Modes {
-        INPUTMODE = 1,
-        OUTPUTMODE = 2,
-        DUALMODE = 3
+static enum ModeEnum {
+        INTEGERMODE = 0,
+        PERCENTAGEMODE = 1,
+        FLOATMODE = 2,
+        STRINGMODE = 5,
+        KOHLSMANMODE = 6,
+        BOOLMODE = 4,
     } modes;
 
 #endif //BITSANDDROIDSGUI_MODEENUM_H

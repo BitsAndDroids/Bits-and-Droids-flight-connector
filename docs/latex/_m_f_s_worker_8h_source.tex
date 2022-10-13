@@ -1,0 +1,92 @@
+\hypertarget{_m_f_s_worker_8h_source}{}\doxysection{MFSWorker.\+h}
+\label{_m_f_s_worker_8h_source}\index{dashboard/workers/MFSWorker.h@{dashboard/workers/MFSWorker.h}}
+\mbox{\hyperlink{_m_f_s_worker_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef DUALWORKER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define DUALWORKER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_input_mapper_8h}{workers/InputMapper.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_input_switch_handler_8h}{handlers/InputSwitchHandler.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{outputhandler_8h}{handlers/outputhandler.h}}"{}}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{outputmapper_8h}{outputmenu/outputmapper.h}}"{}}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <qsettings.h>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <qthread.h>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <tchar.h>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <windows.h>}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <QMutex>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <QWaitCondition>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <cstdio>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <future>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_sim_connect_8h}{models/SimConnect.h}}"{}}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include "{}strsafe.h"{}}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_log_level_enum_8h}{enums/LogLevelEnum.h}}"{}}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_output_converters_8h}{utils/OutputConverters.h}}"{}}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_com_bundle_8h}{dashboard/models/ComBundle.h}}"{}}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{typedef} QList<QString> \mbox{\hyperlink{_m_f_s_worker_8h_a4b92e06d18ab76e70951a28260a7cd54}{ComsList}};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{class }\mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} : \textcolor{keyword}{public} QThread \{}
+\DoxyCodeLine{32 Q\_OBJECT}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_ad9eae2b2ae9799e0bb2327f4bc084193}{run}}()\textcolor{keyword}{ override }\{ \mbox{\hyperlink{class_m_f_s_worker_aaaad3077512d112eb5bc782241b2c342}{eventLoop}}(); \}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 signals:}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a32119fc55ab7800c0c59982b384b6e52}{boardConnectionMade}}(\textcolor{keywordtype}{int} con);}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a282d0a5cd9cc92e7cee1ab8d4876fcb2}{logMessage}}(std::string message, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} level);}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43 \textcolor{keyword}{private}:}
+\DoxyCodeLine{44     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_m_f_s_worker_ab548e95ba0057519c401f31b88e80f75}{connected}} = \textcolor{keyword}{false};}
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a657d7fd5f77b3ee1c88686556427b373}{setConnected}}(\textcolor{keywordtype}{bool} connectedToSim);}
+\DoxyCodeLine{46     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_m_f_s_worker_a6f6e96ae9e184c059865cab7daf234d4}{settingsHandler}};}
+\DoxyCodeLine{47     \mbox{\hyperlink{_sim_connect_8h_abd1963765d4a58f0d62f04fe4baae601}{SIMCONNECT\_OBJECT\_ID}} \mbox{\hyperlink{class_m_f_s_worker_a40507c9c14a7ea6510b715f985f089f0}{objectID}} = \mbox{\hyperlink{_sim_connect_8h_a0e69a68b983db0bff8bcd23bedf188fb}{SIMCONNECT\_OBJECT\_ID\_USER}};}
+\DoxyCodeLine{48     \mbox{\hyperlink{classoutput_handler}{outputHandler}} \mbox{\hyperlink{class_m_f_s_worker_af1fa00e88e7bdd844aa2933b46e6b297}{outputHandler}};}
+\DoxyCodeLine{49     QList<ComBundle *> *\mbox{\hyperlink{class_m_f_s_worker_ab616dbda89f201f757e0c14704bd1a02}{comBundles}} = \textcolor{keyword}{new} QList<ComBundle *>();}
+\DoxyCodeLine{50     \mbox{\hyperlink{class_input_switch_handler}{InputSwitchHandler}} *\mbox{\hyperlink{class_m_f_s_worker_a8c97ddaddf320295db346816262428b8}{dualInputHandler}};}
+\DoxyCodeLine{51     \mbox{\hyperlink{class_input_mapper}{InputMapper}} \mbox{\hyperlink{class_m_f_s_worker_a23cd1bcdff7a8aba00315d411fc59950}{dualInputMapper}} = \mbox{\hyperlink{class_input_mapper}{InputMapper}}();}
+\DoxyCodeLine{52     \mbox{\hyperlink{classoutput_mapper}{outputMapper}} *\mbox{\hyperlink{class_m_f_s_worker_a2820d66dd50741b3793ae825ba3aab05}{dualOutputMapper}} = \textcolor{keyword}{new} \mbox{\hyperlink{classoutput_mapper}{outputMapper}}();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_ade82be0a37a6bf1003e5aa5944a19ecb}{MyDispatchProcInput}}(\mbox{\hyperlink{_sim_connect_8h_ac9a754f1ea08af9aac339b55c77acaf9}{SIMCONNECT\_RECV}} *pData, DWORD cbData,}
+\DoxyCodeLine{55                                     \textcolor{keywordtype}{void} *pContext);}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a965189b74aef21b527d83c39e041b665}{loadRunningPortsAndSets}}();}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     \textcolor{keywordtype}{double} \mbox{\hyperlink{class_m_f_s_worker_a8578d04e4443e761fae75b920149ac36}{dataF}} = 1.2;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61     \mbox{\hyperlink{_sim_connect_8h_a30d93aaebf77296ea984db45684cb1b0}{SIMCONNECT\_CLIENT\_DATA\_ID}} \mbox{\hyperlink{class_m_f_s_worker_aa850030e727af990ebbc6536860650db}{ClientDataID}} = 1;}
+\DoxyCodeLine{62     \mbox{\hyperlink{class_input_enum}{InputEnum}} \mbox{\hyperlink{class_m_f_s_worker_ab77de3e85cee2ef9b76fe1436f635dca}{radioDefs}} = \mbox{\hyperlink{class_input_enum}{InputEnum}}();}
+\DoxyCodeLine{63     \mbox{\hyperlink{class_input_mapper}{InputMapper}} \mbox{\hyperlink{class_m_f_s_worker_a61ca8b799f44fe902be4cd9ecceed432}{radioMap}} = \mbox{\hyperlink{class_input_mapper}{InputMapper}}();}
+\DoxyCodeLine{64     QList<Output *> \mbox{\hyperlink{class_m_f_s_worker_a7e97fc4ef939ff2737542be5584f16c8}{outputsToMap}};}
+\DoxyCodeLine{65     QStringList *\mbox{\hyperlink{class_m_f_s_worker_a45bf73a45c137efded6defb14bfcd700}{keys}} = \textcolor{keyword}{new} QStringList();}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \mbox{\hyperlink{class_output_converters}{OutputConverters}} \mbox{\hyperlink{class_m_f_s_worker_acbb9717265acb2d2ed5cdc18d9c219bc}{converter}} = \mbox{\hyperlink{class_output_converters}{OutputConverters}}();}
+\DoxyCodeLine{68     std::map<int, Input>\mbox{\hyperlink{class_m_f_s_worker_ab423253926080967c09d90853a1c81b8}{inputs}} = std::map<int, Input>();}
+\DoxyCodeLine{69 \textcolor{keyword}{public}:}
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a905cfb74309465985d3b521d45baedc7}{setInputs}}(std::map<int, Input>inputsToSet);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_m_f_s_worker_a97019fb1ccbaa9bc12f22b8b843e47c5}{abortDual}};}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74     \mbox{\hyperlink{class_m_f_s_worker_a3b12cd898df031f54747610656b70f43}{MFSWorker}}();}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \mbox{\hyperlink{class_m_f_s_worker_a189267ac8611d2ff8cabd66d04326324}{\string~MFSWorker}}();}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78     QMutex \mbox{\hyperlink{class_m_f_s_worker_a68d2db303d76869981c9ef7a8848242b}{mutex}};}
+\DoxyCodeLine{79     QWaitCondition \mbox{\hyperlink{class_m_f_s_worker_af513bc95dee2f6bde97ea4f2510d49ab}{condition}};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_aaaad3077512d112eb5bc782241b2c342}{eventLoop}}();}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_m_f_s_worker_a8cbf2eee7eb5ffb6206bc1ab227fab99}{sendToArduino}}(\textcolor{keywordtype}{float} received, \textcolor{keyword}{const} \textcolor{keywordtype}{string} \&prefix, \textcolor{keywordtype}{int} index, \textcolor{keywordtype}{int} mode);}
+\DoxyCodeLine{84 \};}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// DUALWORKER\_H}}
+
+\end{DoxyCode}

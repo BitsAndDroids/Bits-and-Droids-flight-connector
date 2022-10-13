@@ -1,0 +1,40 @@
+\hypertarget{calibrateaxismenu_8h_source}{}\doxysection{calibrateaxismenu.\+h}
+\label{calibrateaxismenu_8h_source}\index{widgets/axismenu/calibrateaxismenu.h@{widgets/axismenu/calibrateaxismenu.h}}
+\mbox{\hyperlink{calibrateaxismenu_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CALIBRATEAXISMENU\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CALIBRATEAXISMENU\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qgridlayout.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{formbuilder_8h}{widgets/settingsmenu/builder/formbuilder.h}}"{}}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_ui}{Ui}} \{}
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{class_calibrate_axis_menu}{CalibrateAxisMenu}};}
+\DoxyCodeLine{12 \}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_calibrate_axis_menu}{CalibrateAxisMenu}} : \textcolor{keyword}{public} QWidget \{}
+\DoxyCodeLine{15   Q\_OBJECT}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17  \textcolor{keyword}{public}:}
+\DoxyCodeLine{18   \textcolor{keyword}{explicit} \mbox{\hyperlink{class_calibrate_axis_menu}{CalibrateAxisMenu}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{19   \mbox{\hyperlink{class_calibrate_axis_menu_a90c5a5720f588bcd46e5759ed591dc13}{\string~CalibrateAxisMenu}}();}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21  \textcolor{keyword}{private}:}
+\DoxyCodeLine{22   \mbox{\hyperlink{class_ui_1_1_calibrate_axis_menu}{Ui::CalibrateAxisMenu}} *\mbox{\hyperlink{class_calibrate_axis_menu_a8ce8e4afc54ea22a6b3f005ce31b96f5}{ui}};}
+\DoxyCodeLine{23   QStringList \mbox{\hyperlink{class_calibrate_axis_menu_a49dc671b864abe942ff63f80e837c2cb}{curves}} = \{\textcolor{stringliteral}{"{}Rudder"{}}, \textcolor{stringliteral}{"{}Toe brakes"{}}, \textcolor{stringliteral}{"{}Aileron"{}}, \textcolor{stringliteral}{"{}Elevator"{}}\};}
+\DoxyCodeLine{24   QGridLayout *\mbox{\hyperlink{class_calibrate_axis_menu_a1f1f163d3439fdab7c48a11b196dd0a9}{GenerateCurveLayouts}}();}
+\DoxyCodeLine{25   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_calibrate_axis_menu_ad66b35a8de278d6eb2d3c1333639d3fa}{saveSettings}}();}
+\DoxyCodeLine{26   \mbox{\hyperlink{class_form_builder}{FormBuilder}} *\mbox{\hyperlink{class_calibrate_axis_menu_a787f8b0d61f49270458e9896474d0cf8}{builder}} = \textcolor{keyword}{new} \mbox{\hyperlink{class_form_builder}{FormBuilder}}();}
+\DoxyCodeLine{27   \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_calibrate_axis_menu_a7bb7c9ba0e602aaae367a89a7c59afd2}{settingsHandler}} = \mbox{\hyperlink{class_settings_handler}{SettingsHandler}}();}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_calibrate_axis_menu_a06d4334c8b85406e178f3f8ea9f9fbee}{closeEvent}}(QCloseEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{30  signals:}
+\DoxyCodeLine{31   \textcolor{keywordtype}{void} \mbox{\hyperlink{class_calibrate_axis_menu_abcf8fcd6cbb43d4b31b644c43f2220a3}{closedCalibrateAxisMenu}}();}
+\DoxyCodeLine{32 \};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// CALIBRATEAXISMENU\_H}}
+
+\end{DoxyCode}

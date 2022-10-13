@@ -1,0 +1,139 @@
+\hypertarget{class_serial_port}{}\doxysection{Serial\+Port Class Reference}
+\label{class_serial_port}\index{SerialPort@{SerialPort}}
+
+
+{\ttfamily \#include $<$Serial\+Port.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_serial_port_ab71d612386a2d6d60a3b1635abd2b35a}{Serial\+Port}} (const char $\ast$\mbox{\hyperlink{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}{port\+Name}})
+\item 
+\mbox{\hyperlink{class_serial_port_a8e09f366ed9b26b0456b66ae7bd8c702}{$\sim$\+Serial\+Port}} ()
+\item 
+int \mbox{\hyperlink{class_serial_port_a6d14fa4e371c25e957a92c0adf3ac011}{read\+Serial\+Port}} (const char $\ast$buffer, unsigned int buf\+\_\+size)
+\item 
+bool \mbox{\hyperlink{class_serial_port_a3ca49feff23bdfccfcd738ff8bd56bf0}{write\+Serial\+Port}} (const char $\ast$buffer, unsigned int buf\+\_\+size)
+\item 
+bool \mbox{\hyperlink{class_serial_port_a73883aa801c1302297bf0e123bf90bc7}{is\+Connected}} ()
+\item 
+void \mbox{\hyperlink{class_serial_port_af053dd018c1797eb884cf9230cd11420}{close\+Serial}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_serial_port_abce445f71fea742efa84532737b21394}{get\+Port\+Name}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \mbox{\hyperlink{class_serial_port_aefc61186943ed809b4e3ef56029dd448}{handler}}
+\item 
+bool \mbox{\hyperlink{class_serial_port_a93a3839f2ed13ec4fa2bb32b5c292ec9}{connected}}
+\item 
+COMSTAT \mbox{\hyperlink{class_serial_port_a72d12e9f28437b04fa855c074b18d629}{status}}
+\item 
+DWORD \mbox{\hyperlink{class_serial_port_a255fe9d48696a3d3d9c2c7dbb9969f1d}{errors}}
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_serial_port_a5acc8f208001976f06b1d60cc3f5e188}{settings\+Handler}}
+\item 
+int \mbox{\hyperlink{class_serial_port_a9c4eb417b119cd97373261d2c35e8d7c}{arduino\+Wait\+Time}} = 15
+\item 
+std\+::string \mbox{\hyperlink{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}{port\+Name}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_serial_port_ab71d612386a2d6d60a3b1635abd2b35a}\label{class_serial_port_ab71d612386a2d6d60a3b1635abd2b35a}} 
+\index{SerialPort@{SerialPort}!SerialPort@{SerialPort}}
+\index{SerialPort@{SerialPort}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{SerialPort()}{SerialPort()}}
+{\footnotesize\ttfamily Serial\+Port\+::\+Serial\+Port (\begin{DoxyParamCaption}\item[{const char $\ast$}]{port\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{class_serial_port_a8e09f366ed9b26b0456b66ae7bd8c702}\label{class_serial_port_a8e09f366ed9b26b0456b66ae7bd8c702}} 
+\index{SerialPort@{SerialPort}!````~SerialPort@{$\sim$SerialPort}}
+\index{````~SerialPort@{$\sim$SerialPort}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{$\sim$SerialPort()}{~SerialPort()}}
+{\footnotesize\ttfamily Serial\+Port\+::$\sim$\+Serial\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_serial_port_af053dd018c1797eb884cf9230cd11420}\label{class_serial_port_af053dd018c1797eb884cf9230cd11420}} 
+\index{SerialPort@{SerialPort}!closeSerial@{closeSerial}}
+\index{closeSerial@{closeSerial}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{closeSerial()}{closeSerial()}}
+{\footnotesize\ttfamily void Serial\+Port\+::close\+Serial (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_serial_port_abce445f71fea742efa84532737b21394}\label{class_serial_port_abce445f71fea742efa84532737b21394}} 
+\index{SerialPort@{SerialPort}!getPortName@{getPortName}}
+\index{getPortName@{getPortName}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{getPortName()}{getPortName()}}
+{\footnotesize\ttfamily std\+::string Serial\+Port\+::get\+Port\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_serial_port_a73883aa801c1302297bf0e123bf90bc7}\label{class_serial_port_a73883aa801c1302297bf0e123bf90bc7}} 
+\index{SerialPort@{SerialPort}!isConnected@{isConnected}}
+\index{isConnected@{isConnected}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{isConnected()}{isConnected()}}
+{\footnotesize\ttfamily bool Serial\+Port\+::is\+Connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_serial_port_a6d14fa4e371c25e957a92c0adf3ac011}\label{class_serial_port_a6d14fa4e371c25e957a92c0adf3ac011}} 
+\index{SerialPort@{SerialPort}!readSerialPort@{readSerialPort}}
+\index{readSerialPort@{readSerialPort}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{readSerialPort()}{readSerialPort()}}
+{\footnotesize\ttfamily int Serial\+Port\+::read\+Serial\+Port (\begin{DoxyParamCaption}\item[{const char $\ast$}]{buffer,  }\item[{unsigned int}]{buf\+\_\+size }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_serial_port_a3ca49feff23bdfccfcd738ff8bd56bf0}\label{class_serial_port_a3ca49feff23bdfccfcd738ff8bd56bf0}} 
+\index{SerialPort@{SerialPort}!writeSerialPort@{writeSerialPort}}
+\index{writeSerialPort@{writeSerialPort}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{writeSerialPort()}{writeSerialPort()}}
+{\footnotesize\ttfamily bool Serial\+Port\+::write\+Serial\+Port (\begin{DoxyParamCaption}\item[{const char $\ast$}]{buffer,  }\item[{unsigned int}]{buf\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_serial_port_a9c4eb417b119cd97373261d2c35e8d7c}\label{class_serial_port_a9c4eb417b119cd97373261d2c35e8d7c}} 
+\index{SerialPort@{SerialPort}!arduinoWaitTime@{arduinoWaitTime}}
+\index{arduinoWaitTime@{arduinoWaitTime}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{arduinoWaitTime}{arduinoWaitTime}}
+{\footnotesize\ttfamily int Serial\+Port\+::arduino\+Wait\+Time = 15\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_a93a3839f2ed13ec4fa2bb32b5c292ec9}\label{class_serial_port_a93a3839f2ed13ec4fa2bb32b5c292ec9}} 
+\index{SerialPort@{SerialPort}!connected@{connected}}
+\index{connected@{connected}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{connected}{connected}}
+{\footnotesize\ttfamily bool Serial\+Port\+::connected\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_a255fe9d48696a3d3d9c2c7dbb9969f1d}\label{class_serial_port_a255fe9d48696a3d3d9c2c7dbb9969f1d}} 
+\index{SerialPort@{SerialPort}!errors@{errors}}
+\index{errors@{errors}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{errors}{errors}}
+{\footnotesize\ttfamily DWORD Serial\+Port\+::errors\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_aefc61186943ed809b4e3ef56029dd448}\label{class_serial_port_aefc61186943ed809b4e3ef56029dd448}} 
+\index{SerialPort@{SerialPort}!handler@{handler}}
+\index{handler@{handler}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{handler}{handler}}
+{\footnotesize\ttfamily HANDLE Serial\+Port\+::handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}\label{class_serial_port_a02edab1960817dfc20e04f3d53f2e291}} 
+\index{SerialPort@{SerialPort}!portName@{portName}}
+\index{portName@{portName}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{portName}{portName}}
+{\footnotesize\ttfamily std\+::string Serial\+Port\+::port\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_a5acc8f208001976f06b1d60cc3f5e188}\label{class_serial_port_a5acc8f208001976f06b1d60cc3f5e188}} 
+\index{SerialPort@{SerialPort}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Serial\+Port\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_serial_port_a72d12e9f28437b04fa855c074b18d629}\label{class_serial_port_a72d12e9f28437b04fa855c074b18d629}} 
+\index{SerialPort@{SerialPort}!status@{status}}
+\index{status@{status}!SerialPort@{SerialPort}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily COMSTAT Serial\+Port\+::status\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+serial/\mbox{\hyperlink{_serial_port_8hpp}{Serial\+Port.\+hpp}}\item 
+serial/\mbox{\hyperlink{_serial_port_8cpp}{Serial\+Port.\+cpp}}\end{DoxyCompactItemize}

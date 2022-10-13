@@ -1,0 +1,39 @@
+\hypertarget{outputhandler_8h_source}{}\doxysection{outputhandler.\+h}
+\label{outputhandler_8h_source}\index{handlers/outputhandler.h@{handlers/outputhandler.h}}
+\mbox{\hyperlink{outputhandler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef OUTPUTHANDLER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define OUTPUTHANDLER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{pathhandler_8h}{pathhandler.h}}"{}}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QJsonObject>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QMap>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <\mbox{\hyperlink{output_8h}{models/commands/output.h}}>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{class }\mbox{\hyperlink{classoutput_handler}{outputHandler}} \{}
+\DoxyCodeLine{12  \textcolor{keyword}{public}:}
+\DoxyCodeLine{13   \mbox{\hyperlink{classoutput_handler_a36515bbcf86efa178da7dd4d7fa65ad3}{outputHandler}}();}
+\DoxyCodeLine{14   QStringList \mbox{\hyperlink{classoutput_handler_af21143004302e27a0f023e352721c2eb}{getCategoryStrings}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classoutput_handler_a1a3059eab84e3085dc88859b409d6046}{categoryStrings}}; \};}
+\DoxyCodeLine{15   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_handler_a22a4da6b63f1a5e5b7d27d889329b3e5}{addCategoryString}}(\textcolor{keyword}{const} QString\& category);}
+\DoxyCodeLine{16   QList<QList<Output>> \mbox{\hyperlink{classoutput_handler_a8574aae732c3c69ddf98e57cc223735c}{getOutputsCategorized}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classoutput_handler_a8174646a79c22b6de5cbe42121c1badf}{outputsCategorized}}; \};}
+\DoxyCodeLine{17   QMap<int, Output*> \mbox{\hyperlink{classoutput_handler_a4cc1bf6dfac82e5c3d119b9bb1bf6315}{getAvailableOutputs}}() \{ \textcolor{keywordflow}{return} \mbox{\hyperlink{classoutput_handler_ae6275033531320ab135cc5558bbc49bf}{availableOutputs}}; \};}
+\DoxyCodeLine{18   \mbox{\hyperlink{class_output}{Output}}* \mbox{\hyperlink{classoutput_handler_ab1b22f4460dda834d7e1df0449544cf2}{findOutputById}}(\textcolor{keywordtype}{int} \textcolor{keywordtype}{id});}
+\DoxyCodeLine{19   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_handler_ace28df069e490b0293ebc1215671dff4}{readOutputs}}();}
+\DoxyCodeLine{20   \textcolor{keywordtype}{void} \mbox{\hyperlink{classoutput_handler_a148396e11dbdff78811974e88ae20e27}{addToEventFileDialog}}(\mbox{\hyperlink{class_output}{Output}} output);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22  \textcolor{keyword}{private}:}
+\DoxyCodeLine{23   \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classoutput_handler_acab22c5d821a5bbb4075c776a0fc0195}{updateOutputsRequired}};}
+\DoxyCodeLine{24   \textcolor{keyword}{static} QMap<int, Output*> \mbox{\hyperlink{classoutput_handler_ae6275033531320ab135cc5558bbc49bf}{availableOutputs}};}
+\DoxyCodeLine{25   \textcolor{keyword}{static} QList<QList<Output>> \mbox{\hyperlink{classoutput_handler_a8174646a79c22b6de5cbe42121c1badf}{outputsCategorized}};}
+\DoxyCodeLine{26   \textcolor{keyword}{static} QStringList \mbox{\hyperlink{classoutput_handler_a1a3059eab84e3085dc88859b409d6046}{categoryStrings}};}
+\DoxyCodeLine{27   \textcolor{comment}{// const QJsonObject \&json}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29   \mbox{\hyperlink{class_path_handler}{PathHandler}} \mbox{\hyperlink{classoutput_handler_aea7dd212481fad97dd76d75d9ec0b834}{pathHandler}};}
+\DoxyCodeLine{30   QString \mbox{\hyperlink{classoutput_handler_adacc688f6398628d31eb534c17a36d6f}{applicationEventsPath}} = \mbox{\hyperlink{classoutput_handler_aea7dd212481fad97dd76d75d9ec0b834}{pathHandler}}.\mbox{\hyperlink{class_path_handler_a1cb031023909495191ffdef8c3e0d55a}{getWritableEventPath}}();}
+\DoxyCodeLine{31 \};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// OUTPUTHANDLER\_H}}
+
+\end{DoxyCode}

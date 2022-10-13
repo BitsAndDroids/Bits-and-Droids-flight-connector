@@ -1,0 +1,27 @@
+\hypertarget{_input_switch_handler_8h}{}\doxysection{handlers/\+Input\+Switch\+Handler.h File Reference}
+\label{_input_switch_handler_8h}\index{handlers/InputSwitchHandler.h@{handlers/InputSwitchHandler.h}}
+{\ttfamily \#include \char`\"{}models/aircraft/\+Engine.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/\+Sim\+Connect.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}constants.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/settings/range.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$qmutex.\+h$>$}\newline
+{\ttfamily \#include $<$qsettings.\+h$>$}\newline
+{\ttfamily \#include $<$qstandardpaths.\+h$>$}\newline
+{\ttfamily \#include $<$qwaitcondition.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}models/settings/coordinates.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}settings/settingshandler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}enums/\+Curve\+Type\+Enum.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/aircraft/\+Curve\+Axis.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}models/commands/\+Input.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}enums/\+Log\+Level\+Enum.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$tchar.\+h$>$}\newline
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$QObject$>$}\newline
+{\ttfamily \#include $<$QThread$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_input_switch_handler}{Input\+Switch\+Handler}}
+\begin{DoxyCompactList}\small\item\em The \mbox{\hyperlink{class_input_switch_handler}{Input\+Switch\+Handler}} class is responsible for handling the input commands. The input commands are sent from the \mbox{\hyperlink{class_m_f_s_worker}{MFSWorker}} class. It uses the received prefix from a microncontroller over serial port to determine which input command to handle. \end{DoxyCompactList}\end{DoxyCompactItemize}

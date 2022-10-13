@@ -1,0 +1,454 @@
+\hypertarget{class_form_builder}{}\doxysection{Form\+Builder Class Reference}
+\label{class_form_builder}\index{FormBuilder@{FormBuilder}}
+
+
+{\ttfamily \#include $<$formbuilder.\+h$>$}
+
+Inheritance diagram for Form\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_form_builder}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_form_builder_a53bbdf28405cfdf6003a799c3d7e053d}{update\+XSignal}} (int number, int index, int value)
+\item 
+void \mbox{\hyperlink{class_form_builder_a81512b8460864ff2eb8478cb46bdb979}{update\+YSignal}} (int number, int index, int value)
+\item 
+void \mbox{\hyperlink{class_form_builder_afe5a8c217bdde6263f5d1356714ef9e3}{add\+Set}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_form_builder_a7595d833fc5102e66a05cb37f2f64dfd}{Form\+Builder}} ()
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a268b96c9586dc9f10679ddf08cc1aeac}{get\+Calibrate\+Labels}} ()
+\item 
+QVBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_ab7e87de6b192e60e7914cba435d381f5}{Range\+Builder}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_a9dfb1182c568e633d3f33e355da174b3}{load\+Com\+Port\+Data}} ()
+\item 
+QVBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_afc71d7f8a8ad48a07dc99c41df540cd8}{generate\+Com\+Column}} (int index)
+\item 
+QHBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_a8aaebbf9ebfda1a9c3e539310cdffd70}{generate\+Com\+Block}} ()
+\item 
+QVBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_a1ae7f79cd483408538fbab9308f3670b}{create\+Axis\+Row}} (QString name, int number)
+\item 
+void \mbox{\hyperlink{class_form_builder_a6f355935c226f7f97c8e53e2dce1bc51}{set\+Curves}} (QString\+List)
+\item 
+QHBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_acaa46ce626275dd13819feb4f6aa385c}{generate\+Output\+Row}} (\mbox{\hyperlink{class_output}{Output}} $\ast$output)
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_form_builder_a918fafa606a67211147b3b1dd8f2c4c8}{generate\+Com\+Selector}} (bool sets\+Needed, int mode)
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_form_builder_a1f5e61f0384e713a94f22e53c47fd1b9}{generate\+Com\+Controls}} (int mode)
+\item 
+QList$<$ struct \mbox{\hyperlink{classcoordinates}{coordinates}} $>$ $\ast$ \mbox{\hyperlink{class_form_builder_a04538d516cf3278c919abf22fd80c39f}{get\+Coordinates}} (int number)
+\item 
+QWidget $\ast$ \mbox{\hyperlink{class_form_builder_a4bfe3a983748293228cfc049465b01df}{generate\+Com\+Selector}} (bool sets\+Needed, int mode, int index)
+\item 
+void \mbox{\hyperlink{class_form_builder_a821aa3807ac7a23f4360d9c110fff4a5}{load\+Points\+To\+Plot}} (QString\+List axis)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static QVBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_a97e9456a54ba949f3aae0e83f6452988}{generate\+Range}} (const QString \&header)
+\item 
+static QWidget $\ast$ \mbox{\hyperlink{class_form_builder_a92b926094a88b860dc5522cc935bc47c}{generate\+Active\+Set}} (\mbox{\hyperlink{class_set}{Set}} $\ast$selected\+Set)
+\item 
+static QLabel $\ast$ \mbox{\hyperlink{class_form_builder_ad83f17f8cedc9da9a9f5e3f569fa696e}{generate\+Header}} (const QString \&text)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a7b89b821c2aa868f975890ed5c23ddd2}{com\+Headers}} = \{\char`\"{}Inputs\char`\"{}, \char`\"{}Outputs\char`\"{}, \char`\"{}Both\char`\"{}\}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a159ed2232b9ef545d3ab2a59c90ab508}{range\+Headers}}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a636e1b7eee6624f3e5bb56c5736a154b}{engine\+Labels}} = \{\char`\"{}Reverse\char`\"{}, \char`\"{}Idle cutoff\char`\"{}, \char`\"{}Max\char`\"{}\}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_acd880ca4d0b5b8a8fffd5d21ae637e57}{engine\+Headers}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_form_builder_a694e74cc598caeeb5d32be74e5881340}{auto\+Run\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_abe86d41ffd2b38be91309c44e5eb930d}{rudder\+Text\+Changed}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_a643b51ab8bfcb7eb842ecb43bbddec4f}{update\+XCall}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_ae7a912e15c5ed54daa31d866470ab109}{update\+YCall}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_afe52188000c9042287c3c2430dc6f4c0}{updateX}} (int number, int index, int value)
+\item 
+void \mbox{\hyperlink{class_form_builder_aee5080bab1f64f65aab0af8da659a4a1}{reverse\+Clicked}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_abc2482e354f8c40f6870f7d264393474}{updateY}} (int number, int index, int value)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_form_builder_a73177e33a285e4a21bfdabeae9536753}{update\+Chart}} (int number)
+\item 
+QVBox\+Layout $\ast$ \mbox{\hyperlink{class_form_builder_ac5c44980209aa87225f01ca45b6d5182}{generate\+Curve\+Col}} (int number, int val\+Axis, int val\+Range)
+\item 
+void \mbox{\hyperlink{class_form_builder_a36cb8710ac861b5279d8ee7f624bb202}{change\+Slider}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_a0d284ac0e3116a906402bcccf4c8d980}{adjust\+Indexes}} ()
+\item 
+void \mbox{\hyperlink{class_form_builder_ade6d1809524134f454185d05d3384c2e}{adjust\+Indexes}} (int index)
+\item 
+void \mbox{\hyperlink{class_form_builder_a5ff78de28a90e55444d41cfa9b315df1}{adjust\+Indexes}} (int mode, int index)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a8226be2322ed88a57e69a0b695d2e96e}{curves}}
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a7eb8d74bde04091ee3fef7aaf44eeb02}{object\+Names}} = \{\char`\"{}Min\+LE\char`\"{}, \char`\"{}Neutral\+LE\char`\"{}, \char`\"{}Max\+LE\char`\"{}\}
+\item 
+QList$<$ int $>$ \mbox{\hyperlink{class_form_builder_a178f78ac6d1249a0e52870c89c37e31d}{axis\+Values}} = \{-\/16383, -\/10000, 0, 0, 0, 10000, 16383\}
+\item 
+QList$<$ QChart $\ast$ $>$ \mbox{\hyperlink{class_form_builder_ac49367254c18124741021c128026c052}{charts}} = QList$<$QChart $\ast$$>$()
+\item 
+QList$<$ QLine\+Series $\ast$ $>$ \mbox{\hyperlink{class_form_builder_a233b5c513c53ef538aaa09c468ab7355}{series}} = QList$<$QLine\+Series $\ast$$>$()
+\item 
+QList$<$ QChart\+View $\ast$ $>$ \mbox{\hyperlink{class_form_builder_a724076f8215faeeebd4455187cb60e8c}{chart\+Views}} = QList$<$QChart\+View $\ast$$>$()
+\item 
+QString\+List \mbox{\hyperlink{class_form_builder_a3113ca490866b85348b7e5b40dd6719c}{main\+Headers}} = \{\char`\"{}\char`\"{}, \char`\"{}INPUT\char`\"{}, \char`\"{}OUTPUT\char`\"{}, \char`\"{}DUAL\char`\"{}\}
+\item 
+\mbox{\hyperlink{class_set_handler}{Set\+Handler}} \mbox{\hyperlink{class_form_builder_a5babc3ac654a2cd9a9c1fc8634489895}{set\+Handler}}
+\item 
+\mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} \mbox{\hyperlink{class_form_builder_ab61212879dc3fd2035200272acaa1f2c}{settings\+Handler}}
+\item 
+QList$<$ QList$<$ \mbox{\hyperlink{classcoordinates}{coordinates}} $>$ $>$ \mbox{\hyperlink{class_form_builder_ab7429991aa9e726e8896c4128744afef}{points\+To\+Plot}} = QList$<$QList$<$\mbox{\hyperlink{classcoordinates}{coordinates}}$>$$>$()
+\item 
+int \mbox{\hyperlink{class_form_builder_a3228bfbc45f4f33d7e0691059a525e9e}{min\+Value}} \mbox{[}4\mbox{]} = \{0, 0, 0, 0\}
+\item 
+int \mbox{\hyperlink{class_form_builder_a0b5d40e075a91d11fa31c173d3becf53}{max\+Value}} \mbox{[}4\mbox{]} = \{1023, 1023, 1023, 1023\}
+\item 
+int \mbox{\hyperlink{class_form_builder_aacb0d9ff3b4752f9ead9258265e9018b}{neutral\+Value}} \mbox{[}4\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_form_builder_a7595d833fc5102e66a05cb37f2f64dfd}\label{class_form_builder_a7595d833fc5102e66a05cb37f2f64dfd}} 
+\index{FormBuilder@{FormBuilder}!FormBuilder@{FormBuilder}}
+\index{FormBuilder@{FormBuilder}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{FormBuilder()}{FormBuilder()}}
+{\footnotesize\ttfamily Form\+Builder\+::\+Form\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_form_builder_afe5a8c217bdde6263f5d1356714ef9e3}\label{class_form_builder_afe5a8c217bdde6263f5d1356714ef9e3}} 
+\index{FormBuilder@{FormBuilder}!addSet@{addSet}}
+\index{addSet@{addSet}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{addSet}{addSet}}
+{\footnotesize\ttfamily void Form\+Builder\+::add\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_form_builder_a0d284ac0e3116a906402bcccf4c8d980}\label{class_form_builder_a0d284ac0e3116a906402bcccf4c8d980}} 
+\index{FormBuilder@{FormBuilder}!adjustIndexes@{adjustIndexes}}
+\index{adjustIndexes@{adjustIndexes}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{adjustIndexes()}{adjustIndexes()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily void Form\+Builder\+::adjust\+Indexes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_ade6d1809524134f454185d05d3384c2e}\label{class_form_builder_ade6d1809524134f454185d05d3384c2e}} 
+\index{FormBuilder@{FormBuilder}!adjustIndexes@{adjustIndexes}}
+\index{adjustIndexes@{adjustIndexes}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{adjustIndexes()}{adjustIndexes()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily void Form\+Builder\+::adjust\+Indexes (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a5ff78de28a90e55444d41cfa9b315df1}\label{class_form_builder_a5ff78de28a90e55444d41cfa9b315df1}} 
+\index{FormBuilder@{FormBuilder}!adjustIndexes@{adjustIndexes}}
+\index{adjustIndexes@{adjustIndexes}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{adjustIndexes()}{adjustIndexes()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily void Form\+Builder\+::adjust\+Indexes (\begin{DoxyParamCaption}\item[{int}]{mode,  }\item[{int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a694e74cc598caeeb5d32be74e5881340}\label{class_form_builder_a694e74cc598caeeb5d32be74e5881340}} 
+\index{FormBuilder@{FormBuilder}!autoRunChanged@{autoRunChanged}}
+\index{autoRunChanged@{autoRunChanged}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{autoRunChanged}{autoRunChanged}}
+{\footnotesize\ttfamily void Form\+Builder\+::auto\+Run\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_a36cb8710ac861b5279d8ee7f624bb202}\label{class_form_builder_a36cb8710ac861b5279d8ee7f624bb202}} 
+\index{FormBuilder@{FormBuilder}!changeSlider@{changeSlider}}
+\index{changeSlider@{changeSlider}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{changeSlider()}{changeSlider()}}
+{\footnotesize\ttfamily void Form\+Builder\+::change\+Slider (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a1ae7f79cd483408538fbab9308f3670b}\label{class_form_builder_a1ae7f79cd483408538fbab9308f3670b}} 
+\index{FormBuilder@{FormBuilder}!createAxisRow@{createAxisRow}}
+\index{createAxisRow@{createAxisRow}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{createAxisRow()}{createAxisRow()}}
+{\footnotesize\ttfamily QVBox\+Layout $\ast$ Form\+Builder\+::create\+Axis\+Row (\begin{DoxyParamCaption}\item[{QString}]{name,  }\item[{int}]{number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a92b926094a88b860dc5522cc935bc47c}\label{class_form_builder_a92b926094a88b860dc5522cc935bc47c}} 
+\index{FormBuilder@{FormBuilder}!generateActiveSet@{generateActiveSet}}
+\index{generateActiveSet@{generateActiveSet}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateActiveSet()}{generateActiveSet()}}
+{\footnotesize\ttfamily static QWidget $\ast$ Form\+Builder\+::generate\+Active\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_set}{Set}} $\ast$}]{selected\+Set }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_form_builder_a8aaebbf9ebfda1a9c3e539310cdffd70}\label{class_form_builder_a8aaebbf9ebfda1a9c3e539310cdffd70}} 
+\index{FormBuilder@{FormBuilder}!generateComBlock@{generateComBlock}}
+\index{generateComBlock@{generateComBlock}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateComBlock()}{generateComBlock()}}
+{\footnotesize\ttfamily QHBox\+Layout $\ast$ Form\+Builder\+::generate\+Com\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_afc71d7f8a8ad48a07dc99c41df540cd8}\label{class_form_builder_afc71d7f8a8ad48a07dc99c41df540cd8}} 
+\index{FormBuilder@{FormBuilder}!generateComColumn@{generateComColumn}}
+\index{generateComColumn@{generateComColumn}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateComColumn()}{generateComColumn()}}
+{\footnotesize\ttfamily QVBox\+Layout $\ast$ Form\+Builder\+::generate\+Com\+Column (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a1f5e61f0384e713a94f22e53c47fd1b9}\label{class_form_builder_a1f5e61f0384e713a94f22e53c47fd1b9}} 
+\index{FormBuilder@{FormBuilder}!generateComControls@{generateComControls}}
+\index{generateComControls@{generateComControls}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateComControls()}{generateComControls()}}
+{\footnotesize\ttfamily QWidget $\ast$ Form\+Builder\+::generate\+Com\+Controls (\begin{DoxyParamCaption}\item[{int}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a918fafa606a67211147b3b1dd8f2c4c8}\label{class_form_builder_a918fafa606a67211147b3b1dd8f2c4c8}} 
+\index{FormBuilder@{FormBuilder}!generateComSelector@{generateComSelector}}
+\index{generateComSelector@{generateComSelector}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateComSelector()}{generateComSelector()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily QWidget $\ast$ Form\+Builder\+::generate\+Com\+Selector (\begin{DoxyParamCaption}\item[{bool}]{sets\+Needed,  }\item[{int}]{mode }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a4bfe3a983748293228cfc049465b01df}\label{class_form_builder_a4bfe3a983748293228cfc049465b01df}} 
+\index{FormBuilder@{FormBuilder}!generateComSelector@{generateComSelector}}
+\index{generateComSelector@{generateComSelector}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateComSelector()}{generateComSelector()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily QWidget $\ast$ Form\+Builder\+::generate\+Com\+Selector (\begin{DoxyParamCaption}\item[{bool}]{sets\+Needed,  }\item[{int}]{mode,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_ac5c44980209aa87225f01ca45b6d5182}\label{class_form_builder_ac5c44980209aa87225f01ca45b6d5182}} 
+\index{FormBuilder@{FormBuilder}!generateCurveCol@{generateCurveCol}}
+\index{generateCurveCol@{generateCurveCol}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateCurveCol()}{generateCurveCol()}}
+{\footnotesize\ttfamily QVBox\+Layout $\ast$ Form\+Builder\+::generate\+Curve\+Col (\begin{DoxyParamCaption}\item[{int}]{number,  }\item[{int}]{val\+Axis,  }\item[{int}]{val\+Range }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_ad83f17f8cedc9da9a9f5e3f569fa696e}\label{class_form_builder_ad83f17f8cedc9da9a9f5e3f569fa696e}} 
+\index{FormBuilder@{FormBuilder}!generateHeader@{generateHeader}}
+\index{generateHeader@{generateHeader}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateHeader()}{generateHeader()}}
+{\footnotesize\ttfamily QLabel $\ast$ Form\+Builder\+::generate\+Header (\begin{DoxyParamCaption}\item[{const QString \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_form_builder_acaa46ce626275dd13819feb4f6aa385c}\label{class_form_builder_acaa46ce626275dd13819feb4f6aa385c}} 
+\index{FormBuilder@{FormBuilder}!generateOutputRow@{generateOutputRow}}
+\index{generateOutputRow@{generateOutputRow}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateOutputRow()}{generateOutputRow()}}
+{\footnotesize\ttfamily QHBox\+Layout $\ast$ Form\+Builder\+::generate\+Output\+Row (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_output}{Output}} $\ast$}]{output }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a97e9456a54ba949f3aae0e83f6452988}\label{class_form_builder_a97e9456a54ba949f3aae0e83f6452988}} 
+\index{FormBuilder@{FormBuilder}!generateRange@{generateRange}}
+\index{generateRange@{generateRange}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{generateRange()}{generateRange()}}
+{\footnotesize\ttfamily QVBox\+Layout $\ast$ Form\+Builder\+::generate\+Range (\begin{DoxyParamCaption}\item[{const QString \&}]{header }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_form_builder_a268b96c9586dc9f10679ddf08cc1aeac}\label{class_form_builder_a268b96c9586dc9f10679ddf08cc1aeac}} 
+\index{FormBuilder@{FormBuilder}!getCalibrateLabels@{getCalibrateLabels}}
+\index{getCalibrateLabels@{getCalibrateLabels}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{getCalibrateLabels()}{getCalibrateLabels()}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::get\+Calibrate\+Labels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{class_form_builder_a04538d516cf3278c919abf22fd80c39f}\label{class_form_builder_a04538d516cf3278c919abf22fd80c39f}} 
+\index{FormBuilder@{FormBuilder}!getCoordinates@{getCoordinates}}
+\index{getCoordinates@{getCoordinates}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{getCoordinates()}{getCoordinates()}}
+{\footnotesize\ttfamily QList$<$ \mbox{\hyperlink{classcoordinates}{coordinates}} $>$ $\ast$ Form\+Builder\+::get\+Coordinates (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a9dfb1182c568e633d3f33e355da174b3}\label{class_form_builder_a9dfb1182c568e633d3f33e355da174b3}} 
+\index{FormBuilder@{FormBuilder}!loadComPortData@{loadComPortData}}
+\index{loadComPortData@{loadComPortData}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{loadComPortData()}{loadComPortData()}}
+{\footnotesize\ttfamily void Form\+Builder\+::load\+Com\+Port\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a821aa3807ac7a23f4360d9c110fff4a5}\label{class_form_builder_a821aa3807ac7a23f4360d9c110fff4a5}} 
+\index{FormBuilder@{FormBuilder}!loadPointsToPlot@{loadPointsToPlot}}
+\index{loadPointsToPlot@{loadPointsToPlot}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{loadPointsToPlot()}{loadPointsToPlot()}}
+{\footnotesize\ttfamily void Form\+Builder\+::load\+Points\+To\+Plot (\begin{DoxyParamCaption}\item[{QString\+List}]{axis }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_ab7e87de6b192e60e7914cba435d381f5}\label{class_form_builder_ab7e87de6b192e60e7914cba435d381f5}} 
+\index{FormBuilder@{FormBuilder}!RangeBuilder@{RangeBuilder}}
+\index{RangeBuilder@{RangeBuilder}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{RangeBuilder()}{RangeBuilder()}}
+{\footnotesize\ttfamily QVBox\+Layout $\ast$ Form\+Builder\+::\+Range\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_aee5080bab1f64f65aab0af8da659a4a1}\label{class_form_builder_aee5080bab1f64f65aab0af8da659a4a1}} 
+\index{FormBuilder@{FormBuilder}!reverseClicked@{reverseClicked}}
+\index{reverseClicked@{reverseClicked}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{reverseClicked}{reverseClicked}}
+{\footnotesize\ttfamily void Form\+Builder\+::reverse\+Clicked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_abe86d41ffd2b38be91309c44e5eb930d}\label{class_form_builder_abe86d41ffd2b38be91309c44e5eb930d}} 
+\index{FormBuilder@{FormBuilder}!rudderTextChanged@{rudderTextChanged}}
+\index{rudderTextChanged@{rudderTextChanged}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{rudderTextChanged}{rudderTextChanged}}
+{\footnotesize\ttfamily void Form\+Builder\+::rudder\+Text\+Changed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_a6f355935c226f7f97c8e53e2dce1bc51}\label{class_form_builder_a6f355935c226f7f97c8e53e2dce1bc51}} 
+\index{FormBuilder@{FormBuilder}!setCurves@{setCurves}}
+\index{setCurves@{setCurves}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{setCurves()}{setCurves()}}
+{\footnotesize\ttfamily void Form\+Builder\+::set\+Curves (\begin{DoxyParamCaption}\item[{QString\+List}]{names\+To\+Set }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_form_builder_a73177e33a285e4a21bfdabeae9536753}\label{class_form_builder_a73177e33a285e4a21bfdabeae9536753}} 
+\index{FormBuilder@{FormBuilder}!updateChart@{updateChart}}
+\index{updateChart@{updateChart}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateChart()}{updateChart()}}
+{\footnotesize\ttfamily void Form\+Builder\+::update\+Chart (\begin{DoxyParamCaption}\item[{int}]{number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_afe52188000c9042287c3c2430dc6f4c0}\label{class_form_builder_afe52188000c9042287c3c2430dc6f4c0}} 
+\index{FormBuilder@{FormBuilder}!updateX@{updateX}}
+\index{updateX@{updateX}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateX}{updateX}}
+{\footnotesize\ttfamily void Form\+Builder\+::updateX (\begin{DoxyParamCaption}\item[{int}]{number,  }\item[{int}]{index,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_a643b51ab8bfcb7eb842ecb43bbddec4f}\label{class_form_builder_a643b51ab8bfcb7eb842ecb43bbddec4f}} 
+\index{FormBuilder@{FormBuilder}!updateXCall@{updateXCall}}
+\index{updateXCall@{updateXCall}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateXCall}{updateXCall}}
+{\footnotesize\ttfamily void Form\+Builder\+::update\+XCall (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_a53bbdf28405cfdf6003a799c3d7e053d}\label{class_form_builder_a53bbdf28405cfdf6003a799c3d7e053d}} 
+\index{FormBuilder@{FormBuilder}!updateXSignal@{updateXSignal}}
+\index{updateXSignal@{updateXSignal}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateXSignal}{updateXSignal}}
+{\footnotesize\ttfamily void Form\+Builder\+::update\+XSignal (\begin{DoxyParamCaption}\item[{int}]{number,  }\item[{int}]{index,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\mbox{\Hypertarget{class_form_builder_abc2482e354f8c40f6870f7d264393474}\label{class_form_builder_abc2482e354f8c40f6870f7d264393474}} 
+\index{FormBuilder@{FormBuilder}!updateY@{updateY}}
+\index{updateY@{updateY}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateY}{updateY}}
+{\footnotesize\ttfamily void Form\+Builder\+::updateY (\begin{DoxyParamCaption}\item[{int}]{number,  }\item[{int}]{index,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_ae7a912e15c5ed54daa31d866470ab109}\label{class_form_builder_ae7a912e15c5ed54daa31d866470ab109}} 
+\index{FormBuilder@{FormBuilder}!updateYCall@{updateYCall}}
+\index{updateYCall@{updateYCall}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateYCall}{updateYCall}}
+{\footnotesize\ttfamily void Form\+Builder\+::update\+YCall (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}, {\ttfamily [slot]}}
+
+\mbox{\Hypertarget{class_form_builder_a81512b8460864ff2eb8478cb46bdb979}\label{class_form_builder_a81512b8460864ff2eb8478cb46bdb979}} 
+\index{FormBuilder@{FormBuilder}!updateYSignal@{updateYSignal}}
+\index{updateYSignal@{updateYSignal}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{updateYSignal}{updateYSignal}}
+{\footnotesize\ttfamily void Form\+Builder\+::update\+YSignal (\begin{DoxyParamCaption}\item[{int}]{number,  }\item[{int}]{index,  }\item[{int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_form_builder_a178f78ac6d1249a0e52870c89c37e31d}\label{class_form_builder_a178f78ac6d1249a0e52870c89c37e31d}} 
+\index{FormBuilder@{FormBuilder}!axisValues@{axisValues}}
+\index{axisValues@{axisValues}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{axisValues}{axisValues}}
+{\footnotesize\ttfamily QList$<$int$>$ Form\+Builder\+::axis\+Values = \{-\/16383, -\/10000, 0, 0, 0, 10000, 16383\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_ac49367254c18124741021c128026c052}\label{class_form_builder_ac49367254c18124741021c128026c052}} 
+\index{FormBuilder@{FormBuilder}!charts@{charts}}
+\index{charts@{charts}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{charts}{charts}}
+{\footnotesize\ttfamily QList$<$QChart $\ast$$>$ Form\+Builder\+::charts = QList$<$QChart $\ast$$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a724076f8215faeeebd4455187cb60e8c}\label{class_form_builder_a724076f8215faeeebd4455187cb60e8c}} 
+\index{FormBuilder@{FormBuilder}!chartViews@{chartViews}}
+\index{chartViews@{chartViews}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{chartViews}{chartViews}}
+{\footnotesize\ttfamily QList$<$QChart\+View $\ast$$>$ Form\+Builder\+::chart\+Views = QList$<$QChart\+View $\ast$$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a7b89b821c2aa868f975890ed5c23ddd2}\label{class_form_builder_a7b89b821c2aa868f975890ed5c23ddd2}} 
+\index{FormBuilder@{FormBuilder}!comHeaders@{comHeaders}}
+\index{comHeaders@{comHeaders}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{comHeaders}{comHeaders}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::com\+Headers = \{\char`\"{}Inputs\char`\"{}, \char`\"{}Outputs\char`\"{}, \char`\"{}Both\char`\"{}\}}
+
+\mbox{\Hypertarget{class_form_builder_a8226be2322ed88a57e69a0b695d2e96e}\label{class_form_builder_a8226be2322ed88a57e69a0b695d2e96e}} 
+\index{FormBuilder@{FormBuilder}!curves@{curves}}
+\index{curves@{curves}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{curves}{curves}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::curves\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_acd880ca4d0b5b8a8fffd5d21ae637e57}\label{class_form_builder_acd880ca4d0b5b8a8fffd5d21ae637e57}} 
+\index{FormBuilder@{FormBuilder}!engineHeaders@{engineHeaders}}
+\index{engineHeaders@{engineHeaders}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{engineHeaders}{engineHeaders}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::engine\+Headers}
+
+\mbox{\Hypertarget{class_form_builder_a636e1b7eee6624f3e5bb56c5736a154b}\label{class_form_builder_a636e1b7eee6624f3e5bb56c5736a154b}} 
+\index{FormBuilder@{FormBuilder}!engineLabels@{engineLabels}}
+\index{engineLabels@{engineLabels}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{engineLabels}{engineLabels}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::engine\+Labels = \{\char`\"{}Reverse\char`\"{}, \char`\"{}Idle cutoff\char`\"{}, \char`\"{}Max\char`\"{}\}}
+
+\mbox{\Hypertarget{class_form_builder_a3113ca490866b85348b7e5b40dd6719c}\label{class_form_builder_a3113ca490866b85348b7e5b40dd6719c}} 
+\index{FormBuilder@{FormBuilder}!mainHeaders@{mainHeaders}}
+\index{mainHeaders@{mainHeaders}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{mainHeaders}{mainHeaders}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::main\+Headers = \{\char`\"{}\char`\"{}, \char`\"{}INPUT\char`\"{}, \char`\"{}OUTPUT\char`\"{}, \char`\"{}DUAL\char`\"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a0b5d40e075a91d11fa31c173d3becf53}\label{class_form_builder_a0b5d40e075a91d11fa31c173d3becf53}} 
+\index{FormBuilder@{FormBuilder}!maxValue@{maxValue}}
+\index{maxValue@{maxValue}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{maxValue}{maxValue}}
+{\footnotesize\ttfamily int Form\+Builder\+::max\+Value\mbox{[}4\mbox{]} = \{1023, 1023, 1023, 1023\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a3228bfbc45f4f33d7e0691059a525e9e}\label{class_form_builder_a3228bfbc45f4f33d7e0691059a525e9e}} 
+\index{FormBuilder@{FormBuilder}!minValue@{minValue}}
+\index{minValue@{minValue}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{minValue}{minValue}}
+{\footnotesize\ttfamily int Form\+Builder\+::min\+Value\mbox{[}4\mbox{]} = \{0, 0, 0, 0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_aacb0d9ff3b4752f9ead9258265e9018b}\label{class_form_builder_aacb0d9ff3b4752f9ead9258265e9018b}} 
+\index{FormBuilder@{FormBuilder}!neutralValue@{neutralValue}}
+\index{neutralValue@{neutralValue}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{neutralValue}{neutralValue}}
+{\footnotesize\ttfamily int Form\+Builder\+::neutral\+Value\mbox{[}4\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{= \{((1023 -\/ 0) / 2), ((1023 -\/ 0) / 2), ((1023 -\/ 0) / 2),}
+\DoxyCodeLine{                           ((1023 -\/ 0) / 2)\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_form_builder_a7eb8d74bde04091ee3fef7aaf44eeb02}\label{class_form_builder_a7eb8d74bde04091ee3fef7aaf44eeb02}} 
+\index{FormBuilder@{FormBuilder}!objectNames@{objectNames}}
+\index{objectNames@{objectNames}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{objectNames}{objectNames}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::object\+Names = \{\char`\"{}Min\+LE\char`\"{}, \char`\"{}Neutral\+LE\char`\"{}, \char`\"{}Max\+LE\char`\"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_ab7429991aa9e726e8896c4128744afef}\label{class_form_builder_ab7429991aa9e726e8896c4128744afef}} 
+\index{FormBuilder@{FormBuilder}!pointsToPlot@{pointsToPlot}}
+\index{pointsToPlot@{pointsToPlot}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{pointsToPlot}{pointsToPlot}}
+{\footnotesize\ttfamily QList$<$QList$<$\mbox{\hyperlink{classcoordinates}{coordinates}}$>$ $>$ Form\+Builder\+::points\+To\+Plot = QList$<$QList$<$\mbox{\hyperlink{classcoordinates}{coordinates}}$>$$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a159ed2232b9ef545d3ab2a59c90ab508}\label{class_form_builder_a159ed2232b9ef545d3ab2a59c90ab508}} 
+\index{FormBuilder@{FormBuilder}!rangeHeaders@{rangeHeaders}}
+\index{rangeHeaders@{rangeHeaders}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{rangeHeaders}{rangeHeaders}}
+{\footnotesize\ttfamily QString\+List Form\+Builder\+::range\+Headers}
+
+\mbox{\Hypertarget{class_form_builder_a233b5c513c53ef538aaa09c468ab7355}\label{class_form_builder_a233b5c513c53ef538aaa09c468ab7355}} 
+\index{FormBuilder@{FormBuilder}!series@{series}}
+\index{series@{series}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{series}{series}}
+{\footnotesize\ttfamily QList$<$QLine\+Series $\ast$$>$ Form\+Builder\+::series = QList$<$QLine\+Series $\ast$$>$()\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_a5babc3ac654a2cd9a9c1fc8634489895}\label{class_form_builder_a5babc3ac654a2cd9a9c1fc8634489895}} 
+\index{FormBuilder@{FormBuilder}!setHandler@{setHandler}}
+\index{setHandler@{setHandler}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{setHandler}{setHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_set_handler}{Set\+Handler}} Form\+Builder\+::set\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_form_builder_ab61212879dc3fd2035200272acaa1f2c}\label{class_form_builder_ab61212879dc3fd2035200272acaa1f2c}} 
+\index{FormBuilder@{FormBuilder}!settingsHandler@{settingsHandler}}
+\index{settingsHandler@{settingsHandler}!FormBuilder@{FormBuilder}}
+\doxysubsubsection{\texorpdfstring{settingsHandler}{settingsHandler}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_settings_handler}{Settings\+Handler}} Form\+Builder\+::settings\+Handler\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+widgets/settingsmenu/builder/\mbox{\hyperlink{formbuilder_8h}{formbuilder.\+h}}\item 
+widgets/settingsmenu/builder/\mbox{\hyperlink{formbuilder_8cpp}{formbuilder.\+cpp}}\end{DoxyCompactItemize}

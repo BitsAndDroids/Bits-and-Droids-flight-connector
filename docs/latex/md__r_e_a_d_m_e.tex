@@ -1,0 +1,30 @@
+Repositry for the mfs2020 flight connector by Bits and Droids
+
+This project runs on the QT UI framework \href{https://www.qt.io/download-open-source}{\texttt{ https\+://www.\+qt.\+io/download-\/open-\/source}}\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{Tools needed to compile}\label{md__r_e_a_d_m_e_autotoc_md1}
+Qt version 6.\+2 Qt additions\+:
+\begin{DoxyItemize}
+\item Qt Charts
+\item Qt Serialport
+\item Qt Graphics
+\end{DoxyItemize}
+
+Can also be run from third party IDE\textquotesingle{}s like CLion.\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{Project setup}\label{md__r_e_a_d_m_e_autotoc_md2}
+This project includes all the files and build steps required to build the project in your favorite IDE. All the required DLL\textquotesingle{}s are included in the dist folder which get added upon build.
+
+
+\begin{DoxyItemize}
+\item Clone / download
+\item Unzip
+\item Run CMAKE on the CMake\+Lists.\+txt in the binary folder
+\item Build
+\item Run
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md3}{}\doxysection{Tests}\label{md__r_e_a_d_m_e_autotoc_md3}
+Tests are added to the Test folder. CMake will generate a seperate .exe for the unit tests. You\textquotesingle{}re able to run these test automatically by adding the .exe to your post build setup (IDE dependent).
+
+\begin{quote}
+There are a boatload of inputs/outputs that are still missing Unit tests. All help on this front is welcome \texorpdfstring{$<$}{<}3 \end{quote}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{Structure}\label{md__r_e_a_d_m_e_autotoc_md4}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md5}{}\doxysubsection{Dashboard}\label{md__r_e_a_d_m_e_autotoc_md5}
+The dashboard is the mainscreen of the application. It consists of several independent units(widgets). The controlling logic has been delegated to seperate controller classes. See the image below for a visual representation of the structure.  \hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{Arduino / ESP32 library}\label{md__r_e_a_d_m_e_autotoc_md6}
+The libraries are a way to simplify the communication between your microcontroller and the connector. They have their own repository which can be found at\+: \href{https://github.com/BitsAndDroids/BitsAndDroidsFlightSimLibrary}{\texttt{ https\+://github.\+com/\+Bits\+And\+Droids/\+Bits\+And\+Droids\+Flight\+Sim\+Library}}\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysection{Documentation}\label{md__r_e_a_d_m_e_autotoc_md7}
+The documentation for the connector can be found on the Bits and Droids website. \href{https://www.bitsanddroids.com/flight-sim-connector-library-documentation/}{\texttt{ https\+://www.\+bitsanddroids.\+com/flight-\/sim-\/connector-\/library-\/documentation/}} 

@@ -1,0 +1,32 @@
+\hypertarget{pathhandler_8h_source}{}\doxysection{pathhandler.\+h}
+\label{pathhandler_8h_source}\index{handlers/pathhandler.h@{handlers/pathhandler.h}}
+\mbox{\hyperlink{pathhandler_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef PATHHANDLER\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define PATHHANDLER\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <qstandardpaths.h>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <qstring.h>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{settingshandler_8h}{settings/settingshandler.h}}"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_path_handler}{PathHandler}} \{}
+\DoxyCodeLine{9  \textcolor{keyword}{public}:}
+\DoxyCodeLine{10   \mbox{\hyperlink{class_path_handler_a8296a0c55654d18dc8efe6c237b624e2}{PathHandler}}();}
+\DoxyCodeLine{11   QString \mbox{\hyperlink{class_path_handler_a1cb031023909495191ffdef8c3e0d55a}{getWritableEventPath}}();}
+\DoxyCodeLine{12   QString \mbox{\hyperlink{class_path_handler_a84c9844ed4a0dca2ac35fd587f8a1c90}{getCommunityFolderPath}}();}
+\DoxyCodeLine{13   QString \mbox{\hyperlink{class_path_handler_a42ca3938146fa0bf784fee3d7c849d5f}{getMaintenanceToolPath}}();}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15   \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_path_handler_a90e039ee0993b91fbf843941ee62ecad}{setWritableEventPath}}(\textcolor{keyword}{const} QString \&newWritableEventPath);}
+\DoxyCodeLine{16   \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_path_handler_af2ec4e740fbd389d334b710af9f712e4}{setCommunityFolderPath}}(\textcolor{keyword}{const} QString \&newPath);}
+\DoxyCodeLine{17   \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_path_handler_acc24ee4960935264b306c947ec58440f}{setMaintenanceToolPath}}(\textcolor{keyword}{const} QString \&\mbox{\hyperlink{class_path_handler_acd1ae8ebcd733a25b13a8fc15de87ed6}{maintenanceToolPath}});}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19  \textcolor{keyword}{private}:}
+\DoxyCodeLine{20   \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_path_handler_a4b2a4eed5726e5eb82adbb8906b8e703}{settingsHandler}};}
+\DoxyCodeLine{21   \textcolor{keyword}{static} QString \mbox{\hyperlink{class_path_handler_aabbd1457ad06c3002da35da536b8d7d7}{writableEventPath}};}
+\DoxyCodeLine{22   \textcolor{keyword}{static} QString \mbox{\hyperlink{class_path_handler_acd1ae8ebcd733a25b13a8fc15de87ed6}{maintenanceToolPath}};}
+\DoxyCodeLine{23   \textcolor{keyword}{static} QString \mbox{\hyperlink{class_path_handler_af682dd2d0fb5c463d667e419d8f35c49}{communityFolderPath}};}
+\DoxyCodeLine{24 \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// PATHHANDLER\_H}}
+
+\end{DoxyCode}

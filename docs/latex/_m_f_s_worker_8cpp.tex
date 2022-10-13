@@ -1,0 +1,170 @@
+\hypertarget{_m_f_s_worker_8cpp}{}\doxysection{dashboard/workers/\+MFSWorker.cpp File Reference}
+\label{_m_f_s_worker_8cpp}\index{dashboard/workers/MFSWorker.cpp@{dashboard/workers/MFSWorker.cpp}}
+{\ttfamily \#include \char`\"{}MFSWorker.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}outputmenu/handlers/sethandler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}settings/\+Com\+Settings\+Handler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/\+Input\+Reader.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}enums/\+Mode\+Enum.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_struct_one_datum}{Struct\+One\+Datum}}
+\item 
+struct \mbox{\hyperlink{structdata_str}{data\+Str}}
+\item 
+struct \mbox{\hyperlink{struct_struct_datum}{Struct\+Datum}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_m_f_s_worker_8cpp_af0113b8a0d65aab384607436aa155838}{DATA\+\_\+\+LENGTH}}~255
+\item 
+\#define \mbox{\hyperlink{_m_f_s_worker_8cpp_a9ddad87441cf1f141f64202b0b501fa7}{MAX\+\_\+\+RETURNED\+\_\+\+ITEMS}}~255
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dd}{EVENT\+\_\+\+ID}} \{ \mbox{\hyperlink{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda2327ecb8aff1c2073b69aae9f29f610a}{EVENT\+\_\+\+SIM\+\_\+\+START}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda9d00f8461c2ad94e46ce9231c043cafd}{EVENT\+\_\+\+WASM}} = 2
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda3fe0fdabb1ab335764b557120c59147a}{EVENT\+\_\+\+WASMINC}} = 3
+ \}
+\item 
+enum \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}{DATA\+\_\+\+DEFINE\+\_\+\+ID}} \{ \newline
+\mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}{DEFINITION\+\_\+\+PDR\+\_\+\+RADIO}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}{DEFINITION\+\_\+\+STRING}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}{DEFINITION\+\_\+\+ELEVATOR\+\_\+\+TRIM\+\_\+\+PCT}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}{DEFINITION\+\_\+1}} = 12
+, \newline
+\mbox{\hyperlink{_service_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}{DEFINITION\+\_\+\+SERVICE\+\_\+\+DATA}} = 14
+ \}
+\item 
+enum \mbox{\hyperlink{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13}{DATA\+\_\+\+REQUEST\+\_\+\+ID}} \{ \mbox{\hyperlink{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13a10d2c126fa287a00103874c19b342425}{REQUEST\+\_\+\+PDR\+\_\+\+RADIO}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13af3d08a6ffd9b1995baa0f756eaa8f9d3}{REQUEST\+\_\+\+STRING}}
+, \mbox{\hyperlink{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13abb6298d04fe07985998d3e3b8a137da1}{REQUEST\+\_\+1}} = 10
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_m_f_s_worker_8cpp_a9ccd6e6c2ea5bdce81c0802f94d7eaa8}{send\+Command}} (\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\+\_\+\+CLIENT\+\_\+\+EVENT\+\_\+\+ID}} event\+ID)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+HANDLE \mbox{\hyperlink{_m_f_s_worker_8cpp_adedb0c0d790506c635283cf7509a3fc6}{dual\+Sim\+Connect}} = nullptr
+\item 
+float \mbox{\hyperlink{_m_f_s_worker_8cpp_a40fd99af0a819612a201b08b85d5eb0b}{dual\+Data\+Recv}} = 1.\+2f
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_af0113b8a0d65aab384607436aa155838}\label{_m_f_s_worker_8cpp_af0113b8a0d65aab384607436aa155838}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!DATA\_LENGTH@{DATA\_LENGTH}}
+\index{DATA\_LENGTH@{DATA\_LENGTH}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{DATA\_LENGTH}{DATA\_LENGTH}}
+{\footnotesize\ttfamily \#define DATA\+\_\+\+LENGTH~255}
+
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_a9ddad87441cf1f141f64202b0b501fa7}\label{_m_f_s_worker_8cpp_a9ddad87441cf1f141f64202b0b501fa7}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!MAX\_RETURNED\_ITEMS@{MAX\_RETURNED\_ITEMS}}
+\index{MAX\_RETURNED\_ITEMS@{MAX\_RETURNED\_ITEMS}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{MAX\_RETURNED\_ITEMS}{MAX\_RETURNED\_ITEMS}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+RETURNED\+\_\+\+ITEMS~255}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!DATA\_DEFINE\_ID@{DATA\_DEFINE\_ID}}
+\index{DATA\_DEFINE\_ID@{DATA\_DEFINE\_ID}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{DATA\_DEFINE\_ID}{DATA\_DEFINE\_ID}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71}{DATA\+\_\+\+DEFINE\+\_\+\+ID}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_PDR\_RADIO@{DEFINITION\_PDR\_RADIO}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!DEFINITION\_PDR\_RADIO@{DEFINITION\_PDR\_RADIO}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a55810b9b5f14c4f32294e07682ca34ed}} 
+DEFINITION\+\_\+\+PDR\+\_\+\+RADIO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_STRING@{DEFINITION\_STRING}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!DEFINITION\_STRING@{DEFINITION\_STRING}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a3b4a2bf3f505bed5fb2ea5acf89f3043}} 
+DEFINITION\+\_\+\+STRING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_ELEVATOR\_TRIM\_PCT@{DEFINITION\_ELEVATOR\_TRIM\_PCT}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!DEFINITION\_ELEVATOR\_TRIM\_PCT@{DEFINITION\_ELEVATOR\_TRIM\_PCT}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71aabb087856cb38381cd86b25a865c3ec6}} 
+DEFINITION\+\_\+\+ELEVATOR\+\_\+\+TRIM\+\_\+\+PCT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_1@{DEFINITION\_1}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!DEFINITION\_1@{DEFINITION\_1}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71af78344c6e5381bb63ce07c25b2054316}} 
+DEFINITION\+\_\+1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEFINITION\_SERVICE\_DATA@{DEFINITION\_SERVICE\_DATA}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!DEFINITION\_SERVICE\_DATA@{DEFINITION\_SERVICE\_DATA}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}\label{_m_f_s_worker_8cpp_a4ac369bf15be0801512ef977ee0c5b71a423b471af9eb74936183aeadd55ab0e2}} 
+DEFINITION\+\_\+\+SERVICE\+\_\+\+DATA&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13}\label{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!DATA\_REQUEST\_ID@{DATA\_REQUEST\_ID}}
+\index{DATA\_REQUEST\_ID@{DATA\_REQUEST\_ID}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{DATA\_REQUEST\_ID}{DATA\_REQUEST\_ID}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13}{DATA\+\_\+\+REQUEST\+\_\+\+ID}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQUEST\_PDR\_RADIO@{REQUEST\_PDR\_RADIO}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!REQUEST\_PDR\_RADIO@{REQUEST\_PDR\_RADIO}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13a10d2c126fa287a00103874c19b342425}\label{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13a10d2c126fa287a00103874c19b342425}} 
+REQUEST\+\_\+\+PDR\+\_\+\+RADIO&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQUEST\_STRING@{REQUEST\_STRING}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!REQUEST\_STRING@{REQUEST\_STRING}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13af3d08a6ffd9b1995baa0f756eaa8f9d3}\label{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13af3d08a6ffd9b1995baa0f756eaa8f9d3}} 
+REQUEST\+\_\+\+STRING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{REQUEST\_1@{REQUEST\_1}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!REQUEST\_1@{REQUEST\_1}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13abb6298d04fe07985998d3e3b8a137da1}\label{_m_f_s_worker_8cpp_a044a6a9e5c366eba7485f126ca8a5f13abb6298d04fe07985998d3e3b8a137da1}} 
+REQUEST\+\_\+1&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dd}\label{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dd}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!EVENT\_ID@{EVENT\_ID}}
+\index{EVENT\_ID@{EVENT\_ID}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{EVENT\_ID}{EVENT\_ID}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dd}{EVENT\+\_\+\+ID}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENT\_SIM\_START@{EVENT\_SIM\_START}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!EVENT\_SIM\_START@{EVENT\_SIM\_START}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda2327ecb8aff1c2073b69aae9f29f610a}\label{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda2327ecb8aff1c2073b69aae9f29f610a}} 
+EVENT\+\_\+\+SIM\+\_\+\+START&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENT\_WASM@{EVENT\_WASM}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!EVENT\_WASM@{EVENT\_WASM}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda9d00f8461c2ad94e46ce9231c043cafd}\label{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda9d00f8461c2ad94e46ce9231c043cafd}} 
+EVENT\+\_\+\+WASM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{EVENT\_WASMINC@{EVENT\_WASMINC}!MFSWorker.cpp@{MFSWorker.cpp}}\index{MFSWorker.cpp@{MFSWorker.cpp}!EVENT\_WASMINC@{EVENT\_WASMINC}}}\mbox{\Hypertarget{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda3fe0fdabb1ab335764b557120c59147a}\label{_m_f_s_worker_8cpp_ab170bfc4d22609ea7c5ac8e9393518dda3fe0fdabb1ab335764b557120c59147a}} 
+EVENT\+\_\+\+WASMINC&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_a9ccd6e6c2ea5bdce81c0802f94d7eaa8}\label{_m_f_s_worker_8cpp_a9ccd6e6c2ea5bdce81c0802f94d7eaa8}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{sendCommand()}{sendCommand()}}
+{\footnotesize\ttfamily void send\+Command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\+\_\+\+CLIENT\+\_\+\+EVENT\+\_\+\+ID}}}]{event\+ID }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_a40fd99af0a819612a201b08b85d5eb0b}\label{_m_f_s_worker_8cpp_a40fd99af0a819612a201b08b85d5eb0b}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!dualDataRecv@{dualDataRecv}}
+\index{dualDataRecv@{dualDataRecv}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{dualDataRecv}{dualDataRecv}}
+{\footnotesize\ttfamily float dual\+Data\+Recv = 1.\+2f}
+
+\mbox{\Hypertarget{_m_f_s_worker_8cpp_adedb0c0d790506c635283cf7509a3fc6}\label{_m_f_s_worker_8cpp_adedb0c0d790506c635283cf7509a3fc6}} 
+\index{MFSWorker.cpp@{MFSWorker.cpp}!dualSimConnect@{dualSimConnect}}
+\index{dualSimConnect@{dualSimConnect}!MFSWorker.cpp@{MFSWorker.cpp}}
+\doxysubsubsection{\texorpdfstring{dualSimConnect}{dualSimConnect}}
+{\footnotesize\ttfamily HANDLE dual\+Sim\+Connect = nullptr}
+
