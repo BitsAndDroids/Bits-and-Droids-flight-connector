@@ -212,8 +212,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
                                 dualCast->sendToArduino(value, prefix, i, mode);
-                                emit
-                                dualCast->logMessage(
+                                emit dualCast->logMessage(
                                         "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
                                         dualCast->comBundles->at(i)->getSerialPort()->getPortName(),
                                         LogLevel::DEBUGLOG);
@@ -348,7 +347,6 @@ void MFSWorker::eventLoop() {
         }
         //TODO replace by proper timer mechanism that can be interrupted
         //This check ensures that we don't wait for the app to close when we want it to close
-        //
         if (!abortDual) {
             uint8_t counter = 0;
             while (counter < 10 && !abortDual) {
@@ -381,7 +379,6 @@ void MFSWorker::setConnected(bool connectedToSim) {
 MFSWorker::~MFSWorker() {
     abortDual = true;
     for (auto com : *comBundles) {
-        auto serialPort = com->getSerialPort();
         if (com->getSerialPort()->isConnected()) {
             emit logMessage("Closing connection to " + com->getSerialPort()->getPortName(),
                             LogLevel::DEBUGLOG);
