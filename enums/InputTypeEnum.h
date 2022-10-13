@@ -6,8 +6,13 @@
 #define BITSANDDROIDSCONNECTOR_INPUTTYPEENUM_H
 
 static enum InputTypeEnum {
+    BASICCOMMAND = 0,
     ENGINE,
-    AXIS
+    AXIS,
+    SETINT,
+    INPUTOFF = 4,
+    INPUTON = 5,
+    SETCOMS = 2,
 } types;
 
 #endif //BITSANDDROIDSCONNECTOR_INPUTTYPEENUM_H
