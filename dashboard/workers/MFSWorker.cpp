@@ -329,13 +329,13 @@ void MFSWorker::eventLoop() {
             while (!abortDual && connected) {
                 SimConnect_CallDispatch(dualSimConnect, MyDispatchProcInput, this);
 
-                for (int i = 0; i < comBundles->size(); i++) {
-                    const auto hasRead = comBundles->at(i)->getSerialPort()->readSerialPort(
-                            &comBundles->at(i)->getReceivedStringAddress(), DATA_LENGTH);
+                for (auto comBundle : *comBundles) {
+                    const auto hasRead = comBundle->getSerialPort()->readSerialPort(
+                            &comBundle->getReceivedStringAddress(), DATA_LENGTH);
 
                     if (hasRead) {
                         if (connected) {
-                            dualInputHandler->switchHandling(&comBundles->at(i)->getReceivedStringAddress());
+                            dualInputHandler->switchHandling(&comBundle->getReceivedStringAddress());
                         }
                     }
                 }
@@ -357,11 +357,11 @@ void MFSWorker::eventLoop() {
         }
     }
 
-    for (int i = 0; i < keys->size(); i++) {
-        if (comBundles->at(i)->getSerialPort()->isConnected()) {
-            emit logMessage("Closing connection to " + comBundles->at(i)->getSerialPort()->getPortName(),
+    for (auto com : *comBundles) {
+        if (com->getSerialPort()->isConnected()) {
+            emit logMessage("Closing connection to " + com->getSerialPort()->getPortName(),
                             LogLevel::DEBUGLOG);
-            comBundles->at(i)->getSerialPort()->closeSerial();
+            com->getSerialPort()->closeSerial();
         }
     }
     //We want to update the dashboard indicator when we've closed the connection
@@ -379,12 +379,12 @@ void MFSWorker::setConnected(bool connectedToSim) {
 
 MFSWorker::~MFSWorker() {
     abortDual = true;
-    for (int i = 0; i < keys->size(); i++) {
-        auto serialPort = comBundles->at(i)->getSerialPort();
-        if (comBundles->at(i)->getSerialPort()->isConnected()) {
-            emit logMessage("Closing connection to " + comBundles->at(i)->getSerialPort()->getPortName(),
+    for (auto com : *comBundles) {
+        auto serialPort = com->getSerialPort();
+        if (com->getSerialPort()->isConnected()) {
+            emit logMessage("Closing connection to " + com->getSerialPort()->getPortName(),
                             LogLevel::DEBUGLOG);
-            comBundles->at(i)->getSerialPort()->closeSerial();
+            com->getSerialPort()->closeSerial();
         }
     }
     mutex.lock();
