@@ -44,4 +44,6 @@ https://github.com/BitsAndDroids/BitsAndDroidsFlightSimLibrary
 The documentation for the connector can be found on the Bits and Droids website.
 https://www.bitsanddroids.com/flight-sim-connector-library-documentation/
 
+I've started to document the code using Doxygen. For more code insights visit the [Github pages section of this repository](https://bitsanddroids.github.io/Bits-and-Droids-flight-connector/).
+
 
