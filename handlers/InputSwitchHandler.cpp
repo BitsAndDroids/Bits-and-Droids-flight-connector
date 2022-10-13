@@ -473,7 +473,14 @@ void InputSwitchHandler::sendBasicCommandValue(
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
-
+/*!
+ * \fn InputSwitchHandler::switchHandling(const char* stringToParse)
+ * \brief this function triggers the appropriate input handling function
+ * Depending on the incomming string this function will parse and fire the appropriate input function.
+ * Input types are determined in the Input.json file. Types are defined in the InputTypeEnum.
+ * \sa InputTypeEnum
+ * @param stringToParse the string that has been sent by a microcontroller
+ */
 void InputSwitchHandler::switchHandling(const char* stringToParse) {
     Sleep(2);
     //
@@ -501,9 +508,12 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                         break;
                     }
                     case SETCOMS: {
-                        setComs(stringStd, prefixValue);
-                        int value = Dec2Bcd(stoi(stringStd.substr(4,10)));
+                        int value = Dec2Bcd((stoi(stringStd.substr(4,10))) / 10);
                         sendBasicCommandValue(input.getPrefix(), value);
+                        break;
+                    }
+                    case SETINT: {
+                        sendBasicCommandValue(input.getPrefix(), stoi(stringStd.substr(4,10)));
                         break;
                     }
                     default: {

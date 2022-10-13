@@ -9,7 +9,7 @@ static enum InputTypeEnum {
     BASICCOMMAND = 0,
     ENGINE,
     AXIS,
-    SETINT,
+    SETINT = 1,
     INPUTOFF = 4,
     INPUTON = 5,
     SETCOMS = 2,

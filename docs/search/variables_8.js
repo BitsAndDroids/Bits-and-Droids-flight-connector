@@ -6,5 +6,5 @@ var searchData=
   ['initposition_5fairspeed_5fcruise_3',['INITPOSITION_AIRSPEED_CRUISE',['../_sim_connect_8h.html#af0d51a03401cad4ca0cd905219289d09',1,'SimConnect.h']]],
   ['initposition_5fairspeed_5fkeep_4',['INITPOSITION_AIRSPEED_KEEP',['../_sim_connect_8h.html#ac5207ec341852812a6f64e9a836ab9f5',1,'SimConnect.h']]],
   ['inputdefinitions_5',['inputDefinitions',['../_input_switch_handler_8cpp.html#adbd5a40e173ef5ac137a30ef542e9b14',1,'InputSwitchHandler.cpp']]],
-  ['inputs_6',['inputs',['../class_m_f_s_worker.html#ab423253926080967c09d90853a1c81b8',1,'MFSWorker::inputs()'],['../class_input_switch_handler.html#ad221535853a456e753e34c44bb4349fa',1,'InputSwitchHandler::inputs()'],['../class_input_reader.html#a570a7ce1ce41f68adf48eabe8141ebb6',1,'InputReader::inputs()'],['../_input_switch_handler_8cpp.html#ada08a53d2c8289f4e68f8459d5dad6a8',1,'inputs():&#160;InputSwitchHandler.cpp']]]
+  ['inputs_6',['inputs',['../class_m_f_s_worker.html#ab423253926080967c09d90853a1c81b8',1,'MFSWorker::inputs()'],['../class_input_switch_handler.html#ad221535853a456e753e34c44bb4349fa',1,'InputSwitchHandler::inputs()'],['../class_input_reader.html#a570a7ce1ce41f68adf48eabe8141ebb6',1,'InputReader::inputs()']]]
 ];

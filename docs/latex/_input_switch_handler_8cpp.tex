@@ -22,23 +22,9 @@
 \begin{DoxyCompactItemize}
 \item 
 UINT32 \mbox{\hyperlink{_input_switch_handler_8cpp_ace979036f354659536a82e1e02dc42f2}{Horner\+Scheme}} (UINT32 Num, UINT32 Divider, UINT32 Factor)
-\item 
-void \mbox{\hyperlink{_input_switch_handler_8cpp_ace8e86b0b162870c5a4f81bcac31dab6}{map\+Value\+To\+Axis}} (\mbox{\hyperlink{class_axis}{Axis}} $\ast$axis)
 \end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
-\item 
-char $\ast$ \mbox{\hyperlink{_input_switch_handler_8cpp_a1d71425d9df28667d528833a4db10432}{token}}
-\item 
-char $\ast$ \mbox{\hyperlink{_input_switch_handler_8cpp_ae8d64a4fef093e4e7d53b8ca69859bef}{next\+\_\+token}}
-\item 
-bool \mbox{\hyperlink{_input_switch_handler_8cpp_ada08a53d2c8289f4e68f8459d5dad6a8}{inputs}} \mbox{[}5\mbox{]}
-\item 
-int \mbox{\hyperlink{_input_switch_handler_8cpp_a617a47c70795bcff659815ad0efd2266}{counter}} = 0
-\item 
-float \mbox{\hyperlink{_input_switch_handler_8cpp_ae2110147779b29cb7167305252f2cd63}{closed\+Axis}} = -\/16383.\+0
-\item 
-float \mbox{\hyperlink{_input_switch_handler_8cpp_a3d35be4a514d83728218488b3992a08b}{open\+Axis}} = 16383.\+0
 \item 
 \mbox{\hyperlink{class_input_enum}{Input\+Enum}} \mbox{\hyperlink{_input_switch_handler_8cpp_adbd5a40e173ef5ac137a30ef542e9b14}{input\+Definitions}} = \mbox{\hyperlink{class_input_enum}{Input\+Enum}}()
 \end{DoxyCompactItemize}
@@ -60,54 +46,12 @@ float \mbox{\hyperlink{_input_switch_handler_8cpp_a3d35be4a514d83728218488b3992a
 \doxysubsubsection{\texorpdfstring{HornerScheme()}{HornerScheme()}}
 {\footnotesize\ttfamily UINT32 Horner\+Scheme (\begin{DoxyParamCaption}\item[{UINT32}]{Num,  }\item[{UINT32}]{Divider,  }\item[{UINT32}]{Factor }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{_input_switch_handler_8cpp_ace8e86b0b162870c5a4f81bcac31dab6}\label{_input_switch_handler_8cpp_ace8e86b0b162870c5a4f81bcac31dab6}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!mapValueToAxis@{mapValueToAxis}}
-\index{mapValueToAxis@{mapValueToAxis}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{mapValueToAxis()}{mapValueToAxis()}}
-{\footnotesize\ttfamily void map\+Value\+To\+Axis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_axis}{Axis}} $\ast$}]{axis }\end{DoxyParamCaption})}
-
 
 
 \doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{_input_switch_handler_8cpp_ae2110147779b29cb7167305252f2cd63}\label{_input_switch_handler_8cpp_ae2110147779b29cb7167305252f2cd63}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!closedAxis@{closedAxis}}
-\index{closedAxis@{closedAxis}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{closedAxis}{closedAxis}}
-{\footnotesize\ttfamily float closed\+Axis = -\/16383.\+0}
-
-\mbox{\Hypertarget{_input_switch_handler_8cpp_a617a47c70795bcff659815ad0efd2266}\label{_input_switch_handler_8cpp_a617a47c70795bcff659815ad0efd2266}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!counter@{counter}}
-\index{counter@{counter}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{counter}{counter}}
-{\footnotesize\ttfamily int counter = 0}
-
 \mbox{\Hypertarget{_input_switch_handler_8cpp_adbd5a40e173ef5ac137a30ef542e9b14}\label{_input_switch_handler_8cpp_adbd5a40e173ef5ac137a30ef542e9b14}} 
 \index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!inputDefinitions@{inputDefinitions}}
 \index{inputDefinitions@{inputDefinitions}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
 \doxysubsubsection{\texorpdfstring{inputDefinitions}{inputDefinitions}}
 {\footnotesize\ttfamily \mbox{\hyperlink{class_input_enum}{Input\+Enum}} input\+Definitions = \mbox{\hyperlink{class_input_enum}{Input\+Enum}}()}
-
-\mbox{\Hypertarget{_input_switch_handler_8cpp_ada08a53d2c8289f4e68f8459d5dad6a8}\label{_input_switch_handler_8cpp_ada08a53d2c8289f4e68f8459d5dad6a8}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!inputs@{inputs}}
-\index{inputs@{inputs}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{inputs}{inputs}}
-{\footnotesize\ttfamily bool inputs\mbox{[}5\mbox{]}}
-
-\mbox{\Hypertarget{_input_switch_handler_8cpp_ae8d64a4fef093e4e7d53b8ca69859bef}\label{_input_switch_handler_8cpp_ae8d64a4fef093e4e7d53b8ca69859bef}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!next\_token@{next\_token}}
-\index{next\_token@{next\_token}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{next\_token}{next\_token}}
-{\footnotesize\ttfamily char $\ast$ next\+\_\+token}
-
-\mbox{\Hypertarget{_input_switch_handler_8cpp_a3d35be4a514d83728218488b3992a08b}\label{_input_switch_handler_8cpp_a3d35be4a514d83728218488b3992a08b}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!openAxis@{openAxis}}
-\index{openAxis@{openAxis}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{openAxis}{openAxis}}
-{\footnotesize\ttfamily float open\+Axis = 16383.\+0}
-
-\mbox{\Hypertarget{_input_switch_handler_8cpp_a1d71425d9df28667d528833a4db10432}\label{_input_switch_handler_8cpp_a1d71425d9df28667d528833a4db10432}} 
-\index{InputSwitchHandler.cpp@{InputSwitchHandler.cpp}!token@{token}}
-\index{token@{token}!InputSwitchHandler.cpp@{InputSwitchHandler.cpp}}
-\doxysubsubsection{\texorpdfstring{token}{token}}
-{\footnotesize\ttfamily char$\ast$ token}
 

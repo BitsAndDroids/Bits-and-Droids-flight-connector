@@ -52,65 +52,69 @@
 \DoxyCodeLine{48     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a978787f572b7cd4c5b66759a9f1426ef}{logMessage}}(std::string message, \mbox{\hyperlink{_log_level_enum_8h_aca1fd1d8935433e6ba2e3918214e07f9}{LogLevel}} level);}
 \DoxyCodeLine{49 }
 \DoxyCodeLine{50 \textcolor{keyword}{private}:}
-\DoxyCodeLine{51     std::map<int, Input> \mbox{\hyperlink{class_input_switch_handler_ad221535853a456e753e34c44bb4349fa}{inputs}};}
-\DoxyCodeLine{52     std::string \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}};}
-\DoxyCodeLine{53     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_input_switch_handler_a12cb80ed9bcdeb2214aff1eb710bec73}{settingsHandler}};}
-\DoxyCodeLine{54     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_abd340f17da0d05c7572262def78a05c3}{elevatorTrimAxis}} = \mbox{\hyperlink{class_axis}{Axis}}(0, 1023, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a4355b89f503010c94909265086ee31a7}{InputEnum::DEFINITION\_ELEVATOR\_TRIM\_SET}});}
-\DoxyCodeLine{55     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_ac5ae0c5853e2bb7b464518dc0ca52152}{mixtureRanges}}[\mbox{\hyperlink{namespaceconstants_afb74188e429e32f439d3ab867756e818}{constants::supportedMixtureLevers}}];}
-\DoxyCodeLine{56     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a47f336de43564251377099f0b93b3f14}{propellerRanges}}[\mbox{\hyperlink{namespaceconstants_addca3123aed51fb5e66863225a040720}{constants::supportedPropellerLevers}}];}
-\DoxyCodeLine{57     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a49b0cad419bc7512d72cfe2cb48ac567}{flapsRange}};}
-\DoxyCodeLine{58 }
-\DoxyCodeLine{59     QStringList \mbox{\hyperlink{class_input_switch_handler_af8d161c95fc05e04af3f8c74a523c04f}{curveStrings}} = \{\textcolor{stringliteral}{"{}Rudder"{}}, \textcolor{stringliteral}{"{}Toe brakes"{}}, \textcolor{stringliteral}{"{}Aileron"{}}, \textcolor{stringliteral}{"{}Elevator"{}}\};}
+\DoxyCodeLine{51     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_input_switch_handler_a4b12dd8f3ca2d49cbebcb7052c160c7a}{closedAxis}} = -\/16383.0;}
+\DoxyCodeLine{52     \textcolor{keywordtype}{float} \mbox{\hyperlink{class_input_switch_handler_adb41d4bab3a07149ab8a875f51ce7c50}{openAxis}} = 16383.0;}
+\DoxyCodeLine{53     std::map<int, Input> \mbox{\hyperlink{class_input_switch_handler_ad221535853a456e753e34c44bb4349fa}{inputs}};}
+\DoxyCodeLine{54     std::string \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}};}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_settings_handler}{SettingsHandler}} \mbox{\hyperlink{class_input_switch_handler_a12cb80ed9bcdeb2214aff1eb710bec73}{settingsHandler}};}
+\DoxyCodeLine{56     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_abd340f17da0d05c7572262def78a05c3}{elevatorTrimAxis}} = \mbox{\hyperlink{class_axis}{Axis}}(0, 1023, \mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a4355b89f503010c94909265086ee31a7}{InputEnum::DEFINITION\_ELEVATOR\_TRIM\_SET}});}
+\DoxyCodeLine{57     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_ac5ae0c5853e2bb7b464518dc0ca52152}{mixtureRanges}}[\mbox{\hyperlink{namespaceconstants_afb74188e429e32f439d3ab867756e818}{constants::supportedMixtureLevers}}];}
+\DoxyCodeLine{58     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a47f336de43564251377099f0b93b3f14}{propellerRanges}}[\mbox{\hyperlink{namespaceconstants_addca3123aed51fb5e66863225a040720}{constants::supportedPropellerLevers}}];}
+\DoxyCodeLine{59     \mbox{\hyperlink{class_axis}{Axis}} \mbox{\hyperlink{class_input_switch_handler_a49b0cad419bc7512d72cfe2cb48ac567}{flapsRange}};}
 \DoxyCodeLine{60 }
-\DoxyCodeLine{61     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a0db154aec181f76ac9aab30a622aca0a}{rudderAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a37d3a2c91a95bfe5b8c514c35fb5d667}{InputEnum::DEFINITION\_AXIS\_RUDDER\_SET}});}
-\DoxyCodeLine{62     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140ad5d02c8aaaa15a1e3d2aab2a4b04698c}{InputEnum::DEFINITION\_AXIS\_LEFT\_BRAKE\_SET}});}
-\DoxyCodeLine{63     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a36df420123bb0858b6324048cdb692bd}{InputEnum::DEFINITION\_AXIS\_RIGHT\_BRAKE\_SET}});}
-\DoxyCodeLine{64     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afb66de4e8ad2ff993d1d89fae8a8b4ec}{brakeAxis}}[2] = \{\mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}}, \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}}\};}
-\DoxyCodeLine{65     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a3e720d2d8de875b35288717678e47468}{aileronAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a0bf6b3830a3d73037ba4d5a2b210129a}{InputEnum::DEFINITION\_AXIS\_AILERONS\_SET}});}
-\DoxyCodeLine{66     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a4a5a557c4a20dec6c9d158be1509c9e2}{elevatorAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140acbb2ce65dd91530c6c046daa20eba109}{InputEnum::DEFINITION\_AXIS\_ELEVATOR\_SET}});}
-\DoxyCodeLine{67 }
-\DoxyCodeLine{68     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a1cb2ab056a4e69f722ab4182e6b482e9}{setEngineValues}}(std::string stringToSet);}
+\DoxyCodeLine{61     QStringList \mbox{\hyperlink{class_input_switch_handler_af8d161c95fc05e04af3f8c74a523c04f}{curveStrings}} = \{\textcolor{stringliteral}{"{}Rudder"{}}, \textcolor{stringliteral}{"{}Toe brakes"{}}, \textcolor{stringliteral}{"{}Aileron"{}}, \textcolor{stringliteral}{"{}Elevator"{}}\};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a0db154aec181f76ac9aab30a622aca0a}{rudderAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a37d3a2c91a95bfe5b8c514c35fb5d667}{InputEnum::DEFINITION\_AXIS\_RUDDER\_SET}});}
+\DoxyCodeLine{64     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140ad5d02c8aaaa15a1e3d2aab2a4b04698c}{InputEnum::DEFINITION\_AXIS\_LEFT\_BRAKE\_SET}});}
+\DoxyCodeLine{65     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a36df420123bb0858b6324048cdb692bd}{InputEnum::DEFINITION\_AXIS\_RIGHT\_BRAKE\_SET}});}
+\DoxyCodeLine{66     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_afb66de4e8ad2ff993d1d89fae8a8b4ec}{brakeAxis}}[2] = \{\mbox{\hyperlink{class_input_switch_handler_afad990b9dbea872c0128acbc05ee48bb}{leftBrakeAxis}}, \mbox{\hyperlink{class_input_switch_handler_ab90021e6bfdd1a206c838031c437efe0}{rightBrakeAxis}}\};}
+\DoxyCodeLine{67     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a3e720d2d8de875b35288717678e47468}{aileronAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140a0bf6b3830a3d73037ba4d5a2b210129a}{InputEnum::DEFINITION\_AXIS\_AILERONS\_SET}});}
+\DoxyCodeLine{68     \mbox{\hyperlink{class_curve_axis}{CurveAxis}} \mbox{\hyperlink{class_input_switch_handler_a4a5a557c4a20dec6c9d158be1509c9e2}{elevatorAxis}} = \mbox{\hyperlink{class_curve_axis}{CurveAxis}}(\mbox{\hyperlink{class_input_enum_a3f47641eff043a29abbde89a94d2d140acbb2ce65dd91530c6c046daa20eba109}{InputEnum::DEFINITION\_AXIS\_ELEVATOR\_SET}});}
 \DoxyCodeLine{69 }
-\DoxyCodeLine{70     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_abf80871157061dfe6e90b036e1b8a9cc}{setMixtureValues}}(std::string stringToSet);}
+\DoxyCodeLine{70     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a1cb2ab056a4e69f722ab4182e6b482e9}{setEngineValues}}(std::string stringToSet);}
 \DoxyCodeLine{71 }
-\DoxyCodeLine{72     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa8f95788e422e0100312a75e98c53e81}{set\_prop\_values}}(std::string stringToSet);}
+\DoxyCodeLine{72     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_abf80871157061dfe6e90b036e1b8a9cc}{setMixtureValues}}(std::string stringToSet);}
 \DoxyCodeLine{73 }
-\DoxyCodeLine{74     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a0615455a016f4d7d891840199151e22d}{setComs}}(\textcolor{keyword}{const} std::string\& stringToSet, \textcolor{keywordtype}{int} comNo) \textcolor{keyword}{const};}
+\DoxyCodeLine{74     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa8f95788e422e0100312a75e98c53e81}{set\_prop\_values}}(std::string stringToSet);}
 \DoxyCodeLine{75 }
-\DoxyCodeLine{76     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa84392794229823bcfcb6cec9a1ff01f}{sendBasicCommandOn}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
+\DoxyCodeLine{76     \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a0615455a016f4d7d891840199151e22d}{setComs}}(\textcolor{keyword}{const} std::string\& stringToSet, \textcolor{keywordtype}{int} comNo) \textcolor{keyword}{const};}
 \DoxyCodeLine{77 }
-\DoxyCodeLine{78     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aee875aca0cd9f15f2741e3c3b1b4ef8a}{sendBasicCommandOff}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
+\DoxyCodeLine{78     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa84392794229823bcfcb6cec9a1ff01f}{sendBasicCommandOn}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
 \DoxyCodeLine{79 }
-\DoxyCodeLine{80 }
-\DoxyCodeLine{81     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_afec5bd5bd56e907c57dd4f5f84d94384}{setElevatorTrim}}(std::string stringToSet);}
+\DoxyCodeLine{80     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aee875aca0cd9f15f2741e3c3b1b4ef8a}{sendBasicCommandOff}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID) \textcolor{keyword}{const};}
+\DoxyCodeLine{81 }
 \DoxyCodeLine{82 }
-\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a76a3ae74f26962cd9e73edf4ae4d5716}{setFlaps}}(std::string stringToSet);}
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_afec5bd5bd56e907c57dd4f5f84d94384}{setElevatorTrim}}(std::string stringToSet);}
 \DoxyCodeLine{84 }
-\DoxyCodeLine{85     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a368288541abf393be8bb7c62596b0612}{setRudder}}(std::string stringToSet);}
+\DoxyCodeLine{85     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a76a3ae74f26962cd9e73edf4ae4d5716}{setFlaps}}(std::string stringToSet);}
 \DoxyCodeLine{86 }
-\DoxyCodeLine{87     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a0915b331e75ed982e06cda979e124933}{setBrakeAxis}}(std::string stringToSet);}
+\DoxyCodeLine{87     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a368288541abf393be8bb7c62596b0612}{setRudder}}(std::string stringToSet);}
 \DoxyCodeLine{88 }
-\DoxyCodeLine{89     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a2689eb9036c234df56abff868d993ae0}{sendBasicCommandValue}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keywordtype}{int} value) \textcolor{keyword}{const};}
+\DoxyCodeLine{89     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a0915b331e75ed982e06cda979e124933}{setBrakeAxis}}(std::string stringToSet);}
 \DoxyCodeLine{90 }
-\DoxyCodeLine{91     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a92bb6af7d5abd7857ddd369f1e303946}{controlYoke}}(std::string stringToSet);}
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a83157e1f8218a8e524b886c1c0ace8d5}{sendBasicCommandValue}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keywordtype}{int} value);}
 \DoxyCodeLine{92 }
-\DoxyCodeLine{93     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a8e8fbbfdf1b2e51d7dc781628f744979}{sendBasicCommand}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keyword}{const} std::string\& stringToSet);}
+\DoxyCodeLine{93     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a92bb6af7d5abd7857ddd369f1e303946}{controlYoke}}(std::string stringToSet);}
 \DoxyCodeLine{94 }
-\DoxyCodeLine{95     \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a06692af1b667386a5444b72b687911df}{mapCoordinates}}(\textcolor{keywordtype}{int} value, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMin, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMax);}
+\DoxyCodeLine{95     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a8e8fbbfdf1b2e51d7dc781628f744979}{sendBasicCommand}}(\mbox{\hyperlink{_sim_connect_8h_af43cb7cd7579db797100489f5155d68e}{SIMCONNECT\_CLIENT\_EVENT\_ID}} eventID, \textcolor{keyword}{const} std::string\& stringToSet);}
 \DoxyCodeLine{96 }
-\DoxyCodeLine{97     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a4dea7669be4a1fb87150ed56741d11a0}{sendWASMCommand}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}}, \textcolor{keywordtype}{int} value) \textcolor{keyword}{const};}
+\DoxyCodeLine{97     \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_a06692af1b667386a5444b72b687911df}{mapCoordinates}}(\textcolor{keywordtype}{int} value, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMin, \mbox{\hyperlink{classcoordinates}{coordinates}} toMapMax);}
 \DoxyCodeLine{98 }
-\DoxyCodeLine{99     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa695d7664a419d19f68490109e351aff}{setAxisValue}}(\mbox{\hyperlink{class_axis}{Axis}} *axis);}
+\DoxyCodeLine{99     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a4dea7669be4a1fb87150ed56741d11a0}{sendWASMCommand}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{class_input_switch_handler_ac1da15a631eaebaecc225a59d299d826}{prefix}}, \textcolor{keywordtype}{int} value) \textcolor{keyword}{const};}
 \DoxyCodeLine{100 }
-\DoxyCodeLine{101     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a6fe15444ab9b49a79af01a9d06796330}{mapEngineValueToAxis}}(\mbox{\hyperlink{class_engine}{Engine}} *engine) \textcolor{keyword}{const};}
+\DoxyCodeLine{101     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_aa695d7664a419d19f68490109e351aff}{setAxisValue}}(\mbox{\hyperlink{class_axis}{Axis}} *axis);}
 \DoxyCodeLine{102 }
-\DoxyCodeLine{103     \textcolor{keyword}{static} vector<int> \mbox{\hyperlink{class_input_switch_handler_aefd3938294fb594a9904545508ade6f8}{cutInputs}}(\textcolor{keywordtype}{int} amountOfPartsNeeded, std::string stringToSet);}
+\DoxyCodeLine{103     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a6fe15444ab9b49a79af01a9d06796330}{mapEngineValueToAxis}}(\mbox{\hyperlink{class_engine}{Engine}} *engine) \textcolor{keyword}{const};}
 \DoxyCodeLine{104 }
-\DoxyCodeLine{105     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a46377ce2b782a631fb6fe73d83d61d8e}{calibratedRange}}(\mbox{\hyperlink{class_curve_axis}{CurveAxis}} *curveAxis);}
+\DoxyCodeLine{105     \textcolor{keyword}{static} vector<int> \mbox{\hyperlink{class_input_switch_handler_aefd3938294fb594a9904545508ade6f8}{cutInputs}}(\textcolor{keywordtype}{int} amountOfPartsNeeded, std::string stringToSet);}
 \DoxyCodeLine{106 }
-\DoxyCodeLine{107     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_ab2367bdea785b4c961d55b4c28538888}{mapInputs}}();}
-\DoxyCodeLine{108 \};}
-\DoxyCodeLine{109 }
-\DoxyCodeLine{110 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// INPUTSWITCHHANDLER\_H}}
+\DoxyCodeLine{107     \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a46377ce2b782a631fb6fe73d83d61d8e}{calibratedRange}}(\mbox{\hyperlink{class_curve_axis}{CurveAxis}} *curveAxis);}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_ab2367bdea785b4c961d55b4c28538888}{mapInputs}}();}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_input_switch_handler_a1b965eb864442bebe714649ff361dd02}{mapValueToAxis}}(\mbox{\hyperlink{class_axis}{Axis}} *axis) \textcolor{keyword}{const};}
+\DoxyCodeLine{112 \};}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 \textcolor{preprocessor}{\#endif  }\textcolor{comment}{// INPUTSWITCHHANDLER\_H}}
 
 \end{DoxyCode}
