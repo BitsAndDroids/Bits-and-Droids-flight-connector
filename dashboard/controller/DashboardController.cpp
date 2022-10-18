@@ -48,7 +48,6 @@ void DashboardController::initController(){
     if(installationService.getUpdatesAvailable()){
         emit updateAvailable();
     }
-    emit updateAvailable();
 }
 
 QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){
