@@ -33,8 +33,7 @@ signals:
     void openLogWindow();
 
     void updateAvailable();
-public slots:
-    void updateButtonClicked();
+
 
 private:
     PathHandler pathHandler = PathHandler();

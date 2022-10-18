@@ -87,6 +87,7 @@ void MenuBar::openGenerateCodeMenu() {
 void MenuBar::addUpdateAvailable() {
     auto *updateAvailable = new QAction("&Update available", this);
     this->addAction(updateAvailable);
+    connect(updateAvailable, &QAction::triggered, this, &MenuBar::updateButtonClicked);
 }
 
 void MenuBar::outputMenuClosed() { outputMenuOpen = false; }
@@ -163,4 +164,12 @@ void MenuBar::checkForUpdates() {
 
 void MenuBar::localUpdateEventFile() {
     std::cout << "Updating event file" << std::endl;
+}
+
+void MenuBar::updateButtonClicked() {
+    auto *process = new QProcess(this);
+    PathHandler pathHandler;
+    process->startDetached(pathHandler.getMaintenanceToolPath());
+    process->waitForFinished();
+    //emit exitProgram();
 }

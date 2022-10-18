@@ -65,6 +65,8 @@ private slots:
 
     void localUpdateEventFile();
 
+    void updateButtonClicked();
+
 };
 
 

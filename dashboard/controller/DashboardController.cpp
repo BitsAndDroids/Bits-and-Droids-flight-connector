@@ -51,13 +51,6 @@ void DashboardController::initController(){
     emit updateAvailable();
 }
 
-void DashboardController::updateButtonClicked() {
-    auto *process = new QProcess(this);
-    process->startDetached(pathHandler.getMaintenanceToolPath());
-    process->waitForFinished();
-    emit exitProgram();
-}
-
 QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){
 
 }
