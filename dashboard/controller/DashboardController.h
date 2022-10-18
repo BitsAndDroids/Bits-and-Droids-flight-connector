@@ -19,6 +19,8 @@ class DashboardController : public QObject {
 Q_OBJECT
 public:
     DashboardController(QMainWindow *parent);
+
+    void initController();
 signals:
     void sendWASMCommand(const char *data);
 
@@ -29,6 +31,8 @@ signals:
     void exitProgram();
 
     void openLogWindow();
+
+    void updateAvailable();
 public slots:
     void updateButtonClicked();
 
@@ -44,9 +48,6 @@ private slots:
     void updateEventFile();
 
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
-
-    void checkForUpdates(bool silentCheck);
-
 
 };
 

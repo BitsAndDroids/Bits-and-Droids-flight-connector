@@ -80,11 +80,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connect(&comPortWidgetController, &ComPortWidgetController::gameConnectionMade,this, &Dashboard::gameConnectionMade);
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
     connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
-
-    auto updateButton = new QPushButton("Update");
-    mainVLayout->addWidget(updateButton);
-    connect(updateButton, &QPushButton::clicked, dashboardController, &DashboardController::updateButtonClicked);
-    updateButton->setVisible(false);
+    connect(dashboardController, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
@@ -115,9 +111,11 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(gameLabel);
     mainVLayout->addLayout(connectionRow);
 
-
-
     this->layout()->setAlignment(Qt::AlignTop);
+
+    //After every UI element is added, the controller can be initialized
+    dashboardController->initController();
+
 }
 
 void Dashboard::closeEvent(QCloseEvent *event) {

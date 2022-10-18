@@ -84,6 +84,11 @@ void MenuBar::openGenerateCodeMenu() {
     }
 }
 
+void MenuBar::addUpdateAvailable() {
+    auto *updateAvailable = new QAction("&Update available", this);
+    this->addAction(updateAvailable);
+}
+
 void MenuBar::outputMenuClosed() { outputMenuOpen = false; }
 
 void MenuBar::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
@@ -106,6 +111,7 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     auto *installWasm = new QAction("&Install WASM");
     auto *WasmUpdateEventFile = new QAction("&Update event file");
     auto *updateApplication = new QAction("Check for updates");
+
     //TODO ADD CODE GENERATION MENU
     //QMenu *codeMenu = menuBar()->addMenu("&Code");
     QMenu *Settings = this->addMenu("&Settings");
