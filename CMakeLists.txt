@@ -186,7 +186,6 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 #-----------------------------------------------------#
 #                   TESTING SECTION                   #
 #-----------------------------------------------------#
-enable_testing()
 include(CTest)
 include(FetchContent)
 FetchContent_Declare(
@@ -202,28 +201,33 @@ include(googletest)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(UnitTests
-        utils/tests/UtilTests.cpp
-        outputmenu/tests/SethandlerTests.cpp
-        models/commands/Set.cpp
-        utils/OutputConverters.cpp
-        utils/tests/UtilTests.cpp
-        settings/settingshandler.cpp
-        handlers/outputhandler.cpp
-        handlers/pathhandler.cpp
-        models/commands/output.cpp
-        logging/messagecaster.cpp
-        outputmenu/handlers/SetHandler.cpp
-        settings/ComSettingsHandler.cpp
-        utils/EventFileFormatter.cpp settings/tests/ComSettingsHandlerTests.cpp)
+IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+    enable_testing()
 
-add_dependencies(UnitTests gtest)
+    add_executable(UnitTests
+            utils/tests/UtilTests.cpp
+            outputmenu/tests/SethandlerTests.cpp
+            models/commands/Set.cpp
+            utils/OutputConverters.cpp
+            utils/tests/UtilTests.cpp
+            settings/settingshandler.cpp
+            handlers/outputhandler.cpp
+            handlers/pathhandler.cpp
+            models/commands/output.cpp
+            logging/messagecaster.cpp
+            outputmenu/handlers/SetHandler.cpp
+            settings/ComSettingsHandler.cpp
+            utils/EventFileFormatter.cpp settings/tests/ComSettingsHandlerTests.cpp)
 
-target_link_libraries(UnitTests
-        GTest::gtest_main
-        Qt${QT_VERSION_MAJOR}::Core
-        Qt${QT_VERSION_MAJOR}::Widgets)
 
-gtest_discover_tests(
-        UnitTests
-)
+    add_dependencies(UnitTests gtest)
+
+    target_link_libraries(UnitTests
+            GTest::gtest_main
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Widgets)
+
+    gtest_discover_tests(
+            UnitTests
+    )
+ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)
