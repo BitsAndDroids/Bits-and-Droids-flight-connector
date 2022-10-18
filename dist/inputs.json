@@ -66,6 +66,11 @@
       "prefix": 125
     },
     {
+      "type": 2,
+      "event": "COM_STBY_RADIO_SET",
+      "prefix": 260
+    },
+    {
       "type": 0,
       "event": "COM2_RADIO_FRACT_DEC",
       "prefix": 120
@@ -94,6 +99,11 @@
       "type": 0,
       "event": "COM2_RADIO_FRACT_INC_CARRY",
       "prefix": 123
+    },
+    {
+      "type": 2,
+      "event": "COM2_STBY_RADIO_SET",
+      "prefix": 261
     },
     {
       "type": 0,

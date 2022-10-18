@@ -10,7 +10,7 @@ var searchData=
   ['sendbasiccommand_7',['sendBasicCommand',['../class_input_switch_handler.html#a8e8fbbfdf1b2e51d7dc781628f744979',1,'InputSwitchHandler']]],
   ['sendbasiccommandoff_8',['sendBasicCommandOff',['../class_input_switch_handler.html#aee875aca0cd9f15f2741e3c3b1b4ef8a',1,'InputSwitchHandler']]],
   ['sendbasiccommandon_9',['sendBasicCommandOn',['../class_input_switch_handler.html#aa84392794229823bcfcb6cec9a1ff01f',1,'InputSwitchHandler']]],
-  ['sendbasiccommandvalue_10',['sendBasicCommandValue',['../class_input_switch_handler.html#a2689eb9036c234df56abff868d993ae0',1,'InputSwitchHandler']]],
+  ['sendbasiccommandvalue_10',['sendBasicCommandValue',['../class_input_switch_handler.html#a83157e1f8218a8e524b886c1c0ace8d5',1,'InputSwitchHandler']]],
   ['sendcommand_11',['sendCommand',['../_m_f_s_worker_8cpp.html#a9ccd6e6c2ea5bdce81c0802f94d7eaa8',1,'MFSWorker.cpp']]],
   ['sendtoarduino_12',['sendToArduino',['../class_m_f_s_worker.html#a8cbf2eee7eb5ffb6206bc1ab227fab99',1,'MFSWorker']]],
   ['sendwasmcommand_13',['sendWASMCommand',['../class_dashboard_controller.html#a148694bfaa86e84be60ef7f10a2cd22e',1,'DashboardController::sendWASMCommand()'],['../class_w_a_s_m_handler.html#a4986234a7f779d9ecb02916f4b5880af',1,'WASMHandler::sendWASMCommand()'],['../class_input_switch_handler.html#a4dea7669be4a1fb87150ed56741d11a0',1,'InputSwitchHandler::sendWASMCommand()']]],

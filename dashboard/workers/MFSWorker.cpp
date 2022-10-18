@@ -269,7 +269,13 @@ void MFSWorker::loadRunningPortsAndSets() {
     this->inputs = inputReader.getInputs();
 
 }
-
+/*!
+ * \fn void MFSWorker::eventLoop()
+ * \brief MFSWorker::eventLoop is the main loop of the application.
+ * It directs the connection to the sim and the microcontrollers
+ * This loop is started from the Dashboard using the StartButton.
+ * /sa Dashboard
+ */
 void MFSWorker::eventLoop() {
     HRESULT hr;
 

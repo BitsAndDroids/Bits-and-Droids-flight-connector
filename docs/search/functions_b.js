@@ -6,7 +6,7 @@ var searchData=
   ['mapevents_3',['mapEvents',['../class_input_mapper.html#a35202d9f5bf4f4ff2b878a79279cceca',1,'InputMapper']]],
   ['mapinputs_4',['mapInputs',['../class_input_switch_handler.html#ab2367bdea785b4c961d55b4c28538888',1,'InputSwitchHandler']]],
   ['mapoutputs_5',['mapOutputs',['../classoutput_mapper.html#a377a06b8535baec1fbb5534571b53283',1,'outputMapper::mapOutputs(QList&lt; Output * &gt; outputToMap, HANDLE outputConnect)'],['../classoutput_mapper.html#a937c62022e0f82f5a27170804a862b9f',1,'outputMapper::mapOutputs()']]],
-  ['mapvaluetoaxis_6',['mapValueToAxis',['../_input_switch_handler_8cpp.html#ace8e86b0b162870c5a4f81bcac31dab6',1,'InputSwitchHandler.cpp']]],
+  ['mapvaluetoaxis_6',['mapValueToAxis',['../class_input_switch_handler.html#a1b965eb864442bebe714649ff361dd02',1,'InputSwitchHandler']]],
   ['mcheckbox_7',['mCheckBox',['../classm_check_box.html#ae763e2fe9032013e12a07ff458ab3bb4',1,'mCheckBox::mCheckBox()'],['../classm_check_box.html#acb56c2e3732285f7cad77d8ef2895752',1,'mCheckBox::mCheckBox(QString cbLabelText, QString objectName)'],['../classm_check_box.html#a99a77df97fc006e17e15547ade48dfac',1,'mCheckBox::mCheckBox(QString cbLabelTextSet, QString objectNameSet, bool setDefaultState)']]],
   ['menubar_8',['MenuBar',['../class_menu_bar.html#a9f5ce4657572127ec2682ec8368244ec',1,'MenuBar']]],
   ['mfsworker_9',['MFSWorker',['../class_m_f_s_worker.html#a3b12cd898df031f54747610656b70f43',1,'MFSWorker']]],

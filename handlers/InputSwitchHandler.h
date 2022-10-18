@@ -88,7 +88,7 @@ private:
 
     void setBrakeAxis(std::string stringToSet);
 
-    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value) const;
+    void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
 
     void controlYoke(std::string stringToSet);
 
@@ -108,7 +108,7 @@ private:
 
     void mapInputs();
 
-    void mapValueToAxis(Axis *axis);
+    void mapValueToAxis(Axis *axis) const;
 };
 
 #endif  // INPUTSWITCHHANDLER_H

@@ -200,7 +200,7 @@ void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
     engine->setMappedValue(valueThrottle);
 }
 
-void InputSwitchHandler::mapValueToAxis(Axis *axis) {
+void InputSwitchHandler::mapValueToAxis(Axis *axis) const {
     axis->setMappedValue((int)
                                  (closedAxis + (openAxis - closedAxis) *
                                                (((float) axis->getCurrentValue() - axis->getMin()) /
@@ -467,12 +467,20 @@ void InputSwitchHandler::sendBasicCommandOff(
 }
 
 void InputSwitchHandler::sendBasicCommandValue(
-        SIMCONNECT_CLIENT_EVENT_ID eventID, int value) const {
+        SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
+    emit logMessage("Sending value: " + std::to_string(value), LogLevel::DEBUGLOG);
     SimConnect_TransmitClientEvent(connect, 0, eventID, value,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
-
+/*!
+ * \fn InputSwitchHandler::switchHandling(const char* stringToParse)
+ * \brief this function triggers the appropriate input handling function
+ * Depending on the incomming string this function will parse and fire the appropriate input function.
+ * Input types are determined in the Input.json file. Types are defined in the InputTypeEnum.
+ * \sa InputTypeEnum
+ * @param stringToParse the string that has been sent by a microcontroller
+ */
 void InputSwitchHandler::switchHandling(const char* stringToParse) {
     Sleep(2);
     //
@@ -486,13 +494,33 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                 emit logMessage(
                         "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),
                         LogLevel::DEBUGLOG);
-                if (input.getType() == 4) {
-                    sendBasicCommandOff(input.getPrefix());
-                } else if (input.getType() == 5) {
-                    sendBasicCommandOn(input.getPrefix());
+                switch(input.getType()){
+                    case BASICCOMMAND: {
+                        sendBasicCommand(input.getPrefix(), stringStd);
+                        break;
+                    }
+                    case INPUTOFF: {
+                        sendBasicCommandOff(input.getPrefix());
+                        break;
+                    }
+                    case INPUTON: {
+                        sendBasicCommandOn(input.getPrefix());
+                        break;
+                    }
+                    case SETCOMS: {
+                        int value = Dec2Bcd((stoi(stringStd.substr(4,10))) / 10);
+                        sendBasicCommandValue(input.getPrefix(), value);
+                        break;
+                    }
+                    case SETINT: {
+                        sendBasicCommandValue(input.getPrefix(), stoi(stringStd.substr(4,10)));
+                        break;
+                    }
+                    default: {
+                        sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), stringToParse);
+                        break;
+                    }
                 }
-                sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), stringToParse);
-
             } else {
                 switch (prefixValue) {
                     case 198: {
@@ -526,6 +554,7 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                     }
                     case 102: {
                         int value = stoi(stringStd.substr(4, 10));
+                        emit logMessage("Converted data com 2: " + Dec2Bcd(value / 10), LogLevel::DEBUGLOG);
                         SimConnect_TransmitClientEvent(
                                 connect, SIMCONNECT_OBJECT_ID_USER,
                                 102, Dec2Bcd(value / 10),

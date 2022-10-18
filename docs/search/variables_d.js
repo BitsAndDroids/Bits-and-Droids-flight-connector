@@ -9,7 +9,7 @@ var searchData=
   ['oldvalue_6',['oldValue',['../class_axis.html#a96d3ca74ba48b6dfdf9ea070bc39e51e',1,'Axis']]],
   ['onground_7',['OnGround',['../_sim_connect_8h.html#ab0d92b3170baf2d203d8e37f2f7570ed',1,'SimConnect.h']]],
   ['open_8',['open',['../class_output_menu.html#a7c6772c2d6c89c225ff64ec2ebe5c1dc',1,'OutputMenu']]],
-  ['openaxis_9',['openAxis',['../_input_switch_handler_8cpp.html#a3d35be4a514d83728218488b3992a08b',1,'InputSwitchHandler.cpp']]],
+  ['openaxis_9',['openAxis',['../class_input_switch_handler.html#adb41d4bab3a07149ab8a875f51ce7c50',1,'InputSwitchHandler']]],
   ['optionmenuopen_10',['optionMenuOpen',['../class_menu_bar.html#a07b9839329bcab006496f20fea59d514',1,'MenuBar']]],
   ['outputenum_11',['outputEnum',['../activeoutputs_8cpp.html#aa8c301ee9101392b0c4bbbb043eecea8',1,'activeoutputs.cpp']]],
   ['outputhandler_12',['outputHandler',['../class_m_f_s_worker.html#af1fa00e88e7bdd844aa2933b46e6b297',1,'MFSWorker::outputHandler()'],['../class_set_handler.html#a4cfd4e74a0f1d06fd3f1adbe8658e32f',1,'SetHandler::outputHandler()'],['../class_output_menu.html#a14acbd48670117959ddff54aea8283ac',1,'OutputMenu::outputHandler()']]],
