@@ -96,7 +96,7 @@ private:
 
     static int mapCoordinates(int value, coordinates toMapMin, coordinates toMapMax);
 
-    void sendWASMCommand(int prefix, int value) const;
+    void sendWASMCommand(int prefix, int value);
 
     void setAxisValue(Axis *axis);
 

@@ -84,6 +84,12 @@ void MenuBar::openGenerateCodeMenu() {
     }
 }
 
+void MenuBar::addUpdateAvailable() {
+    auto *updateAvailable = new QAction("&Update available", this);
+    this->addAction(updateAvailable);
+    connect(updateAvailable, &QAction::triggered, this, &MenuBar::updateButtonClicked);
+}
+
 void MenuBar::outputMenuClosed() { outputMenuOpen = false; }
 
 void MenuBar::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
@@ -106,6 +112,7 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     auto *installWasm = new QAction("&Install WASM");
     auto *WasmUpdateEventFile = new QAction("&Update event file");
     auto *updateApplication = new QAction("Check for updates");
+
     //TODO ADD CODE GENERATION MENU
     //QMenu *codeMenu = menuBar()->addMenu("&Code");
     QMenu *Settings = this->addMenu("&Settings");
@@ -157,4 +164,12 @@ void MenuBar::checkForUpdates() {
 
 void MenuBar::localUpdateEventFile() {
     std::cout << "Updating event file" << std::endl;
+}
+
+void MenuBar::updateButtonClicked() {
+    auto *process = new QProcess(this);
+    PathHandler pathHandler;
+    process->startDetached(pathHandler.getMaintenanceToolPath());
+    process->waitForFinished();
+    //emit exitProgram();
 }

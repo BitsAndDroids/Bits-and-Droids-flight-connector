@@ -2,6 +2,7 @@
 #include "dashboard/Dashboard.h"
 #include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
+#include "services/InstallationService.h"
 
 #include <QtCore/QDataStream>
 
@@ -18,7 +19,8 @@ int main(int argc, char *argv[]) {
     QApplication::setOrganizationName("Bits and Droids");
     QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
-
+    InstallationService installationService = InstallationService();
+    installationService.getUpdatesAvailable();
 
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.migrate();

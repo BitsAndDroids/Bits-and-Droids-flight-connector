@@ -17,6 +17,8 @@ public:
     MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);
 
     void populateMenuBar(QMainWindow *parent);
+public slots:
+    void addUpdateAvailable();
 
 private:
     QMainWindow *parent;
@@ -62,6 +64,8 @@ private slots:
     void checkForUpdates();
 
     void localUpdateEventFile();
+
+    void updateButtonClicked();
 
 };
 

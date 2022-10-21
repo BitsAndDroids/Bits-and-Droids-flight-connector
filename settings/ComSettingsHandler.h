@@ -3,8 +3,9 @@
 //
 #ifndef BITSANDDROIDSCONNECTOR_COMSETTINGSHANDLER_H
 #define BITSANDDROIDSCONNECTOR_COMSETTINGSHANDLER_H
-
+#ifdef QT_DEBUG
 #include "_deps/googletest-src/googletest/include/gtest/gtest.h"
+#endif
 #include "settings/settingshandler.h"
 
     class ComSettingsHandler : public SettingsHandler {
@@ -20,9 +21,11 @@
         void removeComRowSettings(QString index);
 
     private:
+#ifdef QT_DEBUG
         FRIEND_TEST(ComSettingsHandlerTests, test_serialize_qlist_to_json);
         FRIEND_TEST(ComSettingsHandlerTests, test_serialize_qpair_to_json);
         FRIEND_TEST(ComSettingsHandlerTests, test_serialize_json_to_qlist);
+#endif
 
         QJsonObject comPairToJson(const QPair<QString, int> &pair);
 

@@ -19,18 +19,17 @@ class DashboardController : public QObject {
 Q_OBJECT
 public:
     DashboardController(QMainWindow *parent);
+
+    void initController();
 signals:
     void sendWASMCommand(const char *data);
 
     void gameConnectionMade(int state);
 
-    void boardConnectionMade(int state);
-
     void exitProgram();
 
-    void openLogWindow();
-public slots:
-    void updateButtonClicked();
+    void updateAvailable();
+
 
 private:
     PathHandler pathHandler = PathHandler();
@@ -44,9 +43,6 @@ private slots:
     void updateEventFile();
 
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
-
-    void checkForUpdates(bool silentCheck);
-
 
 };
 
