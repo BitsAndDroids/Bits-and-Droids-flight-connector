@@ -439,12 +439,14 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     cout << "HR " << hr << endl;
 }
 
-void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) const {
+void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) {
     std::string testString = std::to_string(prefixValue) + " " + std::to_string(value);
 
     char arrayTest[256];
     strcpy(arrayTest, testString.c_str());
     puts(arrayTest);
+    emit logMessage("Sending data to WASM: " + std::string(arrayTest),
+            LogLevel::DEBUGLOG);
     qDebug() << arrayTest;
 
     SimConnect_SetClientData(connect, 1, 12,
@@ -489,7 +491,7 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
     if (strlen(stringToParse) > 2) {
         try {
             int prefixValue = stoi(stringStd.substr(0,4));
-            if (inputs.count(prefixValue) > 0) {
+            if (prefixValue < 600 && inputs.count(prefixValue) > 0) {
                 Input input = inputs[prefixValue];
                 emit logMessage(
                         "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),

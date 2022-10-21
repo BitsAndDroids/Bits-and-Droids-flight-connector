@@ -26,11 +26,7 @@ signals:
 
     void gameConnectionMade(int state);
 
-    void boardConnectionMade(int state);
-
     void exitProgram();
-
-    void openLogWindow();
 
     void updateAvailable();
 

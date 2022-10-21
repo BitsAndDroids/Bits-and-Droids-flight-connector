@@ -34,8 +34,6 @@ void DashboardController::updateEventFile() {
 
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
-    connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
-
     //TODO connect logger
     //QObject::connect(&dualWorker, &MFSWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
     SettingsHandler settingsHandler = SettingsHandler();
@@ -43,6 +41,7 @@ DashboardController::DashboardController(QMainWindow *parent) {
 }
 
 void DashboardController::initController(){
+    connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
     serviceWorker->start();
     InstallationService installationService = InstallationService();
     if(installationService.getUpdatesAvailable()){

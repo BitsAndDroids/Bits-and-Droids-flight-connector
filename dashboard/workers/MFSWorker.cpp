@@ -82,7 +82,7 @@ void MFSWorker::sendToArduino(float received, const std::string &prefix, int ind
     int intVal;
     std::string prefixString = prefix;
     //Ensure the prefix is 4 characters long
-    for (int i = 0; i < 4; i++) {
+    for (int i = prefixString.size(); i < 4; i++) {
         prefixString += " ";
     }
 
@@ -153,11 +153,11 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                 case EVENT_SIM_START: {
 
                     // Now the sim is running, request information on the user aircraft
-//                    SimConnect_RequestDataOnSimObject(
-//                            dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
-//                            SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_ONCE,
-//                            SIMCONNECT_DATA_REQUEST_FLAG_DEFAULT,
-//                            0, 0);
+                    SimConnect_RequestDataOnSimObject(
+                            dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
+                            SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_ONCE,
+                            SIMCONNECT_DATA_REQUEST_FLAG_DEFAULT,
+                            0, 0);
 
                     SimConnect_RequestDataOnSimObject(
                             dualSimConnect, REQUEST_PDR_RADIO, DEFINITION_PDR_RADIO,
@@ -250,7 +250,8 @@ void MFSWorker::loadRunningPortsAndSets() {
 
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
-        bundle->setOutputs(setHandler.getSetById(QString::number(comSetting.second)).getOutputs());
+        auto outputs=setHandler.getSetById(QString::number(comSetting.second)).getOutputs();
+        bundle->setOutputs(outputs);
         if (bundle->getSerialPort()->isConnected()) {
             emit boardConnectionMade(1);
             emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
@@ -259,6 +260,9 @@ void MFSWorker::loadRunningPortsAndSets() {
             emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
         }
         comBundles->append(bundle);
+        for(auto & i : bundle->getOutputs()){
+            outputsToMap.append(i);
+        }
     }
 
     if (successfullyConnected == comBundles->size()) {
@@ -269,6 +273,7 @@ void MFSWorker::loadRunningPortsAndSets() {
     this->inputs = inputReader.getInputs();
 
 }
+
 /*!
  * \fn void MFSWorker::eventLoop()
  * \brief MFSWorker::eventLoop is the main loop of the application.
@@ -304,6 +309,7 @@ void MFSWorker::eventLoop() {
 
             dualInputHandler = new InputSwitchHandler(inputs, dualSimConnect);
             connect(dualInputHandler, &InputSwitchHandler::logMessage, this, &MFSWorker::logMessage);
+
             dualInputHandler->setRanges();
             dualInputHandler->object = SIMCONNECT_OBJECT_ID_USER;
 

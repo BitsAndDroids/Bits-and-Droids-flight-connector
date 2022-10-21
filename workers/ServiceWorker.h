@@ -16,7 +16,7 @@
 class ServiceWorker : public QThread {
 Q_OBJECT
 
-    void run() override { startServices(); }
+
 
 private:
     static void MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData,
@@ -32,6 +32,7 @@ private:
 
 
 public:
+    void run() override { startServices(); }
     ServiceWorker();
 
     ~ServiceWorker() override;
