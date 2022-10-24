@@ -44,7 +44,10 @@ PathHandler::PathHandler() {
             ->toString();
     setCommunityFolderPath(pathFound);
   }
-
+  //By removing /bin from the path we ensure we get the correct path
+  // to the maintenance tool in a folder up from the application
+  QString pathCut = qApp->applicationDirPath();
+  pathCut.remove("/bin");
   maintenanceToolPath =
-      "\"" + qApp->applicationDirPath() + "/ConnectorMaintenanceTool" + "\"";
+      "\"" + pathCut + "/ConnectorMaintenanceTool" + "\"";
 }

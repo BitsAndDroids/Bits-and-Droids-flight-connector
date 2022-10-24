@@ -81,6 +81,7 @@ void ServiceWorker::startServices() {
         }
     }
     emit logMessage("ServiceWorker disconnected from game", LogLevel::DEBUGLOG);
+
     SimConnect_Close(serviceSimconnect);
     QThread::currentThread()->quit();
 }

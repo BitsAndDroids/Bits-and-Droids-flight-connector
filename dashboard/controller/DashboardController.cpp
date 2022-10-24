@@ -4,10 +4,10 @@
 
 #include <QFile>
 #include <QApplication>
-#include <QMessageBox>
 #include <QProcess>
 #include <QPushButton>
 #include "DashboardController.h"
+#include "services/InstallationService.h"
 
 void DashboardController::updateEventFile() {
     try {
@@ -39,17 +39,16 @@ void DashboardController::initController(){
 
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.checkEventFilePresent();
+    InstallationService installationService = InstallationService();
+    if(installationService.getUpdatesAvailable()){
+        emit updateAvailable();
+    }
+
 }
+
 
 DashboardController::DashboardController(QMainWindow *parent) {
     this->parent = parent;
-}
-
-void DashboardController::updateButtonClicked() {
-    auto *process = new QProcess(this);
-    process->startDetached(pathHandler.getMaintenanceToolPath());
-    process->waitForFinished();
-    emit exitProgram();
 }
 
 QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){

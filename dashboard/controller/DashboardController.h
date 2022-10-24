@@ -32,9 +32,8 @@ signals:
 
     void exitProgram();
 
-    void openLogWindow();
-public slots:
-    void updateButtonClicked();
+    void updateAvailable();
+
 
 private:
     PathHandler pathHandler = PathHandler();
@@ -48,6 +47,7 @@ private slots:
     void updateEventFile();
 
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
+
 };
 
 

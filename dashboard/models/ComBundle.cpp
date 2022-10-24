@@ -10,3 +10,7 @@ bool ComBundle::isOutputInBundle(int id) {
 ComBundle::ComBundle(QString port) {
     this->port = new SerialPort(port.toStdString().c_str());
 }
+
+QMap<int, Output *> ComBundle::getOutputs() {
+    return outputs;
+}
