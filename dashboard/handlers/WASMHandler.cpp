@@ -77,15 +77,15 @@ bool WASMHandler::versionCheck(){
     }
     QStringList communityVersionList = communityVersion.split(".");
     QStringList localVersionList = localVersion.split(".");
-    for(int i = 0; i < localVersionList.size(); i++){
-        std::cout<<localVersionList[i].toInt()<<std::endl;
-        std::cout<<communityVersionList[i].toInt()<<std::endl;
-        if(localVersionList[i].toInt() > communityVersionList[i].toInt()){
-            std::cout<<"Local version is higher than remote version"<<std::endl;
-            updateModule();
-            i = localVersionList.size();
+    if(communityVersionList.size() == localVersionList.size()){
+        for(int i = 0; i < localVersionList.size(); i++){
+            if(localVersionList[i].toInt() > communityVersionList[i].toInt()){
+                updateModule();
+                i = (int)localVersionList.size();
+            }
         }
     }
+
 }
 
 void WASMHandler::updateModule(){

@@ -6,38 +6,14 @@
   <Name>com.bitsanddroids.connector</Name>
   <DisplayName>Bits and Droids Connector</DisplayName>
   <Description>Interface your microcontroller with MFS2020</Description>
-  <Version>1.6.1-1</Version>
-  <ReleaseDate>2022-10-21</ReleaseDate>
+  <Version>1.6.1-2</Version>
+  <ReleaseDate>2022-10-24</ReleaseDate>
   <Default>true</Default>
   <Script>connectorinstallscript.qs</Script>
-  <UpdateFile CompressedSize="30135722" OS="Any" UncompressedSize="151825243"/>
+  <UpdateFile CompressedSize="30362646" UncompressedSize="154408472" OS="Any"/>
   <DownloadableArchives>BitsAndDroidsConnector-Insider.7z</DownloadableArchives>
-  <SHA1>05a2d2060537565b5f0a90eb19911c5bcc481769</SHA1>
+  <SHA1>aa6c7846d58981b04fef5eb1ce2171ff076d342f</SHA1>
  </PackageUpdate>
- <PackageUpdate>
-  <Name>com.bitsanddroids.eventfile</Name>
-  <DisplayName>Event file</DisplayName>
-  <Description>Clean install of the default event file. You can skip this file if you already have your own event file</Description>
-  <Version>1.2.0-0</Version>
-  <ReleaseDate>2022-03-10</ReleaseDate>
-  <Script>installscript.qs</Script>
-  <Default>true</Default>
-  <UpdateFile CompressedSize="2692" OS="Any" UncompressedSize="29891"/>
-  <DownloadableArchives>BitsAndDroidsEventFile.7z</DownloadableArchives>
-  <SHA1>1ea73d48fbd4f9223f8daa7d94b8c12a11d1a7bc</SHA1>
- </PackageUpdate>
- <PackageUpdate>
-  <Name>com.bitsanddroids.wasm</Name>
-  <DisplayName>Bits and Droids WASM</DisplayName>
-  <Description>This installs the WASM module in your application folder. You still need to install the WASM in the community  folder</Description>
-  <Version>1.3.0-0</Version>
-  <ReleaseDate>2022-08-11</ReleaseDate>
-  <Script>installscript.qs</Script>
-  <Default>true</Default>
-  <UpdateFile CompressedSize="192987" OS="Any" UncompressedSize="1057275"/>
-  <DownloadableArchives>BitsAndDroidsWASM.7z</DownloadableArchives>
-  <SHA1>08973c31ab1544990dceec5214bd52887a8610ab</SHA1>
- </PackageUpdate>
- <SHA1>73c53e4052dfc9ab25f41fb69936e7672e847a80</SHA1>
- <MetadataName>2022-10-24-1454_meta.7z</MetadataName>
+ <SHA1>799e6ba347d209860207b740be371ab625595328</SHA1>
+ <MetadataName>2022-10-24-1650_meta.7z</MetadataName>
 </Updates>
