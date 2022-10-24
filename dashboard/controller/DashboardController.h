@@ -11,7 +11,7 @@
 #include "handlers/pathhandler.h"
 #include "logging/MessageCaster.h"
 #include "dashboard/workers/MFSWorker.h"
-#include "workers/ServiceWorker.h"
+#include "services/ServiceWorker.h"
 #include "elements/ModeIndexCombobox.h"
 #include "elements/ModeIndexCheckbox.h"
 
@@ -25,6 +25,10 @@ signals:
     void sendWASMCommand(const char *data);
 
     void gameConnectionMade(int state);
+
+    void boardConnectionMade(int state);
+
+    void wasmConnectionMade(int state);
 
     void exitProgram();
 

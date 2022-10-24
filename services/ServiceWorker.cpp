@@ -4,12 +4,12 @@
 
 #include "ServiceWorker.h"
 #include "logging/LogWindow.h"
+#include "settings/ServiceSettingsHandler.h"
+#include "dashboard/handlers/WASMHandler.h"
 
 HANDLE serviceSimconnect;
 
-ServiceWorker::ServiceWorker(){
-
-}
+ServiceWorker::ServiceWorker()= default;
 
 SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
 enum DATA_DEFINE_ID {
@@ -21,6 +21,13 @@ void ServiceWorker::setStopServiceWorker(bool state) {
 void ServiceWorker::startServices() {
 
     bool connected = false;
+
+    WASMHandler wasmHandler = WASMHandler();
+    wasmFound = wasmHandler.isWASMModuleInstalled();
+    if(!wasmFound){
+        logMessage("WASM module not found, please install the module", LogLevel::ERRORLOG);
+        emit wasmConnectionMade(0);
+    }
 
 
     while (!stopServiceWorker) {
@@ -45,7 +52,20 @@ void ServiceWorker::startServices() {
             connectionClosed = false;
             SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_SIM_START, "SimStart");
             SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_1_SECOND, "1sec");
+            SimConnect_RequestClientData(serviceSimconnect,
+                                         3,
+                                         0,
+                                         DEFINITION_SERVICE_DATA,
+                                         SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
+                                         SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT,
+                                         0,
+                                         0,
+                                         0);
             while (!connectionClosed) {
+                if(wasmFound && !wasmConnected){
+                    sendWASMData("ping");
+                    emit wasmConnectionMade(1);
+                }
                 SimConnect_CallDispatch(serviceSimconnect, MyDispatchProcRD, this);
                 std::this_thread::sleep_for(std::chrono::milliseconds(2));
             }
@@ -70,6 +90,17 @@ void ServiceWorker::startServices() {
 void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void *pContext) {
     auto *serviceWorker = static_cast<ServiceWorker *>(pContext);
     switch (pData->dwID) {
+        case SIMCONNECT_RECV_ID_CLIENT_DATA:
+        {
+            auto* pObjData = (SIMCONNECT_RECV_CLIENT_DATA*)(pData);
+            std::string stringReceived = (char*)&pObjData->dwData;
+            std::cout<<stringReceived<<std::endl;
+            if(stringReceived == "sping"){
+                serviceWorker->wasmConnected = true;
+                emit serviceWorker->wasmConnectionMade(2);
+            }
+
+        }
         case SIMCONNECT_RECV_ID_EVENT: {
             auto *evt = (SIMCONNECT_RECV_EVENT *) pData;
 
@@ -85,10 +116,18 @@ void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void 
             }
             break;
         }
-        case SIMCONNECT_RECV_ID_QUIT: {
-            serviceWorker->setConnectionClosed(true);
+        //TODO HANDLE SIMCONNECT_RECV_ID_QUIT TO ALTER GAME CONNECTION STATE
+        case SIMCONNECT_RECV_ID_SIMOBJECT_DATA: {
+            auto *pObjData = (SIMCONNECT_RECV_SIMOBJECT_DATA *) pData;
+            switch (pObjData->dwRequestID) {
+                case SIMCONNECT_RECV_ID_QUIT: {
+                    serviceWorker->setConnectionClosed(true);
+                    break;
+                }
+            }
             break;
         }
+
     }
 }
 
@@ -103,8 +142,10 @@ void ServiceWorker::sendWASMData(const char *data) {
     //The data size has te be pre-defined in the client data definition
     //data won't be read in the WASM module without this
     char toSend[256] = "";
-    for(int i = 0; i < strlen(data); i++) {
-        toSend[i] = data[i];
+    //prefix the command with s to identify service commands
+    toSend[0] = 's';
+    for(int i = 1; i < strlen(data) + 1; i++) {
+        toSend[i] = data[i-1];
     }
     SimConnect_SetClientData(serviceSimconnect, serviceLayerDataID, DEFINITION_SERVICE_DATA,
                              SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,

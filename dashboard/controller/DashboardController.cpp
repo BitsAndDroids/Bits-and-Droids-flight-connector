@@ -32,21 +32,23 @@ void DashboardController::updateEventFile() {
     }
 }
 
-DashboardController::DashboardController(QMainWindow *parent) {
-    this->parent = parent;
-    //TODO connect logger
-    //QObject::connect(&dualWorker, &MFSWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
-    SettingsHandler settingsHandler = SettingsHandler();
-    settingsHandler.checkEventFilePresent();
-}
-
 void DashboardController::initController(){
     connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
+    connect(serviceWorker, &ServiceWorker::wasmConnectionMade, this, &DashboardController::gameConnectionMade);
     serviceWorker->start();
+
+    SettingsHandler settingsHandler = SettingsHandler();
+    settingsHandler.checkEventFilePresent();
     InstallationService installationService = InstallationService();
     if(installationService.getUpdatesAvailable()){
         emit updateAvailable();
     }
+
+}
+
+
+DashboardController::DashboardController(QMainWindow *parent) {
+    this->parent = parent;
 }
 
 QList<ModeIndexCheckbox *> DashboardController::getCheckboxesByPattern(const QRegularExpression &pattern){

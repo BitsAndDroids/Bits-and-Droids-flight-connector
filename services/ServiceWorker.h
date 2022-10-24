@@ -30,6 +30,9 @@ private:
     };
     LoggerService* logger = new LoggerService();
 
+    bool wasmConnected = false;
+    bool wasmFound = false;
+
 
 public:
     void run() override { startServices(); }
@@ -48,6 +51,8 @@ public:
 
 signals:
     void gameConnectionMade(int state);
+
+    void wasmConnectionMade(int state);
 
 public slots:
 

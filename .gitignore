@@ -1,4 +1,3 @@
-
 *.user
 *.pro
 .idea
@@ -12,6 +11,7 @@ Bitsanddroidsgui.pro.user.26aeae6
 capi.dll
 dasync.dll
 /installer
+/installerInsider
 /cmake-build-debug-coverage
 /cmake-build-tests
 /debug

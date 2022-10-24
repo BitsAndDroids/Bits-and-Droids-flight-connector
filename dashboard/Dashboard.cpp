@@ -10,39 +10,7 @@
 
 #include "dashboard/controller/DashboardController.h"
 
-void Dashboard::copyFolder(const QString &sourceFolder, const QString &destinationFolder) {
-    qDebug() << "Dest path = " << destinationFolder;
-    QDir sourceDir(sourceFolder);
 
-    QDir destinationDir(destinationFolder);
-
-    if (!sourceDir.exists()) {
-        qDebug() << "dest not found" << sourceDir;
-        return;
-    }
-
-    if (!destinationDir.exists()) {
-        destinationDir.mkdir(destinationFolder);
-        qDebug() << "Dir not present";
-    }
-
-    QStringList files = sourceDir.entryList(QDir::Files);
-    qDebug() << files.size() << " Files found";
-    for (int i = 0; i < files.count(); i++) {
-        QString sourceName = sourceFolder + "/" + files[i];
-        QString destName = destinationFolder + "/" + files[i];
-        if (!(files[i] == ("events.txt"))) {
-            qDebug() << "Coppied " << files[i];
-            QFile::copy(sourceName, destName);
-        }
-    }
-    QStringList dirs = sourceDir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot);
-    for (auto &dir: dirs) {
-        QString sourceName = sourceFolder + "/" + dir;
-        QString destinationName = destinationFolder + "/" + dir;
-        copyFolder(sourceName, destinationName);
-    }
-}
 
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     auto centralWidget = new QWidget(this);
@@ -95,16 +63,27 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     radioConGame->setObjectName("gameCon");
     radioConGame->setEnabled(false);
     radioConGame->setChecked(true);
+    auto wasmCon = new QRadioButton();
+    wasmCon->setObjectName("wasmCon");
+    wasmCon->setEnabled(false);
+    wasmCon->setChecked(true);
     QString labelStyle = "QLabel{color: #fff; font-size: 10px;}";
     auto boardLabel = new QLabel("Boards");
     boardLabel->setStyleSheet(labelStyle);
     auto gameLabel = new QLabel("MFS2020");
     gameLabel->setStyleSheet(labelStyle);
+    auto wasmLabel = new QLabel("WASM");
+    wasmLabel->setStyleSheet(labelStyle);
+
     connectionRow->addWidget(radioConBoard);
     connectionRow->addWidget(boardLabel);
     connectionRow->addWidget(radioConGame);
     connectionRow->addWidget(gameLabel);
+    connectionRow->addWidget(wasmCon);
+    connectionRow->addWidget(wasmLabel);
+
     mainVLayout->addLayout(connectionRow);
+    controller.initController();
 
     this->layout()->setAlignment(Qt::AlignTop);
 
@@ -179,6 +158,27 @@ void Dashboard::boardConnectionMade(int con) {
     }
     if (con == 2) {
         boardRadioButton->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "green; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+}
+
+void Dashboard::wasmConnectionMade(int con) {
+    auto wasmCon = this->findChild<QRadioButton *>(
+            "wasmCon");
+
+    if (con == 0) {
+        wasmCon->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "red; border-radius: 7px; height: 12px; width: 12px;}");
+    }
+    if (con == 1) {
+        wasmCon->setStyleSheet(
+                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+    }
+    if (con == 2) {
+        wasmCon->setStyleSheet(
                 "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
                 "green; border-radius: 7px;height: 12px; width: 12px;}");
     }
