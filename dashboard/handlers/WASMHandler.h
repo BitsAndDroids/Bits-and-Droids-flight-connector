@@ -11,6 +11,16 @@ public:
     WASMHandler();
     void sendWASMCommand(const char *data);
     void installWasm();
+
+    bool isWASMModuleInstalled();
+private:
+    bool versionCheck();
+    void copyFolder(const QString &sourceFolder, const QString &destinationFolder);
+    QString WASMModulePath = "";
+
+    QString getLocalVersion();
+
+    void updateModule();
 };
 
 

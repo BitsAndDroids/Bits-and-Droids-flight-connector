@@ -20,7 +20,7 @@
 
 #include "serial/SerialPort.hpp"
 #include "constants.h"
-#include "workers/serviceWorker.h"
+#include "services/ServiceWorker.h"
 #include "dashboard/controller/DashboardController.h"
 #include "dashboard/Elements/MenuBar.h"
 #include "dashboard/controller/ComPortWidgetController.h"
@@ -45,6 +45,8 @@ public slots:
     void gameConnectionMade(int con);
 
     void boardConnectionMade(int con);
+
+    void wasmConnectionMade(int con);
 
 private:
 

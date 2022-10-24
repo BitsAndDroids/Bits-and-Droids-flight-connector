@@ -32,38 +32,17 @@ void DashboardController::updateEventFile() {
     }
 }
 
-DashboardController::DashboardController(QMainWindow *parent) {
-    this->parent = parent;
+void DashboardController::initController(){
     connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
+    connect(serviceWorker, &ServiceWorker::wasmConnectionMade, this, &DashboardController::gameConnectionMade);
     serviceWorker->start();
-    //TODO connect logger
-    //QObject::connect(&dualWorker, &MFSWorker::logMessage, &serviceWorker, &ServiceWorker::logMessage);
+
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.checkEventFilePresent();
 }
 
-
-void DashboardController::checkForUpdates(bool silentCheck) {
-    auto *process = new QProcess(this);
-    process->start(pathHandler.getMaintenanceToolPath() + " ch");
-    process->waitForFinished();
-    QByteArray data = process->readAll();
-    qDebug() << data;
-    auto mb = new QMessageBox();
-    auto updateButton = this->findChild<QPushButton *>("updateButton");
-    updateButton->setVisible(false);
-    if (data.contains("no updates available") && !silentCheck) {
-        mb->setText("No updates available");
-        mb->exec();
-    } else if (data.contains("Wait until it finishes")) {
-        mb->setText(
-                "Another instance of the maintenance tool is already running\n Please "
-                "close it before trying again.");
-        mb->exec();
-    } else if (data.contains("update name")) {
-        updateButton->setText("Update available");
-        updateButton->setVisible(true);
-    }
+DashboardController::DashboardController(QMainWindow *parent) {
+    this->parent = parent;
 }
 
 void DashboardController::updateButtonClicked() {

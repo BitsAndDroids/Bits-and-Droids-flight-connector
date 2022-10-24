@@ -8,7 +8,7 @@
 
 #include <QMainWindow>
 #include <QMenuBar>
-#include "workers/ServiceWorker.h"
+#include "services/ServiceWorker.h"
 
 
 class MenuBar: public QMenuBar {

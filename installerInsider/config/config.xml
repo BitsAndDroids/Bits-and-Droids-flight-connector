@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+    <Name>Bits and Droids connector insider</Name>
+    <Version>1.1.0</Version>
+    <Title>Bits and Droids insider installer</Title>
+    <Publisher>Bits and Droids</Publisher>
+ <InstallerWindowIcon>BitsAndDroidsLogo</InstallerWindowIcon>
+    <InstallerApplicationIcon>BitsAndDroidsLogo</InstallerApplicationIcon>
+    <StartMenuDir>Bits and Droids connector insider</StartMenuDir>
+    <TargetDir>@ApplicationsDir@/BitsAndDroidsInsider/</TargetDir>
+    <MaintenanceToolName>ConnectorInsiderMaintenanceTool</MaintenanceToolName>
+    <CreateLocalRepository>true</CreateLocalRepository>
+<RunProgram>@TargetDir@/bin/BitsAndDroidsConnector-Insider.exe</RunProgram>
+ <RemoteRepositories>
+        <Repository>
+            <Url>https://www.bitsanddroids.com/assets/downloads/connector-insider/repository</Url>
+        </Repository>
+    </RemoteRepositories>
+</Installer>

@@ -13,7 +13,7 @@
 #include "widgets/librarygenerator/librarygeneratorwindow.h"
 #include "widgets/codegenerator/CodeGeneratorWindow.h"
 #include "logging/LogWindow.h"
-#include "workers/ServiceWorker.h"
+#include "services/ServiceWorker.h"
 
 MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(parent) {
     populateMenuBar(parent);

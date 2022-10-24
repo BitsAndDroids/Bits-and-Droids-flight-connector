@@ -11,7 +11,7 @@
 #include "enums/ModeEnum.h"
 #include "dashboard/workers/MFSWorker.h"
 #include "elements/ModeIndexCheckbox.h"
-#include "workers/serviceWorker.h"
+#include "services/ServiceWorker.h"
 #include <QLabel>
 
 class ComPortWidgetController : public QObject {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Bits and Droids WASM</DisplayName>
+    <Description>This installs the WASM module in your application folder. You still need to install the WASM in the community  folder</Description>
+    <Name>com.bitsanddroids.wasm</Name>
+    <Version>1.2.0-0</Version>
+    <ReleaseDate>2022-03-10</ReleaseDate>
+    <Script>installscript.qs</Script>
+    <Default>true</Default>
+</Package>

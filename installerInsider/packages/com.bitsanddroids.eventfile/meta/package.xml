@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+    <DisplayName>Event file</DisplayName>
+    <Description>Clean install of the default event file. You can skip this file if you already have your own event file</Description>
+    <Name>com.bitsanddroids.eventfile</Name>
+    <Version>1.2.0-0</Version>
+    <ReleaseDate>2022-03-10</ReleaseDate>
+    <Script>installscript.qs</Script>
+    <Default>true</Default>
+</Package>

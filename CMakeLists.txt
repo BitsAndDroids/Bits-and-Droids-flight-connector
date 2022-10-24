@@ -26,7 +26,7 @@ set(PROJECT_SOURCES
 
         dashboard/workers/MFSWorker.cpp dashboard/workers/MFSWorker.h
         workers/InputMapper.h workers/inputmapper.cpp
-        workers/serviceworker.cpp workers/serviceworker.h
+        services/ServiceWorker.cpp services/ServiceWorker.h
 
         services/LoggerService.cpp services/LoggerService.h
 
@@ -109,7 +109,7 @@ set(PROJECT_SOURCES
         elements/Element.cpp elements/Element.h
         dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
         dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
-        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h settings/ComSettingsHandler.cpp settings/ComSettingsHandler.h)
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h settings/ComSettingsHandler.cpp settings/ComSettingsHandler.h settings/ServiceSettingsHandler.cpp settings/ServiceSettingsHandler.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -138,8 +138,9 @@ qt_add_executable(
         BitsAndDroidsConnector WIN32
         ${PROJECT_SOURCES}
         ${APP_ICON_RESOURCE_WINDOWS}
-)
 
+)
+set_target_properties (BitsAndDroidsConnector PROPERTIES DEBUG_POSTFIX "-Insider")
 target_link_libraries(BitsAndDroidsConnector PRIVATE
         Qt${QT_VERSION_MAJOR}::Charts
         Qt${QT_VERSION_MAJOR}::Core
@@ -182,6 +183,7 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
+
 
 #-----------------------------------------------------#
 #                   TESTING SECTION                   #
