@@ -11,14 +11,19 @@
 #include "services/ServiceWorker.h"
 
 
-class MenuBar: public QMenuBar {
-    Q_OBJECT
+class MenuBar : public QMenuBar {
+Q_OBJECT
 public:
     MenuBar(QMainWindow *parent, ServiceWorker *serviceWorker);
 
     void populateMenuBar(QMainWindow *parent);
+
 public slots:
+
     void addUpdateAvailable();
+signals:
+
+    void logMessage(const QString &message, const QString &type);
 
 private:
     QMainWindow *parent;
@@ -59,6 +64,7 @@ private:
     ServiceWorker *serviceWorker;
 
 private slots:
+
     void installWASM();
 
     void checkForUpdates();
@@ -66,6 +72,7 @@ private slots:
     void localUpdateEventFile();
 
     void updateButtonClicked();
+
 
 };
 

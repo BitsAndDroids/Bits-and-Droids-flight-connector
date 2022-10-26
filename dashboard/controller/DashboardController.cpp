@@ -34,7 +34,7 @@ void DashboardController::updateEventFile() {
 
 void DashboardController::initController(){
     connect(serviceWorker, &ServiceWorker::gameConnectionMade, this, &DashboardController::gameConnectionMade);
-    connect(serviceWorker, &ServiceWorker::wasmConnectionMade, this, &DashboardController::gameConnectionMade);
+    connect(serviceWorker, &ServiceWorker::wasmConnectionMade, this, &DashboardController::wasmConnectionMade);
     serviceWorker->start();
 
     SettingsHandler settingsHandler = SettingsHandler();
@@ -44,6 +44,10 @@ void DashboardController::initController(){
         emit updateAvailable();
     }
 
+}
+
+void DashboardController::setServiceWorker(ServiceWorker *serviceWorker) {
+    this->serviceWorker = serviceWorker;
 }
 
 

@@ -82,7 +82,7 @@ set(PROJECT_SOURCES
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h
         settings/settingshandler.cpp settings/settingshandler.h
-
+        services/InstallationService.cpp services/InstallationService.h
         serial/SerialPort.hpp serial/SerialPort.cpp
 
         rungaurd/RunGuard.cpp rungaurd/RunGuard.h

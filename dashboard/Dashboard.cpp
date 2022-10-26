@@ -83,18 +83,16 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(wasmLabel);
 
     mainVLayout->addLayout(connectionRow);
-    controller.initController();
-
     this->layout()->setAlignment(Qt::AlignTop);
 
     //After every UI element is added, the controller can be initialized
-
-
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
-    connect(dashboardController, &DashboardController::exitProgram, this, &Dashboard::exitProgram);
-    connect(dashboardController, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
-    connect(dashboardController, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
-    dashboardController->initController();
+    connect(&controller, &DashboardController::exitProgram, this, &Dashboard::exitProgram);
+    connect(&controller, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
+    connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
+    connect(&controller, &DashboardController::wasmConnectionMade, this, &Dashboard::wasmConnectionMade);
+    controller.setServiceWorker(&serviceWorker);
+    controller.initController();
 }
 
 void Dashboard::closeEvent(QCloseEvent *event) {

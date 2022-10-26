@@ -19,10 +19,12 @@ class DashboardController : public QObject {
 Q_OBJECT
 public:
     DashboardController(QMainWindow *parent);
-
+    void setServiceWorker(ServiceWorker *serviceWorker);
     void initController();
 signals:
     void sendWASMCommand(const char *data);
+
+    void logMessage(const QString &message, const QString &type);
 
     void gameConnectionMade(int state);
 
@@ -47,6 +49,7 @@ private slots:
     void updateEventFile();
 
     QList<ModeIndexCheckbox *> getCheckboxesByPattern(const QRegularExpression &pattern);
+
 
 };
 
