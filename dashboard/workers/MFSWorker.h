@@ -56,6 +56,8 @@ private:
 
     void loadRunningPortsAndSets();
 
+    std::string formatOutgoingString(float received, std::string prefix, int mode);
+
     double dataF = 1.2;
 
     SIMCONNECT_CLIENT_DATA_ID ClientDataID = 1;
@@ -80,7 +82,7 @@ public:
 
     void eventLoop();
 
-    void sendToArduino(float received, const string &prefix, int index, int mode);
+    void sendToArduino(const std::string c_string, int index);
 };
 
 #endif  // DUALWORKER_H

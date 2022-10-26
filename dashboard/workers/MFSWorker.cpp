@@ -77,53 +77,51 @@ MFSWorker::MFSWorker() {
 
   \sa ModeEnum
  */
-void MFSWorker::sendToArduino(float received, const std::string &prefix, int index,
-                              int mode) {
-    int intVal;
-    std::string prefixString = prefix;
+void MFSWorker::sendToArduino(const std::string formatedString, int index) {
+    comBundles->at(index)->getSerialPort()->writeSerialPort(formatedString.c_str(), formatedString.length());
+    std::cout<< "Sent to Arduino: " << formatedString << std::endl;
+}
+
+std::string MFSWorker::formatOutgoingString(float received, std::string prefix, int mode){
+    int intVal = 0;
     //Ensure the prefix is 4 characters long
-    for (int i = prefixString.size(); i < 4; i++) {
-        prefixString += " ";
+    for (int i = prefix.size(); i < 4; i++) {
+        prefix += " ";
     }
 
-    std::string input_string;
+    std::string input_string = "";
 
     switch (mode) {
-        case ModeEnum::BOOLMODE: {
+        case BOOLMODE: {
             intVal = (received == 0) ? 0 : 1;
-            input_string = prefixString + std::to_string(intVal);
+            input_string = prefix + std::to_string(intVal);
             break;
         }
-        case ModeEnum::INTEGERMODE: {
-            intVal = (int) received;
-            input_string = prefixString + std::to_string(intVal);
+        case 8:{
+
+        }
+        case INTEGERMODE: {
+            intVal = (int)received;
+            input_string = prefix + std::to_string(intVal);
             break;
         }
-        case ModeEnum::FLOATMODE: {
-            input_string = prefixString + std::to_string(received);
+        case FLOATMODE: {
+            input_string = prefix + std::to_string(received);
             break;
         }
         default:
-            input_string = prefixString + std::to_string(intVal);
+            input_string = prefix + std::to_string(received);
             break;
     }
+    std::string formatedString = input_string;
 
-    auto *const c_string = new char[input_string.size() + 1];
-    std::copy(input_string.begin(), input_string.end(), c_string);
-    c_string[input_string.size()] = '\n';
 
     if (mode == ModeEnum::PERCENTAGEMODE) {
-        if (received < 0) {
-            comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, 7);
-        } else {
-            comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, 6);
-        }
     } else {
-        comBundles->at(index)->getSerialPort()->writeSerialPort(c_string, input_string.size() + 1);
     }
 
-    input_string.clear();
-    delete[] c_string;
+    std::cout<< "Formated String: " << input_string << "Received: "<<received << "Mode :"<<mode<< std::endl;
+    return formatedString;
 }
 
 /*!
@@ -183,10 +181,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
                     auto *data = (dataStr *) &pObjData->dwData;
                     if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                        dualCast->sendToArduino(
-                                data->val, std::to_string(pObjData->dwRequestID), i,
-                                dualCast->outputHandler.findOutputById((int) pObjData->dwRequestID)
-                                        ->getType());
+                        dualCast->sendToArduino(dualCast->formatOutgoingString(data->val, std::to_string(pObjData->dwRequestID), dualCast->outputHandler.findOutputById((int) pObjData->dwRequestID)->getType()),i);
                     }
                 }
             }
@@ -211,7 +206,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                         for (int i = 0; i < dualCast->comBundles->size(); i++) {
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
-                                dualCast->sendToArduino(value, prefix, i, mode);
+                                dualCast->sendToArduino(dualCast->formatOutgoingString(value,prefix,mode), i);
                                 emit dualCast->logMessage(
                                         "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
                                         dualCast->comBundles->at(i)->getSerialPort()->getPortName(),
