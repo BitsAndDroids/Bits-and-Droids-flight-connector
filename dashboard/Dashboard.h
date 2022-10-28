@@ -48,6 +48,9 @@ public slots:
 
     void wasmConnectionMade(int con);
 
+    signals:
+    void updateEventFile();
+
 private:
 
     DashboardController controller = DashboardController(this);

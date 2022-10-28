@@ -91,8 +91,10 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connect(&controller, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
     connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
     connect(&controller, &DashboardController::wasmConnectionMade, this, &Dashboard::wasmConnectionMade);
+
     controller.setServiceWorker(&serviceWorker);
     controller.initController();
+    connect(menuBar, &MenuBar::updateEventFile, &controller, &DashboardController::updateEventFile);
 }
 
 void Dashboard::closeEvent(QCloseEvent *event) {
@@ -183,7 +185,7 @@ void Dashboard::wasmConnectionMade(int con) {
 }
 
 Dashboard::~Dashboard() {
-    delete this;
+
 }
 
 void Dashboard::exitProgram() {
@@ -191,5 +193,5 @@ void Dashboard::exitProgram() {
     serviceWorker.wait();
     dualThread.abortDual = true;
     dualThread.wait();
-    delete this;
+    QApplication::quit();
 }

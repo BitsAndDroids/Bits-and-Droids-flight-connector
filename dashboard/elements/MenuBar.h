@@ -25,6 +25,7 @@ signals:
 
     void logMessage(const QString &message, const QString &type);
 
+    void updateEventFile();
 private:
     QMainWindow *parent;
 

@@ -79,7 +79,10 @@ MFSWorker::MFSWorker() {
  */
 void MFSWorker::sendToArduino(const std::string formatedString, int index) {
     comBundles->at(index)->getSerialPort()->writeSerialPort(formatedString.c_str(), formatedString.length());
-    std::cout<< "Sent to Arduino: " << formatedString << std::endl;
+    emit logMessage(
+            "Send data: " + formatedString + " -> " +
+            comBundles->at(index)->getSerialPort()->getPortName(),
+            LogLevel::DEBUGLOG);
 }
 
 std::string MFSWorker::formatOutgoingString(float received, std::string prefix, int mode){
@@ -109,19 +112,19 @@ std::string MFSWorker::formatOutgoingString(float received, std::string prefix, 
             input_string = prefix + std::to_string(received);
             break;
         }
-        default:
+        case PERCENTAGEMODE: {
+            intVal = (int)(received * 100);
+            input_string = prefix + std::to_string(intVal);
+            break;
+        }
+        default: {
             input_string = prefix + std::to_string(received);
             break;
-    }
-    std::string formatedString = input_string;
-
-
-    if (mode == ModeEnum::PERCENTAGEMODE) {
-    } else {
+        }
     }
 
-    std::cout<< "Formated String: " << input_string << "Received: "<<received << "Mode :"<<mode<< std::endl;
-    return formatedString;
+    input_string = input_string + "\n";
+    return input_string;
 }
 
 /*!
@@ -207,10 +210,6 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
                                 dualCast->sendToArduino(dualCast->formatOutgoingString(value,prefix,mode), i);
-                                emit dualCast->logMessage(
-                                        "Send data: " + std::to_string((int) value) + " | prefix " + prefix + " -> " +
-                                        dualCast->comBundles->at(i)->getSerialPort()->getPortName(),
-                                        LogLevel::DEBUGLOG);
                             }
                         }
 
@@ -242,10 +241,11 @@ void MFSWorker::loadRunningPortsAndSets() {
     auto setHandler = SetHandler();
 
     int successfullyConnected = 0;
-
+    setHandler.updateSets();
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
-        auto outputs=setHandler.getSetById(QString::number(comSetting.second)).getOutputs();
+        auto set = setHandler.getSetById(QString::number(comSetting.second));
+        auto outputs= set.getOutputs();
         bundle->setOutputs(outputs);
         if (bundle->getSerialPort()->isConnected()) {
             emit boardConnectionMade(1);
@@ -256,13 +256,16 @@ void MFSWorker::loadRunningPortsAndSets() {
         }
         comBundles->append(bundle);
         for(auto & i : bundle->getOutputs()){
+            i = outputHandler.findOutputById(i->getId());
             outputsToMap.append(i);
         }
+
     }
 
     if (successfullyConnected == comBundles->size()) {
         emit boardConnectionMade(2);
     }
+
     InputReader inputReader = InputReader();
     inputReader.readInputs();
     this->inputs = inputReader.getInputs();
@@ -365,11 +368,10 @@ void MFSWorker::eventLoop() {
 
     for (auto com : *comBundles) {
         if (com->getSerialPort()->isConnected()) {
-            emit logMessage("Closing connection to " + com->getSerialPort()->getPortName(),
-                            LogLevel::DEBUGLOG);
             com->getSerialPort()->closeSerial();
         }
     }
+
     //We want to update the dashboard indicator when we've closed the connection
     emit boardConnectionMade(0);
     QThread::currentThread()->quit();
