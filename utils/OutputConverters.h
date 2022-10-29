@@ -14,15 +14,7 @@ class OutputConverters {
 public:
     OutputConverters();
     std::string formatOutgoingString(float received, Output output);
-    float converOutgoingFloatValue(float toConvert, int mode);
 private:
-
-
-    int radianToDegree(double rec);
-
-    float radianToDegreeFloat(double rec);
-
-    float radianToDegreeFloat(float rec);
 
     int radianToDegree(float rec);
 };

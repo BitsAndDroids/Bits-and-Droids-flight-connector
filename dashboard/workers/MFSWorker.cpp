@@ -158,18 +158,13 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                     int count = 0;
                     auto pS = reinterpret_cast<StructDatum *>(&pObjData->dwData);
                     while (count < (int) pObjData->dwDefineCount) {
-                        string valString = std::to_string(pS->datum[count].value);
                         int id = pS->datum[count].id;
-                        Output *output = dualCast->outputHandler.findOutputById(id);;
+                        Output *output = dualCast->outputHandler.findOutputById(id);
 
-                        int mode = output->getType();
-                        string prefix = std::to_string(output->getPrefix());
-
-                        float value = dualCast->converter.converOutgoingFloatValue(pS->datum[count].value, mode);
                         for (int i = 0; i < dualCast->comBundles->size(); i++) {
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
-                                dualCast->sendToArduino(dualCast->converter.formatOutgoingString(value,*output), i);
+                                dualCast->sendToArduino(dualCast->converter.formatOutgoingString(pS->datum[count].value,*output), i);
                             }
                         }
 

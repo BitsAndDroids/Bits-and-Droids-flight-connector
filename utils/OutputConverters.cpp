@@ -6,27 +6,23 @@
 #include "OutputConverters.h"
 #include "enums/ModeEnum.h"
 
-OutputConverters::OutputConverters() {}
+OutputConverters::OutputConverters() = default;
+
 int OutputConverters::radianToDegree(float rec) {
     double pi = 3.14159;
     double radian = rec;
     return (radian * (180 / pi));
 }
 
-float OutputConverters::radianToDegreeFloat(float rec) {
-    double pi = 3.14159;
-    double radian = rec;
-    return (radian * (180 / pi));
-}
 std::string OutputConverters::formatOutgoingString(float received, Output output){
     int intVal = 0;
     std::string prefix = std::to_string(output.getPrefix());
     //Ensure the prefix is 4 characters long
-    for (int i = prefix.size(); i < 4; i++) {
+    for (int i = (int)prefix.size(); i < 4; i++) {
         prefix += " ";
     }
 
-    std::string input_string = "";
+    std::string input_string;
 
     switch (output.getType()) {
         case BOOLMODE: {
@@ -62,54 +58,4 @@ std::string OutputConverters::formatOutgoingString(float received, Output output
     return input_string;
 }
 
-float OutputConverters::converOutgoingFloatValue(float toConvert, int mode){
-                float converted;
-                switch (mode) {
-                    case 0: {
-                        converted = toConvert;
-                        break;
-                    }
-                    case 1: {
-                        converted = toConvert * 100;
-                        break;
-                    }
-                    case 2: {
-                        converted = radianToDegree(toConvert);
-                        break;
-                    }
-                    case 3: {
-                        converted = toConvert;
-                        break;
-                    }
-                    case 4: {
-                        converted = toConvert;
-                        break;
-                    }
-                    case 5:
-                        converted = toConvert;
-                        break;
-                    case 6: {
-                        int inHg = toConvert * 1000;
-                        if (inHg % (inHg / 10) >= 5) {
-                            inHg += 10;
-                        }
-                        converted = inHg;
-                        break;
-                    }
-                    case 7: {
-                        converted = toConvert * 1.94;
-                        break;
-                    }
-
-                    case 8: {
-                        converted = toConvert;
-                        break;
-                    }
-
-                    default:
-                        converted = toConvert;
-                        break;
-                }
-    return converted;
-    }
 
