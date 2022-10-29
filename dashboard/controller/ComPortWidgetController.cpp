@@ -3,7 +3,6 @@
 //
 
 #include "ComPortWidgetController.h"
-#include "utils/InputReader.h"
 #include <QVBoxLayout>
 #include <QSerialPort>
 #include <QSerialPortInfo>

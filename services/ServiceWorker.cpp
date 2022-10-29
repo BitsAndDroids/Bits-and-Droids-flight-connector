@@ -21,69 +21,81 @@ void ServiceWorker::setStopServiceWorker(bool state) {
 void ServiceWorker::startServices() {
 
     bool connected = false;
+    try {
+        connect(this, &ServiceWorker::updateEventFile, &wasmHandler, &WASMHandler::updateEventFile);
+        connect(&wasmHandler, &WASMHandler::sendWASMCommand, this,
+                &ServiceWorker::sendWASMData);
+        wasmFound = wasmHandler.isWASMModuleInstalled();
+        if (!wasmFound) {
+            logMessage("WASM module not found, please install the module", LogLevel::ERRORLOG);
+            emit wasmConnectionMade(0);
+        }
 
-    WASMHandler wasmHandler = WASMHandler();
-    wasmFound = wasmHandler.isWASMModuleInstalled();
-    if(!wasmFound){
-        logMessage("WASM module not found, please install the module", LogLevel::ERRORLOG);
-        emit wasmConnectionMade(0);
-    }
 
+        while (!stopServiceWorker) {
+            logMessage("Service worker trying to connect to Simconnect", LogLevel::DEBUGLOG);
+            emit gameConnectionMade(1);
+            if (SUCCEEDED(SimConnect_Open(&serviceSimconnect, "serviceSimconnect", nullptr, 0,
+                                          nullptr, 0))) {
 
-    while (!stopServiceWorker) {
-        emit logMessage("Service worker trying to connect to Simconnect", LogLevel::DEBUGLOG);
-        emit gameConnectionMade(1);
-        if (SUCCEEDED(SimConnect_Open(&serviceSimconnect, "serviceSimconnect", nullptr, 0,
-                                      nullptr, 0))) {
+                connected = true;
+                logMessage("Service worker connected to Simconnect", LogLevel::DEBUGLOG);
+                emit gameConnectionMade(2);
 
-            connected = true;
-            emit logMessage("Service worker connected to Simconnect", LogLevel::DEBUGLOG);
-            emit gameConnectionMade(2);
+                SimConnect_MapClientDataNameToID(serviceSimconnect, "wasm.servicelayer", serviceLayerDataID);
 
-            SimConnect_MapClientDataNameToID(serviceSimconnect, "wasm.servicelayer", serviceLayerDataID);
+                SimConnect_CreateClientData(serviceSimconnect, serviceLayerDataID, 4096,
+                                            SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
 
-            SimConnect_CreateClientData(serviceSimconnect, serviceLayerDataID, 4096,
-                                        SIMCONNECT_CREATE_CLIENT_DATA_FLAG_DEFAULT);
+                SimConnect_AddToClientDataDefinition(serviceSimconnect, DEFINITION_SERVICE_DATA,
+                                                     SIMCONNECT_CLIENTDATAOFFSET_AUTO,
+                                                     256, 0);
 
-            SimConnect_AddToClientDataDefinition(serviceSimconnect, DEFINITION_SERVICE_DATA,
-                                                 SIMCONNECT_CLIENTDATAOFFSET_AUTO,
-                                                 256, 0);
+                connectionClosed = false;
+                SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_SIM_START, "SimStart");
+                SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_1_SECOND, "1sec");
+                SimConnect_RequestClientData(serviceSimconnect,
+                                             3,
+                                             0,
+                                             DEFINITION_SERVICE_DATA,
+                                             SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
+                                             SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT,
+                                             0,
+                                             0,
+                                             0);
 
-            connectionClosed = false;
-            SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_SIM_START, "SimStart");
-            SimConnect_SubscribeToSystemEvent(serviceSimconnect, EVENT_1_SECOND, "1sec");
-            SimConnect_RequestClientData(serviceSimconnect,
-                                         3,
-                                         0,
-                                         DEFINITION_SERVICE_DATA,
-                                         SIMCONNECT_CLIENT_DATA_PERIOD_ON_SET,
-                                         SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT,
-                                         0,
-                                         0,
-                                         0);
-            while (!connectionClosed) {
-                if(wasmFound && !wasmConnected){
-                    sendWASMData("ping");
-                    emit wasmConnectionMade(1);
+                long currentTicks = 0;
+                while (!connectionClosed && !stopServiceWorker) {
+                    currentTicks++;
+                    if (currentTicks > 100) {
+                        if (wasmFound && !wasmConnected) {
+                            sendWASMData("ping");
+                            emit wasmConnectionMade(1);
+                        }
+                        currentTicks = 0;
+                    }
+                    SimConnect_CallDispatch(serviceSimconnect, MyDispatchProcRD, this);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2));
                 }
-                SimConnect_CallDispatch(serviceSimconnect, MyDispatchProcRD, this);
-                std::this_thread::sleep_for(std::chrono::milliseconds(2));
+            }
+            //TODO replace by proper timer mechanism that can be interrupted
+            //This check ensures that we don't wait for the app to close when we want it to close
+            if (!stopServiceWorker) {
+                uint8_t counter = 0;
+                while (counter < 10 && !stopServiceWorker) {
+                    std::this_thread::sleep_for(std::chrono::seconds(1));
+                    counter++;
+                }
             }
         }
-        //TODO replace by proper timer mechanism that can be interrupted
-        //This check ensures that we don't wait for the app to close when we want it to close
-        if (!stopServiceWorker) {
-            uint8_t counter = 0;
-            while(counter < 10 && !stopServiceWorker) {
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-                counter++;
-            }
-        }
-    }
-    emit logMessage("ServiceWorker disconnected from game", LogLevel::DEBUGLOG);
+        logMessage("ServiceWorker disconnected from game", LogLevel::DEBUGLOG);
 
-    SimConnect_Close(serviceSimconnect);
-    QThread::currentThread()->quit();
+        SimConnect_Close(serviceSimconnect);
+        QThread::currentThread()->quit();
+    }
+    catch (std::exception &e) {
+        logMessage("ServiceWorker exception: " + std::string(e.what()), LogLevel::ERRORLOG);
+    }
 }
 
 
@@ -150,7 +162,7 @@ void ServiceWorker::sendWASMData(const char *data) {
     SimConnect_SetClientData(serviceSimconnect, serviceLayerDataID, DEFINITION_SERVICE_DATA,
                              SIMCONNECT_CLIENT_DATA_SET_FLAG_DEFAULT, 0, 256,
                              &toSend);
-    emit logMessage("Sending " + std::string(data) + " to WASM module", LogLevel::DEBUGLOG);
+    logMessage("Sending " + std::string(data) + " to WASM module", LogLevel::DEBUGLOG);
 }
 
 void ServiceWorker::setConnectionClosed(bool toSet) {

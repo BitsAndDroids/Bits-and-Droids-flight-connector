@@ -6,16 +6,27 @@
 #define BITSANDDROIDSCONNECTOR_WASMHANDLER_H
 
 
-class WASMHandler {
+class WASMHandler : public QObject {
+Q_OBJECT
 public:
     WASMHandler();
-    void sendWASMCommand(const char *data);
+
     void installWasm();
 
     bool isWASMModuleInstalled();
+
+public slots:
+    void updateEventFile();
+
+signals:
+
+    void sendWASMCommand(const char *data);
+
 private:
     bool versionCheck();
+
     void copyFolder(const QString &sourceFolder, const QString &destinationFolder);
+
     QString WASMModulePath = "";
 
     QString getLocalVersion();
