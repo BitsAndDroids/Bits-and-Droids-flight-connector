@@ -16,6 +16,7 @@ void WASMHandler::installWasm() {
     //TODO FIX THIS PART
     PathHandler pathHandler;
     try {
+
         bool customPathFound = pathHandler.getCommunityFolderPath() != nullptr;
         QString pathfound = "";
         QString sourceString =
@@ -37,6 +38,7 @@ void WASMHandler::installWasm() {
 }
 
 bool WASMHandler::isWASMModuleInstalled() {
+    try{
       ServiceSettingsHandler serviceSettingsHandler = ServiceSettingsHandler();
       if(serviceSettingsHandler.retrieveSetting("Settings","communityFolderPathLabel")->toString() == "" && !serviceSettingsHandler.searchDefaultCommunityLocation()){
           return false;
@@ -50,53 +52,75 @@ bool WASMHandler::isWASMModuleInstalled() {
       }
       versionCheck();
       return dir.exists();
+    }
+    catch (...){
+        std::cout<<"error"<<std::endl;
+        return false;
+    }
 }
 
 WASMHandler::WASMHandler() {
-    ServiceSettingsHandler serviceSettingsHandler = ServiceSettingsHandler();
-    QDir dir = QDir(serviceSettingsHandler.getCommunityFolderPath() + "/BitsAndDroidsModule");
-    if(dir.exists()){
-        WASMModulePath = dir.absolutePath();
-    }
+
+        ServiceSettingsHandler serviceSettingsHandler = ServiceSettingsHandler();
+        QDir dir = QDir(serviceSettingsHandler.getCommunityFolderPath() + "/BitsAndDroidsModule");
+        if (dir.exists()) {
+            WASMModulePath = dir.absolutePath();
+        }
+
+
 }
 
 bool WASMHandler::versionCheck(){
-    //return true if the version found in the community folder is the same as the version in the application folder
-    QString communityVersion = "";
-    QString localVersion = getLocalVersion();
-    if(WASMModulePath.size() > 0){
+    try {
+        //return true if the version found in the community folder is the same as the version in the application folder
+        QString communityVersion = "";
+        QString localVersion = getLocalVersion();
+        if (WASMModulePath.size() > 0) {
 
-        QFile file(WASMModulePath + "/manifest.JSON");
-        file.open(QIODevice::ReadOnly | QIODevice::Text);
-        QByteArray data = file.readAll();
-        file.close();
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+            QFile file(WASMModulePath + "/manifest.JSON");
+            std::cout<<file.fileName().toStdString()<<std::endl;
+            file.open(QIODevice::ReadOnly);
+            QByteArray data = file.readAll();
+            std::cout<<data.toStdString()<<std::endl;
+            file.close();
 
-        QJsonObject jsonObject = jsonDoc.object();
-        communityVersion = jsonObject["package_version"].toString();
-    }
-    QStringList communityVersionList = communityVersion.split(".");
-    QStringList localVersionList = localVersion.split(".");
-    if(communityVersionList.size() == localVersionList.size()){
-        for(int i = 0; i < localVersionList.size(); i++){
-            if(localVersionList[i].toInt() > communityVersionList[i].toInt()){
-                updateModule();
-                i = (int)localVersionList.size();
+            QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+
+            QJsonObject jsonObject = jsonDoc.object();
+            communityVersion = jsonObject["package_version"].toString();
+            std::cout<<communityVersion.toStdString()<<std::endl;
+        }
+        QStringList communityVersionList = communityVersion.split(".");
+        QStringList localVersionList = localVersion.split(".");
+        std::cout<<communityVersionList.size()<<std::endl;
+        std::cout<<localVersionList.size()<<std::endl;
+        if (communityVersionList.size() == localVersionList.size()) {
+            for (int i = 0; i < localVersionList.size(); i++) {
+                if (localVersionList[i].toInt() > communityVersionList[i].toInt()) {
+                    std::cout<<"local version is higher"<<std::endl;
+                    updateModule();
+                    return false;
+                }
             }
         }
+        return true;
+    }
+    catch (...){
+        return false;
     }
 
 }
 
 void WASMHandler::updateModule(){
+
     QFile localManifest(QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule/manifest.JSON");
     QFile localModule(QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule/modules/WASM_Module_BitsAndDroids.WASM");
 
     QFile remoteManifest(WASMModulePath + "/manifest.JSON");
     QFile remoteModule(WASMModulePath + "/modules/WASM_Module_BitsAndDroids.WASM");
 
-    remoteManifest.copy(localManifest.fileName() + ".old");
-    remoteModule.copy(localModule.fileName() + ".old");
+    remoteManifest.copy(remoteManifest.fileName() + ".old");
+    remoteModule.copy(remoteModule.fileName() + ".old");
 
     remoteManifest.remove();
     remoteModule.remove();
@@ -107,16 +131,19 @@ void WASMHandler::updateModule(){
     if(remoteManifest.exists() && remoteModule.exists()){
         QFile(WASMModulePath + "/manifest.JSON.old").remove();
         QFile(WASMModulePath + "/modules/WASM_Module_BitsAndDroids.WASM.old").remove();
+        std::cout<<"D"<< std::endl;
     }
 }
 
 QString WASMHandler::getLocalVersion(){
+
     QFile file(QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule/manifest.JSON");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    file.open(QIODevice::ReadOnly);
     QByteArray data = file.readAll();
     file.close();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = jsonDoc.object();
+    std::cout<<"LA"<< std::endl;
     return jsonObject["package_version"].toString();
 }
 
@@ -148,5 +175,28 @@ void WASMHandler::copyFolder(const QString &sourceFolder, const QString &destina
         QString sourceName = sourceFolder + "/" + dir;
         QString destinationName = destinationFolder + "/" + dir;
         copyFolder(sourceName, destinationName);
+    }
+}
+
+void WASMHandler::updateEventFile(){
+    PathHandler pathHandler = PathHandler();
+    try {
+        QFile::remove(pathHandler.getCommunityFolderPath() +
+                      "/BitsAndDroidsModule/modules/events.txt");
+        QFile::copy(pathHandler.getWritableEventPath(),
+                    pathHandler.getCommunityFolderPath() +
+                    "/BitsAndDroidsModule/modules/events.txt");
+
+
+        emit sendWASMCommand("9999");
+        MessageCaster::showCompleteMessage("Successfully updated the event file");
+    }
+        //This catches the specific error thrown when no output is running
+        //Since we send a command over SimConnect to the WASM module we need to have a connection that is alive
+    catch (const std::invalid_argument &i) {
+        MessageCaster::showWarningMessage("Please start the connector before updating the remote event file");
+    }
+    catch (const std::exception &e) {
+        MessageCaster::showWarningMessage("Something went wrong updating the event file");
     }
 }

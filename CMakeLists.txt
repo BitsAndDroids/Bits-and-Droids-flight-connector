@@ -82,11 +82,11 @@ set(PROJECT_SOURCES
         handlers/pathhandler.cpp handlers/pathhandler.h
         handlers/outputhandler.cpp handlers/outputhandler.h
         settings/settingshandler.cpp settings/settingshandler.h
-
+        services/InstallationService.cpp services/InstallationService.h
         serial/SerialPort.hpp serial/SerialPort.cpp
 
         rungaurd/RunGuard.cpp rungaurd/RunGuard.h
-
+        dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp
         logging/Logger.cpp logging/Logger.h
         logging/LogWindow.cpp logging/LogWindow.h
         logging/MessageCaster.cpp logging/MessageCaster.h
@@ -114,7 +114,7 @@ set(PROJECT_SOURCES
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp)
+set(APP_ICON_RESOURCE_WINDOWS "${CMAKE_CURRENT_SOURCE_DIR}/appicon.rc" )
 
 set(Resources_resource_files
         "BitsAndDroidsLogo.ico"
@@ -160,7 +160,7 @@ qt6_add_resources(BitsAndDroidsConnector "Resources"
         ${Resources_resource_files}
         )
 
-if (win64 AND NOT CMAKE_BUILD_TYPE STREQUAL Debug)
+if (win64 AND NOT CMAKE_BUILD_TYPE STREQUAL DEBUG)
     target_link_libraries(BitsAndDroidsConnector PUBLIC
             "${PROJECT_SOURCE_DIR}/dist/SimConnect.dll"
             )
@@ -188,22 +188,23 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 #-----------------------------------------------------#
 #                   TESTING SECTION                   #
 #-----------------------------------------------------#
-include(CTest)
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG release-1.12.1
-        PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
-        INSTALL_COMMAND ""
-)
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
-include(googletest)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 
-IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    include(CTest)
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG release-1.12.1
+            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+            INSTALL_COMMAND ""
+    )
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+    include(googletest)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
     enable_testing()
 
     add_executable(UnitTests
@@ -232,4 +233,4 @@ IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
     gtest_discover_tests(
             UnitTests
     )
-ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)

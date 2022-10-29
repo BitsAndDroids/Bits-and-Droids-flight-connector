@@ -14,6 +14,7 @@
 #include "widgets/codegenerator/CodeGeneratorWindow.h"
 #include "logging/LogWindow.h"
 #include "services/ServiceWorker.h"
+#include "services/InstallationService.h"
 
 MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(parent) {
     populateMenuBar(parent);
@@ -152,6 +153,8 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
             &MenuBar::openGenerateCodeMenu);
 
     QObject::connect(openLogging, &QAction::triggered, this, &MenuBar::openLogWindow);
+    InstallationService installationService = InstallationService();
+    std::cout<<"DATA "<<installationService.getCurrentVersion().toStdString()<<std::endl;
 }
 
 void MenuBar::installWASM() {
@@ -164,6 +167,7 @@ void MenuBar::checkForUpdates() {
 
 void MenuBar::localUpdateEventFile() {
     std::cout << "Updating event file" << std::endl;
+    emit updateEventFile();
 }
 
 void MenuBar::updateButtonClicked() {

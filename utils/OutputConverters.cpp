@@ -4,6 +4,7 @@
 
 #include <QString>
 #include "OutputConverters.h"
+#include "enums/ModeEnum.h"
 
 OutputConverters::OutputConverters() {}
 int OutputConverters::radianToDegree(float rec) {
@@ -17,40 +18,48 @@ float OutputConverters::radianToDegreeFloat(float rec) {
     double radian = rec;
     return (radian * (180 / pi));
 }
-std::pair<int, std::string> OutputConverters::parseOutputString(float received, const std::string &prefix, int mode){
-    int bufferSize = 0;
-
-    int intVal;
-    std::string prefixString = prefix;
-
-    //To support more inputs changed from 100 - 1000
-    //In order to support legacy outputs (<100) we prefix with 0
-    if (stoi(prefix) < 1000) {
-        prefixString += " ";
+std::string OutputConverters::formatOutgoingString(float received, Output output){
+    int intVal = 0;
+    std::string prefix = std::to_string(output.getPrefix());
+    //Ensure the prefix is 4 characters long
+    for (int i = prefix.size(); i < 4; i++) {
+        prefix += " ";
     }
 
-    std::string input_string;
+    std::string input_string = "";
 
-    if (mode != 4) {
-        intVal = static_cast<int>(received);
-    } else {
-        if (received == 0) {
-            intVal = 0;
-        } else {
-            intVal = 1;
+    switch (output.getType()) {
+        case BOOLMODE: {
+            intVal = (received == 0) ? 0 : 1;
+            input_string = prefix + std::to_string(intVal);
+            break;
         }
-        input_string = prefixString + std::to_string(intVal);
+        case 8:{
+
+        }
+        case INTEGERMODE: {
+            intVal = (int)received;
+            input_string = prefix + std::to_string(intVal);
+            break;
+        }
+        case FLOATMODE: {
+            input_string = prefix + std::to_string(received);
+            break;
+        }
+        case PERCENTAGEMODE: {
+            intVal = (int)(received * 100);
+            input_string = prefix + std::to_string(intVal);
+            break;
+        }
+        default: {
+            intVal = (int)received;
+            input_string = prefix + std::to_string(intVal);
+            break;
+        }
     }
 
-    if (mode == 3) {
-        input_string = prefixString + std::to_string(received);
-    } else {
-        const auto value = intVal;
-        input_string = prefixString + std::to_string(value);
-    }
-
-    std::pair<int, std::string> pairToSend(bufferSize,input_string);
-    return pairToSend;
+    input_string = input_string + "\n";
+    return input_string;
 }
 
 float OutputConverters::converOutgoingFloatValue(float toConvert, int mode){

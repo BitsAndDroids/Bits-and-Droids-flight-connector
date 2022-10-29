@@ -80,7 +80,7 @@ public:
 
     void eventLoop();
 
-    void sendToArduino(float received, const string &prefix, int index, int mode);
+    void sendToArduino(const std::string& c_string, int index);
 };
 
 #endif  // DUALWORKER_H

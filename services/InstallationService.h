@@ -14,6 +14,8 @@ public:
 
     bool getUpdatesAvailable();
 
+    QString getCurrentVersion();
+
 };
 
 

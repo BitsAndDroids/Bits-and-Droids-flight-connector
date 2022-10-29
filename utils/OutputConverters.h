@@ -8,11 +8,12 @@
 
 #include <utility>
 #include <string>
+#include "models/commands/output.h"
 
 class OutputConverters {
 public:
     OutputConverters();
-    std::pair<int, std::string> parseOutputString(float received, const std::string &prefix, int mode);
+    std::string formatOutgoingString(float received, Output output);
     float converOutgoingFloatValue(float toConvert, int mode);
 private:
 

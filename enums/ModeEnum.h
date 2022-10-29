@@ -9,9 +9,9 @@
 
 static enum ModeEnum {
         INTEGERMODE = 0,
-        PERCENTAGEMODE = 1,
+        PERCENTAGEMODE = 5,
         FLOATMODE = 2,
-        STRINGMODE = 5,
+        STRINGMODE = 12,
         KOHLSMANMODE = 6,
         BOOLMODE = 4,
     } modes;

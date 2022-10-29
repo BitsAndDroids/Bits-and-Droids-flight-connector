@@ -12,6 +12,7 @@
 #include "logging/Logger.h"
 #include "services/LoggerService.h"
 #include "logging/LogWindow.h"
+#include "dashboard/handlers/WASMHandler.h"
 
 class ServiceWorker : public QThread {
 Q_OBJECT
@@ -33,7 +34,7 @@ private:
     bool wasmConnected = false;
     bool wasmFound = false;
 
-
+    WASMHandler wasmHandler = WASMHandler();
 public:
     void run() override { startServices(); }
     ServiceWorker();
@@ -53,6 +54,8 @@ signals:
     void gameConnectionMade(int state);
 
     void wasmConnectionMade(int state);
+
+    void updateEventFile();
 
 public slots:
 
