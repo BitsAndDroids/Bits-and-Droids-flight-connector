@@ -3,7 +3,7 @@
 #include "outputmenu/handlers/sethandler.h"
 #include "settings/ComSettingsHandler.h"
 #include "utils/InputReader.h"
-#include "enums/ModeEnum.h"
+
 #include <windows.h>
 
 #include <string>
@@ -77,7 +77,7 @@ MFSWorker::MFSWorker() {
 
   \sa ModeEnum
  */
-void MFSWorker::sendToArduino(const std::string formatedString, int index) {
+void MFSWorker::sendToArduino(const std::string& formatedString, int index) {
     comBundles->at(index)->getSerialPort()->writeSerialPort(formatedString.c_str(), formatedString.length());
     emit logMessage(
             "Send data: " + formatedString + " -> " +
@@ -85,47 +85,7 @@ void MFSWorker::sendToArduino(const std::string formatedString, int index) {
             LogLevel::DEBUGLOG);
 }
 
-std::string MFSWorker::formatOutgoingString(float received, std::string prefix, int mode){
-    int intVal = 0;
-    //Ensure the prefix is 4 characters long
-    for (int i = prefix.size(); i < 4; i++) {
-        prefix += " ";
-    }
 
-    std::string input_string = "";
-
-    switch (mode) {
-        case BOOLMODE: {
-            intVal = (received == 0) ? 0 : 1;
-            input_string = prefix + std::to_string(intVal);
-            break;
-        }
-        case 8:{
-
-        }
-        case INTEGERMODE: {
-            intVal = (int)received;
-            input_string = prefix + std::to_string(intVal);
-            break;
-        }
-        case FLOATMODE: {
-            input_string = prefix + std::to_string(received);
-            break;
-        }
-        case PERCENTAGEMODE: {
-            intVal = (int)(received * 100);
-            input_string = prefix + std::to_string(intVal);
-            break;
-        }
-        default: {
-            input_string = prefix + std::to_string(received);
-            break;
-        }
-    }
-
-    input_string = input_string + "\n";
-    return input_string;
-}
 
 /*!
   \brief MFSWorker::MyDispatchProcInput handles the data received from the simulator
@@ -184,7 +144,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
                     auto *data = (dataStr *) &pObjData->dwData;
                     if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                        dualCast->sendToArduino(dualCast->formatOutgoingString(data->val, std::to_string(pObjData->dwRequestID), dualCast->outputHandler.findOutputById((int) pObjData->dwRequestID)->getType()),i);
+                        dualCast->sendToArduino(dualCast->converter.formatOutgoingString(data->val, *output),i);
                     }
                 }
             }
@@ -209,7 +169,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                         for (int i = 0; i < dualCast->comBundles->size(); i++) {
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
-                                dualCast->sendToArduino(dualCast->formatOutgoingString(value,prefix,mode), i);
+                                dualCast->sendToArduino(dualCast->converter.formatOutgoingString(value,*output), i);
                             }
                         }
 

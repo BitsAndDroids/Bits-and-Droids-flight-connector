@@ -65,7 +65,7 @@ void ServiceWorker::startServices() {
                                              0);
 
                 long currentTicks = 0;
-                while (!connectionClosed) {
+                while (!connectionClosed && !stopServiceWorker) {
                     currentTicks++;
                     if (currentTicks > 100) {
                         if (wasmFound && !wasmConnected) {

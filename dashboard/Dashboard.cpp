@@ -191,6 +191,7 @@ Dashboard::~Dashboard() {
 void Dashboard::exitProgram() {
     serviceWorker.setStopServiceWorker(true);
     serviceWorker.wait();
+
     dualThread.abortDual = true;
     dualThread.wait();
     QApplication::quit();
