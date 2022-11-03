@@ -101,6 +101,7 @@ void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
         if (closing) {
             event->accept();
+            exitProgram();
         } else {
             this->hide();
             event->ignore();
@@ -185,7 +186,6 @@ void Dashboard::wasmConnectionMade(int con) {
 }
 
 Dashboard::~Dashboard() {
-
 }
 
 void Dashboard::exitProgram() {
