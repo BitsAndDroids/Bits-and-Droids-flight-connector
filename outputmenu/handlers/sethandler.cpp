@@ -13,7 +13,7 @@ Set *SetHandler::saveSet(Set *setToSave) {
   int counter;
   std::cout << "SET SAVED" << setToSave->getID() << std::endl;
   QString key;
-  if (setToSave->getID() != 0) {
+  if (setToSave->getID() != -1) {
     key = QString::number(setToSave->getID());
   } else {
     if (settingsHandler.retrieveSetting("setKeys", "lastId")->isNull()) {
@@ -26,8 +26,6 @@ Set *SetHandler::saveSet(Set *setToSave) {
     settingsHandler.storeValue("setKeys", "lastId", setToSave->getID());
     key = QString::number(counter);
   }
-
-
   QVariant jsonVariant = *setToJSON(setToSave);
   settingsHandler.storeValue("sets", key, jsonVariant);
   setList = loadSets();
@@ -35,9 +33,8 @@ Set *SetHandler::saveSet(Set *setToSave) {
 }
 
 QList<Set> *SetHandler::loadSets() {
-  QList<QJsonDocument> documentList;
-  auto *setListFound = new QList<Set>();
 
+  auto *setListFound = new QList<Set>();
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   for (const auto &key : *keys) {
     QVariant *varFound = settingsHandler.retrieveSetting("sets", key);
@@ -45,26 +42,25 @@ QList<Set> *SetHandler::loadSets() {
     QJsonObject foundObj = foundDoc.object();
     Set savedSet = fromJson(&foundDoc);
     setListFound->append(savedSet);
-
-    documentList.append(foundDoc);
   }
-
   return setListFound;
 }
 
 void SetHandler::updateSets() {
+    setList->clear();
+    setList = loadSets();
+    std::cout<<setList->size()<<" LIST SIZE"<<std::endl;
+    for (auto &setFound : *setList) {
+
+        auto outputMap = QMap<int, Output *>();
+        for (auto &output : setFound.getOutputs()) {
+            auto outputChecked = outputHandler->findOutputById(output->getId());
+            if (outputChecked->getId() != -1) {
+                outputMap.insert(outputChecked->getId(), outputChecked);
+            }
+        }
+        setFound.setOutputs(outputMap);
   outputHandler->readOutputs();
-  setList = loadSets();
-  for (auto &setFound : *setList) {
-    auto outputMap = QMap<int, Output *>();
-    for (auto &output : setFound.getOutputs()) {
-      auto outputChecked = outputHandler->findOutputById(output->getId());
-      if (outputChecked->getId() != -1) {
-        outputMap.insert(outputChecked->getId(), outputChecked);
-        qDebug() << "after";
-      }
-    }
-    setFound.setOutputs(outputMap);
     saveSet(&setFound);
   }
 }
@@ -79,7 +75,7 @@ Set SetHandler::getSetById(QString id) {
 
 Set SetHandler::fromJson(QJsonDocument *docToConvert) {
   Set convertedSet;
-  QMap<int, Output *> *outputsConverted = new QMap<int, Output *>();
+  auto *outputsConverted = new QMap<int, Output *>();
   QJsonObject objToConvert = docToConvert->object();
   convertedSet.setSetId(objToConvert.value("setId").toInt());
   convertedSet.setSetName(objToConvert.value("setName").toString());
@@ -89,7 +85,7 @@ Set SetHandler::fromJson(QJsonDocument *docToConvert) {
   for (auto value : outputJSONArray) {
     QJsonObject tempObj = value.toObject();
 
-    Output *foundOutput = new Output(
+    auto *foundOutput = new Output(
         tempObj.value("id").toInt(),
         tempObj.value("outputName").toString().toStdString(),
         tempObj.value("metric").toString().toStdString(),
@@ -98,7 +94,7 @@ Set SetHandler::fromJson(QJsonDocument *docToConvert) {
         tempObj.value("prefix").toInt(), tempObj.value("type").toInt());
     foundOutput->setOffset(tempObj.value("offset").toInt());
 
-    if (outputHandler->getAvailableOutputs().size() > 0) {
+    if (!outputHandler->getAvailableOutputs().empty()) {
       if (outputHandler->findOutputById(foundOutput->getId())->getId() != -1) {
         outputsConverted->insert(foundOutput->getId(), foundOutput);
 

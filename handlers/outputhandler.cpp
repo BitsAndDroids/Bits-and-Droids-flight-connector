@@ -160,14 +160,14 @@ Output *outputHandler::findOutputById(int idToFind) {
         return emptyOutput;
     } else {
         if(availableOutputs.find(idToFind).value() == nullptr) {
-            return availableOutputs.find(idToFind).value();
-
             std::string delayFilters[] = {"COM", "NAV"};
             for (auto &filter: delayFilters) {
                 if (availableOutputs[idToFind]->getOutputName().find(filter) != std::string::npos) {
                     availableOutputs[idToFind]->setDelay(10);
                 }
             }
+            return availableOutputs.find(idToFind).value();
+
         }
         return availableOutputs[idToFind];
     }
