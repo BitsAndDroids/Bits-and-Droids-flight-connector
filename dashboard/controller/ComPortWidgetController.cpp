@@ -52,7 +52,6 @@ void ComPortWidgetController::loadComPortData() {
         }
 }
 
-
 void ComPortWidgetController::start() {
     settingsHandler.clearKeys("runningComPorts");
     settingsHandler.clearKeys("runningComSets");
@@ -68,11 +67,18 @@ void ComPortWidgetController::start() {
     QList<Set> *sets = setHandler.getSets();
     QList<QPair<QString, int>> coms = QList<QPair<QString, int>>();
     for (int i = 0; i < comList.size(); i++) {
-        QPair<QString, int> settingsPair = QPair<QString, int>(convertComPort(comList.at(i)->currentText()),
-                                                              sets->at(setList.at(i)->currentIndex() - 1).getID());
+        int setID = -1;
+        if (!setList.empty() && !sets->empty()) {
+            if(setList.at(i)->currentIndex() != 0){
+                setID = setList.at(i)->currentIndex() - 1;
+            }
+        }
+        QString com = convertComPort(comList.at(i)->currentText());
+
+        QPair<QString, int> settingsPair = QPair<QString, int>(com,
+                                                               setID);
         coms.append(settingsPair);
     }
-
 
     ComSettingsHandler comSettingsHandler = ComSettingsHandler();
     comSettingsHandler.saveComs(coms);
@@ -81,7 +87,6 @@ void ComPortWidgetController::start() {
     dualWorker.start();
 
     saveAutoRunStates();
-
 }
 
 void ComPortWidgetController::refresh() {
@@ -245,7 +250,7 @@ QLabel *ComPortWidgetController::returnWarningString(int warningType) {
     return warningLabel;
 }
 
-QString ComPortWidgetController::convertComPort(const QString& comText) {
+QString ComPortWidgetController::convertComPort(const QString &comText) {
     QString val =
             R"(\\.\COM)" + comText.mid(3);
     return val;

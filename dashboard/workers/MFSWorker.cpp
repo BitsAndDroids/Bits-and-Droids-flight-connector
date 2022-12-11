@@ -34,8 +34,6 @@ struct dataStr {
 
 enum DATA_DEFINE_ID {
     DEFINITION_PDR_RADIO,
-    DEFINITION_STRING,
-    DEFINITION_ELEVATOR_TRIM_PCT,
     DEFINITION_1 = 12,
 
 };
@@ -77,14 +75,13 @@ MFSWorker::MFSWorker() {
 
   \sa ModeEnum
  */
-void MFSWorker::sendToArduino(const std::string& formatedString, int index) {
+void MFSWorker::sendToArduino(const std::string &formatedString, int index) {
     comBundles->at(index)->getSerialPort()->writeSerialPort(formatedString.c_str(), formatedString.length());
     emit logMessage(
             "Send data: " + formatedString + " -> " +
             comBundles->at(index)->getSerialPort()->getPortName(),
             LogLevel::DEBUGLOG);
 }
-
 
 
 /*!
@@ -144,7 +141,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
                     auto *data = (dataStr *) &pObjData->dwData;
                     if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                        dualCast->sendToArduino(dualCast->converter.formatOutgoingString(data->val, *output),i);
+                        dualCast->sendToArduino(dualCast->converter.formatOutgoingString(data->val, *output), i);
                     }
                 }
             }
@@ -164,7 +161,8 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                         for (int i = 0; i < dualCast->comBundles->size(); i++) {
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
-                                dualCast->sendToArduino(dualCast->converter.formatOutgoingString(pS->datum[count].value,*output), i);
+                                dualCast->sendToArduino(
+                                        dualCast->converter.formatOutgoingString(pS->datum[count].value, *output), i);
                             }
                         }
 
@@ -182,6 +180,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
         }
     }
 }
+
 /*!
  * \fn void MFSWorker::loadRunningPortsAndSets
  * \brief MFSWorker::loadRunningPortsAndSets initiates the ports and sets that are saved in the settings file
@@ -199,21 +198,25 @@ void MFSWorker::loadRunningPortsAndSets() {
     setHandler.updateSets();
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
-        auto set = setHandler.getSetById(QString::number(comSetting.second));
-        auto outputs= set.getOutputs();
-        bundle->setOutputs(outputs);
-        if (bundle->getSerialPort()->isConnected()) {
-            emit boardConnectionMade(1);
-            emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
-            successfullyConnected++;
-        } else {
-            emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
+
+        if(comSetting.second == -1) {
+            auto set = setHandler.getSetById(QString::number(comSetting.second));
+            auto outputs = set.getOutputs();
+            bundle->setOutputs(outputs);
+            if (bundle->getSerialPort()->isConnected()) {
+                emit boardConnectionMade(1);
+                emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
+                successfullyConnected++;
+            } else {
+                emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
+            }
+            comBundles->append(bundle);
+            for (auto &i: bundle->getOutputs()) {
+                i = outputHandler.findOutputById(i->getId());
+                outputsToMap.append(i);
+            }
         }
-        comBundles->append(bundle);
-        for(auto & i : bundle->getOutputs()){
-            i = outputHandler.findOutputById(i->getId());
-            outputsToMap.append(i);
-        }
+
 
     }
 
@@ -294,7 +297,7 @@ void MFSWorker::eventLoop() {
             while (!abortDual && connected) {
                 SimConnect_CallDispatch(dualSimConnect, MyDispatchProcInput, this);
 
-                for (auto comBundle : *comBundles) {
+                for (auto comBundle: *comBundles) {
                     const auto hasRead = comBundle->getSerialPort()->readSerialPort(
                             &comBundle->getReceivedStringAddress(), DATA_LENGTH);
 
@@ -321,7 +324,7 @@ void MFSWorker::eventLoop() {
         }
     }
 
-    for (auto com : *comBundles) {
+    for (auto com: *comBundles) {
         if (com->getSerialPort()->isConnected()) {
             com->getSerialPort()->closeSerial();
         }
@@ -342,7 +345,7 @@ void MFSWorker::setConnected(bool connectedToSim) {
 
 MFSWorker::~MFSWorker() {
     abortDual = true;
-    for (auto com : *comBundles) {
+    for (auto com: *comBundles) {
         if (com->getSerialPort()->isConnected()) {
             emit logMessage("Closing connection to " + com->getSerialPort()->getPortName(),
                             LogLevel::DEBUGLOG);

@@ -12,6 +12,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets svg REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Gui Network PrintSupport SerialPort svg REQUIRED)
 
@@ -140,6 +142,24 @@ qt_add_executable(
         ${APP_ICON_RESOURCE_WINDOWS}
 
 )
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    include(CTest)
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG release-1.12.1
+            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+            INSTALL_COMMAND ""
+    )
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+    include(googletest)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    enable_testing()
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
+
 set_target_properties (BitsAndDroidsConnector PROPERTIES DEBUG_POSTFIX "-Insider")
 target_link_libraries(BitsAndDroidsConnector PRIVATE
         Qt${QT_VERSION_MAJOR}::Charts
@@ -191,22 +211,6 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 
 
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
-    include(CTest)
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.12.1
-            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
-            INSTALL_COMMAND ""
-    )
-    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
-    include(googletest)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-    enable_testing()
-
     add_executable(UnitTests
             utils/tests/UtilTests.cpp
             outputmenu/tests/SethandlerTests.cpp
