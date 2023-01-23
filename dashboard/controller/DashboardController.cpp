@@ -25,8 +25,8 @@ void DashboardController::initController(){
 
 }
 
-void DashboardController::setServiceWorker(ServiceWorker *serviceWorker) {
-    this->serviceWorker = serviceWorker;
+void DashboardController::setServiceWorker(ServiceWorker *serviceWorkerToSet) {
+    this->serviceWorker = serviceWorkerToSet;
 }
 
 

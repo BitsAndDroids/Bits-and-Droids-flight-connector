@@ -19,7 +19,7 @@ class DashboardController : public QObject {
 Q_OBJECT
 public:
     DashboardController(QMainWindow *parent);
-    void setServiceWorker(ServiceWorker *serviceWorker);
+    void setServiceWorker(ServiceWorker *serviceWorkerToSet);
     void initController();
 signals:
     void sendWASMCommand(const char *data);

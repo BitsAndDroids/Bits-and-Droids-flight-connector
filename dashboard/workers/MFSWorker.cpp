@@ -196,28 +196,27 @@ void MFSWorker::loadRunningPortsAndSets() {
 
     int successfullyConnected = 0;
     setHandler.updateSets();
+    setHandler.loadSets();
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
-
-        if(comSetting.second == -1) {
+        if (comSetting.second != -1) {
+            std::cout<<"Loading set: "<<comSetting.second<<std::endl;
             auto set = setHandler.getSetById(QString::number(comSetting.second));
             auto outputs = set.getOutputs();
             bundle->setOutputs(outputs);
-            if (bundle->getSerialPort()->isConnected()) {
-                emit boardConnectionMade(1);
-                emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
-                successfullyConnected++;
-            } else {
-                emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
-            }
-            comBundles->append(bundle);
-            for (auto &i: bundle->getOutputs()) {
-                i = outputHandler.findOutputById(i->getId());
-                outputsToMap.append(i);
-            }
         }
-
-
+        if (bundle->getSerialPort()->isConnected()) {
+            emit boardConnectionMade(1);
+            emit logMessage("Connected to " + comSetting.first.toStdString(), LogLevel::DEBUGLOG);
+            successfullyConnected++;
+        } else {
+            emit logMessage("Can't connect to " + comSetting.first.toStdString(), LogLevel::WARNINGLOG);
+        }
+        comBundles->append(bundle);
+        for (auto &i: bundle->getOutputs()) {
+            i = outputHandler.findOutputById(i->getId());
+            outputsToMap.append(i);
+        }
     }
 
     if (successfullyConnected == comBundles->size()) {

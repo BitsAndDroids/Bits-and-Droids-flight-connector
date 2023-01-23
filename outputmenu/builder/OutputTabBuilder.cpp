@@ -59,7 +59,6 @@ void OutputTabBuilder::saveEditedSet(){
         }
     }
     setHandler.saveSet(&setToEdit);
-    auto messageHandler = MessageCaster();
     emit setEdited(activeSetId);
-    messageHandler.showCompleteMessage("Set saved");
+    MessageCaster::showCompleteMessage("Set saved");
 }
