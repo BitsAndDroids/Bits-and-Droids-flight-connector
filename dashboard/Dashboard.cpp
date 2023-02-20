@@ -31,17 +31,6 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     centralWidget->setStyleSheet("QWidget#centralWidget {background-color: #487f94;}");
 
-    //TRAY ICON
-    //TODO IMPLEMENT CHECK IF ICON ALREADY EXISTS
-    auto icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
-    connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
-    auto *quit_action = new QAction("Exit", icon);
-    connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
-    auto *tray_icon_menu = new QMenu;
-    tray_icon_menu->addAction(quit_action);
-    icon->setContextMenu(tray_icon_menu);
-    icon->show();
-
     //CONTROLLER
     auto dashboardController = new DashboardController(this);
 
@@ -95,6 +84,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     controller.setServiceWorker(&serviceWorker);
     controller.initController();
     connect(menuBar, &MenuBar::updateEventFile, &controller, &DashboardController::updateEventFile);
+
+    setIcon();
 }
 
 void Dashboard::closeEvent(QCloseEvent *event) {
@@ -185,14 +176,25 @@ void Dashboard::wasmConnectionMade(int con) {
     }
 }
 
-Dashboard::~Dashboard() {
+Dashboard::~Dashboard() = default;
+
+void Dashboard::setIcon(){
+    //TODO IMPLEMENT CHECK IF ICON ALREADY EXISTS
+    connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
+    auto *quit_action = new QAction("Exit", icon);
+    connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
+    auto *tray_icon_menu = new QMenu;
+    tray_icon_menu->addAction(quit_action);
+    icon->setContextMenu(tray_icon_menu);
+    icon->show();
 }
 
 void Dashboard::exitProgram() {
+
     serviceWorker.setStopServiceWorker(true);
     serviceWorker.wait();
-
+    delete icon;
     dualThread.abortDual = true;
     dualThread.wait();
-    QApplication::quit();
+    QCoreApplication::exit();
 }
