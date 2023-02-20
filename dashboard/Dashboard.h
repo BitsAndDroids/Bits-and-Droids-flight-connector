@@ -35,12 +35,6 @@ public:
 
     ~Dashboard();
 
-
-
-    void on_btnSwitchNav1_clicked();
-
-    static int getComboxIndex(ModeIndexCombobox *comboBox, const QString &value);
-
 public slots:
 
     void gameConnectionMade(int con);
