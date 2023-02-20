@@ -2,6 +2,7 @@
 
 #include "logging/MessageCaster.h"
 #include "utils/EventFileFormatter.h"
+#include "models/Category.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonArray>
@@ -11,25 +12,25 @@
 #include <iostream>
 #include <utility>
 
-bool outputHandler::updateOutputsRequired = true;
-QMap<int, Output *> outputHandler::availableOutputs = QMap<int, Output *>();
-QList<QList<Output>> outputHandler::outputsCategorized = QList<QList<Output>>();
-QStringList outputHandler::categoryStrings = QStringList();
+bool OutputHandler::updateOutputsRequired = true;
+QMap<int, Output *> OutputHandler::availableOutputs = QMap<int, Output *>();
+std::vector<Category> OutputHandler::outputsCategorized = std::vector<Category>();
+std::vector<QString> OutputHandler::categoryStrings = std::vector<QString>();
 
-outputHandler::outputHandler() {
+OutputHandler::OutputHandler() {
     if (updateOutputsRequired) {
         readOutputs();
         updateOutputsRequired = false;
     }
 }
 
-void outputHandler::addCategoryString(const QString &category) {
-    categoryStrings.append(category);
+void OutputHandler::addCategoryString(const QString &category) {
+    categoryStrings.emplace_back(category);
 }
 
-void outputHandler::readOutputs() {
-    outputHandler::availableOutputs.clear();
-    outputHandler::outputsCategorized.clear();
+void OutputHandler::readOutputs() {
+    OutputHandler::availableOutputs.clear();
+    OutputHandler::outputsCategorized.clear();
     QFile file_obj(qApp->applicationDirPath() + "/outputs.json");
     file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray json_bytes = file_obj.readAll();
@@ -51,14 +52,16 @@ void outputHandler::readOutputs() {
     }
 
     QJsonObject outputJSON = json_doc.object();
-    categoryStrings = outputJSON.keys();
-    categoryStrings.append("Custom");
+    for(auto &cat: outputJSON.keys()) {
+        categoryStrings.emplace_back(cat);
+    }
+    categoryStrings.emplace_back("Custom");
     std::cout << "SIZE WUT " << categoryStrings.size() << std::endl;
     for (auto &cat: categoryStrings) {
         std::cout << "STRING F" << cat.toStdString() << std::endl;
     }
     for (int i = 0; i < categoryStrings.size() - 1; i++) {
-        auto *outputCategory = new QList<Output>;
+        auto *outputCategory = new std::vector<Output>;
         QJsonArray array = outputJSON.value(categoryStrings[i]).toArray();
                 foreach (const QJsonValue &v, array) {
                 QJsonObject obj = v.toObject();
@@ -85,14 +88,15 @@ void outputHandler::readOutputs() {
                     foundOutput->setDelay(1);
                 }
 
-                outputCategory->append(*foundOutput);
+                outputCategory->emplace_back(*foundOutput);
                 availableOutputs.insert(foundOutput->getId(), foundOutput);
 
                 QJsonValue score = obj.value("updateEvery");
             }
-        outputsCategorized.append(*outputCategory);
+            Category category(categoryStrings[i].toStdString(), *outputCategory);
+            outputsCategorized.emplace_back(category);
     }
-    auto *outputCategory = new QList<Output>();
+    auto *eventOutputs = new std::vector<Output>();
 
     std::ifstream file(applicationEventsPath.toStdString());
     std::string row;
@@ -138,7 +142,8 @@ void outputHandler::readOutputs() {
 
                     availableOutputs.insert(newRow->getId(), newRow);
                     offsetCounter++;
-                    outputCategory->append(*newRow);
+                    Category category("Custom", *eventOutputs);
+                    eventOutputs->emplace_back(*newRow);
                 }
             }
         } catch (const std::exception &e) {
@@ -149,11 +154,12 @@ void outputHandler::readOutputs() {
             MessageCaster::showWarningMessage(errorString);
         }
     }
-    outputsCategorized.append(*outputCategory);
+    Category eventCategory("Custom", *eventOutputs);
+    outputsCategorized.emplace_back(eventCategory);
     file.close();
 }
 
-Output *outputHandler::findOutputById(int idToFind) {
+Output *OutputHandler::findOutputById(int idToFind) {
     if (!availableOutputs.contains(idToFind)) {
         auto emptyOutput =
                 new Output(-1, "empty", "none", 0.0, -1, "empty", -1, -1);
@@ -173,7 +179,7 @@ Output *outputHandler::findOutputById(int idToFind) {
     }
 }
 
-void outputHandler::addToEventFileDialog(Output output) {
+void OutputHandler::addToEventFileDialog(Output output) {
     QFile newEventsFile(applicationEventsPath);
     newEventsFile.open(QIODevice::Append);
     EventFileFormatter formatter = EventFileFormatter();

@@ -36,7 +36,7 @@ class SetHandler {
  private:
 
   SettingsHandler settingsHandler;
-  outputHandler *outputHandler = new class outputHandler();
+  OutputHandler *outputHandler = new class OutputHandler();
   // QList<Set*> *savedSets = new QList<Set*>();
   QList<Set> *setList = new QList<Set>();
 

@@ -45,7 +45,7 @@ private:
     void setConnected(bool connectedToSim);
     SettingsHandler settingsHandler;
     SIMCONNECT_OBJECT_ID objectID = SIMCONNECT_OBJECT_ID_USER;
-    outputHandler outputHandler;
+    OutputHandler outputHandler;
     QList<ComBundle *> *comBundles = new QList<ComBundle *>();
     InputSwitchHandler *dualInputHandler;
     InputMapper dualInputMapper = InputMapper();

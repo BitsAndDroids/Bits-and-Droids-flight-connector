@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include <QMenuBar>
 #include "services/ServiceWorker.h"
+#include "outputmenu/outputmenu.h"
 
 
 class MenuBar : public QMenuBar {
@@ -61,6 +62,7 @@ private:
     bool generateCodeMenuOpen = false;
 
     LogWindow *logWindow = new LogWindow();
+    OutputMenu *outputMenu;
 
     ServiceWorker *serviceWorker;
 

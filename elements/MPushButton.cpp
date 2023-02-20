@@ -12,7 +12,7 @@ MPushButton::MPushButton(QLayout* layout): QPushButton() {
     layout->addWidget(this);
 }
 
-void MPushButton::setIconWithPath(QString path) {
+void MPushButton::setIconWithPath(const QString& path) {
 
     this->setIcon(QIcon(path));
     this->setMinimumSize(30,30);

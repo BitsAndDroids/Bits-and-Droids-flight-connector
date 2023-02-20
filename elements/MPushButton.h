@@ -12,7 +12,7 @@ class MPushButton: public QPushButton {
 public:
     MPushButton(QString text, QLayout* layout);
     MPushButton(QLayout* layout);
-    void setIconWithPath(QString path);
+    void setIconWithPath(const QString& path);
 };
 
 

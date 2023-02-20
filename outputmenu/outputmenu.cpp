@@ -4,9 +4,8 @@
 #include "outputmenu/elements/SetDetails.h"
 #include "logging/MessageCaster.h"
 
-OutputMenu::OutputMenu(QWidget *parent)
-        : QWidget(parent) {
-
+OutputMenu::OutputMenu(ServiceWorker *pWorker)
+{
     this->setWindowTitle("Output menu");
     this->setObjectName("outputMenu");
     auto outputMenuVLayout = new QVBoxLayout(this);
@@ -34,7 +33,6 @@ OutputMenu::OutputMenu(QWidget *parent)
     this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
     this->setMinimumHeight(500);
     this->setStyleSheet("QWidget#outputMenu{background-color:#487f94;}");
-    this->show();
 
     QObject::connect(&outputTabBuilder, &OutputTabBuilder::setEdited, this, &OutputMenu::showSetDetails);
 
@@ -74,7 +72,7 @@ void OutputMenu::addMenuBar() {
 
 void OutputMenu::closeEvent(QCloseEvent *event) { delete this; }
 
-void OutputMenu::editSet(QString id) {
+void OutputMenu::editSet(const QString& id) {
     outputTabBuilder.setCheckboxes(id);
     this->findChild<QWidget *>("outputTabWidget")->setVisible(true);
 }
@@ -100,7 +98,7 @@ void OutputMenu::createSet() {
     }
 }
 
-void OutputMenu::deleteSet(QString id) {
+void OutputMenu::deleteSet(const QString& id) {
 
     try {
         setHandler.removeSet(id);
@@ -125,7 +123,7 @@ void OutputMenu::deleteSet(QString id) {
 }
 
 
-void OutputMenu::showSetDetails(QString id) {
+void OutputMenu::showSetDetails(const QString& id) {
     emit displaySetDetails(id);
 
     auto *widgetFound = this->findChild<SetDetails *>("setDetailsContainer");

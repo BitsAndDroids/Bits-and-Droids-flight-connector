@@ -2,18 +2,19 @@
 #define OUTPUTHANDLER_H
 
 #include "pathhandler.h"
+#include "models/Category.h"
 
 #include <QJsonObject>
 #include <QMap>
 
 #include <models/commands/output.h>
 
-class outputHandler {
+class OutputHandler {
  public:
-  outputHandler();
-  QStringList getCategoryStrings() { return categoryStrings; };
+  OutputHandler();
+  std::vector<QString> getCategoryStrings() { return categoryStrings; };
   void addCategoryString(const QString& category);
-  QList<QList<Output>> getOutputsCategorized() { return outputsCategorized; };
+  std::vector<Category> getOutputsCategorized() { return outputsCategorized; };
   QMap<int, Output*> getAvailableOutputs() { return availableOutputs; };
   Output* findOutputById(int id);
   void readOutputs();
@@ -22,8 +23,8 @@ class outputHandler {
  private:
   static bool updateOutputsRequired;
   static QMap<int, Output*> availableOutputs;
-  static QList<QList<Output>> outputsCategorized;
-  static QStringList categoryStrings;
+  static std::vector<Category> outputsCategorized;
+  static std::vector<QString> categoryStrings;
   // const QJsonObject &json
 
   PathHandler pathHandler;

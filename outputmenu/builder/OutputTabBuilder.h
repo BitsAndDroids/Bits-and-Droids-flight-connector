@@ -15,9 +15,11 @@ private:
 private slots:
     void saveEditedSet();
 public:
-    OutputTabBuilder(QWidget *parent = nullptr);
+    explicit OutputTabBuilder(QWidget *parent);
 
     QWidget *buildOutputTabContainer();
+
+    QWidget* parent;
     signals:
     void setEdited(QString id);
 

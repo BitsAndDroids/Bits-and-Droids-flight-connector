@@ -148,6 +148,7 @@ void ComPortWidgetController::refreshComs() {
       i->addItem(com);
     }
   }
+
   QRegularExpression searchSets("setBox");
 
   QList<ModeIndexCombobox *> setList = widget->findChildren<ModeIndexCombobox *>(searchSets);
@@ -216,7 +217,7 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
         //If the saved setting is not Set to "no" which indicates No Set saved for inputs only in 'dual' mode
         if (settingsHandler
             .retrieveSetting("comSets", QString::number(i))
-            ->toString() != "na") {
+            ->toString() != "-1") {
           auto lastSetId =
               settingsHandler
                   .retrieveSetting("comSets", QString::number(i))

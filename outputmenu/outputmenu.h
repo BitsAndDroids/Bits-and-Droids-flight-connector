@@ -13,17 +13,13 @@
 #include "outputmenu/builder/OutputDetailsBuilder.h"
 #include "outputmenu/builder/OutputTabBuilder.h"
 #include "outputmenu/builder/SetrowBuilder.h"
-
-
-namespace Ui {
-    class OutputMenu;
-}
+#include "services/ServiceWorker.h"
 
 class OutputMenu : public QWidget {
 Q_OBJECT
 
 public:
-    explicit OutputMenu(QWidget *parent = nullptr);
+    explicit OutputMenu(ServiceWorker *pWorker);
 
     ~OutputMenu();
 
@@ -44,7 +40,7 @@ signals:
 private:
 
     bool open = false;
-    int activeSet;
+    int activeSet{};
     SettingsHandler settingsHandler;
     SetHandler setHandler;
     FormBuilder formBuilder;
@@ -52,7 +48,6 @@ private:
     OutputDetailsBuilder setDetaisBuilder = OutputDetailsBuilder(this);
     OutputTabBuilder outputTabBuilder = OutputTabBuilder(this);
     SetrowBuilder setrowBuilder = SetrowBuilder(this);
-    outputHandler *outputHandler = new class outputHandler();
 
     QString path =
             QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
@@ -63,14 +58,12 @@ private:
 
     void addMenuBar();
 
-    void editEvent(QString id);
-
 private slots:
-    void deleteSet(QString id);
+    void deleteSet(const QString& id);
 
-    void showSetDetails(QString id);
+    void showSetDetails(const QString& id);
 
-    void editSet(QString id);
+    void editSet(const QString& id);
 
     void importSet();
     void createSet();

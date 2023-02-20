@@ -8,7 +8,6 @@
 #include <QMenuBar>
 #include "widgets/axismenu/calibrateaxismenu.h"
 #include "widgets/settingsmenu/optionsmenu.h"
-#include "outputmenu/outputmenu.h"
 #include "widgets/eventeditor/eventwindow.h"
 #include "widgets/librarygenerator/librarygeneratorwindow.h"
 #include "widgets/codegenerator/CodeGeneratorWindow.h"
@@ -19,6 +18,7 @@
 MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(parent) {
     populateMenuBar(parent);
     this->serviceWorker = serviceworker;
+    this->outputMenu = new OutputMenu(serviceWorker);
     auto loggerService = serviceWorker->getLoggerService();
     connect(loggerService, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
 }
@@ -36,9 +36,8 @@ void MenuBar::openSettings() {
 void MenuBar::openOutputMenu() {
     if (!outputMenuOpen) {
         outputMenuOpen = true;
-        QWidget * wdg = new OutputMenu;
-        connect(wdg, SIGNAL(closedOutputMenu()), this, SLOT(outputMenuClosed()));
-        wdg->show();
+        connect(outputMenu, SIGNAL(closedOutputMenu()), this, SLOT(outputMenuClosed()));
+        outputMenu->show();
     }
 }
 

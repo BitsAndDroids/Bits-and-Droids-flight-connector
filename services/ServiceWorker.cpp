@@ -6,6 +6,7 @@
 #include "logging/LogWindow.h"
 #include "settings/ServiceSettingsHandler.h"
 #include "dashboard/handlers/WASMHandler.h"
+#include "thread"
 
 HANDLE serviceSimconnect;
 

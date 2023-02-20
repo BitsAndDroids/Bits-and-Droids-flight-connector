@@ -12,7 +12,7 @@
 #include "logging/MessageCaster.h"
 
 QWidget *OutputTabBuilder::buildOutputTabContainer() {
-    auto outputTabContainer = new OutputTabs(this);
+    auto outputTabContainer = new OutputTabs();
     outputTabContainer->setObjectName("outputTabWidget");
     auto saveButton = this->findChild<QPushButton *>("saveButton");
     QObject::connect(saveButton, &QPushButton::clicked, this, &OutputTabBuilder::saveEditedSet);
@@ -20,11 +20,12 @@ QWidget *OutputTabBuilder::buildOutputTabContainer() {
 }
 
 OutputTabBuilder::OutputTabBuilder(QWidget *parent) : QWidget(parent) {
+    this->parent = parent;
 }
 
 void OutputTabBuilder::setCheckboxes(const QString& id) {
     activeSetId = id;
-    auto checkBoxes = parent()->findChildren<QCheckBox *>();
+    auto checkBoxes = parent->findChildren<QCheckBox *>();
     for(auto checkBox : checkBoxes) {
             checkBox->setChecked(false);
     }
@@ -34,20 +35,20 @@ void OutputTabBuilder::setCheckboxes(const QString& id) {
     QMap<int, Output *>::iterator i;
 
     for (i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
-        if (parent()->findChild<QCheckBox *>("cb" +
+        if (parent->findChild<QCheckBox *>("cb" +
                                          QString::number(i.value()->getId()))) {
 
-            parent()->findChild<QCheckBox *>("cb" + QString::number(i.value()->getId()))->setChecked(true);
+            parent->findChild<QCheckBox *>("cb" + QString::number(i.value()->getId()))->setChecked(true);
         }
     }
 }
 
 void OutputTabBuilder::saveEditedSet(){
     auto setHandler = SetHandler();
-    auto outputHandler = new class outputHandler();
+    auto outputHandler = new class OutputHandler();
     auto setToEdit = setHandler.getSetById(activeSetId);
     setToEdit.clearOutputs();
-    auto checkBoxes = parent()->findChildren<QCheckBox *>();
+    auto checkBoxes = parent->findChildren<QCheckBox *>();
     for (auto &i: checkBoxes) {
         if (i->isChecked()) {
             QString cbName = i->objectName();

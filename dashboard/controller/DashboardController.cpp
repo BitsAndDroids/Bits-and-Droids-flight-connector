@@ -5,7 +5,6 @@
 #include <QFile>
 #include <QApplication>
 #include <QProcess>
-#include <QPushButton>
 #include "DashboardController.h"
 #include "services/InstallationService.h"
 

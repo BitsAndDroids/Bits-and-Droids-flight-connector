@@ -38,7 +38,7 @@ QString InstallationService::getCurrentVersion(){
         process->start(pathHandler.getMaintenanceToolPath() + " ch");
         process->waitForFinished();
         QByteArray data = process->readAll();
-        return QString(data);
+        return (data);
     }
     catch (...){
         return "";
