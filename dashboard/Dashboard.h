@@ -36,6 +36,7 @@ public:
     ~Dashboard();
 
 
+
     void on_btnSwitchNav1_clicked();
 
     static int getComboxIndex(ModeIndexCombobox *comboBox, const QString &value);
@@ -56,6 +57,8 @@ private:
     DashboardController controller = DashboardController(this);
     ServiceWorker serviceWorker = ServiceWorker();
     ComPortWidgetController comPortWidgetController = ComPortWidgetController(this, &serviceWorker);
+
+    void setIcon();
 
     bool closing = false;
 
@@ -85,28 +88,12 @@ private:
     std::string url = "https://www.bitsanddroids.com/downloads";
     std::string lastValueRec = "";
 
-    void loadSettings();
-
+    QSystemTrayIcon *icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
 
     MFSWorker dualThread;
     FormBuilder formbuilder;
 
     MenuBar* menuBar;
-
-    void loadComPortData();
-
-
-    void copyFolder(const QString &sourceFolder, const QString &destinationFolder);
-
-    bool updateApplication();
-
-    void unzip(QString zipfilename, QString filename);
-
-    void checkForUpdates(bool silentCheck);
-
-    void restoreStoredValuesComboBoxes(QWidget *widget, const QString &comGroupName,
-                                       const QString &setGroupName, bool setsNeeded);
-
 
     void saveAutoRunStates(int mode);
 
