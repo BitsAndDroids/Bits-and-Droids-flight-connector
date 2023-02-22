@@ -32,6 +32,10 @@ void PathHandler::setMaintenanceToolPath(
   PathHandler::maintenanceToolPath = newMaintenanceToolPath;
 }
 
+QString PathHandler::getApplicationExecutablePath() {
+  return qApp->applicationDirPath() + "/BitsAndDroidsConnector.exe";
+}
+
 PathHandler::PathHandler() {
   setWritableEventPath(
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) +

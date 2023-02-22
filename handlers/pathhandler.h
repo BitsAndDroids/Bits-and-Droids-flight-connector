@@ -11,16 +11,20 @@ class PathHandler {
   QString getWritableEventPath();
   QString getCommunityFolderPath();
   QString getMaintenanceToolPath();
+  QString getApplicationExecutablePath();
 
   static void setWritableEventPath(const QString &newWritableEventPath);
   static void setCommunityFolderPath(const QString &newPath);
   static void setMaintenanceToolPath(const QString &maintenanceToolPath);
+
 
  private:
   SettingsHandler settingsHandler;
   static QString writableEventPath;
   static QString maintenanceToolPath;
   static QString communityFolderPath;
+
+
 };
 
 #endif  // PATHHANDLER_H

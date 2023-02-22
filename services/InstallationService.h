@@ -16,6 +16,8 @@ public:
 
     static QString getCurrentVersion();
 
+    void writeToExeXMLMFS2020();
+
 };
 
 

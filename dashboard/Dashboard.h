@@ -80,7 +80,7 @@ private:
     QList<QString> availableComPorts;
     QString m_sSettingsFile;
     std::string url = "https://www.bitsanddroids.com/downloads";
-    std::string lastValueRec = "";
+    std::string lastValueRec;
 
     QSystemTrayIcon *icon = new QSystemTrayIcon(QIcon(":/BitsAndDroidsLogo.ico"), this);
 
