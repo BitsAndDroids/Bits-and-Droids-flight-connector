@@ -249,8 +249,9 @@ QLabel *ComPortWidgetController::returnWarningString(int warningType) {
 }
 
 QString ComPortWidgetController::convertComPort(const QString &comText) {
+    int index = comText.indexOf(" ");
   QString val =
-      R"(\\.\COM)" + comText.mid(3);
+      R"(\\.\COM)" + comText.mid(3, index - 3);
   return val;
 }
 
