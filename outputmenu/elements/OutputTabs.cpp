@@ -5,12 +5,13 @@
 #include <QGridLayout>
 #include <QCheckBox>
 #include <iostream>
+#include <qwidget.h>
 #include "OutputTabs.h"
 #include "handlers/outputhandler.h"
 #include "elements/MPushButton.h"
 #include "outputmenu/handlers/sethandler.h"
 
-OutputTabs::OutputTabs() : QWidget() {
+OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
 
 
     auto tabLayout = new QVBoxLayout();
