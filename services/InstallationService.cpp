@@ -31,22 +31,30 @@ void InstallationService::writeToExeXMLMFS2020() {
         dir.cdUp();
         dir.cdUp();
         QFile file(dir.path() + "/exe.xml");
+        QString content = "";
         if (file.exists()){
             file.open(QIODevice::ReadWrite);
             QTextStream stream(&file);
-            QString content = stream.readAll();
-            std::cout<<content.toStdString()<<std::endl;
+            content = stream.readAll();
         }
-    }
+        if(content.contains("Bits and Droids connector")){
+            return;
+        }
+        QString firstPart = content.split("</SimBase.Document>").at(0);
 
-    std::string autoRunEntryString = " <Launch.Addon>\n"
-                                     "     <Name>Bits and Droids connector</Name>\n"
-                                     "     <Disabled>False</Disabled>\n"
-                                     "     <Path>" + pathHandler.getApplicationExecutablePath().toStdString() +
-                                     "</Path>\n"
-                                     "     <CommandLine>-src=MFS2020</CommandLine>\n"
-                                     "  </Launch.Addon>\n";
-    std::cout << autoRunEntryString << std::endl;
+        std::string autoRunEntryString = " <Launch.Addon>\n"
+                                         "     <Name>Bits and Droids connector</Name>\n"
+                                         "     <Disabled>False</Disabled>\n"
+                                         "     <Path>" + pathHandler.getApplicationExecutablePath().toStdString() +
+                                         "</Path>\n"
+                                         "     <CommandLine>-src=MFS2020</CommandLine>\n"
+                                         "  </Launch.Addon>\n";
+
+        QString newContent = firstPart + autoRunEntryString.c_str() + "</SimBase.Document>";
+        std::cout<<newContent.toStdString()<<std::endl;
+        file.resize(0);
+        file.write(newContent.toStdString().c_str());
+    }
 
 }
 
