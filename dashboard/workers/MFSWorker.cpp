@@ -302,9 +302,9 @@ void MFSWorker::eventLoop() {
                 for (auto comBundle: *comBundles) {
                     const auto hasRead = comBundle->getSerialPort()->readSerialPort(
                             &comBundle->getReceivedStringAddress(), DATA_LENGTH);
-
                     if (hasRead) {
                         if (connected) {
+                            LoggerService::getInstance()->logDebug("Received Raw: " + std::string(&comBundle->getReceivedStringAddress()));
                             dualInputHandler->switchHandling(&comBundle->getReceivedStringAddress());
                         }
                     }

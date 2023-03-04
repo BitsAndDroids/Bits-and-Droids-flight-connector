@@ -15,6 +15,56 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets svg REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Charts Gui Network PrintSupport SerialPort svg REQUIRED)
 
+#-----------------------------------------------------#
+#                   TESTING SECTION                   #
+#-----------------------------------------------------#
+IF(CMAKE_BUILD_TYPE MATCHES Debug)
+    include(CTest)
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG release-1.12.1
+            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+            INSTALL_COMMAND ""
+    )
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
+    include(googletest)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    enable_testing()
+
+    add_executable(UnitTests
+            utils/tests/UtilTests.cpp
+            outputmenu/tests/SethandlerTests.cpp
+            models/commands/Set.cpp
+            utils/OutputConverters.cpp
+            utils/tests/UtilTests.cpp
+            settings/settingshandler.cpp
+            handlers/outputhandler.cpp
+            handlers/pathhandler.cpp
+            models/commands/output.cpp
+            logging/messagecaster.cpp
+            outputmenu/handlers/SetHandler.cpp
+            settings/ComSettingsHandler.cpp
+            utils/EventFileFormatter.cpp settings/tests/ComSettingsHandlerTests.cpp)
+
+
+    add_dependencies(UnitTests gtest)
+
+    target_link_libraries(UnitTests
+            GTest::gtest_main
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Widgets)
+
+    gtest_discover_tests(
+            UnitTests
+    )
+
+#-----------------------------------------------------#
+#                   APPLICATION SECTION               #
+#-----------------------------------------------------#
 set(PROJECT_SOURCES
 
         main.cpp
@@ -140,23 +190,7 @@ qt_add_executable(
         ${APP_ICON_RESOURCE_WINDOWS}
 
 )
-IF(CMAKE_BUILD_TYPE MATCHES Debug)
-    include(CTest)
-    include(FetchContent)
-    FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.12.1
-            PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
-            INSTALL_COMMAND ""
-    )
-    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-    include_directories(${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
-    include(googletest)
-    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-    FetchContent_MakeAvailable(googletest)
-    enable_testing()
-ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
+
 
 set_target_properties (BitsAndDroidsConnector PROPERTIES DEBUG_POSTFIX "-Insider")
 target_link_libraries(BitsAndDroidsConnector PRIVATE
@@ -203,36 +237,5 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
         "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
 
 
-#-----------------------------------------------------#
-#                   TESTING SECTION                   #
-#-----------------------------------------------------#
 
-
-IF(CMAKE_BUILD_TYPE MATCHES Debug)
-    add_executable(UnitTests
-            utils/tests/UtilTests.cpp
-            outputmenu/tests/SethandlerTests.cpp
-            models/commands/Set.cpp
-            utils/OutputConverters.cpp
-            utils/tests/UtilTests.cpp
-            settings/settingshandler.cpp
-            handlers/outputhandler.cpp
-            handlers/pathhandler.cpp
-            models/commands/output.cpp
-            logging/messagecaster.cpp
-            outputmenu/handlers/SetHandler.cpp
-            settings/ComSettingsHandler.cpp
-            utils/EventFileFormatter.cpp settings/tests/ComSettingsHandlerTests.cpp)
-
-
-    add_dependencies(UnitTests gtest)
-
-    target_link_libraries(UnitTests
-            GTest::gtest_main
-            Qt${QT_VERSION_MAJOR}::Core
-            Qt${QT_VERSION_MAJOR}::Widgets)
-
-    gtest_discover_tests(
-            UnitTests
-    )
 ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
