@@ -29,7 +29,7 @@ private:
         EVENT_SIM_START,
         EVENT_1_SECOND
     };
-    LoggerService* logger = new LoggerService();
+    LoggerService* logger = LoggerService::getInstance();
 
     bool wasmConnected = false;
     bool wasmFound = false;

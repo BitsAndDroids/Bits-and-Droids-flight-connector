@@ -10,9 +10,10 @@
 #include "outputmenu/elements/OutputTabs.h"
 #include "outputmenu/handlers/sethandler.h"
 #include "logging/MessageCaster.h"
+#include "services/LoggerService.h"
 
 QWidget *OutputTabBuilder::buildOutputTabContainer() {
-    auto outputTabContainer = new OutputTabs();
+    auto outputTabContainer = new OutputTabs(this);
     outputTabContainer->setObjectName("outputTabWidget");
     auto saveButton = this->findChild<QPushButton *>("saveButton");
     QObject::connect(saveButton, &QPushButton::clicked, this, &OutputTabBuilder::saveEditedSet);
@@ -44,6 +45,7 @@ void OutputTabBuilder::setCheckboxes(const QString& id) {
 }
 
 void OutputTabBuilder::saveEditedSet(){
+
     auto setHandler = SetHandler();
     auto outputHandler = new class OutputHandler();
     auto setToEdit = setHandler.getSetById(activeSetId);
@@ -61,5 +63,6 @@ void OutputTabBuilder::saveEditedSet(){
     }
     setHandler.saveSet(&setToEdit);
     emit setEdited(activeSetId);
+    LoggerService::getInstance()->logDebug("Set saved");
     MessageCaster::showCompleteMessage("Set saved");
 }

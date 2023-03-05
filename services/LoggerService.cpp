@@ -6,7 +6,16 @@
 #include <utility>
 #include <logging/LogWindow.h>
 
-LoggerService::LoggerService() {
+LoggerService *LoggerService::getInstance()
+{
+    /**
+     * This is a safer way to create an instance. instance = new Singleton is
+     * dangeruous in case two instance threads wants to access at the same time
+     */
+    if(instance==nullptr){
+        instance = new LoggerService();
+    }
+    return instance;
 }
 
 LoggerService::~LoggerService() {

@@ -48,7 +48,6 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
             logging/messagecaster.cpp
             outputmenu/handlers/SetHandler.cpp
             settings/ComSettingsHandler.cpp
-            models/Category.cpp models/Category.h
             utils/EventFileFormatter.cpp settings/tests/ComSettingsHandlerTests.cpp)
 
 
@@ -62,7 +61,6 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
     gtest_discover_tests(
             UnitTests
     )
-ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
 #-----------------------------------------------------#
 #                   APPLICATION SECTION               #
@@ -240,3 +238,4 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 
 
 
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)

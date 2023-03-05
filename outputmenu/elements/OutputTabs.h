@@ -8,6 +8,7 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <qwidget.h>
 
 class OutputTabs: public QWidget{
 Q_OBJECT
@@ -15,7 +16,7 @@ private:
     QTabWidget* outputTabsWidget = new QTabWidget();
     QWidget* parent;
 public:
-    explicit OutputTabs();
+    explicit OutputTabs(QWidget* parent);
     ~OutputTabs() override;
 };
 
