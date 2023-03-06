@@ -6,6 +6,7 @@
 #include "constants.h"
 #include <QAction>
 #include <QMenuBar>
+#include "dashboard/handlers/WASMHandler.h"
 #include "widgets/axismenu/calibrateaxismenu.h"
 #include "widgets/settingsmenu/optionsmenu.h"
 #include "widgets/eventeditor/eventwindow.h"
@@ -20,7 +21,7 @@ MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(pa
     this->serviceWorker = serviceworker;
     this->outputMenu = new OutputMenu(serviceWorker);
     auto loggerService = serviceWorker->getLoggerService();
-    connect(loggerService, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
+    connect(loggerService, &Logger::logReceived, logWindow, &LogWindow::addLogRow);
 }
 
 void MenuBar::openSettings() {
@@ -157,7 +158,10 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
 }
 
 void MenuBar::installWASM() {
-    std::cout << "Installing WASM" << std::endl;
+    Logger::getInstance()->logDebug("Installing WASM");
+
+    auto wasmHandler = new WASMHandler();
+    wasmHandler->installWasm();
 }
 
 void MenuBar::checkForUpdates() {

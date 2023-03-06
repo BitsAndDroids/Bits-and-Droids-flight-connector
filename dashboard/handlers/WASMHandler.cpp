@@ -4,10 +4,12 @@
 
 #include <QDir>
 #include <QCoreApplication>
+#include <exception>
 #include <iostream>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "WASMHandler.h"
+#include "logging/Logger.h"
 #include "settings/ServiceSettingsHandler.h"
 #include "handlers/pathhandler.h"
 #include "logging/MessageCaster.h"
@@ -21,19 +23,18 @@ void WASMHandler::installWasm() {
         QString pathfound = "";
         QString sourceString =
                 QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-        std::cout << sourceString.toStdString() << std::endl;
         if (customPathFound) {
             pathfound = pathHandler.getCommunityFolderPath();
         } else {
-          std::cout<<"Could not find the community folder"<<std::endl;
+            Logger::getInstance()->logDebug("Could not find community folder");
 
         }
-
+        Logger::getInstance()->logDebug("Installing WASM in: " + pathfound.toStdString());
         QString destinationString = pathfound + "/BitsAndDroidsModule";
         copyFolder(sourceString, destinationString);
     }
-    catch (...) {
-        std::cout << "error" << std::endl;
+    catch (const std::exception &e) {
+        Logger::getInstance()->logError("Couldn't install WASM, reason: " + std::string(e.what()));
     }
 }
 

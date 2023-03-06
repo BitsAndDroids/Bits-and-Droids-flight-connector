@@ -10,7 +10,7 @@
 #include <QWaitCondition>
 #include "models/SimConnect.h"
 #include "logging/Logger.h"
-#include "services/LoggerService.h"
+#include "logging/Logger.h"
 #include "logging/LogWindow.h"
 #include "dashboard/handlers/WASMHandler.h"
 
@@ -29,7 +29,7 @@ private:
         EVENT_SIM_START,
         EVENT_1_SECOND
     };
-    LoggerService* logger = LoggerService::getInstance();
+    Logger* logger = Logger::getInstance();
 
     bool wasmConnected = false;
     bool wasmFound = false;
@@ -41,7 +41,7 @@ public:
 
     ~ServiceWorker() override;
 
-    LoggerService *getLoggerService();
+    Logger *getLoggerService();
 
     void setConnectionClosed(bool);
     void setStopServiceWorker(bool state);

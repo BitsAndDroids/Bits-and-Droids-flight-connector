@@ -4,7 +4,7 @@
 
 #include <QSerialPortInfo>
 #include "ComPortWidgetModel.h"
-#include "services/LoggerService.h"
+#include "logging/Logger.h"
 
 ComPortWidgetModel::ComPortWidgetModel() {
     availableComPorts = loadAvailableComPorts();
@@ -12,7 +12,7 @@ ComPortWidgetModel::ComPortWidgetModel() {
 }
 
 void ComPortWidgetModel::refresh() {
-    LoggerService::getInstance()->logDebug("Refreshing ports");
+    Logger::getInstance()->logDebug("Refreshing ports");
     availableSets->clear();
     availableComPorts->clear();
     availableSets = setHandler->getSets();
@@ -33,8 +33,8 @@ void ComPortWidgetModel::clearComPortData() {
 QList<QString> *ComPortWidgetModel::loadAvailableComPorts() {
     auto *comPorts = new QList<QString>();
     for (const QSerialPortInfo &serialPortInfo : QSerialPortInfo::availablePorts()) {
-        LoggerService::getInstance()->logDebug("Found com port: " + serialPortInfo.portName().toStdString() +
-        " | " + serialPortInfo.description().toStdString());
+        Logger::getInstance()->logDebug("Found com port: " + serialPortInfo.portName().toStdString() +
+                                        " | " + serialPortInfo.description().toStdString());
         comPorts->append(serialPortInfo.portName() + " | " + serialPortInfo.description());
     }
     return comPorts;
