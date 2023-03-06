@@ -1,23 +1,43 @@
 //
-// Created by Dave Riedel on 04-Apr-22.
+// Created by dave- on 13-7-2022.
 //
 
-#ifndef BITSANDDROIDSGUI_LOGGER_H
-#define BITSANDDROIDSGUI_LOGGER_H
-
+#ifndef BITSANDDROIDSCONNECTOR_LOGGER_H
+#define BITSANDDROIDSCONNECTOR_LOGGER_H
 
 #include <QWidget>
+#include <QString>
+#include "models/Log.h"
+#include "stores/LoggerStore.h"
 
-class Logger: public QWidget {
-    Q_OBJECT
-
-public:
-    Logger();
-    ~Logger();
-
+class Logger: public QObject {
+Q_OBJECT
 private:
+    void writeToLogFile(const Log& log);
+    LoggerStore loggerStore = LoggerStore();
+    Logger(){};
+public:
+
+    void logError(std::string message);
+
+    void logDebug(std::string message);
+
+    void logWarning(std::string message);
+
+    Logger(Logger &other) = delete;
+    /**
+     * Singletons should not be assignable.
+     */
+    void operator=(const Logger &) = delete;
+
+    static Logger *getInstance();
+
+    signals:
+    void logReceived(const Log& log);
+
+protected:
+
+    static Logger* instance;
 
 };
-
-
-#endif //BITSANDDROIDSGUI_LOGGER_H
+#endif //BITSANDDROIDSCONNECTOR_LOGGER_H

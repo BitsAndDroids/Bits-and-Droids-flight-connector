@@ -20,7 +20,7 @@ MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(pa
     this->serviceWorker = serviceworker;
     this->outputMenu = new OutputMenu(serviceWorker);
     auto loggerService = serviceWorker->getLoggerService();
-    connect(loggerService, &LoggerService::logReceived, logWindow, &LogWindow::addLogRow);
+    connect(loggerService, &Logger::logReceived, logWindow, &LogWindow::addLogRow);
 }
 
 void MenuBar::openSettings() {

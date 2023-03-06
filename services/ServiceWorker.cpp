@@ -185,7 +185,7 @@ void ServiceWorker::logMessage(const std::string& message, LogLevel level) {
     }
 }
 
-LoggerService *ServiceWorker::getLoggerService() {
+Logger *ServiceWorker::getLoggerService() {
     return this->logger;
 }
 

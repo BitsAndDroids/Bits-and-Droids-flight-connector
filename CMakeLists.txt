@@ -62,6 +62,7 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
             UnitTests
     )
 
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 #-----------------------------------------------------#
 #                   APPLICATION SECTION               #
 #-----------------------------------------------------#
@@ -78,7 +79,7 @@ set(PROJECT_SOURCES
         workers/InputMapper.h workers/inputmapper.cpp
         services/ServiceWorker.cpp services/ServiceWorker.h
 
-        services/LoggerService.cpp services/LoggerService.h
+        logging/Logger.cpp logging/Logger.h
 
         stores/LoggerStore.cpp stores/LoggerStore.h
 
@@ -137,7 +138,6 @@ set(PROJECT_SOURCES
 
         rungaurd/RunGuard.cpp rungaurd/RunGuard.h
         dashboard/models/ComBundle.h dashboard/models/ComBundle.cpp
-        logging/Logger.cpp logging/Logger.h
         logging/LogWindow.cpp logging/LogWindow.h
         logging/MessageCaster.cpp logging/MessageCaster.h
         utils/OutputConverters.cpp utils/OutputConverters.h
@@ -236,6 +236,3 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
 
-
-
-ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)

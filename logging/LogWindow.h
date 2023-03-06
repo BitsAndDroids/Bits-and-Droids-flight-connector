@@ -11,7 +11,7 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include "models/Log.h"
-#include "services/LoggerService.h"
+#include "Logger.h"
 #include "enums/LogLevelEnum.h"
 
 class LogWindow: public QWidget {

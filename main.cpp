@@ -3,10 +3,10 @@
 #include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
 #include "services/InstallationService.h"
-#include "services/LoggerService.h"
+#include "logging/Logger.h"
 #include <QtCore/QDataStream>
 
-LoggerService* LoggerService::instance = nullptr;
+Logger* Logger::instance = nullptr;
 
 int main(int argc, char *argv[]) {
 

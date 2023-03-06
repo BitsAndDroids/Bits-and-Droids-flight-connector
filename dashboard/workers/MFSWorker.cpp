@@ -3,7 +3,7 @@
 #include "outputmenu/handlers/sethandler.h"
 #include "settings/ComSettingsHandler.h"
 #include "utils/InputReader.h"
-#include "services/LoggerService.h"
+#include "logging/Logger.h"
 
 #include <windows.h>
 
@@ -80,8 +80,8 @@ MFSWorker::MFSWorker() {
 void MFSWorker::sendToArduino(const std::string &formatedString, int index) {
     comBundles->at(index)->getSerialPort()->writeSerialPort(formatedString.c_str(),
                                                             formatedString.length());
-    LoggerService::getInstance()->logDebug("Sent to Arduino: " + formatedString
-                              + " -> " + comBundles->at(index)->getSerialPort()->getPortName());
+    Logger::getInstance()->logDebug("Sent to Arduino: " + formatedString
+                                    + " -> " + comBundles->at(index)->getSerialPort()->getPortName());
 }
 
 
@@ -202,19 +202,19 @@ void MFSWorker::loadRunningPortsAndSets() {
         auto *bundle = new ComBundle(comSetting.first);
         if (comSetting.second != -1) {
             std::cout<<"Loading set: "<<comSetting.second<<std::endl;
-            LoggerService::getInstance()->logDebug("Loading set: " + std::to_string(comSetting.second));
+            Logger::getInstance()->logDebug("Loading set: " + std::to_string(comSetting.second));
             auto set = setHandler.getSetById(QString::number(comSetting.second));
             auto outputs = set.getOutputs();
             bundle->setOutputs(outputs);
         } else{
-            LoggerService::getInstance()->logDebug("No set loaded");
+            Logger::getInstance()->logDebug("No set loaded");
         }
         if (bundle->getSerialPort()->isConnected()) {
             emit boardConnectionMade(1);
-            LoggerService::getInstance()->logDebug("Connected to: " + comSetting.first.toStdString());
+            Logger::getInstance()->logDebug("Connected to: " + comSetting.first.toStdString());
             successfullyConnected++;
         } else {
-            LoggerService::getInstance()->logDebug("Failed to connect to: " + comSetting.first.toStdString());
+            Logger::getInstance()->logDebug("Failed to connect to: " + comSetting.first.toStdString());
         }
         comBundles->append(bundle);
         for (auto &i: bundle->getOutputs()) {
@@ -246,10 +246,10 @@ void MFSWorker::eventLoop() {
     loadRunningPortsAndSets();
 
     while (!connected && !abortDual) {
-        LoggerService::getInstance()->logDebug("Connecting to SimConnect");
+        Logger::getInstance()->logDebug("Connecting to SimConnect");
         if (SUCCEEDED(SimConnect_Open(&dualSimConnect, "dualConnect", nullptr, 0,
                                       nullptr, 0))) {
-            LoggerService::getInstance()->logDebug("Connected to SimConnect");
+            Logger::getInstance()->logDebug("Connected to SimConnect");
             connected = true;
 
             SimConnect_MapClientDataNameToID(dualSimConnect, "shared", ClientDataID);
@@ -304,7 +304,7 @@ void MFSWorker::eventLoop() {
                             &comBundle->getReceivedStringAddress(), DATA_LENGTH);
                     if (hasRead) {
                         if (connected) {
-                            LoggerService::getInstance()->logDebug("Received Raw: " + std::string(&comBundle->getReceivedStringAddress()));
+                            Logger::getInstance()->logDebug("Received Raw: " + std::string(&comBundle->getReceivedStringAddress()));
                             dualInputHandler->switchHandling(&comBundle->getReceivedStringAddress());
                         }
                     }
