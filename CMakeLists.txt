@@ -62,6 +62,9 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
             UnitTests
     )
 
+
+
+ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 #-----------------------------------------------------#
 #                   APPLICATION SECTION               #
 #-----------------------------------------------------#
@@ -234,7 +237,3 @@ add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
 add_custom_command(TARGET BitsAndDroidsConnector POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${PROJECT_SOURCE_DIR}/dist/imageformats" "$<TARGET_FILE_DIR:BitsAndDroidsConnector>/imageformats")
-
-
-
-ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
