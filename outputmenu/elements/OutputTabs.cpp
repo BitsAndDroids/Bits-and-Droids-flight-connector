@@ -98,7 +98,6 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
 
     auto *outputHandler = new class OutputHandler();
     std::vector<Category> categorizedOutputs = outputHandler->getOutputsCategorized();
-    std::cout << "CategoryOutputs list size: " << categorizedOutputs.size() << std::endl;
     //categorizedOutputs is a 2d List of outputs, each output is in a category
     //each category receives its own tab
     uint8_t amountOfCheckboxesPerColumn = 10;
@@ -114,7 +113,6 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
         uint8_t column = 0;
 
         for(auto & output : categorizedOutput.getOutputs()){
-            std::cout << "output: " << output.getCbText().toStdString() << std::endl;
             auto *checkbox = new QCheckBox();
             checkbox->setMinimumHeight(20);
 
@@ -130,11 +128,7 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
             }
         }
 
-        std::cout << "end of category" << std::endl;
-        std::cout << "end of tab" << std::endl;
-
         outputTabsWidget->addTab( newTab, QString::fromStdString(categorizedOutput.getCategoryName()));
-        std::cout << "end of addtab" << std::endl;
     }
 }
 

@@ -107,7 +107,6 @@ void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void 
         {
             auto* pObjData = (SIMCONNECT_RECV_CLIENT_DATA*)(pData);
             std::string stringReceived = (char*)&pObjData->dwData;
-            std::cout<<stringReceived<<std::endl;
             if(stringReceived == "sping"){
                 serviceWorker->wasmConnected = true;
                 emit serviceWorker->wasmConnectionMade(2);
@@ -171,7 +170,6 @@ void ServiceWorker::setConnectionClosed(bool toSet) {
 }
 
 void ServiceWorker::logMessage(const std::string& message, LogLevel level) {
-    std::cout<<"LOG RECEIVED"<<std::endl;
     switch (level) {
         case LogLevel::WARNINGLOG:
             logger->logWarning(message);

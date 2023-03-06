@@ -55,7 +55,6 @@ bool WASMHandler::isWASMModuleInstalled() {
       return dir.exists();
     }
     catch (...){
-        std::cout<<"error"<<std::endl;
         return false;
     }
 }
@@ -79,17 +78,14 @@ bool WASMHandler::versionCheck(){
         if (WASMModulePath.size() > 0) {
 
             QFile file(WASMModulePath + "/manifest.JSON");
-            std::cout<<file.fileName().toStdString()<<std::endl;
             file.open(QIODevice::ReadOnly);
             QByteArray data = file.readAll();
-            std::cout<<data.toStdString()<<std::endl;
             file.close();
 
             QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
             QJsonObject jsonObject = jsonDoc.object();
             communityVersion = jsonObject["package_version"].toString();
-            std::cout<<communityVersion.toStdString()<<std::endl;
         }
         QStringList communityVersionList = communityVersion.split(".");
         QStringList localVersionList = localVersion.split(".");
@@ -98,7 +94,6 @@ bool WASMHandler::versionCheck(){
         if (communityVersionList.size() == localVersionList.size()) {
             for (int i = 0; i < localVersionList.size(); i++) {
                 if (localVersionList[i].toInt() > communityVersionList[i].toInt()) {
-                    std::cout<<"local version is higher"<<std::endl;
                     updateModule();
                     return false;
                 }
@@ -132,7 +127,6 @@ void WASMHandler::updateModule(){
     if(remoteManifest.exists() && remoteModule.exists()){
         QFile(WASMModulePath + "/manifest.JSON.old").remove();
         QFile(WASMModulePath + "/modules/WASM_Module_BitsAndDroids.WASM.old").remove();
-        std::cout<<"D"<< std::endl;
     }
 }
 
@@ -144,7 +138,6 @@ QString WASMHandler::getLocalVersion(){
     file.close();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = jsonDoc.object();
-    std::cout<<"LA"<< std::endl;
     return jsonObject["package_version"].toString();
 }
 
