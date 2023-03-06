@@ -201,7 +201,6 @@ void MFSWorker::loadRunningPortsAndSets() {
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
         if (comSetting.second != -1) {
-            std::cout<<"Loading set: "<<comSetting.second<<std::endl;
             Logger::getInstance()->logDebug("Loading set: " + std::to_string(comSetting.second));
             auto set = setHandler.getSetById(QString::number(comSetting.second));
             auto outputs = set.getOutputs();

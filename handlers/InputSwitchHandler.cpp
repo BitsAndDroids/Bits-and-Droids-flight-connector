@@ -216,7 +216,6 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::str
         std::string tokenFound;
         while ((pos = string.find(delimiter)) != std::string::npos) {
             tokenFound = string.substr(0, pos);
-            std::cout << tokenFound << std::endl;
             if(counter != 0){
                 parts.push_back(std::stoi(tokenFound));
             }

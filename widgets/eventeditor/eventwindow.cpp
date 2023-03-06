@@ -454,7 +454,6 @@ bool EventWindow::checkIfRowChanged(int index) {
   }
 
   return !(std::all_of(checks.begin(), checks.end(), [](bool b) {
-    std::cout << "oneFalse" << std::endl;
     return !b;
   }));
 }
@@ -465,7 +464,7 @@ EventWindow::~EventWindow() {
 }
 
 void EventWindow::closeEvent(QCloseEvent *event) {
-  emit EventWindow::closedEventWindow();
+  emit closedEventWindow();
   delete ui;
 }
 

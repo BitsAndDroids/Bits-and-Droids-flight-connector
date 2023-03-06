@@ -11,7 +11,6 @@ SetHandler::SetHandler() { setList = loadSets(); }
 
 Set *SetHandler::saveSet(Set *setToSave) {
   int counter;
-  std::cout << "SET SAVED" << setToSave->getID() << std::endl;
   QString key;
   if (setToSave->getID() != -1) {
     key = QString::number(setToSave->getID());
@@ -49,7 +48,6 @@ QList<Set> *SetHandler::loadSets() {
 void SetHandler::updateSets() {
     setList->clear();
     setList = loadSets();
-    std::cout<<setList->size()<<" LIST SIZE"<<std::endl;
     for (auto &setFound : *setList) {
 
         auto outputMap = QMap<int, Output *>();
@@ -131,7 +129,6 @@ QJsonDocument* SetHandler::setToJSON(Set *setToConvert) {
 
 void SetHandler::removeOutputFromSet(int setId, int outputId) {
   Set setFound = getSetById(QString::number(setId));
-  std::cout << "remove from Set" << std::endl;
   setFound.removeOutput(outputId);
   saveSet(&setFound);
 }

@@ -8,11 +8,8 @@ outputMapper::outputMapper() {}
 void outputMapper::mapOutputs(QList<Output*> outputToMap,
                               HANDLE outputConnect) {
   int offsetCounter = 0;
-  std::cout << "OUTPUTS TO MAP " << outputToMap.size() << std::endl;
   for (auto& i : outputToMap) {
     if (i->getType() == 99 || i->getType() == 98 || i->getType() == 97) {
-      std::cout << "MAPPED " << i->getType() << "OffSET: " << i->getOffset()
-                << " ID " << i->getId() << std::endl;
       SimConnect_AddToClientDataDefinition(outputConnect, i->getPrefix(),
                                            i->getOffset(), sizeof(float),
                                            i->getUpdateEvery(), 0);
@@ -28,7 +25,5 @@ void outputMapper::mapOutputs(QList<Output*> outputToMap,
           SIMCONNECT_DATATYPE_FLOAT32, i->getUpdateEvery(), i->getId());
 
     }
-
-    std::cout << i->getId() << std::endl;
   }
 }

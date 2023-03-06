@@ -23,8 +23,6 @@ public:
 
     ~OutputMenu();
 
-    bool isOpen() { return open; }
-
 signals:
 
     void closedOutputMenu();

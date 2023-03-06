@@ -25,6 +25,5 @@ void CodeGeneratorWindow::placeImage(){
     auto boardImage = new QLabel();
     QPixmap pm(":/codegenerator/boards/boardimages/proMicroPinout.png");
     boardImage->setPixmap(pm);
-    std::cout<<pm.isNull()<<std::endl;
     this->layout()->addWidget(boardImage);
 }

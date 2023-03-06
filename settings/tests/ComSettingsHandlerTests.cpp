@@ -48,7 +48,6 @@ TEST(ComSettingsHandlerTests, test_serialize_json_to_qlist) {
     QJsonDocument doc = QJsonDocument::fromJson(val.toUtf8());
 
     ComSettingsHandler handler;
-    std::cout<<doc.object().keys().size()<<std::endl;
     auto listConverted = handler.jsonObjectToComList(doc.object());
 
     int expectedKeySize = 3;
