@@ -22,6 +22,7 @@ public:
 public slots:
 
     void addUpdateAvailable();
+
 signals:
 
     void logMessage(const QString &message, const QString &type);
@@ -46,14 +47,6 @@ private:
 
     void openGenerateLibraryMenu();
 
-    void outputMenuClosed();
-
-    void calibrateAxisMenuClosed();
-
-    void optionMenuClosed();
-
-    void eventWindowClosed();
-
     bool outputMenuOpen = false;
     bool eventwindowOpen = false;
     bool calibrateAxisMenuOpen = false;
@@ -62,7 +55,6 @@ private:
     bool generateCodeMenuOpen = false;
 
     LogWindow *logWindow = new LogWindow();
-    OutputMenu *outputMenu;
 
     ServiceWorker *serviceWorker;
 

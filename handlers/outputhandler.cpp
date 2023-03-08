@@ -56,10 +56,7 @@ void OutputHandler::readOutputs() {
         categoryStrings.emplace_back(cat);
     }
     categoryStrings.emplace_back("Custom");
-    std::cout << "SIZE WUT " << categoryStrings.size() << std::endl;
-    for (auto &cat: categoryStrings) {
-        std::cout << "STRING F" << cat.toStdString() << std::endl;
-    }
+
     for (int i = 0; i < categoryStrings.size() - 1; i++) {
         auto *outputCategory = new std::vector<Output>;
         QJsonArray array = outputJSON.value(categoryStrings[i]).toArray();

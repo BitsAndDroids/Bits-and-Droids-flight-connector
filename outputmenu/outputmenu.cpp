@@ -43,7 +43,7 @@ OutputMenu::OutputMenu(ServiceWorker *pWorker)
 }
 
 OutputMenu::~OutputMenu() {
-    emit OutputMenu::closedOutputMenu();
+    emit closedOutputMenu();
 }
 
 void OutputMenu::addMenuBar() {
@@ -70,7 +70,10 @@ void OutputMenu::addMenuBar() {
 
 }
 
-void OutputMenu::closeEvent(QCloseEvent *event) { delete this; }
+void OutputMenu::closeEvent(QCloseEvent *event) {
+    emit closedOutputMenu();
+    delete this;
+}
 
 void OutputMenu::editSet(const QString& id) {
     outputTabBuilder.setCheckboxes(id);

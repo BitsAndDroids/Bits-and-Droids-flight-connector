@@ -18,7 +18,6 @@
 COMMTIMEOUTS cto;
 
 SerialPort::SerialPort(const char *portName) {
-  std::cout << portName << std::endl;
   this->connected = false;
   this->portName = std::string(portName);
   this->handler =
@@ -52,7 +51,6 @@ SerialPort::SerialPort(const char *portName) {
         dcbSerialParameters.BaudRate =
             settingsHandler.retrieveSetting("com", "CBR")->toInt();
       }
-      std::cout << "DCB" << dcbSerialParameters.BaudRate << std::endl;
 
       dcbSerialParameters.ByteSize = 8;
       dcbSerialParameters.StopBits = ONESTOPBIT;
@@ -60,7 +58,6 @@ SerialPort::SerialPort(const char *portName) {
       dcbSerialParameters.fDtrControl = DTR_CONTROL_ENABLE;
 
       if (!SetCommState(handler, &dcbSerialParameters)) {
-        std::cout << "ALERT: could not Set serial port parameters\n";
       } else {
         this->connected = true;
         PurgeComm(this->handler, PURGE_RXCLEAR | PURGE_TXCLEAR);

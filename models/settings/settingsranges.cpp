@@ -25,7 +25,7 @@ QVBoxLayout* SettingsRanges::CreateRangeRow() {
   auto* header = new QLabel();
   header->setText(this->headerText);
   headerRow->addWidget(header);
-  std::cout << this->amntOfRanges << std::endl;
+
   for (int i = 0; i < this->amntOfRanges; i++) {
     auto* label = new QLabel();
     label->setText(labels[i]);

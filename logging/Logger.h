@@ -15,9 +15,8 @@ Q_OBJECT
 private:
     void writeToLogFile(const Log& log);
     LoggerStore loggerStore = LoggerStore();
-    Logger(){};
-public:
 
+public:
     void logError(std::string message);
 
     void logDebug(std::string message);
@@ -36,7 +35,7 @@ public:
     void logReceived(const Log& log);
 
 protected:
-
+    Logger(){};
     static Logger* instance;
 
 };

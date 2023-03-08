@@ -35,7 +35,6 @@ LogWindow::LogWindow() {
 }
 
 void LogWindow::addLogRow(const Log& log) {
-    std::cout<<"MESSAGE ARRIVED"<<std::endl;
     this->logList->push_back(log);
     this->logTable->setRowCount((int)logList->size());
     this->logTable->setItem((int)logList->size() - 1, 0, new QTableWidgetItem(QString::fromStdString(log.getLevelString())));

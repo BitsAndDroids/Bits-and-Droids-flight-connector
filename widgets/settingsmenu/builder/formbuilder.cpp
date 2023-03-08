@@ -135,7 +135,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
 
         auto slider = new QSlider(Qt::Horizontal);
         slider->setObjectName(sliderNames.at(i));
-        std::cout << sliderNames.at(i).toStdString().c_str() << std::endl;
         connect(slider, &QAbstractSlider::valueChanged, this,
                 &FormBuilder::changeSlider);
         slider->setRange(0, 100);
@@ -168,7 +167,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
 
         lineEdit->setObjectName(QString::number(number) + QString::number(i) +
                                 name + objectNames.at(i));
-        std::cout << lineEdit->objectName().toStdString().c_str() << std::endl;
         lineEdit->setMaximumWidth(50);
         connect(lineEdit, &QLineEdit::textEdited, this,
                 &FormBuilder::rudderTextChanged);

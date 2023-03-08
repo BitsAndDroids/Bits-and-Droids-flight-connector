@@ -4,10 +4,12 @@
 
 #include <QDir>
 #include <QCoreApplication>
+#include <exception>
 #include <iostream>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "WASMHandler.h"
+#include "logging/Logger.h"
 #include "settings/ServiceSettingsHandler.h"
 #include "handlers/pathhandler.h"
 #include "logging/MessageCaster.h"
@@ -21,19 +23,18 @@ void WASMHandler::installWasm() {
         QString pathfound = "";
         QString sourceString =
                 QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule";
-        std::cout << sourceString.toStdString() << std::endl;
         if (customPathFound) {
             pathfound = pathHandler.getCommunityFolderPath();
         } else {
-          std::cout<<"Could not find the community folder"<<std::endl;
+            Logger::getInstance()->logDebug("Could not find community folder");
 
         }
-
+        Logger::getInstance()->logDebug("Installing WASM in: " + pathfound.toStdString());
         QString destinationString = pathfound + "/BitsAndDroidsModule";
         copyFolder(sourceString, destinationString);
     }
-    catch (...) {
-        std::cout << "error" << std::endl;
+    catch (const std::exception &e) {
+        Logger::getInstance()->logError("Couldn't install WASM, reason: " + std::string(e.what()));
     }
 }
 
@@ -54,7 +55,6 @@ bool WASMHandler::isWASMModuleInstalled() {
       return dir.exists();
     }
     catch (...){
-        std::cout<<"error"<<std::endl;
         return false;
     }
 }
@@ -78,17 +78,14 @@ bool WASMHandler::versionCheck(){
         if (WASMModulePath.size() > 0) {
 
             QFile file(WASMModulePath + "/manifest.JSON");
-            std::cout<<file.fileName().toStdString()<<std::endl;
             file.open(QIODevice::ReadOnly);
             QByteArray data = file.readAll();
-            std::cout<<data.toStdString()<<std::endl;
             file.close();
 
             QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
             QJsonObject jsonObject = jsonDoc.object();
             communityVersion = jsonObject["package_version"].toString();
-            std::cout<<communityVersion.toStdString()<<std::endl;
         }
         QStringList communityVersionList = communityVersion.split(".");
         QStringList localVersionList = localVersion.split(".");
@@ -97,7 +94,6 @@ bool WASMHandler::versionCheck(){
         if (communityVersionList.size() == localVersionList.size()) {
             for (int i = 0; i < localVersionList.size(); i++) {
                 if (localVersionList[i].toInt() > communityVersionList[i].toInt()) {
-                    std::cout<<"local version is higher"<<std::endl;
                     updateModule();
                     return false;
                 }
@@ -131,7 +127,6 @@ void WASMHandler::updateModule(){
     if(remoteManifest.exists() && remoteModule.exists()){
         QFile(WASMModulePath + "/manifest.JSON.old").remove();
         QFile(WASMModulePath + "/modules/WASM_Module_BitsAndDroids.WASM.old").remove();
-        std::cout<<"D"<< std::endl;
     }
 }
 
@@ -143,7 +138,6 @@ QString WASMHandler::getLocalVersion(){
     file.close();
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
     QJsonObject jsonObject = jsonDoc.object();
-    std::cout<<"LA"<< std::endl;
     return jsonObject["package_version"].toString();
 }
 

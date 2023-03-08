@@ -6,6 +6,8 @@
 #include "constants.h"
 #include <QAction>
 #include <QMenuBar>
+#include "dashboard/handlers/WASMHandler.h"
+#include "outputmenu/outputmenu.h"
 #include "widgets/axismenu/calibrateaxismenu.h"
 #include "widgets/settingsmenu/optionsmenu.h"
 #include "widgets/eventeditor/eventwindow.h"
@@ -18,7 +20,6 @@
 MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(parent) {
     populateMenuBar(parent);
     this->serviceWorker = serviceworker;
-    this->outputMenu = new OutputMenu(serviceWorker);
     auto loggerService = serviceWorker->getLoggerService();
     connect(loggerService, &Logger::logReceived, logWindow, &LogWindow::addLogRow);
 }
@@ -26,27 +27,40 @@ MenuBar::MenuBar(QMainWindow *parent, ServiceWorker *serviceworker): QMenuBar(pa
 void MenuBar::openSettings() {
     if (!optionMenuOpen) {
         optionMenuOpen = true;
-        QWidget * wdg = new OptionsMenu;
-        QObject::connect(wdg, SIGNAL(closedOptionsMenu), this,
-                         SLOT(optionMenuClosed));
+        auto * wdg = new OptionsMenu();
+        connect(
+                wdg,
+                &OptionsMenu::closedOptionsMenu,
+                this,
+                [=](){this->optionMenuOpen = false;}
+                );
         wdg->show();
     }
 }
 
 void MenuBar::openOutputMenu() {
     if (!outputMenuOpen) {
-        outputMenuOpen = true;
-        connect(outputMenu, SIGNAL(closedOutputMenu()), this, SLOT(outputMenuClosed()));
-        outputMenu->show();
+        auto * wdg = new OutputMenu(serviceWorker);
+        connect(
+                wdg,
+                &OutputMenu::closedOutputMenu,
+                this,
+                [=](){this->outputMenuOpen = false;}
+                );
+        wdg->show();
     }
 }
 
 void MenuBar::openCalibrateAxis() {
     if (!calibrateAxisMenuOpen) {
         calibrateAxisMenuOpen = true;
-        QWidget * wdg = new CalibrateAxisMenu;
-        connect(wdg, SIGNAL(closedCalibrateAxisMenu()), this,
-                SLOT(calibrateAxisMenuClosed()));
+        auto * wdg = new CalibrateAxisMenu();
+        connect(
+                wdg,
+                &CalibrateAxisMenu::closedCalibrateAxisMenu,
+                this,
+                [=](){this->calibrateAxisMenuOpen = false;}
+                );
         wdg->show();
     }
 }
@@ -54,9 +68,12 @@ void MenuBar::openCalibrateAxis() {
 void MenuBar::openEditEventMenu() {
     if (!eventwindowOpen) {
         eventwindowOpen = true;
-        QWidget * wdg = new EventWindow;
-        connect(wdg, SIGNAL(closedEventWindow()), this,
-                SLOT(eventWindowClosed()));
+        auto * wdg = new EventWindow();
+        connect(
+                wdg,
+                &EventWindow::closedEventWindow,
+                this,
+                [=](){this->eventwindowOpen = false;});
         wdg->show();
     }
 }
@@ -76,7 +93,6 @@ void MenuBar::openLogWindow() {
 }
 
 void MenuBar::openGenerateCodeMenu() {
-    std::cout << "hit" << std::endl;
     if (!generateCodeMenuOpen) {
         generateCodeMenuOpen = true;
         QWidget * wdg = new CodeGeneratorWindow;
@@ -89,14 +105,6 @@ void MenuBar::addUpdateAvailable() {
     this->addAction(updateAvailable);
     connect(updateAvailable, &QAction::triggered, this, &MenuBar::updateButtonClicked);
 }
-
-void MenuBar::outputMenuClosed() { outputMenuOpen = false; }
-
-void MenuBar::calibrateAxisMenuClosed() { calibrateAxisMenuOpen = false; }
-
-void MenuBar::eventWindowClosed() { eventwindowOpen = false; }
-
-void MenuBar::optionMenuClosed() { optionMenuOpen = false; }
 
 void MenuBar::populateMenuBar(QMainWindow *parent) {
 
@@ -153,11 +161,13 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
 
     QObject::connect(openLogging, &QAction::triggered, this, &MenuBar::openLogWindow);
     InstallationService installationService = InstallationService();
-    std::cout<<"DATA "<<installationService.getCurrentVersion().toStdString()<<std::endl;
 }
 
 void MenuBar::installWASM() {
-    std::cout << "Installing WASM" << std::endl;
+    Logger::getInstance()->logDebug("Installing WASM");
+
+    auto wasmHandler = new WASMHandler();
+    wasmHandler->installWasm();
 }
 
 void MenuBar::checkForUpdates() {
