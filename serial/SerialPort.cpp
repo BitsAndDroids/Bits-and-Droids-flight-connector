@@ -103,7 +103,7 @@ int SerialPort::readSerialPort(const char *buffer, unsigned int buf_size) {
 }
 
 // Sending provided buffer to serial port;
-// returns true if succeed, false if not
+// returns true if succeeded, false if not
 bool SerialPort::writeSerialPort(const char *buffer, unsigned int buf_size) {
   DWORD bytesSend;
 

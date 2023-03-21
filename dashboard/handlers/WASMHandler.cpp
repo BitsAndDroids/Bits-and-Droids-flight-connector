@@ -60,14 +60,11 @@ bool WASMHandler::isWASMModuleInstalled() {
 }
 
 WASMHandler::WASMHandler() {
-
         ServiceSettingsHandler serviceSettingsHandler = ServiceSettingsHandler();
         QDir dir = QDir(serviceSettingsHandler.getCommunityFolderPath() + "/BitsAndDroidsModule");
         if (dir.exists()) {
             WASMModulePath = dir.absolutePath();
         }
-
-
 }
 
 bool WASMHandler::versionCheck(){
@@ -131,7 +128,6 @@ void WASMHandler::updateModule(){
 }
 
 QString WASMHandler::getLocalVersion(){
-
     QFile file(QCoreApplication::applicationDirPath() + "/BitsAndDroidsModule/manifest.JSON");
     file.open(QIODevice::ReadOnly);
     QByteArray data = file.readAll();

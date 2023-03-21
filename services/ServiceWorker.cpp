@@ -4,13 +4,16 @@
 
 #include "ServiceWorker.h"
 #include "logging/LogWindow.h"
+#include "logging/Logger.h"
 #include "settings/ServiceSettingsHandler.h"
 #include "dashboard/handlers/WASMHandler.h"
 #include "thread"
+#include <stdint.h>
+#include <time.h>
 
 HANDLE serviceSimconnect;
 
-ServiceWorker::ServiceWorker()= default;
+ServiceWorker::ServiceWorker() = default;
 
 SIMCONNECT_CLIENT_DATA_ID serviceLayerDataID = 3;
 enum DATA_DEFINE_ID {
@@ -99,6 +102,26 @@ void ServiceWorker::startServices() {
     }
 }
 
+const uint8_t POLLRATES = 2;
+clock_t lastPoll = clock();
+
+void ServiceWorker::pollUnconnectedDevices() {
+    //time based polling based on POLLRATEMS constant in S
+    clock_t now = clock();
+
+    if (now - lastPoll > POLLRATES * CLOCKS_PER_SEC) {
+        lastPoll = now;
+        for (auto &serialPort: this->unconnectedDevices) {
+            if (serialPort->isConnected()) {
+                //TODO emit signal to update workerthread
+                Logger::getInstance()->logDebug("Serial port connected: " + serialPort->getPortName());
+                this->unconnectedDevices.erase(
+                        std::remove(this->unconnectedDevices.begin(), this->unconnectedDevices.end(), serialPort),
+                        this->unconnectedDevices.end());
+            }
+        }
+    }
+}
 
 void ServiceWorker::MyDispatchProcRD(SIMCONNECT_RECV *pData, DWORD cbData, void *pContext) {
     auto *serviceWorker = static_cast<ServiceWorker *>(pContext);

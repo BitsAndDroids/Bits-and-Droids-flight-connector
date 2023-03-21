@@ -13,6 +13,7 @@
 #include "logging/Logger.h"
 #include "logging/LogWindow.h"
 #include "dashboard/handlers/WASMHandler.h"
+#include "serial/SerialPort.hpp"
 
 class ServiceWorker : public QThread {
 Q_OBJECT
@@ -35,6 +36,8 @@ private:
     bool wasmFound = false;
 
     WASMHandler wasmHandler = WASMHandler();
+
+    std::vector<SerialPort*> unconnectedDevices = std::vector<SerialPort*>();
 public:
     void run() override { startServices(); }
     ServiceWorker();
@@ -62,6 +65,8 @@ public slots:
     void logMessage(const std::string& message, LogLevel level);
 
     void sendWASMData(const char *data);
+
+    void pollUnconnectedDevices();
 };
 
 
