@@ -35,6 +35,8 @@ public:
 
     ~Dashboard();
 
+    void initWithAutorun();
+
 public slots:
 
     void gameConnectionMade(int con);

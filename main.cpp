@@ -20,10 +20,12 @@ int main(int argc, char *argv[]) {
     QApplication::setOrganizationName("Bits and Droids");
     QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
-    std::cout<<"Starting BitsAndDroidsFlightConnector"<<std::endl;
-    //print all argv[] values
+    bool launchedFromMFS2020 = false;
     for (int i = 0; i < argc; i++) {
         std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
+        if(strcmp(argv[i], "-src=MFS2020") == 0){
+            launchedFromMFS2020 = true;
+        }
     }
 
     InstallationService installationService = InstallationService();
@@ -32,7 +34,11 @@ int main(int argc, char *argv[]) {
     settingsHandler.migrate();
 
     Dashboard w;
-    w.show();
+    if(launchedFromMFS2020){
+        w.initWithAutorun();
+    } else{
+        w.show();
+    }
 
     return QApplication::exec();
 }

@@ -21,7 +21,6 @@ void DashboardController::initController(){
     if(installationService.getUpdatesAvailable()){
         emit updateAvailable();
     }
-
 }
 
 void DashboardController::setServiceWorker(ServiceWorker *serviceWorkerToSet) {

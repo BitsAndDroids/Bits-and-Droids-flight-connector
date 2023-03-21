@@ -88,6 +88,10 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     setIcon();
 }
 
+void Dashboard::initWithAutorun(){
+    comPortWidgetController.start();
+}
+
 void Dashboard::closeEvent(QCloseEvent *event) {
     if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
         if (closing) {
