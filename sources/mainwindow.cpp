@@ -2,7 +2,6 @@
 
 #include <events/eventwindow.h>
 #include <library/librarygeneratorwindow.h>
-#include <qdesktopservices.h>
 #include <qserialportinfo.h>
 #include <qstandardpaths.h>
 #include <settings/calibrateaxismenu.h>
@@ -10,8 +9,6 @@
 #include <settings/outputmenu.h>
 
 #include <QDir>
-#include <QNetworkAccessManager>
-#include <iostream>
 #include <string>
 
 #include "ui_mainwindow.h"
@@ -156,17 +153,14 @@ void MainWindow::installWasm() {
                     QString communityFolderPath = dialog.getExistingDirectory();
                     settingsHandler.storeValue("Settings", "communityFolderPathLabel",
                                                communityFolderPath);
-
                 }
             }
-
-
-            QString destinationString = pathfound + "/BitsAndDroidsModule";
+        }
+         QString destinationString = pathfound + "/BitsAndDroidsModule";
 
             copyFolder(sourceString, destinationString);
             qDebug() << applicationEventsPath;
             MessageCaster::showCompleteMessage("WASM was sucesfully installed");
-        }
     }
         catch (...) {
             MessageCaster::showWarningMessage("Could not install WASM module");
