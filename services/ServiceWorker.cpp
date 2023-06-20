@@ -3,13 +3,11 @@
 //
 
 #include "ServiceWorker.h"
-#include "logging/LogWindow.h"
 #include "logging/Logger.h"
 #include "settings/ServiceSettingsHandler.h"
 #include "dashboard/handlers/WASMHandler.h"
 #include "thread"
-#include <stdint.h>
-#include <time.h>
+#include <ctime>
 
 HANDLE serviceSimconnect;
 
@@ -102,14 +100,14 @@ void ServiceWorker::startServices() {
     }
 }
 
-const uint8_t POLLRATES = 2;
+const uint8_t POLLRATESECONDS = 2;
 clock_t lastPoll = clock();
 
 void ServiceWorker::pollUnconnectedDevices() {
-    //time based polling based on POLLRATEMS constant in S
+    //time based polling based on POLLRATESECONDS to prevent spamming the system
     clock_t now = clock();
 
-    if (now - lastPoll > POLLRATES * CLOCKS_PER_SEC) {
+    if (now - lastPoll > POLLRATESECONDS * CLOCKS_PER_SEC) {
         lastPoll = now;
         for (auto &serialPort: this->unconnectedDevices) {
             if (serialPort->isConnected()) {
