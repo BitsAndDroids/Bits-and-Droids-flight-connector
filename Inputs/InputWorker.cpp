@@ -9,6 +9,7 @@
 #include <headers/SerialPort.hpp>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "InputMapper.h"
 #include "InputSwitchHandler.h"
