@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "formbuilder.h"
 
 #include "constants.h"
@@ -27,7 +28,7 @@ FormBuilder::FormBuilder() {
     }
     rangeHeaders.append("Flaps");
 
-    cout << "bye" << endl;
+    qDebug() << "bye";
 
 }
 

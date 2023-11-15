@@ -22,12 +22,11 @@ void InstallationService::installWASMModule() {
 void InstallationService::writeToExeXMLMFS2020() {
     PathHandler pathHandler = PathHandler();
 
-    std::string communityFolderPath = pathHandler.getCommunityFolderPath().toStdString();
+    const std::string communityFolderPath = pathHandler.getCommunityFolderPath().toStdString();
     //get path of exe
     std::string exePath = QCoreApplication::applicationDirPath().toStdString() + "";
 
-    QDir dir(communityFolderPath.c_str());
-    if (dir.exists()) {
+    if (QDir dir(communityFolderPath.c_str()); dir.exists()) {
         dir.cdUp();
         dir.cdUp();
         QFile file(dir.path() + "/exe.xml");
@@ -40,18 +39,18 @@ void InstallationService::writeToExeXMLMFS2020() {
         if(content.contains("Bits and Droids connector")){
             return;
         }
-        QString firstPart = content.split("</SimBase.Document>").at(0);
+        const QString firstPart = content.split("</SimBase.Document>").at(0);
 
-        std::string autoRunEntryString = " <Launch.Addon>\n"
-                                         "     <Name>Bits and Droids connector</Name>\n"
-                                         "     <Disabled>False</Disabled>\n"
-                                         "     <Path>" + pathHandler.getApplicationExecutablePath().toStdString() +
-                                         "</Path>\n"
-                                         "     <CommandLine>-src=MFS2020</CommandLine>\n"
-                                         "  </Launch.Addon>\n";
+        const std::string autoRunEntryString = " <Launch.Addon>\n"
+                                               "     <Name>Bits and Droids connector</Name>\n"
+                                               "     <Disabled>False</Disabled>\n"
+                                               "     <Path>" + pathHandler.getApplicationExecutablePath().toStdString() +
+                                               "</Path>\n"
+                                               "     <CommandLine>-src=MFS2020</CommandLine>\n"
+                                               "  </Launch.Addon>\n";
 
-        QString newContent = firstPart + autoRunEntryString.c_str() + "</SimBase.Document>";
-        std::cout<<newContent.toStdString()<<std::endl;
+        const QString newContent = firstPart + autoRunEntryString.c_str() + "</SimBase.Document>";
+        qDebug() << newContent;
         file.resize(0);
         file.write(newContent.toStdString().c_str());
     }

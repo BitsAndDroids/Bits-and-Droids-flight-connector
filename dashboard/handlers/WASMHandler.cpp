@@ -1,7 +1,7 @@
 //
 // Created by DaveRiedel on 21-9-2022.
 //
-
+#include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
 #include <exception>
@@ -86,8 +86,8 @@ bool WASMHandler::versionCheck(){
         }
         QStringList communityVersionList = communityVersion.split(".");
         QStringList localVersionList = localVersion.split(".");
-        std::cout<<communityVersionList.size()<<std::endl;
-        std::cout<<localVersionList.size()<<std::endl;
+        qDebug() << communityVersionList.size();
+        qDebug() << localVersionList.size();
         if (communityVersionList.size() == localVersionList.size()) {
             for (int i = 0; i < localVersionList.size(); i++) {
                 if (localVersionList[i].toInt() > communityVersionList[i].toInt()) {

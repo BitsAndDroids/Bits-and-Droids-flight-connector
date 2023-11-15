@@ -12,11 +12,11 @@ public:
 
     void installWASMModule();
 
-    bool getUpdatesAvailable();
+    static bool getUpdatesAvailable();
 
     static QString getCurrentVersion();
 
-    void writeToExeXMLMFS2020();
+    static void writeToExeXMLMFS2020();
 
 };
 

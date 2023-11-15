@@ -1,10 +1,11 @@
 #include <QApplication>
+#include <QDebug>
 #include "dashboard/Dashboard.h"
 #include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
 #include "services/InstallationService.h"
 #include "logging/Logger.h"
-#include <QtCore/QDataStream>
+
 
 Logger* Logger::instance = nullptr;
 
@@ -21,10 +22,14 @@ int main(int argc, char *argv[]) {
     QApplication::setOrganizationDomain("www.bitsanddroids.com");
 
     bool launchedFromMFS2020 = false;
-    for (int i = 0; i < argc; i++) {
-        std::cout << "argv[" << i << "] = " << argv[i] << std::endl;
-        if(strcmp(argv[i], "-src=MFS2020") == 0){
-            launchedFromMFS2020 = true;
+    for (int i = 1; i < argc; i++) {
+        if(argv[i] == nullptr) {
+            qDebug()<< "argv[" << i << "] = nullptr";
+        } else {
+            qDebug() << "argv[" << i << "] = " << argv[i];
+            if(strcmp(argv[i], "-src=MFS2020") == 0){
+                launchedFromMFS2020 = true;
+            }
         }
     }
 
