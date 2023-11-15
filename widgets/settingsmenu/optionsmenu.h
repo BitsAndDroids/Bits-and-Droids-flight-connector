@@ -19,6 +19,17 @@ class OptionsMenu : public QWidget {
   explicit OptionsMenu(QWidget *parent = nullptr);
 
   ~OptionsMenu() override;
+
+  void save_cbs();
+
+  void save_labels();
+
+  void save_ranges();
+
+  void save_communityfolder_path();
+
+  void save_com_settings();
+
  signals:
 
   void closedOptionsMenu();

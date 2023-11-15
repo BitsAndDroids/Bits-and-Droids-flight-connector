@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void OptionsMenu::closeEvent(QCloseEvent *event) { delete this; }
+void OptionsMenu::closeEvent(QCloseEvent* event) { delete this; }
 
 void OptionsMenu::selectFile() {
     QFileDialog dialog(this);
@@ -25,27 +25,27 @@ void OptionsMenu::selectFile() {
     }
 }
 
-OptionsMenu::OptionsMenu(QWidget *parent)
-        : QWidget(parent), uiOptions(new Ui::optionsMenu) {
+OptionsMenu::OptionsMenu(QWidget* parent)
+    : QWidget(parent), uiOptions(new Ui::optionsMenu) {
     uiOptions->setupUi(this);
     QStringList keys = *settingsHandler.retrieveKeys("Settings");
     if (!keys.empty()) {
-                foreach (const QString &key, keys) {
-                if (uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)) {
-                    uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)->setText(
-                            settingsHandler.retrieveSetting("Settings", key)->toString());
-                }
+        foreach(const QString &key, keys) {
+            if (uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)) {
+                uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)->setText(
+                    settingsHandler.retrieveSetting("Settings", key)->toString());
             }
+        }
         if (!settingsHandler.retrieveSetting("Settings", "CBR")->isNull()) {
             uiOptions->baudComboBox->setCurrentText(
-                    settingsHandler.retrieveSetting("Setting", "CBR")->toString());
+                settingsHandler.retrieveSetting("Setting", "CBR")->toString());
         }
     }
 
     auto cbCloseToTray = new mCheckBox("Close to tray", "cbCloseToTray", true);
     uiOptions->vlOptions->addWidget(cbCloseToTray->generateCheckbox());
 
-    auto cbStartupMenu = new mCheckBox("Run on startup", "cbRunOnStartup", false);
+    auto cbStartupMenu = new mCheckBox("Run on MFS2020 launch", "cbRunOnMFSStartup", false);
     uiOptions->vlOptions->addWidget(cbStartupMenu->generateCheckbox());
 
     auto cbAutoRun = new mCheckBox("Autorun in background", "cbAutorun", false);
@@ -55,16 +55,16 @@ OptionsMenu::OptionsMenu(QWidget *parent)
     if (!settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->isNull()) {
         this->findChild<QCheckBox *>("cbCloseToTray")
                 ->setChecked(
-                        settingsHandler.retrieveSetting("Settings", "cbCloseToTray")
-                                ->toBool());
+                    settingsHandler.retrieveSetting("Settings", "cbCloseToTray")
+                    ->toBool());
         this->findChild<QCheckBox *>("cbAutorun")
                 ->setChecked(
-                        settingsHandler.retrieveSetting("Settings", "cbAutorun")
-                                ->toBool());
-        this->findChild<QCheckBox *>("cbRunOnStartup")
+                    settingsHandler.retrieveSetting("Settings", "cbAutorun")
+                    ->toBool());
+        this->findChild<QCheckBox *>("cbRunOnMFSStartup")
                 ->setChecked(
-                        settingsHandler.retrieveSetting("Settings", "cbRunOnStartup")
-                                ->toBool());
+                    settingsHandler.retrieveSetting("Settings", "cbRunOnMFSStartup")
+                    ->toBool());
     }
 
     auto communityFolderPathLabel = new QLabel();
@@ -92,12 +92,12 @@ OptionsMenu::OptionsMenu(QWidget *parent)
     uiOptions->sensitivityWidget->adjustSize();
     QStringList rangeKeys = *settingsHandler.retrieveKeys("Ranges");
     if (!rangeKeys.empty()) {
-                foreach (const QString &key, rangeKeys) {
-                if (uiOptions->widgetRanges->findChild<QLineEdit *>(key)) {
-                    uiOptions->widgetRanges->findChild<QLineEdit *>(key)->setText(
-                            settingsHandler.retrieveSetting("Ranges", key)->toString());
-                }
+        foreach(const QString &key, rangeKeys) {
+            if (uiOptions->widgetRanges->findChild<QLineEdit *>(key)) {
+                uiOptions->widgetRanges->findChild<QLineEdit *>(key)->setText(
+                    settingsHandler.retrieveSetting("Ranges", key)->toString());
             }
+        }
     }
     if (!settingsHandler.retrieveSetting("Ranges", "maxReverseId")->isNull()) {
         int value =
@@ -107,10 +107,10 @@ OptionsMenu::OptionsMenu(QWidget *parent)
         }
     }
     if (!settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
-            ->isNull()) {
+        ->isNull()) {
         communityFolderPathLabel->setText(
-                settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
-                        ->toString());
+            settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+            ->toString());
         communityFolderPathLabel->adjustSize();
     }
 }
@@ -120,48 +120,15 @@ OptionsMenu::~OptionsMenu() {
     delete uiOptions;
 }
 
-void OptionsMenu::on_saveSettingsBtn_clicked() {
-    auto *communityFolderPath =
-            this->findChild<QLabel *>("communityFolderPathLabel");
-    settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
-                               communityFolderPath->text());
-    PathHandler::setCommunityFolderPath(communityFolderPath->text());
-
-    // Checkboxes that affect the application behavior on closing / startup
-    auto cbCloseToTray = this->findChild<QCheckBox *>("cbCloseToTray");
-    settingsHandler.storeValue("Settings", "cbCloseToTray",
-                               cbCloseToTray->isChecked());
-
-    auto cbAutoRun = this->findChild<QCheckBox *>("cbAutorun");
-    settingsHandler.storeValue("Settings", "cbAutorun",
-                               cbAutoRun->isChecked());
-
-    auto cbStartup = this->findChild<QCheckBox *>("cbRunOnStartup");
-    settingsHandler.storeValue("Settings", "cbRunOnStartup",
-                               cbStartup->isChecked());
-
-    // The default startup path is
-    // (C:\Users\<USER>\AppData\Roaming\Microsoft\Windows\Start
-    // Menu\Programs\Startup
-    auto startupPath =
-            QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation) +
-            "/Startup/";
-
-    if (cbStartup->isChecked()) {
-        // This will create a shortcut in the startup menu
-        // This will also overwrite any existing links(of the connector) already
-        // pressent.
-        QFile::link("Bitsanddroidsgui.exe",
-                    startupPath + "Bitsanddroidsgui.exe.lnk");
-
-    } else {
-        QFile file(startupPath + "Bitsanddroidsgui.exe.lnk");
-
-        if (file.exists()) {
-            file.remove();
-        }
+void OptionsMenu::save_cbs() {
+    QList<QCheckBox *> allCheckBoxes = this->findChildren<QCheckBox *>();
+    for (auto&allCheckBox: allCheckBoxes) {
+        settingsHandler.storeValue("Settings", allCheckBox->objectName(),
+                                   allCheckBox->isChecked());
     }
+}
 
+void OptionsMenu::save_labels() {
     QList<QLineEdit *> allLabels =
             uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
     qDebug() << "size" << allLabels.size();
@@ -170,13 +137,13 @@ void OptionsMenu::on_saveSettingsBtn_clicked() {
         qDebug() << "Clicked" << name;
         settingsHandler.storeValue("Settings", name, allLabel->text());
     }
-    settingsHandler.storeValue("Settings", "CBR",
-                               uiOptions->baudComboBox->currentText());
+}
 
+void OptionsMenu::save_ranges() {
     QList<QLineEdit *> rangeLineEdits =
             uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
-    for (auto &rangeLineEdit: rangeLineEdits) {
+    for (auto&rangeLineEdit: rangeLineEdits) {
         settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
                                    rangeLineEdit->text());
     }
@@ -187,7 +154,7 @@ void OptionsMenu::on_saveSettingsBtn_clicked() {
 
     int value;
     auto id = uiOptions->buttonGroup->checkedId();
-    qDebug() << "id " << id;
+    // map values of the checkboxes to ingame value that represent a negative value from the idle cutoff
     switch (id) {
         case -2:
             value = -21400;
@@ -206,6 +173,30 @@ void OptionsMenu::on_saveSettingsBtn_clicked() {
     settingsHandler.storeValue("Ranges", "maxReverseId", id);
 }
 
+void OptionsMenu::save_communityfolder_path() {
+    const auto* communityFolderPath =
+            this->findChild<QLabel *>("communityFolderPathLabel");
+
+    settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
+                               communityFolderPath->text());
+    PathHandler::setCommunityFolderPath(communityFolderPath->text());
+}
+
+void OptionsMenu::save_com_settings() {
+    settingsHandler.storeValue("Settings", "CBR",
+                               uiOptions->baudComboBox->currentText());
+}
+
+
+void OptionsMenu::on_saveSettingsBtn_clicked() {
+    // find all checkboxes and save their state
+    save_cbs();
+    save_labels();
+    save_ranges();
+    save_communityfolder_path();
+    save_com_settings();
+}
+
 void OptionsMenu::on_checkBox_stateChanged(int checked) {
     QList<QLineEdit *> allLabels =
             uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
@@ -214,8 +205,8 @@ void OptionsMenu::on_checkBox_stateChanged(int checked) {
             allLabel->setEnabled(true);
         }
         uiOptions->baudComboBox->setEnabled(true);
-
-    } else {
+    }
+    else {
         for (auto allLabel: allLabels) {
             allLabel->setEnabled(false);
         }
@@ -223,4 +214,5 @@ void OptionsMenu::on_checkBox_stateChanged(int checked) {
     }
 }
 
-void OptionsMenu::on_baudComboBox_currentTextChanged(const QString &arg1) {}
+void OptionsMenu::on_baudComboBox_currentTextChanged(const QString&arg1) {
+}
