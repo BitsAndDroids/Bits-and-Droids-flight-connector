@@ -1,11 +1,7 @@
 #include "optionsmenu.h"
-
 #include "elements/mcheckbox.h"
-#include <qstandardpaths.h>
-
 #include <iostream>
 #include <string>
-
 #include "ui_optionsmenu.h"
 
 using namespace std;
