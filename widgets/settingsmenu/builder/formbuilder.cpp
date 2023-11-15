@@ -87,7 +87,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
                     .retrieveSubSetting(name + "Series", "calibrations",
                                         objectNames.at(i))
                     ->toInt();
-            cout << valFound << endl;
             switch (i) {
                 case 0:
                     minValue[number] = valFound;
@@ -187,7 +186,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
     int const max = 16383;
 
     if (pointsToPlot[number].isEmpty()) {
-        cout << "empty" << endl;
         auto *coords = new QList <coordinates>{
                 {coordinates(static_cast<float>(minValue[number]), min)},
                 {coordinates(static_cast<float>(neutralValue[number]) -
@@ -263,7 +261,6 @@ QList <coordinates> *FormBuilder::getCoordinates(int number) {
 
 void FormBuilder::updateY(int number, int index, int value) {
     pointsToPlot[number][index].setY((float) value);
-    // cout << "Y" << index << " val" << pointsToPlot[index].y << endl;
     updateChart(number);
 }
 
@@ -283,7 +280,6 @@ void FormBuilder::updateYCall() {
 
 void FormBuilder::updateX(int number, int index, int value) {
     pointsToPlot[number][index].setX((float) value);
-    // cout << "X" << index << " val" << pointsToPlot[index].x << endl;
     updateChart(number);
 }
 

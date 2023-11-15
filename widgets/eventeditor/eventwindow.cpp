@@ -21,6 +21,8 @@
 #include "logging/MessageCaster.h"
 #include "ui_eventwindow.h"
 
+#include <QDebug>
+
 using namespace std;
 namespace Utils {
 std::string padLeft(std::string source, std::size_t totalWidth,
@@ -229,10 +231,10 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
   if (checkIfRowChanged(changedItem->row())) {
     if (rowsChanged.indexOf(changedItem->row()) == -1) {
       rowsChanged.append(changedItem->row());
-      cout << "Changed" << changedItem->row() << endl;
+      qDebug() << "Changed" << changedItem->row();
     }
   }
-  cout << changedItem->text().toStdString() << "CHANGED" << endl;
+  qDebug() << changedItem->text() << "CHANGED";
 }
 
 void EventWindow::addEventBtnPressed() {
@@ -255,7 +257,7 @@ void EventWindow::saveBtnPressed() {
   for (auto &changed : rowsChanged) {
     if (!checkIfRowChanged(changed)) {
       rowsChanged.removeAt(rowsChanged.indexOf(changed));
-      cout << "ROW REMOVED" << endl;
+      qDebug() << "ROW REMOVED";
     }
   }
   auto saveMessageBox = new QMessageBox();
@@ -332,8 +334,7 @@ void EventWindow::saveBtnPressed() {
 
 void EventWindow::writeFile() {
   QFile newEventsFile(applicationEventsPath);
-  cout << "WRITEFILE " << newEventsFile.fileName().toStdString().c_str()
-       << endl;
+  qDebug() << "WRITEFILE " << newEventsFile.fileName();
   newEventsFile.open(QIODevice::ReadWrite);
   newEventsFile.resize(0);
   QTextStream out(&newEventsFile);

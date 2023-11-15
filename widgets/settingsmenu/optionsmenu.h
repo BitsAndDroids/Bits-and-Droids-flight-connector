@@ -20,15 +20,19 @@ class OptionsMenu : public QWidget {
 
   ~OptionsMenu() override;
 
-  void save_cbs();
+  void saveCbs();
 
-  void save_labels();
+  void saveLabels();
 
-  void save_ranges();
+  void saveRanges();
 
-  void save_communityfolder_path();
+  void saveCommunityfolderPath();
 
-  void save_com_settings();
+  void saveComSettings();
+
+  void checkMFSAutorunEnabled();
+
+  void checkAutorunChanged();
 
  signals:
 
@@ -43,6 +47,8 @@ class OptionsMenu : public QWidget {
   void on_baudComboBox_currentTextChanged(const QString &arg1);
 
   void selectFile();
+
+  void addCheckboxes();
 
  private:
   FormBuilder *builder = new FormBuilder();

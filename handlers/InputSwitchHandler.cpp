@@ -25,6 +25,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <utility>
+#include <QDebug>
 
 //#define Bcd2Dec(BcdNum) HornerScheme(BcdNum, 0x10, 10)
 #define Dec2Bcd(DecNum) HornerScheme(DecNum, 10, 0x10)
@@ -49,8 +50,6 @@ void InputSwitchHandler::mapInputs() {
         hr = SimConnect_MapClientEventToSimEvent(connect,
                                                  input.second.getPrefix(),
                                                  input.second.getEvent().c_str());
-
-        cout << input.second.getPrefix() << " EVENT " << input.second.getEvent() << " " << to_string(hr) << endl;
     }
 }
 
@@ -80,7 +79,7 @@ void InputSwitchHandler::setRanges() {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
 
             int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
-            cout << "MIN SET" << minRange << endl;
+            qDebug() << "MIN SET" << minRange;
 
             QString idleStr = "Engine " + QString::number(i + 1) + "Idle cutoff";
             int idleCutoff =
@@ -102,7 +101,7 @@ void InputSwitchHandler::setRanges() {
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
             QString minStr = "Mixture " + QString::number(i + 1) + "Min";
             int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
-            cout << minRange << endl;
+            qDebug() << minRange;
 
             QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
             int maxRange =
@@ -224,13 +223,13 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::str
         }
     }
     catch (const std::exception &e) {
-        cout << "error in cutInputs()" << endl;
+        qDebug() << "error in cutInputs()";
     }
     if (parts.size() == amountOfPartsNeeded) {
         return parts;
     }
     parts.clear();
-    cout << "SIZE OF PARTS: " << parts.size() << endl;
+    qDebug() << "SIZE OF PARTS: " << parts.size();
     return parts;
 }
 
@@ -365,7 +364,7 @@ void InputSwitchHandler::setRudder(std::string stringToSet) {
 
         rudderAxis.setCurrentValue(rudderBuffer.at(0));
         calibratedRange(&rudderAxis);
-        cout << "RUDDER: " << rudderAxis.getMappedValue() << endl;
+        qDebug() << "RUDDER: " << rudderAxis.getMappedValue();
         int diff = std::abs(rudderAxis.getMappedValue() - rudderAxis.getOldMappedValue());
         if (diff < 10000 || rudderAxis.getOldMappedValue() == NULL) {
             sendBasicCommandValue(rudderAxis.getEvent(), rudderAxis.getMappedValue());
@@ -429,13 +428,11 @@ void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
     HRESULT hr;
 
     if (stringToSet.size() == 6 || stringToSet.size() == 5) {
-        cout << "SENDING COMMAND " << inputs[(int) eventID].getEvent() << endl;
         emit logMessage(inputs[(int) eventID].getEvent(), LogLevel::DEBUGLOG);
         hr = SimConnect_TransmitClientEvent(
                 connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                 SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
     }
-    cout << "HR " << hr << endl;
 }
 
 void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) {
@@ -603,7 +600,6 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                         break;
                     }
                     case 901: {
-                        cout << "901" << endl;
                         setRudder(stringToParse);
                         break;
                     }
@@ -619,7 +615,6 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                         }
 
                         sendWASMCommand(prefixValue, value);
-                        cout << value << "val" << endl;
                         break;
                     }
 

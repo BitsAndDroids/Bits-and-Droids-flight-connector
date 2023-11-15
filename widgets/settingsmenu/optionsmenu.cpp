@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include "ui_optionsmenu.h"
+#include "services/InstallationService.h"
+#include <QDebug>
 
 using namespace std;
 
@@ -12,13 +14,24 @@ void OptionsMenu::selectFile() {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::Directory);
     QString communityFolderPath = dialog.getExistingDirectory();
-    cout << communityFolderPath.toStdString().c_str() << endl;
+    qDebug() << communityFolderPath.toStdString().c_str();
     if (!communityFolderPath.isNull()) {
         auto pathLabel = this->findChild<QLabel *>("communityFolderPathLabel");
 
         pathLabel->setText(communityFolderPath);
         pathLabel->adjustSize();
     }
+}
+
+void CreateAndAddNewCheckbox(const QString& text, const QString& objectName, bool isChecked, QVBoxLayout* layout) {
+    const auto newCheckBox = new mCheckBox(text, objectName, isChecked);
+    layout->addWidget(newCheckBox->generateCheckbox());
+}
+
+void OptionsMenu::addCheckboxes() {
+    CreateAndAddNewCheckbox("Close to tray", "cbCloseToTray", true, uiOptions->vlOptions);
+    CreateAndAddNewCheckbox("Run on MFS2020 launch", "cbRunOnMFSStartup", false, uiOptions->vlOptions);
+    CreateAndAddNewCheckbox("Autorun in background", "cbAutorun", false, uiOptions->vlOptions);
 }
 
 OptionsMenu::OptionsMenu(QWidget* parent)
@@ -38,14 +51,7 @@ OptionsMenu::OptionsMenu(QWidget* parent)
         }
     }
 
-    auto cbCloseToTray = new mCheckBox("Close to tray", "cbCloseToTray", true);
-    uiOptions->vlOptions->addWidget(cbCloseToTray->generateCheckbox());
-
-    auto cbStartupMenu = new mCheckBox("Run on MFS2020 launch", "cbRunOnMFSStartup", false);
-    uiOptions->vlOptions->addWidget(cbStartupMenu->generateCheckbox());
-
-    auto cbAutoRun = new mCheckBox("Autorun in background", "cbAutorun", false);
-    uiOptions->vlOptions->addWidget(cbAutoRun->generateCheckbox());
+    addCheckboxes();
 
     // Loading the saved checkbox states
     if (!settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->isNull()) {
@@ -116,15 +122,16 @@ OptionsMenu::~OptionsMenu() {
     delete uiOptions;
 }
 
-void OptionsMenu::save_cbs() {
+void OptionsMenu::saveCbs() {
     QList<QCheckBox *> allCheckBoxes = this->findChildren<QCheckBox *>();
     for (auto&allCheckBox: allCheckBoxes) {
         settingsHandler.storeValue("Settings", allCheckBox->objectName(),
                                    allCheckBox->isChecked());
     }
+    checkMFSAutorunEnabled();
 }
 
-void OptionsMenu::save_labels() {
+void OptionsMenu::saveLabels() {
     QList<QLineEdit *> allLabels =
             uiOptions->formLayoutWidget->findChildren<QLineEdit *>();
     qDebug() << "size" << allLabels.size();
@@ -135,7 +142,7 @@ void OptionsMenu::save_labels() {
     }
 }
 
-void OptionsMenu::save_ranges() {
+void OptionsMenu::saveRanges() {
     QList<QLineEdit *> rangeLineEdits =
             uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
@@ -169,7 +176,7 @@ void OptionsMenu::save_ranges() {
     settingsHandler.storeValue("Ranges", "maxReverseId", id);
 }
 
-void OptionsMenu::save_communityfolder_path() {
+void OptionsMenu::saveCommunityfolderPath() {
     const auto* communityFolderPath =
             this->findChild<QLabel *>("communityFolderPathLabel");
 
@@ -178,19 +185,26 @@ void OptionsMenu::save_communityfolder_path() {
     PathHandler::setCommunityFolderPath(communityFolderPath->text());
 }
 
-void OptionsMenu::save_com_settings() {
+void OptionsMenu::saveComSettings() {
     settingsHandler.storeValue("Settings", "CBR",
                                uiOptions->baudComboBox->currentText());
+}
+
+void OptionsMenu::checkMFSAutorunEnabled() {
+    if (settingsHandler.retrieveSetting("Settings", "cbRunOnMFSStartup")
+        ->toBool()) {
+        InstallationService::writeToExeXMLMFS2020();
+    }
 }
 
 
 void OptionsMenu::on_saveSettingsBtn_clicked() {
     // find all checkboxes and save their state
-    save_cbs();
-    save_labels();
-    save_ranges();
-    save_communityfolder_path();
-    save_com_settings();
+    saveCbs();
+    saveLabels();
+    saveRanges();
+    saveCommunityfolderPath();
+    saveComSettings();
 }
 
 void OptionsMenu::on_checkBox_stateChanged(int checked) {

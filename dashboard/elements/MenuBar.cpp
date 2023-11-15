@@ -3,6 +3,7 @@
 //
 
 #include "MenuBar.h"
+#include <QDebug>
 #include "constants.h"
 #include <QAction>
 #include <QMenuBar>
@@ -171,11 +172,11 @@ void MenuBar::installWASM() {
 }
 
 void MenuBar::checkForUpdates() {
-    std::cout << "Checking for updates" << std::endl;
+    qDebug() << "Checking for updates";
 }
 
 void MenuBar::localUpdateEventFile() {
-    std::cout << "Updating event file" << std::endl;
+    qDebug() << "Updating event file";
     emit updateEventFile();
 }
 
