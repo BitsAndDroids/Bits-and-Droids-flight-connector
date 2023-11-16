@@ -33,8 +33,6 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    InstallationService installationService = InstallationService();
-    installationService.writeToExeXMLMFS2020();
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.migrate();
 

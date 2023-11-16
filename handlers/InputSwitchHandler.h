@@ -100,6 +100,12 @@ private:
 
     void setAxisValue(Axis *axis);
 
+    void setCurveBasedOnType(QList<coordinates> curve, CurveTypeEnum curveType);
+
+    CurveAxis* getAxisToSet(CurveTypeEnum curveType);
+
+    void clearAndSetCurve(CurveAxis* axis, QList<coordinates> curve);
+
     void mapEngineValueToAxis(Engine *engine) const;
 
     static vector<int> cutInputs(int amountOfPartsNeeded, std::string stringToSet);

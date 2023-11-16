@@ -136,7 +136,7 @@ void InputSwitchHandler::setRanges() {
             propellerRanges[i] = Axis(0, 1023, propEvents[i]);
         }
 
-        flapsRange = Axis(0, 1023, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);
+        flapsRange = Axis(0, 1023, InputEnum::DEFINITION_AXIS_FLAPS_SET);
     }
 }
 
@@ -149,28 +149,25 @@ UINT32 HornerScheme(UINT32 Num, UINT32 Divider, UINT32 Factor) {
     return Result;
 }
 
+void InputSwitchHandler::setCurveBasedOnType(QList<coordinates> curve, CurveTypeEnum curveType) {
+    CurveAxis* axisToSet = getAxisToSet(curveType);
+    clearAndSetCurve(axisToSet, std::move(curve));
+}
 
-void InputSwitchHandler::setCurve(QList<coordinates> curve, CurveTypeEnum curveType) {
-    CurveAxis *toSet;
+CurveAxis* InputSwitchHandler::getAxisToSet(CurveTypeEnum curveType) {
     switch (curveType) {
-        case RUDDER:
-            toSet = &rudderAxis;
-            break;
-        case LEFTBRAKE:
-            toSet = &brakeAxis[0];
-            break;
-        case RIGHTBRAKE:
-            toSet = &brakeAxis[1];
-            break;
-        case AILERON:
-            toSet = &aileronAxis;
-            break;
-        case ELEVATOR:
-            toSet = &elevatorAxis;
-            break;
+        case RUDDER: return &rudderAxis;
+        case LEFTBRAKE: return &brakeAxis[0];
+        case RIGHTBRAKE: return &brakeAxis[1];
+        case AILERON: return &aileronAxis;
+        case ELEVATOR: return &elevatorAxis;
+        default: return nullptr;
     }
-    toSet->clearCurve();
-    toSet->setCurve(curve);
+}
+
+void InputSwitchHandler::clearAndSetCurve(CurveAxis* axis, QList<coordinates> curve) {
+    axis->clearCurve();
+    axis->setCurve(curve);
 }
 
 void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
@@ -258,8 +255,8 @@ void InputSwitchHandler::calibratedRange(CurveAxis *curveAxis) {
 }
 
 void InputSwitchHandler::setAxisValue(Axis *axis) {
-    int value = axis->getCurrentValue();
-    int oldValue = axis->getOldValue();
+    const int value = axis->getCurrentValue();
+    const int oldValue = axis->getOldValue();
     if (value < 10) {
         if (oldValue < 20) {
             axis->setOldValue(value);
@@ -350,7 +347,7 @@ void InputSwitchHandler::setElevatorTrim(std::string stringToSet) {
     if (elevatorTrimBuffer.size() == 1) {
         elevatorTrimAxis.setCurrentValue(elevatorTrimBuffer.at(0));
         int diff = std::abs(elevatorTrimAxis.getMappedValue() - elevatorTrimAxis.getOldMappedValue());
-        if (diff < 5000 || elevatorTrimAxis.getOldMappedValue() == NULL) {
+        if (diff < 5000) {
             sendBasicCommandValue(elevatorTrimAxis.getEvent(), elevatorTrimAxis.getMappedValue());
             elevatorTrimAxis.setOldMappedValue(elevatorAxis.getCurrentValue());
         }
@@ -366,7 +363,7 @@ void InputSwitchHandler::setRudder(std::string stringToSet) {
         calibratedRange(&rudderAxis);
         qDebug() << "RUDDER: " << rudderAxis.getMappedValue();
         int diff = std::abs(rudderAxis.getMappedValue() - rudderAxis.getOldMappedValue());
-        if (diff < 10000 || rudderAxis.getOldMappedValue() == NULL) {
+        if (diff < 10000) {
             sendBasicCommandValue(rudderAxis.getEvent(), rudderAxis.getMappedValue());
             rudderAxis.setOldMappedValue(rudderAxis.getCurrentValue());
         }
@@ -388,7 +385,7 @@ void InputSwitchHandler::setBrakeAxis(std::string stringToSet) {
             brakeAxi.setCurrentValue(brakeBuffer.at(0));
             calibratedRange(&brakeAxi);
             int diff = std::abs(brakeAxi.getMappedValue() - brakeAxi.getOldMappedValue());
-            if (diff < 10000 || brakeAxi.getOldMappedValue() == NULL) {
+            if (diff < 10000) {
                 sendBasicCommandValue(brakeAxi.getEvent(), brakeAxi.getMappedValue());
                 brakeAxi.setOldMappedValue(brakeAxi.getCurrentValue());
             }
