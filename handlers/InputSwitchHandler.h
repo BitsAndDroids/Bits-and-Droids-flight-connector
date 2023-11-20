@@ -48,6 +48,20 @@ signals:
     void logMessage(std::string message, LogLevel level);
 
 private:
+    std::unordered_map<int, std::function<void(std::string)>> funcMap = {
+        {100, [this](auto && PH1) { simpleCase(100, std::forward<decltype(1)>(PH1)); }},
+        {102, [this](auto && PH1) { setComCase(std::forward<decltype(PH1)>(PH1)); }},
+        {202, [this](auto && PH1) { standardCase(std::forward<decltype(PH1)>(PH1)); }},
+        {405, [this](auto && PH1) { simpleCase(405, std::forward<decltype(1)>(PH1)); }},
+        {406, [this](auto && PH1) { simpleCase(406, std::forward<decltype(2)>(PH1)); }},
+        {103, [&](std::string s) { this.controlYoke(std::move(s)); }},
+        {115, [&](std::string s) { this.setMixtureValues(std::move(s)); }},
+        {198, [&](std::string s) { this.set_prop_values(std::move(s)); }},
+        {199, [&](std::string s) { this.setEngineValues(std::move(s)); }},
+        {900, [&](std::string s) { this.setElevatorTrim(std::move(s)); }},
+        {901, [&](std::string s) { this.setElevatorTrim(std::move(s)); }},
+        {902, [&](std::string s) { this.setRudder(std::move(s)); }},
+    };
     float closedAxis = -16383.0;
     float openAxis = 16383.0;
     std::map<int, Input> inputs;
@@ -89,6 +103,16 @@ private:
     void setBrakeAxis(std::string stringToSet);
 
     void sendBasicCommandValue(SIMCONNECT_CLIENT_EVENT_ID eventID, int value);
+
+    void transmitEvent(DWORD eventID, DWORD data);
+
+    void setComCase(std::string s);
+
+    void standardCase(std::string s);
+
+    void transmitEvent(DWORD eventID, DWORD data) const;
+
+    void simpleCase(int caseNumber, std::string s);
 
     void controlYoke(std::string stringToSet);
 

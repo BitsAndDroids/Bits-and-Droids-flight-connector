@@ -34,7 +34,8 @@ using namespace std;
 
 InputEnum inputDefinitions = InputEnum();
 
-InputSwitchHandler::InputSwitchHandler() {}
+InputSwitchHandler::InputSwitchHandler() {
+}
 
 InputSwitchHandler::InputSwitchHandler(std::map<int, Input> inputs, HANDLE connect) {
     this->inputs = std::move(inputs);
@@ -45,8 +46,7 @@ InputSwitchHandler::InputSwitchHandler(std::map<int, Input> inputs, HANDLE conne
 
 void InputSwitchHandler::mapInputs() {
     HRESULT hr;
-    for (auto &input: inputs) {
-
+    for (auto&input: inputs) {
         hr = SimConnect_MapClientEventToSimEvent(connect,
                                                  input.second.getPrefix(),
                                                  input.second.getEvent().c_str());
@@ -57,22 +57,25 @@ void InputSwitchHandler::mapInputs() {
 
 void InputSwitchHandler::setRanges() {
     InputEnum::DATA_DEFINE_ID_INPUT engineEvents[] = {
-            inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_4_AXIS};
+        inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
+        inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
+        inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
+        inputDefinitions.DATA_EX_THROTTLE_4_AXIS
+    };
 
     InputEnum::DATA_DEFINE_ID_INPUT mixtureEvents[] = {
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_1,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_2,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_3,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_4};
+        inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_1,
+        inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_2,
+        inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_3,
+        inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_4
+    };
 
     InputEnum::DATA_DEFINE_ID_INPUT propEvents[] = {
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4};
+        inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
+        inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
+        inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
+        inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4
+    };
 
     if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
@@ -92,10 +95,10 @@ void InputSwitchHandler::setRanges() {
         }
 
         if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
-                ->isNull()) {
+            ->isNull()) {
             reverseAxis =
                     settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
-                            ->toFloat();
+                    ->toFloat();
         }
 
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
@@ -124,8 +127,8 @@ void InputSwitchHandler::setRanges() {
         int maxFlaps =
                 settingsHandler.retrieveSetting("Ranges", "FlapsMax")->toInt();
         flapsRange = Axis(minFlaps, maxFlaps, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);
-
-    } else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+    }
+    else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
             enginelist[i] = new Engine(0, 0, 1023, ENGINE, engineEvents[i]);
         }
@@ -170,7 +173,7 @@ void InputSwitchHandler::clearAndSetCurve(CurveAxis* axis, QList<coordinates> cu
     axis->setCurve(curve);
 }
 
-void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
+void InputSwitchHandler::mapEngineValueToAxis(Engine* engine) const {
     int valueThrottle;
     float idle = engine->getIdleIndex();
     float min = engine->getMin();
@@ -182,13 +185,14 @@ void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
   backwards This affects how our logic needs to operate We want to check if the
   idle cutoff - reverse < 0 This check tells us wether or not the user wants to
   utilize the reverse range or not visa versa for the second check */
-    if ((reversed && idle - min < 0 && (float) engine->getCurrentValue() >= idle) ||
-        (!reversed && idle - min > 0 && (float) engine->getCurrentValue() <= idle)) {
-        valueThrottle = (int) (reverseAxis + (closedAxis - reverseAxis) *
-                                             (((float) engine->getCurrentValue() - min) / (idle - min)));
-    } else {
-        valueThrottle = (int) (closedAxis +
-                               (openAxis - closedAxis) * (((float) engine->getCurrentValue() - idle) / (max - idle)));
+    if ((reversed && idle - min < 0 && (float)engine->getCurrentValue() >= idle) ||
+        (!reversed && idle - min > 0 && (float)engine->getCurrentValue() <= idle)) {
+        valueThrottle = (int)(reverseAxis + (closedAxis - reverseAxis) *
+                              (((float)engine->getCurrentValue() - min) / (idle - min)));
+    }
+    else {
+        valueThrottle = (int)(closedAxis +
+                              (openAxis - closedAxis) * (((float)engine->getCurrentValue() - idle) / (max - idle)));
     }
     if (valueThrottle > 16383) {
         valueThrottle = 16383;
@@ -196,11 +200,11 @@ void InputSwitchHandler::mapEngineValueToAxis(Engine *engine) const {
     engine->setMappedValue(valueThrottle);
 }
 
-void InputSwitchHandler::mapValueToAxis(Axis *axis) const {
+void InputSwitchHandler::mapValueToAxis(Axis* axis) const {
     axis->setMappedValue((int)
-                                 (closedAxis + (openAxis - closedAxis) *
-                                               (((float) axis->getCurrentValue() - axis->getMin()) /
-                                                (axis->getMax() - axis->getMin()))));
+    (closedAxis + (openAxis - closedAxis) *
+     (((float)axis->getCurrentValue() - axis->getMin()) /
+      (axis->getMax() - axis->getMin()))));
 }
 
 std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::string string) {
@@ -212,14 +216,14 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::str
         std::string tokenFound;
         while ((pos = string.find(delimiter)) != std::string::npos) {
             tokenFound = string.substr(0, pos);
-            if(counter != 0){
+            if (counter != 0) {
                 parts.push_back(std::stoi(tokenFound));
             }
             string.erase(0, pos + delimiter.length());
             counter++;
         }
     }
-    catch (const std::exception &e) {
+    catch (const std::exception&e) {
         qDebug() << "error in cutInputs()";
     }
     if (parts.size() == amountOfPartsNeeded) {
@@ -230,51 +234,52 @@ std::vector<int> InputSwitchHandler::cutInputs(int amountOfPartsNeeded, std::str
     return parts;
 }
 
-void InputSwitchHandler::calibratedRange(CurveAxis *curveAxis) {
+void InputSwitchHandler::calibratedRange(CurveAxis* curveAxis) {
     int axis;
     int value = curveAxis->getCurrentValue();
     if (static_cast<float>(value) <= curveAxis->getCoordinates(1).getX()) {
         axis = mapCoordinates(value, curveAxis->getCoordinates(0), curveAxis->getCoordinates(1));
     }
-        // minCurve
+    // minCurve
     else if (static_cast<float>(value) < curveAxis->getCoordinates(2).getX()) {
         axis = mapCoordinates(value, curveAxis->getCoordinates(1), curveAxis->getCoordinates(2));
     }
-        // deadzone
+    // deadzone
     else if (static_cast<float>(value) >= curveAxis->getCoordinates(2).getX() &&
              static_cast<float>(value) <= curveAxis->getCoordinates(4).getX()) {
         axis = 0;
-    } else if (static_cast<float>(value) <= curveAxis->getCoordinates(5).getX()) {
+    }
+    else if (static_cast<float>(value) <= curveAxis->getCoordinates(5).getX()) {
         axis = mapCoordinates(static_cast<float>(value), curveAxis->getCoordinates(4),
                               curveAxis->getCoordinates(5));
-    } else if (static_cast<float>(value) <= curveAxis->getCoordinates(6).getX()) {
+    }
+    else if (static_cast<float>(value) <= curveAxis->getCoordinates(6).getX()) {
         axis = mapCoordinates(static_cast<float>(value), curveAxis->getCoordinates(5),
                               curveAxis->getCoordinates(6));
     }
     curveAxis->setMappedValue(axis);
 }
 
-void InputSwitchHandler::setAxisValue(Axis *axis) {
+void InputSwitchHandler::setAxisValue(Axis* axis) {
     const int value = axis->getCurrentValue();
     const int oldValue = axis->getOldValue();
     if (value < 10) {
         if (oldValue < 20) {
             axis->setOldValue(value);
         }
-    } else {
-
+    }
+    else {
         if (value == 98) {
             axis->setCurrentValue(100);
         }
         axis->setOldValue(value);
-
     }
     if (axis->getType() == ENGINE) {
-        mapEngineValueToAxis((Engine *) (axis));
-    } else {
+        mapEngineValueToAxis((Engine *)(axis));
+    }
+    else {
         mapValueToAxis(axis);
     }
-
 }
 
 void InputSwitchHandler::setEngineValues(std::string stringToSet) {
@@ -358,7 +363,6 @@ void InputSwitchHandler::setElevatorTrim(std::string stringToSet) {
 void InputSwitchHandler::setRudder(std::string stringToSet) {
     std::vector<int> rudderBuffer = cutInputs(1, std::move(stringToSet));
     if (rudderBuffer.size() == 1) {
-
         rudderAxis.setCurrentValue(rudderBuffer.at(0));
         calibratedRange(&rudderAxis);
         qDebug() << "RUDDER: " << rudderAxis.getMappedValue();
@@ -380,7 +384,7 @@ int InputSwitchHandler::mapCoordinates(int value, coordinates toMapMin,
 void InputSwitchHandler::setBrakeAxis(std::string stringToSet) {
     std::vector<int> brakeBuffer = cutInputs(2, std::move(stringToSet));
     if (brakeBuffer.size() == 2) {
-        for (auto &brakeAxi: brakeAxis) {
+        for (auto&brakeAxi: brakeAxis) {
             //TODO support seperate axis calibration
             brakeAxi.setCurrentValue(brakeBuffer.at(0));
             calibratedRange(&brakeAxi);
@@ -390,45 +394,62 @@ void InputSwitchHandler::setBrakeAxis(std::string stringToSet) {
                 brakeAxi.setOldMappedValue(brakeAxi.getCurrentValue());
             }
         }
-
     }
 }
 
-int InputSwitchHandler::setComs(const std::string& stringToSet, int comNo) const {
+//make this generic using the code below
+//
+void InputSwitchHandler::setComCase(std::string s, int command) {
+    const std::map<int, int> uptickLookupTable = {
+        {102, 121},
+        {100, }
+    };
+    int value = stoi(s.substr(4, 10));
+    emit logMessage("Converted data com 2: " + Dec2Bcd(value / 10), LogLevel::DEBUGLOG);
+    transmitEvent(102, Dec2Bcd(value / 10));
+    //Tick the value up ingame to match the current state
+    //this is due to the way the game syncs the khz
+    if (value % (value / 10) == 5 || value % (value / 10) == 85) {
+        transmitEvent(121, 0);
+    }
+}
+
+int InputSwitchHandler::setComs(const std::string&stringToSet, int comNo) const {
     int value =
-            stoi(stringToSet.substr(4,10));
+            stoi(stringToSet.substr(4, 10));
+    HRESULT result = 0;
     if (value % (value / 10) == 5 || value % (value / 10) == 85) {
         switch (comNo) {
             case 1: {
-                SimConnect_TransmitClientEvent(
-                        connect, SIMCONNECT_OBJECT_ID_USER,
-                        125, 0,
-                        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                result = SimConnect_TransmitClientEvent(
+                    connect, SIMCONNECT_OBJECT_ID_USER,
+                    125, 0,
+                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
             }
             case 2: {
-                SimConnect_TransmitClientEvent(
-                        connect, SIMCONNECT_OBJECT_ID_USER,
-                        121, 0,
-                        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+                result = SimConnect_TransmitClientEvent(
+                    connect, SIMCONNECT_OBJECT_ID_USER,
+                    121, 0,
+                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
             }
             default: {
             }
         }
     }
-    return Dec2Bcd(value / 10);
+    if (result != 0) { return Dec2Bcd(value / 10); }
 }
 
 void InputSwitchHandler::sendBasicCommand(SIMCONNECT_CLIENT_EVENT_ID eventID,
-                                          const std::string& stringToSet) {
+                                          const std::string&stringToSet) {
     HRESULT hr;
 
     if (stringToSet.size() == 6 || stringToSet.size() == 5) {
-        emit logMessage(inputs[(int) eventID].getEvent(), LogLevel::DEBUGLOG);
+        emit logMessage(inputs[(int)eventID].getEvent(), LogLevel::DEBUGLOG);
         hr = SimConnect_TransmitClientEvent(
-                connect, 0, (SIMCONNECT_CLIENT_EVENT_ID) eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+            connect, 0, (SIMCONNECT_CLIENT_EVENT_ID)eventID, 0, SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+            SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
     }
 }
 
@@ -439,7 +460,7 @@ void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) {
     strcpy(arrayTest, testString.c_str());
     puts(arrayTest);
     emit logMessage("Sending data to WASM: " + std::string(arrayTest),
-            LogLevel::DEBUGLOG);
+                    LogLevel::DEBUGLOG);
     qDebug() << arrayTest;
 
     SimConnect_SetClientData(connect, 1, 12,
@@ -448,26 +469,59 @@ void InputSwitchHandler::sendWASMCommand(int prefixValue, int value) {
 }
 
 void InputSwitchHandler::sendBasicCommandOn(
-        SIMCONNECT_CLIENT_EVENT_ID eventID) const {
+    SIMCONNECT_CLIENT_EVENT_ID eventID) const {
     SimConnect_TransmitClientEvent(connect, 0, eventID, 1,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
 void InputSwitchHandler::sendBasicCommandOff(
-        SIMCONNECT_CLIENT_EVENT_ID eventID) const {
+    SIMCONNECT_CLIENT_EVENT_ID eventID) const {
     SimConnect_TransmitClientEvent(connect, 0, eventID, 0,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
 
 void InputSwitchHandler::sendBasicCommandValue(
-        SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
+    SIMCONNECT_CLIENT_EVENT_ID eventID, int value) {
     emit logMessage("Sending value: " + std::to_string(value), LogLevel::DEBUGLOG);
     SimConnect_TransmitClientEvent(connect, 0, eventID, value,
                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
 }
+
+void InputSwitchHandler::transmitEvent(DWORD eventID, DWORD data) {
+    SimConnect_TransmitClientEvent(
+        connect,
+        SIMCONNECT_OBJECT_ID_USER,
+        eventID,
+        data,
+        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+}
+
+
+
+void InputSwitchHandler::standardCase(std::string s) {
+    std::string value = s.substr(4, 8);
+    transmitEvent(202, Dec2Bcd(stoi(value)));
+}
+
+void InputSwitchHandler::transmitEvent(DWORD eventID, DWORD data) const {
+    SimConnect_TransmitClientEvent(
+        connect,
+        SIMCONNECT_OBJECT_ID_USER,
+        eventID,
+        data,
+        SIMCONNECT_GROUP_PRIORITY_HIGHEST,
+        SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
+};
+
+void InputSwitchHandler::simpleCase(int caseNumber, int data) {
+    // determine the data value based on your logic or requirement
+    transmitEvent(caseNumber, data);
+}
+
 /*!
  * \fn InputSwitchHandler::switchHandling(const char* stringToParse)
  * \brief this function triggers the appropriate input handling function
@@ -477,19 +531,29 @@ void InputSwitchHandler::sendBasicCommandValue(
  * @param stringToParse the string that has been sent by a microcontroller
  */
 void InputSwitchHandler::switchHandling(const char* stringToParse) {
+    // Default handler
+    auto defaultFunc = [&](std::string s) {
+        int value = 0;
+        bool valFound = s.size() > 6;
+        if (valFound) {
+            value = stoi(s.substr(4));
+        }
+        sendWASMCommand(0, value);
+    };
+
     Sleep(2);
     //
     std::string stringStd = stringToParse;
 
     if (strlen(stringToParse) > 2) {
         try {
-            int prefixValue = stoi(stringStd.substr(0,4));
-            if (prefixValue < 1000 && inputs.count(prefixValue) > 0) {
-                Input input = inputs[prefixValue];
+            if (const int prefixValue = stoi(stringStd.substr(0, 4));
+                prefixValue < 1000 && inputs.count(prefixValue) > 0) {
+                const Input input = inputs[prefixValue];
                 emit logMessage(
-                        "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),
-                        LogLevel::DEBUGLOG);
-                switch(input.getType()){
+                    "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),
+                    DEBUGLOG);
+                switch (input.getType()) {
                     case BASICCOMMAND: {
                         sendBasicCommand(input.getPrefix(), stringStd);
                         break;
@@ -503,128 +567,36 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
                         break;
                     }
                     case SETCOMS: {
-                        int value = Dec2Bcd((stoi(stringStd.substr(4,10))) / 10);
+                        const int value = Dec2Bcd((stoi(stringStd.substr(4,10))) / 10);
                         sendBasicCommandValue(input.getPrefix(), value);
                         break;
                     }
                     case SETINT: {
-                        sendBasicCommandValue(input.getPrefix(), stoi(stringStd.substr(4,10)));
+                        sendBasicCommandValue(input.getPrefix(), stoi(stringStd.substr(4, 10)));
                         break;
                     }
                     default: {
-                        sendBasicCommand((SIMCONNECT_CLIENT_EVENT_ID) input.getPrefix(), stringToParse);
+                        sendBasicCommand(static_cast<SIMCONNECT_CLIENT_EVENT_ID>(input.getPrefix()), stringToParse);
                         break;
                     }
                 }
-            } else {
-                switch (prefixValue) {
-                    case 198: {
-                        set_prop_values(stringToParse);
-                        break;
-                    }
-
-                    case 199: {
-                        setEngineValues(stringToParse);
-                        break;
-                    }
-
-                    case 115: {
-                        setMixtureValues(stringToParse);
-                        break;
-                    }
-
-                    case 103: {
-                        controlYoke(stringToParse);
-                        break;
-                    }
-
-                    case 100: {
-                        SimConnect_TransmitClientEvent(
-                                connect, SIMCONNECT_OBJECT_ID_USER,
-                                100, setComs(stringToParse, 1),
-                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-
-                        break;
-                    }
-                    case 102: {
-                        int value = stoi(stringStd.substr(4, 10));
-                        emit logMessage("Converted data com 2: " + Dec2Bcd(value / 10), LogLevel::DEBUGLOG);
-                        SimConnect_TransmitClientEvent(
-                                connect, SIMCONNECT_OBJECT_ID_USER,
-                                102, Dec2Bcd(value / 10),
-                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                        if (value % (value / 10) == 5 || value % (value / 10) == 85) {
-                            SimConnect_TransmitClientEvent(
-                                    connect, SIMCONNECT_OBJECT_ID_USER,
-                                    121, 0,
-                                    SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                    SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                        }
-                        break;
-                    }
-
-
-                    case 202: {
-                        std::string value =
-                                std::string(stringStd.substr(4, 8));
-                        SimConnect_TransmitClientEvent(
-                                connect, 0, 202,
-                                Dec2Bcd(stoi(value)), SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                        break;
-                    }
-
-                        // TO DO FUNCTION ON OFF Battery
-                    case 405: {
-                        SimConnect_TransmitClientEvent(
-                                connect, 0, 405, 1,
-                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                        break;
-                    }
-                    case 406: {
-                        SimConnect_TransmitClientEvent(
-                                connect, 0, 406, 2,
-                                SIMCONNECT_GROUP_PRIORITY_HIGHEST,
-                                SIMCONNECT_EVENT_FLAG_GROUPID_IS_PRIORITY);
-                        break;
-                    }
-
-                    case 900: {
-                        setElevatorTrim(stringToParse);
-                        break;
-                    }
-                    case 901: {
-                        setRudder(stringToParse);
-                        break;
-                    }
-                    case 902: {
-                        setBrakeAxis(stringToParse);
-                        break;
-                    }
-                    default: {
-                        int value = 0;
-                        bool valFound = stringStd.size() > 6;
-                        if (valFound) {
-                            value = stoi(stringStd.substr(4));
-                        }
-
-                        sendWASMCommand(prefixValue, value);
-                        break;
-                    }
-
+            }
+            else {
+                if (funcMap.find(prefixValue) != funcMap.end()) {
+                    funcMap[prefixValue](stringToParse);
+                }
+                else {
+                    defaultFunc(stringToParse);
                 }
             }
         }
-        catch (std::exception &e) {
+        catch (std::exception&e) {
             emit logMessage(
-                    "Received data: " + std::string(stringStd) + " " + e.what(),
-                    LogLevel::ERRORLOG);
+                "Received data: " + std::string(stringStd) + " " + e.what(),
+                LogLevel::ERRORLOG);
         }
     }
+
+
+    // Use the function map
 }
-
-
-
