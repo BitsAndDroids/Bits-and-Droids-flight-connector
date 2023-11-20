@@ -112,7 +112,16 @@ set(PROJECT_SOURCES
         elements/Element.cpp elements/Element.h
         dashboard/Elements/ComPortWidget.cpp dashboard/Elements/ComPortWidget.h
         dashboard/elements/ComPortButtonRow.cpp dashboard/elements/ComPortButtonRow.h
-        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h settings/ComSettingsHandler.cpp settings/ComSettingsHandler.h settings/ServiceSettingsHandler.cpp settings/ServiceSettingsHandler.h models/Category.cpp models/Category.h)
+        dashboard/elements/MenuBar.cpp dashboard/elements/MenuBar.h dashboard/controller/DashboardController.cpp dashboard/controller/DashboardController.h dashboard/handlers/WASMHandler.cpp dashboard/handlers/WASMHandler.h settings/migrations/Migration.h settings/migrations/2022092601.h settings/ComSettingsHandler.cpp settings/ComSettingsHandler.h settings/ServiceSettingsHandler.cpp settings/ServiceSettingsHandler.h models/Category.cpp models/Category.h
+        dashboard/elements/PresetWidget.cpp
+        dashboard/controller/PresetWidgetController.cpp
+        dashboard/controller/PresetWidgetController.h
+        dashboard/models/Preset.cpp
+        dashboard/models/Preset.h
+        settings/PresetSettingsHandler.cpp
+        settings/PresetSettingsHandler.h
+        dashboard/elements/PresetRow.cpp
+        dashboard/elements/PresetRow.h)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

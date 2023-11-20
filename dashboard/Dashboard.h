@@ -20,6 +20,7 @@
 
 #include "serial/SerialPort.hpp"
 #include "constants.h"
+#include "controller/PresetWidgetController.h"
 #include "services/ServiceWorker.h"
 #include "dashboard/controller/DashboardController.h"
 #include "dashboard/Elements/MenuBar.h"
@@ -51,6 +52,7 @@ public slots:
 private:
 
     DashboardController controller = DashboardController(this);
+    PresetWidgetController presetWidgetController = PresetWidgetController(this);
     ServiceWorker serviceWorker = ServiceWorker();
     ComPortWidgetController comPortWidgetController = ComPortWidgetController(this, &serviceWorker);
 

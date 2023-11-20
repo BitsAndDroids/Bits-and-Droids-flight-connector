@@ -3,7 +3,6 @@
 #include "dashboard/Dashboard.h"
 #include "settings/settingshandler.h"
 #include "rungaurd/RunGuard.h"
-#include "services/InstallationService.h"
 #include "logging/Logger.h"
 
 

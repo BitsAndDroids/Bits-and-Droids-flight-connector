@@ -65,7 +65,7 @@ SetDetails* SetDetails::generateSetDetails(Set setToShow) {
     this->setLayout(setDetailsContainerLayout);
     setDetailsContainerLayout->setAlignment({Qt::AlignTop, Qt::AlignLeft});
     this->layout()->setAlignment({Qt::AlignTop, Qt::AlignLeft});
-    this->layout()->addWidget(new MStyleLabels(setToShow.getSetName(), StyleEnum::HEADER));
+    this->layout()->addWidget(new MStyleLabels(setToShow.getSetName(), StyleEnum::H1_LIGHT));
     this->layout()->addWidget(generateGridLayout());
     this->setFixedWidth(375);
     this->setObjectName("setDetailsContainer");

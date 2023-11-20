@@ -9,7 +9,7 @@
 #include "dashboard/Elements/ComPortWidget.h"
 
 #include "dashboard/controller/DashboardController.h"
-
+#include "elements/PresetWidget.h"
 
 
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
@@ -22,22 +22,25 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     menuBar = new MenuBar(this, &serviceWorker);
 
     this->setMenuBar(menuBar);
-    auto mainVLayout = new QVBoxLayout();
-    mainVLayout->setAlignment(Qt::AlignTop);
+    auto mainHLayout = new QHBoxLayout();
+    auto comportVLayout = new QVBoxLayout();
+    comportVLayout->setAlignment(Qt::AlignTop);
 
-    centralWidget->setLayout(mainVLayout);
+    centralWidget->setLayout(mainHLayout);
 
     qRegisterMetaType<QList<QString>>("QList<QString>");
 
     centralWidget->setStyleSheet("QWidget#centralWidget {background-color: #487f94;}");
 
+
     //CONTROLLER
-    auto dashboardController = new DashboardController(this);
+    auto presetWidget = PresetWidget(this, &presetWidgetController);
+    mainHLayout->addWidget(presetWidget.generateElement(), Qt::AlignTop);
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
     connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
-    mainVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
+    comportVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
     comPortWidgetController.initComRows();
 
     //CONNECTION ICONS
@@ -71,7 +74,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     connectionRow->addWidget(wasmCon);
     connectionRow->addWidget(wasmLabel);
 
-    mainVLayout->addLayout(connectionRow);
+    comportVLayout->addLayout(connectionRow);
     this->layout()->setAlignment(Qt::AlignTop);
 
     //After every UI element is added, the controller can be initialized
@@ -85,6 +88,7 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     controller.initController();
     connect(menuBar, &MenuBar::updateEventFile, &controller, &DashboardController::updateEventFile);
 
+    mainHLayout->addLayout(comportVLayout);
     setIcon();
 }
 

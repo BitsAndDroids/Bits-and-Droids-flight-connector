@@ -8,11 +8,15 @@
 
 class SettingsHandler {
 public:
+    virtual ~SettingsHandler() = default;
+
     SettingsHandler();
 
     virtual void storeValue(QString group, QString key, QVariant value);
 
     virtual QVariant *retrieveSetting(const QString& group, const QString& key);
+
+    QVariantList* getGroup(QString group);
 
     QStringList *retrieveKeys(QString group);
 

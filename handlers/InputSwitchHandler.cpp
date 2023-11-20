@@ -21,9 +21,7 @@
 #include "enums/CurveTypeEnum.h"
 #include <models/aircraft/Axis.h>
 #include <QFile>
-#include <QJsonParseError>
 #include <QJsonObject>
-#include <QJsonArray>
 #include <utility>
 #include <QDebug>
 
@@ -402,7 +400,7 @@ void InputSwitchHandler::setBrakeAxis(std::string stringToSet) {
 void InputSwitchHandler::setComCase(std::string s, int command) {
     const std::map<int, int> uptickLookupTable = {
         {102, 121},
-        {100, }
+        {100, 122}
     };
     int value = stoi(s.substr(4, 10));
     emit logMessage("Converted data com 2: " + Dec2Bcd(value / 10), LogLevel::DEBUGLOG);

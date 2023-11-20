@@ -17,8 +17,7 @@ void DashboardController::initController(){
     connect(this, &DashboardController::updateEventFile, serviceWorker, &ServiceWorker::updateEventFile);
     SettingsHandler settingsHandler = SettingsHandler();
     settingsHandler.checkEventFilePresent();
-    InstallationService installationService = InstallationService();
-    if(installationService.getUpdatesAvailable()){
+    if(InstallationService installationService = InstallationService(); installationService.getUpdatesAvailable()){
         emit updateAvailable();
     }
 }

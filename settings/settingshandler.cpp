@@ -51,6 +51,16 @@ QVariant *SettingsHandler::retrieveSetting(const QString &group, const QString &
     return value;
 }
 
+QVariantList *SettingsHandler::getGroup(QString group) {
+    settings->beginGroup(group);
+    QStringList keys = settings->childKeys();
+    auto *list = new QVariantList();
+    for (const auto & key : keys) {
+        list->append(settings->value(key));
+    }
+    return list;
+}
+
 QVariant *SettingsHandler::retrieveSubSetting(QString group, QString subGroup,
                                               QString key) {
     settings->beginGroup(group);
