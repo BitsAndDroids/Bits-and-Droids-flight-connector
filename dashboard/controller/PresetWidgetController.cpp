@@ -11,8 +11,11 @@ PresetWidgetController::PresetWidgetController(QWidget *parent) {
     qDebug() << "PresetWidgetController::PresetWidgetController()";
     qDebug() << "Parent: " << this->parent;
     const Preset preset = Preset("Custom", std::map<std::string, int>({{"com1", 1}}));
+    const Preset testPreset = Preset(" Test", std::map<std::string, int>({{"com1", 1}}));
+
     auto* presetSettingsHandler = new PresetSettingsHandler();
     presetSettingsHandler->savePreset(preset);
+    presetSettingsHandler->savePreset(testPreset);
 }
 
 void PresetWidgetController::saveDefaultPreset(Preset preset) {
