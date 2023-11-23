@@ -41,10 +41,10 @@ PathHandler::PathHandler() {
       QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) +
       "/events.txt");
 
-  if (!settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+  if (!settingsHandler.getSettingValue("Settings", "communityFolderPathLabel")
            ->isNull()) {
     QString pathFound =
-        settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+        settingsHandler.getSettingValue("Settings", "communityFolderPathLabel")
             ->toString();
     setCommunityFolderPath(pathFound);
   }

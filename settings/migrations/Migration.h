@@ -26,9 +26,9 @@ public:
         auto targetKeys = settingsHandler.retrieveKeys(targetGroup);
         int targetIndexCounter = (targetKeys->empty()) ? 0 : targetKeys->at(targetKeys->size()-1).toInt() + 1;
         for (auto &key : *keys) {
-            auto value = settingsHandler.retrieveSetting(group, key);
+            auto value = settingsHandler.getSettingValue(group, key);
             settingsHandler.removeSetting(group,key);
-            settingsHandler.storeValue(targetGroup, QString::number(targetIndexCounter), *value);
+            settingsHandler.storeSettingValue(targetGroup, QString::number(targetIndexCounter), *value);
             targetIndexCounter++;
         }
     };

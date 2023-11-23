@@ -198,7 +198,7 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
     if (comComboBox != nullptr) {
       auto lastComSaved =
           settingsHandler
-              .retrieveSetting("comPorts", QString::number(i))
+              .getSettingValue("comPorts", QString::number(i))
               ->toString()
               .mid(4);
       if (getComboxIndex(comComboBox, lastComSaved) != -10) {
@@ -212,15 +212,15 @@ void ComPortWidgetController::restoreStoredValuesComboBoxes() {
       auto comboBox =
           parent->findChild<ModeIndexCombobox *>("setBox" + QString::number(i));
       if (!settingsHandler
-          .retrieveSetting("comSets", QString::number(i))
+          .getSettingValue("comSets", QString::number(i))
           ->isNull()) {
         //If the saved setting is not Set to "no" which indicates No Set saved for inputs only in 'dual' mode
         if (settingsHandler
-            .retrieveSetting("comSets", QString::number(i))
+            .getSettingValue("comSets", QString::number(i))
             ->toString() != "-1") {
           auto lastSetId =
               settingsHandler
-                  .retrieveSetting("comSets", QString::number(i))
+                  .getSettingValue("comSets", QString::number(i))
                   ->toString();
           auto setFound = setHandler.getSetById(lastSetId);
           auto setName = setFound.getSetName();
@@ -259,7 +259,7 @@ void ComPortWidgetController::saveAutoRunStates() {
   auto autoList = getCheckboxesByPattern(QRegularExpression("auto"));
   for (auto &cb : autoList) {
     QString index = QString::number(cb->getIndex());
-    settingsHandler.storeValue("dualARIndex", index, cb->isChecked());
+    settingsHandler.storeSettingValue("dualARIndex", index, cb->isChecked());
   }
 }
 

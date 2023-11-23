@@ -1,10 +1,7 @@
 #include "Dashboard.h"
 
 #include <qserialportinfo.h>
-#include <QDir>
-#include <string>
 
-#include "logging/MessageCaster.h"
 #include "dashboard/Elements/MenuBar.h"
 #include "dashboard/Elements/ComPortWidget.h"
 
@@ -14,6 +11,7 @@
 
 Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     auto centralWidget = new QWidget(this);
+    centralWidget->setStyleSheet("#presetWidget {background-color: #487f94;}");
     this->setCentralWidget(centralWidget);
 
     centralWidget->setObjectName("centralWidget");
@@ -34,8 +32,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
 
     //CONTROLLER
-    auto presetWidget = PresetWidget(this, &presetWidgetController);
-    mainHLayout->addWidget(presetWidget.generateElement(), Qt::AlignTop);
+    auto presetWidget = new PresetWidget(this);
+    mainHLayout->addWidget(presetWidget->generateElement(), Qt::AlignTop);
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
@@ -97,7 +95,7 @@ void Dashboard::initWithAutorun(){
 }
 
 void Dashboard::closeEvent(QCloseEvent *event) {
-    if (settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->toBool()) {
+    if (settingsHandler.getSettingValue("Settings", "cbCloseToTray")->toBool()) {
         if (closing) {
             event->accept();
             exitProgram();

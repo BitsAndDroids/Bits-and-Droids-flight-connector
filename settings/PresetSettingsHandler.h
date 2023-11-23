@@ -14,6 +14,10 @@ public:
     std::vector<Preset> loadPresets();
     void savePreset(Preset preset);
 
+    void setDefaultPreset(Preset preset);
+
+    QString getDefaulPreset();
+
 private:
     static QVariantMap serializePreset(const Preset& preset);
     static Preset deserializePreset(QVariantMap map);

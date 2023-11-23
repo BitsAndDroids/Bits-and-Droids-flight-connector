@@ -25,9 +25,9 @@ SerialPort::SerialPort(const char *portName) {
                   0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
   arduinoWaitTime =
-      settingsHandler.retrieveSetting("com", "waitXMsBeforeSendingLineEdit")
+      settingsHandler.getSettingValue("com", "waitXMsBeforeSendingLineEdit")
           ->toInt();
-  if (settingsHandler.retrieveSetting("com", "waitXMsBeforeSendingLineEdit")
+  if (settingsHandler.getSettingValue("com", "waitXMsBeforeSendingLineEdit")
           ->isNull()) {
     arduinoWaitTime = 15;
   }
@@ -45,11 +45,11 @@ SerialPort::SerialPort(const char *portName) {
     if (!GetCommState(this->handler, &dcbSerialParameters)) {
       std::cerr << "Failed to get current serial parameters\n";
     } else {
-      if (settingsHandler.retrieveSetting("com", "CBR")->isNull()) {
+      if (settingsHandler.getSettingValue("com", "CBR")->isNull()) {
         dcbSerialParameters.BaudRate = CBR_115200;
       } else {
         dcbSerialParameters.BaudRate =
-            settingsHandler.retrieveSetting("com", "CBR")->toInt();
+            settingsHandler.getSettingValue("com", "CBR")->toInt();
       }
 
       dcbSerialParameters.ByteSize = 8;

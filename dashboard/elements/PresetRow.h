@@ -12,14 +12,16 @@
 class PresetRow: public QWidget, public Element {
     Q_OBJECT
 public:
-    PresetRow(QMainWindow* parent, Preset preset);
+    PresetRow(QWidget* parent, Preset preset);
 
     QWidget* generateElement();
-
+    void setActiveStyle(bool active);
     void setActive();
+    signals:
+    void saveDefaultPresetSignal(Preset preset);
 
 private:
-    QMainWindow *parent;
+    QWidget *parent;
     Preset preset;
     QWidget *widget;
 };

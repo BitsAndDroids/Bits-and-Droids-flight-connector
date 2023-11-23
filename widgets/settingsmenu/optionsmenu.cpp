@@ -42,30 +42,30 @@ OptionsMenu::OptionsMenu(QWidget* parent)
         foreach(const QString &key, keys) {
             if (uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)) {
                 uiOptions->formLayoutWidget->findChild<QLineEdit *>(key)->setText(
-                    settingsHandler.retrieveSetting("Settings", key)->toString());
+                    settingsHandler.getSettingValue("Settings", key)->toString());
             }
         }
-        if (!settingsHandler.retrieveSetting("Settings", "CBR")->isNull()) {
+        if (!settingsHandler.getSettingValue("Settings", "CBR")->isNull()) {
             uiOptions->baudComboBox->setCurrentText(
-                settingsHandler.retrieveSetting("Setting", "CBR")->toString());
+                settingsHandler.getSettingValue("Setting", "CBR")->toString());
         }
     }
 
     addCheckboxes();
 
     // Loading the saved checkbox states
-    if (!settingsHandler.retrieveSetting("Settings", "cbCloseToTray")->isNull()) {
+    if (!settingsHandler.getSettingValue("Settings", "cbCloseToTray")->isNull()) {
         this->findChild<QCheckBox *>("cbCloseToTray")
                 ->setChecked(
-                    settingsHandler.retrieveSetting("Settings", "cbCloseToTray")
+                    settingsHandler.getSettingValue("Settings", "cbCloseToTray")
                     ->toBool());
         this->findChild<QCheckBox *>("cbAutorun")
                 ->setChecked(
-                    settingsHandler.retrieveSetting("Settings", "cbAutorun")
+                    settingsHandler.getSettingValue("Settings", "cbAutorun")
                     ->toBool());
         this->findChild<QCheckBox *>("cbRunOnMFSStartup")
                 ->setChecked(
-                    settingsHandler.retrieveSetting("Settings", "cbRunOnMFSStartup")
+                    settingsHandler.getSettingValue("Settings", "cbRunOnMFSStartup")
                     ->toBool());
     }
 
@@ -97,21 +97,21 @@ OptionsMenu::OptionsMenu(QWidget* parent)
         foreach(const QString &key, rangeKeys) {
             if (uiOptions->widgetRanges->findChild<QLineEdit *>(key)) {
                 uiOptions->widgetRanges->findChild<QLineEdit *>(key)->setText(
-                    settingsHandler.retrieveSetting("Ranges", key)->toString());
+                    settingsHandler.getSettingValue("Ranges", key)->toString());
             }
         }
     }
-    if (!settingsHandler.retrieveSetting("Ranges", "maxReverseId")->isNull()) {
+    if (!settingsHandler.getSettingValue("Ranges", "maxReverseId")->isNull()) {
         int value =
-                settingsHandler.retrieveSetting("Ranges", "maxReverseId")->toInt();
+                settingsHandler.getSettingValue("Ranges", "maxReverseId")->toInt();
         if (value != -1) {
             uiOptions->buttonGroup->button(value)->click();
         }
     }
-    if (!settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+    if (!settingsHandler.getSettingValue("Settings", "communityFolderPathLabel")
         ->isNull()) {
         communityFolderPathLabel->setText(
-            settingsHandler.retrieveSetting("Settings", "communityFolderPathLabel")
+            settingsHandler.getSettingValue("Settings", "communityFolderPathLabel")
             ->toString());
         communityFolderPathLabel->adjustSize();
     }
@@ -125,7 +125,7 @@ OptionsMenu::~OptionsMenu() {
 void OptionsMenu::saveCbs() {
     QList<QCheckBox *> allCheckBoxes = this->findChildren<QCheckBox *>();
     for (auto&allCheckBox: allCheckBoxes) {
-        settingsHandler.storeValue("Settings", allCheckBox->objectName(),
+        settingsHandler.storeSettingValue("Settings", allCheckBox->objectName(),
                                    allCheckBox->isChecked());
     }
     checkMFSAutorunEnabled();
@@ -138,7 +138,7 @@ void OptionsMenu::saveLabels() {
     for (auto allLabel: allLabels) {
         QString name = allLabel->objectName();
         qDebug() << "Clicked" << name;
-        settingsHandler.storeValue("Settings", name, allLabel->text());
+        settingsHandler.storeSettingValue("Settings", name, allLabel->text());
     }
 }
 
@@ -147,12 +147,12 @@ void OptionsMenu::saveRanges() {
             uiOptions->widgetRanges->findChildren<QLineEdit *>();
 
     for (auto&rangeLineEdit: rangeLineEdits) {
-        settingsHandler.storeValue("Ranges", rangeLineEdit->objectName(),
+        settingsHandler.storeSettingValue("Ranges", rangeLineEdit->objectName(),
                                    rangeLineEdit->text());
     }
 
     QString idleStr = "Engine " + QString::number(1) + "Min";
-    int idleCutoff = settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+    int idleCutoff = settingsHandler.getSettingValue("Ranges", idleStr)->toInt();
     qDebug() << "cut" << idleCutoff;
 
     int value;
@@ -172,26 +172,26 @@ void OptionsMenu::saveRanges() {
             value = -23000;
             break;
     }
-    settingsHandler.storeValue("Ranges", "maxReverseRange", value);
-    settingsHandler.storeValue("Ranges", "maxReverseId", id);
+    settingsHandler.storeSettingValue("Ranges", "maxReverseRange", value);
+    settingsHandler.storeSettingValue("Ranges", "maxReverseId", id);
 }
 
 void OptionsMenu::saveCommunityfolderPath() {
     const auto* communityFolderPath =
             this->findChild<QLabel *>("communityFolderPathLabel");
 
-    settingsHandler.storeValue("Settings", communityFolderPath->objectName(),
+    settingsHandler.storeSettingValue("Settings", communityFolderPath->objectName(),
                                communityFolderPath->text());
     PathHandler::setCommunityFolderPath(communityFolderPath->text());
 }
 
 void OptionsMenu::saveComSettings() {
-    settingsHandler.storeValue("Settings", "CBR",
+    settingsHandler.storeSettingValue("Settings", "CBR",
                                uiOptions->baudComboBox->currentText());
 }
 
 void OptionsMenu::checkMFSAutorunEnabled() {
-    if (settingsHandler.retrieveSetting("Settings", "cbRunOnMFSStartup")
+    if (settingsHandler.getSettingValue("Settings", "cbRunOnMFSStartup")
         ->toBool()) {
         InstallationService::writeToExeXMLMFS2020();
     }

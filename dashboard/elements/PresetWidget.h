@@ -16,9 +16,9 @@
 class PresetWidget : public QWidget, public Element {
     Q_OBJECT
 public:
-    PresetWidget(const QMainWindow* parent, const PresetWidgetController* controller);
+    PresetWidget(const QWidget* parent);
 
-    PresetWidget(QMainWindow* parent, const PresetWidgetController* controller);
+    PresetWidget(QWidget* parent);
 
     QWidget* generateElement();
 
@@ -28,7 +28,7 @@ public:
 
 private:
     const PresetWidgetController * controller = nullptr;
-    QMainWindow * parent = nullptr;
+    QWidget * parent = nullptr;
 
 
 };

@@ -11,29 +11,43 @@
 #include "dashboard/controller/PresetWidgetController.h"
 #include "dashboard/models/Preset.h"
 #include "elements/MStyleLabels.h"
+#include "settings/PresetSettingsHandler.h"
 
-PresetWidget::PresetWidget(QMainWindow* parent, const PresetWidgetController* controller) {
+PresetWidget::PresetWidget(QWidget* parent): QWidget(parent) {
+    this->setObjectName("presetWidget");
+
     this->parent = parent;
-    this->controller = controller;
+    //this->setStyleSheet("");
+
 }
 
 QWidget* PresetWidget::generateElement() {
-    auto* widget = new QWidget(parent);
-    widget->setObjectName("presetWidget");
-    widget->setStyleSheet("#presetWidget { "
-        "background-color: #fff; "
+    this->setParent(this->parent);
+    this->controller = new PresetWidgetController(this);
+    const auto styleWidget = new QWidget(this);
+    styleWidget->setObjectName("presetWidget");
+    qDebug()<<"className: "<<this->metaObject()->className();
+    qDebug()<<"type: "<<this->metaObject()->metaType().name();
+
+    styleWidget->setStyleSheet("QWidget#presetWidget { "
+        "background-color: #fff!important; "
         "border-radius: 5px; "
         "}");
-
-    widget->setGeometry(0, 0, 100, 100);
+    qDebug() << "Applied Styles:" << this->styleSheet();
+    this->setGeometry(0, 0, 100, 100);
     const auto layout = new QVBoxLayout();
 
     layout->setAlignment(Qt::AlignTop);
+    qDebug()<< this->styleSheet();
     generatePresetRows(layout);
     qDebug()<< "PresetWidget::generateElement()";
-    widget->setLayout(layout);
-    widget->show();
-    return widget;
+    styleWidget->setLayout(layout);
+    const auto newLayout = new QHBoxLayout();
+    newLayout->addWidget(styleWidget);
+    this->setLayout(newLayout);
+    this->show();
+
+    return this;
 }
 
 std::vector<Preset> PresetWidget::loadPresets() {
@@ -52,9 +66,13 @@ void PresetWidget::generatePresetRows(QVBoxLayout* layout) {
         return;
     }
     layout->addWidget(new MStyleLabels("PRESETS", H2));
+    const auto presetSettingHandler = new PresetSettingsHandler();
     for (const Preset& preset : presets) {
-        auto *row = new PresetRow(parent, preset);
+        auto *row = new PresetRow(this, preset);
         layout->addWidget(row->generateElement());
-        row->setActive();
+        connect(row, SIGNAL(saveDefaultPresetSignal(Preset)), controller, SLOT(saveDefaultPreset(Preset)));
+        if(QString::fromStdString(preset.getName()) == presetSettingHandler->getDefaulPreset()) {
+            row->setActiveStyle(true);
+        }
     }
 }

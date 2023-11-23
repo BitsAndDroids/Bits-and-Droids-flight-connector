@@ -8,14 +8,14 @@ ServiceSettingsHandler::ServiceSettingsHandler() {
 
 }
 QString ServiceSettingsHandler::getCommunityFolderPath() {
-    return retrieveSetting("Settings","communityFolderPathLabel")->toString();
+    return getSettingValue("Settings","communityFolderPathLabel")->toString();
 }
 
 bool ServiceSettingsHandler::searchDefaultCommunityLocation() {
     QString test = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     QDir dir = QDir(test + R"(\Packages\Microsoft.FlightSimulator_8wekyb3d8bbwe\LocalCache\Packages\Community)");
     if(dir.exists()){
-        storeValue("Settings","communityFolderPathLabel",dir.absolutePath());
+        storeSettingValue("Settings","communityFolderPathLabel",dir.absolutePath());
     }
     return dir.exists();
 }

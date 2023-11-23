@@ -41,7 +41,7 @@ void WASMHandler::installWasm() {
 bool WASMHandler::isWASMModuleInstalled() {
     try{
       ServiceSettingsHandler serviceSettingsHandler = ServiceSettingsHandler();
-      if(serviceSettingsHandler.retrieveSetting("Settings","communityFolderPathLabel")->toString() == "" && !serviceSettingsHandler.searchDefaultCommunityLocation()){
+      if(serviceSettingsHandler.getSettingValue("Settings","communityFolderPathLabel")->toString() == "" && !serviceSettingsHandler.searchDefaultCommunityLocation()){
           return false;
       }
       QDir dir(serviceSettingsHandler.getCommunityFolderPath() + "/BitsAndDroidsModule");

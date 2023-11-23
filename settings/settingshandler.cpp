@@ -10,7 +10,7 @@ SettingsHandler::SettingsHandler() {
 
 }
 
-void SettingsHandler::storeValue(QString group, QString key, QVariant value) {
+void SettingsHandler::storeSettingValue(QString group, QString key, QVariant value) {
     settings->beginGroup(group);
     settings->setValue(key, value);
     settings->endGroup();
@@ -32,7 +32,7 @@ void SettingsHandler::checkEventFilePresent() {
 void SettingsHandler::storeSubGroup(QString group, QString subGroup,
                                     QString key, QVariant value) {
     settings->beginGroup(group);
-    storeValue(std::move(subGroup), std::move(key), std::move(value));
+    storeSettingValue(std::move(subGroup), std::move(key), std::move(value));
     settings->endGroup();
 }
 
@@ -43,7 +43,7 @@ QStringList *SettingsHandler::retrieveSubKeys(QString group, QString subGroup) {
     return keys;
 }
 
-QVariant *SettingsHandler::retrieveSetting(const QString &group, const QString &key) {
+QVariant *SettingsHandler::getSettingValue(const QString &group, const QString &key) {
     auto *value = new QVariant();
     settings->beginGroup(group);
     *value = settings->value(key);
@@ -64,7 +64,7 @@ QVariantList *SettingsHandler::getGroup(QString group) {
 QVariant *SettingsHandler::retrieveSubSetting(QString group, QString subGroup,
                                               QString key) {
     settings->beginGroup(group);
-    QVariant *value = retrieveSetting(std::move(subGroup), std::move(key));
+    QVariant *value = getSettingValue(std::move(subGroup), std::move(key));
     settings->endGroup();
     return value;
 }
@@ -113,10 +113,10 @@ void SettingsHandler::migrate() {
     migrations->append(migration2022092601);
 
     for (auto &migration: *migrations) {
-        if (migration->getMigrationId() > retrieveSetting("migrations", "id")->toInt()) {
+        if (migration->getMigrationId() > getSettingValue("migrations", "id")->toInt()) {
             migration->migrate();
-            storeValue("migrations", "id", QString::number(migration->getMigrationId()));
-            storeValue("migrations", "date", QDateTime::currentDateTime().toString());
+            storeSettingValue("migrations", "id", QString::number(migration->getMigrationId()));
+            storeSettingValue("migrations", "date", QDateTime::currentDateTime().toString());
         }
     }
 }

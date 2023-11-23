@@ -13,10 +13,10 @@ ComSettingsHandler::ComSettingsHandler() {
 
 void ComSettingsHandler::saveComs(QList<QPair<QString,int>> coms) {
     QJsonObject obj = comListToJsonObject(coms);
-    storeValue("com","bundles", obj);
+    storeSettingValue("com","bundles", obj);
     for (int i = 0; i < coms.size(); ++i) {
-        storeValue("comPorts",QString::number(i),coms[i].first);
-        storeValue("comSets",QString::number(i),coms[i].second);
+        storeSettingValue("comPorts",QString::number(i),coms[i].first);
+        storeSettingValue("comSets",QString::number(i),coms[i].second);
     }
 }
 
@@ -26,23 +26,23 @@ void ComSettingsHandler::adjustIndexes(){
     auto autoRunStates = retrieveKeys("autoRunStates");
     if(comPorts != nullptr) {
         for (int i = 0; i < comPorts->size(); i++) {
-            auto comValue = retrieveSetting("comPorts", comPorts->at(i))->toString();
+            auto comValue = getSettingValue("comPorts", comPorts->at(i))->toString();
             removeSetting("comPorts", comPorts->at(i));
-            storeValue("comPorts", QString::number(i), comValue);
+            storeSettingValue("comPorts", QString::number(i), comValue);
         }
     }
     if(comSets != nullptr) {
         for (int i = 0; i < comSets->size(); i++) {
-            auto setValue = retrieveSetting("comSets", comSets->at(i))->toInt();
+            auto setValue = getSettingValue("comSets", comSets->at(i))->toInt();
             removeSetting("comSets", comSets->at(i));
-            storeValue("comSets", QString::number(i), setValue);
+            storeSettingValue("comSets", QString::number(i), setValue);
         }
     }
     if(autoRunStates != nullptr) {
         for (int i = 0; i < autoRunStates->size(); i++) {
-            auto autoRunValue = retrieveSetting("autoRunStates", autoRunStates->at(i))->toBool();
+            auto autoRunValue = getSettingValue("autoRunStates", autoRunStates->at(i))->toBool();
             removeSetting("autoRunStates", autoRunStates->at(i));
-            storeValue("autoRunStates", QString::number(i), autoRunValue);
+            storeSettingValue("autoRunStates", QString::number(i), autoRunValue);
         }
     }
 }
@@ -54,7 +54,7 @@ void ComSettingsHandler::removeComRowSettings(QString index) {
 }
 
 QList<QPair<QString, int>> ComSettingsHandler::loadComs() {
-    auto bundleJsonArray = retrieveSetting("com","bundles")->toJsonObject();
+    auto bundleJsonArray = getSettingValue("com","bundles")->toJsonObject();
     return jsonObjectToComList(bundleJsonArray);
 }
 

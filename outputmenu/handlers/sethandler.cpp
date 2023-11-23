@@ -15,18 +15,18 @@ Set *SetHandler::saveSet(Set *setToSave) {
   if (setToSave->getID() != -1) {
     key = QString::number(setToSave->getID());
   } else {
-    if (settingsHandler.retrieveSetting("setKeys", "lastId")->isNull()) {
+    if (settingsHandler.getSettingValue("setKeys", "lastId")->isNull()) {
       counter = 0;
     } else {
       counter =
-          settingsHandler.retrieveSetting("setKeys", "lastId")->toInt() + 1;
+          settingsHandler.getSettingValue("setKeys", "lastId")->toInt() + 1;
     }
     setToSave->setSetId(counter);
-    settingsHandler.storeValue("setKeys", "lastId", setToSave->getID());
+    settingsHandler.storeSettingValue("setKeys", "lastId", setToSave->getID());
     key = QString::number(counter);
   }
   QVariant jsonVariant = *setToJSON(setToSave);
-  settingsHandler.storeValue("sets", key, jsonVariant);
+  settingsHandler.storeSettingValue("sets", key, jsonVariant);
   setList = loadSets();
   return setToSave;
 }
@@ -36,7 +36,7 @@ QList<Set> *SetHandler::loadSets() {
   auto *setListFound = new QList<Set>();
   QStringList *keys = settingsHandler.retrieveKeys("sets");
   for (const auto &key : *keys) {
-    QVariant *varFound = settingsHandler.retrieveSetting("sets", key);
+    QVariant *varFound = settingsHandler.getSettingValue("sets", key);
     QJsonDocument foundDoc = varFound->toJsonDocument();
     QJsonObject foundObj = foundDoc.object();
     Set savedSet = fromJson(&foundDoc);
@@ -66,7 +66,7 @@ void SetHandler::updateSets() {
 Set SetHandler::getSetById(QString id) {
   Set setFound;
   QJsonDocument foundSetJson =
-      settingsHandler.retrieveSetting("sets", id)->toJsonDocument();
+      settingsHandler.getSettingValue("sets", id)->toJsonDocument();
   setFound = fromJson(&foundSetJson);
   return setFound;
 }

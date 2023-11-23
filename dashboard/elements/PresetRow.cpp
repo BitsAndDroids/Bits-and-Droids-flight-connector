@@ -8,42 +8,52 @@
 
 #include "elements/MPushButton.h"
 #include "elements/MStyleLabels.h"
+#include "settings/PresetSettingsHandler.h"
 
-PresetRow::PresetRow(QMainWindow* parent, Preset preset) {
+PresetRow::PresetRow(QWidget* parent, Preset preset): QWidget(parent) {
     this->parent = parent;
-    this->preset = preset;
+    this->preset = std::move(preset);
+    this->setStyleSheet("");
+    this->setObjectName("presetRowWidget");
 }
 
 QWidget* PresetRow::generateElement() {
-    widget = new QWidget(parent);
+    this->setParent(this->parent);
+    const auto styleWidget = new QWidget(this);
+    styleWidget->setObjectName("presetRowWidget");
 
     auto *layout = new QHBoxLayout();
+    auto *styleLayout = new QHBoxLayout();
 
     auto *name = new MStyleLabels(QString::fromStdString(this->preset.getName()), LABEL);
-    auto *setActive = new QPushButton("Set active");
+    auto *setActive = new QPushButton("Set default");
     setActive->connect(setActive, &QPushButton::clicked, this, &PresetRow::setActive);
     auto *deletePreset = new QPushButton("Delete preset");
 
-    layout->addWidget(name);
-    layout->addWidget(setActive);
-    layout->addWidget(deletePreset);
+    styleLayout->addWidget(name);
+    styleLayout->addWidget(setActive);
+    styleLayout->addWidget(deletePreset);
 
-    widget->setLayout(layout);
-    widget->setObjectName("presetRowWidget");
-    return widget;
+    styleWidget->setLayout(styleLayout);
+    layout->addWidget(styleWidget);
+
+   this->setLayout(layout);
+
+    return this;
 }
 
 void PresetRow::setActive() {
-    this->preset.setActive(!this->preset.isActive());
-    //set background of this widget to green
-    if(widget) {
-        if(this->preset.isActive()) {
-            widget->setStyleSheet("#presetRowWidget {border-color: #9fd980; border-radius: 5px; border-width: 2px; border-style: solid;}");
+    emit(saveDefaultPresetSignal(this->preset));
+}
+
+void PresetRow::setActiveStyle(bool active) {
+    if(this) {
+        if(active) {
+            this->setStyleSheet("QWidget#presetRowWidget {border-color: #9fd980; border-radius: 5px; border-width: 2px; border-style: solid;}");
+            qDebug() << "PresetRow::setActiveStyle(true)";
         } else {
-            widget->setStyleSheet("{background-color: #fff}");
+            this->setStyleSheet("QWidget#presetRowWidget {border-color: #9fd980; border-radius: 5px; border-width: 0px; border-style: none;}");
+            qDebug() << "PresetRow::setActiveStyle(false)";
         }
     }
-
-
-
 }

@@ -123,6 +123,8 @@ set(PROJECT_SOURCES
         dashboard/elements/PresetRow.cpp
         dashboard/elements/PresetRow.h)
 
+file(COPY css DESTINATION "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/BitsAndDroidsConnector/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

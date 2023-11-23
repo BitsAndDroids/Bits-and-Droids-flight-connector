@@ -75,58 +75,58 @@ void InputSwitchHandler::setRanges() {
         inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4
     };
 
-    if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+    if (!settingsHandler.getSettingValue("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
             QString minStr = "Engine " + QString::number(i + 1) + "Reverse";
 
-            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+            int minRange = settingsHandler.getSettingValue("Ranges", minStr)->toInt();
             qDebug() << "MIN SET" << minRange;
 
             QString idleStr = "Engine " + QString::number(i + 1) + "Idle cutoff";
             int idleCutoff =
-                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+                    settingsHandler.getSettingValue("Ranges", idleStr)->toInt();
 
             QString maxStr = "Engine " + QString::number(i + 1) + "Max";
-            int maxRange = settingsHandler.retrieveSetting("Ranges", maxStr)->toInt();
+            int maxRange = settingsHandler.getSettingValue("Ranges", maxStr)->toInt();
 
             enginelist[i] = new Engine(minRange, idleCutoff, maxRange, ENGINE, engineEvents[i]);
         }
 
-        if (!settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
+        if (!settingsHandler.getSettingValue("Ranges", "maxReverseRange")
             ->isNull()) {
             reverseAxis =
-                    settingsHandler.retrieveSetting("Ranges", "maxReverseRange")
+                    settingsHandler.getSettingValue("Ranges", "maxReverseRange")
                     ->toFloat();
         }
 
         for (int i = 0; i < constants::supportedMixtureLevers; i++) {
             QString minStr = "Mixture " + QString::number(i + 1) + "Min";
-            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+            int minRange = settingsHandler.getSettingValue("Ranges", minStr)->toInt();
             qDebug() << minRange;
 
             QString idleStr = "Mixture " + QString::number(i + 1) + "Max";
             int maxRange =
-                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+                    settingsHandler.getSettingValue("Ranges", idleStr)->toInt();
 
             mixtureRanges[i] = Axis(minRange, maxRange, mixtureEvents[i]);
         }
         for (int i = 0; i < constants::supportedPropellerLevers; i++) {
             QString minStr = "Propeller " + QString::number(i + 1) + "Min";
-            int minRange = settingsHandler.retrieveSetting("Ranges", minStr)->toInt();
+            int minRange = settingsHandler.getSettingValue("Ranges", minStr)->toInt();
 
             QString idleStr = "Propeller " + QString::number(i + 1) + "Max";
             int maxRange =
-                    settingsHandler.retrieveSetting("Ranges", idleStr)->toInt();
+                    settingsHandler.getSettingValue("Ranges", idleStr)->toInt();
 
             propellerRanges[i] = Axis(minRange, maxRange, propEvents[i]);
         }
         int minFlaps =
-                settingsHandler.retrieveSetting("Ranges", "FlapsMin")->toInt();
+                settingsHandler.getSettingValue("Ranges", "FlapsMin")->toInt();
         int maxFlaps =
-                settingsHandler.retrieveSetting("Ranges", "FlapsMax")->toInt();
+                settingsHandler.getSettingValue("Ranges", "FlapsMax")->toInt();
         flapsRange = Axis(minFlaps, maxFlaps, inputDefinitions.DEFINITION_AXIS_FLAPS_SET);
     }
-    else if (settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
+    else if (settingsHandler.getSettingValue("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {
             enginelist[i] = new Engine(0, 0, 1023, ENGINE, engineEvents[i]);
         }

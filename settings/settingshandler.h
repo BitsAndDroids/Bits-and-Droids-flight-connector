@@ -12,9 +12,9 @@ public:
 
     SettingsHandler();
 
-    virtual void storeValue(QString group, QString key, QVariant value);
+    virtual void storeSettingValue(QString group, QString key, QVariant value);
 
-    virtual QVariant *retrieveSetting(const QString& group, const QString& key);
+    virtual QVariant *getSettingValue(const QString& group, const QString& key);
 
     QVariantList* getGroup(QString group);
 

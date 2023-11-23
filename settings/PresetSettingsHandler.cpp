@@ -18,13 +18,20 @@ std::vector<Preset> PresetSettingsHandler::loadPresets() {
         const auto deserializedPreset = deserializePreset(preset.toMap());
         qDebug() << deserializedPreset.getName().c_str();
         presets.push_back(deserializedPreset);
-
     }
     return presets;
 }
 
 void PresetSettingsHandler::savePreset(Preset preset) {
-    storeValue("presets", QString::fromStdString(preset.getName()), serializePreset(preset));
+    storeSettingValue("presets", QString::fromStdString(preset.getName()), serializePreset(preset));
+}
+
+void PresetSettingsHandler::setDefaultPreset(Preset preset) {
+    storeSettingValue("PresetParameters", "default", QString::fromStdString(preset.getName()));
+}
+
+QString PresetSettingsHandler::getDefaulPreset() {
+    return getSettingValue("PresetParameters", "default")->toString();
 }
 
 QVariantMap PresetSettingsHandler::serializePreset(const Preset& preset) {

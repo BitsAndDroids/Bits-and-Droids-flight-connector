@@ -5,13 +5,46 @@
 #include "PresetWidgetController.h"
 #include <QDebug>
 #include "settings/PresetSettingsHandler.h"
-#include "settings/settingshandler.h"
 
-PresetWidgetController::PresetWidgetController(QMainWindow *parent) {
+PresetWidgetController::PresetWidgetController(QWidget *parent) {
     this->parent = parent;
+    qDebug() << "PresetWidgetController::PresetWidgetController()";
+    qDebug() << "Parent: " << this->parent;
     const Preset preset = Preset("Custom", std::map<std::string, int>({{"com1", 1}}));
     auto* presetSettingsHandler = new PresetSettingsHandler();
     presetSettingsHandler->savePreset(preset);
+}
+
+void PresetWidgetController::saveDefaultPreset(Preset preset) {
+    qDebug() << "PresetWidgetController::saveDefaultPreset()";
+    // caller PresetRow
+    const auto callerRow = dynamic_cast<PresetRow*>(sender());
+    if(callerRow == nullptr) {
+        qDebug() << "Caller row is null";
+        return;
+    }
+    const auto presetSettingsHandler = new PresetSettingsHandler();
+    presetSettingsHandler->setDefaultPreset(std::move(preset));
+    // set active style to false for all rows
+    if(parent != nullptr) {
+        try {
+            qDebug() << parent->objectName();
+            const auto presetRows = parent->findChildren<PresetRow*>();
+            for (const auto& row : presetRows) {
+                setActiveRowStyle(row, false);
+            }
+        } catch (std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+        setActiveRowStyle(callerRow, true);
+    } else {
+        // Handle the case when parent is null
+        std::cerr << "Parent is not defined. Cannot find children." << std::endl;
+    }
+}
+
+void PresetWidgetController::setActiveRowStyle(PresetRow* row, bool active) {
+    row->setActiveStyle(active);
 }
 
 std::vector<Preset> PresetWidgetController::loadPresets() {
