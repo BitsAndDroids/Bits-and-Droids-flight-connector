@@ -1,15 +1,12 @@
 #include "Dashboard.h"
-
 #include <qserialportinfo.h>
-
 #include "dashboard/Elements/MenuBar.h"
 #include "dashboard/Elements/ComPortWidget.h"
-
 #include "dashboard/controller/DashboardController.h"
 #include "elements/PresetWidget.h"
 
 
-Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
+Dashboard::Dashboard(QWidget* parent): QMainWindow(parent) {
     auto centralWidget = new QWidget(this);
     centralWidget->setStyleSheet("#presetWidget {background-color: #487f94;}");
     this->setCentralWidget(centralWidget);
@@ -37,7 +34,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
 
     //ComPortWidget
     auto comPortWidget = ComPortWidget(this, &comPortWidgetController);
-    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
+    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this,
+            &Dashboard::boardConnectionMade);
     comportVLayout->addWidget(comPortWidget.generateElement(), Qt::AlignTop);
     comPortWidgetController.initComRows();
 
@@ -76,7 +74,8 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     this->layout()->setAlignment(Qt::AlignTop);
 
     //After every UI element is added, the controller can be initialized
-    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this, &Dashboard::boardConnectionMade);
+    connect(&comPortWidgetController, &ComPortWidgetController::boardConnectionMade, this,
+            &Dashboard::boardConnectionMade);
     connect(&controller, &DashboardController::exitProgram, this, &Dashboard::exitProgram);
     connect(&controller, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
     connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
@@ -90,20 +89,22 @@ Dashboard::Dashboard(QWidget *parent): QMainWindow(parent){
     setIcon();
 }
 
-void Dashboard::initWithAutorun(){
+void Dashboard::initWithAutorun() {
     comPortWidgetController.start();
 }
 
-void Dashboard::closeEvent(QCloseEvent *event) {
+void Dashboard::closeEvent(QCloseEvent* event) {
     if (settingsHandler.getSettingValue("Settings", "cbCloseToTray")->toBool()) {
         if (closing) {
             event->accept();
             exitProgram();
-        } else {
+        }
+        else {
             this->hide();
             event->ignore();
         }
-    } else {
+    }
+    else {
         exitProgram();
     }
 }
@@ -112,7 +113,8 @@ void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         if (isVisible()) {
             hide();
-        } else {
+        }
+        else {
             show();
             activateWindow();
         }
@@ -121,82 +123,81 @@ void Dashboard::toggleOpen(QSystemTrayIcon::ActivationReason reason) {
 
 void Dashboard::gameConnectionMade(int con) {
     auto gameRadioButton = this->findChild<QRadioButton *>(
-            "gameCon");
+        "gameCon");
 
     if (con == 0) {
         gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "red; border-radius: 7px; height: 12px; width: 12px;}");
     }
     if (con == 1) {
         gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "orange; border-radius: 7px;height: 12px; width: 12px;}");
     }
     if (con == 2) {
         gameRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "green; border-radius: 7px;height: 12px; width: 12px;}");
     }
 }
 
 void Dashboard::boardConnectionMade(int con) {
     auto boardRadioButton = this->findChild<QRadioButton *>(
-            "boardCon");
+        "boardCon");
 
     if (con == 0) {
         boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "red; border-radius: 7px; height: 12px; width: 12px;}");
     }
     if (con == 1) {
         boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "orange; border-radius: 7px;height: 12px; width: 12px;}");
     }
     if (con == 2) {
         boardRadioButton->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "green; border-radius: 7px;height: 12px; width: 12px;}");
     }
 }
 
 void Dashboard::wasmConnectionMade(int con) {
     auto wasmCon = this->findChild<QRadioButton *>(
-            "wasmCon");
+        "wasmCon");
 
     if (con == 0) {
         wasmCon->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "red; border-radius: 7px; height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "red; border-radius: 7px; height: 12px; width: 12px;}");
     }
     if (con == 1) {
         wasmCon->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "orange; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "orange; border-radius: 7px;height: 12px; width: 12px;}");
     }
     if (con == 2) {
         wasmCon->setStyleSheet(
-                "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
-                "green; border-radius: 7px;height: 12px; width: 12px;}");
+            "QRadioButton::indicator{border: 1px solid darkgray; background-color: "
+            "green; border-radius: 7px;height: 12px; width: 12px;}");
     }
 }
 
 Dashboard::~Dashboard() = default;
 
-void Dashboard::setIcon(){
+void Dashboard::setIcon() {
     //TODO IMPLEMENT CHECK IF ICON ALREADY EXISTS
     connect(icon, &QSystemTrayIcon::activated, this, &Dashboard::toggleOpen);
-    auto *quit_action = new QAction("Exit", icon);
+    auto* quit_action = new QAction("Exit", icon);
     connect(quit_action, &QAction::triggered, this, &Dashboard::exitProgram);
-    auto *tray_icon_menu = new QMenu;
+    auto* tray_icon_menu = new QMenu;
     tray_icon_menu->addAction(quit_action);
     icon->setContextMenu(tray_icon_menu);
     icon->show();
 }
 
 void Dashboard::exitProgram() {
-
     serviceWorker.setStopServiceWorker(true);
     serviceWorker.wait();
     delete icon;
