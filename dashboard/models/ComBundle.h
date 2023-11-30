@@ -12,7 +12,7 @@
 
 class ComBundle{
 public:
-    ComBundle(QString port);
+    ComBundle(QString port, bool delayBoot);
     void setOutputs(QMap<int, Output *> outputsToSet) { this->outputs = outputsToSet; };
     bool isOutputInBundle(int id);
     SerialPort *getSerialPort() { return this->port; };

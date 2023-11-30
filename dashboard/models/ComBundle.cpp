@@ -10,10 +10,10 @@ bool ComBundle::isOutputInBundle(int id){
     return this->outputs.contains(id);
 }
 
-ComBundle::ComBundle(QString port){
+ComBundle::ComBundle(QString port, bool delayBoot){
     this->port = new SerialPort(port.toStdString().c_str());
-    if (this->port->getPortName().find("due") != std::string::npos){
-        //sleep for x seconds to allow for due boards to reset
+    if (delayBoot){
+        //sleep for x seconds to allow for boards to reset (i.e. Arduino due)
         std::this_thread::sleep_for(std::chrono::seconds(3));
     }
 }
