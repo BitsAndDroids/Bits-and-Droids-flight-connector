@@ -171,11 +171,9 @@ void MenuBar::installWASM() {
 }
 
 void MenuBar::checkForUpdates() {
-    std::cout << "Checking for updates" << std::endl;
 }
 
 void MenuBar::localUpdateEventFile() {
-    std::cout << "Updating event file" << std::endl;
     emit updateEventFile();
 }
 

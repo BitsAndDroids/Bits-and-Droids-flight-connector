@@ -26,9 +26,6 @@ FormBuilder::FormBuilder() {
         rangeHeaders.append("Propeller " + QString::number(i + 1));
     }
     rangeHeaders.append("Flaps");
-
-    cout << "bye" << endl;
-
 }
 
 void FormBuilder::loadPointsToPlot(QStringList axis) {
@@ -86,7 +83,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
                     .retrieveSubSetting(name + "Series", "calibrations",
                                         objectNames.at(i))
                     ->toInt();
-            cout << valFound << endl;
             switch (i) {
                 case 0:
                     minValue[number] = valFound;
@@ -186,7 +182,6 @@ QVBoxLayout *FormBuilder::createAxisRow(QString name, int number) {
     int const max = 16383;
 
     if (pointsToPlot[number].isEmpty()) {
-        cout << "empty" << endl;
         auto *coords = new QList <coordinates>{
                 {coordinates(static_cast<float>(minValue[number]), min)},
                 {coordinates(static_cast<float>(neutralValue[number]) -

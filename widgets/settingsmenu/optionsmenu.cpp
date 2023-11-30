@@ -16,7 +16,6 @@ void OptionsMenu::selectFile() {
     QFileDialog dialog(this);
     dialog.setFileMode(QFileDialog::Directory);
     QString communityFolderPath = dialog.getExistingDirectory();
-    cout << communityFolderPath.toStdString().c_str() << endl;
     if (!communityFolderPath.isNull()) {
         auto pathLabel = this->findChild<QLabel *>("communityFolderPathLabel");
 

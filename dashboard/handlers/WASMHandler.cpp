@@ -89,8 +89,7 @@ bool WASMHandler::versionCheck(){
         }
         QStringList communityVersionList = communityVersion.split(".");
         QStringList localVersionList = localVersion.split(".");
-        std::cout<<communityVersionList.size()<<std::endl;
-        std::cout<<localVersionList.size()<<std::endl;
+
         if (communityVersionList.size() == localVersionList.size()) {
             for (int i = 0; i < localVersionList.size(); i++) {
                 if (localVersionList[i].toInt() > communityVersionList[i].toInt()) {

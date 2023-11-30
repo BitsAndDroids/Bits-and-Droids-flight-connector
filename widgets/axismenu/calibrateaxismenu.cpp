@@ -54,20 +54,17 @@ CalibrateAxisMenu::~CalibrateAxisMenu() {
 void CalibrateAxisMenu::saveSettings() {
   for (int i = 0; i < curves.size(); i++) {
     QList<coordinates> *coords = builder->getCoordinates(i);
-    cout << curves[i].toStdString() << endl;
     QStringList sliderNames = {
         QString::number(i) + curves[i] + "Deadzone",
         QString::number(i) + curves[i] + "MinSensitivity",
         QString::number(i) + curves[i] + "PlusSensitivity"};
     for (const auto &sliderName : sliderNames) {
       auto *sliderFound = findChild<QSlider *>(sliderName);
-      cout << sliderFound->objectName().toStdString() << endl;
       settingsHandler.storeSubGroup(curves[i] + "Series", "sliders", sliderName,
                                     sliderFound->value());
     }
     QStringList rudderLineEdits = builder->getCalibrateLabels();
     for (int j = 0; j < coords->size(); j++) {
-      cout << i << endl;
       settingsHandler.storeSubGroup(curves[i] + "Series", "axis",
                                     QString::number(j), coords->at(j).getX());
       settingsHandler.storeSubGroup(curves[i] + "Series", "value",
@@ -75,11 +72,6 @@ void CalibrateAxisMenu::saveSettings() {
     }
 
     for (int j = 0; j < rudderLineEdits.size(); j++) {
-      cout << (QString::number(i) + QString::number(j) + curves[i] +
-               rudderLineEdits[j])
-                  .toStdString()
-                  .c_str()
-           << endl;
       // Format of the lineEdit objectnames =
       // <NrOfCurve><Nr1-3><NameOfCurve><NameOfLineEditType>
       auto rudderValsFound =

@@ -229,10 +229,8 @@ void EventWindow::cellTextChanged(QTableWidgetItem *changedItem) {
   if (checkIfRowChanged(changedItem->row())) {
     if (rowsChanged.indexOf(changedItem->row()) == -1) {
       rowsChanged.append(changedItem->row());
-      cout << "Changed" << changedItem->row() << endl;
     }
   }
-  cout << changedItem->text().toStdString() << "CHANGED" << endl;
 }
 
 void EventWindow::addEventBtnPressed() {
@@ -255,7 +253,6 @@ void EventWindow::saveBtnPressed() {
   for (auto &changed : rowsChanged) {
     if (!checkIfRowChanged(changed)) {
       rowsChanged.removeAt(rowsChanged.indexOf(changed));
-      cout << "ROW REMOVED" << endl;
     }
   }
   auto saveMessageBox = new QMessageBox();
@@ -332,8 +329,7 @@ void EventWindow::saveBtnPressed() {
 
 void EventWindow::writeFile() {
   QFile newEventsFile(applicationEventsPath);
-  cout << "WRITEFILE " << newEventsFile.fileName().toStdString().c_str()
-       << endl;
+
   newEventsFile.open(QIODevice::ReadWrite);
   newEventsFile.resize(0);
   QTextStream out(&newEventsFile);
