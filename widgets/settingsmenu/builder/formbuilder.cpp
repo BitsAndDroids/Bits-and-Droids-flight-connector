@@ -459,8 +459,8 @@ void FormBuilder::autoRunChanged(){
 //        }
         default: break;
     }
-    if(!settingsHandler.retrieveSetting(group,index)->isNull()) {
-        settingsHandler.storeValue(group, index, senderCB->isChecked());
+    if(!settingsHandler.getSettingValue(group,index)->isNull()) {
+        settingsHandler.storeSettingValue(group, index, senderCB->isChecked());
     }
 
 

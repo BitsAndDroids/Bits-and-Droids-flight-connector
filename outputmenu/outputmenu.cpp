@@ -76,12 +76,11 @@ void OutputMenu::closeEvent(QCloseEvent *event) {
 }
 
 void OutputMenu::editSet(const QString& id) {
-    outputTabBuilder.setCheckboxes(id);
     this->findChild<QWidget *>("outputTabWidget")->setVisible(true);
+    outputTabBuilder.setCheckboxes(id);
 }
 
 void OutputMenu::createSet() {
-
     bool ok;
     QString name =
             QInputDialog::getText(this, tr("Create a new set"), tr("Enter a descriptive name:"),

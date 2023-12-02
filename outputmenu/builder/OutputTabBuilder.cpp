@@ -33,9 +33,8 @@ void OutputTabBuilder::setCheckboxes(const QString& id) {
     auto setHandler = SetHandler();
     auto setFound = setHandler.getSetById(id);
     QMap<int, Output *> outputsToToggle = setFound.getOutputs();
-    QMap<int, Output *>::iterator i;
 
-    for (i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
+    for (QMap<int, Output*>::iterator i = outputsToToggle.begin(); i != outputsToToggle.end(); i++) {
         if (parent->findChild<QCheckBox *>("cb" +
                                          QString::number(i.value()->getId()))) {
 

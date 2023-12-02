@@ -47,6 +47,6 @@ class SetHandler {
     QJsonDocument* setToJSON(Set *setToConvert);
 };
 
-QList<Set> *SetHandler::setList = new QList<Set>();
+
 
 #endif  // SETHANDLER_H
