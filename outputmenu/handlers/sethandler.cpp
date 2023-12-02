@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QInputDialog>
-
+QList<Set> *SetHandler::setList = new QList<Set>();
 SetHandler::SetHandler() { setList = loadSets(); }
 
 Set *SetHandler::saveSet(Set *setToSave) {

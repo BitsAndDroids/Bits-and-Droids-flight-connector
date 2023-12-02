@@ -38,7 +38,7 @@ class SetHandler {
   SettingsHandler settingsHandler;
   OutputHandler *outputHandler = new class OutputHandler();
   // QList<Set*> *savedSets = new QList<Set*>();
-  QList<Set> *setList = new QList<Set>();
+  static QList<Set> *setList;
 
   void removeOutputFromSet(int setId, int outputId);
 
