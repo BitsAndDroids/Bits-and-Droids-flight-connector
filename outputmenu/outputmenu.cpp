@@ -27,15 +27,13 @@ OutputMenu::OutputMenu(ServiceWorker *pWorker)
     } else{
         outputMenuLayout->addWidget(setDetaisBuilder.buildOutputDetailsContainer());
     }
-
     outputMenuLayout->addWidget(outputTabBuilder.buildOutputTabContainer());
 
     this->findChild<QWidget *>("outputTabWidget")->setVisible(false);
     this->setMinimumHeight(500);
     this->setStyleSheet("QWidget#outputMenu{background-color:#487f94;}");
 
-    QObject::connect(&outputTabBuilder, &OutputTabBuilder::setEdited, this, &OutputMenu::showSetDetails);
-
+    connect(&outputTabBuilder, &OutputTabBuilder::setEdited, this, &OutputMenu::showSetDetails);
     connect(&setrowBuilder, &SetrowBuilder::showSetDetailsSignal, this, &OutputMenu::showSetDetails);
     connect(&setrowBuilder, &SetrowBuilder::editSetSignal, this, &OutputMenu::editSet);
     connect(&setrowBuilder, &SetrowBuilder::deleteSetSignal, this, &OutputMenu::deleteSet);
