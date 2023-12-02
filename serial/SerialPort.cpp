@@ -34,16 +34,16 @@ SerialPort::SerialPort(const char *portName) {
 
   if (this->handler == INVALID_HANDLE_VALUE) {
     if (GetLastError() == ERROR_FILE_NOT_FOUND) {
-      std::cerr << "ERROR: Handle was not attached.Reason : " << portName
-                << " not available\n";
+      // std::cerr << "ERROR: Handle was not attached.Reason : " << portName
+      //           << " not available\n";
     } else {
-      std::cerr << "ERROR!!!\n";
+      // std::cerr << "ERROR!!!\n";
     }
   } else {
     DCB dcbSerialParameters = {0};
 
     if (!GetCommState(this->handler, &dcbSerialParameters)) {
-      std::cerr << "Failed to get current serial parameters\n";
+      // std::cerr << "Failed to get current serial parameters\n";
     } else {
       if (settingsHandler.getSettingValue("com", "CBR")->isNull()) {
         dcbSerialParameters.BaudRate = CBR_115200;

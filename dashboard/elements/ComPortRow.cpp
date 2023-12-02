@@ -59,7 +59,7 @@ QWidget *ComPortRow::generateElement() {
     auto *comPortComboBox = new ModeIndexCombobox("comBox",index);
 
     ComPortWidgetModel model = ComPortWidgetModel();
-    auto availableComPorts = model.loadAvailableComPorts();
+        auto availableComPorts = model.loadAvailableComPorts();
     auto availableSets = model.getAvailableSets();
 
     for (auto &availableComPort: *availableComPorts) {

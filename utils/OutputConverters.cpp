@@ -4,6 +4,10 @@
 
 #include <QString>
 #include "OutputConverters.h"
+
+#include <iomanip>
+#include <sstream>
+
 #include "enums/ModeEnum.h"
 
 OutputConverters::OutputConverters() = default;
@@ -42,8 +46,19 @@ std::string OutputConverters::formatOutgoingString(float received, Output output
             input_string = prefix + std::to_string(received);
             break;
         }
+        case FLOATMODE2DECIMALS: {
+                std::ostringstream stream;
+                stream << std::fixed << std::setprecision(2) << received;
+                input_string = prefix + stream.str();
+                break;
+        }
         case PERCENTAGEMODE: {
             intVal = (int)(received * 100);
+            input_string = prefix + std::to_string(intVal);
+            break;
+        }
+        case METERSPERSECOND: {
+            intVal = (int)(received * 1.94384);
             input_string = prefix + std::to_string(intVal);
             break;
         }

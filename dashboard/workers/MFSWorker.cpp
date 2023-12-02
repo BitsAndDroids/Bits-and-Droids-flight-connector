@@ -1,5 +1,7 @@
 #include "MFSWorker.h"
 
+#include <QSerialPortInfo>
+
 #include "outputmenu/handlers/sethandler.h"
 #include "settings/ComSettingsHandler.h"
 #include "utils/InputReader.h"
@@ -197,8 +199,28 @@ void MFSWorker::loadRunningPortsAndSets() {
 
     int successfullyConnected = 0;
     setHandler.updateSets();
+    setHandler.loadSets();
+
+    auto *comPorts = new QList<QString>();
+    for (const QSerialPortInfo &serialPortInfo : QSerialPortInfo::availablePorts()) {
+        Logger::getInstance()->logDebug("Found com port: " + serialPortInfo.portName().toStdString() +
+                                        " | " + serialPortInfo.description().toStdString());
+        comPorts->append(serialPortInfo.portName() + " | " + serialPortInfo.description());
+    }
+
     for (const auto &comSetting: comSettings) {
-        auto *bundle = new ComBundle(comSetting.first);
+        //remove slash from port string
+        const auto portStringNoSlash = comSetting.first.mid(4);
+        const auto portString = portStringNoSlash + ' ';
+        bool addDelayToAllowReset = false;
+        for_each(comPorts->begin(), comPorts->end(), [&](const QString &port) {
+            if (port.contains(portString)) {
+                if (port.toLower().contains("due")) {
+                    addDelayToAllowReset = true;
+                }
+            }
+        });
+        auto *bundle = new ComBundle(comSetting.first, addDelayToAllowReset);
         if (comSetting.second != -1) {
             Logger::getInstance()->logDebug("Loading set: " + std::to_string(comSetting.second));
             auto set = setHandler.getSetById(QString::number(comSetting.second));
