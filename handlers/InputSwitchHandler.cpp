@@ -480,9 +480,8 @@ void InputSwitchHandler::switchHandling(const char* stringToParse) {
 
     if (strlen(stringToParse) > 2) {
         try {
-            int prefixValue = stoi(stringStd.substr(0,4));
-            if (prefixValue < 1000 && inputs.count(prefixValue) > 0) {
-                Input input = inputs[prefixValue];
+            if (const int prefixValue = stoi(stringStd.substr(0,4)); prefixValue < 1000 && inputs.count(prefixValue) > 0) {
+                const Input input = inputs[prefixValue];
                 emit logMessage(
                         "Received data: " + std::string(stringToParse) + " command: " + input.getEvent(),
                         LogLevel::DEBUGLOG);

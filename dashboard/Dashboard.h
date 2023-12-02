@@ -6,26 +6,14 @@
 #include "dashboard/workers/MFSWorker.h"
 
 #include "outputmenu/handlers/sethandler.h"
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qstandardpaths.h>
 #include "widgets/settingsmenu/builder/formbuilder.h"
 #include "elements/ModeIndexCombobox.h"
 #include "elements/ModeIndexCheckbox.h"
-#include <QCoreApplication>
 #include <QFile>
 #include <QMainWindow>
-#include <QNetworkReply>
-#include <QSettings>
-
-#include "serial/SerialPort.hpp"
-#include "constants.h"
 #include "services/ServiceWorker.h"
 #include "dashboard/controller/DashboardController.h"
 #include "dashboard/Elements/MenuBar.h"
-#include "dashboard/controller/ComPortWidgetController.h"
-
-const std::string version = constants::VERSION;
 
 class Dashboard : public QMainWindow {
 Q_OBJECT

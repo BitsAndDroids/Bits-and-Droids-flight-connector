@@ -138,8 +138,6 @@ void MenuBar::populateMenuBar(QMainWindow *parent) {
     Settings->addAction(openLogging);
     //codeMenu->addAction(generateCode);
     Settings->addAction(calibrateAxis);
-
-    Settings->addAction("Version " + QString(constants::VERSION));
     // libraryMenu->addAction(libraryGenerator);
 
     connect(WasmUpdateEventFile, &QAction::triggered, this,
