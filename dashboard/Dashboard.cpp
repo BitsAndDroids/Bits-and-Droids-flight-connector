@@ -90,6 +90,7 @@ Dashboard::Dashboard(QWidget* parent): QMainWindow(parent) {
 }
 
 void Dashboard::initWithAutorun() {
+    setHandler->updateSets();
     comPortWidgetController.start();
 }
 

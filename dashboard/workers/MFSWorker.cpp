@@ -197,7 +197,6 @@ void MFSWorker::loadRunningPortsAndSets() {
 
     int successfullyConnected = 0;
     setHandler.updateSets();
-    setHandler.loadSets();
     for (const auto &comSetting: comSettings) {
         auto *bundle = new ComBundle(comSetting.first);
         if (comSetting.second != -1) {

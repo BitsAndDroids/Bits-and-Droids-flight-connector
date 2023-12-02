@@ -21,7 +21,9 @@ class SetHandler {
 
   void removeSet(QString id);
 
-  QList<Set> *getSets() { return setList; };
+  QList<Set> *getSets() {
+   return setList;
+  };
 
   Set getSetById(QString id);
 
@@ -38,11 +40,13 @@ class SetHandler {
   SettingsHandler settingsHandler;
   OutputHandler *outputHandler = new class OutputHandler();
   // QList<Set*> *savedSets = new QList<Set*>();
-  QList<Set> *setList = new QList<Set>();
+  static QList<Set> *setList;
 
   void removeOutputFromSet(int setId, int outputId);
 
     QJsonDocument* setToJSON(Set *setToConvert);
 };
+
+QList<Set> *SetHandler::setList = new QList<Set>();
 
 #endif  // SETHANDLER_H

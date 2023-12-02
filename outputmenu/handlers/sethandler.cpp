@@ -49,7 +49,6 @@ void SetHandler::updateSets() {
     setList->clear();
     setList = loadSets();
     for (auto &setFound : *setList) {
-
         auto outputMap = QMap<int, Output *>();
         for (auto &output : setFound.getOutputs()) {
             auto outputChecked = outputHandler->findOutputById(output->getId());
