@@ -17,7 +17,7 @@
 class ComPortWidgetController : public QObject {
 Q_OBJECT
 public:
-    explicit ComPortWidgetController(QWidget *parent, ServiceWorker *serviceworker);
+    explicit ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker);
 
     void initComRows();
 

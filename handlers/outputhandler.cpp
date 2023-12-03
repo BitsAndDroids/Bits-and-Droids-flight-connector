@@ -28,11 +28,8 @@ void OutputHandler::addCategoryString(const QString &category) {
     categoryStrings.emplace_back(category);
 }
 
-void OutputHandler::readOutputs() {
-    availableOutputs.clear();
-    outputsCategorized.clear();
-    categoryStrings.clear();
-    QFile file_obj(qApp->applicationDirPath() + "/outputs.json");
+void OutputHandler::processOutputsJsonFile() {
+     QFile file_obj(qApp->applicationDirPath() + "/outputs.json");
     file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray json_bytes = file_obj.readAll();
     file_obj.close();
@@ -94,7 +91,16 @@ void OutputHandler::readOutputs() {
             Category category(categoryStrings[i].toStdString(), *outputCategory);
             outputsCategorized.emplace_back(category);
     }
-    auto *eventOutputs = new std::vector<Output>();
+}
+
+void OutputHandler::resetOutputs() {
+    availableOutputs.clear();
+    outputsCategorized.clear();
+    categoryStrings.clear();
+}
+
+void OutputHandler::processEventFile() {
+     auto *eventOutputs = new std::vector<Output>();
 
     std::ifstream file(applicationEventsPath.toStdString());
     std::string row;
@@ -155,6 +161,12 @@ void OutputHandler::readOutputs() {
     Category eventCategory("Custom", *eventOutputs);
     outputsCategorized.emplace_back(eventCategory);
     file.close();
+}
+
+void OutputHandler::readOutputs() {
+    resetOutputs();
+    processOutputsJsonFile();
+    processEventFile();
 }
 
 Output *OutputHandler::findOutputById(int idToFind) {

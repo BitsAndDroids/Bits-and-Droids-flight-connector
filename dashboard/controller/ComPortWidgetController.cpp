@@ -4,14 +4,12 @@
 
 #include "ComPortWidgetController.h"
 #include <QVBoxLayout>
-#include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QPushButton>
 #include "settings/ComSettingsHandler.h"
 #include "dashboard/elements/ComPortRow.h"
 
 ComPortWidgetController::ComPortWidgetController(QWidget *parent, ServiceWorker *serviceWorker) {
-
   this->parent = parent;
   this->serviceWorker = serviceWorker;
 

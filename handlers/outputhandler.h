@@ -14,6 +14,10 @@ class OutputHandler {
   OutputHandler();
   std::vector<QString> getCategoryStrings() { return categoryStrings; };
   void addCategoryString(const QString& category);
+  void processOutputsJsonFile();
+  void resetOutputs();
+  void processOutputJsonFile();
+  void processEventFile();
   std::vector<Category> getOutputsCategorized() { return outputsCategorized; };
   QMap<int, Output*> getAvailableOutputs() { return availableOutputs; };
   Output* findOutputById(int id);
