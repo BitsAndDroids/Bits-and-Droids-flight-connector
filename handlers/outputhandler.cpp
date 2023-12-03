@@ -29,8 +29,9 @@ void OutputHandler::addCategoryString(const QString &category) {
 }
 
 void OutputHandler::readOutputs() {
-    OutputHandler::availableOutputs.clear();
-    OutputHandler::outputsCategorized.clear();
+    availableOutputs.clear();
+    outputsCategorized.clear();
+    categoryStrings.clear();
     QFile file_obj(qApp->applicationDirPath() + "/outputs.json");
     file_obj.open(QIODevice::ReadOnly | QIODevice::Text);
     QByteArray json_bytes = file_obj.readAll();
