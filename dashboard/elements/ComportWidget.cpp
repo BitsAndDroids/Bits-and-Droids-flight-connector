@@ -7,14 +7,20 @@
 #include "ComPortButtonRow.h"
 #include "ComPortWidget.h"
 #include "dashboard/controller/ComPortWidgetController.h"
+#include "elements/MStyleLabels.h"
 
 ComPortWidget::ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller) {
     this->controller = controller;
     this->parent = parent;
 }
 
+ComPortWidgetController* ComPortWidget::getController() const {
+    return controller;
+}
+
 QWidget* ComPortWidget::generateElement() {
     auto *widget = new QWidget(parent);
+    preset_label = new MStyleLabels("Custom", H1_LIGHT);
     widget->setObjectName("comPortWidget");
     widget->setStyleSheet("QWidget#comPortWidget{ border-radius:4px;}");
     auto containerLayout = new QVBoxLayout(widget);
@@ -31,6 +37,7 @@ QWidget* ComPortWidget::generateElement() {
 
     //COM CONTROLS
     auto *comPortButtonRow = new ComPortButtonRow(controller, 0);
+    layout->addWidget(preset_label);
     layout->addWidget(comPortButtonRow->generateElement());
 
     //COM PORTS

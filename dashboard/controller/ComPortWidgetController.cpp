@@ -40,6 +40,10 @@ void ComPortWidgetController::removeComPortRow() {
   delete senderWidget;
 }
 
+void ComPortWidgetController::updatePreset(Preset preset) {
+  qDebug() << "ComPortWidgetController::updatePreset()";
+}
+
 void ComPortWidgetController::loadComPortData() {
   comPortModel->clearComPortData();
       foreach(

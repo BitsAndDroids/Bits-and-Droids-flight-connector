@@ -15,7 +15,7 @@ ComBundle::ComBundle(QString port, bool delayBoot){
     this->port = new SerialPort(port.toStdString().c_str());
     if (delayBoot){
         //sleep for x seconds to allow for boards to reset (i.e. Arduino due)
-        std::this_thread::sleep_for(std::chrono::seconds(3));
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         qDebug() << "Sleeping for 3 seconds";
     }
 }

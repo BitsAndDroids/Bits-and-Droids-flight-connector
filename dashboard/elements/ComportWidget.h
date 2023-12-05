@@ -10,15 +10,19 @@
 #include <QMainWindow>
 #include "elements/Element.h"
 #include "dashboard/controller/ComPortWidgetController.h"
+#include "dashboard/models/Preset.h"
 
 class ComPortWidget: public QWidget, public Element {
     Q_OBJECT
 public:
     QWidget* generateElement() override;
     ComPortWidget(QMainWindow *parent, ComPortWidgetController *controller);
+    ComPortWidgetController *getController() const;
+
 private:
     QMainWindow *parent;
     ComPortWidgetController *controller;
+    QLabel* preset_label;
 };
 
 

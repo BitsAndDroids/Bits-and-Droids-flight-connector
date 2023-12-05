@@ -14,6 +14,8 @@
 #include "services/ServiceWorker.h"
 #include <QLabel>
 
+#include "dashboard/models/Preset.h"
+
 class ComPortWidgetController : public QObject {
 Q_OBJECT
 public:
@@ -35,6 +37,8 @@ public slots:
     void refresh();
 
     void removeComPortRow();
+
+    void updatePreset(Preset preset);
 
 
 private:

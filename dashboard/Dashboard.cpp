@@ -80,6 +80,8 @@ Dashboard::Dashboard(QWidget* parent): QMainWindow(parent) {
     connect(&controller, &DashboardController::updateAvailable, menuBar, &MenuBar::addUpdateAvailable);
     connect(&controller, &DashboardController::gameConnectionMade, this, &Dashboard::gameConnectionMade);
     connect(&controller, &DashboardController::wasmConnectionMade, this, &Dashboard::wasmConnectionMade);
+    connect(presetWidget->getController(), &PresetWidgetController::updatePreset, comPortWidget.getController(),
+            &ComPortWidgetController::updatePreset);
 
     controller.setServiceWorker(&serviceWorker);
     controller.initController();

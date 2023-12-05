@@ -15,6 +15,7 @@
 
 class PresetWidget : public QWidget, public Element {
     Q_OBJECT
+
 public:
     PresetWidget(const QWidget* parent);
 
@@ -24,13 +25,14 @@ public:
 
     std::vector<Preset> loadPresets();
 
+    const PresetWidgetController* getController() const;
+
     void generatePresetRows(QVBoxLayout* layout);
 
+
 private:
-    const PresetWidgetController * controller = nullptr;
-    QWidget * parent = nullptr;
-
-
+    const PresetWidgetController* controller = nullptr;
+    QWidget* parent = nullptr;
 };
 
 

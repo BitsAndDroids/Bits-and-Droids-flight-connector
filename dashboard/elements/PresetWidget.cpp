@@ -24,7 +24,6 @@ QWidget* PresetWidget::generateElement() {
     styleWidget->setObjectName("presetWidget");
     qDebug() << "className: " << this->metaObject()->className();
     qDebug() << "type: " << this->metaObject()->metaType().name();
-
     styleWidget->setStyleSheet("QWidget#presetWidget { "
         "background-color: #fff!important; "
         "border-radius: 5px; "
@@ -32,17 +31,17 @@ QWidget* PresetWidget::generateElement() {
 
     qDebug() << "Applied Styles:" << this->styleSheet();
     const auto layout = new QVBoxLayout();
-
     layout->setAlignment(Qt::AlignTop);
-
+    this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     qDebug() << this->styleSheet();
     generatePresetRows(layout);
+    layout->addStretch(0);
     qDebug() << "PresetWidget::generateElement()";
     styleWidget->setLayout(layout);
     const auto newLayout = new QVBoxLayout();
     newLayout->addWidget(styleWidget);
     newLayout->setAlignment(Qt::AlignTop);
-    newLayout->addStretch(1);
+    newLayout->setSpacing(0);
     this->setLayout(newLayout);
     this->show();
 
@@ -52,6 +51,10 @@ QWidget* PresetWidget::generateElement() {
 std::vector<Preset> PresetWidget::loadPresets() {
     qDebug() << "PresetWidget::loadPresets()";
     return PresetWidgetController::loadPresets();
+}
+
+const PresetWidgetController* PresetWidget::getController() const {
+    return controller;
 }
 
 void PresetWidget::generatePresetRows(QVBoxLayout* layout) {
@@ -70,7 +73,7 @@ void PresetWidget::generatePresetRows(QVBoxLayout* layout) {
         auto* row = new PresetRow(this, preset);
         layout->addWidget(row->generateElement(), Qt::AlignTop);
         layout->setAlignment(Qt::AlignTop);
-        layout->addStretch(1);
+        layout->setSpacing(1);
         connect(row, SIGNAL(saveDefaultPresetSignal(Preset)), controller, SLOT(saveDefaultPreset(Preset)));
         if (QString::fromStdString(preset.getName()) == presetSettingHandler->getDefaulPreset()) {
             row->setActiveStyle(true);

@@ -11,20 +11,24 @@
 #include "dashboard/models/Preset.h"
 
 
-class PresetWidgetController final : public QObject{
+class PresetWidgetController final : public QObject {
     Q_OBJECT
+
 public:
-    explicit PresetWidgetController(QWidget *parent);
+    explicit PresetWidgetController(QWidget* parent);
     static std::vector<Preset> loadPresets();
 
 public slots:
-        void saveDefaultPreset(Preset preset);
+    void saveDefaultPreset(Preset preset);
+
+signals:
+    void setActivePreset(Preset preset);
+    void updatePreset(Preset preset);
 
 private:
     QWidget* parent = nullptr;
     void setActiveRowStyle(PresetRow* row, bool active);
 };
-
 
 
 #endif //PRESETWIDGETCONTROLLER_H

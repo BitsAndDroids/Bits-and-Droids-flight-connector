@@ -5,6 +5,7 @@
 #include "PresetRow.h"
 
 #include <QHBoxLayout>
+#include <QRadioButton>
 
 #include "elements/MPushButton.h"
 #include "elements/MStyleLabels.h"
@@ -24,6 +25,11 @@ QWidget* PresetRow::generateElement() {
 
     auto* layout = new QHBoxLayout();
     auto* styleLayout = new QHBoxLayout();
+    //Set size to minimum
+    this->setMaximumHeight(60);
+
+    const auto default_radio_button = new QRadioButton();
+    styleLayout->addWidget(default_radio_button);
 
     auto* name = new MStyleLabels(QString::fromStdString(this->preset.getName()), LABEL);
     auto* setActive = new QPushButton("Set default");
@@ -31,8 +37,11 @@ QWidget* PresetRow::generateElement() {
     connect(setActive, &QPushButton::clicked, this, &PresetRow::setActive);
     auto* deletePreset = new QPushButton("Delete preset");
     deletePreset->setObjectName("BtnDeletePreset");
-
     this->setStyleSheet(
+        "QWidget #presetRowWidget{"
+        "background-color:#fff;"
+        "margin: 0px;"
+        "}"
         "QPushButton {"
         "width: 100px;"
         "min-width: 100px;"
@@ -47,7 +56,6 @@ QWidget* PresetRow::generateElement() {
 
     styleWidget->setLayout(styleLayout);
     layout->addWidget(styleWidget);
-
     this->setLayout(layout);
 
     return this;

@@ -11,6 +11,7 @@ PresetWidgetController::PresetWidgetController(QWidget *parent) {
     qDebug() << "PresetWidgetController::PresetWidgetController()";
     qDebug() << "Parent: " << this->parent;
     const Preset preset = Preset("Custom", std::map<std::string, int>({{"com1", 1}}));
+
     const Preset testPreset = Preset(" Test", std::map<std::string, int>({{"com1", 1}}));
 
     auto* presetSettingsHandler = new PresetSettingsHandler();
@@ -20,6 +21,7 @@ PresetWidgetController::PresetWidgetController(QWidget *parent) {
 
 void PresetWidgetController::saveDefaultPreset(Preset preset) {
     qDebug() << "PresetWidgetController::saveDefaultPreset()";
+    emit updatePreset(preset);
     // caller PresetRow
     const auto callerRow = dynamic_cast<PresetRow*>(sender());
     if(callerRow == nullptr) {
