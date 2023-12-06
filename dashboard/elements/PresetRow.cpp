@@ -158,10 +158,16 @@ void PresetRow::setActiveStyle(bool active) {
         const auto btn = this->findChild<QPushButton*>();
         if (active) {
             btn->setObjectName("btn_plane_style_active");
+            btn->repaint();
+            btn->update();
+            btn->show();
             qDebug() << "PresetRow::setActiveStyle(true)";
         }
         else {
             btn->setObjectName("btn_plane_style_inactive");
+            btn->repaint();
+            btn->update();
+            btn->show();
             qDebug() << "PresetRow::setActiveStyle(false)";
         }
     }
