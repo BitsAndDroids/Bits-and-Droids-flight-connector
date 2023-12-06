@@ -34,8 +34,6 @@ std::string OutputConverters::formatOutgoingString(float received, Output output
         input_string = prefix + std::to_string(intVal);
         break;
     }
-    case 8: {
-    }
     case INTEGERMODE: {
         intVal = (int)received;
         input_string = prefix + std::to_string(intVal);
