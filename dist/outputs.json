@@ -506,12 +506,12 @@
     },
     {
       "id": 100,
-      "outputName": "GPS COURSE TO STEER",
-      "metric": "Radians",
-      "updateEvery": 0.01,
+      "outputName": "GPS WP BEARING",
+      "metric": "Degrees",
+      "updateEvery": 1,
       "dataType": 0,
       "cbText":"GPS course to steer",
-      "prefix":454 ,
+      "prefix":454,
       "type":0
     }
   ],

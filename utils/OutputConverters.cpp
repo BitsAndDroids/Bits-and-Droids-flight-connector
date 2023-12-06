@@ -4,7 +4,7 @@
 
 #include <QString>
 #include "OutputConverters.h"
-
+#include <qdebug.h>
 #include <iomanip>
 #include <sstream>
 
@@ -19,13 +19,13 @@ int OutputConverters::radianToDegree(float rec) {
 }
 
 std::string OutputConverters::formatOutgoingString(float received, Output output) {
-    int intVal = 0;
+    int intVal;
     std::string prefix = std::to_string(output.getPrefix());
     //Ensure the prefix is 4 characters long
     for (int i = (int)prefix.size(); i < 4; i++) {
         prefix += " ";
     }
-
+    qDebug() << "received: " << received;
     std::string input_string;
 
     switch (output.getType()) {
@@ -35,7 +35,7 @@ std::string OutputConverters::formatOutgoingString(float received, Output output
         break;
     }
     case INTEGERMODE: {
-        intVal = (int)received;
+        intVal = (int)std::round(received);
         input_string = prefix + std::to_string(intVal);
         break;
     }
