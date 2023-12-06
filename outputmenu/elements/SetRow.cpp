@@ -19,17 +19,17 @@ SetRow::SetRow(const Set &setForRow, QWidget * parent): QWidget(parent) {
 
     rowHLayout->addWidget(new QLabel(setForRow.getSetName()));
 
-    auto editButton = new MPushButton(this->layout());
+    auto editButton = new MPushButton(this->layout(), ButtonStyleEnum::DEFAULT);
     editButton->setIconWithPath(":/resources/images/edit.svg");
     editButton->setToolTip("Edit set");
     connect(editButton, &QPushButton::clicked, this, &SetRow::editSet);
 
-    auto exportButton = new MPushButton(this->layout());
+    auto exportButton = new MPushButton(this->layout(), ButtonStyleEnum::DEFAULT);
     exportButton->setIconWithPath(":/resources/images/export.svg");
     exportButton->setToolTip("Export set");
     connect(exportButton, &QPushButton::clicked, this, &SetRow::exportSet);
 
-    auto deleteButton = new MPushButton(this->layout());
+    auto deleteButton = new MPushButton(this->layout(), ButtonStyleEnum::DEFAULT);
     deleteButton->setIconWithPath(":/resources/images/trashcan.svg");
     deleteButton->setToolTip("Delete set");
     connect(deleteButton, &QPushButton::clicked, this, &SetRow::deleteSet);

@@ -22,7 +22,7 @@ OutputTabs::OutputTabs(QWidget *parent) : QWidget(parent) {
     outputTabsWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
-    auto saveButton = new MPushButton(tabHLayout);
+    auto saveButton = new MPushButton(tabHLayout, ButtonStyleEnum::DEFAULT);
     saveButton->setObjectName("saveButton");
     saveButton->setIconWithPath(":/resources/images/save.svg");
     saveButton->setToolTip("Save set");

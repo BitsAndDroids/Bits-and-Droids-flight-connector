@@ -79,7 +79,7 @@ QWidget *ComPortRow::generateElement() {
 
     comRow->addWidget(dropdownContainer);
 
-    auto *removeButton = new MPushButton(comRow);
+    auto *removeButton = new MPushButton(comRow, ButtonStyleEnum::DEFAULT);
     removeButton->setIconWithPath(":/resources/images/trashcan.svg");
 
     removeButton->setObjectName(QString::number(index));

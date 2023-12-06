@@ -18,6 +18,58 @@ PresetRow::PresetRow(QWidget* parent, Preset preset): QWidget(parent) {
     this->setObjectName("presetRowWidget");
 }
 
+//stylesheet
+// QPushbutton#btn_plane_style_inactive{
+//     background-color: #605f5f;
+//     border: 4px solid #59493b;
+//     color: #e1ae6b;
+//     font-weight: 900;
+//     line-height: 15px;
+//
+//     padding: 10px 20px;
+//     text-align: center;
+//     text-decoration: none;
+//     display: inline-block;
+//     font-size: 12px;
+//     margin: 0px 0px;
+//     cursor: pointer;
+//     border-radius: 3px;
+//     -webkit-transition-duration: 0.4s; /* Safari */
+//     transition-duration: 0.4s;
+//     height: fit-content;
+//     font-family: "Roboto Bold", sans-serif;
+//     box-shadow: #e1ae6b 0px 0px 5px 0px;
+//     width: 200px;
+// }
+// QPushbutton#btn_plane_style_active{
+//     background-color: #605f5f;
+//     border: 4px solid #3f593b;
+//     color: #96d327;
+//     font-weight: 900;
+//     line-height: 15px;
+//
+//     padding: 10px 20px;
+//     text-align: center;
+//     text-decoration: none;
+//     display: inline-block;
+//     font-size: 12px;
+//     margin: 0px 0px;
+//     cursor: pointer;
+//     border-radius: 3px;
+//     -webkit-transition-duration: 0.4s; /* Safari */
+//     transition-duration: 0.4s;
+//     height: fit-content;
+//     font-family: "Roboto Bold", sans-serif;
+//     box-shadow: #8ce16b 0px 0px 5px 0px;
+//     width: 200px;
+// }
+// QPushbutton#btn_plane_style_active:hover{
+//     background-color: #3f3f3f;
+//   }
+//
+// QPushbutton#btn_plane_style_inactive:hover{
+//     background-color: #3f3f3f;
+//   }
 QWidget* PresetRow::generateElement() {
     this->setParent(this->parent);
     const auto styleWidget = new QWidget(this);
@@ -25,31 +77,67 @@ QWidget* PresetRow::generateElement() {
 
     auto* layout = new QHBoxLayout();
     auto* styleLayout = new QHBoxLayout();
+    styleLayout->setAlignment(Qt::AlignLeft);
     //Set size to minimum
-    this->setMaximumHeight(60);
+    auto* preset_annunciator_button = new MPushButton(QString::fromStdString(this->preset.getName()), styleLayout, ButtonStyleEnum::DEFAULT);
+    preset_annunciator_button->setObjectName("btn_plane_style_inactive");
+    connect(preset_annunciator_button, &QPushButton::clicked, this, &PresetRow::setActive);
 
-    const auto default_radio_button = new QRadioButton();
-    styleLayout->addWidget(default_radio_button);
-
-    auto* name = new MStyleLabels(QString::fromStdString(this->preset.getName()), LABEL);
-    auto* setActive = new QPushButton("Set default");
-    setActive->setObjectName("BtnSetActive");
-    connect(setActive, &QPushButton::clicked, this, &PresetRow::setActive);
     auto* deletePreset = new QPushButton("Delete preset");
     deletePreset->setObjectName("BtnDeletePreset");
+    //set stylesheet as seen in comment above this function
     this->setStyleSheet(
-        "QWidget #presetRowWidget{"
-        "background-color:#fff;"
-        "margin: 0px;"
+        " #btn_plane_style_inactive{"
+        "background-color: #605f5f;"
+        "border: 4px solid #59493b;"
+        "color: #e1ae6b;"
+        "font-weight: 900;"
+        "line-height: 15px;"
+        "padding: 10px 20px;"
+        "text-align: center;"
+        "text-decoration: none;"
+        "display: inline-block;"
+        "font-size: 12px;"
+        "margin: 0px 0px;"
+        "cursor: pointer;"
+        "border-radius: 3px;"
+        "-webkit-transition-duration: 0.4s; /* Safari */"
+        "transition-duration: 0.4s;"
+        "height: fit-content;"
+        //"box-shadow: #e1ae6b 0px 0px 5px 0px;"
+        "width: 200px;"
+        "max-width: 200px;"
         "}"
-        "QPushButton {"
-        "width: 100px;"
-        "min-width: 100px;"
-        "max-width: 100px;"
-        "}");
-
-    styleLayout->addWidget(name);
-    styleLayout->addWidget(setActive);
+        "#btn_plane_style_active{"
+        "background-color: #605f5f;"
+        "border: 4px solid #3f593b;"
+        "color: #96d327;"
+        "font-weight: 900;"
+        "line-height: 15px;"
+        "padding: 10px 20px;"
+        "text-align: center;"
+        "text-decoration: none;"
+        "display: inline-block;"
+        "font-size: 12px;"
+        "margin: 0px 0px;"
+        "cursor: pointer;"
+        "border-radius: 3px;"
+        "-webkit-transition-duration: 0.4s; /* Safari */"
+        "transition-duration: 0.4s;"
+        "height: fit-content;"
+        //"box-shadow: #8ce16b 0px 0px 5px 0px;"
+        "width: 200px;"
+        "max-width: 200px;"
+        "}"
+        " #btn_plane_style_active:hover{"
+        "background-color: #3f3f3f;"
+        "}"
+        " #btn_plane_style_inactive:hover{"
+        "background-color: #3f3f3f;"
+        "}"
+    );
+    auto* delete_preset_icon_button = new MPushButton(styleLayout, ButtonStyleEnum::DEFAULT);
+    delete_preset_icon_button->setIconWithPath(":/resources/images/trashcan.svg");
     if (preset.getName() != "Custom") {
         styleLayout->addWidget(deletePreset);
     }
@@ -67,24 +155,13 @@ void PresetRow::setActive() {
 
 void PresetRow::setActiveStyle(bool active) {
     if (this) {
+        const auto btn = this->findChild<QPushButton*>();
         if (active) {
-            this->setStyleSheet(
-                "QPushButton {"
-                "width: 100px;"
-                "min-width: 100px;"
-                "max-width: 100px;"
-                "}"
-                "QWidget#presetRowWidget {border-color: #9fd980; border-radius: 5px; border-width: 2px; border-style: solid;}");
+            btn->setObjectName("btn_plane_style_active");
             qDebug() << "PresetRow::setActiveStyle(true)";
         }
         else {
-            this->setStyleSheet(
-                "QPushButton {"
-                "width: 100px;"
-                "min-width: 100px;"
-                "max-width: 100px;"
-                "}"
-                "QWidget#presetRowWidget {border-color: #9fd980; border-radius: 5px; border-width: 0px; border-style: none;}");
+            btn->setObjectName("btn_plane_style_inactive");
             qDebug() << "PresetRow::setActiveStyle(false)";
         }
     }

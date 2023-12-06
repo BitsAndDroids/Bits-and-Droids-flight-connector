@@ -27,7 +27,8 @@ public:
 
     const PresetWidgetController* getController() const;
 
-    void generatePresetRows(QVBoxLayout* layout);
+    void generatePresetRows(QGridLayout* layout);
+
 
 
 private:

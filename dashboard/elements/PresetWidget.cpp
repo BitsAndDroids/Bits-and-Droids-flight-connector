@@ -30,14 +30,13 @@ QWidget* PresetWidget::generateElement() {
         "}");
 
     qDebug() << "Applied Styles:" << this->styleSheet();
-    const auto layout = new QVBoxLayout();
-    layout->setAlignment(Qt::AlignTop);
+    const auto gridLayout = new QGridLayout();
+    gridLayout->setAlignment(Qt::AlignTop);
     this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     qDebug() << this->styleSheet();
-    generatePresetRows(layout);
-    layout->addStretch(0);
+    generatePresetRows(gridLayout);
     qDebug() << "PresetWidget::generateElement()";
-    styleWidget->setLayout(layout);
+    styleWidget->setLayout(gridLayout);
     const auto newLayout = new QVBoxLayout();
     newLayout->addWidget(styleWidget);
     newLayout->setAlignment(Qt::AlignTop);
@@ -57,7 +56,7 @@ const PresetWidgetController* PresetWidget::getController() const {
     return controller;
 }
 
-void PresetWidget::generatePresetRows(QVBoxLayout* layout) {
+void PresetWidget::generatePresetRows(QGridLayout* layout) {
     if (layout == nullptr) {
         qDebug() << "Layout is null";
         return;
@@ -69,14 +68,16 @@ void PresetWidget::generatePresetRows(QVBoxLayout* layout) {
     }
     layout->addWidget(new MStyleLabels("PRESETS", H2));
     const auto presetSettingHandler = new PresetSettingsHandler();
+    int rowCount = 1;
     for (const Preset&preset: presets) {
         auto* row = new PresetRow(this, preset);
-        layout->addWidget(row->generateElement(), Qt::AlignTop);
+        layout->addWidget(row->generateElement(), rowCount, 0);
         layout->setAlignment(Qt::AlignTop);
         layout->setSpacing(1);
         connect(row, SIGNAL(saveDefaultPresetSignal(Preset)), controller, SLOT(saveDefaultPreset(Preset)));
         if (QString::fromStdString(preset.getName()) == presetSettingHandler->getDefaulPreset()) {
             row->setActiveStyle(true);
         }
+        rowCount++;
     }
 }

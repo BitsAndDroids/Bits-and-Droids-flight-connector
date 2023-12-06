@@ -53,20 +53,20 @@ QWidget *ComPortButtonRow::generateElement() {
     auto *stopButton = new QPushButton("Stop");
     stopButton->setObjectName("stopButton");
     stopButton->setStyleSheet(
-            "QPushButton#stopButton { \
-                      color:white;\
-                      background-color:#0F4C5C;\
-                    border-radius:4px;\
-                  }   \
-                  QPushButton#stopButton:checked{\
-                      background-color:#E20303;\
-                      border: none; \
-                    border-radius:4px;\
-                  }\
-                  QPushButton#stopButton:hover{  \
-                      background-color: grey; \
-                      border-style: outset;\
-                  }");
+            R"(QPushButton#stopButton {
+                      color:white;
+                      background-color:#0F4C5C;
+                    border-radius:4px;
+                  }
+                  QPushButton#stopButton:checked{
+                      background-color:#E20303;
+                      border: none;
+                    border-radius:4px;
+                  }
+                  QPushButton#stopButton:hover{
+                      background-color: grey;
+                      border-style: outset;
+                  })");
     stopButton->setMinimumSize(60, 35);
     stopButton->setMaximumSize(60, 35);
     stopButton->setCheckable(true);
@@ -76,7 +76,7 @@ QWidget *ComPortButtonRow::generateElement() {
     comControlRow->addWidget(stopButton);
 
     // ADD BTN
-    auto *addButton = new MPushButton(comControlRow);
+    auto *addButton = new MPushButton(comControlRow, ButtonStyleEnum::DEFAULT);
     addButton->setIconWithPath(":/resources/images/add.svg");
     addButton->setObjectName("addBtn");
     addButton->setToolTip("Add new row");
@@ -86,7 +86,7 @@ QWidget *ComPortButtonRow::generateElement() {
     comControlRow->addWidget(addButton);
 
     // REFRESH BTN
-    auto *refreshButton = new MPushButton(comControlRow);
+    auto *refreshButton = new MPushButton(comControlRow, ButtonStyleEnum::DEFAULT);
 
     refreshButton->setIconWithPath(":/resources/images/reload.svg");
     refreshButton->setToolTip("Refresh com ports/sets");

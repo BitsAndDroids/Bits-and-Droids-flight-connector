@@ -8,10 +8,17 @@
 
 #include <QPushButton>
 #include <QLayout>
+
+#include "enums/ButtonStyleEnum.h"
+
 class MPushButton: public QPushButton {
 public:
-    MPushButton(QString text, QLayout* layout);
-    MPushButton(QLayout* layout);
+    MPushButton(QString text, QLayout* layout, ButtonStyleEnum style);
+    MPushButton(QLayout* layout, ButtonStyleEnum style);
+    void setStyle(ButtonStyleEnum style);
+    void setStyle();
+    void setDefaulStyle();
+    void setAnunciatorStyle();
     void setIconWithPath(const QString& path);
 };
 
