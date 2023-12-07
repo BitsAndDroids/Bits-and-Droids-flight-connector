@@ -1,24 +1,24 @@
 {
   "Fuel": [
-   {
+    {
       "id": 12,
       "outputName": "FUEL SELECTED QUANTITY PERCENT",
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel quantity %",
+      "cbText": "Fuel quantity %",
       "prefix": 275,
-      "type":5
+      "type": 5
     },
-{
+    {
       "id": 500,
       "outputName": "AUTOPILOT AIRSPEED HOLD VAR",
       "metric": "knots",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"AP airspeed var",
-      "prefix":700 ,
-      "type":0
+      "cbText": "AP airspeed var",
+      "prefix": 700,
+      "type": 0
     },
     {
       "id": 104,
@@ -26,7 +26,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank center level",
+      "cbText": "Fuel tank center level",
       "prefix": 234,
       "type": 5
     },
@@ -36,7 +36,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank center 2 level",
+      "cbText": "Fuel tank center 2 level",
       "prefix": 235,
       "type": 5
     },
@@ -46,7 +46,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank center 3 level",
+      "cbText": "Fuel tank center 3 level",
       "prefix": 236,
       "type": 5
     },
@@ -56,7 +56,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank left main level",
+      "cbText": "Fuel tank left main level",
       "prefix": 237,
       "type": 5
     },
@@ -66,7 +66,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank left aux level",
+      "cbText": "Fuel tank left aux level",
       "prefix": 238,
       "type": 5
     },
@@ -76,7 +76,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank left tip level",
+      "cbText": "Fuel tank left tip level",
       "prefix": 239,
       "type": 5
     },
@@ -86,7 +86,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank right main level",
+      "cbText": "Fuel tank right main level",
       "prefix": 240,
       "type": 5
     },
@@ -96,9 +96,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank right aux level",
+      "cbText": "Fuel tank right aux level",
       "prefix": 241,
-      "type":5
+      "type": 5
     },
     {
       "id": 112,
@@ -106,7 +106,7 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank right tip level",
+      "cbText": "Fuel tank right tip level",
       "prefix": 242,
       "type": 5
     },
@@ -116,9 +116,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank external 1 level",
+      "cbText": "Fuel tank external 1 level",
       "prefix": 243,
-      "type":5
+      "type": 5
     },
     {
       "id": 114,
@@ -126,9 +126,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Fuel tank external 2 level",
+      "cbText": "Fuel tank external 2 level",
       "prefix": 244,
-      "type":5
+      "type": 5
     },
     {
       "id": 115,
@@ -136,9 +136,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center capacity",
+      "cbText": "Fuel tank center capacity",
       "prefix": 245,
-      "type":0
+      "type": 0
     },
     {
       "id": 116,
@@ -146,9 +146,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center 2 capacity",
+      "cbText": "Fuel tank center 2 capacity",
       "prefix": 246,
-      "type":0
+      "type": 0
     },
     {
       "id": 117,
@@ -156,10 +156,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center 3 capacity",
+      "cbText": "Fuel tank center 3 capacity",
       "prefix": 247,
-      "type":0
-
+      "type": 0
     },
     {
       "id": 118,
@@ -167,9 +166,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left main capacity",
+      "cbText": "Fuel tank left main capacity",
       "prefix": 248,
-      "type":0
+      "type": 0
     },
     {
       "id": 119,
@@ -177,9 +176,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left aux capacity",
-      "prefix":249,
-      "type":0
+      "cbText": "Fuel tank left aux capacity",
+      "prefix": 249,
+      "type": 0
     },
     {
       "id": 120,
@@ -187,9 +186,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left tip capacity",
+      "cbText": "Fuel tank left tip capacity",
       "prefix": 250,
-      "type":0
+      "type": 0
     },
     {
       "id": 121,
@@ -197,9 +196,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right main capacity",
-      "prefix":251 ,
-      "type":0
+      "cbText": "Fuel tank right main capacity",
+      "prefix": 251,
+      "type": 0
     },
     {
       "id": 122,
@@ -207,9 +206,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right aux capacity",
+      "cbText": "Fuel tank right aux capacity",
       "prefix": 252,
-      "type":0
+      "type": 0
     },
     {
       "id": 123,
@@ -217,9 +216,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right tip capacity",
-      "prefix":253 ,
-      "type":0
+      "cbText": "Fuel tank right tip capacity",
+      "prefix": 253,
+      "type": 0
     },
     {
       "id": 124,
@@ -227,9 +226,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank external 1 capacity",
+      "cbText": "Fuel tank external 1 capacity",
       "prefix": 254,
-      "type":0
+      "type": 0
     },
     {
       "id": 125,
@@ -237,9 +236,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank external 2 capacity",
+      "cbText": "Fuel tank external 2 capacity",
       "prefix": 255,
-      "type":0
+      "type": 0
     },
     {
       "id": 126,
@@ -247,7 +246,7 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel left capacity",
+      "cbText": "Fuel left capacity",
       "prefix": 256,
       "type": 0
     },
@@ -257,9 +256,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel right capacity",
+      "cbText": "Fuel right capacity",
       "prefix": 257,
-      "type":0
+      "type": 0
     },
     {
       "id": 128,
@@ -267,9 +266,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center quantity",
+      "cbText": "Fuel tank center quantity",
       "prefix": 258,
-      "type":0
+      "type": 0
     },
     {
       "id": 129,
@@ -277,9 +276,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center 2 quantity",
-      "prefix":259 ,
-      "type":0
+      "cbText": "Fuel tank center 2 quantity",
+      "prefix": 259,
+      "type": 0
     },
     {
       "id": 130,
@@ -287,9 +286,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank center 3 quantity",
-      "prefix":260 ,
-      "type":0
+      "cbText": "Fuel tank center 3 quantity",
+      "prefix": 260,
+      "type": 0
     },
     {
       "id": 131,
@@ -297,9 +296,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left main quantity",
+      "cbText": "Fuel tank left main quantity",
       "prefix": 261,
-      "type":0
+      "type": 0
     },
     {
       "id": 132,
@@ -307,9 +306,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left aux quantity",
+      "cbText": "Fuel tank left aux quantity",
       "prefix": 262,
-      "type":0
+      "type": 0
     },
     {
       "id": 133,
@@ -317,9 +316,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank left tip quantity",
-      "prefix":263 ,
-      "type":0
+      "cbText": "Fuel tank left tip quantity",
+      "prefix": 263,
+      "type": 0
     },
     {
       "id": 134,
@@ -327,9 +326,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right main quantity",
+      "cbText": "Fuel tank right main quantity",
       "prefix": 264,
-      "type":0
+      "type": 0
     },
     {
       "id": 135,
@@ -337,9 +336,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right aux quantity",
+      "cbText": "Fuel tank right aux quantity",
       "prefix": 265,
-      "type":0
+      "type": 0
     },
     {
       "id": 136,
@@ -347,9 +346,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank right tip quantity",
+      "cbText": "Fuel tank right tip quantity",
       "prefix": 266,
-      "type":0
+      "type": 0
     },
     {
       "id": 137,
@@ -357,9 +356,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank external 1",
+      "cbText": "Fuel tank external 1",
       "prefix": 267,
-      "type":0
+      "type": 0
     },
     {
       "id": 138,
@@ -367,9 +366,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel tank external 2 quantity",
+      "cbText": "Fuel tank external 2 quantity",
       "prefix": 268,
-      "type":0
+      "type": 0
     },
     {
       "id": 139,
@@ -377,9 +376,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel left quantity",
+      "cbText": "Fuel left quantity",
       "prefix": 269,
-      "type":0
+      "type": 0
     },
     {
       "id": 140,
@@ -387,9 +386,9 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel right quantity",
+      "cbText": "Fuel right quantity",
       "prefix": 270,
-      "type":0
+      "type": 0
     },
     {
       "id": 141,
@@ -397,20 +396,21 @@
       "metric": "Gallons",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Fuel total quantity",
+      "cbText": "Fuel total quantity",
       "prefix": 271,
-      "type":0
+      "type": 0
     }
   ],
-  "Data": [{
+  "Data": [
+    {
       "id": 1,
       "outputName": "PLANE ALT ABOVE GROUND",
       "metric": "Feet",
       "updateEvery": 100,
       "dataType": 0,
-      "cbText":"Feet above ground",
+      "cbText": "Feet above ground",
       "prefix": 312,
-      "type":0
+      "type": 0
     },
     {
       "id": 2,
@@ -418,9 +418,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) on the ground",
+      "cbText": "(bool) on the ground",
       "prefix": 323,
-      "type":4
+      "type": 4
     },
     {
       "id": 7,
@@ -428,9 +428,9 @@
       "metric": "Feet per second",
       "updateEvery": 10,
       "dataType": 0,
-      "cbText":"Vertical speed",
-      "prefix":590,
-      "type":0
+      "cbText": "Vertical speed",
+      "prefix": 590,
+      "type": 0
     },
     {
       "id": 101,
@@ -438,18 +438,19 @@
       "metric": "NULL",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Plane name",
-      "prefix":999,
-      "type": 5
+      "cbText": "Plane name",
+      "prefix": 999,
+      "type": 1
     }
   ],
-  "Instruments": [{
+  "Instruments": [
+    {
       "id": 6,
       "outputName": "BAROMETER PRESSURE",
       "metric": "Millibars",
       "updateEvery": 10,
       "dataType": 0,
-      "cbText":"Barometer pressure",
+      "cbText": "Barometer pressure",
       "prefix": 632,
       "type": 0
     },
@@ -459,9 +460,9 @@
       "metric": "Knots",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Indicated airspeed",
+      "cbText": "Indicated airspeed",
       "prefix": 326,
-      "type":0
+      "type": 0
     },
     {
       "id": 10,
@@ -469,9 +470,9 @@
       "metric": "Radians",
       "updateEvery": 0.02,
       "dataType": 0,
-      "cbText":"Indicated heading",
+      "cbText": "Indicated heading",
       "prefix": 344,
-      "type":2
+      "type": 2
     },
     {
       "id": 11,
@@ -479,9 +480,9 @@
       "metric": "Feet",
       "updateEvery": 10,
       "dataType": 0,
-      "cbText":"Indicated altitude",
+      "cbText": "Indicated altitude",
       "prefix": 335,
-      "type":0
+      "type": 0
     },
     {
       "id": 15,
@@ -489,41 +490,103 @@
       "metric": "inHg",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Kohlsman HG",
+      "cbText": "Kohlsman HG",
       "prefix": 337,
       "type": 6
     }
   ],
-  "GPS": [{
+  "GPS": [
+    {
       "id": 9,
       "outputName": "GPS GROUND SPEED",
       "metric": "Meters per second",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"GPS groundspeed",
+      "cbText": "GPS groundspeed",
       "prefix": 430,
-      "type":7
+      "type": 7
     },
     {
       "id": 100,
-      "outputName": "GPS WP BEARING",
+      "outputName": "GPS COURSE TO STEER",
       "metric": "Degrees",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"GPS course to steer",
-      "prefix":454,
-      "type":0
+      "cbText": "GPS course to steer",
+      "prefix": 454,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS WP DISTANCE",
+      "metric": "Meters",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS distance to waypoint",
+      "prefix": 101,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS WP TRUE BEARING",
+      "metric": "Degrees",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS true bearing to waypoint.",
+      "prefix": 102,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS WP ETE",
+      "metric": "Seconds",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS Estimated time en route to waypoint",
+      "prefix": 103,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS ETA",
+      "metric": "Seconds",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS Estimated time of arrival at destination",
+      "prefix": 104,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS FLIGHTPLAN TOTAL DISTANCE",
+      "metric": "Meters",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS complete flightplan length from start to end",
+      "prefix": 105,
+      "type": 0
+    },
+    {
+      "id": 100,
+      "outputName": "GPS WP NEXT ID",
+      "metric": "String",
+      "updateEvery": 1,
+      "dataType": 0,
+      "cbText": "GPS ID of next GPS waypoint",
+      "prefix": 106,
+      "type": 1
     }
   ],
-  "Autopilot": [{
+  "Autopilot": [
+    {
       "id": 3,
       "outputName": "AUTOPILOT HEADING LOCK DIR",
       "metric": "Degrees",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"AP heading lock",
+      "cbText": "AP heading lock",
       "prefix": 582,
-      "type":0
+      "type": 0
     },
     {
       "id": 4,
@@ -531,9 +594,9 @@
       "metric": "Feet",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"AP altitude lock var",
+      "cbText": "AP altitude lock var",
       "prefix": 584,
-      "type":0
+      "type": 0
     },
     {
       "id": 5,
@@ -541,9 +604,9 @@
       "metric": "Feet/minute",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"AP vertical hold var",
+      "cbText": "AP vertical hold var",
       "prefix": 590,
-      "type":0
+      "type": 0
     },
     {
       "id": 80,
@@ -551,9 +614,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP available",
+      "cbText": "(bool) AP available",
       "prefix": 576,
-      "type":4
+      "type": 4
     },
     {
       "id": 81,
@@ -561,9 +624,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP master",
+      "cbText": "(bool) AP master",
       "prefix": 577,
-      "type":4
+      "type": 4
     },
     {
       "id": 82,
@@ -571,9 +634,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP wing leveler",
+      "cbText": "(bool) AP wing leveler",
       "prefix": 579,
-      "type":4
+      "type": 4
     },
     {
       "id": 83,
@@ -581,9 +644,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP NAV1 lock",
+      "cbText": "(bool) AP NAV1 lock",
       "prefix": 580,
-      "type":4
+      "type": 4
     },
     {
       "id": 84,
@@ -591,9 +654,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP heading lock",
-      "prefix":581 ,
-      "type":4
+      "cbText": "(bool) AP heading lock",
+      "prefix": 581,
+      "type": 4
     },
     {
       "id": 85,
@@ -601,9 +664,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP altitude lock",
+      "cbText": "(bool) AP altitude lock",
       "prefix": 583,
-      "type":4
+      "type": 4
     },
     {
       "id": 86,
@@ -611,9 +674,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP attitude lock",
+      "cbText": "(bool) AP attitude lock",
       "prefix": 585,
-      "type":4
+      "type": 4
     },
     {
       "id": 87,
@@ -621,9 +684,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP glideslope hold",
-      "prefix":586 ,
-      "type":4
+      "cbText": "(bool) AP glideslope hold",
+      "prefix": 586,
+      "type": 4
     },
     {
       "id": 88,
@@ -631,9 +694,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP approach hold",
-      "prefix":588,
-      "type":4
+      "cbText": "(bool) AP approach hold",
+      "prefix": 588,
+      "type": 4
     },
     {
       "id": 89,
@@ -641,9 +704,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP backcourse hold",
-      "prefix":589 ,
-      "type":4
+      "cbText": "(bool) AP backcourse hold",
+      "prefix": 589,
+      "type": 4
     },
     {
       "id": 90,
@@ -651,9 +714,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP flight director",
-      "prefix":591 ,
-      "type":4
+      "cbText": "(bool) AP flight director",
+      "prefix": 591,
+      "type": 4
     },
     {
       "id": 91,
@@ -661,9 +724,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP airspeed hold",
-      "prefix":594 ,
-      "type":4
+      "cbText": "(bool) AP airspeed hold",
+      "prefix": 594,
+      "type": 4
     },
     {
       "id": 92,
@@ -671,9 +734,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP mach hold",
-      "prefix":596 ,
-      "type":4
+      "cbText": "(bool) AP mach hold",
+      "prefix": 596,
+      "type": 4
     },
     {
       "id": 93,
@@ -681,9 +744,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP yaw damper",
-      "prefix":598 ,
-      "type":4
+      "cbText": "(bool) AP yaw damper",
+      "prefix": 598,
+      "type": 4
     },
     {
       "id": 94,
@@ -691,9 +754,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP throttle arm",
+      "cbText": "(bool) AP throttle arm",
       "prefix": 600,
-      "type":4
+      "type": 4
     },
     {
       "id": 95,
@@ -701,9 +764,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP takeoff power",
-      "prefix":601 ,
-      "type":4
+      "cbText": "(bool) AP takeoff power",
+      "prefix": 601,
+      "type": 4
     },
     {
       "id": 96,
@@ -711,9 +774,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Autothrottle",
-      "prefix":602 ,
-      "type":4
+      "cbText": "(bool) Autothrottle",
+      "prefix": 602,
+      "type": 4
     },
     {
       "id": 97,
@@ -721,9 +784,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP NAV1 lock",
+      "cbText": "(bool) AP NAV1 lock",
       "prefix": 580,
-      "type":4
+      "type": 4
     },
     {
       "id": 98,
@@ -731,9 +794,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP vertical hold",
+      "cbText": "(bool) AP vertical hold",
       "prefix": 604,
-      "type":4
+      "type": 4
     },
     {
       "id": 99,
@@ -741,20 +804,21 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) AP RPM hold",
-      "prefix":605 ,
-      "type":4
+      "cbText": "(bool) AP RPM hold",
+      "prefix": 605,
+      "type": 4
     }
   ],
-  "NAV and COMS": [{
+  "NAV and COMS": [
+    {
       "id": 13,
       "outputName": "COM ACTIVE FREQUENCY:1",
       "metric": "Khz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Com 1 active",
-      "prefix":900 ,
-      "type":0
+      "cbText": "Com 1 active",
+      "prefix": 900,
+      "type": 0
     },
     {
       "id": 14,
@@ -762,9 +826,9 @@
       "metric": "Khz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Com 2 active",
-      "prefix":902 ,
-      "type":0
+      "cbText": "Com 2 active",
+      "prefix": 902,
+      "type": 0
     },
     {
       "id": 16,
@@ -772,9 +836,9 @@
       "metric": "Khz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Com 1 standby",
-      "prefix":901 ,
-      "type":0
+      "cbText": "Com 1 standby",
+      "prefix": 901,
+      "type": 0
     },
     {
       "id": 17,
@@ -782,9 +846,9 @@
       "metric": "Khz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Com 2 standby",
-      "prefix":903 ,
-      "type":0
+      "cbText": "Com 2 standby",
+      "prefix": 903,
+      "type": 0
     },
     {
       "id": 18,
@@ -792,9 +856,9 @@
       "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV 1 active",
+      "cbText": "NAV 1 active",
       "prefix": 910,
-      "type":0
+      "type": 0
     },
     {
       "id": 19,
@@ -802,9 +866,9 @@
       "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV 1 standby",
+      "cbText": "NAV 1 standby",
       "prefix": 911,
-      "type":0
+      "type": 0
     },
     {
       "id": 20,
@@ -812,9 +876,9 @@
       "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV 2 active",
-      "prefix":912 ,
-      "type":0
+      "cbText": "NAV 2 active",
+      "prefix": 912,
+      "type": 0
     },
     {
       "id": 21,
@@ -822,9 +886,9 @@
       "metric": "KHz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV 2 standby",
-      "prefix":913 ,
-      "type":0
+      "cbText": "NAV 2 standby",
+      "prefix": 913,
+      "type": 0
     },
     {
       "id": 22,
@@ -832,9 +896,9 @@
       "metric": "Degrees",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV 1 radial error",
+      "cbText": "NAV 1 radial error",
       "prefix": 914,
-      "type":0
+      "type": 0
     },
     {
       "id": 23,
@@ -842,9 +906,9 @@
       "metric": "SIMCONNECT_DATA_LATLONALT",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Nav 1 VOR LATLONALT",
-      "prefix":915 ,
-      "type":0
+      "cbText": "Nav 1 VOR LATLONALT",
+      "prefix": 915,
+      "type": 0
     },
     {
       "id": 24,
@@ -852,9 +916,9 @@
       "metric": "Hz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 1 active",
+      "cbText": "ADF 1 active",
       "prefix": 954,
-      "type":8
+      "type": 8
     },
     {
       "id": 25,
@@ -862,9 +926,9 @@
       "metric": "Hz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 1 standby",
-      "prefix":955 ,
-      "type":8
+      "cbText": "ADF 1 standby",
+      "prefix": 955,
+      "type": 8
     },
     {
       "id": 26,
@@ -872,9 +936,9 @@
       "metric": "Degrees",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 1 radial",
-      "prefix":956 ,
-      "type":0
+      "cbText": "ADF 1 radial",
+      "prefix": 956,
+      "type": 0
     },
     {
       "id": 27,
@@ -882,9 +946,9 @@
       "metric": "Number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 1 signal",
+      "cbText": "ADF 1 signal",
       "prefix": 957,
-      "type":0
+      "type": 0
     },
     {
       "id": 28,
@@ -892,9 +956,9 @@
       "metric": "Hz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 2 active",
-      "prefix":958 ,
-      "type":8
+      "cbText": "ADF 2 active",
+      "prefix": 958,
+      "type": 8
     },
     {
       "id": 29,
@@ -902,9 +966,9 @@
       "metric": "Hz",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 2 standby",
-      "prefix":959 ,
-      "type":8
+      "cbText": "ADF 2 standby",
+      "prefix": 959,
+      "type": 8
     },
     {
       "id": 30,
@@ -912,9 +976,9 @@
       "metric": "Degrees",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 2 radial",
-      "prefix":960 ,
-      "type":0
+      "cbText": "ADF 2 radial",
+      "prefix": 960,
+      "type": 0
     },
     {
       "id": 31,
@@ -922,9 +986,9 @@
       "metric": "Number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"ADF 2 signal",
-      "prefix":961 ,
-      "type":0
+      "cbText": "ADF 2 signal",
+      "prefix": 961,
+      "type": 0
     },
     {
       "id": 32,
@@ -932,9 +996,9 @@
       "metric": "Nautical miles",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV DME 1",
+      "cbText": "NAV DME 1",
       "prefix": 950,
-      "type":0
+      "type": 0
     },
     {
       "id": 33,
@@ -942,9 +1006,9 @@
       "metric": "Knots",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV DME 1 speed",
-      "prefix":951 ,
-      "type":0
+      "cbText": "NAV DME 1 speed",
+      "prefix": 951,
+      "type": 0
     },
     {
       "id": 34,
@@ -952,9 +1016,9 @@
       "metric": "Nautical miles",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV DME 2",
+      "cbText": "NAV DME 2",
       "prefix": 952,
-      "type":0
+      "type": 0
     },
     {
       "id": 35,
@@ -962,9 +1026,9 @@
       "metric": "Knots",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"NAV DME 2 speed",
+      "cbText": "NAV DME 2 speed",
       "prefix": 953,
-      "type":0
+      "type": 0
     },
     {
       "id": 36,
@@ -972,9 +1036,9 @@
       "metric": "number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Transponder 1 code",
-      "prefix":962 ,
-      "type":0
+      "cbText": "Transponder 1 code",
+      "prefix": 962,
+      "type": 0
     },
     {
       "id": 37,
@@ -982,9 +1046,9 @@
       "metric": "number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Transponder 2 code",
+      "cbText": "Transponder 2 code",
       "prefix": 963,
-      "type":0
+      "type": 0
     },
     {
       "id": 102,
@@ -992,9 +1056,9 @@
       "metric": "Degrees",
       "updateEvery": 0.1,
       "dataType": 0,
-      "cbText":"NAV OBS 1",
+      "cbText": "NAV OBS 1",
       "prefix": 606,
-      "type":0
+      "type": 0
     },
     {
       "id": 103,
@@ -1002,20 +1066,21 @@
       "metric": "Degrees",
       "updateEvery": 0.1,
       "dataType": 0,
-      "cbText":"NAV OBS 2",
+      "cbText": "NAV OBS 2",
       "prefix": 607,
-      "type":0
+      "type": 0
     }
   ],
-  "Lights": [{
+  "Lights": [
+    {
       "id": 38,
       "outputName": "LIGHT TAXI ON",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Taxi lights",
+      "cbText": "(bool) Taxi lights",
       "prefix": 133,
-      "type":4
+      "type": 4
     },
     {
       "id": 39,
@@ -1023,9 +1088,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Strobe lights",
-      "prefix":134 ,
-      "type":4
+      "cbText": "(bool) Strobe lights",
+      "prefix": 134,
+      "type": 4
     },
     {
       "id": 40,
@@ -1033,9 +1098,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Panel lights",
-      "prefix":135 ,
-      "type":4
+      "cbText": "(bool) Panel lights",
+      "prefix": 135,
+      "type": 4
     },
     {
       "id": 41,
@@ -1043,9 +1108,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Recognition lights",
+      "cbText": "(bool) Recognition lights",
       "prefix": 136,
-      "type":4
+      "type": 4
     },
     {
       "id": 42,
@@ -1053,9 +1118,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Wing lights",
+      "cbText": "(bool) Wing lights",
       "prefix": 137,
-      "type":4
+      "type": 4
     },
     {
       "id": 43,
@@ -1063,9 +1128,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Logo lights",
-      "prefix":138 ,
-      "type":4
+      "cbText": "(bool) Logo lights",
+      "prefix": 138,
+      "type": 4
     },
     {
       "id": 44,
@@ -1073,9 +1138,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Cabin lights",
-      "prefix":139 ,
-      "type":4
+      "cbText": "(bool) Cabin lights",
+      "prefix": 139,
+      "type": 4
     },
     {
       "id": 45,
@@ -1083,9 +1148,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Head light",
-      "prefix":140 ,
-      "type":4
+      "cbText": "(bool) Head light",
+      "prefix": 140,
+      "type": 4
     },
     {
       "id": 46,
@@ -1093,9 +1158,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Brake lights (not the brakes!)",
-      "prefix":141 ,
-      "type":4
+      "cbText": "(bool) Brake lights (not the brakes!)",
+      "prefix": 141,
+      "type": 4
     },
     {
       "id": 47,
@@ -1103,9 +1168,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) NAV lights",
-      "prefix":142 ,
-      "type":4
+      "cbText": "(bool) NAV lights",
+      "prefix": 142,
+      "type": 4
     },
     {
       "id": 48,
@@ -1113,9 +1178,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Beacon lights",
+      "cbText": "(bool) Beacon lights",
       "prefix": 143,
-      "type":4
+      "type": 4
     },
     {
       "id": 49,
@@ -1123,62 +1188,63 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Landing lights",
-      "prefix":144 ,
-      "type":4
+      "cbText": "(bool) Landing lights",
+      "prefix": 144,
+      "type": 4
     }
   ],
-  "Warnings": [{
+  "Warnings": [
+    {
       "id": 50,
       "outputName": "STALL WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Stall warning",
+      "cbText": "(bool) Stall warning",
       "prefix": 333,
-      "type":4
+      "type": 4
     },
-{
+    {
       "id": 1000,
       "outputName": "STALL WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Master caution",
+      "cbText": "(bool) Master caution",
       "prefix": 1000,
-      "type":4
+      "type": 4
     },
-{
+    {
       "id": 1001,
       "outputName": "STALL WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Master warning",
+      "cbText": "(bool) Master warning",
       "prefix": 1001,
-      "type":4
+      "type": 4
     },
-
     {
       "id": 51,
       "outputName": "OVERSPEED WARNING",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Overspeed warning",
+      "cbText": "(bool) Overspeed warning",
       "prefix": 334,
-      "type":4
+      "type": 4
     }
   ],
-  "Mechanical": [{
+  "Mechanical": [
+    {
       "id": 142,
       "outputName": "BRAKE PARKING INDICATOR",
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Parking brake indicator",
+      "cbText": "(bool) Parking brake indicator",
       "prefix": 505,
-      "type":4
+      "type": 4
     },
     {
       "id": 52,
@@ -1186,9 +1252,9 @@
       "metric": "Radians",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Aileron trim degrees",
+      "cbText": "Aileron trim degrees",
       "prefix": 562,
-      "type":2
+      "type": 2
     },
     {
       "id": 53,
@@ -1196,9 +1262,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Aileron trim %",
+      "cbText": "Aileron trim %",
       "prefix": 563,
-      "type":5
+      "type": 5
     },
     {
       "id": 54,
@@ -1206,9 +1272,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Rudder trim degrees",
+      "cbText": "Rudder trim degrees",
       "prefix": 566,
-      "type":2
+      "type": 2
     },
     {
       "id": 55,
@@ -1216,9 +1282,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Rudder trim %",
-      "prefix":567 ,
-      "type":5
+      "cbText": "Rudder trim %",
+      "prefix": 567,
+      "type": 5
     },
     {
       "id": 58,
@@ -1226,9 +1292,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Elevator trim position degrees",
-      "prefix":498 ,
-      "type":2
+      "cbText": "Elevator trim position degrees",
+      "prefix": 498,
+      "type": 2
     },
     {
       "id": 59,
@@ -1236,9 +1302,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Elevator trim %",
+      "cbText": "Elevator trim %",
       "prefix": 500,
-      "type":5
+      "type": 5
     },
     {
       "id": 60,
@@ -1246,9 +1312,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Flaps handle %",
-      "prefix":510 ,
-      "type":5
+      "cbText": "Flaps handle %",
+      "prefix": 510,
+      "type": 5
     },
     {
       "id": 61,
@@ -1256,9 +1322,9 @@
       "metric": "Number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Flaps handle index",
+      "cbText": "Flaps handle index",
       "prefix": 511,
-      "type":0
+      "type": 0
     },
     {
       "id": 62,
@@ -1266,9 +1332,9 @@
       "metric": "Number",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"Flaps number handle positions",
+      "cbText": "Flaps number handle positions",
       "prefix": 512,
-      "type":0
+      "type": 0
     },
     {
       "id": 63,
@@ -1276,9 +1342,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Trailing edge flaps left %",
+      "cbText": "Trailing edge flaps left %",
       "prefix": 513,
-      "type":5
+      "type": 5
     },
     {
       "id": 64,
@@ -1286,9 +1352,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Trailing edge flaps right %",
+      "cbText": "Trailing edge flaps right %",
       "prefix": 514,
-      "type":5
+      "type": 5
     },
     {
       "id": 65,
@@ -1296,9 +1362,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Trailing edge flaps left degrees",
+      "cbText": "Trailing edge flaps left degrees",
       "prefix": 515,
-      "type":2
+      "type": 2
     },
     {
       "id": 66,
@@ -1306,9 +1372,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Trailing edge flaps right degree",
-      "prefix":516,
-      "type":2
+      "cbText": "Trailing edge flaps right degree",
+      "prefix": 516,
+      "type": 2
     },
     {
       "id": 67,
@@ -1316,9 +1382,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Leading edge flaps left %",
+      "cbText": "Leading edge flaps left %",
       "prefix": 517,
-      "type":1
+      "type": 5
     },
     {
       "id": 68,
@@ -1326,9 +1392,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Leading edge flaps right %",
+      "cbText": "Leading edge flaps right %",
       "prefix": 518,
-      "type":5
+      "type": 5
     },
     {
       "id": 69,
@@ -1336,9 +1402,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Leading edge flaps left degrees",
-      "prefix":519 ,
-      "type":2
+      "cbText": "Leading edge flaps left degrees",
+      "prefix": 519,
+      "type": 2
     },
     {
       "id": 70,
@@ -1346,9 +1412,9 @@
       "metric": "Radians",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Leading edge flaps right degrees",
+      "cbText": "Leading edge flaps right degrees",
       "prefix": 520,
-      "type":2
+      "type": 2
     },
     {
       "id": 71,
@@ -1356,9 +1422,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Gear handle position",
+      "cbText": "(bool) Gear handle position",
       "prefix": 526,
-      "type":4
+      "type": 4
     },
     {
       "id": 72,
@@ -1366,7 +1432,7 @@
       "metric": "psf",
       "updateEvery": 1,
       "dataType": 0,
-      "cbText":"Gear hydraulic pressure",
+      "cbText": "Gear hydraulic pressure",
       "prefix": 527,
       "type": 0
     },
@@ -1376,9 +1442,9 @@
       "metric": "Bool",
       "updateEvery": 0,
       "dataType": 0,
-      "cbText":"(bool) Tailwheel lock",
+      "cbText": "(bool) Tailwheel lock",
       "prefix": 528,
-      "type":4
+      "type": 4
     },
     {
       "id": 74,
@@ -1386,9 +1452,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear center position %",
+      "cbText": "Gear center position %",
       "prefix": 529,
-      "type":5
+      "type": 5
     },
     {
       "id": 75,
@@ -1396,9 +1462,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear left position %",
+      "cbText": "Gear left position %",
       "prefix": 530,
-      "type":5
+      "type": 5
     },
     {
       "id": 76,
@@ -1406,9 +1472,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear right position %",
+      "cbText": "Gear right position %",
       "prefix": 531,
-      "type":5
+      "type": 5
     },
     {
       "id": 77,
@@ -1416,9 +1482,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear tail position %",
+      "cbText": "Gear tail position %",
       "prefix": 532,
-      "type":5
+      "type": 5
     },
     {
       "id": 78,
@@ -1426,9 +1492,9 @@
       "metric": "Percent Over 100",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear AUX position %",
-      "prefix":533 ,
-      "type":5
+      "cbText": "Gear AUX position %",
+      "prefix": 533,
+      "type": 5
     },
     {
       "id": 79,
@@ -1436,9 +1502,9 @@
       "metric": "Percentage",
       "updateEvery": 0.01,
       "dataType": 0,
-      "cbText":"Gear total extended %",
+      "cbText": "Gear total extended %",
       "prefix": 536,
-      "type":5
+      "type": 5
     }
   ]
 }

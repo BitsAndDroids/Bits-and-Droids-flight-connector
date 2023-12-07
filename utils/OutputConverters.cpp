@@ -17,8 +17,17 @@ int OutputConverters::radianToDegree(float rec) {
     double radian = rec;
     return (radian * (180 / pi));
 }
+std::string OutputConverters::formatOutgoingString(std::string received, Output output) {
+    std::string prefix = std::to_string(output.getPrefix());
+    //Ensure the prefix is 4 characters long
+    for (int i = (int)prefix.size(); i < 4; i++) {
+        prefix += " ";
+    }
+    std::string input_string = prefix + received + "\n";
+    return input_string;
+}
 
-std::string OutputConverters::formatOutgoingString(float received, Output output) {
+std::string OutputConverters::formatOutgoingFloat(float received, Output output) {
     int intVal;
     std::string prefix = std::to_string(output.getPrefix());
     //Ensure the prefix is 4 characters long

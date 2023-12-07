@@ -56,22 +56,22 @@ void InputSwitchHandler::mapInputs() {
 
 void InputSwitchHandler::setRanges() {
     InputEnum::DATA_DEFINE_ID_INPUT engineEvents[] = {
-            inputDefinitions.DATA_EX_THROTTLE_1_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_2_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_3_AXIS,
-            inputDefinitions.DATA_EX_THROTTLE_4_AXIS};
+            InputEnum::DATA_EX_THROTTLE_1_AXIS,
+            InputEnum::DATA_EX_THROTTLE_2_AXIS,
+            InputEnum::DATA_EX_THROTTLE_3_AXIS,
+            InputEnum::DATA_EX_THROTTLE_4_AXIS};
 
     InputEnum::DATA_DEFINE_ID_INPUT mixtureEvents[] = {
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_1,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_2,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_3,
-            inputDefinitions.DEFINITION_MIXTURE_LEVER_AXIS_4};
+            InputEnum::DEFINITION_MIXTURE_LEVER_AXIS_1,
+            InputEnum::DEFINITION_MIXTURE_LEVER_AXIS_2,
+            InputEnum::DEFINITION_MIXTURE_LEVER_AXIS_3,
+            InputEnum::DEFINITION_MIXTURE_LEVER_AXIS_4};
 
     InputEnum::DATA_DEFINE_ID_INPUT propEvents[] = {
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_1,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_2,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_3,
-            inputDefinitions.DEFINITION_PROP_LEVER_AXIS_4};
+            InputEnum::DEFINITION_PROP_LEVER_AXIS_1,
+            InputEnum::DEFINITION_PROP_LEVER_AXIS_2,
+            InputEnum::DEFINITION_PROP_LEVER_AXIS_3,
+            InputEnum::DEFINITION_PROP_LEVER_AXIS_4};
 
     if (!settingsHandler.retrieveSetting("Ranges", "FlapsMin")->isNull()) {
         for (int i = 0; i < constants::supportedEngines; i++) {

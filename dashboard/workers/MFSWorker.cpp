@@ -25,6 +25,11 @@ struct StructOneDatum {
     float value;
 };
 
+struct StructString {
+    int id;
+    char value[256];
+};
+
 float dualDataRecv = 1.2f;
 
 enum EVENT_ID {
@@ -38,12 +43,17 @@ struct dataStr {
 
 enum DATA_DEFINE_ID {
     DEFINITION_PDR_RADIO,
+    DEFINITION_STRING,
     DEFINITION_1 = 12,
 
 };
 
 struct StructDatum {
     StructOneDatum datum[MAX_RETURNED_ITEMS];
+};
+
+struct StructDatumString {
+    StructString datum_string[MAX_RETURNED_ITEMS];
 };
 
 enum DATA_REQUEST_ID {
@@ -144,7 +154,7 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
 
                     auto *data = (dataStr *) &pObjData->dwData;
                     if (pObjData->dwRequestID > 999 && pObjData->dwRequestID < 9999) {
-                        dualCast->sendToArduino(dualCast->converter.formatOutgoingString(data->val, *output), i);
+                        dualCast->sendToArduino(dualCast->converter.formatOutgoingFloat(data->val, *output), i);
                     }
                 }
             }
@@ -165,12 +175,24 @@ void MFSWorker::MyDispatchProcInput(SIMCONNECT_RECV *pData, DWORD cbData,
                             if (dualCast->comBundles->at(i)->isOutputInBundle(
                                     output->getId())) {
                                 dualCast->sendToArduino(
-                                        dualCast->converter.formatOutgoingString(pS->datum[count].value, *output), i);
+                                        dualCast->converter.formatOutgoingFloat(pS->datum[count].value, *output), i);
                             }
                         }
 
                         std::this_thread::sleep_for(std::chrono::milliseconds(output->getDelay()));
                         count++;
+                    }
+                    break;
+                }
+                case REQUEST_STRING: {
+                    auto pS = reinterpret_cast<StructDatumString *>(&pObjData->dwData);
+                    int id = pS->datum_string[0].id;
+                    Output *output = dualCast->outputHandler.findOutputById(id);
+                    for (int i = 0; i < dualCast->comBundles->size(); i++) {
+                        if (dualCast->comBundles->at(i)->isOutputInBundle(output->getId())) {
+                            dualCast->sendToArduino(
+                                    dualCast->converter.formatOutgoingString(pS->datum_string[0].value, *output), i);
+                        }
                     }
                     break;
                 }
@@ -306,6 +328,7 @@ void MFSWorker::eventLoop() {
                                          SIMCONNECT_CLIENT_DATA_PERIOD_SECOND,
                                          SIMCONNECT_CLIENT_DATA_REQUEST_FLAG_DEFAULT);
 
+
             dualOutputMapper->mapOutputs(outputsToMap, dualSimConnect);
             SimConnect_SubscribeToSystemEvent(dualSimConnect, EVENT_SIM_START,
                                               "6Hz");
@@ -315,6 +338,12 @@ void MFSWorker::eventLoop() {
                     SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
                     SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
                     SIMCONNECT_DATA_REQUEST_FLAG_TAGGED);
+            SimConnect_RequestDataOnSimObject(
+                    dualSimConnect, REQUEST_STRING, DEFINITION_STRING,
+                    SIMCONNECT_OBJECT_ID_USER, SIMCONNECT_PERIOD_VISUAL_FRAME,
+                    SIMCONNECT_DATA_REQUEST_FLAG_CHANGED |
+                    SIMCONNECT_DATA_REQUEST_FLAG_TAGGED);
+
 
             while (!abortDual && connected) {
                 SimConnect_CallDispatch(dualSimConnect, MyDispatchProcInput, this);

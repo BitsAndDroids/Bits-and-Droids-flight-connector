@@ -13,10 +13,14 @@
 class OutputConverters {
 public:
     OutputConverters();
-    std::string formatOutgoingString(float received, Output output);
+    std::string formatOutgoingFloat(float received, Output output);
+    std::string formatOutgoingString(std::string received, Output output);
+
 private:
 
     int radianToDegree(float rec);
+
+
 };
 
 
