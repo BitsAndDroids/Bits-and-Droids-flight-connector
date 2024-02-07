@@ -1,11 +1,8 @@
 ---
-```diff
-- # This project is moving to Rust.
-- Progress can be followed in the new Repository.
-- [https://github.com/BitsAndDroids/FlightConnector-Rust](https://github.com/BitsAndDroids/FlightConnector-Rust)
-
-- [In this article I'm explaining why I've started this rewrite](https://bitsanddroids.com/post/flightsim/the-connector-deserves-a-first-class-upgrade-from-c-to-rust)
-``` 
+# This project is moving to Rust.
+Progress can be followed in the new Repository.
+[https://github.com/BitsAndDroids/FlightConnector-Rust](https://github.com/BitsAndDroids/FlightConnector-Rust)
+[In this article I'm explaining why I've started this rewrite](https://bitsanddroids.com/post/flightsim/the-connector-deserves-a-first-class-upgrade-from-c-to-rust)
 ---
 
 # Bits-and-Droids-flight-connector
